@@ -1,0 +1,8 @@
+---
+    import { readFile } from 'node:fs/promises'
+    const { src } = Astro.props
+
+    const svgCode = await readFile(src.replace('/_astro/', ''))
+---
+
+{ svgCode }

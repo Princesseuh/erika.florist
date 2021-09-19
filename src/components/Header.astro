@@ -1,0 +1,22 @@
+---
+    import menu from "../data/header.json"
+    import Socials from '../components/Socials.astro'
+---
+
+<header class="px-4 sm:px-0 py-[.8rem] flex justify-center">
+  <section class="w-header flex justify-between">
+    <div class="flex items-center">
+      <h1 class="m-0 inline-block">
+        <a class="header-link" href="/">Erika 🌺</a>
+      </h1>
+
+      <nav class="inline-block ml-2">
+            {
+                menu.map(item => (<a class="header-link" href="{ '/' + item.toLowerCase() }">{ item }</a>))
+            }
+      </nav>
+    </div>
+
+    <Socials classes="hidden sm:flex"/>
+  </section>
+</header>

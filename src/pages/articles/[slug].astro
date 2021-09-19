@@ -1,0 +1,13 @@
+---
+    import ArticleLayout from '../../layouts/ArticleLayout.astro'
+    import { getArticle, getStaticListArticles } from '../../data/articles.ts'
+
+    export async function getStaticPaths() {
+        return getStaticListArticles()
+    }
+
+    const { slug } = Astro.request.params
+    const article = getArticle(slug)
+---
+
+<ArticleLayout article={article}/>

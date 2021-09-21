@@ -1,5 +1,6 @@
 ---
     import BaseLayout from '$layouts/BaseLayout.astro'
+    import ContentHeader from '$components/ContentHeader.astro'
     import { Markdown } from 'astro/components';
 
     const { article } = Astro.props
@@ -7,22 +8,7 @@
 
 <BaseLayout>
     <article class="post mx-auto">
-        <header class="mb-4 mt-4">
-        <h1 class="text-[3.5rem] mb-4 mt-0 leading-none">{ article.data.title }</h1>
-        { article.data.tagline &&
-            <h2 class="text-xl m-0 relative top-[-5px]">{article.data.tagline}</h2>
-        }
-        <div class="text-creative-work">
-            { article.data.dateString }
-            ·
-            {
-                article.data.tags
-                .map(tag => (<a href="{ '/articles/tags/' + tag}">{tag}</a>))
-                .reduce((prev, curr) => prev === null ? [curr] : [prev, ', ', curr])
-            }
-        </div>
-        </header>
-
+        <ContentHeader item={article} includeTags={true}/>
         <Markdown content={article.content}/>
     </article>
 </BaseLayout>

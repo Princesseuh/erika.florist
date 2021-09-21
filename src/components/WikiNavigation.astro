@@ -1,0 +1,23 @@
+---
+import { getWikiItemsByCategory, WikiItem } from '$data/wiki.ts'
+import { wikiCategories, WikiCategory } from '$data/wikiCategories.ts'
+
+function getItemElement(item: WikiItem): string {
+    return `<a class="block" href="${item.link}">${item.data.navigation.label || item.data.title}</a>`
+}
+---
+
+<ul class="m-0 list-none p-0 wiki-navigation">
+    {wikiCategories.map((category: WikiCategory) => (
+        // This is a bit messy, I think there's a way to do this without using a template literal but I couldn't find it
+        // PERF: This isn't cached. Though it's not that expensive I think
+        `<li>
+            <span class="block font-bold text-sugar-cane">${category.title}</span>
+            ${
+                getWikiItemsByCategory(category.key).map((item: WikiItem) => {
+                    return getItemElement(item)
+                }).join('')
+            }
+        </li>`
+    ))}
+</ul>

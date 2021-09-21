@@ -4,7 +4,8 @@
         "target": "es2020",
         "jsx": "preserve",
         "strictFunctionTypes": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "resolveJsonModule": true
     },
     "exclude": [
         "node_modules",

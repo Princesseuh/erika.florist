@@ -1,0 +1,9 @@
+---
+    import WikiLayout from '$layouts/WikiLayout.astro'
+    import { Markdown } from 'astro/components';
+    import { getWikiItem } from '$data/wiki.ts'
+
+    const wikiItem = getWikiItem('index')
+---
+
+<WikiLayout wikiItem={wikiItem}/>

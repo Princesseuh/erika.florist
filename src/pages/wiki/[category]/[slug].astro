@@ -1,0 +1,13 @@
+---
+    import WikiLayout from '$layouts/WikiLayout.astro'
+    import { getWikiItem, getStaticListWikiItems } from '$data/wiki.ts'
+
+    export async function getStaticPaths() {
+        return getStaticListWikiItems()
+    }
+
+    const { slug } = Astro.request.params
+    const wikiItem = getWikiItem(slug)
+---
+
+<WikiLayout wikiItem={wikiItem}/>

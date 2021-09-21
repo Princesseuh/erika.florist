@@ -14,12 +14,14 @@ interface Article extends matter.GrayMatterFile<string> {
     }
 }
 
-// Astro has a thing to fetch Markdown content but I couldn't get it to work inside this file, it only worked in components
-// Additionally, Astro supports just using .md files as pages however, you then need to specify the layout to use in every file which is very non-elegant
-// and also, you have very little control over how the markdown files are parsed whereas, in this case, I have all the control I want really
-
+// Astro has a thing to fetch Markdown content (Astro.fetchContent) but it only works in components and you don't necessarily
+// have that much control over how the markdown files are parsed whereas, in this case, I have all the control I want really
 // However, we end up rendering our markdown using Astro's Markdown component (which goes through Remark/Rehype and its plugins), so we get to have
 // the cake and eat it too. In the future, if Astro's markdown support is a bit less restrictive, we could go their way fully instead of this half-half solution
+
+// The only two remaining issues are:
+// - Modifying the markdown doesn't auto reload our browser. That's more or less a non-issue since I can always reload this file or alternatively, create my content through a CMS (might get fixed by #1174)
+// - We don't get the header list that Astro provide through its own rehype-collect-headers thing, we'll have to do that on our own for TOCs. I wonder if we can do that without parsing the file really..
 const articles: Article[] = (() => {
     const files = new fdir()
         .withFullPaths()
@@ -51,11 +53,9 @@ const articles: Article[] = (() => {
 // Get a specific article by slug, simple enough
 // In the future, this could allow us to embed a specific article data into another article through a component, neat
 function getArticle(slug: string): Article {
-    const result = articles.find((article: Article) => {
+    return articles.find((article: Article) => {
         return article.slug === slug
     })
-
-    return result
 }
 
 // This is used to generate the pages through getStaticPaths in [slug].astro

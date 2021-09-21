@@ -2,7 +2,7 @@
     import { readFile } from 'node:fs/promises'
     const { src } = Astro.props
 
-    // TODO: This isn't cached, which means it's currently reading the same files twice per page. Not so good
+    // PERF: This isn't cached, which means it's currently reading the same files twice per page. Not so good
     const svgCode = await readFile(src.replace('/_astro/', ''))
 ---
 

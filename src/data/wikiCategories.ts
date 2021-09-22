@@ -1,34 +1,28 @@
 export interface WikiCategory {
     key: string,
-    title: string,
-    weight: number
+    title: string
 }
 
 export const wikiCategories: WikiCategory[] = [
     {
         key: 'computers',
-        title: 'Computers',
-        weight: 0
+        title: 'Computers'
     },
     {
         key: 'linux',
-        title: 'Linux',
-        weight: 1
+        title: 'Linux'
     },
     {
         key: 'floristry',
-        title: 'Floristry',
-        weight: 2
+        title: 'Floristry'
     },
     {
         key: 'games',
-        title: 'Games',
-        weight: 3
+        title: 'Games'
     },
     {
         key: 'misc',
-        title: 'Misc',
-        weight: 4
+        title: 'Misc'
     },
 ]
 

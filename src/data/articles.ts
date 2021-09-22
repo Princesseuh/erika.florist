@@ -31,7 +31,7 @@ const articles: Article[] = (() => {
 
     const result = []
     files.forEach(file => {
-        var markdownData = matter.read(file) as Article
+        const markdownData = matter.read(file) as Article
         const slug = basename(file, extname(file))
         const link = new URL(`/articles/${slug}`, 'http://localhost:3000/')
 
@@ -59,7 +59,7 @@ function getArticle(slug: string): Article {
 }
 
 // This is used to generate the pages through getStaticPaths in [slug].astro
-function getStaticListArticles(): object {
+function getStaticListArticles(): Record<string, unknown>[] {
     const result = []
     articles.forEach(article => {
         result.push({ params: { slug: article.slug } })

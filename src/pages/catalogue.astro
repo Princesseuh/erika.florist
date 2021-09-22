@@ -1,0 +1,14 @@
+---
+    import BaseLayout from '$layouts/BaseLayout.astro'
+    import { games, books } from '$data/catalogue.ts'
+---
+
+<BaseLayout>
+    { games.map((game) => (
+        <p>{game.data.title}</p>
+    ))}
+
+    { books.map((book) => (
+        <p>{book.data.title}</p>
+    ))}
+</BaseLayout>

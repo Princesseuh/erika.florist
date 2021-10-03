@@ -2,9 +2,18 @@ import * as matter from 'gray-matter';
 import { fdir } from "fdir";
 import { basename, extname } from 'path'
 
+enum CatalogueType {
+    GAME = "game",
+    BOOK = "book",
+    MOVIE = "movie",
+    SHOW = "show"
+}
+
 interface CatalogueItem extends matter.GrayMatterFile<string> {
     slug: string,
     link: URL,
+    type: CatalogueType, // This isn't used to generate pages (we know the types from Typescript), it's used for the list so it can filter by type
+    cover?: URL, // This allows us to set a cover in the markdown, though it's not something we really do ever
     data: {
         title: string,
         genre: string
@@ -16,7 +25,7 @@ interface CatalogueItem extends matter.GrayMatterFile<string> {
 
 // Books are a wild beast, mangas and one shots follow much different formats than normal books does, same goes for light novels
 interface CatalogueBookBase extends CatalogueItem {
-    type: string,
+    formatType: string,
     data: CatalogueItem['data'] & {
         author: string,
     }
@@ -59,8 +68,9 @@ const games: CatalogueGame[] = (() => {
         const markdownData = matter.read(file) as CatalogueGame
         const slug = basename(file, extname(file))
         const link = new URL(`/catalogue/games/${slug}`, 'http://localhost:3000/')
+        const cover = new URL(link + '.jpg')
 
-        result.push({slug, link, ...markdownData})
+        result.push({slug, type: CatalogueType.GAME, link, cover, ...markdownData})
     })
     return result
 })();
@@ -78,13 +88,16 @@ const books: Array<CatalogueBookSingle | CatalogueBookMultiple> = (() => {
         const markdownData = matter.read(file) as CatalogueBookBase
         const slug = basename(file, extname(file))
         const link = new URL(`/catalogue/books/${slug}`, 'http://localhost:3000/')
-        const type = (markdownData as CatalogueBookMultiple).data.volumes ? 'multiple' : 'single'
+        const cover = new URL(link + '.jpg')
+        const formatType = (markdownData as CatalogueBookMultiple).data.volumes ? 'multiple' : 'single'
 
-        console.log(type)
-
-        result.push({ slug, link, type, ...markdownData } as CatalogueBookSingle | CatalogueBookMultiple)
+        result.push({ slug, type: CatalogueType.BOOK, link, cover, formatType, ...markdownData } as CatalogueBookSingle | CatalogueBookMultiple)
     })
     return result
 })();
 
-export { games, books }
+function getAllCatalogueItems(): CatalogueItem[] {
+    return [...games, ...books]
+}
+
+export { games, books, getAllCatalogueItems, CatalogueType }

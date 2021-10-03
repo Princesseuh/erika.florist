@@ -1,0 +1,18 @@
+---
+    import { getAllCatalogueItems } from '$data/catalogue.ts'
+
+    const json = JSON.stringify(
+        getAllCatalogueItems().map((item) => {
+            return {
+                title: item.data.title,
+                cover: item.cover,
+                cover_alt: item.data.cover_alt,
+                creator: item.data.author || item.data.developer,
+                link: item.link,
+                type: item.type
+            }
+        }
+    ))
+---
+
+{ json }

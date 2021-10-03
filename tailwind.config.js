@@ -3,7 +3,7 @@ const plugin = require('tailwindcss/plugin');
 module.exports = {
   mode: 'jit',
   purge: [
-    './src/**/*.{astro,js,jsx,svelte,ts,tsx,vue}',
+    './src/**/*.{astro,js,ts,tsx}',
     'safelist.txt',
   ],
   corePlugins: {

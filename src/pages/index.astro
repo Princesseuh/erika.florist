@@ -1,7 +1,13 @@
 ---
-import BaseLayout from '$layouts/BaseLayout.astro'
-import { articles } from '$data/articles.ts'
-import ArticlePreview from '$components/ArticlePreview.astro'
+  import BaseLayout from '$layouts/BaseLayout.astro'
+  import ArticlePreview from '$components/ArticlePreview.astro'
+  import { readableDate } from '$utils'
+
+  let articles = await Astro.fetchContent("../content/articles/**/*.md");
+  articles = articles.map(article => {
+    const dateString = readableDate(new Date(article.date))
+    return {dateString, ...article}
+  })
 ---
 
 <BaseLayout>

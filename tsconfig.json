@@ -1,11 +1,13 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
-        "target": "es2020",
-        "jsx": "preserve",
-        "strictFunctionTypes": true,
-        "sourceMap": true,
-        "resolveJsonModule": true
+        "paths": {
+            "$components/*": ["./src/components/*"],
+            "$data": ["./src/data/*"],
+            "$layouts": ["./src/layouts/*"],
+            "$theme": ["./src/theme/*"],
+            "$types": ["./src/types/*"],
+            "$utils": ["./src/utils/*"]
+        }
     },
     "exclude": [
         "node_modules",

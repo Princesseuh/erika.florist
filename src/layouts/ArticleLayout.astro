@@ -9,6 +9,6 @@
 <BaseLayout>
     <article class="post mx-auto">
         <ContentHeader item={article} includeTags={true}/>
-        <Markdown content={article.content}/>
+        <Markdown content={article.astro.source}/>
     </article>
 </BaseLayout>

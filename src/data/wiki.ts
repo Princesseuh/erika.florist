@@ -7,6 +7,7 @@ import type { WikiCategory } from './wikiCategories'
 interface WikiItem extends matter.GrayMatterFile<string> {
     slug: string,
     link: URL,
+    file,
     category?: WikiCategory,
     data: {
         title: string,
@@ -24,7 +25,7 @@ const wikiItems: WikiItem[] = (() => {
     const files = new fdir()
         .withFullPaths()
         .filter((path) => path.endsWith('.md'))
-        .crawl('./content/wiki')
+        .crawl('./src/content/wiki')
         .sync() as string[]
 
     const result = []
@@ -41,7 +42,7 @@ const wikiItems: WikiItem[] = (() => {
         const slug = basename(file, extname(file))
         const link = new URL(`/wiki/${markdownData.data.navigation.category}/${slug}`, 'http://localhost:3000/')
 
-        result.push({slug, link, category, ...markdownData})
+        result.push({slug, link, file, category, ...markdownData})
     })
     return result
 })();

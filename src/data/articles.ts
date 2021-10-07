@@ -5,6 +5,7 @@ import * as matter from 'gray-matter';
 interface Article extends matter.GrayMatterFile<string> {
     slug: string,
     link: URL,
+    file: string,
     data: {
         title: string,
         tagline?: string,
@@ -26,7 +27,7 @@ const articles: Article[] = (() => {
     const files = new fdir()
         .withFullPaths()
         .filter((path) => path.endsWith('.md'))
-        .crawl('./content/articles')
+        .crawl('./src/content/articles')
         .sync() as string[];
 
     const result = []
@@ -39,7 +40,7 @@ const articles: Article[] = (() => {
         const dateString = markdownData.data.date.toLocaleDateString('en-US', { timeZone: 'UTC', year: 'numeric', month: 'short', day: '2-digit' })
         markdownData.data.dateString = dateString
 
-        result.push({slug, link, ...markdownData})
+        result.push({slug, link, file, ...markdownData})
     });
 
     // Sort articles by date. It's fine to do it here as it's the only way we'll ever sort them really
@@ -62,7 +63,7 @@ function getArticle(slug: string): Article {
 function getStaticListArticles(): Record<string, unknown>[] {
     const result = []
     articles.forEach(article => {
-        result.push({ params: { slug: article.slug } })
+        result.push({ params: { slug: article.slug }, props: { article } })
     });
 
     return result

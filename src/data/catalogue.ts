@@ -12,6 +12,7 @@ enum CatalogueType {
 interface CatalogueItem extends matter.GrayMatterFile<string> {
     slug: string,
     link: URL,
+    file: string,
     type: CatalogueType, // This isn't used to generate pages (we know the types from Typescript), it's used for the list so it can filter by type
     cover?: URL, // This allows us to set a cover in the markdown, though it's not something we really do ever
     data: {
@@ -60,7 +61,7 @@ const games: CatalogueGame[] = (() => {
     const files = new fdir()
         .withFullPaths()
         .filter((path) => path.endsWith('.md'))
-        .crawl('./content/catalogue/games')
+        .crawl('./src/content/catalogue/games')
         .sync() as string[]
 
     const result: CatalogueGame[] = []
@@ -70,7 +71,7 @@ const games: CatalogueGame[] = (() => {
         const link = new URL(`/catalogue/games/${slug}`, 'http://localhost:3000/')
         const cover = new URL(link + '.jpg')
 
-        result.push({slug, type: CatalogueType.GAME, link, cover, ...markdownData})
+        result.push({slug, type: CatalogueType.GAME, link, file, cover, ...markdownData})
     })
     return result
 })();
@@ -80,7 +81,7 @@ const books: Array<CatalogueBookSingle | CatalogueBookMultiple> = (() => {
     const files = new fdir()
         .withFullPaths()
         .filter((path) => path.endsWith('.md'))
-        .crawl('./content/catalogue/books')
+        .crawl('./src/content/catalogue/books')
         .sync() as string[]
 
     const result: Array<CatalogueBookSingle | CatalogueBookMultiple> = []
@@ -91,7 +92,7 @@ const books: Array<CatalogueBookSingle | CatalogueBookMultiple> = (() => {
         const cover = new URL(link + '.jpg')
         const formatType = (markdownData as CatalogueBookMultiple).data.volumes ? 'multiple' : 'single'
 
-        result.push({ slug, type: CatalogueType.BOOK, link, cover, formatType, ...markdownData } as CatalogueBookSingle | CatalogueBookMultiple)
+        result.push({ slug, type: CatalogueType.BOOK, link, file, cover, formatType, ...markdownData } as CatalogueBookSingle | CatalogueBookMultiple)
     })
     return result
 })();

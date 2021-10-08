@@ -1,9 +1,7 @@
 ---
     import WikiLayout from '$layouts/WikiLayout.astro'
-    import { Markdown } from 'astro/components';
-    import { getWikiItem } from '$data/wiki.ts'
 
-    const wikiItem = getWikiItem('index')
+    const wikiIndex = await Astro.fetchContent('../content/wiki/index.md')[0]
 ---
 
-<WikiLayout wikiItem={wikiItem}/>
+<WikiLayout wikiItem={wikiIndex}/>

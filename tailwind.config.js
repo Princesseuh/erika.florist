@@ -85,7 +85,7 @@ module.exports = {
           textAlign: 'center',
           fontSize: theme('fontSize.3xl'),
           lineHeight: '180px',
-          // When applied through the CSS-in-JS syntax, opacity information doesn't stay on colors
+          // NOTE: When applied through the CSS-in-JS syntax, opacity information doesn't stay on colors, this workaround it
           '@apply bg-pinky-unicorny bg-opacity-80 transition-opacity': {},
           opacity: '0',
           borderRadius: theme('borderRadius.sm'),

@@ -1,13 +1,25 @@
 ---
     import WikiLayout from '$layouts/WikiLayout.astro'
-    import { getWikiItem, getStaticListWikiItems } from '$data/wiki.ts'
+    import { WikiItem, postProcessWikiItem } from '$data/wiki'
+    import { getSlugFromFile } from '$utils'
 
     export async function getStaticPaths() {
-        return getStaticListWikiItems()
+        const wikiItems = await Astro.fetchContent("../../../content/wiki/**/*.md")
+        return wikiItems.map((wikiItem) => {
+            wikiItem = postProcessWikiItem(wikiItem)
+
+            return {
+                params: { category: wikiItem.navigation.category, slug: wikiItem.slug },
+                props: { wikiItem }
+            }
+        })
     }
 
-    const { slug } = Astro.request.params
-    const wikiItem = getWikiItem(slug)
+    export interface Props {
+        article: WikiItem
+    }
+
+    const { wikiItem } = Astro.props
 ---
 
 <WikiLayout wikiItem={wikiItem}/>

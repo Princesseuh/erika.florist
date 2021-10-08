@@ -1,14 +1,11 @@
 ---
     import BaseLayout from '$layouts/BaseLayout.astro'
     import ArticlePreview from '$components/ArticlePreview.astro'
-    import { readableDate } from '$utils'
+    import { postProcessArticle } from '$data/articles'
 
     export async function getStaticPaths({ paginate }) {
         let articles = await Astro.fetchContent("../../content/articles/**/*.md");
-        articles = articles.map(article => {
-            const dateString = readableDate(new Date(article.date))
-            return {dateString, ...article}
-        })
+        articles = articles.map(article => postProcessArticle(article))
 
         return paginate(articles, { pageSize: 5})
     }

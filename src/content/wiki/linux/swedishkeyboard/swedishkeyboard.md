@@ -7,13 +7,9 @@
     category: linux
 ---
 
-{% usingCSSComponent "code" %}
-
 Swedish has three additional characters in its alphabet: Ää, Öö and Åå. The first two can be typed with any layouts supporting diaereses (`¨`) but the third one can't be typed on any layout except the Scandinavians and the US-International ones (also [the UK extended one but exclusively on ChromeOS, weird](https://en.wikipedia.org/wiki/QWERTY#Chrome_OS))
 
 However, despite needing those characters, I use the layout I'm most accustomed to due to growing up with it which is : The French Canadian keyboard (it's basically QWERTY with accents) so in this article, let's figure out together how to add Åå to my keyboard on Linux. Nu går vi!
-
-{% image src="./wiki/linux/swedishkeyboard/swedish_keyboard.png", alt="Swedish keyboard Layout", caption="The Swedish keyboard. Credit: [Wikipedia](https://commons.wikimedia.org/wiki/File:KB_Sweden.svg)" %}
 
 As you can see on the image above, the characters are normally on their own key. Let's start with a controversial take: We won't do this
 
@@ -54,7 +50,7 @@ Now here come the important line:
 
 `key <AC01> { [a, A, aring, Aring ] };`
 
-`key` here says that this line describe a single mapping for a keycode, in this case `AC01`. The first letter indicate the block in which the key is located, here it's A for the **alphanumeric key block**, the second {% footnoteref "key-row", "This is a bit unintuitive, but the TL:DR is that it goes from A to E, the space bar row being A and the number keys are on the row E. So, the letter A in this case is on the row C" %}the row in which the key is located{% endfootnoteref %} and the last two numbers are for the position of the key counting from the left and skipping over special keys such as Tab, Caps Lock etc
+`key` here says that this line describe a single mapping for a keycode, in this case `AC01`. The first letter indicate the block in which the key is located, here it's A for the **alphanumeric key block**, the second and the last two numbers are for the position of the key counting from the left and skipping over special keys such as Tab, Caps Lock etc
 
 `{ [a, A, aring, Aring ] }`
 
@@ -68,10 +64,6 @@ This part says which character to output when the key is pressed, you might be w
 `Mode_switch` is most of the time `AltGr` but it's a actually bit more complicated than that, I recommend reading the documentation about it as it is fairly outside of the scope of this page. `AltGr` being a not so reachable key, we will remap it to left `Alt` using the following import:
 
 `include "level3(lalt_switch)"`
-
-{% note 'Caution regarding lalt_switch' %}
-Unfortunately, this isn't macOS and apps expect the left alt to be used for shortcuts so setting this will break shortcuts in a lot of apps. What you can do is either use another level3 include to use another key, or omit it completely to use AltGr
-{% endnote %}
 
 And that's it for the layout file! This isn't needed on Sway with Wayland but if you were using let's say GNOME with Xorg, you would also need to add the keyboard layout to the following files: `/usr/share/X11/xkb/rules/evdev.xml` and `/usr/share/X11/xkb/rules/evdev.lst` otherwise it won't appear in the graphical tools for choosing your layouts
 

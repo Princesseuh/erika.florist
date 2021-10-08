@@ -1,9 +1,13 @@
 ---
-import { getWikiItemsByCategory, WikiItem } from '$data/wiki.ts'
+import { getWikiItemsByCategory, WikiItem, postProcessWikiItem } from '$data/wiki.ts'
 import { wikiCategories, WikiCategory } from '$data/wikiCategories.ts'
 
+let wikiItems = await Astro.fetchContent("../content/wiki/**/*.md")
+wikiItems = wikiItems.map((item) => postProcessWikiItem(item))
+
+
 function getItemElement(item: WikiItem): string {
-    return `<a class="block" href="${item.link}">${item.data.navigation.label || item.data.title}</a>`
+    return `<a class="block" href="/wiki/${item.navigation.category}/${item.slug}">${item.navigation.label || item.title}</a>`
 }
 ---
 
@@ -14,7 +18,7 @@ function getItemElement(item: WikiItem): string {
         `<li>
             <span class="block font-bold text-sugar-cane">${category.title}</span>
             ${
-                getWikiItemsByCategory(category.key).map((item: WikiItem) => {
+                getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItem) => {
                     return getItemElement(item)
                 }).join('')
             }

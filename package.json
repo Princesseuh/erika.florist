@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "lint": "eslint . --ext .ts,.js"
   },
   "devDependencies": {
     "astro": "^0.20.7",

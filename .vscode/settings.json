@@ -4,5 +4,5 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "prettier.documentSelectors": ["**/*.astro"]
+  "prettier.documentSelectors": ["**/*.astro"],
 }

@@ -10,4 +10,13 @@ module.exports = {
     "eslint:recommended",
     "plugin:prettier/recommended",
   ],
+  overrides: [
+    {
+      files: ["./src/scripts/*"],
+      env: {
+        node: false,
+        browser: true,
+      },
+    },
+  ],
 }

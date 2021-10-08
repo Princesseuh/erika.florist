@@ -4,11 +4,11 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 module.exports = {
   alias: {
-    $components: './src/components',
-    $data: './src/data',
-    $layouts: './src/layouts',
-    $theme: './src/theme',
-    $types: './src/types',
-    $utils: './src/utils'
-  }
-};
+    $components: "./src/components",
+    $data: "./src/data",
+    $layouts: "./src/layouts",
+    $theme: "./src/theme",
+    $types: "./src/types",
+    $utils: "./src/utils",
+  },
+}

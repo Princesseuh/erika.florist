@@ -1,14 +1,14 @@
 ---
-    import BaseLayout from '$layouts/BaseLayout.astro'
-    import ContentHeader from '$components/ContentHeader.astro'
-    import { Markdown } from 'astro/components';
+import BaseLayout from "$layouts/BaseLayout.astro"
+import ContentHeader from "$components/ContentHeader.astro"
+import { Markdown } from "astro/components"
 
-    const { article } = Astro.props
+const { article } = Astro.props
 ---
 
 <BaseLayout>
-    <article class="post mx-auto">
-        <ContentHeader item={article} includeTags={true}/>
-        <Markdown content={article.astro.source}/>
-    </article>
+  <article class="post mx-auto">
+    <ContentHeader item={article} includeTags={true} />
+    <Markdown content={article.astro.source} />
+  </article>
 </BaseLayout>

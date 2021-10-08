@@ -1,42 +1,42 @@
 ---
-  import Header from '$components/Header.astro'
-  import Socials from '$components/Socials.astro'
+import Header from "$components/Header.astro"
+import Socials from "$components/Socials.astro"
 
-  const { title } = Astro.props;
+const { title } = Astro.props
 ---
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <link rel="stylesheet" href={Astro.resolve("../theme/css/tailwind.css")}>
+    <link rel="stylesheet" href={Astro.resolve("../theme/css/tailwind.css")} />
 
-    <title>{ title ? `${title} - Princesseuh` : 'Princesseuh'}</title>
-</head>
-<body>
-  <div id="app" class="bg-baltic-sea">
-    <Header/>
+    <title>{title ? `${title} - Princesseuh` : "Princesseuh"}</title>
+  </head>
+  <body>
+    <div id="app" class="bg-baltic-sea">
+      <Header />
 
-    <main>
+      <main>
         <slot />
-    </main>
+      </main>
 
-    <footer class="px-6 sm:px-0 py-6 flex justify-center leading-tight bg-darker-skylines">
-      <section class="flex justify-between w-footer">
-        <Socials/>
+      <footer class="px-6 sm:px-0 py-6 flex justify-center leading-tight bg-darker-skylines">
+        <section class="flex justify-between w-footer">
+          <Socials />
 
-        <div>
-          Made with <a href="https://www.11ty.dev/">Eleventy</a><br/>
-          <a href="https://github.com/Princesseuh/princesseuh.dev">Source Code</a><br/>
-          <a href="/">Settings</a>
-        </div>
-      </section>
-    </footer>
-  </div>
-</body>
+          <div>
+            Made with <a href="https://www.11ty.dev/">Eleventy</a><br />
+            <a href="https://github.com/Princesseuh/princesseuh.dev">Source Code</a><br />
+            <a href="/">Settings</a>
+          </div>
+        </section>
+      </footer>
+    </div>
+  </body>
 </html>

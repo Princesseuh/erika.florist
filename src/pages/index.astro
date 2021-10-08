@@ -1,44 +1,49 @@
 ---
-  import BaseLayout from '$layouts/BaseLayout.astro'
-  import ArticlePreview from '$components/ArticlePreview.astro'
-  import { postProcessArticle } from '$data/articles'
+import BaseLayout from "$layouts/BaseLayout.astro"
+import ArticlePreview from "$components/ArticlePreview.astro"
+import { postProcessArticle } from "$data/articles"
 
-  let articles = await Astro.fetchContent("../content/articles/**/*.md");
-  articles = articles.map(article => postProcessArticle(article)).slice(0, 3) // We only show 3 articles on the main page
+let articles = await Astro.fetchContent("../content/articles/**/*.md")
+articles = articles.map((article) => postProcessArticle(article)).slice(0, 3) // We only show 3 articles on the main page
 ---
 
 <BaseLayout>
-<article class="w-index mx-auto mt-4 sm:mt-6 px-6 sm:px-0">
-  <h2 class="mb-4 mt-0 text-4xl">Hello! 💐</h2>
+  <article class="w-index mx-auto mt-4 sm:mt-6 px-6 sm:px-0">
+    <h2 class="mb-4 mt-0 text-4xl">Hello! 💐</h2>
 
-  <p>My real name is <span class="font-bold text-beach-watermelon">Erika</span> but maybe you know me under the nickname <span class="font-semibold text-pinky-unicorny">Princesseuh</span> 👸, that's okay!</p>
+    <p>
+      My real name is <span class="font-bold text-beach-watermelon">Erika</span> but maybe you know me
+      under the nickname <span class="font-semibold text-pinky-unicorny">Princesseuh</span> 👸, that's
+      okay!
+    </p>
 
-  <p>I'm a web/game developer from Canada 🇨🇦, pleased to meet you! Truth be told, I'm not as interested in programming as I once used to be, however, I'm definitely still a nerd at heart and having your own website is still a really cool thing, so hey, welcome to my website! Feel free to browse around!</p>
+    <p>
+      I'm a web/game developer from Canada 🇨🇦, pleased to meet you! Truth be told, I'm not as
+      interested in programming as I once used to be, however, I'm definitely still a nerd at heart
+      and having your own website is still a really cool thing, so hey, welcome to my website! Feel
+      free to browse around!
+    </p>
 
-  Interested in seeing stuff I worked on? Click <a href="">here for my projects</a>! Wanna read stuff I wrote? Well, lucky you, <a href="">here's my blog</a>! You want to read random stuff I wrote mostly for myself? Well, <a href="">my wiki is right here</a>!&nbsp;🎉
+    Interested in seeing stuff I worked on? Click <a href="">here for my projects</a>! Wanna read
+    stuff I wrote? Well, lucky you, <a href="">here's my blog</a>! You want to read random stuff I
+    wrote mostly for myself? Well, <a href="">my wiki is right here</a>!&nbsp;🎉
 
-  <h3 class="text-2xl mb-5">Featured works</h3>
-  <div class="flex flex-wrap mx-10 mt-2 mb-6 gap-5 sm:gap-4 justify-center items-center">
-  </div>
+    <h3 class="text-2xl mb-5">Featured works</h3>
+    <div class="flex flex-wrap mx-10 mt-2 mb-6 gap-5 sm:gap-4 justify-center items-center"></div>
 
-  <div class="flex justify-around gap-4 flex-col sm:flex-row">
-    <div class="sm:w-[63%]">
-      <h3 class="text-2xl mb-4 mt-2 sm:mt-4">Latest blog posts</h3>
-        {articles.map((item) => (
-          <ArticlePreview article={item}/>
-        ))}
+    <div class="flex justify-around gap-4 flex-col sm:flex-row">
+      <div class="sm:w-[63%]">
+        <h3 class="text-2xl mb-4 mt-2 sm:mt-4">Latest blog posts</h3>
+        {articles.map((item) => <ArticlePreview article={item} />)}
+      </div>
+
+      <div class="sm:w-[37%]">
+        <h3 class="text-2xl mb-4 mt-2 sm:mt-4">Latest wiki modifications</h3>
+        <section class="mb-3">
+          <a class="block font-bold leading-tight" href=""> </a>
+          <span class="text-sm first-letter:uppercase block" data-date=""> </span>
+        </section>
+      </div>
     </div>
-
-    <div class="sm:w-[37%]">
-      <h3 class="text-2xl mb-4 mt-2 sm:mt-4">Latest wiki modifications</h3>
-      <section class="mb-3">
-        <a class="block font-bold leading-tight" href="">
-        </a>
-        <span class="text-sm first-letter:uppercase block" data-date="">
-        </span>
-      </section>
-    </div>
-  </div>
-</article>
-
+  </article>
 </BaseLayout>

@@ -1,24 +1,25 @@
 ---
-    import BaseLayout from '$layouts/BaseLayout.astro'
-    import WikiNavigation from '$components/WikiNavigation.astro'
-    import ContentHeader from '$components/ContentHeader.astro'
-    import { Markdown } from 'astro/components';
+import BaseLayout from "$layouts/BaseLayout.astro"
+import WikiNavigation from "$components/WikiNavigation.astro"
+import ContentHeader from "$components/ContentHeader.astro"
+import { Markdown } from "astro/components"
 
-    const { wikiItem } = Astro.props
+const { wikiItem } = Astro.props
 ---
+
 <BaseLayout>
-    <section class="gap-[3%] grid grid-cols-wiki mx-auto my-0 w-wiki">
-        <aside class="mb-4 duration-100 ease-linear mt-10 transition-opacity">
-            <WikiNavigation/>
-        </aside>
+  <section class="gap-[3%] grid grid-cols-wiki mx-auto my-0 w-wiki">
+    <aside class="mb-4 duration-100 ease-linear mt-10 transition-opacity">
+      <WikiNavigation />
+    </aside>
 
-        <article class="post">
-            <ContentHeader item={wikiItem} includeTags={false}/>
-            <Markdown content={wikiItem.astro.source}/>
-        </article>
+    <article class="post">
+      <ContentHeader item={wikiItem} includeTags={false} />
+      <Markdown content={wikiItem.astro.source} />
+    </article>
 
-        <aside class="mt-10 mb-4 transition-opacity duration-100 ease-linear">
-            <span class="font-semibold mb-2">On this page</span>
-        </aside>
-    </section>
+    <aside class="mt-10 mb-4 transition-opacity duration-100 ease-linear">
+      <span class="font-semibold mb-2">On this page</span>
+    </aside>
+  </section>
 </BaseLayout>

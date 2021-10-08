@@ -1,22 +1,28 @@
 ---
-    import twitterSVG from '$theme/assets/twitter.svg'
-    import githubSVG from '$theme/assets/github.svg'
-    import mailSVG from '$theme/assets/mail.svg'
-    import Icon from '$components/Icon.astro'
+import twitterSVG from "$theme/assets/twitter.svg"
+import githubSVG from "$theme/assets/github.svg"
+import mailSVG from "$theme/assets/mail.svg"
+import Icon from "$components/Icon.astro"
 
-    const { classes } = Astro.props
+const { classes } = Astro.props
 ---
 
-<div class="{ 'flex items-center' + (classes ? (' ' + classes) : '') }">
-  <a href="https://twitter.com/_princesseuh" title="Link to my Twitter profile" class="social-icon social-twitter">
-    <Icon src={ twitterSVG }/>
+<div class={"flex items-center" + (classes ? " " + classes : "")}>
+  <a
+    href="https://twitter.com/_princesseuh"
+    title="Link to my Twitter profile"
+    class="social-icon social-twitter">
+    <Icon src={twitterSVG} />
   </a>
 
-  <a href="https://github.com/Princesseuh" title="Link to my GitHub profile" class="social-icon social-other">
-    <Icon src={ githubSVG }/>
+  <a
+    href="https://github.com/Princesseuh"
+    title="Link to my GitHub profile"
+    class="social-icon social-other">
+    <Icon src={githubSVG} />
   </a>
 
   <a href="mailto:princssdev@gmail.com" title="Link to email me" class="social-icon social-other">
-    <Icon src={ mailSVG }/>
+    <Icon src={mailSVG} />
   </a>
 </div>

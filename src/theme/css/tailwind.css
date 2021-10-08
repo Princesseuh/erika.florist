@@ -3,22 +3,18 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Cantarell';
+  font-family: "Cantarell";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src:
-    local('Cantarell'),
-    url('../fonts/cantarell-regular-webfont.woff2') format('woff2'),
-    url('../fonts/cantarell-regular-webfont.woff') format('woff')
+  src: local("Cantarell"), url("../fonts/cantarell-regular-webfont.woff2") format("woff2"),
+    url("../fonts/cantarell-regular-webfont.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'Cantarell';
+  font-family: "Cantarell";
   font-weight: 700;
   font-display: swap;
-  src:
-    local('Cantarell'),
-    url('../fonts/cantarell-bold-webfont.woff2') format('woff2'),
-    url('../fonts/cantarell-bold-webfont.woff') format('woff')
+  src: local("Cantarell"), url("../fonts/cantarell-bold-webfont.woff2") format("woff2"),
+    url("../fonts/cantarell-bold-webfont.woff") format("woff");
 }

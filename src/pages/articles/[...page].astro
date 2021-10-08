@@ -1,37 +1,33 @@
 ---
-    import BaseLayout from '$layouts/BaseLayout.astro'
-    import ArticlePreview from '$components/ArticlePreview.astro'
-    import { postProcessArticle } from '$data/articles'
+import BaseLayout from "$layouts/BaseLayout.astro"
+import ArticlePreview from "$components/ArticlePreview.astro"
+import { postProcessArticle } from "$data/articles"
 
-    export async function getStaticPaths({ paginate }) {
-        let articles = await Astro.fetchContent("../../content/articles/**/*.md");
-        articles = articles.map(article => postProcessArticle(article))
+export async function getStaticPaths({ paginate }) {
+  let articles = await Astro.fetchContent("../../content/articles/**/*.md")
+  articles = articles.map((article) => postProcessArticle(article))
 
-        return paginate(articles, { pageSize: 5})
-    }
+  return paginate(articles, { pageSize: 5 })
+}
 
-    const { page } = Astro.props;
+const { page } = Astro.props
 ---
 
 <BaseLayout title="Articles">
-    <article class="w-articleList mx-auto flex">
-      <div class="w-[80%]">
-        <h2>Articles</h2>
-        {page.data.map((item) => (
-          <ArticlePreview article={item}/>
-        ))}
-      </div>
+  <article class="w-articleList mx-auto flex">
+    <div class="w-[80%]">
+      <h2>Articles</h2>
+      {page.data.map((item) => <ArticlePreview article={item} />)}
+    </div>
 
     <aside class="w-[20%]">
-    <section>
-      <h2>Tags</h2>
-      <ul>
-      </ul>
-    </section>
-    <section>
-    <h2>Year</h2>
-
-    </section>
-  </aside>
+      <section>
+        <h2>Tags</h2>
+        <ul></ul>
+      </section>
+      <section>
+        <h2>Year</h2>
+      </section>
+    </aside>
   </article>
 </BaseLayout>

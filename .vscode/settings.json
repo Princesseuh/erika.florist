@@ -1,7 +1,8 @@
 {
-    "cSpell.words": [
-        "Astro",
-        "fdir",
-        "Rehype"
-    ]
+  "cSpell.words": ["Astro", "fdir", "Rehype"],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "prettier.documentSelectors": ["**/*.astro"]
 }

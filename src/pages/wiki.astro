@@ -1,7 +1,7 @@
 ---
-    import WikiLayout from '$layouts/WikiLayout.astro'
+import WikiLayout from "$layouts/WikiLayout.astro"
 
-    const wikiIndex = await Astro.fetchContent('../content/wiki/index.md')[0]
+const wikiIndex = await Astro.fetchContent("../content/wiki/index.md")[0]
 ---
 
-<WikiLayout wikiItem={wikiIndex}/>
+<WikiLayout wikiItem={wikiIndex} />

@@ -1,27 +1,26 @@
 ---
-import { getWikiItemsByCategory, WikiItem, postProcessWikiItem } from '$data/wiki.ts'
-import { wikiCategories, WikiCategory } from '$data/wikiCategories.ts'
+import { getWikiItemsByCategory, WikiItem, postProcessWikiItem } from "$data/wiki.ts"
+import { wikiCategories, WikiCategory } from "$data/wikiCategories.ts"
 
 let wikiItems = await Astro.fetchContent("../content/wiki/**/*.md")
 wikiItems = wikiItems.map((item) => postProcessWikiItem(item))
 
-
 function getItemElement(item: WikiItem): string {
-    return `<a class="block" href="/wiki/${item.navigation.category}/${item.slug}">${item.navigation.label || item.title}</a>`
+  return `<a class="block" href="/wiki/${item.navigation.category}/${item.slug}">${
+    item.navigation.label || item.title
+  }</a>`
 }
 ---
 
 <ul class="m-0 list-none p-0 wiki-navigation">
-    {wikiCategories.map((category: WikiCategory) => (
-        // This is a bit messy, I think there's a way to do this without using a template literal but I couldn't find it
-        // PERF: This isn't cached. Though it's not that expensive I think
-        `<li>
+  {wikiCategories.map((category: WikiCategory) => // This is a bit messy, I think there's a way to do this without using a template literal but I couldn't find it
+      // PERF: This isn't cached. Though it's not that expensive I think
+      `<li>
             <span class="block font-bold text-sugar-cane">${category.title}</span>
-            ${
-                getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItem) => {
-                    return getItemElement(item)
-                }).join('')
-            }
-        </li>`
-    ))}
+            ${getWikiItemsByCategory(wikiItems, category.key)
+              .map((item: WikiItem) => {
+                return getItemElement(item)
+              })
+              .join("")}
+        </li>`)}
 </ul>

@@ -118,7 +118,7 @@ module.exports = {
             margin: "0",
             padding: "0",
           },
-          "& li > ol": {
+          "& .toc-depth-3": {
             paddingLeft: "0.75rem",
             borderLeft: "1px solid rgba(146,149,152,.15)",
           },

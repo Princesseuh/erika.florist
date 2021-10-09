@@ -2,6 +2,7 @@
 import BaseLayout from "$layouts/BaseLayout.astro"
 import WikiNavigation from "$components/WikiNavigation.astro"
 import ContentHeader from "$components/ContentHeader.astro"
+import WikiTOC from "$components/WikiTOC.astro"
 import { Markdown } from "astro/components"
 
 const { wikiItem } = Astro.props
@@ -19,7 +20,7 @@ const { wikiItem } = Astro.props
     </article>
 
     <aside class="mt-10 mb-4 transition-opacity duration-100 ease-linear">
-      <span class="font-semibold mb-2">On this page</span>
+      {wikiItem.astro.headers.length > 0 && <WikiTOC headers={wikiItem.astro.headers} maxDepth={wikiItem.maxDepthTOC || 4} />}
     </aside>
   </section>
 </BaseLayout>

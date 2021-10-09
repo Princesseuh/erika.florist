@@ -1,7 +1,6 @@
 ---
   title: "My VS Code setup"
   tagline: "Because feeling at home is important"
-  date: 2021-04-05
   navigation:
     label: 'VS Code setup'
     category: computers
@@ -45,7 +44,7 @@ Those are intentionally not complete, some of the settings I have in my full con
     "activityBar.foreground": "#b8aba5",
     "sideBar.foreground": "#a39793"
   },
-  
+
   // Usability
   "files.autoSave": "afterDelay",
   "files.trimTrailingWhitespace": true,

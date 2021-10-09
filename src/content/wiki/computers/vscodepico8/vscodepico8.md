@@ -1,7 +1,6 @@
 ---
   title: "Using VS Code with PICO-8"
   tagline: "Because indentation is always worth it"
-  date: 2021-02-11
   navigation:
     label: "PICO-8 + VS Code"
     category: computers

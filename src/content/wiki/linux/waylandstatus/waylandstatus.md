@@ -1,6 +1,7 @@
 ---
   title: "Experience with Wayland on my setup"
   tagline: "Almost there Wayland, almost there"
+  loadCSSModules: ["code"]
   navigation:
     label: Wayland status
     category: linux
@@ -16,7 +17,7 @@ I started using Wayland because I got tired of dealing with vsync issues, Picom 
 
 If you've been using Linux for a long time now, you're probably aware that Linux's biggest problem is very often somehow related to NVIDIA
 
-For Wayland's case what this mean that if you're using a conventional stacking window manager, you're in luck because [GNOME (Mutter)](https://en.wikipedia.org/wiki/Mutter_(software)) and [KDE (KWin)](https://en.wikipedia.org/wiki/KWin) both supports NVIDIA GPUs, but any other options (be it stacking or tilling) doesn't. So yeah, [Sway doesn't officially support NVIDIA GPUs](https://github.com/swaywm/sway/wiki#nvidia-users)
+For Wayland's case what this mean that if you're using a conventional stacking window manager, you're in luck because [GNOME (Mutter)](<https://en.wikipedia.org/wiki/Mutter_(software)>) and [KDE (KWin)](https://en.wikipedia.org/wiki/KWin) both supports NVIDIA GPUs, but any other options (be it stacking or tilling) doesn't. So yeah, [Sway doesn't officially support NVIDIA GPUs](https://github.com/swaywm/sway/wiki#nvidia-users)
 
 I, unfortunately for my Linux adventure, have a NVIDIA GPU, but thankfully, Sway runs fine using [Nouveau](https://nouveau.freedesktop.org/), the unofficial open source driver for NVIDIA GPU. Nouveau isn't always perfect, it doesn't always have the best performance for gaming but, it's better than nothing
 

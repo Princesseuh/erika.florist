@@ -1,6 +1,7 @@
 ---
   title: "Using VS Code with PICO-8"
   tagline: "Because indentation is always worth it"
+  loadCSSModules: ["code"]
   navigation:
     label: "PICO-8 + VS Code"
     category: computers

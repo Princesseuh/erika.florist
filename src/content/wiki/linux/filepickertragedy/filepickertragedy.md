@@ -1,6 +1,7 @@
 ---
   title: "The great Linux file pickers tragedy"
   tagline: "Spoiler: the moral behind this article is 'well yeah but no'"
+  loadCSSModules: ["code"]
   navigation:
     label: File pickers dilemma
     category: linux
@@ -48,13 +49,13 @@ Luckily, this is Linux so we can change stuff we dislike with stuff we don't dis
 
 Frankly, it's much much better than the GNOME one these days, first it has thumbnails (which already means it's much better) and as is often the case with KDE stuff, it doesn't suffer from as much UX issues as GNOME's projects tend to
 
-However, it cannot open URLs and doesn't have a search feature but outside of those, it has all you would expect from a file picker
+However it's still has flaws, it cannot open URLs and doesn't really have a search feature outside of those, it has all you would expect from a file picker
 
 {% image src="./wiki/linux/filepickertragedy/kdepicker.png", alt="The KDE default filepicker", caption="Thumbnails only appear when you are a bit more zoomed but I swear, they definitely exists" %}
 
 So it has thumbnails and bookmarks, the "url" bar works like the one on Windows where it works both as navigation and a typing area and it even has syntax coloring in his text preview! It's definitely much better than the GNOME one so, what's the catch?
 
-Well, it's KDE. Unless you're already using KDE softwares, you'll have to install a lot of dependencies for it (kdialog doesn't suffice on a non-KDE setup, see below). KDE also has the tendency to absolutely rampage through your `.config` folder, creating many config files for softwares you didn't even know the existence of. It's unfortunately really hard to cleanly get specific parts of KDE due to its design
+Well, it's KDE. Unless you're already using KDE softwares, you'll have to install a lot of dependencies for it (kdialog doesn't suffice on a non-KDE setup, see the Arch install guide below). KDE also has the tendency to absolutely rampage through your `.config` folder, creating many config files for softwares you didn't even know the existence of. It's unfortunately really hard to cleanly get specific parts of KDE due to its design
 
 {% image src="./wiki/linux/filepickertragedy/kdeexperience.png", alt="Trojan horse meme where the horse is the KDE file picker and the soldiers inside are 'thousands of dependencies'", caption="Stop baiting me with the pretty UI KDE! I know what you're up to!" %}
 
@@ -64,7 +65,7 @@ But outside of that, it works, it's really good. Probably among the best choices
 
 ### Arch Linux guide
 
-See [Installing the KDE file picker on Arch Linux](/wiki/linux/filepickertragedy/kdearchlinux) for a guide on how to install the KDE file picker on Arch
+See [Installing the KDE file picker on Arch Linux](/wiki/linux/kdearchlinux) for a guide on how to install the KDE file picker on Arch
 
 ## The Deepin file Picker
 
@@ -76,7 +77,7 @@ It's possible to integrate it in Chromium using the following value for `XDG_CUR
 
 I haven't been able to integrate it with Firefox and other apps depending on `xdg-desktop-portal`, it launches.. a weird old KDE version of the picker with a broken theme. I'm sure there's a way to make it work because the official Deepin distro does make it work but perhaps they're using a custom Firefox or something else? Weird
 
-In general, Deepin (the DE, not the picker) unfortunately tends to be.. not so stable, has performance issues and it crashes often. While trying it out, I had to reboot a few times because my system got irresponsive. It's a shame because, functionality wise Deepin stuff tend to work well. Special mention to the file manager which I really find enjoyable (though I never got that working on Wayland either)
+In general, Deepin unfortunately tends to be not so stable, have performance issues and it crashes often. While trying it out, I had to reboot a few times because my system got irresponsive. It's a shame because, functionality wise Deepin stuff tend to work well. Special mention to the file manager which I really find enjoyable (though I never got that working on Wayland either)
 
 ## The Pantheon file picker
 
@@ -105,15 +106,14 @@ Either way, pick your poison. I'll be the KDE fangirl in this war
 
 ### The truth about all this
 
-The reality is that sure, the KDE or Deepin pickers might be better than the GTK one but they are still really not as good as the Windows one is. And I'm not talking necessarily about the Windows 10 one, even older ones are still better than what we can have
-on Linux today
+The reality is that sure, the KDE or Deepin pickers might be better than the GTK one but they are still really not as good as the Windows one is. And I'm not talking necessarily about the latest, shiniest Windows 11 one, even older ones are still better than what we can have on Linux today
 
-It does have shortcomings though, this is computers after all, but overall it has a really good UX and it has all the features you need, thumbnails, bookmarks, search, network support, urls etc. The file picker on Windows 10 is basically just a `explorer.exe` window which means that it's also consistant with what people are used to, something that Linux isn't always that good at
+It does have shortcomings, this is computers after all, but overall it has a really good UX and all the features you need, thumbnails, bookmarks, search, network support, urls etc. The file picker on Windows is basically just a `explorer.exe` window which means that it's also consistant with what people are used to, something that Linux isn't always that good at
 
 {% note "Fun fact" %}
 You'll be impressed to know that even though I had to install multiple complete DE for this article, the only thing that broke on my system was my monospace font in my browser
 
-The reason being that Deepin put a config file in `.config/fontconfig/` and it wasn't removed when I removed the package. Twas an easy fix. Apart from that, I was able to get back to the same exact state I was in before starting, no orphans left behind or config files. Computing is cool sometimes
+The reason being that Deepin put a config file in `.config/fontconfig/` and it wasn't removed when I removed the package. Twas an easy fix. Apart from that, I was able to get back to the same exact state I was in before starting, no orphans left behind or config files. Computing is cool, sometimes
 {% endnote %}
 
 ## TODOs

@@ -3,10 +3,17 @@ import BaseLayout from "$layouts/BaseLayout.astro"
 import WikiNavigation from "$components/WikiNavigation.astro"
 import ContentHeader from "$components/ContentHeader.astro"
 import WikiTOC from "$components/WikiTOC.astro"
+
 import { Markdown } from "astro/components"
+import { CSSComponent } from "astro-css-components"
 
 const { wikiItem } = Astro.props
 ---
+
+<CSSComponent
+  register={{ name: "code", contentFile: "src/theme/css/modules/code.css" }}
+  conditional={wikiItem.loadCSSModules.includes("code")}
+  minify={true} />
 
 <BaseLayout>
   <section class="gap-[3%] grid grid-cols-wiki mx-auto my-0 w-wiki">

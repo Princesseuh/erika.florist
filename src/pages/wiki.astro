@@ -1,7 +1,9 @@
 ---
 import WikiLayout from "$layouts/WikiLayout.astro"
+import { postProcessBase } from "$data/shared"
 
-const wikiIndex = await Astro.fetchContent("../content/wiki/index.md")[0]
+let wikiIndex = await Astro.fetchContent("../content/wiki/index.md")[0]
+wikiIndex = postProcessBase(wikiIndex)
 ---
 
 <WikiLayout wikiItem={wikiIndex} />

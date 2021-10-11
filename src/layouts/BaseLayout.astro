@@ -1,6 +1,7 @@
 ---
 import Header from "$components/Header.astro"
 import Socials from "$components/Socials.astro"
+import { CSSComponent } from "astro-css-components"
 
 const { title } = Astro.props
 ---
@@ -17,6 +18,8 @@ const { title } = Astro.props
     <link rel="stylesheet" href={Astro.resolve("../theme/css/tailwind.css")} />
 
     <title>{title ? `${title} - Princesseuh` : "Princesseuh"}</title>
+
+    <CSSComponent getForURL />
   </head>
   <body>
     <div id="app" class="bg-baltic-sea">

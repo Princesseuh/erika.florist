@@ -16,10 +16,10 @@ pre {
 
 .post code {
   padding: 0.08em 0.3em;
+}
 
-  &::before {
-    content: none;
-  }
+.post code::before {
+  content: none;
 }
 
 .post pre > code {

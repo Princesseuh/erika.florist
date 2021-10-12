@@ -1,14 +1,17 @@
 ---
-import { getAllCatalogueItems } from "$data/catalogue.ts"
+import { postProcessCatalogueItem, CatalogueItem } from "$data/catalogue"
+
+let catalogueItems = await Astro.fetchContent("../content/catalogue/**/*.md")
+catalogueItems = catalogueItems.map((item) => postProcessCatalogueItem(item as CatalogueItem))
 
 const json = JSON.stringify(
-  getAllCatalogueItems().map((item) => {
+  catalogueItems.map((item: CatalogueItem) => {
     return {
-      title: item.data.title,
+      title: item.title,
       cover: item.cover,
-      cover_alt: item.data.cover_alt,
-      creator: item.data.author || item.data.developer,
-      link: item.link,
+      cover_alt: item.cover_alt,
+      creator: item.author || item.developer,
+      url: item.url,
       type: item.type,
     }
   }),

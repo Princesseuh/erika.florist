@@ -1,11 +1,11 @@
 import type { CatalogueType } from "../data/catalogue"
 
 interface CatalogueJSONItem {
+  url: URL
   title: string
   cover: URL
   cover_alt: string
   type: CatalogueType
-  link: URL
   creator: string
 }
 
@@ -20,7 +20,7 @@ function buildLibrary(subset: CatalogueJSONItem[] = fullElements) {
     const itemContainer = document.createElement("div")
     itemContainer.className = "w-[200px]"
     itemContainer.innerHTML = `
-            <a href="${item.link}" class="hover:no-underline">
+            <a href="${item.url}" class="hover:no-underline">
                 <img src="${item.cover}" alt="${item.cover_alt}" class="max-w-[200px] max-h-[300px]" width="300" height="300" loading="lazy" decoding="async"/>
                 <span class="block">${item.title}</span>
                 <span class="test-sm text-creative-work">${item.creator}</span>

@@ -12,7 +12,7 @@ function getItemElement(item: WikiItem): string {
 }
 ---
 
-<ul class="m-0 list-none p-0 wiki-navigation">
+<ul class="m-0 list-none p-0 wiki-navigation hidden sm:block">
   {wikiCategories.map((category: WikiCategory) =>  // This is a bit messy, I think there's a way to do this without using a template literal but I couldn't find it
       `<li>
             <span class="block font-bold text-sugar-cane">${category.title}</span>

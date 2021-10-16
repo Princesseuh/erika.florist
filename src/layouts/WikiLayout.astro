@@ -15,9 +15,9 @@ const { wikiItem } = Astro.props
   conditional={wikiItem.loadCSSModules.includes("code")}
   minify={true} />
 
-<BaseLayout>
-  <section class="gap-[3%] grid grid-cols-wiki mx-auto my-0 w-wiki">
-    <aside class="mb-4 duration-100 ease-linear mt-10 transition-opacity">
+<BaseLayout title={wikiItem.title} description={wikiItem.tagline}>
+  <section class="gap-[3%] grid sm:grid-cols-wiki mx-auto my-0 w-wiki">
+    <aside class="mb-4 duration-100 ease-linear mt-10 transition-opacity hidden sm:block">
       <WikiNavigation />
     </aside>
 
@@ -26,7 +26,7 @@ const { wikiItem } = Astro.props
       <Markdown content={wikiItem.astro.source} />
     </article>
 
-    <aside class="mt-10 mb-4 transition-opacity duration-100 ease-linear">
+    <aside class="mt-10 mb-4 transition-opacity duration-100 ease-linear hidden sm:block">
       {wikiItem.astro.headers.length > 0 && <WikiTOC headers={wikiItem.astro.headers} maxDepth={wikiItem.maxDepthTOC || 4} />}
     </aside>
   </section>

@@ -10,7 +10,7 @@ import Socials from "$components/Socials.astro"
         <a class="header-link" href="/">Erika 🌺</a>
       </h1>
 
-      <nav class="inline-block ml-2">
+      <nav class="hidden ml-2 sm:inline-block">
         {menu.map((item) => <a class="header-link" href="{ '/' + item.toLowerCase() }">
             {item}
           </a>)}

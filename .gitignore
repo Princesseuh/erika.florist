@@ -16,3 +16,9 @@ yarn-error.log*
 
 # macOS-specific files
 .DS_Store
+workspace.code-workspace
+
+# Social images (we'll cache those on Netlify)
+public/socials/*
+
+src/pages/test.astro

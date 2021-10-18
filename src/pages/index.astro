@@ -2,9 +2,27 @@
 import BaseLayout from "$layouts/BaseLayout.astro"
 import ArticlePreview from "$components/ArticlePreview.astro"
 import { postProcessArticle } from "$data/articles"
+import { postProcessWikiItem } from "$data/wiki"
+import { readableDate } from "$utils"
 
-let articles = await Astro.fetchContent("../content/articles/**/*.md")
-articles = articles.map((article) => postProcessArticle(article)).slice(0, 3) // We only show 3 articles on the main page
+// TODO: Astro currently only support one fetchContent per component/page (see issue: https://github.com/snowpackjs/astro/issues/1496)
+// So what we'll do it fetch all of our content and filter per content type ourselves using the path
+const content = await Astro.fetchContent("../content/**/*.md")
+let articles = content.filter((item) => item.file.pathname.includes("/content/articles/"))
+articles = articles
+  .map((article) => postProcessArticle(article))
+  .sort((a, b) => {
+    return b.date.getTime() - a.date.getTime()
+  })
+  .slice(0, 3)
+
+let wikiItems = content.filter((item) => item.file.pathname.includes("/content/wiki/"))
+wikiItems = wikiItems
+  .map((wikiItems) => postProcessWikiItem(wikiItems))
+  .sort((a, b) => {
+    return b.lastModified.getTime() - a.lastModified.getTime()
+  })
+  .slice(0, 5)
 ---
 
 <BaseLayout>
@@ -24,9 +42,10 @@ articles = articles.map((article) => postProcessArticle(article)).slice(0, 3) //
       free to browse around!
     </p>
 
-    Interested in seeing stuff I worked on? Click <a href="">here for my projects</a>! Wanna read
-    stuff I wrote? Well, lucky you, <a href="">here's my blog</a>! You want to read random stuff I
-    wrote mostly for myself? Well, <a href="">my wiki is right here</a>!&nbsp;🎉
+    Interested in seeing stuff I worked on? Click <a href="/projects">here for my projects</a>!
+    Wanna read stuff I wrote? Well, lucky you, <a href="/articles">here's my blog</a>! You want to
+    read random stuff I wrote mostly for myself? Well, <a href="/wiki">my wiki is right here</a
+    >!&nbsp;🎉
 
     <h3 class="text-2xl mb-5">Featured works</h3>
     <div class="flex flex-wrap mx-10 mt-2 mb-6 gap-5 sm:gap-4 justify-center items-center"></div>
@@ -34,15 +53,19 @@ articles = articles.map((article) => postProcessArticle(article)).slice(0, 3) //
     <div class="flex justify-around gap-4 flex-col sm:flex-row">
       <div class="sm:w-[63%]">
         <h3 class="text-2xl mb-4 mt-2 sm:mt-4">Latest blog posts</h3>
-        {articles.map((item) => <ArticlePreview article={item} />)}
+        {articles.map((article) => <ArticlePreview article={article} />)}
       </div>
 
       <div class="sm:w-[37%]">
         <h3 class="text-2xl mb-4 mt-2 sm:mt-4">Latest wiki modifications</h3>
-        <section class="mb-3">
-          <a class="block font-bold leading-tight" href=""> </a>
-          <span class="text-sm first-letter:uppercase block" data-date=""> </span>
-        </section>
+        {wikiItems.map((item) => <section class="mb-3">
+            <a class="block font-bold leading-tight" href={item.url}>
+              {item.title}
+            </a>
+            <span class="text-sm first-letter:uppercase block" data-date="{ item.lastModified }">
+              {readableDate(item.lastModified)}
+            </span>
+          </section>)}
       </div>
     </div>
   </article>

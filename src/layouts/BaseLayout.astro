@@ -30,6 +30,8 @@ const { title, description } = Astro.props
       ]} />
 
     <CSSComponent getForURL />
+
+    <script defer src={Astro.resolve("../scripts/main.js")}></script>
   </head>
   <body>
     <div id="app" class="bg-baltic-sea">

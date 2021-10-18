@@ -1,12 +1,10 @@
 import type { BaseObject } from "./shared"
 import { postProcessBase } from "./shared"
-import { readableDate } from "../utils"
 
 interface Article extends BaseObject {
   title: string
   tagline?: string
   date: Date
-  dateString?: string
   tags: string[]
 }
 
@@ -16,7 +14,13 @@ interface Article extends BaseObject {
 
 function postProcessArticle(article: Article): Article {
   article = postProcessBase(article) as Article
-  article.dateString = readableDate(new Date(article.date)) // NOTE: For some reason, our date become a string, weird
+
+  article.url = new URL(`/article/${article.slug}`, "http://localhost:3000")
+
+  // NOTE: For some reason, Astro transform our dates into string so let's check for that and return a proper date
+  if (typeof article.date === "string") {
+    article.date = new Date(article.date)
+  }
 
   return article
 }

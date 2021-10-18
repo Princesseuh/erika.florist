@@ -1,5 +1,6 @@
 ---
-import Article from "$data/articles"
+import { Article } from "$data/articles"
+import { readableDate } from "../utils"
 
 export interface Props {
   article: Article
@@ -9,12 +10,12 @@ const { article } = Astro.props
 ---
 
 <section class="mb-3">
-  <a href={`/article/${article.slug}`}>
+  <a href={article.url}>
     <h4 class="inline-block m-0 text-xl">{article.title}</h4>
   </a>
 
   <div class="mb-2 text-creative-work text-sm">
-    {article.dateString}
+    {readableDate(article.date)}
     ·
     {article.tags
       .map((tag) => <a href="{ '/articles/tags/' + tag}">{tag}</a>)

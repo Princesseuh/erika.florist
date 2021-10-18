@@ -8,7 +8,7 @@
       "$layouts/*": ["./src/layouts/*"],
       "$theme/*": ["./src/theme/*"],
       "$types/*": ["./src/types/*"],
-      "$utils/*": ["./src/utils/*"]
+      "$utils": ["./src/utils/index.ts"]
     }
   },
   "exclude": ["node_modules", "**/node_modules/*"]

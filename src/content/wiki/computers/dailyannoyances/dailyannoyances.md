@@ -7,7 +7,7 @@
     category: computers
 ---
 
-I like my setup, I've put a lot of time into it, making sure everything is just like how I want. Sure, not everything about is is perfect, there's a few things that I notice once in a while but that doesn't bother me too much
+I like my setup. After all, I've put a lot of time into it, making sure everything is just like how I want. Sure, not everything about is is perfect, there's a few irks and quirks that I notice once in a while but usually, nothing that really ruins my experience, however some issues are.. a bit too much
 
 On this page, I'll be listing the daily annoyances I have that I notice everytime and annoys me a lot. Some issues are fixable - I just haven't gotten to it. Some.. not so much, either I couldn't find a fix, a fix doesn't exist or a fix has other implications that I don't like. Some issues have workaround that I don't necessarily mind using until a find a proper solution (or a proper solution exists)
 

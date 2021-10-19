@@ -54,6 +54,9 @@ module.exports = {
       gridTemplateColumns: {
         wiki: "16% 61% 17%",
       },
+      opacity: {
+        15: "0.15",
+      },
     },
   },
 
@@ -72,6 +75,27 @@ module.exports = {
             marginBottom: "1rem",
           },
         },
+        ".project-box": {
+          padding: "1em",
+          position: "relative",
+          background: "transparent",
+          color: theme("colors.white"),
+          opacity: "0.85",
+          transition: "all 0.1s ease-out",
+          display: "flex",
+          width: "431px",
+          "&.project-featured": {
+            opacity: "1",
+          },
+          "&:hover": {
+            // NOTE: When applied through the CSS-in-JS syntax, opacity information doesn't stay on colors, this workaround it
+            "@apply bg-beach-watermelon hover:bg-opacity-15": {},
+            opacity: "1",
+            color: theme("colors.white"),
+            textDecoration: "none",
+            transition: "all 0.1s ease-out",
+          },
+        },
         // TODO: Figure out a way to simplify this perhaps? This is by far the most complex element on the website
         ".cover-title": {
           position: "absolute",
@@ -82,7 +106,6 @@ module.exports = {
           textAlign: "center",
           fontSize: theme("fontSize.3xl"),
           lineHeight: "180px",
-          // NOTE: When applied through the CSS-in-JS syntax, opacity information doesn't stay on colors, this workaround it
           "@apply bg-pinky-unicorny bg-opacity-80 transition-opacity": {},
           opacity: "0",
           borderRadius: theme("borderRadius.sm"),

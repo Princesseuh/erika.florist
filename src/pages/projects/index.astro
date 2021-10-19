@@ -1,0 +1,56 @@
+---
+import BaseLayout from "$layouts/BaseLayout.astro"
+import { postProcessProject, Project, ProjectType } from "$data/projects"
+
+let projects = Astro.fetchContent("../../content/projects/**/*.md")
+projects = projects.map((project) => postProcessProject(project))
+
+// Create an object with sub-objects corresponding to the different types of projects that exist
+// The cool part about this: it's 100% automated based on types and content, we'll practically never have to touch this
+type ProjectList = {
+  [projectType in ProjectType]?: Project[]
+}
+
+const projectsPerType: ProjectList = {}
+Object.values(ProjectType).forEach((projectType) => {
+  projectsPerType[projectType] = projects.filter((project) => project.type === projectType)
+})
+
+// Utils
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+---
+
+<BaseLayout title="Projects">
+  <article class="w-index mx-auto mt-4 sm:mt-6">
+    <h2>Projects</h2>
+
+    <p>
+      A list of my projects, it isn't necessarily exhaustive and mostly contain the projects I'm the
+      most proud of. Additionally, projects marked with a star (🌟) are featured projects I'm even
+      more proud of!
+    </p>
+
+    To see more projects, feel free to visit my <a href="https://github.com/Princesseuh">GitHub</a> or
+    for games, my <a href="https://princesseuh.itch.io/">Itch.io</a>
+
+    {Object.entries(projectsPerType)
+      .filter((type) => type[1].length > 0)
+      .map((type) => <div>
+          <h3>{capitalizeFirstLetter(type[0]) + "s"}</h3>
+          <div class="flex gap-4">
+            {type[1].map( (project) => <a href={project.url} class={project.featured ? "project-box project-featured" : "project-box"}>
+                  {project.featured && <span class="absolute right-2 top-1 w-5 h-5 fill-current" title="Featured project">
+                      🌟
+                    </span>}
+                  <img src={project.miniLogo} class="w-[48px] h-[48px] mr-4" />
+                  <div>
+                    <h4 class="block font-bold m-0">{project.title}</h4>
+                    <span class="text-sm text-creative-work">{project.description}</span>
+                  </div>
+                </a>, )}
+          </div>
+        </div>)}
+  </article>
+</BaseLayout>

@@ -50,7 +50,7 @@ function postProcessCatalogueItem(item: CatalogueItem): CatalogueItem {
   item = postProcessBase(item) as CatalogueItem
 
   item.type = getCatalogueTypeFromURL(item.file.pathname)
-  item.url = getCatalogueURL(item.file.pathname)
+  item.url = getCatalogueURL(item)
   item.cover = new URL(item.url + ".jpg")
 
   switch (item.type) {
@@ -58,7 +58,6 @@ function postProcessCatalogueItem(item: CatalogueItem): CatalogueItem {
       break
     case CatalogueType.BOOK:
       item.formatType = item?.volumes ? "multiple" : "single"
-
       break
   }
 
@@ -69,8 +68,8 @@ function getCatalogueTypeFromURL(path: string): CatalogueType {
   return basename(dirname(path)).slice(0, -1) as CatalogueType
 }
 
-function getCatalogueURL(path: string, add: string = ""): URL {
-  return new URL("/" + path.split("/content/")[1].split(".")[0] + add, "http://localhost:3000/")
+function getCatalogueURL(item: CatalogueItem): URL {
+  return new URL(`/catalogue/${item.type}s/${item.slug}`, "http://localhost:3000/")
 }
 
 export { postProcessCatalogueItem, CatalogueItem, CatalogueType }

@@ -1,0 +1,49 @@
+---
+import BaseLayout from "$layouts/BaseLayout.astro"
+---
+
+<BaseLayout>
+  <article class="post">
+    <h1>Settings</h1>
+
+    <p>Trying to make it feel more like home, eh?</p>
+
+    <div>
+      <input type="checkbox" id="cb--spa" />
+      <label for="cb--spa"> Disable SPA (page will reload) </label><br />
+
+      <input type="checkbox" id="cb--transitions" />
+      <label for="cb--transitions"> Disable page transitions </label><br />
+
+      <input type="checkbox" id="cb--prefetch" />
+      <label for="cb--prefetch">
+        Disable page prefetch (using <a href="https://getquick.link/">Quicklink</a>)
+      </label><br />
+    </div>
+  </article>
+
+  <script>
+    ;(function () {
+      const disableSPA = document.getElementById("cb--spa")
+      const disableTransitions = document.getElementById("cb--transitions")
+      const disablePrefetch = document.getElementById("cb--prefetch")
+      disableSPA.checked = localStorage.getItem("spaDisabled") == "true"
+      disableTransitions.disabled = disableSPA.checked
+      disableTransitions.checked = localStorage.getItem("transitionsDisabled") == "true"
+      disablePrefetch.checked = localStorage.getItem("prefetchDisabled") == "true"
+
+      disableSPA.addEventListener("change", () => {
+        localStorage.setItem("spaDisabled", disableSPA.checked ? "true" : "false")
+        location.reload()
+      })
+
+      disableTransitions.addEventListener("change", () => {
+        localStorage.setItem("transitionsDisabled", disableTransitions.checked ? "true" : "false")
+      })
+
+      disablePrefetch.addEventListener("change", () => {
+        localStorage.setItem("prefetchDisabled", disablePrefetch.checked ? "true" : "false")
+      })
+    })()
+  </script>
+</BaseLayout>

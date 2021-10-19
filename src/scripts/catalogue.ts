@@ -34,7 +34,7 @@ function buildLibrary(subset: CatalogueJSONItem[] = fullElements) {
 }
 
 ;(function initCatalogue() {
-  fetch("/catalogue.json")
+  fetch("/catalogue/content.json")
     .then((response) => response.json())
     .then((data) => {
       fullElements = data

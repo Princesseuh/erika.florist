@@ -11,7 +11,7 @@ export async function getStaticPaths({ paginate }) {
       return b.date.getTime() - a.date.getTime()
     })
 
-  return paginate(articles, { pageSize: 5 })
+  return paginate(articles, { pageSize: 6 })
 }
 
 const { page } = Astro.props
@@ -22,6 +22,12 @@ const { page } = Astro.props
     <div class="sm:w-[80%]">
       <h2>Articles</h2>
       {page.data.map((item) => <ArticlePreview article={item} />)}
+      <div>
+        {page.url.prev && <a href={page.url.prev}>Newer posts</a>}
+        {page.url.next && <a class="float-right" href={page.url.next}>
+            Older posts
+          </a>}
+      </div>
     </div>
 
     <aside class="sm:w-[20%]">

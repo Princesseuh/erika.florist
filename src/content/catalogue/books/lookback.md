@@ -4,8 +4,8 @@ genre: Action
 author: Tatsuki Fujimoto
 pages: 145
 chapters: 1
-started_on: 2020-07-19
-ended_on: 2020-07-19
+started_on: 2021-07-19
+ended_on: 2021-07-19
 ---
 
 A cute-sad one shot by the creator of Chainsaw Man. Some panels are really gorgeous! I wasn't always that awe by CSM's panels but this is really pretty

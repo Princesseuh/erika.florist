@@ -4,8 +4,8 @@ genre: Action
 author: Tatsuki Fujimoto
 volumes: 11
 chapters: 97
-started_on: 2020-06-08
-ended_on: 2020-06-11
+started_on: 2021-06-08
+ended_on: 2021-06-11
 ---
 
 I overall liked this! It had been a while since I last read a manga, especially a shonen like this one and ended up really pleasantly surprised

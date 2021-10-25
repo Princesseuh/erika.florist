@@ -5,16 +5,21 @@ let catalogueItems = await Astro.fetchContent("../../content/catalogue/**/*.md")
 catalogueItems = catalogueItems.map((item) => postProcessCatalogueItem(item as CatalogueItem))
 
 const json = JSON.stringify(
-  catalogueItems.map((item: CatalogueItem) => {
-    return {
-      title: item.title,
-      cover: item.cover,
-      cover_alt: item.cover_alt,
-      creator: item.author || item.developer,
-      url: item.url,
-      type: item.type,
-    }
-  }),
+  catalogueItems
+    .sort((a, b) => {
+      return b.ended_on.getTime() - a.ended_on.getTime()
+    })
+    .map((item: CatalogueItem) => {
+      return {
+        title: item.title,
+        cover: item.cover,
+        cover_alt: item.cover_alt,
+        creator: item.author || item.developer,
+        test: item.ended_on,
+        url: item.url,
+        type: item.type,
+      }
+    }),
 )
 ---
 

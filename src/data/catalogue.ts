@@ -53,6 +53,11 @@ function postProcessCatalogueItem(item: CatalogueItem): CatalogueItem {
   item.url = getCatalogueURL(item)
   item.cover = new URL(item.url + ".jpg")
 
+  item.started_on = new Date(item.started_on)
+  if (item.ended_on) {
+    item.ended_on = new Date(item.ended_on)
+  }
+
   switch (item.type) {
     case CatalogueType.GAME:
       break

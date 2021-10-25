@@ -4,8 +4,8 @@ genre: Postmodernist
 author: Italo Calvino
 pages: 260
 format: Paperback
-started_on: 2020-02-04
-ended_on: 2020-06-17
+started_on: 2021-02-04
+ended_on: 2021-06-17
 ---
 
 This book is a lot, well at least it was when it came out but it's still a fairly important book and really inventive read. I'm not exactly an insane reader so a lot of it probably went over my head but I think I got the gist of the book, summaries and explanations online were pretty useful

@@ -5,10 +5,12 @@ import { wikiCategories, WikiCategory } from "$data/wikiCategories.ts"
 let wikiItems = await Astro.fetchContent("../content/wiki/**/*.md")
 wikiItems = wikiItems.map((item) => postProcessWikiItem(item))
 
+const { url } = Astro.request
+
 function getItemElement(item: WikiItem): string {
-  return `<a class="block" href="/wiki/${item.navigation.category}/${item.slug}">${
-    item.navigation.label || item.title
-  }</a>`
+  return `<a class="block ${
+    url.pathname == item.url.pathname ? "text-pinky-unicorny font-bold" : ""
+  }" href="${item.url}">${item.navigation.label || item.title}</a>`
 }
 ---
 

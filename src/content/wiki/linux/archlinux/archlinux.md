@@ -1,12 +1,10 @@
 ---
   title: "Why I use Arch Linux"
   tagline: "(i use arch btw)"
-  date: 2021-01-22
+  loadCSSModules: ["code"]
   navigation:
     category: 'linux'
 ---
-
-{% usingCSSComponent "code" %}
 
 Being a nerd, I was always interested in trying out things on my computers and so, eventually that lead to me wanting to become a [florist](/wiki/introtoflowers) when I discovered that computers are well... computers
 
@@ -41,9 +39,9 @@ These days it isn't really the case anymore but back then, game development on L
 This led to me being much more interested in customizing my setup, be it for purely aesthetic purpose or to improve my workflow
 
 {% note 'A quick note on the usage of the term "ricing"' %}
-  The commonly used term to refer to customizing a Linux setup is *ricing*, the origin of the term being detailed on [this Wikipedia page](https://en.wikipedia.org/wiki/Rice_burner). It's a term that I have used in the past, without knowing its origin and that it could be offensive to some people
+The commonly used term to refer to customizing a Linux setup is _ricing_, the origin of the term being detailed on [this Wikipedia page](https://en.wikipedia.org/wiki/Rice_burner). It's a term that I have used in the past, without knowing its origin and that it could be offensive to some people
 
-  Nowadays, even though the term is used in a non-derogative manner in the Linux community, I'd rather avoid using the term
+Nowadays, even though the term is used in a non-derogative manner in the Linux community, I'd rather avoid using the term
 {% endnote %}
 
 The first customization I did was probably using [Zsh](https://www.zsh.org/) instead of [Bash](https://www.gnu.org/software/bash/), something I'm sure many advanced Linux users have lived through at some point ha! The first thing dragging you towards Zsh is the fancy auto-completion and then you discover [Oh My Zsh](https://github.com/ohmyzsh/ohmyzsh) and next thing you know, your prompt takes one to two seconds booting up. We all went through this right? Zsh is really cool and frankly, if [Fish](https://fishshell.com/) didn't exist, I'd still be using Zsh. I liked it

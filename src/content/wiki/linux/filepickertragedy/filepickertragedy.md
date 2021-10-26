@@ -7,8 +7,6 @@
     category: linux
 ---
 
-{% usingCSSComponent "code" %}
-
 File pickers on Linux are.. not good. Pretty much all of them have a few shortcomings that makes the experience fairly deplorable
 
 But, first of all, what is a file picker? A file picker is the window that open whenever you press "Save As" or "Open" on most softwares. To try it out, press the following buttons (the save button saves the html of the current page, nothing harmful)

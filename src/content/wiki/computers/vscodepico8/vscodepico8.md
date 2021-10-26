@@ -7,8 +7,6 @@
     category: computers
 ---
 
-{% usingCSSComponent "code" %}
-
 I like [PICO-8, the fantasy console by Lexaloffle](https://www.lexaloffle.com/pico-8.php). It's really useful and cute whenever I feel like making small games. It's pretty good
 
 {% image src="./wiki/computers/vscodepico8/pico8.png", alt="Swedish keyboard Layout", caption="The PICO-8 window. It's small" %}

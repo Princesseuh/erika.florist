@@ -12,7 +12,7 @@ This book is a lot, well at least it was when it came out but it's still a fairl
 
 I wish the pushy parts would have worked a bit better on me, I felt at times the book was trying a bit too hard to be smart and in the end, it often felt a bit more pretentious than it probably should have been
 
-Additionally, I know that it's supposed to represent different styles of literature and the author himself makes fun of it towards the end but the ~sexy~ parts were really cringe. Just because you make fun of something doesn't mean you get to make the same mistake
+Additionally, I know that it's supposed to represent different styles of literature and the author himself makes fun of it towards the end but the "sexy" parts were really cringe. Just because you make fun of something doesn't mean you get to make the same mistake
 
 Overall I liked it, though I think it could have been a little bit simplier while still getting its message through. But it's an old book, so it's probably fair that it's a bit clunky
 

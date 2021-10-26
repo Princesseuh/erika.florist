@@ -6,8 +6,6 @@
     hidden: true
 ---
 
-{% usingCSSComponent "code" %}
-
 While trying to install the KDE file picker on Arch Linux, you'll most likely encounter the following situation unless you're already using KDE softwares: You'll install `kdialog` expecting it to be enough to open the KDE file dialog, but instead, you'll see this:
 
 {% image src="./wiki/linux/filepickertragedy/kdialog.png", alt="The Qt file picker", caption="What is that?" %}

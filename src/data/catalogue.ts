@@ -19,21 +19,21 @@ interface CatalogueItemBase extends BaseObject {
   cover_alt: string // Used for alt attribute on the cover, a11y yay
 }
 
-// Books are a wild beast, mangas and one shots follow much different formats than normal books does, same goes for light novels
+// The books type really is two type of content, it can either be single books or multiple books in one entry.
+// Unfortunately, we want different metadata depending on that variable, for instance, it doesn't make sense to list
+// the number of pages for a collection of books. It's much more interesting to write the number of volumes or chapters, in the case of mangas
 interface CatalogueBookBase extends CatalogueItemBase {
   formatType: string
   author: string
 }
 
-// For normal books, the only special thing we want is the page count really
 interface CatalogueBookSingle extends CatalogueBookBase {
   pages: number
-  format: string // We only care about the format here because mangas are very rarely available in another format than physical
+  format: string // We only care about the format for single books because the format can vary between volumes in a collection
 }
 
-// This is mainly used for mangas and light novels which get bundled into one entry (unlike traditional books)
 interface CatalogueBookMultiple extends CatalogueBookBase {
-  chapters: number
+  chapters?: number // The number of chapters is really only interesting in the case of mangas, so we'll mark it as optional
   volumes: number
 }
 

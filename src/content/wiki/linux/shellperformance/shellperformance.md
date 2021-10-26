@@ -6,8 +6,6 @@
     category: linux
 ---
 
-{% usingCSSComponent "code" %}
-
 When customizing a Linux setup, it's really easy to fall into the trap of thinking that, since your base programs are so efficient, adding plugins or tweaks won't slow them down much but that's often not the case
 
 A common exemple is [Vim](https://www.vim.org/), it's fairly easy to slow down Vim by adding too many plugins! You'd think that Vim is so old and so fast that they're be no way to slow it down so much so that it perform worse than modern editors and yet it's very much possible and even the simplest plugin can slow down the editor to a crawl - it's horrifying

@@ -7,8 +7,6 @@
     category: linux
 ---
 
-{% usingCSSComponent "code" %}
-
 I've been using Wayland [since May 2020](https://github.com/Princesseuh/dotfiles/commit/42d18db2db41e4de08396d367d90612d2ec98f30) through [Sway](https://swaywm.org/), an i3 compatible windows manager
 
 I started using Wayland because I got tired of dealing with vsync issues, Picom and other stuff on Xorg. So I tried out Wayland, not expecting much after all the stories I've heard but in the end, well, everything works 🤷‍♀️

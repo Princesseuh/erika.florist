@@ -1,6 +1,6 @@
 ---
 title: Code Vein
-author: Bandai Namco
+developer: Bandai Namco
 playtime: 13 hours
 started_on: 2021-03-02
 ended_on: 2021-03-05

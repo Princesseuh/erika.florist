@@ -1,6 +1,5 @@
-const rtf = new Intl.RelativeTimeFormat("en")
-
 function makeDatesRelative(): void {
+  const timeFormat = new Intl.RelativeTimeFormat("en")
   const dateElements = document.querySelectorAll<HTMLElement>("[data-date]")
 
   dateElements.forEach((element) => {
@@ -17,10 +16,10 @@ function makeDatesRelative(): void {
       if (deltaHours === 0) {
         element.textContent = "less than an hour ago"
       } else {
-        element.textContent = rtf.format(deltaHours, "hours")
+        element.textContent = timeFormat.format(deltaHours, "hours")
       }
     } else {
-      element.textContent = rtf.format(deltaDays, "days")
+      element.textContent = timeFormat.format(deltaDays, "days")
     }
 
     element.title = date.toString()
@@ -31,4 +30,6 @@ function onPageLoad() {
   makeDatesRelative()
 }
 
-onPageLoad()
+document.onload = () => {
+  onPageLoad()
+}

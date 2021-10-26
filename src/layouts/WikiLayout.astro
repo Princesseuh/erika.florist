@@ -5,7 +5,6 @@ import ContentHeader from "$components/ContentHeader.astro"
 import WikiTOC from "$components/WikiTOC.astro"
 import { readableDate } from "$utils"
 
-import { Markdown } from "astro/components"
 import { CSSComponent } from "astro-css-components"
 
 const { wikiItem } = Astro.props
@@ -24,7 +23,7 @@ const { wikiItem } = Astro.props
 
     <article class="post">
       <ContentHeader item={wikiItem} includeTags={false} />
-      <Markdown content={wikiItem.astro.source} />
+      {wikiItem.astro.html}
 
       <span class="text-right block text-creative-work mb-4">
         Page last modified <span data-date={wikiItem.lastModified}

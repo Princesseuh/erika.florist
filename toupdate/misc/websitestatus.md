@@ -5,8 +5,6 @@
     category: 'misc'
 ---
 
-{% usingCSSComponent "code" %}
-
 Things that should be done, things I'd maybe like to do in the future..
 
 ## TODOs

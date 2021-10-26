@@ -1,0 +1,87 @@
+---
+import BaseLayout from "$layouts/BaseLayout.astro"
+import { CatalogueType } from "$data/catalogue"
+import { readableDate } from "$utils"
+
+const { catalogueItem } = Astro.props
+
+let metaInfo = []
+switch (catalogueItem.type) {
+  case CatalogueType.BOOK:
+    metaInfo = [
+      {
+        Author: catalogueItem.author,
+        Genre: catalogueItem.genre,
+      },
+      {
+        "Started On": readableDate(catalogueItem.started_on),
+        "Ended On": readableDate(catalogueItem.ended_on),
+      },
+    ]
+
+    // Books have two types, you can either have a collection of books (often used for mangas) or a single book in a single entry
+    // They both share most attributes, except that for collections, we'll prefer to have the amount of chapters and volumes
+    // and we don't care much about the format (which can vary by volume anyway) and for single books, we want the number of pages
+    switch (catalogueItem.formatType) {
+      case "multiple":
+        metaInfo[0].Chapters = catalogueItem.chapters
+        metaInfo[1].Volumes = catalogueItem.volumes
+        break
+      case "single":
+        metaInfo[0].Format = catalogueItem.format
+        metaInfo[1].Pages = catalogueItem.pages
+        break
+    }
+    break
+
+  case CatalogueType.GAME:
+    metaInfo = [
+      {
+        Developer: catalogueItem.developer,
+        Genre: catalogueItem.genre,
+        Platform: catalogueItem.platform,
+      },
+      {
+        "Started On": readableDate(catalogueItem.started_on),
+        "Ended On": readableDate(catalogueItem.ended_on),
+        Playtime: catalogueItem.playtime,
+      },
+    ]
+    break
+}
+---
+
+<BaseLayout>
+  <article class="w-index mx-auto mt-6">
+    <a href="/catalogue">Back to Catalogue</a>
+    <header class="flex justify-between gap-4 px-4 my-4">
+      <img
+        src={catalogueItem.cover}
+        alt="${item.cover_alt}"
+        class="max-w-[200px] max-h-[300px]"
+        width="200"
+        height="300"
+        loading="lazy"
+        decoding="async" />
+
+      <div class="flex items-center bottom-2 catalogue--item-meta flex-1 justify-center relative">
+        <div>
+          <h2 class="mt-0 text-center">{catalogueItem.title}</h2>
+
+          <section class="flex justify-center gap-14">
+            {metaInfo.map((array) => <dl>
+                {Object.entries(array).map((info) => <Fragment>
+                    <dt>{info[0]}</dt>
+                    <dd>{info[1]}</dd>
+                  </Fragment>)}
+              </dl>)}
+          </section>
+        </div>
+      </div>
+    </header>
+    <h2 class="mb-3 mt-0">Quick thoughts</h2>
+    <section class="px-2">
+      {catalogueItem.astro.html}
+    </section>
+  </article>
+</BaseLayout>

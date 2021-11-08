@@ -23,7 +23,9 @@ function postProcessProject(project: Project): Project {
 
   project.type = getProjectTypeFromURL(project.file.pathname)
   project.url = new URL(`/projects/${project.type}s/${project.slug}`, "http://localhost:3000")
-  project.miniLogo = new URL(project.url + "/mini-logo.png")
+  project.miniLogo = new URL(
+    project.url.href.replace("/projects/", "/assets/projects/") + "/mini-logo.png",
+  )
 
   // NOTE: Workaround an Astro bug regarding dates in frontmatter, see data/articles.ts for more info
   if (typeof project.startDate === "string") {

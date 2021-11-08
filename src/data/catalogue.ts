@@ -51,7 +51,7 @@ function postProcessCatalogueItem(item: CatalogueItem): CatalogueItem {
 
   item.type = getCatalogueTypeFromURL(item.file.pathname)
   item.url = getCatalogueURL(item)
-  item.cover = new URL(item.url + ".jpg")
+  item.cover = new URL(item.url.href.replace("/catalogue/", "/assets/catalogue/") + ".jpg")
 
   item.started_on = new Date(item.started_on)
   if (item.ended_on) {

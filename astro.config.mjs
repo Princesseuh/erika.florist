@@ -7,10 +7,22 @@
 // You can disable this by removing "@ts-check" and `@type` comments below.
 
 // @ts-check
-export default /** @type {import('astro').AstroUserConfig} */ ({
-  // Comment out "renderers: []" to enable Astro's default component support.
+
+/** @type {import('astro').AstroUserConfig} */
+export default {
   renderers: [],
-  devOptions: {
-    tailwindConfig: "./tailwind.config.js",
+  vite: {
+    plugins: [],
+    resolve: {
+      alias: {
+        $components: "/src/components",
+        $data: "/src/data",
+        $layouts: "/src/layouts",
+        $theme: "/src/theme",
+        $types: "/src/types",
+        $utils: "/src/utils",
+        $content: "/src/content",
+      },
+    },
   },
-})
+}

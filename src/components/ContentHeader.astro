@@ -1,6 +1,6 @@
 ---
-const { item, includeTags } = Astro.props
 import { readableDate } from "$utils"
+const { item, includeTags } = Astro.props
 ---
 
 <header class="mb-4 mt-4">
@@ -8,7 +8,7 @@ import { readableDate } from "$utils"
   {item.tagline && <h2 class="text-xl m-0 relative top-[-5px]">{item.tagline}</h2>}
   {includeTags && <div class="text-creative-work">
       {readableDate(item.date)} · {item.tags
-        .map((tag) => <a href="{ '/articles/tags/' + tag}">{tag}</a>)
+        .map((tag) => <a href={"/articles/tags/" + tag}>{tag}</a>)
         .reduce((prev, curr) => (prev === null ? [curr] : [prev, ", ", curr]))}
     </div>}
 </header>

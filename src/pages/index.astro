@@ -62,7 +62,7 @@ wikiItems = wikiItems
             <a class="block font-bold leading-tight" href={item.url}>
               {item.title}
             </a>
-            <span class="text-sm first-letter:uppercase block" data-date="{ item.lastModified }">
+            <span class="text-sm first-letter:uppercase block" data-date={item.lastModified}>
               {readableDate(item.lastModified)}
             </span>
           </section>)}

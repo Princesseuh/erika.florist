@@ -19,12 +19,16 @@ function postProcessWikiItem(wikiItem: WikiItem): WikiItem {
   // If we don't have an order, we set it to 0 which won't affect the sort
   wikiItem.navigation.order = wikiItem.navigation.order ?? 0
 
-  // Get the last modified time from Git as getting it from file system is not accurate
-  // PERF: This can be a bit slow, in Eleventy it used to slow down my builds a lot
-  const isoDate = execSync(
-    `git log -1 --date=iso --pretty="format:%cI" ${wikiItem.file.pathname}`,
-  ).toString()
-  wikiItem.lastModified = new Date(Date.parse(isoDate))
+  if (import.meta.env.PROD) {
+    // Get the last modified time from Git as getting it from file system is not accurate
+    // PERF: This can be a bit slow, in Eleventy it used to slow down my builds a lot
+    const isoDate = execSync(
+      `git log -1 --date=iso --pretty="format:%cI" ${wikiItem.file.pathname}`,
+    ).toString()
+    wikiItem.lastModified = new Date(Date.parse(isoDate))
+  } else {
+    wikiItem.lastModified = new Date()
+  }
 
   wikiItem.url = new URL(
     `/wiki/${wikiItem.navigation.category}/${wikiItem.slug}`,

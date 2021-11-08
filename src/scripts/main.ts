@@ -30,6 +30,4 @@ function onPageLoad() {
   makeDatesRelative()
 }
 
-document.onload = () => {
-  onPageLoad()
-}
+onPageLoad()

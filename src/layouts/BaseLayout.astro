@@ -1,8 +1,8 @@
 ---
 import Header from "$components/Header.astro"
 import Socials from "$components/Socials.astro"
-import { CSSComponent } from "astro-css-components"
-import { SocialImage } from "astro-social-images/index.js"
+/* import { CSSComponent } from "astro-css-components"
+import { SocialImage } from "astro-social-images/index.js" */
 
 const { title, description } = Astro.props
 ---
@@ -20,7 +20,7 @@ const { title, description } = Astro.props
 
     <title>{title ? `${title} - Princesseuh` : "Princesseuh"}</title>
 
-    <SocialImage
+    <!--     <SocialImage
       backgroundColor="#28262c"
       images={[{ url: "public/resized-social-card.png", attributes: { top: 375, left: 900 } }]}
       texts={// prettier-ignore
@@ -29,9 +29,9 @@ const { title, description } = Astro.props
         { content: description, attributes: { x: "50", y: "325", "font-size": "40px", fill: "#fefffe" } }
       ]} />
 
-    <CSSComponent getForURL />
+    <CSSComponent getForURL /> -->
 
-    <script defer src={Astro.resolve("../scripts/main.js")}></script>
+    <script type="module" defer src={Astro.resolve("../scripts/main.ts")}></script>
   </head>
   <body>
     <div id="app" class="bg-baltic-sea">

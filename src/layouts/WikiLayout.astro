@@ -5,15 +5,15 @@ import ContentHeader from "$components/ContentHeader.astro"
 import WikiTOC from "$components/WikiTOC.astro"
 import { readableDate } from "$utils"
 
-import { CSSComponent } from "astro-css-components"
+// import { CSSComponent } from "astro-css-components"
 
 const { wikiItem } = Astro.props
 ---
 
-<CSSComponent
+<!-- <CSSComponent
   register={{ name: "code", contentFile: "src/theme/css/modules/code.css" }}
   conditional={wikiItem.loadCSSModules.includes("code")}
-  minify={true} />
+  minify={true} /> -->
 
 <BaseLayout title={wikiItem.title} description={wikiItem.tagline}>
   <section class="gap-[3%] grid sm:grid-cols-wiki mx-auto my-0 w-wiki">

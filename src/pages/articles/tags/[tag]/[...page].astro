@@ -11,12 +11,14 @@ export async function getStaticPaths({ paginate }) {
       return b.date.getTime() - a.date.getTime()
     })
 
-  const tagList = new Array()
+  const tagList = new Set()
   articles.forEach((article) => {
-    tagList.push(...article.tags)
+    article.tags.forEach((tag) => {
+      tagList.add(tag)
+    })
   })
 
-  return tagList.map((tag) => {
+  return Array.from(tagList).map((tag) => {
     const filteredArticles = articles.filter((article) => article.tags.includes(tag))
     return paginate(filteredArticles, { params: { tag }, pageSize: 6 })
   })

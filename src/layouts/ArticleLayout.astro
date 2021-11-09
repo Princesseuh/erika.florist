@@ -5,7 +5,7 @@ import ContentHeader from "$components/ContentHeader.astro"
 const { article } = Astro.props
 ---
 
-<BaseLayout title={article.title} description={article.tagline}>
+<BaseLayout title={article.title} description={article.tagline} styles={article.loadCSSModules}>
   <article class="post mx-auto">
     <ContentHeader item={article} includeTags={true} />
     {article.astro.html}

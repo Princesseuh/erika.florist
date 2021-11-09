@@ -1,10 +1,9 @@
 ---
 import Header from "$components/Header.astro"
 import Socials from "$components/Socials.astro"
-/* import { CSSComponent } from "astro-css-components"
-import { SocialImage } from "astro-social-images/index.js" */
+/* import { SocialImage } from "astro-social-images/index.js" */
 
-const { title, description } = Astro.props
+const { title, description, styles = [], js } = Astro.props
 ---
 
 <!DOCTYPE html>
@@ -18,18 +17,18 @@ const { title, description } = Astro.props
 
     <link rel="stylesheet" href={Astro.resolve("../theme/css/tailwind.css")} />
 
+    {styles.map( (stylesheet) => <link rel="stylesheet" href={Astro.resolve("../theme/css/modules/" + stylesheet + ".css")} />, )}
+
     <title>{title ? `${title} - Princesseuh` : "Princesseuh"}</title>
 
-    <!--     <SocialImage
+    <!-- <SocialImage
       backgroundColor="#28262c"
       images={[{ url: "public/resized-social-card.png", attributes: { top: 375, left: 900 } }]}
       texts={// prettier-ignore
       [
         { content: title ? `${title}` : "Princesseuh", attributes: { x: "55", y: "105", "font-size": "70px", fill: "#fefffe" } },
         { content: description, attributes: { x: "50", y: "325", "font-size": "40px", fill: "#fefffe" } }
-      ]} />
-
-    <CSSComponent getForURL /> -->
+      ]} /> -->
 
     <script type="module" defer src={Astro.resolve("../scripts/main.ts")}></script>
   </head>

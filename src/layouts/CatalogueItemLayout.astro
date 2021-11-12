@@ -69,11 +69,11 @@ switch (catalogueItem.type) {
           <h2 class="mt-0 text-center">{catalogueItem.title}</h2>
 
           <section class="flex justify-center gap-14">
-            {metaInfo.map((array) => <dl>
-                {Object.entries(array).map((info) => <Fragment>
+            {metaInfo.map((meta) => <dl>
+                {Object.entries(meta).map((info) => (
                     <dt>{info[0]}</dt>
                     <dd>{info[1]}</dd>
-                  </Fragment>)}
+                ))}
               </dl>)}
           </section>
         </div>

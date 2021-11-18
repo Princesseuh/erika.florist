@@ -1,11 +1,11 @@
 ---
 title: Moonlander Mark 1 review
 tagline: "Come get your futurist looking keyboards here, for a single payment of [a lot] you can perhaps save your wrists!"
-tags: ['productivity', 'ergonomy']
+tags: ["productivity", "ergonomy"]
 date: 2021-01-01
 ---
 
-A few months ago, my keyboard broke. Is it related to me dropping coffee on it? *Perhaps*, but that's not the point. I had been using a [CODE keyboard](http://codekeyboards.com/) for about 2 years now, it was a really good experience. My only regret being buying the 104-key version instead of the 87 one back then
+A few months ago, my keyboard broke. Is it related to me dropping coffee on it? _Perhaps_, but that's not the point. I had been using a [CODE keyboard](http://codekeyboards.com/) for about 2 years now, it was a really good experience. My only regret being buying the 104-key version instead of the 87 one back then
 
 It's a really good keyboard that I recommend a lot if normal looking keyboards are what you're after because today we're gonna be talking about the Moonlander by ZSA, a clearly not normal looking keyboard
 

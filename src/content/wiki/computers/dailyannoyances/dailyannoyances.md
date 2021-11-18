@@ -55,6 +55,14 @@ My "Windows session" will often be up and running for weeks as I only hibernate 
 
 **Workaround**: Reboot the app
 
+## Discord
+
+### Doesn't properly acknowledge when a call has ended on another device on wakeup
+
+A workflow I find myself having often is, I'm on a call on Windows on my desktop and without cutting the call, I'll dual boot to Linux and rejoin the call there, talk for a while and cut the call. This is all fine and dandy, it works nicely.
+
+However, when I'll go back to Windows, waking it up from hibernation, it'll try to rejoin the call even though it had ended, this result in Discord automatically trying to call back the people in the call. It should know that the call has ended somewhere else and not try to restart it. I've called my lover a few times in the middle of the night due to that..
+
 ---
 
 ## Android

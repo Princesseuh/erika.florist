@@ -52,7 +52,7 @@ module.exports = {
         wiki: "min(1280px, 100%)",
       },
       gridTemplateColumns: {
-        wiki: "16% 61% 17%",
+        wiki: "17% 60% 17%",
       },
       opacity: {
         15: "0.15",

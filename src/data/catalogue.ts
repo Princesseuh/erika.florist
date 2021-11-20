@@ -33,18 +33,32 @@ interface CatalogueBookSingle extends CatalogueBookBase {
 }
 
 interface CatalogueBookMultiple extends CatalogueBookBase {
-  chapters?: number // The number of chapters is really only interesting in the case of mangas, so we'll mark it as optional
+  chapters?: number // The number of chapters is really only interesting in the case of mangas, so it's optional
   volumes: number
 }
 
-// I don't want to at the moment, but perhaps it'd be cool to make types for developers and platforms
 interface CatalogueGame extends CatalogueItemBase {
   developer: string
   playtime: number
   platform: string
 }
 
-type CatalogueItem = CatalogueGame | CatalogueBookSingle | CatalogueBookMultiple
+interface CatalogueMovie extends CatalogueItemBase {
+  director: string
+  length: number
+}
+
+interface CatalogueShow extends CatalogueItemBase {
+  episodes: number
+  platform: string
+}
+
+type CatalogueItem =
+  | CatalogueGame
+  | CatalogueMovie
+  | CatalogueShow
+  | CatalogueBookSingle
+  | CatalogueBookMultiple
 
 function postProcessCatalogueItem(item: CatalogueItem): CatalogueItem {
   item = postProcessBase(item) as CatalogueItem
@@ -58,12 +72,9 @@ function postProcessCatalogueItem(item: CatalogueItem): CatalogueItem {
     item.ended_on = new Date(item.ended_on)
   }
 
-  switch (item.type) {
-    case CatalogueType.GAME:
-      break
-    case CatalogueType.BOOK:
-      item.formatType = item?.volumes ? "multiple" : "single"
-      break
+  // NOTE: This is a special exception needed for books as we need to display different infos depending on the format even though they're technically the same type. Maybe there's a better way to do this, I don't know
+  if (item.type === CatalogueType.BOOK) {
+    item.formatType = item.volumes ? "multiple" : "single"
   }
 
   return item

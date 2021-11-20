@@ -7,7 +7,7 @@ catalogueItems = catalogueItems.map((item) => postProcessCatalogueItem(item as C
 const json = JSON.stringify(
   catalogueItems
     .sort((a, b) => {
-      return b.ended_on.getTime() - a.ended_on.getTime()
+      return (b.ended_on ?? b.started_on).getTime() - (a.ended_on ?? a.started_on).getTime()
     })
     .map((item: CatalogueItem) => {
       return {

@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .ts,.js"
   },
   "devDependencies": {
-    "astro": "^0.21.0-next.6",
+    "astro": "^0.21.2",
     "typescript": "^4.5.2"
   },
   "dependencies": {
@@ -18,9 +18,9 @@
     "@types/prettier": "^2.4.2",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
-    "astro-social-images": "link:../astro-social-images",
+    "astro-social-images": "^0.2.1",
     "autoprefixer": "^10.4.0",
-    "eslint": "^8.2.0",
+    "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.4.1",

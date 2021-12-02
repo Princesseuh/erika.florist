@@ -37,20 +37,32 @@ function capitalizeFirstLetter(string) {
 
     {Object.entries(projectsPerType)
       .filter((type) => type[1].length > 0)
-      .map((type) => <div>
+      .map((type) => (
+        <div>
           <h3>{capitalizeFirstLetter(type[0]) + "s"}</h3>
           <div class="flex gap-4">
-            {type[1].map( (project) => <a href={project.url} class={project.featured ? "project-box project-featured" : "project-box"}>
-                  {project.featured && <span class="absolute right-2 top-1 w-5 h-5 fill-current" title="Featured project">
-                      🌟
-                    </span>}
-                  <img src={project.miniLogo} class="w-[48px] h-[48px] mr-4" />
-                  <div>
-                    <h4 class="block font-bold m-0">{project.title}</h4>
-                    <span class="text-sm text-creative-work">{project.description}</span>
-                  </div>
-                </a>, )}
+            {type[1].map((project) => (
+              <a
+                href={project.url.pathname}
+                class={project.featured ? "project-box project-featured" : "project-box"}
+              >
+                {project.featured && (
+                  <span
+                    class="absolute right-2 top-1 w-5 h-5 fill-current"
+                    title="Featured project"
+                  >
+                    🌟
+                  </span>
+                )}
+                <img src={project.miniLogo.pathname} class="w-[48px] h-[48px] mr-4" />
+                <div>
+                  <h4 class="block font-bold m-0">{project.title}</h4>
+                  <span class="text-sm text-creative-work">{project.description}</span>
+                </div>
+              </a>
+            ))}
           </div>
-        </div>)}
+        </div>
+      ))}
   </article>
 </BaseLayout>

@@ -1,6 +1,7 @@
 import type { BaseObject } from "./shared"
 import { postProcessBase } from "./shared"
 import { basename, dirname } from "path"
+import { getBaseSiteURL } from "$utils"
 
 enum CatalogueType {
   GAME = "game",
@@ -85,7 +86,7 @@ function getCatalogueTypeFromURL(path: string): CatalogueType {
 }
 
 function getCatalogueURL(item: CatalogueItem): URL {
-  return new URL(`/catalogue/${item.type}s/${item.slug}`, "http://localhost:3000/")
+  return new URL(`/catalogue/${item.type}s/${item.slug}`, getBaseSiteURL())
 }
 
 export { postProcessCatalogueItem, CatalogueItem, CatalogueType }

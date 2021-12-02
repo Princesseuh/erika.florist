@@ -10,7 +10,7 @@ const { article } = Astro.props
 ---
 
 <section class="mb-3">
-  <a href={article.url}>
+  <a href={article.url.pathname}>
     <h4 class="inline-block m-0 text-xl">{article.title}</h4>
   </a>
 

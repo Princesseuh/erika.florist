@@ -1,5 +1,6 @@
 import { BaseObject, postProcessBase } from "./shared"
 import { basename, dirname } from "path"
+import { getBaseSiteURL } from "$utils"
 
 interface Project extends BaseObject {
   type: ProjectType
@@ -22,7 +23,7 @@ function postProcessProject(project: Project): Project {
   project = postProcessBase(project) as Project
 
   project.type = getProjectTypeFromURL(project.file.pathname)
-  project.url = new URL(`/projects/${project.type}s/${project.slug}`, "http://localhost:3000")
+  project.url = new URL(`/projects/${project.type}s/${project.slug}`, getBaseSiteURL())
   project.miniLogo = new URL(
     project.url.href.replace("/projects/", "/assets/projects/") + "/mini-logo.png",
   )

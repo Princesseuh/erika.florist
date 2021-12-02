@@ -10,12 +10,15 @@ const { url } = Astro.request
 function getItemElement(item: WikiItem): string {
   return `<a class="block ${
     url.pathname == item.url.pathname ? "text-pinky-unicorny font-bold" : ""
-  }" href="${item.url}">${item.navigation.label || item.title}</a>`
+  }" href="${item.url.pathname}">${item.navigation.label || item.title}</a>`
 }
 ---
 
 <ul class="m-0 list-none p-0 wiki-navigation hidden sm:block">
-  {wikiCategories.map((category: WikiCategory) =>  // This is a bit messy, I think there's a way to do this without using a template literal but I couldn't find it
+  {wikiCategories.map(
+    (
+      category: WikiCategory, // This is a bit messy, I think there's a way to do this without using a template literal but I couldn't find it
+    ) =>
       `<li>
             <span class="block font-bold text-sugar-cane">${category.title}</span>
             ${getWikiItemsByCategory(wikiItems, category.key)
@@ -23,5 +26,6 @@ function getItemElement(item: WikiItem): string {
                 return getItemElement(item)
               })
               .join("")}
-        </li>`)}
+        </li>`,
+  )}
 </ul>

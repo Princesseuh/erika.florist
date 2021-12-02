@@ -12,10 +12,10 @@ const json = JSON.stringify(
     .map((item: CatalogueItem) => {
       return {
         title: item.title,
-        cover: item.cover,
+        cover: item.cover.pathname,
         cover_alt: item.cover_alt,
         creator: item.author || item.developer,
-        url: item.url,
+        url: item.url.pathname,
         type: item.type,
       }
     }),

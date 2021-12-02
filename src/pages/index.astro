@@ -58,14 +58,16 @@ wikiItems = wikiItems
 
       <div class="sm:w-[37%]">
         <h3 class="text-2xl mb-4 mt-2 sm:mt-4">Latest wiki modifications</h3>
-        {wikiItems.map((item) => <section class="mb-3">
-            <a class="block font-bold leading-tight" href={item.url}>
+        {wikiItems.map((item) => (
+          <section class="mb-3">
+            <a class="block font-bold leading-tight" href={item.url.pathname}>
               {item.title}
             </a>
             <span class="text-sm first-letter:uppercase block" data-date={item.lastModified}>
               {readableDate(item.lastModified)}
             </span>
-          </section>)}
+          </section>
+        ))}
       </div>
     </div>
   </article>

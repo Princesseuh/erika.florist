@@ -1,6 +1,6 @@
 ---
-import menu from "$data/header.json"
 import Socials from "$components/Socials.astro"
+const menu = ["Projects", "Articles", "Wiki", "Catalogue"]
 ---
 
 <header class="px-4 sm:px-0 py-[.8rem] flex justify-center">
@@ -11,9 +11,11 @@ import Socials from "$components/Socials.astro"
       </h1>
 
       <nav class="hidden ml-2 sm:inline-block">
-        {menu.map((item) => <a class="header-link" href={"/" + item.toLowerCase()}>
+        {menu.map((item) => (
+          <a class="header-link" href={`/${item.toLowerCase()}`}>
             {item}
-          </a>)}
+          </a>
+        ))}
       </nav>
     </div>
 

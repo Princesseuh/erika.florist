@@ -1,42 +1,21 @@
-# Astro Starter Kit: Minimal
+# princesseuh.dev
 
-```
-npm init astro -- --template minimal
-```
+Source code for my website, [princesseuh.dev](https://princesseuh.dev).
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/snowpackjs/astro/tree/latest/examples/minimal)
+This website contains [articles I wrote](https://princesseuh.dev/articles), a [list of projects](https://princesseuh.dev/projects) I made, a [catalogue of the things I played/read/watched](https://princesseuh.dev/catalogue) and finally, [a wiki about various things](https://princesseuh.dev/wiki)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Tech stack
 
-## 🚀 Project Structure
+The website is made using [Astro](https://astro.build), styled using [Tailwind](https://tailwindcss.com/) and the interactive parts are written in [Typescript](https://www.typescriptlang.org/) however, no framework is used 
 
-Inside of your Astro project, you'll see the following folders and files:
+### Technical motivations
 
-```
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+While I dont necessarily have big ambitions for this website, I'm still trying to make it a good experience, as such, here's a few rules that I (try my best) follow for that purpose:
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+#### Performance
+- Pages should be as lightweight as possible. A page shouldn't initially weight more than 2mb. Heavy content such as images or embeds should be lazy-loaded when possible, otherwise, only loaded on interaction or through a link. Pages should load under 200-300ms when possible, even on a relatively slow internet. All in all, that means that:
+- Javascript should only be ever used for progressive enhancements or if there's no alternative. 
+Apart from a few exceptions (such as the catalogue), the website should work with Javascript disabled or not loaded yet. In cases where that isn't possible, an alternative experience albeit not as complete should be provided
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command         | Action                                      |
-| :-------------- | :------------------------------------------ |
-| `npm install`   | Installs dependencies                       |
-| `npm run dev`   | Starts local dev server at `localhost:3000` |
-| `npm run build` | Build your production site to `./dist/`     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://github.com/snowpackjs/astro) or jump into our [Discord server](https://astro.build/chat).
+#### Accessibility
+- The website should be as accessible as possible, while I unfortunately probably cannot fulfill every needs, low-hanging fruits such as accessible colors, alt texts on images, proper usage of headings are all fairly doable and should be done

@@ -5,10 +5,7 @@ import { postProcessArticle } from "$data/articles"
 import { postProcessWikiItem } from "$data/wiki"
 import { readableDate } from "$utils"
 
-// TODO: Astro currently only support one fetchContent per component/page (see issue: https://github.com/snowpackjs/astro/issues/1496)
-// So what we'll do it fetch all of our content and filter per content type ourselves using the path
-const content = await Astro.fetchContent("../content/**/*.md")
-let articles = content.filter((item) => item.file.pathname.includes("/content/articles/"))
+let articles = await Astro.fetchContent("../content/articles/**/*.md")
 articles = articles
   .map((article) => postProcessArticle(article))
   .sort((a, b) => {
@@ -16,7 +13,7 @@ articles = articles
   })
   .slice(0, 3)
 
-let wikiItems = content.filter((item) => item.file.pathname.includes("/content/wiki/"))
+let wikiItems = await Astro.fetchContent("../content/wiki/**/*.md")
 wikiItems = wikiItems
   .map((wikiItems) => postProcessWikiItem(wikiItems))
   .sort((a, b) => {

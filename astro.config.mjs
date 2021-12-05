@@ -12,6 +12,9 @@
 export default {
   renderers: [],
   vite: {
+    ssr: {
+      external: ["svgo"],
+    },
     plugins: [],
     resolve: {
       alias: {

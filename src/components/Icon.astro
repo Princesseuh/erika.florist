@@ -1,9 +1,0 @@
----
-import { promises } from "fs"
-const { src } = Astro.props
-
-// PERF: This isn't cached, which means it's currently reading the same files twice per page. Not so good
-const svgCode = await promises.readFile("." + src)
----
-
-{svgCode}

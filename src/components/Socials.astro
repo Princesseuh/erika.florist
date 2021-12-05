@@ -1,8 +1,5 @@
 ---
-import twitterSVG from "$theme/assets/twitter.svg"
-import githubSVG from "$theme/assets/github.svg"
-import mailSVG from "$theme/assets/mail.svg"
-import Icon from "$components/Icon.astro"
+import { Sprite } from "astro-icon"
 
 const { classes } = Astro.props
 ---
@@ -11,18 +8,20 @@ const { classes } = Astro.props
   <a
     href="https://twitter.com/_princesseuh"
     title="Link to my Twitter profile"
-    class="social-icon social-twitter">
-    <Icon src={twitterSVG} />
+    class="social-icon social-twitter"
+  >
+    <Sprite name="twitter" size="26px" />
   </a>
 
   <a
     href="https://github.com/Princesseuh"
     title="Link to my GitHub profile"
-    class="social-icon social-other">
-    <Icon src={githubSVG} />
+    class="social-icon social-other"
+  >
+    <Sprite name="github" size="26px" />
   </a>
 
   <a href="mailto:princssdev@gmail.com" title="Link to email me" class="social-icon social-other">
-    <Icon src={mailSVG} />
+    <Sprite name="mail" size="26px" />
   </a>
 </div>

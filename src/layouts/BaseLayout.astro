@@ -1,6 +1,7 @@
 ---
 import Header from "$components/Header.astro"
 import Socials from "$components/Socials.astro"
+import { SpriteSheet } from "astro-icon"
 import { generateSocialImage } from "astro-social-images"
 
 const { title, description, styles = [], js } = Astro.props
@@ -60,5 +61,6 @@ generateSocialImage({
         </section>
       </footer>
     </div>
+    <SpriteSheet />
   </body>
 </html>

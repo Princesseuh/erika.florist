@@ -5,6 +5,8 @@
   navigation:
     label: Wayland status
     category: linux
+  setup: |
+    import Image from '$components/MarkdownImage.astro';
 ---
 
 I've been using Wayland [since May 2020](https://github.com/Princesseuh/dotfiles/commit/42d18db2db41e4de08396d367d90612d2ec98f30) through [Sway](https://swaywm.org/), an i3 compatible windows manager
@@ -21,7 +23,7 @@ I, unfortunately for my Linux adventure, have a NVIDIA GPU, but thankfully, Sway
 
 I'll buy an AMD GPU next time
 
-{% image src="./wiki/linux/waylandstatus/waylandlogo.png", alt="The Wayland logo, a white W written on a yellow-ish circle using a graffiti font", caption="Wayland's logo" %}
+<Image src="waylandlogo.png" alt="The Wayland logo, a white W written on a yellow-ish circle using a graffiti font" caption="Wayland's logo" />
 
 ## The overall status of things
 
@@ -53,10 +55,10 @@ Unfortunately Electron apps tend to be slow at updating their Electron versions 
 
 Much like NVIDIA, Spotify tend to be a common name that pops up whenever someone has issues on their Linux setup. Spotify is a CEF app, which mean that you can make it run under Wayland using the flags for Chrome however...
 
-{% image src="./wiki/linux/waylandstatus/spotifywayland.jpg", alt="The normal spotify window, running under Wayland but also, an entirely black screen running under X11", caption="Spotify is always pretty good at giving us interesting bugs on Linux" %}
+<Image src="spotifywayland.jpg" alt="The normal spotify window, running under Wayland but also, an entirely black screen running under X11" caption="Spotify is always pretty good at giving us interesting bugs on Linux" />
 
 It does this whenever you run it under Wayland 😅
 
-The bottom window is running completely under Wayland and works perfectly, the top window however, in addition of being completely black and devoid of any apparent purpose is running under X11. That means that despite it working, you cannot run it without XWayland
+The bottom window is running completely under Wayland and works perfectly, the top window however, in addition of being completely black is running under X11 (I think the audio plays from that window, not sure). That means that despite it working, you cannot run it without XWayland
 
-Your best bet as the moment for running it under Wayland is probably to hide the black window somehow and just use it normally, forgetting that window ever existed
+Your best bet as the moment for running it natively under Wayland is probably to hide the black window somehow and just use it normally, forgetting that window ever existed

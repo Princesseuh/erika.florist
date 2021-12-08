@@ -5,6 +5,8 @@
   navigation:
     label: 'VS Code setup'
     category: computers
+  setup: |
+    import Image from '$components/MarkdownImage.astro';
 ---
 
 These days, my editor of choice is, like many people, [VS Code](https://code.visualstudio.com/)
@@ -13,7 +15,7 @@ Previously it was [Sublime Text](https://www.sublimetext.com/) but a Python-base
 
 Ok! Now that the goodbyes are done, let's talk about my VS Code setup
 
-{% image src="./wiki/computers/vscodesetup/screenshot.png", alt="Screenshot of my VS Code setup, the color scheme is dark, the sidebar is on the right", caption="My setup is pretty classic so don't expect anything too crazy. Some newly added settings might be missing from this particular screenshot" %}
+<Image src="screenshot.png" alt="Screenshot of my VS Code setup, the color scheme is dark, the sidebar is on the right" caption="My setup is pretty classic so don't expect anything too crazy. Some newly added settings might be missing from this particular screenshot" />
 
 ## Settings
 

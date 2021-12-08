@@ -4,11 +4,13 @@
   navigation:
     category: "linux"
     hidden: true
+  setup: |
+    import Image from '$components/MarkdownImage.astro';
 ---
 
 While trying to install the KDE file picker on Arch Linux, you'll most likely encounter the following situation unless you're already using KDE softwares: You'll install `kdialog` expecting it to be enough to open the KDE file dialog, but instead, you'll see this:
 
-{% image src="./wiki/linux/filepickertragedy/kdialog.png", alt="The Qt file picker", caption="What is that?" %}
+<Image src="/wiki/linux/filepickertragedy/kdialog.png" alt="The Qt file picker" caption="What is that?" />
 
 That's the default Qt file picker. To get the KDE one, the minimum list of packages (in addition to `kdialog`) you need to install are those:
 

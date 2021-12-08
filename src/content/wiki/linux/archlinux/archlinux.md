@@ -4,6 +4,8 @@
   loadCSSModules: ["code"]
   navigation:
     category: 'linux'
+  setup: |
+    import Image from '$components/MarkdownImage.astro';
 ---
 
 Being a nerd, I was always interested in trying out things on my computers and so, eventually that lead to me wanting to become a [florist](/wiki/introtoflowers) when I discovered that computers are well... computers
@@ -20,7 +22,7 @@ There's other things that I don't really like about Ubuntu (forcing snaps over t
 
 After stumbling around the Linux world, trying out many distros for a few days / weeks and ultimately always being displeased, eventually I did what everyone does: I installed Arch
 
-{% image src="./wiki/linux/archlinux/arch_logo.png", alt="Arch Linux logo" %}
+<Image src="arch_logo.png" alt="Arch Linux logo" />
 
 ### My first steps with Arch
 

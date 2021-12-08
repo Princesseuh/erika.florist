@@ -5,11 +5,15 @@
   navigation:
     label: Swedish + FR CA Layout
     category: linux
+  setup: |
+    import Image from '$components/MarkdownImage.astro';
 ---
 
 Swedish has three additional characters in its alphabet: Ää, Öö and Åå. The first two can be typed with any layouts supporting diaereses (`¨`) but the third one can't be typed on any layout except the Scandinavians and the US-International ones (also [the UK extended one but exclusively on ChromeOS, weird](https://en.wikipedia.org/wiki/QWERTY#Chrome_OS))
 
 However, despite needing those characters, I use the layout I'm most accustomed to due to growing up with it which is : The French Canadian keyboard (it's basically QWERTY with accents) so in this article, let's figure out together how to add Åå to my keyboard on Linux. Nu går vi!
+
+<Image src="swedish_keyboard.png" alt="Swedish keyboard Layout" caption="The Swedish keyboard. Credit: [Wikipedia](https://commons.wikimedia.org/wiki/File:KB_Sweden.svg)" />
 
 As you can see on the image above, the characters are normally on their own key. Let's start with a controversial take: We won't do this
 

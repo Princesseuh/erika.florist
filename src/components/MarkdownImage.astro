@@ -1,19 +1,31 @@
 ---
 import Image from "@11ty/eleventy-img"
 import { generateImage } from "$utils"
-const { src, alt, caption, options = {}, sizes = "", classes = undefined } = Astro.props
+import { Markdown } from "astro/components"
+const {
+  src,
+  alt,
+  caption,
+  options = {},
+  sizes = "",
+  classes = undefined,
+  quality = 90,
+} = Astro.props
 const { url } = Astro.request
 
 const image = generateImage(
-  "src/content" + url.pathname + "/" + src,
+  // If our URL starts with a slash, let's assume the user know what they're doing and not alter the URL apart from the content prefix
+  // The reason this is needed is for subarticles, even though they reside in the same folder as their parent, their path
+  // is not accurate to the file structure and so, looking the image relatively doesn't work - erika, 2021-12-08
+  src.startsWith("/") ? "src/content" + src : "src/content" + url.pathname + "/" + src,
   Object.assign(options, {
     widths: [null],
     formats: ["avif", "webp", "png"],
     sharpWebpOptions: {
-      quality: 90,
+      quality: quality,
     },
     sharpAvifOptions: {
-      quality: 90,
+      quality: quality,
     },
   }),
   false,
@@ -27,9 +39,15 @@ const imageAttributes = {
 }
 
 const html = Image.generateHTML(image, imageAttributes)
+const props: Record<string, string> = {}
+props.class ??= classes
 ---
 
-<figure>
+<figure {...props}>
   {html}
-  {caption && <figcaption>{caption}</figcaption>}
+  {caption && (
+    <figcaption>
+      <Markdown>{caption}</Markdown>
+    </figcaption>
+  )}
 </figure>

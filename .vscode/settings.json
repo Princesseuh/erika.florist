@@ -4,5 +4,15 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "prettier.documentSelectors": ["**/*.astro"]
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": false,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.markdownlint": true
+    }
+  },
+  "prettier.documentSelectors": ["**/*.astro"],
+  "markdownlint.config": {
+    "MD033": false // Since we use components in our markdown files, we disable this rule that prevents HTML
+  }
 }

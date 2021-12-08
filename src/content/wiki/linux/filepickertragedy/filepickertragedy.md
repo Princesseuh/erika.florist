@@ -5,6 +5,8 @@
   navigation:
     label: File pickers dilemma
     category: linux
+  setup: |
+    import Image from '$components/MarkdownImage.astro';
 ---
 
 File pickers on Linux are.. not good. Pretty much all of them have a few shortcomings that makes the experience fairly deplorable
@@ -18,13 +20,15 @@ But, first of all, what is a file picker? A file picker is the window that open 
   </a>
 </div>
 
-There's usually only minors differences between the two, oftentimes the only change is the input field for the name of the item being saved but as we'll see, every platform has his own take on what a file picker should have for features. Let's look at it together!
+There's usually only minors differences between the two, oftentimes the only change is the input field for the name of the item being saved but as we'll see, every desktop environnement has its own take on what a file picker should have for features. Let's look at it together!
+
+(If the save button doesn't work, you can try pressing CTRL+S or using the "Save as" option in your browser)
 
 ## The GNOME file picker
 
 Right now, if you're using Gnome or any other DE that doesn't have its own file picker and try to save this page, you'll see something that looks like this:
 
-{% image src="./wiki/linux/filepickertragedy/gnomepicker.png", alt="The GNOME default filepicker", caption="Don't mind the double video folders, it's my fault" %}
+<Image src="gnomepicker.png" alt="The GNOME default filepicker" caption="Don't mind the double video folders, it's my fault" />
 
 This is the default GTK file picker, all applications using GTK (which is a lot) use it. It works nicely but.. It's extremely impractical compared to its alternatives
 
@@ -34,9 +38,9 @@ Outside of that specific thing, it has a lot of issues and bugs that makes it re
 
 - You can't create a new folder from the right click menu
 - It doesn't seem to remember its settings half the time so you need to press right click then "view hidden files" everytime
-- It cannot open URLs, this is especially annoying when wanting to set for instance, your Discord avatar using an URL. You have to download the file manually and stuff while Windows will just accept it (and download the picture to its temp folder)
+- It cannot open URLs, this is especially annoying when wanting to set for instance, your Discord avatar using an URL. You have to download the file manually and stuff while Windows will just accept it (automatically downloading the picture to its temp folder)
 - The navigation buttons and the "url bar" are separated, this uses up a lot of space where they could be merged like they are on Windows. The file name could be at the bottom, like it is on other file saving dialogs, especially considering there's a lot of empty space there
-- Huge performance issues in large folders (which also lead to usability issues due to the cursor often jumping)
+- Huge performance issues in large folders (which also lead to usability issues due to the cursor often jumping around)
 - Weird behaviour when searching for files
 
 Anyway, I've already moved on from my griefs regarding the GNOME file picker. After all, I've been using it (suffering from it) for the past 10 years or so at this point.
@@ -49,13 +53,13 @@ Frankly, it's much much better than the GNOME one these days, first it has thumb
 
 However it's still has flaws, it cannot open URLs and doesn't really have a search feature outside of those, it has all you would expect from a file picker
 
-{% image src="./wiki/linux/filepickertragedy/kdepicker.png", alt="The KDE default filepicker", caption="Thumbnails only appear when you are a bit more zoomed but I swear, they definitely exists" %}
+<Image src="kdepicker.png" alt="The KDE default filepicker" caption="Thumbnails only appear when you are a bit more zoomed but I swear, they definitely exists" />
 
 So it has thumbnails and bookmarks, the "url" bar works like the one on Windows where it works both as navigation and a typing area and it even has syntax coloring in his text preview! It's definitely much better than the GNOME one so, what's the catch?
 
 Well, it's KDE. Unless you're already using KDE softwares, you'll have to install a lot of dependencies for it (kdialog doesn't suffice on a non-KDE setup, see the Arch install guide below). KDE also has the tendency to absolutely rampage through your `.config` folder, creating many config files for softwares you didn't even know the existence of. It's unfortunately really hard to cleanly get specific parts of KDE due to its design
 
-{% image src="./wiki/linux/filepickertragedy/kdeexperience.png", alt="Trojan horse meme where the horse is the KDE file picker and the soldiers inside are 'thousands of dependencies'", caption="Stop baiting me with the pretty UI KDE! I know what you're up to!" %}
+<Image src="kdeexperience.png" alt="Trojan horse meme where the horse is the KDE file picker and the soldiers inside are 'thousands of dependencies'" caption="Stop baiting me with the pretty UI KDE! I know what you're up to!" />
 
 Additionally, some softwares just.. don't support it. Chrome and Firefox both does (Chrome does natively, Firefox does through `xdg-desktop-portal`) but for instance, Electron apps using a version older than 14 won't use it. Which, unfortunately for computing, means that even on a full KDE setup, you might eventually encounter the GTK file dialog at some point
 
@@ -69,7 +73,7 @@ See [Installing the KDE file picker on Arch Linux](/wiki/linux/kdearchlinux) for
 
 Deepin and Wayland are not the biggest friends so I was not able to install this on my normal setup, in general integrating the Deepin file picker in your system is a bit troublesome. Deepin programs tend to not work too well outside of a full Deepin setup. Additionally, much like the KDE one, it doesn't come alone (damn trojan horse!) and isn't well supported
 
-{% image src="./wiki/linux/filepickertragedy/deepinpicker.png", alt="Deepin default file picker, it's pretty", caption="It's pretty, it has thumbnails and it comes with a dark theme too!" %}
+<Image src="deepinpicker.png" alt="Deepin default file picker, it's pretty" caption="It's pretty, it has thumbnails and it comes with a dark theme too!" />
 
 It's possible to integrate it in Chromium using the following value for `XDG_CURRENT_DESKTOP`: `KDE:deepin`. The reason it works is because Chromium checks if any of the values (separated by colons) is equal to KDE and if so, it uses kdialog. Just putting KDE won't work however because kdialog needs `XDG_CURRENT_DESKTOP` to be set to `deepin` in order to get the proper dialog
 
@@ -81,7 +85,7 @@ In general, Deepin unfortunately tends to be not so stable, have performance iss
 
 Despite Elementary being known for its beautiful apps, the Pantheon file picker is essentially the base GTK one with a few minors changes, unfortunately it seems to be forked from an older version and thus lacks the ability to complete paths in the input field
 
-{% image src="./wiki/linux/filepickertragedy/pantheonpicker.png", alt="Pantheon's picker, same as GNOME more or less", caption="Yeah, we've seen this before" %}
+<Image src="pantheonpicker.png" alt="Pantheon's picker, same as GNOME more or less" caption="Yeah, we've seen this before" />
 
 It has the buttons at the top, which is probably a more efficient usage of space at least. Also, the search function isn't hidden behind a keybind/typing on this one, that's for the better really. Outside of that, there's not much to say
 
@@ -91,7 +95,7 @@ A cool thing Elementary has is full support of GtkFileChooserNative on all their
 
 ## Results of our findings
 
-With all things considered (outside of purely visuals, that can always be themed more or less) the KDE picker is probably the best choice:
+With all things considered (outside of purely visuals, that can always be themed more or less), to me at least, the KDE picker is the best choice:
 
 - It's not that hard to get it working and integrate on a non-KDE setup, at least on Arch
 - It's fairly well supported and more and more apps are getting support for it thanks to GtkFileChooserNative
@@ -106,7 +110,9 @@ Either way, pick your poison. I'll be the KDE fangirl in this war
 
 The reality is that sure, the KDE or Deepin pickers might be better than the GTK one but they are still really not as good as the Windows one is. And I'm not talking necessarily about the latest, shiniest Windows 11 one, even older ones are still better than what we can have on Linux today
 
-It does have shortcomings, this is computers after all, but overall it has a really good UX and all the features you need, thumbnails, bookmarks, search, network support, urls etc. The file picker on Windows is basically just a `explorer.exe` window which means that it's also consistant with what people are used to, something that Linux isn't always that good at
+It does have shortcomings, this is computers after all, but overall it has a fairly good UX and all the features you need, thumbnails, bookmarks, search, network support, url support etc. The file picker on Windows is basically just a `explorer.exe` window which means that it's also consistant with what people are used to, something that Linux isn't always that good at
+
+macOS's file picker is also much better than Linux's offerings. While Finder is.. not always a very good software, the file picking part is pretty good. I especially like how some things are combined, for instance opening a folder or a file is done in the same window, unlike Windows which has a special view for folders (which is also good imo, depends on your needs)
 
 {% note "Fun fact" %}
 You'll be impressed to know that even though I had to install multiple complete DE for this article, the only thing that broke on my system was my monospace font in my browser

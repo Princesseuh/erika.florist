@@ -2,7 +2,7 @@ const plugin = require("tailwindcss/plugin")
 
 module.exports = {
   mode: "jit",
-  purge: ["./src/**/*.{astro,js,ts,tsx}", "safelist.txt"],
+  purge: ["./src/**/*.{astro,js,ts,tsx,md}", "safelist.txt"],
   corePlugins: {
     preflight: false,
 
@@ -205,6 +205,11 @@ module.exports = {
 
         ".foonotes__list-item": {
           marginBottom: ".5rem",
+        },
+
+        // Image rendering
+        ".pixelated": {
+          imageRendering: "pixelated",
         },
       })
     }),

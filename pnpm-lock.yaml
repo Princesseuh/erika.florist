@@ -6,7 +6,7 @@ specifiers:
   '@types/prettier': ^2.4.2
   '@typescript-eslint/eslint-plugin': ^5.6.0
   '@typescript-eslint/parser': ^5.6.0
-  astro: 0.21.4
+  astro: ^0.21.11
   astro-icon: 0.2.2
   astro-social-images: ^0.2.1
   autoprefixer: ^10.4.0
@@ -35,7 +35,7 @@ dependencies:
 
 devDependencies:
   '@11ty/eleventy-img': 1.0.0
-  astro: 0.21.4_typescript@4.5.2
+  astro: 0.21.11_typescript@4.5.2
   typescript: 4.5.2
 
 packages:
@@ -66,33 +66,10 @@ packages:
       - supports-color
     dev: true
 
-  /@astrojs/compiler/0.3.9:
-    resolution: {integrity: sha512-TzmIzpB6bpGD3vghcj+cXPckXkRCf6zHcVupf6F2b9WpFkMAvrXoafkKJIids2Mq9aU4p7ooVcIDGZ9tpqZpyw==}
-    dependencies:
-      typescript: 4.5.2
-    dev: true
-
   /@astrojs/compiler/0.5.7:
     resolution: {integrity: sha512-SMmgApjroKy6PGSjofTBbl9kIQb7/ywtiP0hYpa/x2yuiCQQoe+QLusOnNgmGDgJBmV/5UVEf1+EA+77s4acHQ==}
     dependencies:
       typescript: 4.5.2
-    dev: false
-
-  /@astrojs/language-server/0.7.19:
-    resolution: {integrity: sha512-6ZZtId4NGvMyXILbOdsAE6gllCxd7tpFL6zrMdtQcVvd1XZAABq7hmUDAD1BIfG0HHVz7cHxe5Wxq+cLWIYyVw==}
-    hasBin: true
-    dependencies:
-      lodash: 4.17.21
-      source-map: 0.7.3
-      ts-morph: 12.2.0
-      typescript: 4.5.2
-      vscode-css-languageservice: 5.1.9
-      vscode-emmet-helper: 2.1.2
-      vscode-html-languageservice: 3.2.0
-      vscode-languageserver: 6.1.1
-      vscode-languageserver-protocol: 3.16.0
-      vscode-languageserver-textdocument: 1.0.3
-    dev: true
 
   /@astrojs/language-server/0.8.2:
     resolution: {integrity: sha512-AD2KDWM5CJMyhvD+ME8yJNvppliLizY34zRO+sFJ0xZ0YDIcIW9+Q0Y2gdYGoPLsr0xCu5SLpF0EmlHmTtfYEw==}
@@ -110,7 +87,6 @@ packages:
       vscode-languageserver-textdocument: 1.0.3
       vscode-languageserver-types: 3.16.0
       vscode-uri: 3.0.2
-    dev: false
 
   /@astrojs/markdown-remark/0.5.0:
     resolution: {integrity: sha512-2A+PNNZ1w/GOZeLGRBco8QO6o3R8xtJY5EbQXwP3KmZ8xQZuVsZxX4HFpkFOvzm7ADCHZr7h6yVSdaoOAUb6UQ==}
@@ -160,17 +136,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
 
-  /@astrojs/renderer-react/0.3.0_@babel+core@7.16.0:
-    resolution: {integrity: sha512-pb9gKVHJwtFNoYrtSnBfOPm/0IerEGe6MCDrgys5lwVPWiZ9Di+7uK+C2/UdBuHDM8NEKw+zXA+6qZi/endy+g==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    dependencies:
-      '@babel/plugin-transform-react-jsx': 7.16.0_@babel+core@7.16.0
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-    transitivePeerDependencies:
-      - '@babel/core'
-    dev: true
-
   /@astrojs/renderer-react/0.3.1_@babel+core@7.16.0:
     resolution: {integrity: sha512-TqwQyVHhzbFKuF8+jMOlrxM767nubzZzCKuKTAzmrCRLa8vMXPqcPS7JXWD7Q6s6gXln3yhat6+3iodwgurwlw==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
@@ -180,31 +145,6 @@ packages:
       react-dom: 17.0.2_react@17.0.2
     transitivePeerDependencies:
       - '@babel/core'
-    dev: false
-
-  /@astrojs/renderer-svelte/0.2.1_8c1fa7d102337d10493564850ef6770d:
-    resolution: {integrity: sha512-0pifE/w+K6eLrDT0urBYPOBJzF7e4sL3+td7o1p4a3yGXPQsr5eKKQ66lyIKl7sgg5bXOVQhVMQbnm6rGqHxVA==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    dependencies:
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.30_svelte@3.44.2+vite@2.6.14
-      svelte: 3.44.2
-      svelte-preprocess: 4.9.8_77bdd22b352f8343175e86d128d31396
-    transitivePeerDependencies:
-      - '@babel/core'
-      - coffeescript
-      - diff-match-patch
-      - less
-      - node-sass
-      - postcss
-      - postcss-load-config
-      - pug
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - typescript
-      - vite
-    dev: true
 
   /@astrojs/renderer-svelte/0.2.2_8c1fa7d102337d10493564850ef6770d:
     resolution: {integrity: sha512-6fs/skQURDvn2K/TVAgOmqcMUaGuocV7EwAzthHTJzlfRQUbNEWmyLtuvjcSCZnY+28vupKjEarWl3IsyqJh6Q==}
@@ -228,17 +168,6 @@ packages:
       - supports-color
       - typescript
       - vite
-    dev: false
-
-  /@astrojs/renderer-vue/0.2.0_vite@2.6.14:
-    resolution: {integrity: sha512-YfQwghT0/n/tNbi/93wWsqNUwUxRCi76CdNvBRNyP01JVTZisQyqtT8yOJYGgMgqxQEscpPmD467dK89knd5gQ==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    dependencies:
-      '@vitejs/plugin-vue': 1.10.1_vite@2.6.14
-      vue: 3.2.23
-    transitivePeerDependencies:
-      - vite
-    dev: true
 
   /@astrojs/renderer-vue/0.2.1_vite@2.6.14:
     resolution: {integrity: sha512-nawWIzwL40M8ran4zQaYckAdHwn1HeD6zTRH3LKCENeAjn3bJ4wxJ2KD9dZw4twACP+yBZm3y2N7iX+6CyueIQ==}
@@ -248,7 +177,6 @@ packages:
       vue: 3.2.23
     transitivePeerDependencies:
       - vite
-    dev: false
 
   /@babel/code-frame/7.16.0:
     resolution: {integrity: sha512-IF4EOMEV+bfYwOmNxGzSnjR2EmQod7f1UXOpZM3l4i4o4QNwzjtJAu/HxdjHq0aYBvdqMuQEY1eg0nqW9ZPORA==}
@@ -1142,77 +1070,6 @@ packages:
       - sugarss
       - supports-color
       - typescript
-    dev: false
-
-  /astro/0.21.4_typescript@4.5.2:
-    resolution: {integrity: sha512-LDGPBbRDb54NZxRKzYEypphyoyVY5WwL3Lg/i9DiUlYmojfm5q/tw8kRgVj+nP0VNrJ/SrzIeVgtJmXMhwa3UQ==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0, npm: '>=6.14.0'}
-    hasBin: true
-    dependencies:
-      '@astrojs/compiler': 0.3.9
-      '@astrojs/language-server': 0.7.19
-      '@astrojs/markdown-remark': 0.5.0
-      '@astrojs/prism': 0.3.0
-      '@astrojs/renderer-preact': 0.3.1_@babel+core@7.16.0
-      '@astrojs/renderer-react': 0.3.0_@babel+core@7.16.0
-      '@astrojs/renderer-svelte': 0.2.1_8c1fa7d102337d10493564850ef6770d
-      '@astrojs/renderer-vue': 0.2.0_vite@2.6.14
-      '@babel/core': 7.16.0
-      '@babel/traverse': 7.16.3
-      '@proload/core': 0.2.2
-      '@proload/plugin-tsm': 0.1.1_@proload+core@0.2.2
-      '@types/babel__core': 7.1.16
-      '@web/parse5-utils': 1.3.0
-      astring: 1.8.1
-      ci-info: 3.3.0
-      connect: 3.7.0
-      eol: 0.9.1
-      es-module-lexer: 0.7.1
-      esbuild: 0.13.7
-      estree-util-value-to-estree: 1.3.0
-      fast-glob: 3.2.7
-      fast-xml-parser: 3.21.1
-      html-entities: 2.3.2
-      htmlparser2: 7.2.0
-      kleur: 4.1.4
-      magic-string: 0.25.7
-      mime: 2.6.0
-      morphdom: 2.6.1
-      node-fetch: 3.1.0
-      parse5: 6.0.1
-      path-to-regexp: 6.2.0
-      postcss: 8.4.4
-      prismjs: 1.25.0
-      rehype-slug: 5.0.0
-      resolve: 1.20.0
-      rollup: 2.60.2
-      sass: 1.44.0
-      semver: 7.3.5
-      send: 0.17.1
-      shiki: 0.9.14
-      shorthash: 0.0.2
-      slash: 4.0.0
-      sourcemap-codec: 1.4.8
-      srcset-parse: 1.1.0
-      string-width: 5.0.1
-      strip-ansi: 7.0.1
-      supports-esm: 1.0.0
-      tsconfig-resolver: 3.0.1
-      vite: 2.6.14_sass@1.44.0
-      yargs-parser: 20.2.9
-      zod: 3.11.6
-    transitivePeerDependencies:
-      - coffeescript
-      - diff-match-patch
-      - less
-      - node-sass
-      - postcss-load-config
-      - pug
-      - stylus
-      - sugarss
-      - supports-color
-      - typescript
-    dev: true
 
   /autoprefixer/10.4.0:
     resolution: {integrity: sha512-7FdJ1ONtwzV1G43GDD0kpVMn/qbiNqyOPMFTX5nRffI+7vgWoFEc6DcXOxHJxrWNDXrZh18eDsZjvZGUljSRGA==}
@@ -2268,7 +2125,6 @@ packages:
 
   /estree-walker/3.0.0:
     resolution: {integrity: sha512-s6ceX0NFiU/vKPiKvFdR83U1Zffu7upwZsGwpoqfg5rbbq1l50WQ5hCeIvM6E6oD4shUHCYMsiFPns4Jk0YfMQ==}
-    dev: false
 
   /esutils/2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}

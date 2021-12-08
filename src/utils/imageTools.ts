@@ -7,8 +7,20 @@ export function generateImage(src, options, addBasePath = true) {
   })
   src = (addBasePath ? "src/assets" : "") + src
   ;(async () => {
-    const data = await Image(src, settings)
+    await Image(src, settings)
   })()
 
   return Image.statsSync(src, settings)
+}
+
+export interface ImageFormat {
+  format: string
+  width: number
+  height: number
+  filename: string
+  outputPath: string
+  url: string
+  sourceType: string
+  srcset: string
+  size: number
 }

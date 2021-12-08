@@ -1,7 +1,7 @@
 import type { BaseObject } from "./shared"
 import { postProcessBase } from "./shared"
 import { basename, dirname } from "path"
-import { generateImage, getBaseSiteURL } from "$utils"
+import { generateImage, getBaseSiteURL, ImageFormat } from "$utils"
 
 enum CatalogueType {
   GAME = "game",
@@ -68,7 +68,7 @@ function postProcessCatalogueItem(item: CatalogueItem): CatalogueItem {
   const itemBaseDir = `/catalogue/${item.type}s/${item.slug}`
   item.url = new URL(itemBaseDir, getBaseSiteURL())
 
-  const cover = generateImage(itemBaseDir + `.jpg`, {
+  const cover: Record<string, Array<ImageFormat>> = generateImage(itemBaseDir + `.jpg`, {
     widths: [300],
     formats: ["avif", "webp", "jpeg"],
   })

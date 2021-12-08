@@ -1,6 +1,6 @@
 import { BaseObject, postProcessBase } from "./shared"
 import { basename, dirname } from "path"
-import { getBaseSiteURL, generateImage } from "$utils"
+import { getBaseSiteURL, generateImage, ImageFormat } from "$utils"
 
 interface Project extends BaseObject {
   type: ProjectType
@@ -36,10 +36,13 @@ function postProcessProject(project: Project): Project {
   project.assets = {}
 
   if (project.featured) {
-    const indexCover = generateImage(projectBaseDir + "/cover.png", {
-      widths: [380, 600],
-      formats: ["avif", "webp", "jpeg"],
-    })
+    const indexCover: Record<string, Array<ImageFormat>> = generateImage(
+      projectBaseDir + "/cover.png",
+      {
+        widths: [380, 600],
+        formats: ["avif", "webp", "jpeg"],
+      },
+    )
 
     project.assets.indexCover = `<picture>
     ${Object.values(indexCover)
@@ -61,10 +64,13 @@ function postProcessProject(project: Project): Project {
     </picture>`
   }
 
-  const miniLogo = generateImage(projectBaseDir + "/mini-logo.png", {
-    widths: [128, 96],
-    formats: ["avif", "webp", "png"], // We need transparency on those so can't use jpegs
-  })
+  const miniLogo: Record<string, Array<ImageFormat>> = generateImage(
+    projectBaseDir + "/mini-logo.png",
+    {
+      widths: [128, 96],
+      formats: ["avif", "webp", "png"], // We need transparency on those so can't use jpegs
+    },
+  )
 
   project.assets.miniLogo = `<picture>
     ${Object.values(miniLogo)

@@ -1,6 +1,10 @@
 import Image from "@11ty/eleventy-img"
 
-export function generateImage(src, options, addBasePath = true) {
+export function generateImage(
+  src: string,
+  options,
+  addBasePath = true,
+): Record<string, ImageFormat[]> {
   const settings = Object.assign(options, {
     outputDir: "public/assets/images",
     urlPath: "/assets/images",

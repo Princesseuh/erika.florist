@@ -1,7 +1,7 @@
 ---
 import Header from "$components/Header.astro"
 import Socials from "$components/Socials.astro"
-import { SpriteSheet } from "astro-icon"
+import { Sprite } from "astro-icon"
 import { generateSocialImage } from "astro-social-images"
 
 const { title, description, styles = [], js } = Astro.props
@@ -47,25 +47,26 @@ generateSocialImage(
     <script type="module" defer src={Astro.resolve("../scripts/main.ts")}></script>
   </head>
   <body>
-    <div id="app" class="bg-baltic-sea">
-      <Header />
+    <Sprite.Provider>
+      <div id="app" class="bg-baltic-sea">
+        <Header />
 
-      <main class="px-6 lg:px-0">
-        <slot />
-      </main>
+        <main class="px-6 lg:px-0">
+          <slot />
+        </main>
 
-      <footer class="px-6 sm:px-0 py-6 flex justify-center leading-tight bg-darker-skylines">
-        <section class="flex justify-between w-footer">
-          <Socials />
+        <footer class="px-6 sm:px-0 py-6 flex justify-center leading-tight bg-darker-skylines">
+          <section class="flex justify-between w-footer">
+            <Socials />
 
-          <div>
-            Powered by <a href="https://astro.build/">Astro</a><br />
-            <a href="https://github.com/Princesseuh/princesseuh.dev">Source Code</a><br />
-            <a href="/settings">Settings</a>
-          </div>
-        </section>
-      </footer>
-    </div>
-    <SpriteSheet />
+            <div>
+              Powered by <a href="https://astro.build/">Astro</a><br />
+              <a href="https://github.com/Princesseuh/princesseuh.dev">Source Code</a><br />
+              <a href="/settings">Settings</a>
+            </div>
+          </section>
+        </footer>
+      </div>
+    </Sprite.Provider>
   </body>
 </html>

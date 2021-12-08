@@ -115,8 +115,4 @@ function getCatalogueTypeFromURL(path: string): CatalogueType {
   return basename(dirname(path)).slice(0, -1) as CatalogueType
 }
 
-function getCatalogueURL(item: CatalogueItem): URL {
-  return new URL(`/catalogue/${item.type}s/${item.slug}`, getBaseSiteURL())
-}
-
 export { postProcessCatalogueItem, CatalogueItem, CatalogueType }

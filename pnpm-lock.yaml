@@ -7,7 +7,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.6.0
   '@typescript-eslint/parser': ^5.6.0
   astro: ^0.21.11
-  astro-icon: 0.2.2
+  astro-icon: 0.5.0
   astro-social-images: ^0.2.1
   autoprefixer: ^10.4.0
   eslint: ^8.4.1
@@ -24,7 +24,7 @@ dependencies:
   '@types/prettier': 2.4.2
   '@typescript-eslint/eslint-plugin': 5.6.0_16d83f5c41c3abb1061a82b07c18e4f3
   '@typescript-eslint/parser': 5.6.0_eslint@8.4.1+typescript@4.5.2
-  astro-icon: 0.2.2
+  astro-icon: 0.5.0
   astro-social-images: 0.2.1_typescript@4.5.2
   autoprefixer: 10.4.0
   eslint: 8.4.1
@@ -978,9 +978,10 @@ packages:
     resolution: {integrity: sha512-Aj3mbwVzj7Vve4I/v2JYOPFkCGM2YS7OqQTNSxmUR+LECRpokuPgAYghePgr6SALDo5bD5DlfbSaYjOzGJZOLQ==}
     hasBin: true
 
-  /astro-icon/0.2.2:
-    resolution: {integrity: sha512-ozSCTo+5DGPkNmXBxLMzpqq+B+I8+WO/k5LURGFjvHXyOgiYcI/5xxjGkXWCMdQC6jtuJGtwHcQbEkQDAIpIpQ==}
+  /astro-icon/0.5.0:
+    resolution: {integrity: sha512-rQg8l8VwLnXltglISVGFzS8gW8Umsy3NO5WjybRxh1nsfH8UvsjO9LPEdL3EwZKqP7fxBBAP00+LyXDizKC+NA==}
     dependencies:
+      node-fetch: 3.1.0
       svgo: 2.8.0
     dev: false
 

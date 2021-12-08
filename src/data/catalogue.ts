@@ -1,7 +1,7 @@
 import type { BaseObject } from "./shared"
 import { postProcessBase } from "./shared"
 import { basename, dirname } from "path"
-import { getBaseSiteURL } from "$utils"
+import { generateImage, getBaseSiteURL } from "$utils"
 
 enum CatalogueType {
   GAME = "game",
@@ -16,7 +16,7 @@ interface CatalogueItemBase extends BaseObject {
   genre: string
   started_on: Date
   ended_on?: Date // If we don't have an ended_on, it means it was done in a day (for movies, one shots etc)
-  cover?: URL
+  cover?: string
   cover_alt: string // Used for alt attribute on the cover, a11y yay
 }
 
@@ -65,8 +65,38 @@ function postProcessCatalogueItem(item: CatalogueItem): CatalogueItem {
   item = postProcessBase(item) as CatalogueItem
 
   item.type = getCatalogueTypeFromURL(item.file.pathname)
-  item.url = getCatalogueURL(item)
-  item.cover = new URL(item.url.href.replace("/catalogue/", "/assets/catalogue/") + ".jpg")
+  const itemBaseDir = `/catalogue/${item.type}s/${item.slug}`
+  item.url = new URL(itemBaseDir, getBaseSiteURL())
+
+  const cover = generateImage(itemBaseDir + `.jpg`, {
+    widths: [300],
+    formats: ["avif", "webp", "jpeg"],
+  })
+
+  function escapeHtml(unsafe) {
+    return unsafe.replace(/</g, "&lt;").replace(/>/g, "&gt;")
+  }
+
+  item.cover = escapeHtml(`<picture>
+    ${Object.values(cover)
+      .map(
+        (imageFormat) =>
+          `<source type="${imageFormat[0].sourceType}" srcset="${imageFormat
+            .map((entry) => entry.srcset)
+            .join(", ")}">`,
+      )
+      .join("\n")}
+      <img
+        class="max-w-[200px] max-h-[300px]"
+        src="${cover.jpeg[0].url}"
+        alt="${item.cover_alt}"
+        width="200"
+        height="300"
+        loading="lazy"
+        decoding="async">
+    </picture>`)
+
+  item.cover = item.cover.replace(/(\r\n|\n|\r)/gm, "")
 
   item.started_on = new Date(item.started_on)
   if (item.ended_on) {

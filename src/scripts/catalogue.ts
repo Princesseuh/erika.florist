@@ -21,7 +21,7 @@ function buildLibrary(subset: CatalogueJSONItem[] = fullElements) {
     itemContainer.className = "w-[200px]"
     itemContainer.innerHTML = `
             <a href="${item.url}" class="hover:no-underline">
-                <img src="${item.cover}" alt="${item.cover_alt}" class="max-w-[200px] max-h-[300px]" width="300" height="300" loading="lazy" decoding="async"/>
+                ${item.cover}
                 <span class="block">${item.title}</span>
                 <span class="test-sm text-creative-work">${item.creator}</span>
             </a>
@@ -40,7 +40,7 @@ function buildLibrary(subset: CatalogueJSONItem[] = fullElements) {
     .then((response) => response.text())
     .then((data) => {
       const parser = new DOMParser()
-      data = parser.parseFromString(data, "text/html").getElementsByTagName("body")[0].innerText
+      data = parser.parseFromString(data, "text/html").getElementsByTagName("body")[0].textContent
       fullElements = JSON.parse(data)
       buildLibrary()
     })

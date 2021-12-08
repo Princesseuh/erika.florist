@@ -5,11 +5,13 @@
   navigation:
     label: "PICO-8 + VS Code"
     category: computers
+  setup: |
+    import Image from '$components/MarkdownImage.astro';
 ---
 
 I like [PICO-8, the fantasy console by Lexaloffle](https://www.lexaloffle.com/pico-8.php). It's really useful and cute whenever I feel like making small games. It's pretty good
 
-{% image src="./wiki/computers/vscodepico8/pico8.png", alt="Swedish keyboard Layout", caption="The PICO-8 window. It's small" %}
+<Image src="pico8.png" alt="The PICO-8 code editor, its window is really small" caption="The PICO-8 window. It's small" />
 
 However, I despise programming in its window, it's **really** small, promote bad code design due to its restrictions and well, overall isn't that comfortable. Over the years, I got really used to having my code on one screen and the result on the other but this unfortunately isn't possible with PICO-8. I think promoting faster iterations would be really beneficial since it's often used for fast prototyping or jams but hey, I'm not the devs 🤷‍♀️
 

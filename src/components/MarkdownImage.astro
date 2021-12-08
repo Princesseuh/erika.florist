@@ -1,0 +1,35 @@
+---
+import Image from "@11ty/eleventy-img"
+import { generateImage } from "$utils"
+const { src, alt, caption, options = {}, sizes = "", classes = undefined } = Astro.props
+const { url } = Astro.request
+
+const image = generateImage(
+  "src/content" + url.pathname + "/" + src,
+  Object.assign(options, {
+    widths: [null],
+    formats: ["avif", "webp", "png"],
+    sharpWebpOptions: {
+      quality: 90,
+    },
+    sharpAvifOptions: {
+      quality: 90,
+    },
+  }),
+  false,
+)
+
+const imageAttributes = {
+  alt: alt,
+  sizes: sizes,
+  loading: "lazy",
+  decoding: "async",
+}
+
+const html = Image.generateHTML(image, imageAttributes)
+---
+
+<figure>
+  {html}
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

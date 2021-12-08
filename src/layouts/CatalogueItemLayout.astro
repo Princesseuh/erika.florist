@@ -3,6 +3,10 @@ import BaseLayout from "$layouts/BaseLayout.astro"
 import { CatalogueType } from "$data/catalogue"
 import { readableDate } from "$utils"
 
+function unescapeHtml(unsafe) {
+  return unsafe.replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+}
+
 const { catalogueItem } = Astro.props
 
 let metaInfo = []
@@ -14,8 +18,8 @@ switch (catalogueItem.type) {
         Genre: catalogueItem.genre,
       },
       {
-        "Started On": readableDate(catalogueItem.started_on),
-        "Ended On": readableDate(catalogueItem.ended_on),
+        "Started on": readableDate(catalogueItem.started_on),
+        "Ended on": readableDate(catalogueItem.ended_on),
       },
     ]
 
@@ -42,8 +46,8 @@ switch (catalogueItem.type) {
         Platform: catalogueItem.platform,
       },
       {
-        "Started On": readableDate(catalogueItem.started_on),
-        "Ended On": readableDate(catalogueItem.ended_on),
+        "Started on": readableDate(catalogueItem.started_on),
+        "Ended on": readableDate(catalogueItem.ended_on),
         Playtime: catalogueItem.playtime,
       },
     ]
@@ -55,15 +59,7 @@ switch (catalogueItem.type) {
   <article class="w-index mx-auto mt-6">
     <a href="/catalogue">Back to Catalogue</a>
     <header class="flex justify-between gap-4 px-4 my-4">
-      <img
-        src={catalogueItem.cover}
-        alt={catalogueItem.cover_alt}
-        class="max-w-[200px] max-h-[300px]"
-        width="200"
-        height="300"
-        loading="lazy"
-        decoding="async" />
-
+      {unescapeHtml(catalogueItem.cover)}
       <div class="flex items-center bottom-2 catalogue--item-meta flex-1 justify-center relative">
         <div>
           <h2 class="mt-0 text-center">{catalogueItem.title}</h2>

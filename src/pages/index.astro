@@ -3,6 +3,7 @@ import BaseLayout from "$layouts/BaseLayout.astro"
 import ArticlePreview from "$components/ArticlePreview.astro"
 import { postProcessArticle } from "$data/articles"
 import { postProcessWikiItem } from "$data/wiki"
+import { postProcessProject } from "$data/projects"
 import { readableDate } from "$utils"
 
 let articles = await Astro.fetchContent("../content/articles/**/*.md")
@@ -15,11 +16,17 @@ articles = articles
 
 let wikiItems = await Astro.fetchContent("../content/wiki/**/*.md")
 wikiItems = wikiItems
-  .map((wikiItems) => postProcessWikiItem(wikiItems))
+  .map((wikiItem) => postProcessWikiItem(wikiItem))
   .sort((a, b) => {
     return b.lastModified.getTime() - a.lastModified.getTime()
   })
   .slice(0, 5)
+
+let featuredProjects = await Astro.fetchContent("../content/projects/**/*.md")
+featuredProjects = featuredProjects
+  .filter((project) => project.featured)
+  .map((project) => postProcessProject(project))
+  .slice(0, 3)
 ---
 
 <BaseLayout>
@@ -45,7 +52,16 @@ wikiItems = wikiItems
     >!&nbsp;🎉
 
     <h3 class="text-2xl mb-5">Featured works</h3>
-    <div class="flex flex-wrap mx-10 mt-2 mb-6 gap-5 sm:gap-4 justify-center items-center"></div>
+    <div class="flex flex-wrap mx-10 mt-2 mb-6 gap-5 sm:gap-4 justify-center items-center">
+      {featuredProjects.map((project) => (
+        <div class="h-[180px] relative">
+          <a href={project.url.pathname}>
+            {project.assets.indexCover}
+            <h4 class="cover-title">{project.title}</h4>
+          </a>
+        </div>
+      ))}
+    </div>
 
     <div class="flex justify-around gap-4 flex-col sm:flex-row">
       <div class="sm:w-[63%]">

@@ -6,20 +6,25 @@ import { generateSocialImage } from "astro-social-images"
 
 const { title, description, styles = [], js } = Astro.props
 
-generateSocialImage({
-  backgroundColor: "#28262c",
-  images: [{ url: "public/resized-social-card.png", attributes: { top: 375, left: 900 } }],
-  texts: [
-    {
-      content: title ? `${title}` : "Princesseuh",
-      attributes: { x: "55", y: "105", "font-size": "70px", fill: "#fefffe" },
-    },
-    {
-      content: description,
-      attributes: { x: "50", y: "325", "font-size": "40px", fill: "#fefffe" },
-    },
-  ],
-})
+generateSocialImage(
+  {
+    backgroundColor: "#28262c",
+    images: [{ url: "public/resized-social-card.png", attributes: { top: 375, left: 900 } }],
+    texts: [
+      {
+        content: title ? `${title}` : "Princesseuh",
+        attributes: { x: "55", y: "105", "font-size": "70px", fill: "#fefffe" },
+      },
+      {
+        content: description,
+        attributes: { x: "50", y: "325", "font-size": "40px", fill: "#fefffe" },
+      },
+    ],
+  },
+  {
+    outputDir: "public/assets/socials",
+  },
+)
 ---
 
 <!DOCTYPE html>
@@ -31,7 +36,7 @@ generateSocialImage({
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <link rel="stylesheet" href={Astro.resolve("../theme/css/tailwind.css")} />
+    <link rel="stylesheet" href={Astro.resolve("../theme/css/prin.css")} />
 
     {styles.map((stylesheet) => (
       <link rel="stylesheet" href={Astro.resolve("../theme/css/modules/" + stylesheet + ".css")} />

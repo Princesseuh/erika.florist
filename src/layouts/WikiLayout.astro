@@ -16,16 +16,20 @@ const { wikiItem } = Astro.props
 
     <article class="post">
       <ContentHeader item={wikiItem} includeTags={false} />
-      {wikiItem.astro.html}
+      <!-- prettier-ignore -->
+      <wikiItem.Content />
 
       <span class="text-right block text-creative-work mb-4">
         Page last modified <span data-date={wikiItem.lastModified}
-          >{readableDate(wikiItem.lastModified)}</span>
+          >{readableDate(wikiItem.lastModified)}</span
+        >
       </span>
     </article>
 
     <aside class="mt-10 mb-4 transition-opacity duration-100 ease-linear hidden sm:block">
-      {wikiItem.astro.headers.length > 0 && <WikiTOC headers={wikiItem.astro.headers} maxDepth={wikiItem.maxDepthTOC || 4} />}
+      {wikiItem.astro.headers.length > 0 && (
+        <WikiTOC headers={wikiItem.astro.headers} maxDepth={wikiItem.maxDepthTOC || 4} />
+      )}
     </aside>
   </section>
 </BaseLayout>

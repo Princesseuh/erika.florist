@@ -1,14 +1,14 @@
 ---
   title: "Recommended readings for aspiring florists"
   tagline: "And just everybody interested in flowers really"
-  navigation: 
+  navigation:
     category: floristry
     label: "Readings about flowers"
 ---
 
 Floristry doesn't really have the best presence online, sure you can find plenty of pictures of bouquets and various other arrangements but it's surprisingly hard to find lessons, guides etc about it (special mention however to the MANY Youtube channels such as [FlowerSchool](https://www.youtube.com/user/FlowerSchool/videos) or [Flower Joos](https://www.youtube.com/c/FlowerJoos/videos), those are great!)
 
-You see, there's no "[MDN](https://developer.mozilla.org/en-US/) of the flowers". Outside of the many videos on Youtube, typing "how to do {thing}" on your favorite search engine will most likely lead you towards sketchy websites or at least, really non-informative content
+You see, there's no "[MDN](https://developer.mozilla.org/en-US/) of the flowers". Outside of the many videos on Youtube, typing "how to do [thing]" on your favorite search engine will most likely lead you towards sketchy websites or at least, really non-informative content
 
 Thankfully, there's an alternative yet still true and tried way to learn anything that exist: **Books**
 

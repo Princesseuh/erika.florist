@@ -3,7 +3,6 @@ dist
 
 # dependencies
 node_modules/
-.snowpack/
 
 # logs
 npm-debug.log*
@@ -18,7 +17,8 @@ yarn-error.log*
 .DS_Store
 workspace.code-workspace
 
-# Social images (we'll cache those on Netlify)
-public/socials/*
+# Generated images (we'll cache those on Netlify)
+public/assets/socials/*
+public/assets/images/*
 
 src/pages/test.astro

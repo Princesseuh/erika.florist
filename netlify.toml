@@ -1,0 +1,10 @@
+[[plugins]]
+package = "netlify-plugin-cache"
+  [plugins.inputs]
+  paths = ["public/assets/images", "public/assets/socials"]
+
+[[headers]]
+  for = "*.avif"
+    [headers.values]
+      Content-Type = "image/avif"
+      Content-Disposition = "inline"

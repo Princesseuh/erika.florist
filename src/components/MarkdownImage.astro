@@ -13,11 +13,15 @@ const {
 } = Astro.props
 const { url } = Astro.request
 
+// Due to an issue in Astro preventing us from using the /articles/ path (see [slug].astro in pages/article), we have
+// to manually replace it in the URL so images can work. Hopefully won't be needed someday - erika, 2021-12-08
+const tempURL = url.pathname.replace("/article/", "/articles/")
+
 const image = generateImage(
   // If our URL starts with a slash, let's assume the user know what they're doing and not alter the URL apart from the content prefix
   // The reason this is needed is for subarticles, even though they reside in the same folder as their parent, their path
   // is not accurate to the file structure and so, looking the image relatively doesn't work - erika, 2021-12-08
-  src.startsWith("/") ? "src/content" + src : "src/content" + url.pathname + "/" + src,
+  src.startsWith("/") ? "src/content" + src : "src/content" + tempURL + "/" + src,
   Object.assign(options, {
     widths: [null],
     formats: ["avif", "webp", "png"],

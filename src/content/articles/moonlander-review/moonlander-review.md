@@ -1,15 +1,17 @@
 ---
-title: Moonlander Mark 1 review
-tagline: "Come get your futurist looking keyboards here, for a single payment of [a lot] you can perhaps save your wrists!"
-tags: ["productivity", "ergonomy"]
-date: 2021-01-01
+  title: Moonlander Mark 1 review
+  tagline: "Come get your futurist looking keyboards here, for a single payment of [a lot] you can perhaps save your wrists!"
+  tags: ["productivity", "ergonomy"]
+  date: 2021-01-01
+  setup: |
+    import Image from '$components/MarkdownImage.astro';
 ---
 
 A few months ago, my keyboard broke. Is it related to me dropping coffee on it? _Perhaps_, but that's not the point. I had been using a [CODE keyboard](http://codekeyboards.com/) for about 2 years now, it was a really good experience. My only regret being buying the 104-key version instead of the 87 one back then
 
 It's a really good keyboard that I recommend a lot if normal looking keyboards are what you're after because today we're gonna be talking about the Moonlander by ZSA, a clearly not normal looking keyboard
 
-{% image src="./articles/moonlander-review/keyboard.png", alt="A picture of the Moonlander keyboard, a two splits keyboard. The picture showcase the two coloring available, black and white", caption="Available in two colors!" %}
+<Image src="keyboard.png" alt="A picture of the Moonlander keyboard, a two splits keyboard. The picture showcase the two coloring available, black and white" caption="Available in two colors!" />
 
 What got me into ergonomic keyboards is mainly that these past few years I've been getting intermittent wrists issues. Nothing huge but still annoying once in a while, luckily just taking breaks and doing wrist exercises before usage was enough to fix them, but still, **wrists issues being a reality when you work at a computer all day long**, I might as well try to delay the inevitable as much as possible, also, I like fancy keyboards, they're cool
 
@@ -45,7 +47,7 @@ I use the French Canadian QWERTY keyboard (which got recently added to Oryx, tha
 
 I feel like the default layout would be perfect if I were only speaking English or if I were to use an alternative keyboard layout such as COLEMAK (Though typing other languages than English on that is not optimal either). To be completely fair, I can't really blame the keyboard for that, typing three languages + Programming is definitely not easy to accommodate and the layout is easily changed through [Oryx](https://www.zsa.io/oryx/)
 
-{% image src="./articles/moonlander-review/colemak.png", alt="The COLEMAK layout, its main changes are that the E key is moved the right side of the keyboard and that the most common letters are all moved to the home row to prevent too much hand movements", caption="The COLEMAK layout" %}
+<Image src="colemak.png" alt="The COLEMAK layout, its main changes are that the E key is moved the right side of the keyboard and that the most common letters are all moved to the home row to prevent too much hand movements" caption="The COLEMAK layout" />
 
 Talking about programming, since I use half my keys for accents, I figured that I would use a secondary layout full of various symbols needed in programming and that work really fine, however, I still haven't found a proper spot for the layout switch key. I'd use the thumb cluster but as said earlier, those keys are pretty uncomfortable to press so I'd rather avoid needing to hold them. Also, keys with secondary options on them are really visibly laggy. With the default layout, this is REALLY noticeable on Z and / which, again, isn't a problem in English since the Z key is really rarely used but is in French
 

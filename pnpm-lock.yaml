@@ -13,6 +13,7 @@ specifiers:
   eslint: ^8.4.1
   eslint-config-prettier: ^8.3.0
   eslint-plugin-prettier: ^4.0.0
+  netlify-plugin-cache: ^1.0.3
   prettier: ^2.5.1
   prettier-plugin-astro: ^0.0.11
   tailwindcss: ^2.2.19
@@ -29,6 +30,7 @@ dependencies:
   eslint: 8.4.1
   eslint-config-prettier: 8.3.0_eslint@8.4.1
   eslint-plugin-prettier: 4.0.0_90bd2ba582f6d1348d73031482d782e2
+  netlify-plugin-cache: 1.0.3
   prettier: 2.5.1
   prettier-plugin-astro: 0.0.11
   tailwindcss: 2.2.19_autoprefixer@10.4.0
@@ -3490,6 +3492,10 @@ packages:
 
   /natural-compare/1.4.0:
     resolution: {integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=}
+    dev: false
+
+  /netlify-plugin-cache/1.0.3:
+    resolution: {integrity: sha512-CTOwNWrTOP59T6y6unxQNnp1WX702v2R/faR5peSH94ebrYfyY4zT5IsRcIiHKq57jXeyCrhy0GLuTN8ktzuQg==}
     dev: false
 
   /nlcst-to-string/2.0.4:

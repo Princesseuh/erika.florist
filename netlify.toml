@@ -1,7 +1,7 @@
 [[plugins]]
 package = "netlify-plugin-cache"
   [plugins.inputs]
-  paths = ["public/assets/images", "public/assets/socials"]
+  paths = ["public/assets/images/", "public/assets/socials/"]
 
 [[headers]]
   for = "*.avif"

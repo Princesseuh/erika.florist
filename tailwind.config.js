@@ -1,8 +1,7 @@
 const plugin = require("tailwindcss/plugin")
 
 module.exports = {
-  mode: "jit",
-  purge: ["./src/**/*.{astro,js,ts,tsx,md}", "safelist.txt"],
+  content: ["./src/**/*.{astro,js,ts,tsx,md}", "safelist.txt"],
   corePlugins: {
     preflight: false,
 

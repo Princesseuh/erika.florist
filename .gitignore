@@ -19,7 +19,7 @@ yarn-error.log*
 workspace.code-workspace
 
 # Generated images (we'll cache those on Netlify)
-public/assets/socials/*
-public/assets/images/*
+static/assets/socials/*
+static/assets/images/*
 
 src/pages/test.astro

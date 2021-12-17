@@ -4,7 +4,7 @@ import ArticlePreview from "$components/ArticlePreview.astro"
 import { postProcessArticle } from "$data/articles"
 
 export async function getStaticPaths({ paginate }) {
-  let articles = await Astro.fetchContent("../../../../content/articles/**/*.md")
+  let articles = await Astro.fetchContent("/content/articles/**/*.md")
   articles = articles
     .map((article) => postProcessArticle(article))
     .sort((a, b) => {
@@ -34,9 +34,11 @@ const { page } = Astro.props
       {page.data.map((item) => <ArticlePreview article={item} />)}
       <div>
         {page.url.prev && <a href={page.url.prev}>Newer posts</a>}
-        {page.url.next && <a class="float-right" href={page.url.next}>
+        {page.url.next && (
+          <a class="float-right" href={page.url.next}>
             Older posts
-          </a>}
+          </a>
+        )}
       </div>
     </div>
 

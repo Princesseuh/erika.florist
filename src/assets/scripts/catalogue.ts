@@ -1,4 +1,4 @@
-import type { CatalogueType } from "../data/catalogue"
+import type { CatalogueType } from "../../data/catalogue"
 
 interface CatalogueJSONItem {
   url: URL

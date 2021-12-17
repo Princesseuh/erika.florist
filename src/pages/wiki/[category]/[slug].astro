@@ -3,7 +3,7 @@ import WikiLayout from "$layouts/WikiLayout.astro"
 import { WikiItem, postProcessWikiItem } from "$data/wiki"
 
 export async function getStaticPaths() {
-  const wikiItems = await Astro.fetchContent("../../../content/wiki/**/*.md")
+  const wikiItems = await Astro.fetchContent("/content/wiki/**/*.md")
   return wikiItems.map((wikiItem) => {
     wikiItem = postProcessWikiItem(wikiItem)
 

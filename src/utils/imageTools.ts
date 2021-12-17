@@ -6,12 +6,16 @@ export function generateImage(
   addBasePath = true,
 ): Record<string, ImageFormat[]> {
   const settings = Object.assign(options, {
-    outputDir: "public/assets/images",
+    outputDir: "static/assets/images",
     urlPath: "/assets/images",
   })
-  src = (addBasePath ? "src/assets" : "") + src
+  src = (addBasePath ? "content/assets" : "") + src
   ;(async () => {
-    await Image(src, settings)
+    try {
+      await Image(src, settings)
+    } catch (error) {
+      console.error(error)
+    }
   })()
 
   return Image.statsSync(src, settings)

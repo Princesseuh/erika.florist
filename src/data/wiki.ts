@@ -1,5 +1,6 @@
 import { postProcessBase, BaseObject } from "./shared"
 import { execSync } from "child_process"
+import { getBaseSiteURL } from "$utils"
 
 interface WikiItem extends BaseObject {
   title: string
@@ -22,18 +23,23 @@ function postProcessWikiItem(wikiItem: WikiItem): WikiItem {
   if (import.meta.env.PROD) {
     // Get the last modified time from Git as getting it from file system is not accurate
     // PERF: This can be a bit slow, in Eleventy it used to slow down my builds a lot
-    const isoDate = execSync(
-      `git log -1 --date=iso --pretty="format:%cI" ${wikiItem.file.pathname}`,
-    ).toString()
-    wikiItem.lastModified = new Date(Date.parse(isoDate))
+    try {
+      const isoDate = execSync(
+        `git log -1 --date=iso --pretty="format:%cI" ${wikiItem.file.pathname}`,
+        { stdio: "pipe" }, // Silence error in case of a problem
+      )
+
+      wikiItem.lastModified = new Date(Date.parse(isoDate.toString()))
+    } catch {
+      // In most cases, if we get an error here it's because the file doesn't exist yet in Git's files
+      // So whenever we get an error, we'll just create a date from current date (which is accurate)
+      wikiItem.lastModified = new Date()
+    }
   } else {
     wikiItem.lastModified = new Date()
   }
 
-  wikiItem.url = new URL(
-    `/wiki/${wikiItem.navigation.category}/${wikiItem.slug}`,
-    "http://localhost:3000/",
-  )
+  wikiItem.url = new URL(`/wiki/${wikiItem.navigation.category}/${wikiItem.slug}`, getBaseSiteURL())
 
   return wikiItem
 }

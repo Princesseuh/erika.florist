@@ -9,7 +9,7 @@ const { title, description, styles = [], js } = Astro.props
 generateSocialImage(
   {
     backgroundColor: "#28262c",
-    images: [{ url: "public/resized-social-card.png", attributes: { top: 375, left: 900 } }],
+    images: [{ url: "static/resized-social-card.png", attributes: { top: 375, left: 900 } }],
     texts: [
       {
         content: title ? `${title}` : "Princesseuh",
@@ -22,7 +22,7 @@ generateSocialImage(
     ],
   },
   {
-    outputDir: "public/assets/socials",
+    outputDir: "static/assets/socials",
   },
 )
 ---
@@ -36,15 +36,18 @@ generateSocialImage(
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <link rel="stylesheet" href={Astro.resolve("../theme/css/prin.css")} />
+    <link rel="stylesheet" href={Astro.resolve("../assets/style/prin.css")} />
 
     {styles.map((stylesheet) => (
-      <link rel="stylesheet" href={Astro.resolve("../theme/css/modules/" + stylesheet + ".css")} />
+      <link
+        rel="stylesheet"
+        href={Astro.resolve("../assets/style/modules/" + stylesheet + ".css")}
+      />
     ))}
 
     <title>{title ? `${title} - Princesseuh` : "Princesseuh"}</title>
 
-    <script type="module" defer src={Astro.resolve("../scripts/main.ts")}></script>
+    <script type="module" defer src={Astro.resolve("../assets/scripts/main.ts")}></script>
   </head>
   <body>
     <Sprite.Provider>

@@ -21,7 +21,7 @@ const image = generateImage(
   // If our URL starts with a slash, let's assume the user know what they're doing and not alter the URL apart from the content prefix
   // The reason this is needed is for subarticles, even though they reside in the same folder as their parent, their path
   // is not accurate to the file structure and so, looking the image relatively doesn't work - erika, 2021-12-08
-  src.startsWith("/") ? "src/content" + src : "src/content" + tempURL + "/" + src,
+  src.startsWith("/") ? "content" + src : "content" + tempURL + "/" + src,
   Object.assign(options, {
     widths: [null],
     formats: ["avif", "webp", "png"],

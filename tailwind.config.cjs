@@ -1,7 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const plugin = require("tailwindcss/plugin")
 
+/** @type {import('tailwindcss/tailwind-config').TailwindConfig} */
 module.exports = {
-  content: ["./src/**/*.{astro,js,ts,tsx,md}", "safelist.txt"],
+  content: ["./src/**/*.{astro,js,ts,tsx,md}", "./content/**/*.md"],
   corePlugins: {
     preflight: false,
 

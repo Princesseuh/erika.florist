@@ -4,7 +4,7 @@ import { postProcessCatalogueItem, CatalogueItem } from "$data/catalogue"
 import { getSlugFromFile } from "$utils"
 
 export async function getStaticPaths() {
-  const items = await Astro.fetchContent("../../../content/catalogue/**/*.md")
+  const items = await Astro.fetchContent("/content/catalogue/**/*.md")
   return items.map((item) => {
     item = postProcessCatalogueItem(item)
 

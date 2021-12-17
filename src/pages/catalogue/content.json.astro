@@ -1,7 +1,7 @@
 ---
 import { postProcessCatalogueItem, CatalogueItem } from "$data/catalogue"
 
-let catalogueItems = await Astro.fetchContent("../../content/catalogue/**/*.md")
+let catalogueItems = await Astro.fetchContent("/content/catalogue/**/*.md")
 catalogueItems = catalogueItems.map((item) => postProcessCatalogueItem(item as CatalogueItem))
 
 const json = JSON.stringify(

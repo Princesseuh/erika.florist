@@ -6,7 +6,7 @@ import { postProcessWikiItem } from "$data/wiki"
 import { postProcessProject } from "$data/projects"
 import { readableDate } from "$utils"
 
-let articles = await Astro.fetchContent("../content/articles/**/*.md")
+let articles = await Astro.fetchContent("/content/articles/**/*.md")
 articles = articles
   .map((article) => postProcessArticle(article))
   .sort((a, b) => {
@@ -14,7 +14,7 @@ articles = articles
   })
   .slice(0, 3)
 
-let wikiItems = await Astro.fetchContent("../content/wiki/**/*.md")
+let wikiItems = await Astro.fetchContent("/content/wiki/**/*.md")
 wikiItems = wikiItems
   .map((wikiItem) => postProcessWikiItem(wikiItem))
   .sort((a, b) => {
@@ -22,7 +22,7 @@ wikiItems = wikiItems
   })
   .slice(0, 5)
 
-let featuredProjects = await Astro.fetchContent("../content/projects/**/*.md")
+let featuredProjects = await Astro.fetchContent("/content/projects/**/*.md")
 featuredProjects = featuredProjects
   .filter((project) => project.featured)
   .map((project) => postProcessProject(project))

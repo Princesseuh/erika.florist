@@ -9,10 +9,6 @@ interface Article extends BaseObject {
   tags: string[]
 }
 
-// TODO: At the moment, Astro doesn't support using fetchContent outside its components so our data fetching logic has
-// to be somewhere else instead of here, but in the future I'd like for all data fetching to happen in files in this folder
-// Until then, those files are full of post processing functions used to add various processed data to our objects
-
 function postProcessArticle(article: Article): Article {
   article = postProcessBase(article) as Article
 

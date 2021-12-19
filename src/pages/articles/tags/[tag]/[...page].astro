@@ -10,6 +10,7 @@ export async function getStaticPaths({ paginate }) {
       return b.date.getTime() - a.date.getTime()
     })
 
+  // We need to create a list of unique tags here otherwise Astro will try to create already existing pages and complain
   const tags = articles.flatMap((article) => [...article.tags])
   const uniqueTags = [...new Set<string>(tags)]
 

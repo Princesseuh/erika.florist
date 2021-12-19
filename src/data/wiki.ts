@@ -25,8 +25,7 @@ function postProcessWikiItem(wikiItem: WikiItem): WikiItem {
     // PERF: This can be a bit slow, in Eleventy it used to slow down my builds a lot
     try {
       const isoDate = execSync(
-        `git log -1 --date=iso --pretty="format:%cI" ${wikiItem.file.pathname}`,
-        { stdio: "pipe" }, // Silence error in case of a problem
+        `git log -1 --date=iso --pretty="format:%cI" -- ./${wikiItem.file.pathname}`,
       )
 
       wikiItem.lastModified = new Date(Date.parse(isoDate.toString()))

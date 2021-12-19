@@ -29,6 +29,6 @@ Unfortunately a lot of the features are locked behind a paywall but I think it's
 
 ### Mission Control Plus
 
-Mission Control works, that's about it. For something that is supposed to be one the main way to manage your open windows and activities, it's however, very barebones. Notably, you can't close windows in it which to me, is absolutely insane and I can't believe you still can't even in Monterey. Shame on Apple
+Mission Control works, that's about it. For something that is supposed to be one of the main way to manage your open windows and activities, it's however, very barebones. Notably, you can't close windows in it which to me, is absolutely insane and I can't believe you still can't even in Monterey. Shame on Apple
 
 Thankfully, [Mission Control Plus](https://www.fadel.io/missioncontrolplus) exists for that and works nicely. However, it's paid but personally, I don't mind spending a bit of my money for a better workflow, but it's insulting to have to pay for such a small thing that should definitely be there by default

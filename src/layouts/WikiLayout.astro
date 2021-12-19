@@ -1,8 +1,8 @@
 ---
 import BaseLayout from "$layouts/BaseLayout.astro"
-import WikiNavigation from "$components/WikiNavigation.astro"
-import ContentHeader from "$components/ContentHeader.astro"
-import WikiTOC from "$components/WikiTOC.astro"
+import WikiNavigation from "$components/wiki/WikiNavigation.astro"
+import ContentHeader from "$components/shared/ContentHeader.astro"
+import WikiTOC from "$components/wiki/WikiTOC.astro"
 import { readableDate } from "$utils"
 
 const { wikiItem } = Astro.props

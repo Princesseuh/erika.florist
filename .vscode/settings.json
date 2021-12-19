@@ -14,5 +14,5 @@
   "prettier.documentSelectors": ["**/*.astro"],
   "markdownlint.config": {
     "MD033": false // Since we use components in our markdown files, we disable this rule that prevents HTML
-  }
+  },
 }

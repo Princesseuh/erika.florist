@@ -1,0 +1,28 @@
+---
+import { Article } from "$data/articles"
+
+const articles = (await Astro.fetchContent("/content/articles/**/*.md")) as Article[]
+const tags: Array<[string, number]> = [
+  ...articles
+    .flatMap((article) => [...article.tags])
+    .reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
+].sort((a, b) => {
+  return b[1] - a[1]
+})
+---
+
+<aside class="sm:w-[20%]">
+  <section>
+    <h2>Tags</h2>
+    <ul>
+      {tags.map((tag) => (
+        <li>
+          <a href={"/articles/tags/" + tag[0]}>{tag[0]}</a> ({tag[1]})
+        </li>
+      ))}
+    </ul>
+  </section>
+  <section>
+    <h2>Year</h2>
+  </section>
+</aside>

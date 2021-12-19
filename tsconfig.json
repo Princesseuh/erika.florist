@@ -13,5 +13,5 @@
     },
     "types": ["vite/client", "node"]
   },
-  "exclude": ["node_modules", "**/node_modules/*", ".vscode"]
+  "exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist"]
 }

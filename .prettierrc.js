@@ -5,6 +5,7 @@ module.exports = {
   trailingComma: "all",
   semi: false,
   plugins: ["./node_modules/prettier-plugin-astro"],
+  astroAllowShorthand: false,
   overrides: [
     {
       files: "*.astro",

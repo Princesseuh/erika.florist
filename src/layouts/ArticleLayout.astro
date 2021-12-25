@@ -1,13 +1,23 @@
 ---
 import BaseLayout from "$layouts/BaseLayout.astro"
 import ContentHeader from "$components/shared/ContentHeader.astro"
+import type { Article } from "$data/articles"
+export interface Props {
+  article: Article
+}
 
-const { article } = Astro.props
+const { article } = Astro.props as Props
 ---
 
-<BaseLayout title={article.title} description={article.tagline} styles={article.loadCSSModules}>
+<BaseLayout
+  title={article.title}
+  description={article.tagline}
+  styles={article.loadCSSModules}
+  socialImage={article.socialImage ?? true}
+>
   <article class="post mx-auto">
     <ContentHeader item={article} includeTags={true} />
-    <article.Content></article.Content>
+    <!-- prettier-ignore -->
+    <article.Content/>
   </article>
 </BaseLayout>

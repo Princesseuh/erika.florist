@@ -1,13 +1,16 @@
 ---
 import BaseLayout from "$layouts/BaseLayout.astro"
-import { CatalogueType } from "$data/catalogue"
+import { CatalogueType, CatalogueItem } from "$data/catalogue"
 import { readableDate } from "$utils"
+export interface Props {
+  catalogueItem: CatalogueItem
+}
 
 function unescapeHtml(unsafe) {
   return unsafe.replace(/&lt;/g, "<").replace(/&gt;/g, ">")
 }
 
-const { catalogueItem } = Astro.props
+const { catalogueItem } = Astro.props as Props
 
 let metaInfo = []
 switch (catalogueItem.type) {
@@ -77,7 +80,8 @@ switch (catalogueItem.type) {
     </header>
     <h2 class="mb-3 mt-0">Quick thoughts</h2>
     <section class="px-2">
-      {catalogueItem.astro.html}
+      <!-- prettier-ignore -->
+      <catalogueItem.Content/>
     </section>
   </article>
 </BaseLayout>

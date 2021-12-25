@@ -2,11 +2,18 @@
 import BaseLayout from "$layouts/BaseLayout.astro"
 import ArticlePreview from "$components/shared/ArticlePreview.astro"
 import ArticleListAside from "$components/articleList/ArticleListAside.astro"
+import type { Article } from "$data/articles"
+import type { Page } from "$data/shared"
 
-const { page, title } = Astro.props
+export interface Props {
+  page: Page<Article>
+  title: string
+}
+
+const { page, title } = Astro.props as Props
 ---
 
-<BaseLayout {title}>
+<BaseLayout title={title}>
   <article class="w-articleList mx-auto flex flex-col md:flex-row">
     <div class="sm:w-[80%]">
       <h2>{title}</h2>

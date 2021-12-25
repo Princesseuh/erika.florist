@@ -1,14 +1,29 @@
 ---
 import { readableDate } from "$utils"
-const { item, includeTags } = Astro.props
+import type { Article } from "$data/articles"
+import type { WikiItem } from "$data/wiki"
+
+export interface Props {
+  item: Article | WikiItem
+  includeTags: boolean
+}
+
+const isArticle = (item: Article | WikiItem): item is Article => {
+  return item.date !== undefined || item.tags !== undefined
+}
+
+const { item, includeTags } = Astro.props as Props
 ---
 
 <header class="mb-4 mt-4">
   <h1 class="text-[3.5rem] mb-4 mt-0 leading-none">{item.title}</h1>
   {item.tagline && <h2 class="text-xl m-0 relative top-[-5px]">{item.tagline}</h2>}
-  {includeTags && <div class="text-creative-work">
-      {readableDate(item.date)} · {item.tags
+  {isArticle(item) && includeTags && (
+    <div class="text-creative-work">
+      {readableDate(item.date)} ·{" "}
+      {item.tags
         .map((tag) => <a href={"/articles/tags/" + tag}>{tag}</a>)
         .reduce((prev, curr) => (prev === null ? [curr] : [prev, ", ", curr]))}
-    </div>}
+    </div>
+  )}
 </header>

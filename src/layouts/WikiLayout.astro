@@ -4,11 +4,20 @@ import WikiNavigation from "$components/wiki/WikiNavigation.astro"
 import ContentHeader from "$components/shared/ContentHeader.astro"
 import WikiTOC from "$components/wiki/WikiTOC.astro"
 import { readableDate } from "$utils"
+import type { WikiItem } from "$data/wiki"
+export interface Props {
+  wikiItem: WikiItem
+}
 
-const { wikiItem } = Astro.props
+const { wikiItem } = Astro.props as Props
 ---
 
-<BaseLayout title={wikiItem.title} description={wikiItem.tagline} styles={wikiItem.loadCSSModules}>
+<BaseLayout
+  title={wikiItem.title}
+  description={wikiItem.tagline}
+  styles={wikiItem.loadCSSModules}
+  socialImage={wikiItem.socialImage ?? true}
+>
   <section class="gap-[3%] grid sm:grid-cols-wiki mx-auto my-0 w-wiki">
     <aside class="mb-4 duration-100 ease-linear mt-10 transition-opacity hidden sm:block">
       <WikiNavigation />

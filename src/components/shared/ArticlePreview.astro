@@ -6,7 +6,7 @@ export interface Props {
   article: Article
 }
 
-const { article } = Astro.props
+const { article } = Astro.props as Props
 ---
 
 <section class="mb-3">

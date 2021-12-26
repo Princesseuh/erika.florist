@@ -60,7 +60,12 @@ if (socialImage) {
     ))}
 
     <title>{title ? `${title} - Princesseuh` : "Princesseuh"}</title>
-    <meta name="description" content={description ? description : "My personal website"}>
+    <link ref="og:title" content={title ? `${title} - Princesseuh` : "Princesseuh"} />
+    <meta name="description" content={description ? description : "My personal website"} />
+    <link ref="og:description" content={description ? description : "My personal website"} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="princesseuh.dev" />
 
     {socialImage ? (
       <meta property="og:image" content={socialImageURL.url} />
@@ -72,7 +77,8 @@ if (socialImage) {
       <meta name="twitter:image" content={getBaseSiteURL() + "social-card.png"} />
     )}
 
-    <link rel="canonical" href={Astro.request.canonicalURL}>
+    <link rel="canonical" href={Astro.request.canonicalURL} />
+    <link rel="og:url" href={Astro.request.canonicalURL} />
 
     <script type="module" defer src={Astro.resolve("../assets/scripts/main.ts")}></script>
   </head>

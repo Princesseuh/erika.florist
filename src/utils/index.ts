@@ -7,5 +7,5 @@ export function getSlugFromFile(path: string): string {
 }
 
 export function getBaseSiteURL(): string {
-  return import.meta.env.PROD ? "https://princesseuh.netlify.app/" : "http://localhost:3000"
+  return import.meta.env.PROD ? "https://princesseuh.netlify.app/" : "http://localhost:3000/"
 }

@@ -2,7 +2,9 @@
 import Header from "$components/layout/Header.astro"
 import Socials from "$components/layout/Socials.astro"
 import { Sprite } from "astro-icon"
-import { generateSocialImage } from "astro-social-images"
+import { generateSocialImage, SocialImageResult, SocialImage } from "astro-social-images"
+import { getBaseSiteURL } from "$utils"
+
 export interface Props {
   title?: string
   description?: string
@@ -13,8 +15,9 @@ export interface Props {
 
 const { title, description, styles = [], js = [], socialImage = false } = Astro.props as Props
 
+let socialImageURL: SocialImageResult = undefined
 if (socialImage) {
-  generateSocialImage(
+  socialImageURL = generateSocialImage(
     {
       backgroundColor: "#28262c",
       images: [{ url: "static/resized-social-card.png", attributes: { top: 375, left: 900 } }],
@@ -31,6 +34,8 @@ if (socialImage) {
     },
     {
       outputDir: "static/assets/socials",
+      urlPath: getBaseSiteURL(),
+      publicDir: "static",
     },
   )
 }
@@ -55,6 +60,19 @@ if (socialImage) {
     ))}
 
     <title>{title ? `${title} - Princesseuh` : "Princesseuh"}</title>
+    <meta name="description" content={description ? description : "My personal website"}>
+
+    {socialImage ? (
+      <meta property="og:image" content={socialImageURL.url} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:image" content={socialImageURL.url} />
+    ) : (
+      <meta property="og:image" content={getBaseSiteURL() + "social-card.png"} />
+      <meta name="twitter:card" content="summary"/>
+      <meta name="twitter:image" content={getBaseSiteURL() + "social-card.png"} />
+    )}
+
+    <link rel="canonical" href={Astro.request.canonicalURL}>
 
     <script type="module" defer src={Astro.resolve("../assets/scripts/main.ts")}></script>
   </head>

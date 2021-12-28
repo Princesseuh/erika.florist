@@ -50,6 +50,21 @@ if (socialImage) {
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <link
+      rel="preload"
+      href="/assets/fonts/cantarell-bold-webfont.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets/fonts/cantarell-regular-webfont.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="preload" href={Astro.resolve("../assets/style/prin.css")} as="style" />
     <link rel="stylesheet" href={Astro.resolve("../assets/style/prin.css")} />
 
     {styles.map((stylesheet) => (

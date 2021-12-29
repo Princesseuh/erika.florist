@@ -22,7 +22,7 @@ const { item, includeTags } = Astro.props as Props
     <div class="text-creative-work">
       {readableDate(item.date)} ·{" "}
       {item.tags
-        .map((tag) => <a href={"/articles/tags/" + tag}>{tag}</a>)
+        .map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)
         .reduce((prev, curr) => (prev === null ? [curr] : [prev, ", ", curr]))}
     </div>
   )}

@@ -17,7 +17,7 @@ const tags: Array<[string, number]> = [
     <ul>
       {tags.map((tag) => (
         <li>
-          <a href={"/articles/tags/" + tag[0]}>{tag[0]}</a> ({tag[1]})
+          <a href={"/articles/tags/" + tag[0] + "/"}>{tag[0]}</a> ({tag[1]})
         </li>
       ))}
     </ul>

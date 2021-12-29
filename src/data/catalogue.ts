@@ -65,13 +65,16 @@ function postProcessCatalogueItem(item: CatalogueItem): CatalogueItem {
   item = postProcessBase(item) as CatalogueItem
 
   item.type = getCatalogueTypeFromURL(item.file.pathname)
-  const itemBaseDir = `/catalogue/${item.type}s/${item.slug}`
+  const itemBaseDir = `/catalogue/${item.type}s/${item.slug}/`
   item.url = new URL(itemBaseDir, getBaseSiteURL())
 
-  const cover: Record<string, Array<ImageFormat>> = generateImage(itemBaseDir + `.jpg`, {
-    widths: [300],
-    formats: ["avif", "webp", "jpeg"],
-  })
+  const cover: Record<string, Array<ImageFormat>> = generateImage(
+    itemBaseDir.slice(0, -1) + `.jpg`,
+    {
+      widths: [300],
+      formats: ["avif", "webp", "jpeg"],
+    },
+  )
 
   function escapeHtml(unsafe) {
     return unsafe.replace(/</g, "&lt;").replace(/>/g, "&gt;")

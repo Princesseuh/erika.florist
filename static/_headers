@@ -10,4 +10,4 @@
 /assets/*.css
   cache-control: public,max-age=31536000,immutable
 /favicon.svg
-  cache-control: public,max-age=3600
+  cache-control: public,max-age=2628000

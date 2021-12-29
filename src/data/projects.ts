@@ -29,7 +29,7 @@ function postProcessProject(project: Project): Project {
 
   project.type = getProjectTypeFromURL(project.file.pathname)
 
-  const projectBaseDir = `/projects/${project.type}s/${project.slug}`
+  const projectBaseDir = `/projects/${project.type}s/${project.slug}/`
   project.url = new URL(projectBaseDir, getBaseSiteURL())
 
   // Assets
@@ -37,7 +37,7 @@ function postProcessProject(project: Project): Project {
 
   if (project.featured) {
     const indexCover: Record<string, Array<ImageFormat>> = generateImage(
-      projectBaseDir + "/cover.png",
+      projectBaseDir + "cover.png",
       {
         widths: [380, 600],
         formats: ["avif", "webp", "jpeg"],
@@ -65,7 +65,7 @@ function postProcessProject(project: Project): Project {
   }
 
   const miniLogo: Record<string, Array<ImageFormat>> = generateImage(
-    projectBaseDir + "/mini-logo.png",
+    projectBaseDir + "mini-logo.png",
     {
       widths: [128, 96],
       formats: ["avif", "webp", "png"], // We need transparency on those so can't use jpegs

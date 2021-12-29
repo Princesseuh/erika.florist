@@ -1,3 +1,5 @@
+import { listen } from "quicklink"
+
 function makeDatesRelative(): void {
   const timeFormat = new Intl.RelativeTimeFormat("en")
   const dateElements = document.querySelectorAll<HTMLElement>("[data-date]")
@@ -28,6 +30,7 @@ function makeDatesRelative(): void {
 
 function onPageLoad() {
   makeDatesRelative()
+  listen()
 }
 
 onPageLoad()

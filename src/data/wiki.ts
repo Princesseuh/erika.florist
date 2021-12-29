@@ -32,7 +32,10 @@ function postProcessWikiItem(wikiItem: WikiItem): WikiItem {
     wikiItem.lastModified = new Date()
   }
 
-  wikiItem.url = new URL(`/wiki/${wikiItem.navigation.category}/${wikiItem.slug}`, getBaseSiteURL())
+  wikiItem.url = new URL(
+    `/wiki/${wikiItem.navigation.category}/${wikiItem.slug}/`,
+    getBaseSiteURL(),
+  )
 
   return wikiItem
 }

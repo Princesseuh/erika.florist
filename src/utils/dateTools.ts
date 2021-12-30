@@ -1,5 +1,5 @@
 export function readableDate(
-  date: Date,
+  date: Date | undefined,
   options: Intl.DateTimeFormatOptions = {
     timeZone: "UTC",
     year: "numeric",
@@ -7,5 +7,9 @@ export function readableDate(
     day: "2-digit",
   },
 ): string {
+  if (date === undefined) {
+    return "Invalid Date"
+  }
+
   return date.toLocaleDateString("en-US", options)
 }

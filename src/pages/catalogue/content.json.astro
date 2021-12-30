@@ -13,7 +13,7 @@ const json = JSON.stringify(
       return {
         title: item.title,
         cover: item.cover,
-        creator: item.author || item.developer,
+        creator: item.author || item.developer || item.producer,
         url: item.url.pathname,
         type: item.type,
       }

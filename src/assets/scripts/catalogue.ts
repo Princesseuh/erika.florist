@@ -33,10 +33,10 @@ function buildLibrary(subset: CatalogueJSONItem[] = fullElements) {
   catalogueContent.replaceChildren(contentFragment)
 }
 
-// Astro currently doesn't support generating anything other than .html files
-// So we need to get our json from the page's body
+// Astro currently doesn't support generating anything other than .html files so our JSON file, is not a json, hah
+// So we'll need to get our json from the page's body
 ;(function initCatalogue() {
-  fetch("/catalogue/content.json")
+  fetch("/catalogue/content.json/")
     .then((response) => response.text())
     .then((data) => {
       const parser = new DOMParser()

@@ -50,6 +50,8 @@ interface CatalogueMovie extends CatalogueItemBase {
 }
 
 interface CatalogueShow extends CatalogueItemBase {
+  producer: string
+  seasons: number
   episodes: number
   platform: string
 }
@@ -90,7 +92,10 @@ function postProcessCatalogueItem(item: CatalogueItem): CatalogueItem {
       )
       .join("\n")}
       <img
-        class="max-w-[200px] max-h-[300px]"
+        class="max-w-[200px] max-h-[300px] ${
+          // If our image is super small, it's probably because it's a square, notably this happens with older games
+          cover.jpeg[0].height < 300 ? "object-contain bg-fin-lanka bg-opacity-50" : ""
+        }"
         src="${cover.jpeg[0].url}"
         alt="${item.cover_alt}"
         width="200"

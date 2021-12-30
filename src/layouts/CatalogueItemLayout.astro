@@ -55,6 +55,21 @@ switch (catalogueItem.type) {
       },
     ]
     break
+
+  case CatalogueType.SHOW:
+    metaInfo = [
+      {
+        Producer: catalogueItem.producer,
+        Platform: catalogueItem.platform,
+        Seasons: catalogueItem.seasons
+      },
+      {
+        "Started on": readableDate(catalogueItem.started_on),
+        "Ended on": readableDate(catalogueItem.ended_on),
+        Episodes: catalogueItem.episodes
+      }
+    ]
+    break
 }
 ---
 
@@ -62,7 +77,10 @@ switch (catalogueItem.type) {
   <article class="w-index mx-auto mt-6">
     <a href="/catalogue/">Back to Catalogue</a>
     <header class="flex justify-between gap-4 px-4 my-4">
-      {unescapeHtml(catalogueItem.cover)}
+      {
+        // We remove the background we add for small elements manually on this page
+        unescapeHtml(catalogueItem.cover).replace("bg-fin-lanka bg-opacity-50", "")
+      }
       <div class="flex items-center bottom-2 catalogue--item-meta flex-1 justify-center relative">
         <div>
           <h2 class="mt-0 text-center">{catalogueItem.title}</h2>

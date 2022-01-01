@@ -13,7 +13,7 @@ I've been using Wayland [since May 2020](https://github.com/Princesseuh/dotfiles
 
 I started using Wayland because I got tired of dealing with vsync issues, Picom and other stuff on Xorg. So I tried out Wayland, not expecting much after all the stories I've heard but in the end, well, everything works 🤷‍♀️
 
-### Disclaimer about NVIDIA
+## Disclaimer about NVIDIA
 
 If you've been using Linux for a long time now, you're probably aware that Linux's biggest problem is very often somehow related to NVIDIA
 

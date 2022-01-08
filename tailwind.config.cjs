@@ -9,17 +9,21 @@ module.exports = {
 
     // We disable those because they add stuff to the CSS file even when unused
     filter: false,
+    backdropFilter: false,
     ringWidth: false,
     ringColor: false,
     ringOffsetWidth: false,
     ringOffsetColor: false,
     boxShadow: false,
     transform: false,
-    backdropFilter: false,
+    touchAction: false,
+    scrollSnapType: false,
     borderColor: false, // If we don't disable this, Tailwind will apply a default border color to all the elements
-
     borderOpacity: false,
     textOpacity: false,
+
+    // Things we might need in the future but disable for now as they also add stuff
+    fontVariantNumeric: false,
   },
   theme: {
     screens: {

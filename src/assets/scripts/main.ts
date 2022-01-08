@@ -30,7 +30,10 @@ function makeDatesRelative(): void {
 
 function onPageLoad() {
   makeDatesRelative()
-  listen()
+
+  if ((localStorage.getItem("prefetchDisabled") ?? "false") === "false") {
+    listen()
+  }
 }
 
 onPageLoad()

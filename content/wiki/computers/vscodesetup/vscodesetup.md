@@ -22,6 +22,7 @@ Ok! Now that the goodbyes are done, let's talk about my VS Code setup
 Those are intentionally not complete, some of the settings I have in my full config files are for things I don't really use (such as Zen Mode or the Git support inside the editor), default settings that I redefine just to be exhaustive or things that are personal choices outside of the scope of this article (such as if I accept telemetry or not)
 
 ```json
+{
   // Visuals
   "workbench.colorTheme": "lucy-evening",
   "editor.fontFamily": "'Iosevka', 'Fira Code', 'Font Awesome 5 Free Regular', 'Font Awesome 5 Free Solid', 'Font Awesome 5 Brands Regular'",
@@ -32,10 +33,7 @@ Those are intentionally not complete, some of the settings I have in my full con
   "workbench.sideBar.location": "right",
   "window.menuBarVisibility": "toggle",
   "editor.wordWrap": "on",
-  "editor.rulers": [
-    80,
-    120
-  ],
+  "editor.rulers": [80, 120],
   "workbench.colorCustomizations": {
     "terminal.background": "#17161b",
     "panel.background": "#131317",
@@ -69,7 +67,8 @@ Those are intentionally not complete, some of the settings I have in my full con
     "editor.quickSuggestions": false,
     "files.trimTrailingWhitespace": false,
     "editor.rulers": [] // Disable rulers in Markdown
-  },
+  }
+}
 ```
 
 ### Visuals

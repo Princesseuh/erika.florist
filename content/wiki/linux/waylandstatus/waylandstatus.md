@@ -17,11 +17,7 @@ I started using Wayland because I got tired of dealing with vsync issues, Picom 
 
 If you've been using Linux for a long time now, you're probably aware that Linux's biggest problem is very often somehow related to NVIDIA
 
-For Wayland's case what this mean that if you're using a conventional stacking window manager, you're in luck because [GNOME (Mutter)](<https://en.wikipedia.org/wiki/Mutter_(software)>) and [KDE (KWin)](https://en.wikipedia.org/wiki/KWin) both supports NVIDIA GPUs, but any other options (be it stacking or tilling) doesn't. So yeah, [Sway doesn't officially support NVIDIA GPUs](https://github.com/swaywm/sway/wiki#nvidia-users)
-
-I, unfortunately for my Linux adventure, have a NVIDIA GPU, but thankfully, Sway runs fine using [Nouveau](https://nouveau.freedesktop.org/), the unofficial open source driver for NVIDIA GPU. Nouveau isn't always perfect, it doesn't always have the best performance for gaming but, it's better than nothing
-
-I'll buy an AMD GPU next time
+For Wayland's case what this used to mean is that most Wayland WM wouldn't support Nvidia because they refused to support the standard API most of them used. This changed recently however and they do now in fact support the proper API. [Proprietary drivers are still unsupported by Sway](https://github.com/swaywm/sway/commit/b48cb6b0ec1320ad25fd2c0a1b5118dbe2536060) but at least, they do work now
 
 <Image src="waylandlogo.png" alt="The Wayland logo, a white W written on a yellow-ish circle using a graffiti font" caption="Wayland's logo" />
 
@@ -30,6 +26,8 @@ I'll buy an AMD GPU next time
 These days? All the GUI libraries supports Wayland. [Sometimes you need to set flags or install a package to enable it](https://wiki.archlinux.org/title/Wayland#GUI_libraries) but still, it works fine after that
 
 This mean that unless you're using an old version of a program, or the program hasn't been updated to newer versions of its GUI library, there's a very good chance that it's running under Wayland!
+
+## Troublemakers
 
 Here's a few programs where this is however not the case yet as they don't depend on GUI libraries for their Wayland support
 
@@ -47,7 +45,7 @@ For both of them, Wayland is still a work in progress but it's getting along rea
 
 ### Electron
 
-Electron support Wayland since its version 12, however it also needs the same flags Chrome does. It has certain limitations, namely [it doesn't support client side decorations](https://github.com/electron/electron/issues/27522) yet if you need those (this isn't really a requirement on Sway as it will render its own title bars)
+Electron support Wayland since its version 12, however [it also needs the same flags Chrome does](https://wiki.archlinux.org/title/Wayland#Electron). It has certain limitations, namely [it doesn't support client side decorations](https://github.com/electron/electron/issues/27522) yet if you need those (this isn't really a requirement on Sway as it will render its own title bars)
 
 Unfortunately Electron apps tend to be slow at updating their Electron versions sometimes so for some applications it might take just a little bit more time before everything works, luckily projects like [discord_arch_electron](https://aur.archlinux.org/packages/discord_arch_electron/) exists to use your system's Electron instead of the bundled one
 
@@ -62,3 +60,7 @@ It does this whenever you run it under Wayland 😅
 The bottom window is running completely under Wayland and works perfectly, the top window however, in addition of being completely black is running under X11 (I think the audio plays from that window, not sure). That means that despite it working, you cannot run it without XWayland
 
 Your best bet as the moment for running it natively under Wayland is probably to hide the black window somehow and just use it normally, forgetting that window ever existed
+
+## For the rest
+
+I recommend checking out [Are we Wayland yet?](https://arewewaylandyet.com/) for more information on the state of various projects

@@ -24,4 +24,4 @@ const { page } = Astro.props
 const tag = Astro.request.params.tag
 ---
 
-<ArticleListLayout {page} title={"Articles tagged " + tag} />
+<ArticleListLayout page={page} title={"Articles tagged " + tag} />

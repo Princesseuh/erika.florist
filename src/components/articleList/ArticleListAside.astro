@@ -9,6 +9,14 @@ const tags: Array<[string, number]> = [
 ].sort((a, b) => {
   return b[1] - a[1]
 })
+
+const years: Array<[string, number]> = [
+  ...articles
+    .map((article) => new Date(article.date).getFullYear())
+    .reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
+].sort((a, b) => {
+  return b[0] - a[0]
+})
 ---
 
 <aside class="sm:w-[20%]">
@@ -24,5 +32,12 @@ const tags: Array<[string, number]> = [
   </section>
   <section>
     <h2>Year</h2>
+    <ul>
+      {years.map((year) => (
+        <li>
+          <a href={"/articles/years/" + year[0] + "/"}>{year[0]}</a> ({year[1]})
+        </li>
+      ))}
+    </ul>
   </section>
 </aside>

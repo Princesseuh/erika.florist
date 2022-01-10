@@ -1,0 +1,28 @@
+---
+import ArticleListLayout from "$layouts/ArticleListLayout.astro"
+import { postProcessArticle, Article } from "$data/articles"
+
+export async function getStaticPaths({ paginate }) {
+  let articles = (await Astro.fetchContent("/content/articles/**/*.md")) as Article[]
+  articles = articles
+    .map((article) => postProcessArticle(article))
+    .sort((a, b) => {
+      return b.date.getTime() - a.date.getTime()
+    })
+
+  const years = articles.map((article) => article.date.getFullYear().toString())
+  const uniqueYears = [...new Set<string>(years)]
+
+  return uniqueYears.map((year) => {
+    const filteredArticles = articles.filter(
+      (article) => article.date.getFullYear().toString() === year,
+    )
+    return paginate(filteredArticles, { params: { year }, pageSize: 6 })
+  })
+}
+
+const { page } = Astro.props
+const year = Astro.request.params.year
+---
+
+<ArticleListLayout page={page} title={"Articles from " + year} />

@@ -6,6 +6,7 @@ interface WikiItem extends BaseObject {
   title: string
   tagline?: string
   lastModified?: Date
+  lastModifiedCommitUrl?: URL
   navigation: {
     label?: string
     category: string
@@ -18,18 +19,32 @@ function postProcessWikiItem(wikiItem: WikiItem): WikiItem {
   wikiItem = postProcessBase(wikiItem) as WikiItem
 
   // If we don't have an order, we set it to 0 which won't affect the sort
-  wikiItem.navigation.order = wikiItem.navigation.order ?? 0
+  wikiItem.navigation.order ??= 0
 
   if (import.meta.env.PROD) {
-    // Get the last modified time from Git as getting it from file system is not accurate
-    // PERF: This can be a bit slow, in Eleventy it used to slow down my builds a lot
-    const isoDate = execSync(
-      `git log -1 --date=iso --pretty="format:%cI" -- ./${wikiItem.file.pathname}`,
+    // Get the last modified time and commit ref from Git as getting it from file system is not accurate
+    // PERF: This is slow, it'd be great to eventually find a way to make it faster but I don't think that's possible
+    // It's not a big problem though since it only happens at build
+    const gitInfoRaw = execSync(
+      `git log -1 --date=iso --pretty="format:%cI|%H" -- ./${wikiItem.file.pathname}`,
     )
+      .toString()
+      .split("|")
 
-    wikiItem.lastModified = new Date(Date.parse(isoDate.toString()))
+    const gitInfo = {
+      date: gitInfoRaw[0],
+      ref: gitInfoRaw[1],
+    }
+
+    wikiItem.lastModified = new Date(gitInfo.date)
+    wikiItem.lastModifiedCommitUrl = new URL(
+      gitInfo.ref,
+      "https://github.com/Princesseuh/princesseuh.dev/commit/",
+    )
   } else {
+    // In dev, we just set those to the current date and the website URL, to avoid useless work
     wikiItem.lastModified = new Date()
+    wikiItem.lastModifiedCommitUrl = new URL("/", getBaseSiteURL())
   }
 
   wikiItem.url = new URL(

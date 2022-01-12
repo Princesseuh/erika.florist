@@ -10,14 +10,12 @@ export async function getStaticPaths({ paginate }) {
       return b.date.getTime() - a.date.getTime()
     })
 
-  const years = articles.map((article) => article.date.getFullYear().toString())
-  const uniqueYears = [...new Set<string>(years)]
+  const years = articles.map((article) => article.date.getFullYear())
+  const uniqueYears = [...new Set<number>(years)]
 
   return uniqueYears.map((year) => {
-    const filteredArticles = articles.filter(
-      (article) => article.date.getFullYear().toString() === year,
-    )
-    return paginate(filteredArticles, { params: { year }, pageSize: 6 })
+    const filteredArticles = articles.filter((article) => article.date.getFullYear() === year)
+    return paginate(filteredArticles, { params: { year: year.toString() }, pageSize: 6 })
   })
 }
 

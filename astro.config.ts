@@ -1,4 +1,6 @@
-export default /** @type {import('astro').AstroUserConfig} */ ({
+import type { AstroUserConfig } from "astro"
+
+const config: AstroUserConfig = {
   public: "./static",
   buildOptions: {
     site: "https://princesseuh.netlify.app/",
@@ -21,4 +23,6 @@ export default /** @type {import('astro').AstroUserConfig} */ ({
       },
     },
   },
-})
+}
+
+export default config

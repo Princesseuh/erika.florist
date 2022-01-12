@@ -168,12 +168,11 @@ module.exports = {
 
         // Note blocks, often used on wiki
         ".block-note": {
-          padding: ".9rem",
-          maxWidth: "90%",
+          padding: "1em",
+          margin: "1.5em auto",
+          maxWidth: "min(675px, 100%)",
           backgroundColor: theme("colors.fin-lanka"),
           borderRadius: "4px",
-          marginBottom: "1rem",
-          marginTop: "1.1rem",
 
           ".block-title": {
             display: "block",

@@ -5,6 +5,7 @@ import ContentHeader from "$components/shared/ContentHeader.astro"
 import WikiTOC from "$components/wiki/WikiTOC.astro"
 import { readableDate } from "$utils"
 import type { WikiItem } from "$data/wiki"
+
 export interface Props {
   wikiItem: WikiItem
 }
@@ -29,8 +30,9 @@ const { wikiItem } = Astro.props as Props
       <wikiItem.Content />
 
       <span class="text-right block text-creative-work mb-4">
-        Page last modified <span data-date={wikiItem.lastModified}
-          >{readableDate(wikiItem.lastModified)}</span
+        Page last modified <a
+          href={wikiItem.lastModifiedCommitUrl}
+          data-date={wikiItem.lastModified}>{readableDate(wikiItem.lastModified)}</a
         >
       </span>
     </article>

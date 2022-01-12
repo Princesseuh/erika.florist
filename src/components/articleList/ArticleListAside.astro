@@ -21,8 +21,8 @@ const years: Array<[string, number]> = [
 
 <aside class="sm:w-[20%]">
   <section>
-    <h2>Tags</h2>
-    <ul>
+    <h2 class="mb-3">Tags</h2>
+    <ul class="list-none m-0 p-0">
       {tags.map((tag) => (
         <li>
           <a href={"/articles/tags/" + tag[0] + "/"}>{tag[0]}</a> ({tag[1]})
@@ -31,8 +31,8 @@ const years: Array<[string, number]> = [
     </ul>
   </section>
   <section>
-    <h2>Year</h2>
-    <ul>
+    <h2 class="mb-3">Year</h2>
+    <ul class="list-none m-0 p-0">
       {years.map((year) => (
         <li>
           <a href={"/articles/years/" + year[0] + "/"}>{year[0]}</a> ({year[1]})

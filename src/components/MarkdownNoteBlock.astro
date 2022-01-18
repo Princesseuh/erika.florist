@@ -5,18 +5,10 @@ export interface Props {
 }
 
 const { title } = Astro.props as Props
-
-// Unfortunately, we have to do this because otherwise, the only way to get proper newlines would be to write
-// the blockquote content directly in Markdown and it leads to needing newlines both before the content and after which
-// isn't necessarily pretty. I'm still not really sure why we lose the newlines..
-const { privateRenderSlotDoNotUse: renderSlot } = Astro as any
-let slotContent = (await renderSlot("default")) as string
-
-slotContent = slotContent.replaceAll("\n", "\n\n")
 ---
 
 <div class="block-note">
   <span class="block-title">{title}</span>
   <!-- prettier-ignore -->
-  <Markdown content={slotContent}/>
+  <slot/>
 </div>

@@ -20,7 +20,7 @@ wikiItems = wikiItems
   .sort((a, b) => {
     return b.lastModified.getTime() - a.lastModified.getTime()
   })
-  .slice(0, 5)
+  .slice(0, 6)
 
 let featuredProjects = await Astro.fetchContent("/content/projects/**/*.md")
 featuredProjects = featuredProjects

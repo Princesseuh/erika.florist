@@ -1,13 +1,23 @@
 ---
 title: "Eleventy pain points"
 tagline: "In an unsurprising turns of event, it turns out you really can't write any kind of software without at least a few things going wrong"
+loadCSSModules: ["code"]
 date: 2020-10-18
-tags: ["eleventy", "website"]
+tags: ["eleventy", "website", "programming"]
+setup: |
+  import Image from '$components/MarkdownImage.astro';
+  import Blocknote from "$components/MarkdownNoteBlock.astro";
 ---
 
-During the developement of this version of my website I encountered a few pain points with [Eleventy](https://www.11ty.dev/), the static site generator used for this website. But that's okay, things take time to make and I'm glad it exists because outside of those few points, it was really really fun to use
+<Blocknote title="Outdated article">
 
-<!-- excerpt -->
+I ended up not using Eleventy at all for the final version of this website, I LOVED using it and would definitely use it on other projects
+
+I preferred to use something a bit more.. modern than Eleventy, Nunjucks and other are fun to use but they're clearly a bit outdated nowadays and [Astro](https://astro.build/) ended up being really fun
+
+</Blocknote>
+
+During the development of this version of my website I encountered a few pain points with [Eleventy](https://www.11ty.dev/), the static site generator used for this website. But that's okay, things take time to make and I'm glad it exists because outside of those few points, it was really really fun to use
 
 Please note that this article was written progressively while making the website so some points are not necessarily still relevant to the final product nor to the current state of the projects used
 

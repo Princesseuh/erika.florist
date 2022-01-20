@@ -11,17 +11,6 @@ const config: AstroUserConfig = {
       external: ["svgo"],
     },
     plugins: [],
-    resolve: {
-      alias: {
-        $components: "/src/components",
-        $data: "/src/data",
-        $layouts: "/src/layouts",
-        $theme: "/src/theme",
-        $types: "/src/types",
-        $utils: "/src/utils",
-        $content: "/src/content",
-      },
-    },
   },
 }
 

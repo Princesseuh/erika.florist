@@ -3,15 +3,14 @@
     "module": "esnext",
     "moduleResolution": "node",
     "target": "ESNext",
+    "types": ["vite/client", "node"],
+    "baseUrl": ".",
     "paths": {
-      "$components/*": ["./src/components/*"],
-      "$data/*": ["./src/data/*"],
-      "$layouts/*": ["./src/layouts/*"],
-      "$theme/*": ["./src/theme/*"],
-      "$types/*": ["./src/types/*"],
-      "$utils": ["./src/utils/index.ts"]
-    },
-    "types": ["vite/client", "node"]
+      "$components/*": ["src/components/*"],
+      "$data/*": ["src/data/*"],
+      "$layouts/*": ["src/layouts/*"],
+      "$utils": ["src/utils/index.ts"]
+    }
   },
   "exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist"]
 }

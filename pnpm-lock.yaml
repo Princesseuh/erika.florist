@@ -2,13 +2,13 @@ lockfileVersion: 5.3
 
 specifiers:
   '@11ty/eleventy-img': ^1.0.0
-  '@types/eslint': ^8.2.2
-  '@types/node': ^17.0.9
+  '@types/eslint': ^8.4.0
+  '@types/node': ^17.0.10
   '@types/prettier': ^2.4.3
   '@types/tailwindcss': ^3.0.2
   '@typescript-eslint/eslint-plugin': ^5.10.0
   '@typescript-eslint/parser': ^5.10.0
-  astro: ^0.22.14
+  astro: ^0.22.16
   astro-icon: 0.5.3
   astro-social-images: ^0.3.0
   autoprefixer: ^10.4.2
@@ -23,7 +23,7 @@ specifiers:
   typescript: ^4.5.4
 
 dependencies:
-  '@types/eslint': 8.2.2
+  '@types/eslint': 8.4.0
   '@types/prettier': 2.4.3
   '@types/tailwindcss': 3.0.2
   '@typescript-eslint/eslint-plugin': 5.10.0_3b6b276e93ead7cf6063f183a5e18d1f
@@ -42,8 +42,8 @@ dependencies:
 
 devDependencies:
   '@11ty/eleventy-img': 1.0.0
-  '@types/node': 17.0.9
-  astro: 0.22.14_typescript@4.5.4
+  '@types/node': 17.0.10
+  astro: 0.22.16_typescript@4.5.4
   typescript: 4.5.4
 
 packages:
@@ -552,8 +552,8 @@ packages:
     dependencies:
       '@types/ms': 0.7.31
 
-  /@types/eslint/8.2.2:
-    resolution: {integrity: sha512-nQxgB8/Sg+QKhnV8e0WzPpxjIGT3tuJDDzybkDi8ItE/IgTlHo07U0shaIjzhcvQxlq9SDRE42lsJ23uvEgJ2A==}
+  /@types/eslint/8.4.0:
+    resolution: {integrity: sha512-JUYa/5JwoqikCy7O7jKtuNe9Z4ZZt615G+1EKfaDGSNEpzaA2OwbV/G1v08Oa7fd1XzlFoSCvt9ePl9/6FyAug==}
     dependencies:
       '@types/estree': 0.0.50
       '@types/json-schema': 7.0.9
@@ -571,7 +571,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 3.0.5
-      '@types/node': 17.0.9
+      '@types/node': 17.0.10
     dev: false
 
   /@types/hast/2.3.4:
@@ -610,8 +610,8 @@ packages:
     dependencies:
       '@types/unist': 2.0.6
 
-  /@types/node/17.0.9:
-    resolution: {integrity: sha512-5dNBXu/FOER+EXnyah7rn8xlNrfMOQb/qXnw4NQgLkCygKBKhdmF/CA5oXVOKZLBEahw8s2WP9LxIcN/oDDRgQ==}
+  /@types/node/17.0.10:
+    resolution: {integrity: sha512-S/3xB4KzyFxYGCppyDt68yzBU9ysL88lSdIah4D6cptdcltc4NCPCAMc0+PCpg/lLIyC7IPvj2Z52OJWeIUkog==}
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -637,7 +637,7 @@ packages:
   /@types/sass/1.43.1:
     resolution: {integrity: sha512-BPdoIt1lfJ6B7rw35ncdwBZrAssjcwzI5LByIrYs+tpXlj/CAkuVdRsgZDdP4lq5EjyWzwxZCqAoFyHKFwp32g==}
     dependencies:
-      '@types/node': 17.0.9
+      '@types/node': 17.0.10
 
   /@types/tailwindcss/3.0.2:
     resolution: {integrity: sha512-4nilb5vk7aZXaQvMZin5dSHX+AIHZNDmKtDDRHfVKE/XNkQK9OjZ9V+zo+XHoH/fdLzureJno3+C5wIGdrBzgQ==}
@@ -1000,7 +1000,7 @@ packages:
   /astro-social-images/0.3.0_typescript@4.5.4:
     resolution: {integrity: sha512-y9+gtEqCBr0WKPD16vvy3kpAyfIjtULWkjhDx0Rbgh/yZPlKJLayInHnyXJRBXzEVOjpq27TfKhZE5zjiGn4UA==}
     dependencies:
-      astro: 0.22.14_typescript@4.5.4
+      astro: 0.22.16_typescript@4.5.4
       base64url-xplatform: 1.1.2
       sharp: 0.29.3
     transitivePeerDependencies:
@@ -1016,8 +1016,8 @@ packages:
       - typescript
     dev: false
 
-  /astro/0.22.14_typescript@4.5.4:
-    resolution: {integrity: sha512-6+cJhCK/m8U/p6deZzITIMHeuj7R0P7ipPOi80IbM15RHoDIjObhA3U50gbp0B0xg3EoPo7SMF4QyHW82ICupw==}
+  /astro/0.22.16_typescript@4.5.4:
+    resolution: {integrity: sha512-qQWjRRUnxbrktBjqzTAMisKTU7hhafI0wREtgmLeVdFx54bWOwL6yBDw/ZOvrJL5c3w0b7vwGMQ0fQsJZ+GVNQ==}
     engines: {node: ^14.15.0 || >=16.0.0, npm: '>=6.14.0'}
     hasBin: true
     dependencies:

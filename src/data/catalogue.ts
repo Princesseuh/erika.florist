@@ -1,7 +1,8 @@
 import type { BaseObject } from "./shared"
 import { postProcessBase } from "./shared"
 import { basename, dirname } from "path"
-import { generateImage, getBaseSiteURL, ImageFormat } from "$utils"
+import { generateImage, getBaseSiteURL } from "$utils"
+import type { ImageFormat } from "src/utils/imageTools"
 
 enum CatalogueType {
   GAME = "game",

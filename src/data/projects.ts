@@ -1,6 +1,7 @@
 import { BaseObject, postProcessBase } from "./shared"
 import { basename, dirname } from "path"
-import { getBaseSiteURL, generateImage, ImageFormat } from "$utils"
+import { getBaseSiteURL, generateImage } from "$utils"
+import type { ImageFormat } from "src/utils/imageTools"
 
 interface Project extends BaseObject {
   type: ProjectType

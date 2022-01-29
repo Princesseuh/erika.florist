@@ -85,7 +85,7 @@ module.exports = {
           position: "relative",
           background: "transparent",
           color: theme("colors.white"),
-          opacity: "0.85",
+          opacity: "0.90",
           transition: "all 0.1s ease-out",
           display: "flex",
           width: "431px",

@@ -17,8 +17,10 @@ Object.values(ProjectType).forEach((projectType) => {
 })
 
 // Utils
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
+const readableTitles = {
+  game: "Games",
+  website: "Websites",
+  software: "Softwares and librairies",
 }
 ---
 
@@ -28,22 +30,26 @@ function capitalizeFirstLetter(string) {
 
     <p>
       A list of my projects, it isn't necessarily exhaustive and mostly contain the projects I'm the
-      most proud of. Additionally, projects marked with a star (🌟) are featured projects I'm even
-      more proud of!
+      most proud of.
+    </p>
+    <p>
+      Additionally, projects marked with a star (🌟) are featured projects I'm even more proud of!
+      Projects marked with a chain (🔗) will be opened on another website (for instance, their
+      GitHub repo)
     </p>
 
     To see more projects, feel free to visit my <a href="https://github.com/Princesseuh">GitHub</a> or
-    for games, my <a href="https://princesseuh.itch.io/">Itch.io</a>
+    for games especially, my <a href="https://princesseuh.itch.io/">Itch.io</a>
 
     {Object.entries(projectsPerType)
       .filter((type) => type[1].length > 0)
       .map((type) => (
         <div>
-          <h3>{capitalizeFirstLetter(type[0]) + "s"}</h3>
+          <h3>{readableTitles[type[0]]}</h3>
           <div class="flex gap-4">
             {type[1].map((project) => (
               <a
-                href={project.url.pathname}
+                href={project.external_url ? project.external_url : project.url.pathname}
                 class={project.featured ? "project-box project-featured" : "project-box"}
               >
                 {project.featured && (
@@ -52,6 +58,14 @@ function capitalizeFirstLetter(string) {
                     title="Featured project"
                   >
                     🌟
+                  </span>
+                )}
+                {project.external_url && (
+                  <span
+                    class="absolute right-2 top-1 w-5 h-5 fill-current"
+                    title="Project is hosted on an external website"
+                  >
+                    🔗
                   </span>
                 )}
                 {project.assets.miniLogo}

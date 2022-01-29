@@ -17,6 +17,7 @@ interface Project extends BaseObject {
   miniLogoAlt?: string
   githubRepo?: URL
   featured: boolean
+  external_url?: string
 }
 
 enum ProjectType {
@@ -31,7 +32,9 @@ function postProcessProject(project: Project): Project {
   project.type = getProjectTypeFromURL(project.file.pathname)
 
   const projectBaseDir = `/projects/${project.type}s/${project.slug}/`
-  project.url = new URL(projectBaseDir, getBaseSiteURL())
+  project.url = project.external_url
+    ? new URL(project.external_url)
+    : new URL(projectBaseDir, getBaseSiteURL())
 
   // Assets
   project.assets = {}

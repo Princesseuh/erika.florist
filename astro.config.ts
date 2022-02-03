@@ -7,8 +7,11 @@ const config: AstroUserConfig = {
   },
   renderers: [],
   vite: {
+    optimizeDeps: {
+      exclude: ["astro-eleventy-img"],
+    },
     ssr: {
-      external: ["svgo"],
+      external: ["svgo", "@11ty/eleventy-img"],
     },
     plugins: [],
   },

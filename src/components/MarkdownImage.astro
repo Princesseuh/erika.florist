@@ -1,7 +1,17 @@
 ---
-import Image from "@11ty/eleventy-img"
-import { generateImage } from "$utils"
-import { Markdown } from "astro/components"
+import { Image, ImageOptions, PlaceholderOptions } from "astro-eleventy-img"
+
+interface Props {
+  src: string
+  alt: string
+  caption?: string
+  options?: ImageOptions
+  sizes?: string
+  classes?: string
+  quality?: number
+  placeholderOptions?: PlaceholderOptions
+}
+
 const {
   src,
   alt,
@@ -10,48 +20,28 @@ const {
   sizes = "",
   classes = undefined,
   quality = 90,
-} = Astro.props
+  placeholderOptions = {},
+} = Astro.props as Props
 const { url } = Astro.request
 
 // Due to an issue in Astro preventing us from using the /articles/ path (see [slug].astro in pages/article), we have
 // to manually replace it in the URL so images can work. Hopefully won't be needed someday - erika, 2021-12-08
 const tempURL = url.pathname.replace("/article/", "/articles/")
+// If our URL starts with a slash, let's assume the user know what they're doing and not alter the URL apart from the content prefix
+// The reason this is needed is for subarticles, even though they reside in the same folder as their parent, their path
+// is not accurate to the file structure and so, looking the image relatively doesn't work - erika, 2021-12-08
+const tempSrc = src.startsWith("/") ? "content" + src : "content" + tempURL + "/" + src
 
-const image = generateImage(
-  // If our URL starts with a slash, let's assume the user know what they're doing and not alter the URL apart from the content prefix
-  // The reason this is needed is for subarticles, even though they reside in the same folder as their parent, their path
-  // is not accurate to the file structure and so, looking the image relatively doesn't work - erika, 2021-12-08
-  src.startsWith("/") ? "content" + src : "content" + tempURL + "/" + src,
-  Object.assign(options, {
-    widths: [null],
-    formats: ["avif", "webp", "png"],
-    sharpWebpOptions: {
-      quality: quality,
+const props: Props = Object.assign(
+  { ...Astro.props },
+  {
+    src: tempSrc,
+    alt,
+    options: {
+      outputDir: "static/assets/images",
     },
-    sharpAvifOptions: {
-      quality: quality,
-    },
-  }),
-  false,
+  },
 )
-
-const imageAttributes = {
-  alt: alt,
-  sizes: sizes,
-  loading: "lazy",
-  decoding: "async",
-}
-
-const html = Image.generateHTML(image, imageAttributes)
-const props: Record<string, string> = {}
-props.class ??= classes
 ---
 
-<figure {...props}>
-  {html}
-  {caption && (
-    <figcaption>
-      <Markdown>{caption}</Markdown>
-    </figcaption>
-  )}
-</figure>
+<Image {...props} />

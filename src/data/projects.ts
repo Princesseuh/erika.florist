@@ -1,7 +1,8 @@
 import { BaseObject, postProcessBase } from "./shared"
 import { basename, dirname } from "path"
-import { getBaseSiteURL, generateImage } from "$utils"
-import type { ImageFormat } from "src/utils/imageTools"
+import { getBaseSiteURL } from "$utils"
+
+import { generateImage, ImageFormat } from "astro-eleventy-img"
 
 interface Project extends BaseObject {
   type: ProjectType
@@ -41,8 +42,9 @@ function postProcessProject(project: Project): Project {
 
   if (project.featured) {
     const indexCover: Record<string, Array<ImageFormat>> = generateImage(
-      projectBaseDir + "cover.png",
+      "content/assets" + projectBaseDir + "cover.png",
       {
+        outputDir: "static/assets/images",
         widths: [380, 600],
         formats: ["avif", "webp", "jpeg"],
       },
@@ -69,8 +71,9 @@ function postProcessProject(project: Project): Project {
   }
 
   const miniLogo: Record<string, Array<ImageFormat>> = generateImage(
-    projectBaseDir + "mini-logo.png",
+    "content/assets" + projectBaseDir + "mini-logo.png",
     {
+      outputDir: "static/assets/images",
       widths: [128, 96],
       formats: ["avif", "webp", "png"], // We need transparency on those so can't use jpegs
     },

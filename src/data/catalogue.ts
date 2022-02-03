@@ -1,8 +1,8 @@
 import type { BaseObject } from "./shared"
 import { postProcessBase } from "./shared"
 import { basename, dirname } from "path"
-import { generateImage, getBaseSiteURL } from "$utils"
-import type { ImageFormat } from "src/utils/imageTools"
+import { getBaseSiteURL } from "$utils"
+import { generateImage, ImageFormat } from "astro-eleventy-img"
 
 enum CatalogueType {
   GAME = "game",
@@ -72,8 +72,9 @@ function postProcessCatalogueItem(item: CatalogueItem): CatalogueItem {
   item.url = new URL(itemBaseDir, getBaseSiteURL())
 
   const cover: Record<string, Array<ImageFormat>> = generateImage(
-    itemBaseDir.slice(0, -1) + `.jpg`,
+    "content/assets" + itemBaseDir.slice(0, -1) + `.jpg`,
     {
+      outputDir: "static/assets/images",
       widths: [300],
       formats: ["avif", "webp", "jpeg"],
     },

@@ -2,9 +2,9 @@
 import Header from "$components/layout/Header.astro"
 import Socials from "$components/layout/Socials.astro"
 import { Sprite } from "astro-icon"
-import { generateSocialImage, SocialImageResult, SocialImage } from "astro-social-images"
+import { generateSocialImage, SocialImageResult } from "astro-social-images"
 import { getBaseSiteURL } from "$utils"
-import mainJS from "../assets/scripts/main.ts?url"
+import "src/assets/style/prin.css"
 
 export interface Props {
   title?: string
@@ -66,19 +66,6 @@ if (socialImage) {
       crossorigin
     />
 
-    <link rel="preload" href={(await import("../assets/style/prin.css?url")).default} as="style" />
-    <style global>
-      @import "../assets/style/prin.css";
-    </style>
-
-    <!-- TODO: Figure out a way to do this with the new syntax for importing CSS -->
-    {styles.map((stylesheet) => (
-      <link
-        rel="stylesheet"
-        href={Astro.resolve("../assets/style/modules/" + stylesheet + ".css")}
-      />
-    ))}
-
     <title>{title ? `${title} - Princesseuh` : "Princesseuh"}</title>
     <meta name="description" content={description ? description : "My personal website"} />
     <meta property="og:title" content={title ? `${title} - Princesseuh` : "Princesseuh"} />
@@ -100,7 +87,7 @@ if (socialImage) {
     <link rel="canonical" href={Astro.request.canonicalURL} />
     <meta property="og:url" href={Astro.request.canonicalURL} />
 
-    <script type="module" defer src={mainJS}></script>
+    <script type="module" hoist> import "/src/assets/scripts/main.ts" </script>
   </head>
   <body>
     <Sprite.Provider>

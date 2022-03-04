@@ -6,26 +6,22 @@ let wikiItems = await Astro.fetchContent("/content/wiki/**/*.md")
 wikiItems = wikiItems.map((item) => postProcessWikiItem(item))
 
 const { url } = Astro.request
-
-function getItemElement(item: WikiItem): string {
-  return `<a class="block ${
-    url.pathname == item.url.pathname ? "text-pinky-unicorny font-bold" : ""
-  }" href="${item.url.pathname}">${item.navigation.label || item.title}</a>`
-}
 ---
 
 <ul class="m-0 list-none p-0 wiki-navigation hidden sm:block">
-  {wikiCategories.map(
-    (
-      category: WikiCategory, // This is a bit messy, I think there's a way to do this without using a template literal but I couldn't find it
-    ) =>
-      `<li>
-            <span class="block font-bold text-sugar-cane">${category.title}</span>
-            ${getWikiItemsByCategory(wikiItems, category.key)
-              .map((item: WikiItem) => {
-                return getItemElement(item)
-              })
-              .join("")}
-        </li>`,
-  )}
+  {wikiCategories.map((category: WikiCategory) => (
+    <li>
+      <span class="block font-bold text-sugar-cane">{category.title}</span>
+      {getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItem) => (
+        <a
+          class={`block ${
+            url.pathname == item.url.pathname ? "text-pinky-unicorny font-bold" : ""
+          }`}
+          href={item.url.pathname}
+        >
+          {item.navigation.label || item.title}
+        </a>
+      ))}
+    </li>
+  ))}
 </ul>

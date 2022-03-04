@@ -61,13 +61,13 @@ switch (catalogueItem.type) {
       {
         Producer: catalogueItem.producer,
         Platform: catalogueItem.platform,
-        Seasons: catalogueItem.seasons
+        Seasons: catalogueItem.seasons,
       },
       {
         "Started on": readableDate(catalogueItem.started_on),
         "Ended on": readableDate(catalogueItem.ended_on),
-        Episodes: catalogueItem.episodes
-      }
+        Episodes: catalogueItem.episodes,
+      },
     ]
     break
 }
@@ -77,10 +77,10 @@ switch (catalogueItem.type) {
   <article class="w-index mx-auto mt-6">
     <a href="/catalogue/">Back to Catalogue</a>
     <header class="flex justify-between gap-4 px-4 my-4">
-      {
-        // We remove the background we add for small elements manually on this page
-        unescapeHtml(catalogueItem.cover).replace("bg-fin-lanka bg-opacity-50", "")
-      }
+      <Fragment
+        set:html={// We remove the background we add for small elements manually on this page
+        unescapeHtml(catalogueItem.cover).replace("bg-fin-lanka bg-opacity-50", "")}
+      />
       <div class="flex items-center bottom-2 catalogue--item-meta flex-1 justify-center relative">
         <div>
           <h2 class="mt-0 text-center">{catalogueItem.title}</h2>
@@ -99,7 +99,7 @@ switch (catalogueItem.type) {
     <h2 class="mb-3 mt-0">Quick thoughts</h2>
     <section class="px-2">
       <!-- prettier-ignore -->
-      <catalogueItem.Content/>
+      <catalogueItem.Content></catalogueItem.Content>
     </section>
   </article>
 </BaseLayout>

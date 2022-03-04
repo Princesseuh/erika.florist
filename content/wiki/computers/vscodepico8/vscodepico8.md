@@ -121,7 +121,7 @@ Start-Process .\reload-pico8.exe
 
 And to reload PICO-8, this AHK script was used:
 
-```autohotkey
+```plaintext
 if WinExist("ahk_exe pico8.exe")
     WinActivate ; use the window found above
     SendInput, ^{r}

@@ -56,7 +56,7 @@ featuredProjects = featuredProjects
       {featuredProjects.map((project) => (
         <div class="h-[180px] relative">
           <a href={project.url.pathname}>
-            {project.assets.indexCover}
+            <Fragment set:html={project.assets.indexCover}/>
             <h4 class="cover-title">{project.title}</h4>
           </a>
         </div>

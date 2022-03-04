@@ -33,9 +33,9 @@ const readableTitles = {
       most proud of.
     </p>
     <p>
-      Additionally, projects marked with a star () are featured projects I'm even more proud of!
-      Projects marked with a chain () will be opened on another website (for instance, their GitHub
-      repo)
+      Additionally, projects marked with a star (🌟) are featured projects I'm even more proud of!
+      Projects marked with a chain (🔗) will be opened on another website (for instance, their
+      GitHub repo)
     </p>
 
     To see more projects, feel free to visit my <a href="https://github.com/Princesseuh">GitHub</a> or
@@ -57,7 +57,7 @@ const readableTitles = {
                     class="absolute right-2 top-1 w-5 h-5 fill-current"
                     title="Featured project"
                   >
-                    s
+                    🌟
                   </span>
                 )}
                 {project.external_url && (
@@ -65,10 +65,10 @@ const readableTitles = {
                     class="absolute right-2 top-1 w-5 h-5 fill-current"
                     title="Project is hosted on an external website"
                   >
-                    c
+                    🔗
                   </span>
                 )}
-                {project.assets.miniLogo}
+                <Fragment set:html={project.assets.miniLogo} />
                 <div>
                   <h4 class="block font-bold m-0">{project.title}</h4>
                   <span class="text-sm text-creative-work">{project.description}</span>

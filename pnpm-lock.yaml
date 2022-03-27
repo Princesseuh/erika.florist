@@ -9,7 +9,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.16.0
   '@typescript-eslint/parser': ^5.16.0
   astro: ^0.25.2
-  astro-eleventy-img: ^0.3.0
+  astro-eleventy-img: ^0.3.1
   astro-icon: 0.6.1
   astro-social-images: ^0.4.0
   autoprefixer: ^10.4.4
@@ -34,7 +34,7 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 5.16.0_4df62b6e125e6f18efee2d013b4a9d80
   '@typescript-eslint/parser': 5.16.0_eslint@8.12.0+typescript@4.6.3
   astro: 0.25.2
-  astro-eleventy-img: 0.3.0
+  astro-eleventy-img: 0.3.1
   astro-icon: 0.6.1
   astro-social-images: 0.4.0
   autoprefixer: 10.4.4
@@ -907,8 +907,8 @@ packages:
       util: 0.12.4
     dev: true
 
-  /astro-eleventy-img/0.3.0:
-    resolution: {integrity: sha512-g8TVDv3EV6HujZOMcY+7ZvzpiYl0rHmciqhA7RtEHLhFiO7o51dHSDNYmb/nUMBw4P4xVESvV0Lq/nRoxosmDw==}
+  /astro-eleventy-img/0.3.1:
+    resolution: {integrity: sha512-eg/PVbFQrN92N3htJunog2VD5do2mQsJ+1oSFNqxOVEaS/L0JXADTSAAZGWO7vVh9Ug1c43eEZqyIitimnLNUg==}
     dependencies:
       '@11ty/eleventy-img': 1.1.0
       astro: 0.25.2

@@ -6,7 +6,7 @@ export interface Props {
   catalogueItem: CatalogueItem
 }
 
-function unescapeHtml(unsafe) {
+function unescapeHtml(unsafe: string) {
   return unsafe.replace(/&lt;/g, "<").replace(/&gt;/g, ">")
 }
 
@@ -59,7 +59,7 @@ switch (catalogueItem.type) {
   case CatalogueType.SHOW:
     metaInfo = [
       {
-        Producer: catalogueItem.producer,
+        Studio: catalogueItem.studio,
         Platform: catalogueItem.platform,
         Seasons: catalogueItem.seasons,
       },

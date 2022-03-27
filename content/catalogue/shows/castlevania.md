@@ -1,6 +1,6 @@
 ---
 title: Castlevania
-producer: Frederator Studios
+studio: Frederator Studios
 seasons: 4
 episodes: 32
 platform: Netflix

@@ -1,0 +1,16 @@
+---
+import CatalogueFilters from "./CatalogueFilters.astro"
+import CatalogueMeta from "./CatalogueMeta.astro"
+import CatalogueLoadingBlock from "./CatalogueLoadingBlock.astro"
+---
+
+<CatalogueFilters />
+
+<div id="catalogue">
+  <CatalogueMeta />
+  <div id="catalogueContent" class="flex gap-[0.88975rem] flex-wrap">
+    {Array.from({ length: 30 }, (_, i) => <CatalogueLoadingBlock />)}
+  </div>
+  <CatalogueMeta />
+</div>
+<script type="module" hoist> import "/src/assets/scripts/catalogue.ts" </script>

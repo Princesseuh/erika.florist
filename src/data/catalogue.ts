@@ -2,7 +2,7 @@ import type { BaseObject } from "./shared"
 import { postProcessBase } from "./shared"
 import { basename, dirname } from "path"
 import { getBaseSiteURL } from "$utils"
-import { generateImage, ImageFormat } from "astro-eleventy-img"
+import { generateImage, generatePlaceholder, ImageFormat } from "astro-eleventy-img"
 
 enum CatalogueType {
   GAME = "game",
@@ -46,12 +46,12 @@ interface CatalogueGame extends CatalogueItemBase {
 }
 
 interface CatalogueMovie extends CatalogueItemBase {
-  director: string
+  studio: string
   length: number
 }
 
 interface CatalogueShow extends CatalogueItemBase {
-  producer: string
+  studio: string
   seasons: number
   episodes: number
   platform: string
@@ -64,7 +64,7 @@ type CatalogueItem =
   | CatalogueBookSingle
   | CatalogueBookMultiple
 
-function postProcessCatalogueItem(item: CatalogueItem): CatalogueItem {
+async function postProcessCatalogueItem(item: CatalogueItem): Promise<CatalogueItem> {
   item = postProcessBase(item) as CatalogueItem
 
   item.type = getCatalogueTypeFromURL(item.file.pathname)
@@ -78,6 +78,10 @@ function postProcessCatalogueItem(item: CatalogueItem): CatalogueItem {
       widths: [300],
       formats: ["avif", "webp", "jpeg"],
     },
+  )
+
+  const placeholder = await generatePlaceholder(
+    "content/assets" + itemBaseDir.slice(0, -1) + `.jpg`,
   )
 
   function escapeHtml(unsafe) {
@@ -104,7 +108,9 @@ function postProcessCatalogueItem(item: CatalogueItem): CatalogueItem {
         width="200"
         height="300"
         loading="lazy"
-        decoding="async">
+        decoding="async"
+        style="background-size: cover;background-image:url(${placeholder?.dataURI})"
+        onload="this.style.backgroundImage='none'">
     </picture>`)
 
   item.cover = item.cover.replace(/(\r\n|\n|\r)/gm, "")

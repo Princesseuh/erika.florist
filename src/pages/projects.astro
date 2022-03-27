@@ -2,7 +2,7 @@
 import BaseLayout from "$layouts/BaseLayout.astro"
 import { postProcessProject, Project, ProjectType } from "$data/projects"
 
-let projects = Astro.fetchContent("/content/projects/**/*.md")
+let projects = await Astro.fetchContent("/content/projects/**/*.md")
 projects = projects.map((project) => postProcessProject(project))
 
 // Create an object with sub-objects corresponding to the different types of projects that exist
@@ -20,7 +20,7 @@ Object.values(ProjectType).forEach((projectType) => {
 const readableTitles = {
   game: "Games",
   website: "Websites",
-  software: "Softwares and librairies",
+  software: "Softwares and libraries",
 }
 ---
 

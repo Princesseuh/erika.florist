@@ -1,6 +1,6 @@
 ---
-import { getWikiItemsByCategory, WikiItem, postProcessWikiItem } from "$data/wiki.ts"
-import { wikiCategories, WikiCategory } from "$data/wikiCategories.ts"
+import { getWikiItemsByCategory, WikiItem, postProcessWikiItem } from "$data/wiki"
+import { wikiCategories, WikiCategory } from "$data/wikiCategories"
 
 let wikiItems = await Astro.fetchContent("/content/wiki/**/*.md")
 wikiItems = wikiItems.map((item) => postProcessWikiItem(item))

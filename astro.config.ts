@@ -21,7 +21,7 @@ const config: AstroUserConfig = {
       },
     ],
   },
-  renderers: [],
+  integrations: [],
   vite: {
     optimizeDeps: {
       exclude: ["astro-eleventy-img"],

@@ -2,7 +2,9 @@
 import { postProcessCatalogueItem, CatalogueItem } from "$data/catalogue"
 
 let catalogueItems = await Astro.fetchContent("/content/catalogue/**/*.md")
-catalogueItems = catalogueItems.map((item) => postProcessCatalogueItem(item as CatalogueItem))
+catalogueItems = await Promise.all(
+  catalogueItems.map(async (item) => await postProcessCatalogueItem(item as CatalogueItem)),
+)
 
 const json = JSON.stringify(
   catalogueItems
@@ -13,7 +15,7 @@ const json = JSON.stringify(
       return {
         title: item.title,
         cover: item.cover,
-        creator: item.author || item.developer || item.producer,
+        creator: (item.author || item.developer || item.studio) ?? "Unknown",
         url: item.url.pathname,
         type: item.type,
       }

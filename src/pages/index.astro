@@ -34,29 +34,33 @@ featuredProjects = featuredProjects
     <h2 class="mb-4 mt-0 text-4xl">Hello! 💐</h2>
 
     <p>
-      My real name is <span class="font-bold text-beach-watermelon">Erika</span> but maybe you know me
-      under the nickname <span class="font-semibold text-pinky-unicorny">Princesseuh</span> 👸, that's
-      okay!
+      I'm <span class="font-bold text-beach-watermelon">Erika</span>, a web/game developer from
+      Canada 🇨🇦, pleased to meet you! Alternatively, I also go by the nickname <span
+        class="font-semibold text-pinky-unicorny">Princesseuh</span
+      > 👸, use whichever you prefer!
     </p>
 
     <p>
-      I'm a web/game developer from Canada 🇨🇦, pleased to meet you! Truth be told, I'm not as
-      interested in programming as I once used to be, however, I'm definitely still a nerd at heart
-      and having your own website is still a really cool thing, so hey, welcome to my website! Feel
-      free to browse around!
+      I am currently employed at <a href="https://astro.build/">Astro</a> where I work as a core developer.
+      While I do touch everything, I notably focus on making sure our users always get just the right
+      tools needed for a good and efficient developer experience!
     </p>
 
-    Interested in seeing stuff I worked on? Click <a href="/projects/">here for my projects</a>!
-    Wanna read stuff I wrote? Well, lucky you, <a href="/articles/">here's my blog</a>! You want to
-    read random stuff I wrote mostly for myself? Well, <a href="/wiki/">my wiki is right here</a
-    >!&nbsp;🎉
+    <p>
+      Interested in seeing stuff I worked on? Click <a href="/projects/">here for my projects</a>!
+      Wanna read stuff I wrote? Well, lucky you, <a href="/articles/">here's my blog</a>! You want
+      to read random stuff I wrote mostly for myself? <a href="/wiki/">Take a look at my wiki</a
+      >!&nbsp;🎉
+    </p>
+
+    <p>I hope you'll have fun visiting my website! 🎀</p>
 
     <h3 class="text-2xl mb-5">Featured works</h3>
     <div class="flex flex-wrap sm:mx-10 mt-2 mb-6 gap-5 sm:gap-4 justify-center items-center">
       {featuredProjects.map((project) => (
         <div class="h-[180px] relative">
           <a href={project.url.pathname}>
-            <Fragment set:html={project.assets.indexCover}/>
+            <Fragment set:html={project.assets.indexCover} />
             <h4 class="cover-title">{project.title}</h4>
           </a>
         </div>

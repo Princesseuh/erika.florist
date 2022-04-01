@@ -8,7 +8,7 @@ import CatalogueLoadingBlock from "./CatalogueLoadingBlock.astro"
 
 <div id="catalogue">
   <CatalogueMeta />
-  <div id="catalogueContent" class="flex gap-[0.88975rem] flex-wrap">
+  <div id="catalogueContent" class="flex gap-[0.88975rem] flex-wrap mb-2">
     {Array.from({ length: 30 }, (_, i) => <CatalogueLoadingBlock />)}
   </div>
   <CatalogueMeta />

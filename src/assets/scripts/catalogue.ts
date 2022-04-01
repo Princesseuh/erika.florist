@@ -43,6 +43,7 @@ filters.forEach((filter) => {
 
 function buildLibrary(subset: CatalogueJSONItem[] = fullElements) {
   const contentFragment = new DocumentFragment()
+
   const offset = currentPage * elementPerPage
   const maxElements =
     offset + elementPerPage > subset.length ? subset.length : offset + elementPerPage
@@ -63,9 +64,9 @@ function buildLibrary(subset: CatalogueJSONItem[] = fullElements) {
 
   resultCount.forEach(
     (count) =>
-      (count.innerText = `${offset + 1} - ${maxElements} of ${subset.length} element${
-        subset.length > 0 ? "s" : ""
-      }`),
+      (count.innerText = `${Math.min(offset + 1, maxElements)} - ${maxElements} of ${
+        subset.length
+      } element${subset.length > 0 ? "s" : ""}`),
   )
   catalogueContent.replaceChildren(contentFragment)
 }
@@ -130,6 +131,24 @@ function updateFilters(build = true, resetPage = false) {
     .appendCurrentPage().result
 
   maxPage = Math.floor(library.library.length / elementPerPage)
+  if (library.library.length % elementPerPage === 0) {
+    maxPage--
+  }
+
+  if (currentPage > maxPage) {
+    currentPage = maxPage
+    const newURL = library.url
+    newURL.searchParams.set("page", currentPage.toString())
+    window.history.replaceState(null, "", newURL)
+  }
+
+  if (currentPage < 0) {
+    currentPage = 0
+    const newURL = library.url
+    newURL.searchParams.delete("page")
+    window.history.replaceState(null, "", newURL)
+  }
+
   updatePageButtonStatus()
 
   if (build) {
@@ -150,9 +169,14 @@ function updateFiltersFromURL() {
 
   if (urlParams.has("page")) {
     currentPage = parseInt(urlParams.get("page"))
-  }
 
-  updateFilters()
+    if (isNaN(currentPage)) {
+      currentPage = 0
+      const newURL = new URL(document.location.href)
+      newURL.searchParams.delete("page")
+      window.history.replaceState(null, "", newURL)
+    }
+  }
 }
 
 function pageUp() {
@@ -174,12 +198,12 @@ function pageDown() {
 }
 
 function updatePageButtonStatus() {
-  pageUpButtons.forEach((button) => (button.disabled = currentPage === maxPage))
+  pageUpButtons.forEach((button) => (button.disabled = currentPage === Math.max(maxPage, 0)))
   pageDownButtons.forEach((button) => (button.disabled = currentPage === 0))
 }
 
-// Astro currently doesn't support generating anything other than .html files so our JSON file, is not a json, hah
-// So we'll need to get our json from the page's body
+// Astro currently doesn't support generating .json using Astro.fetchContent, so we need to generate a .html which imply
+// That we need to get our json from the page's body, unfortunate
 ;(function initCatalogue() {
   fetch("/catalogue/content.json/")
     .then((response) => response.text())

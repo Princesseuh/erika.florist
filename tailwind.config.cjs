@@ -299,6 +299,12 @@ module.exports = {
           marginBottom: ".6rem",
         },
 
+        ".post blockquote": {
+          paddingLeft: "0.75rem",
+          borderLeft: "5px solid #e2747fb9",
+          fontStyle: "italic",
+        },
+
         ".post figure": {
           marginTop: "1.4rem",
           marginBottom: "1rem",

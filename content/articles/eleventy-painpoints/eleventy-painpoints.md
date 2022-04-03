@@ -11,9 +11,9 @@ setup: |
 
 <Blocknote title="Outdated article">
 
-I ended up not using Eleventy at all for the final version of this website, I LOVED using it and would definitely use it on other projects
+I ended up not using Eleventy at all for the final version of this website, I LOVED using it and would definitely use it on other projects however
 
-I preferred to use something a bit more.. modern than Eleventy, Nunjucks and other are fun to use but they're clearly a bit outdated nowadays and [Astro](https://astro.build/) ended up being really fun
+For this, I preferred to use something a bit more.. modern than Eleventy and [Astro](https://astro.build/) ended up being really fun, so much that [I started working there](https://twitter.com/_princesseuh/status/1510012848394625030) 😅
 
 </Blocknote>
 

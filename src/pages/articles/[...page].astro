@@ -3,11 +3,14 @@ import ArticleListLayout from "$layouts/ArticleListLayout.astro"
 import { postProcessArticle, Article } from "$data/articles"
 
 export async function getStaticPaths({ paginate }) {
-  let articles = (await Astro.fetchContent("/content/articles/**/*.md")) as Article[]
+  let articles = await Astro.glob<Article>("/content/articles/**/*.md")
   articles = articles
-    .map((article) => postProcessArticle(article))
+    .map((article) => {
+      article.frontmatter = postProcessArticle(article.frontmatter, article.file)
+      return article
+    })
     .sort((a, b) => {
-      return b.date.getTime() - a.date.getTime()
+      return b.frontmatter.date.getTime() - a.frontmatter.date.getTime()
     })
 
   return paginate(articles, { pageSize: 6 })
@@ -16,4 +19,4 @@ export async function getStaticPaths({ paginate }) {
 const { page } = Astro.props
 ---
 
-<ArticleListLayout {page} title="Articles" />
+<ArticleListLayout page={page} title="Articles" />

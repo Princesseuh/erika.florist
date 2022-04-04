@@ -9,7 +9,7 @@ export interface Props {
 }
 
 const isArticle = (item: Article | WikiItem): item is Article => {
-  return item.date !== undefined || item.tags !== undefined
+  return (item as Article).date !== undefined || (item as Article).tags !== undefined
 }
 
 const { item, includeTags } = Astro.props as Props

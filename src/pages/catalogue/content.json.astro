@@ -1,23 +1,32 @@
 ---
 import { postProcessCatalogueItem, CatalogueItem } from "$data/catalogue"
+import type { MarkdownInstance } from "$data/shared"
 
-let catalogueItems = await Astro.fetchContent("/content/catalogue/**/*.md")
+let catalogueItems = await Astro.glob<CatalogueItem>("/content/catalogue/**/*.md")
 catalogueItems = await Promise.all(
-  catalogueItems.map(async (item) => await postProcessCatalogueItem(item as CatalogueItem)),
+  catalogueItems.map(async (item) => {
+    item.frontmatter = await postProcessCatalogueItem(item.frontmatter, item.file)
+    return item
+  }),
 )
 
 const json = JSON.stringify(
   catalogueItems
     .sort((a, b) => {
-      return (b.ended_on ?? b.started_on).getTime() - (a.ended_on ?? a.started_on).getTime()
+      return (
+        (b.frontmatter.ended_on ?? b.frontmatter.started_on).getTime() -
+        (a.frontmatter.ended_on ?? a.frontmatter.started_on).getTime()
+      )
     })
-    .map((item: CatalogueItem) => {
+    .map((item: MarkdownInstance<CatalogueItem>) => {
       return {
-        title: item.title,
-        cover: item.cover,
-        creator: (item.author || item.developer || item.studio) ?? "Unknown",
-        url: item.url.pathname,
-        type: item.type,
+        title: item.frontmatter.title,
+        cover: item.frontmatter.cover,
+        creator:
+          (item.frontmatter.author || item.frontmatter.developer || item.frontmatter.studio) ??
+          "Unknown",
+        url: item.url,
+        type: item.frontmatter.type,
       }
     }),
 )

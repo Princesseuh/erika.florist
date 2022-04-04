@@ -84,10 +84,10 @@ if (socialImage) {
       <meta name="twitter:image" content={getBaseSiteURL() + "social-card.png"} />
     )}
 
-    <link rel="canonical" href={Astro.request.canonicalURL} />
-    <meta property="og:url" href={Astro.request.canonicalURL} />
+    <link rel="canonical" href={Astro.canonicalURL} />
+    <meta property="og:url" href={Astro.canonicalURL} />
 
-    <script type="module" hoist>
+    <script type="module">
       // prettier-ignore
       import "/src/assets/scripts/main.ts";
     </script>

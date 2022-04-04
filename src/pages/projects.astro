@@ -1,19 +1,25 @@
 ---
 import BaseLayout from "$layouts/BaseLayout.astro"
 import { postProcessProject, Project, ProjectType } from "$data/projects"
+import { MarkdownInstance } from "$data/shared"
 
-let projects = await Astro.fetchContent("/content/projects/**/*.md")
-projects = projects.map((project) => postProcessProject(project))
+let projects = await Astro.glob<Project>("/content/projects/**/*.md")
+projects = projects.map((project) => {
+  project.frontmatter = postProcessProject(project.frontmatter, project.file)
+  return project
+})
 
 // Create an object with sub-objects corresponding to the different types of projects that exist
 // The cool part about this: it's 100% automated based on types and content, we'll practically never have to touch this
 type ProjectList = {
-  [projectType in ProjectType]?: Project[]
+  [projectType in ProjectType]?: MarkdownInstance<Project>[]
 }
 
 const projectsPerType: ProjectList = {}
 Object.values(ProjectType).forEach((projectType) => {
-  projectsPerType[projectType] = projects.filter((project) => project.type === projectType)
+  projectsPerType[projectType] = projects.filter(
+    (project) => project.frontmatter.type === projectType,
+  )
 })
 
 // Utils
@@ -49,10 +55,14 @@ const readableTitles = {
           <div class="flex gap-4">
             {type[1].map((project) => (
               <a
-                href={project.external_url ? project.external_url : project.url.pathname}
-                class={project.featured ? "project-box project-featured" : "project-box"}
+                href={
+                  project.frontmatter.external_url ? project.frontmatter.external_url : project.url
+                }
+                class={
+                  project.frontmatter.featured ? "project-box project-featured" : "project-box"
+                }
               >
-                {project.featured && (
+                {project.frontmatter.featured && (
                   <span
                     class="absolute right-2 top-1 w-5 h-5 fill-current"
                     title="Featured project"
@@ -60,7 +70,7 @@ const readableTitles = {
                     🌟
                   </span>
                 )}
-                {project.external_url && (
+                {project.frontmatter.external_url && (
                   <span
                     class="absolute right-2 top-1 w-5 h-5 fill-current"
                     title="Project is hosted on an external website"
@@ -68,10 +78,10 @@ const readableTitles = {
                     🔗
                   </span>
                 )}
-                <Fragment set:html={project.assets.miniLogo} />
+                <Fragment set:html={project.frontmatter.assets.miniLogo} />
                 <div>
-                  <h4 class="block font-bold m-0">{project.title}</h4>
-                  <span class="text-sm text-creative-work">{project.description}</span>
+                  <h4 class="block font-bold m-0">{project.frontmatter.title}</h4>
+                  <span class="text-sm text-creative-work">{project.frontmatter.description}</span>
                 </div>
               </a>
             ))}

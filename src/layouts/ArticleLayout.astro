@@ -2,22 +2,23 @@
 import BaseLayout from "$layouts/BaseLayout.astro"
 import ContentHeader from "$components/shared/ContentHeader.astro"
 import type { Article } from "$data/articles"
+import { MarkdownInstance } from "$data/shared"
+
 export interface Props {
-  article: Article
+  article: MarkdownInstance<Article>
 }
 
 const { article } = Astro.props as Props
 ---
 
 <BaseLayout
-  title={article.title}
-  description={article.tagline}
-  styles={article.loadCSSModules}
-  socialImage={article.socialImage ?? true}
+  title={article.frontmatter.title}
+  description={article.frontmatter.tagline}
+  socialImage={article.frontmatter.socialImage ?? true}
 >
   <article class="post mx-auto">
-    <ContentHeader item={article} includeTags={true} />
+    <ContentHeader item={article.frontmatter} includeTags={true} />
     <!-- prettier-ignore -->
-    <article.Content/>
+    <article.Content></article.Content>
   </article>
 </BaseLayout>

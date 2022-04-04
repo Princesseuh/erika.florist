@@ -5,27 +5,40 @@ import { postProcessArticle } from "$data/articles"
 import { postProcessWikiItem } from "$data/wiki"
 import { postProcessProject } from "$data/projects"
 import { readableDate } from "$utils"
+import type { Article } from "$data/articles"
+import type { WikiItem } from "$data/wiki"
+import type { Project } from "$data/projects"
+import type { MarkdownInstance } from "$data/shared"
 
-let articles = await Astro.fetchContent("/content/articles/**/*.md")
+let articles = await Astro.glob<Article>("/content/articles/**/*.md")
 articles = articles
-  .map((article) => postProcessArticle(article))
+  .map((article) => {
+    article.frontmatter = postProcessArticle(article.frontmatter, article.file)
+    return article
+  })
   .sort((a, b) => {
-    return b.date.getTime() - a.date.getTime()
+    return b.frontmatter.date.getTime() - a.frontmatter.date.getTime()
   })
   .slice(0, 3)
 
-let wikiItems = await Astro.fetchContent("/content/wiki/**/*.md")
+let wikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")
 wikiItems = wikiItems
-  .map((wikiItem) => postProcessWikiItem(wikiItem))
+  .map((wikiItem) => {
+    wikiItem.frontmatter = postProcessWikiItem(wikiItem.frontmatter, wikiItem.file)
+    return wikiItem
+  })
   .sort((a, b) => {
-    return b.lastModified.getTime() - a.lastModified.getTime()
+    return b.frontmatter.lastModified.getTime() - a.frontmatter.lastModified.getTime()
   })
   .slice(0, 6)
 
-let featuredProjects = await Astro.fetchContent("/content/projects/**/*.md")
+let featuredProjects = await Astro.glob<Project>("/content/projects/**/*.md")
 featuredProjects = featuredProjects
-  .filter((project) => project.featured)
-  .map((project) => postProcessProject(project))
+  .filter((project) => project.frontmatter.featured)
+  .map((project) => {
+    project.frontmatter = postProcessProject(project.frontmatter, project.file)
+    return project
+  })
   .slice(0, 3)
 ---
 
@@ -59,9 +72,9 @@ featuredProjects = featuredProjects
     <div class="flex flex-wrap sm:mx-10 mt-2 mb-6 gap-5 sm:gap-4 justify-center items-center">
       {featuredProjects.map((project) => (
         <div class="h-[180px] relative">
-          <a href={project.url.pathname}>
-            <Fragment set:html={project.assets.indexCover} />
-            <h4 class="cover-title">{project.title}</h4>
+          <a href={project.frontmatter.url}>
+            <Fragment set:html={project.frontmatter.assets.indexCover} />
+            <h4 class="cover-title">{project.frontmatter.title}</h4>
           </a>
         </div>
       ))}
@@ -70,18 +83,21 @@ featuredProjects = featuredProjects
     <div class="flex justify-around gap-4 flex-col sm:flex-row">
       <div class="sm:w-[63%]">
         <h3 class="text-2xl mb-4 mt-2 sm:mt-4">Latest blog posts</h3>
-        {articles.map((article) => <ArticlePreview article={article} />)}
+        {articles.map((article) => <ArticlePreview article={article.frontmatter} />)}
       </div>
 
       <div class="sm:w-[37%]">
         <h3 class="text-2xl mb-4 mt-2 sm:mt-4">Latest wiki modifications</h3>
         {wikiItems.map((item) => (
           <section class="mb-3">
-            <a class="block font-bold leading-tight" href={item.url.pathname}>
-              {item.title}
+            <a class="block font-bold leading-tight" href={item.frontmatter.url}>
+              {item.frontmatter.title}
             </a>
-            <span class="text-sm first-letter:uppercase block" data-date={item.lastModified}>
-              {readableDate(item.lastModified)}
+            <span
+              class="text-sm first-letter:uppercase block"
+              data-date={item.frontmatter.lastModified}
+            >
+              {readableDate(item.frontmatter.lastModified)}
             </span>
           </section>
         ))}

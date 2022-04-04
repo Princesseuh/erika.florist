@@ -1,7 +1,6 @@
-import type { BaseObject } from "./shared"
-import { postProcessBase } from "./shared"
+import type { BaseFrontmatter } from "./shared"
 import { basename, dirname } from "path"
-import { getBaseSiteURL } from "$utils"
+import { getBaseSiteURL, getSlugFromFile } from "$utils"
 import { generateImage, generatePlaceholder, ImageFormat } from "astro-eleventy-img"
 
 enum CatalogueType {
@@ -11,7 +10,7 @@ enum CatalogueType {
   SHOW = "show",
 }
 
-interface CatalogueItemBase extends BaseObject {
+interface CatalogueItemBase extends BaseFrontmatter {
   type: CatalogueType // This isn't used to generate pages (we know the types from Typescript), it's used for the list so it can filter by type
   title: string
   genre: string
@@ -64,10 +63,14 @@ type CatalogueItem =
   | CatalogueBookSingle
   | CatalogueBookMultiple
 
-async function postProcessCatalogueItem(item: CatalogueItem): Promise<CatalogueItem> {
-  item = postProcessBase(item) as CatalogueItem
+const isBook = (item: CatalogueItem): item is CatalogueBookMultiple | CatalogueBookSingle => {
+  return item.type === CatalogueType.BOOK
+}
 
-  item.type = getCatalogueTypeFromURL(item.file.pathname)
+async function postProcessCatalogueItem(item: CatalogueItem, file: string): Promise<CatalogueItem> {
+  item.slug = getSlugFromFile(file)
+  item.type = getCatalogueTypeFromURL(file)
+
   const itemBaseDir = `/catalogue/${item.type}s/${item.slug}/`
   item.url = new URL(itemBaseDir, getBaseSiteURL())
 
@@ -121,8 +124,8 @@ async function postProcessCatalogueItem(item: CatalogueItem): Promise<CatalogueI
   }
 
   // NOTE: This is a special exception needed for books as we need to display different infos depending on the format even though they're technically the same type. Maybe there's a better way to do this, I don't know
-  if (item.type === CatalogueType.BOOK) {
-    item.formatType = item.volumes ? "multiple" : "single"
+  if (isBook(item)) {
+    item.formatType = (item as CatalogueBookMultiple).volumes ? "multiple" : "single"
   }
 
   return item

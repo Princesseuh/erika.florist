@@ -1,12 +1,14 @@
-import { postProcessBase, BaseObject } from "./shared"
+import { BaseFrontmatter } from "./shared"
 import { execSync } from "child_process"
-import { getBaseSiteURL } from "$utils"
+import { getBaseSiteURL, getSlugFromFile } from "$utils"
+import { MarkdownInstance } from "astro"
 
-interface WikiItem extends BaseObject {
+interface WikiItem extends BaseFrontmatter {
   title: string
   tagline?: string
   lastModified?: Date
   lastModifiedCommitUrl?: URL
+  maxDepthTOC: number
   navigation: {
     label?: string
     category: string
@@ -15,8 +17,8 @@ interface WikiItem extends BaseObject {
   }
 }
 
-function postProcessWikiItem(wikiItem: WikiItem): WikiItem {
-  wikiItem = postProcessBase(wikiItem) as WikiItem
+function postProcessWikiItem(wikiItem: WikiItem, file: string): WikiItem {
+  wikiItem.slug = getSlugFromFile(file)
 
   // If we don't have an order, we set it to 0 which won't affect the sort
   wikiItem.navigation.order ??= 0
@@ -24,9 +26,7 @@ function postProcessWikiItem(wikiItem: WikiItem): WikiItem {
   if (import.meta.env.PROD) {
     // Get the last modified time and commit ref from Git as getting it from file system is not accurate
     // PERF: This is slow, we should attempt to do it once for the entire website instead of once per file
-    const gitInfoRaw = execSync(
-      `git log -1 --date=iso --pretty="format:%cI|%H" -- ./${wikiItem.file.pathname}`,
-    )
+    const gitInfoRaw = execSync(`git log -1 --date=iso --pretty="format:%cI|%H" -- ./${file}`)
       .toString()
       .split("|")
 
@@ -54,13 +54,18 @@ function postProcessWikiItem(wikiItem: WikiItem): WikiItem {
   return wikiItem
 }
 
-function getWikiItemsByCategory(wikiItems: WikiItem[], key: string): WikiItem[] {
+function getWikiItemsByCategory(
+  wikiItems: MarkdownInstance<WikiItem>[],
+  key: string,
+): MarkdownInstance<WikiItem>[] {
   return wikiItems
-    .filter((wikiItem: WikiItem) => {
-      return wikiItem.navigation.category === key && !wikiItem.navigation.hidden
+    .filter((wikiItem: MarkdownInstance<WikiItem>) => {
+      return (
+        wikiItem.frontmatter.navigation.category === key && !wikiItem.frontmatter.navigation.hidden
+      )
     })
-    .sort((a: WikiItem, b: WikiItem) => {
-      return a.navigation.order - b.navigation.order
+    .sort((a: MarkdownInstance<WikiItem>, b: MarkdownInstance<WikiItem>) => {
+      return a.frontmatter.navigation.order - b.frontmatter.navigation.order
     })
 }
 

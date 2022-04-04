@@ -1,9 +1,9 @@
 ---
 import WikiLayout from "$layouts/WikiLayout.astro"
-import { postProcessWikiItem } from "$data/wiki"
+import { postProcessWikiItem, WikiItem } from "$data/wiki"
 
-let wikiIndex = await Astro.fetchContent("/content/wiki/index.md")[0]
-wikiIndex = postProcessWikiItem(wikiIndex)
+let wikiIndex = await Astro.glob<WikiItem>("/content/wiki/index.md")
+wikiIndex[0].frontmatter = postProcessWikiItem(wikiIndex[0].frontmatter, wikiIndex[0].file)
 ---
 
-<WikiLayout wikiItem={wikiIndex} />
+<WikiLayout wikiItem={wikiIndex[0]} />

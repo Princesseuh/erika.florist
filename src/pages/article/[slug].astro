@@ -7,11 +7,13 @@ import { getSlugFromFile } from "$utils"
 import { postProcessArticle, Article } from "$data/articles"
 
 export async function getStaticPaths() {
-  const articles = await Astro.fetchContent("/content/articles/**/*.md")
+  const articles = await Astro.glob<Article>("/content/articles/**/*.md")
   return articles.map((article) => {
+    article.frontmatter = postProcessArticle(article.frontmatter, article.file)
+
     return {
-      params: { slug: getSlugFromFile(article.file.pathname) },
-      props: { article: postProcessArticle(article) },
+      params: { slug: getSlugFromFile(article.file) },
+      props: { article: article },
     }
   })
 }

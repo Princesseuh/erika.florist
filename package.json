@@ -8,7 +8,7 @@
     "preview": "astro preview --experimental-integrations",
     "format": "prettier -w --plugin-search-dir=. --cache .",
     "lint": "eslint . --ext .ts,.js,.astro",
-    "copy:images": "cp -r static/assets/images dist/assets/images"
+    "copy:images": "cp -r static/assets/images dist/assets/"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^0.2.1",

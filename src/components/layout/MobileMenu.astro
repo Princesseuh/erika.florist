@@ -12,7 +12,7 @@ let rawWikiItems = []
 let wikiItems = []
 
 const url = new URL(Astro.request.url)
-const isWikiPage = url.pathname.includes("/wiki/")
+const isWikiPage = url.pathname.startsWith("/wiki")
 
 if (isWikiPage) {
   rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")

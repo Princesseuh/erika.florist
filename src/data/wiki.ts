@@ -26,7 +26,7 @@ function postProcessWikiItem(wikiItem: WikiItem, file: string): WikiItem {
   if (import.meta.env.PROD) {
     // Get the last modified time and commit ref from Git as getting it from file system is not accurate
     // PERF: This is slow, we should attempt to do it once for the entire website instead of once per file
-    const gitInfoRaw = execSync(`git log -1 --date=iso --pretty="format:%cI|%H" -- ./${file}`)
+    const gitInfoRaw = execSync(`git log -1 --date=iso --pretty="format:%cI|%H" -- ${file}`)
       .toString()
       .split("|")
 

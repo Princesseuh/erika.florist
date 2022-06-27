@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev --experimental-integrations",
     "build": "astro build --experimental-integrations",
-    "preview": "astro preview",
+    "preview": "astro preview --experimental-integrations",
     "format": "prettier -w --plugin-search-dir=. --cache .",
     "lint": "eslint . --ext .ts,.js,.astro"
   },

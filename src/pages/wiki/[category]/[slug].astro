@@ -5,12 +5,12 @@ import { WikiItem, postProcessWikiItem } from "$data/wiki"
 export async function getStaticPaths() {
   const wikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")
   return wikiItems.map((wikiItem) => {
-    wikiItem.frontmatter = postProcessWikiItem(wikiItem.frontmatter, wikiItem.file)
+    const augmentedFrontmatter = postProcessWikiItem(wikiItem.frontmatter, wikiItem.file)
 
     return {
       params: {
-        category: wikiItem.frontmatter.navigation.category,
-        slug: wikiItem.frontmatter.slug,
+        category: augmentedFrontmatter.navigation.category,
+        slug: augmentedFrontmatter.slug,
       },
       props: { wikiItem },
     }

@@ -8,10 +8,10 @@ export async function getStaticPaths() {
 
   const catalogueItems = await Promise.all(
     items.map(async (item) => {
-      item.frontmatter = await postProcessCatalogueItem(item.frontmatter, item.file)
+      const augmentedFrontmatter = await postProcessCatalogueItem(item.frontmatter, item.file)
 
       return {
-        params: { type: item.frontmatter.type + "s", slug: getSlugFromFile(item.file) },
+        params: { type: augmentedFrontmatter.type + "s", slug: getSlugFromFile(item.file) },
         props: { item },
       }
     }),

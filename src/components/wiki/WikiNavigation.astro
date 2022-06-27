@@ -6,11 +6,11 @@ import { MarkdownInstance } from "$data/shared"
 // HACK: If we directly use MarkdownInstance<WikiItem>, Astro fails with a weird error
 type WikiItemInstance = MarkdownInstance<WikiItem>
 
-let wikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")
-wikiItems = wikiItems.map((item) => {
-  item.frontmatter = postProcessWikiItem(item.frontmatter, item.file)
-  return item
-})
+const rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")
+const wikiItems = rawWikiItems.map((item) => ({
+  ...item,
+  frontmatter: postProcessWikiItem(item.frontmatter, item.file),
+}))
 
 const url = Astro.request.url
 ---

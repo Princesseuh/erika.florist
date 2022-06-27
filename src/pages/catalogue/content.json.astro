@@ -2,13 +2,12 @@
 import { postProcessCatalogueItem, CatalogueItem } from "$data/catalogue"
 import type { MarkdownInstance } from "$data/shared"
 
-let catalogueItems = await Astro.glob<CatalogueItem>("/content/catalogue/**/*.md")
-catalogueItems = await Promise.all(
-  catalogueItems.map(async (item) => {
-    item.frontmatter = await postProcessCatalogueItem(item.frontmatter, item.file)
-
-    return item
-  }),
+const rawCatalogueItems = await Astro.glob<CatalogueItem>("/content/catalogue/**/*.md")
+const catalogueItems = await Promise.all(
+  rawCatalogueItems.map(async (item) => ({
+    ...item,
+    frontmatter: await postProcessCatalogueItem(item.frontmatter, item.file),
+  })),
 )
 
 const json = JSON.stringify(

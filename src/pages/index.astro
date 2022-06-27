@@ -9,35 +9,35 @@ import type { Article } from "$data/articles"
 import type { WikiItem } from "$data/wiki"
 import type { Project } from "$data/projects"
 
-let articles = await Astro.glob<Article>("/content/articles/**/*.md")
-articles = articles
-  .map((article) => {
-    article.frontmatter = postProcessArticle(article.frontmatter, article.file)
-    return article
-  })
+const rawArticles = await Astro.glob<Article>("/content/articles/**/*.md")
+const articles = rawArticles
+  .map((article) => ({
+    ...article,
+    frontmatter: postProcessArticle(article.frontmatter, article.file),
+  }))
   .sort((a, b) => {
     return b.frontmatter.date.getTime() - a.frontmatter.date.getTime()
   })
   .slice(0, 3)
 
-let wikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")
-wikiItems = wikiItems
-  .map((wikiItem) => {
-    wikiItem.frontmatter = postProcessWikiItem(wikiItem.frontmatter, wikiItem.file)
-    return wikiItem
-  })
+const rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")
+const wikiItems = rawWikiItems
+  .map((wikiItem) => ({
+    ...wikiItem,
+    frontmatter: postProcessWikiItem(wikiItem.frontmatter, wikiItem.file),
+  }))
   .sort((a, b) => {
     return b.frontmatter.lastModified.getTime() - a.frontmatter.lastModified.getTime()
   })
   .slice(0, 6)
 
-let featuredProjects = await Astro.glob<Project>("/content/projects/**/*.md")
-featuredProjects = featuredProjects
+let rawFeaturedProjects = await Astro.glob<Project>("/content/projects/**/*.md")
+const featuredProjects = rawFeaturedProjects
   .filter((project) => project.frontmatter.featured)
-  .map((project) => {
-    project.frontmatter = postProcessProject(project.frontmatter, project.file)
-    return project
-  })
+  .map((project) => ({
+    ...project,
+    frontmatter: postProcessProject(project.frontmatter, project.file),
+  }))
   .slice(0, 3)
 ---
 

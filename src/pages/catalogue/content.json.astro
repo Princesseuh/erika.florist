@@ -6,6 +6,7 @@ let catalogueItems = await Astro.glob<CatalogueItem>("/content/catalogue/**/*.md
 catalogueItems = await Promise.all(
   catalogueItems.map(async (item) => {
     item.frontmatter = await postProcessCatalogueItem(item.frontmatter, item.file)
+
     return item
   }),
 )
@@ -25,7 +26,7 @@ const json = JSON.stringify(
         creator:
           (item.frontmatter.author || item.frontmatter.developer || item.frontmatter.studio) ??
           "Unknown",
-        url: item.url,
+        url: item.frontmatter.url,
         type: item.frontmatter.type,
       }
     }),

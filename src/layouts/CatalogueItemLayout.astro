@@ -79,7 +79,7 @@ switch (catalogueItem.type) {
     <header class="flex justify-between gap-4 px-4 my-4">
       <Fragment
         set:html={// We remove the background we add for small elements manually on this page
-        unescapeHtml(catalogueItem.cover).replace("bg-fin-lanka bg-opacity-50", "")}
+        unescapeHtml(catalogueItem.frontmatter.cover).replace("bg-fin-lanka bg-opacity-50", "")}
       />
       <div class="flex items-center bottom-2 catalogue--item-meta flex-1 justify-center relative">
         <div>

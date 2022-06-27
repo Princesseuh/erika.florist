@@ -1,7 +1,7 @@
 ---
 title: New Website!
 date: 2016-11-30
-tags: ['pelican', 'release', 'website']
+tags: ["pelican", "release", "website"]
 ---
 
 About 9 years ago when I started programming, one thing I really enjoyed doing was fully reading the blogs of developers I admired (back then it was the French developers [Sebsauvage](http://sebsauvage.net) and [Lehollandaisvolant](https://lehollandaisvolant.net) in particular). I would spend nights scrolling through their blog until finally reaching their first posts!
@@ -72,16 +72,15 @@ Overall the design is more in line with designs of 2016 without having gone full
 
 Oh also the previous version was XHTML which is.. a bit outdated by now.
 
-
 ## The few things I learned
 
 ### SASS
+
 For those unaware, SASS is a scripting language which translate into normal CSS. It add features like variables, nesting, functions and more! It's a great tool to make CSS easier to write and avoid having to repeat oneself
 
 I had some experience using SASS due to a few very small projects, I never really learned its intricacies. So for this new website, I thought.. Why not try to use it somewhat seriously this time? Perhaps it would speed up development or at least speed up the work on future projects.
 
 I obviously didn't get to use all its features considering this website certainly doesn't need to import things left and right nor does it need to support IE6 but all the features I used were actually pretty great and certainly did help me achieve things quicker! I hope to continue using Sass (or perhaps try Less?) in future projects!
-
 
 ### How to optimize a website
 
@@ -89,7 +88,7 @@ As you might have already noticed by now if you wandered through the website : I
 
 Unsurprisingly servers are pretty fast at delivering static content but there's plenty of ways we can further improve on the overall speed! Optimizations on the client side would be things along the lines of minimizing CSS/JS, reducing requests counts or optimizing images where the ones on the server side would be things like using http2/spdy, gzip, proper caching headers etc
 
-After spending days reading guides, scanning my website  with various diagnostic tools and tweaking Nginx's configuration files, I finally managed to make it load almost 'instantaneously' (read : various hundreds of ms) without really having to cut features!
+After spending days reading guides, scanning my website with various diagnostic tools and tweaking Nginx's configuration files, I finally managed to make it load almost 'instantaneously' (read : various hundreds of ms) without really having to cut features!
 
 One of the coolest things I did -in my opinion- was adding click-to-load for Youtube embeds.
 

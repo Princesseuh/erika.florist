@@ -1,7 +1,7 @@
 ---
 title: Building a website I'm satisfied with (2020 Edition)
 date: 2020-06-20
-tags: ['pelican', 'release', 'website', 'eleventy']
+tags: ["pelican", "release", "website", "eleventy"]
 ---
 
 [What?! Again?](../new-website-2016) Yeah...

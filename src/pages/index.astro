@@ -8,7 +8,6 @@ import { readableDate } from "$utils"
 import type { Article } from "$data/articles"
 import type { WikiItem } from "$data/wiki"
 import type { Project } from "$data/projects"
-import type { MarkdownInstance } from "$data/shared"
 
 let articles = await Astro.glob<Article>("/content/articles/**/*.md")
 articles = articles
@@ -49,8 +48,9 @@ featuredProjects = featuredProjects
     <p>
       I'm <span class="font-bold text-beach-watermelon">Erika</span>, a web/game developer from
       Canada 🇨🇦, pleased to meet you! Alternatively, I also go by the nickname <span
-        class="font-semibold text-pinky-unicorny">Princesseuh</span
-      > 👸, use whichever you prefer!
+        class="font-semibold text-pinky-unicorny"
+        >Princesseuh
+      </span> 👸, use whichever you prefer!
     </p>
 
     <p>
@@ -62,8 +62,9 @@ featuredProjects = featuredProjects
     <p>
       Interested in seeing stuff I worked on? Click <a href="/projects/">here for my projects</a>!
       Wanna read stuff I wrote? Well, lucky you, <a href="/articles/">here's my blog</a>! You want
-      to read random stuff I wrote mostly for myself? <a href="/wiki/">Take a look at my wiki</a
-      >!&nbsp;🎉
+      to read random stuff I wrote mostly for myself? <a href="/wiki/"
+        >Take a look at my wiki
+      </a>!&nbsp;🎉
     </p>
 
     <p>I hope you'll have fun visiting my website! 🎀</p>

@@ -1,4 +1,4 @@
-/** @type {import("@types/prettier").Options */
+/** @type {import("@types/prettier").Options} */
 module.exports = {
   printWidth: 100,
   tabWidth: 2,

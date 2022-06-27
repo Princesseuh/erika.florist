@@ -4,19 +4,20 @@ import { postProcessCatalogueItem, CatalogueItem } from "$data/catalogue"
 import { getSlugFromFile } from "$utils"
 
 export async function getStaticPaths() {
-  let items = await Astro.fetchContent("/content/catalogue/**/*.md")
-  items = await Promise.all(
+  let items = await Astro.glob<CatalogueItem>("/content/catalogue/**/*.md")
+
+  const catalogueItems = await Promise.all(
     items.map(async (item) => {
-      item = await postProcessCatalogueItem(item)
+      item.frontmatter = await postProcessCatalogueItem(item.frontmatter, item.file)
 
       return {
-        params: { type: item.type + "s", slug: getSlugFromFile(item.file.pathname) },
+        params: { type: item.frontmatter.type + "s", slug: getSlugFromFile(item.file) },
         props: { item },
       }
     }),
   )
 
-  return items
+  return catalogueItems
 }
 
 export interface Props {

@@ -34,11 +34,9 @@ And, let me be clear: They are all very good and far performant enough for the c
 
 At first I used Starship, it's written in [Rust](https://www.rust-lang.org/) so clearly it must be the fastest right? Well, yes and no. It is _~blazing~_ fast (though not necessarily that much faster than the alternatives) however being an synchronous prompt it struggle a lot in certain situations (especially Git repositories) and due to not having a timeout, it'll sometimes take multiple seconds to print anything and letting you type. Thankfully, [the issue is known](https://github.com/starship/starship/issues/301) so I'm sure It'll eventually get fixed
 
-{% note 'Starship `explain`' %}
 Starship can be given an `explain` parameter like so: `starship explain` to explain the current prompt and measure the performance of every module composing it. It's really really good - I wish this feature was available in other prompts too
 
 A `timings` parameter that give a few more info is also available
-{% endnote %}
 
 Apart from Starship, most of the popular shells these days are asynchronous so this is not a common issue. If your current prompt is not async, you can make it so easily by using [fish-async-prompt](https://github.com/acomagu/fish-async-prompt) (this only work with native Fish prompts, so it's not applicable to Starship)
 

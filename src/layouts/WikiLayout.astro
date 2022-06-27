@@ -27,15 +27,14 @@ const headers = await wikiItem.getHeaders()
 
     <article class="post">
       <ContentHeader item={wikiItem.frontmatter} includeTags={false} />
-      <!-- prettier-ignore -->
-      <wikiItem.Content></wikiItem.Content>
+      <wikiItem.Content />
 
       <span class="text-right block text-creative-work mb-4">
         Page last modified <a
           href={wikiItem.frontmatter.lastModifiedCommitUrl}
           data-date={wikiItem.frontmatter.lastModified}
-          >{readableDate(wikiItem.frontmatter.lastModified)}</a
-        >
+          >{readableDate(wikiItem.frontmatter.lastModified)}
+        </a>
       </span>
     </article>
 

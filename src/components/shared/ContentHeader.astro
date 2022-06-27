@@ -16,7 +16,7 @@ const { item, includeTags } = Astro.props as Props
 ---
 
 <header class="mb-4 mt-4">
-  <h1 class="text-[3.5rem] mb-4 mt-0 leading-none">{item.title}</h1>
+  <h1 class="text-4xl sm:text-[3.5rem] mb-4 mt-0 leading-none">{item.title}</h1>
   {item.tagline && <h2 class="text-xl m-0 relative top-[-5px]">{item.tagline}</h2>}
   {isArticle(item) && includeTags && (
     <div class="text-creative-work">

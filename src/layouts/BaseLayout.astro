@@ -1,9 +1,10 @@
 ---
 import Header from "$components/layout/Header.astro"
+import MobileMenu from "$components/layout/MobileMenu.astro"
 import Socials from "$components/layout/Socials.astro"
-import { Sprite } from "astro-icon"
-import { generateSocialImage, SocialImageResult } from "astro-social-images"
 import { getBaseSiteURL } from "$utils"
+import { Sprite } from "astro-icon"
+import { generateSocialImage,SocialImageResult } from "astro-social-images"
 import "src/assets/style/prin.css"
 
 export interface Props {
@@ -109,6 +110,8 @@ if (socialImage) {
             </div>
           </section>
         </footer>
+
+        <MobileMenu />
       </div>
     </Sprite.Provider>
   </body>

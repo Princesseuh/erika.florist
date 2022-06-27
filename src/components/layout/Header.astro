@@ -1,7 +1,8 @@
 ---
 import Socials from "$components/layout/Socials.astro"
-import MobileMenu from "$components/layout/MobileMenu.astro"
-const menu = ["Projects", "Articles", "Wiki", "Catalogue"]
+import MobileMenuToggle from "$components/layout/MobileMenuToggle.astro"
+
+import { headerMenu as menu } from "$data/headerMenu"
 ---
 
 <header class="px-4 sm:px-0 py-[.8rem] flex justify-center">
@@ -20,6 +21,7 @@ const menu = ["Projects", "Articles", "Wiki", "Catalogue"]
       </nav>
     </div>
 
-    <Socials classes="flex" />
+    <Socials classes="hidden sm:flex" />
+    <MobileMenuToggle />
   </section>
 </header>

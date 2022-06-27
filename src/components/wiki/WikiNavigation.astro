@@ -12,7 +12,7 @@ const wikiItems = rawWikiItems.map((item) => ({
   frontmatter: postProcessWikiItem(item.frontmatter, item.file),
 }))
 
-const url = Astro.request.url
+const url = new URL(Astro.request.url)
 ---
 
 <ul class="m-0 list-none p-0 wiki-navigation hidden sm:block">
@@ -22,7 +22,7 @@ const url = Astro.request.url
       {getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItemInstance) => (
         <a
           class={`block ${
-            url == item.frontmatter.url.pathname ? "text-pinky-unicorny font-bold" : ""
+            url.pathname == item.frontmatter.url.pathname ? "text-pinky-unicorny font-bold" : ""
           }`}
           href={item.frontmatter.url.pathname}
         >

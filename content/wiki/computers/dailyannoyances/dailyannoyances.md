@@ -76,7 +76,3 @@ No idea why it happens, even simple pages will sometimes completely freeze up my
 ### Instagram keyboard goes over the application when bottom bar is disabled
 
 This issue drives me mad, probably more so than every single other issues on this list. I'm sure all the women who ghosted me on Instagram did so for this reason, I don't see another explanation. [This has been an issue for years](https://forums.androidcentral.com/ask-question/848949-keyboard-covers-what-im-typing-instagram.html)
-
-### Watching a video on Twitter, even without sound, while in a Messenger call will produce sound that is coming from the call
-
-I have no explanation. I thought it was my lover snooring but no, it's because of the video I was watching (muted!). I.. I don't know

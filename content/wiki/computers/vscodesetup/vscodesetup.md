@@ -5,8 +5,6 @@
   navigation:
     label: 'VS Code setup'
     category: computers
-  setup: |
-    import Image from '$components/MarkdownImage.astro';
 ---
 
 These days, my editor of choice is, like many people, [VS Code](https://code.visualstudio.com/)

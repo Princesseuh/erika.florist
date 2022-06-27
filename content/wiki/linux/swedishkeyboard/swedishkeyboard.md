@@ -5,8 +5,6 @@
   navigation:
     label: Swedish + FR CA Layout
     category: linux
-  setup: |
-    import Image from '$components/MarkdownImage.astro';
 ---
 
 Swedish has three additional characters in its alphabet: Ää, Öö and Åå. The first two can be typed with any layouts supporting diaereses (`¨`) but the third one can't be typed on any layout except the Scandinavians and the US-International ones (also [the UK extended one but exclusively on ChromeOS, weird](https://en.wikipedia.org/wiki/QWERTY#Chrome_OS))
@@ -25,7 +23,7 @@ I use Wayland, but the process should be about the same on Xorg, first let's cre
 
 The final content will be the following (don't worry, we'll go through it!):
 
-```
+```plaintext
 default partial
 xkb_symbols "swe" {
     include "ca(fr)"

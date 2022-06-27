@@ -4,9 +4,6 @@ tagline: aka, How to use the power of Typescript for your Prettier, ESLint and o
 loadCSSModules: ["code"]
 date: 2022-01-12
 tags: ["programming", "javascript"]
-setup: |
-  import Image from '$components/MarkdownImage.astro';
-  import Blocknote from "$components/MarkdownNoteBlock.astro";
 ---
 
 Or maybe not, whatever fits your needs. Personally, I think that definitely not enough people are using TypeScript for their config files, or maybe not a lot of people know that you even can in the first place!

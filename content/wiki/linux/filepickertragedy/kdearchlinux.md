@@ -4,8 +4,6 @@
   navigation:
     category: "linux"
     hidden: true
-  setup: |
-    import Image from '$components/MarkdownImage.astro';
 ---
 
 While trying to install the KDE file picker on Arch Linux, you'll most likely encounter the following situation unless you're already using KDE softwares: You'll install `kdialog` expecting it to be enough to open the KDE file dialog, but instead, you'll see this:

@@ -4,9 +4,6 @@ tagline: "In an unsurprising turns of event, it turns out you really can't write
 loadCSSModules: ["code"]
 date: 2020-10-18
 tags: ["eleventy", "website", "programming"]
-setup: |
-  import Image from '$components/MarkdownImage.astro';
-  import Blocknote from "$components/MarkdownNoteBlock.astro";
 ---
 
 <Blocknote title="Outdated article">

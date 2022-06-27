@@ -5,8 +5,6 @@
   navigation:
     label: File pickers dilemma
     category: linux
-  setup: |
-    import Image from '$components/MarkdownImage.astro';
 ---
 
 File pickers on Linux are.. not good. Pretty much all of them have a few shortcomings that makes the experience fairly deplorable

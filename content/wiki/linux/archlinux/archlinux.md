@@ -4,8 +4,6 @@
   loadCSSModules: ["code"]
   navigation:
     category: 'linux'
-  setup: |
-    import Image from '$components/MarkdownImage.astro';
 ---
 
 Being a nerd, I was always interested in trying out things on my computers and so, eventually that lead to me wanting to become a [florist](/wiki/introtoflowers) when I discovered that computers are well... computers

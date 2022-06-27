@@ -1,5 +1,5 @@
 ---
-import { postProcessCatalogueItem, CatalogueItem } from "$data/catalogue"
+import { postProcessCatalogueItem, CatalogueItem, CatalogueType } from "$data/catalogue"
 import type { MarkdownInstance } from "$data/shared"
 
 const rawCatalogueItems = await Astro.glob<CatalogueItem>("/content/catalogue/**/*.md")
@@ -19,12 +19,20 @@ const json = JSON.stringify(
       )
     })
     .map((item: MarkdownInstance<CatalogueItem>) => {
+      const creator =
+        (item.frontmatter.type == CatalogueType.GAME
+          ? item.frontmatter.developer
+          : item.frontmatter.type == CatalogueType.BOOK
+          ? item.frontmatter.author
+          : item.frontmatter.type == CatalogueType.MOVIE ||
+            item.frontmatter.type == CatalogueType.SHOW
+          ? item.frontmatter.studio
+          : undefined) ?? "Unknown"
+
       return {
         title: item.frontmatter.title,
         cover: item.frontmatter.cover,
-        creator:
-          (item.frontmatter.author || item.frontmatter.developer || item.frontmatter.studio) ??
-          "Unknown",
+        creator,
         url: item.frontmatter.url,
         type: item.frontmatter.type,
       }

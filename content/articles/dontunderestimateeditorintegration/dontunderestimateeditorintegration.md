@@ -3,8 +3,6 @@ title: Don't underestimate the power of good editor integration
 tagline: Close to 100% of programmers are typing code in a code editor!
 date: 2022-04-01
 tags: ["programming"]
-setup: |
-  import Image from '$components/MarkdownImage.astro';
 ---
 
 You're finally ready to unveil your new programming language / framework / thing that developers work with. You tell yourself, "It's so amazing, it's so modern, it's so new, surely it'll take the world by storm!". You've added all the coolest features, it even makes you a cup of coffee on the side!

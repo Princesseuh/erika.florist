@@ -24,32 +24,38 @@ interface CatalogueItemBase extends BaseFrontmatter {
 // Unfortunately, we want different metadata depending on that variable, for instance, it doesn't make sense to list
 // the number of pages for a collection of books. It's much more interesting to write the number of volumes or chapters, in the case of mangas
 interface CatalogueBookBase extends CatalogueItemBase {
-  formatType: string
+  type: CatalogueType.BOOK
+  formatType: "single" | "multiple"
   author: string
 }
 
 interface CatalogueBookSingle extends CatalogueBookBase {
   pages: number
   format: string // We only care about the format for single books because the format can vary between volumes in a collection
+  formatType: "single"
 }
 
 interface CatalogueBookMultiple extends CatalogueBookBase {
   chapters?: number // The number of chapters is really only interesting in the case of mangas, so it's optional
   volumes: number
+  formatType: "multiple"
 }
 
 interface CatalogueGame extends CatalogueItemBase {
+  type: CatalogueType.GAME
   developer: string
   playtime: number
   platform: string
 }
 
 interface CatalogueMovie extends CatalogueItemBase {
+  type: CatalogueType.MOVIE
   studio: string
   length: number
 }
 
 interface CatalogueShow extends CatalogueItemBase {
+  type: CatalogueType.SHOW
   studio: string
   seasons: number
   episodes: number
@@ -63,7 +69,9 @@ type CatalogueItem =
   | CatalogueBookSingle
   | CatalogueBookMultiple
 
-const isBook = (item: CatalogueItem): item is CatalogueBookMultiple | CatalogueBookSingle => {
+export const isBook = (
+  item: CatalogueItem,
+): item is CatalogueBookMultiple | CatalogueBookSingle => {
   return item.type === CatalogueType.BOOK
 }
 

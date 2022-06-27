@@ -2,8 +2,10 @@
 import BaseLayout from "$layouts/BaseLayout.astro"
 import { CatalogueType, CatalogueItem } from "$data/catalogue"
 import { readableDate } from "$utils"
+import { MarkdownInstance } from "$data/shared"
+
 export interface Props {
-  catalogueItem: CatalogueItem
+  catalogueItem: MarkdownInstance<CatalogueItem>
 }
 
 function unescapeHtml(unsafe: string) {
@@ -13,30 +15,31 @@ function unescapeHtml(unsafe: string) {
 const { catalogueItem } = Astro.props as Props
 
 let metaInfo = []
-switch (catalogueItem.type) {
+
+switch (catalogueItem.frontmatter.type) {
   case CatalogueType.BOOK:
     metaInfo = [
       {
-        Author: catalogueItem.author,
-        Genre: catalogueItem.genre,
+        Author: catalogueItem.frontmatter.author,
+        Genre: catalogueItem.frontmatter.genre,
       },
       {
-        "Started on": readableDate(catalogueItem.started_on),
-        "Ended on": readableDate(catalogueItem.ended_on),
+        "Started on": readableDate(catalogueItem.frontmatter.started_on),
+        "Ended on": readableDate(catalogueItem.frontmatter.ended_on),
       },
     ]
 
     // Books have two types, you can either have a collection of books (often used for mangas) or a single book in a single entry
     // They both share most attributes, except that for collections, we'll prefer to have the amount of chapters and volumes
     // and we don't care much about the format (which can vary by volume anyway) and for single books, we want the number of pages
-    switch (catalogueItem.formatType) {
+    switch (catalogueItem.frontmatter.formatType) {
       case "multiple":
-        metaInfo[0].Chapters = catalogueItem.chapters
-        metaInfo[1].Volumes = catalogueItem.volumes
+        metaInfo[0].Chapters = catalogueItem.frontmatter.chapters
+        metaInfo[1].Volumes = catalogueItem.frontmatter.volumes
         break
       case "single":
-        metaInfo[0].Format = catalogueItem.format
-        metaInfo[1].Pages = catalogueItem.pages
+        metaInfo[0].Format = catalogueItem.frontmatter.format
+        metaInfo[1].Pages = catalogueItem.frontmatter.pages
         break
     }
     break
@@ -44,14 +47,14 @@ switch (catalogueItem.type) {
   case CatalogueType.GAME:
     metaInfo = [
       {
-        Developer: catalogueItem.developer,
-        Genre: catalogueItem.genre,
-        Platform: catalogueItem.platform,
+        Developer: catalogueItem.frontmatter.developer,
+        Genre: catalogueItem.frontmatter.genre,
+        Platform: catalogueItem.frontmatter.platform,
       },
       {
-        "Started on": readableDate(catalogueItem.started_on),
-        "Ended on": readableDate(catalogueItem.ended_on),
-        Playtime: catalogueItem.playtime,
+        "Started on": readableDate(catalogueItem.frontmatter.started_on),
+        "Ended on": readableDate(catalogueItem.frontmatter.ended_on),
+        Playtime: catalogueItem.frontmatter.playtime,
       },
     ]
     break
@@ -59,14 +62,14 @@ switch (catalogueItem.type) {
   case CatalogueType.SHOW:
     metaInfo = [
       {
-        Studio: catalogueItem.studio,
-        Platform: catalogueItem.platform,
-        Seasons: catalogueItem.seasons,
+        Studio: catalogueItem.frontmatter.studio,
+        Platform: catalogueItem.frontmatter.platform,
+        Seasons: catalogueItem.frontmatter.seasons,
       },
       {
-        "Started on": readableDate(catalogueItem.started_on),
-        "Ended on": readableDate(catalogueItem.ended_on),
-        Episodes: catalogueItem.episodes,
+        "Started on": readableDate(catalogueItem.frontmatter.started_on),
+        "Ended on": readableDate(catalogueItem.frontmatter.ended_on),
+        Episodes: catalogueItem.frontmatter.episodes,
       },
     ]
     break
@@ -83,7 +86,7 @@ switch (catalogueItem.type) {
       />
       <div class="flex items-center bottom-2 catalogue--item-meta flex-1 justify-center relative">
         <div>
-          <h2 class="mt-0 text-center">{catalogueItem.title}</h2>
+          <h2 class="mt-0 text-center">{catalogueItem.frontmatter.title}</h2>
 
           <section class="flex justify-center gap-14">
             {metaInfo.map((meta) => <dl>

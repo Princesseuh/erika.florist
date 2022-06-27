@@ -9,12 +9,10 @@ import "src/assets/style/prin.css"
 export interface Props {
   title?: string
   description?: string
-  styles?: string[]
-  js?: string[]
   socialImage?: boolean
 }
 
-const { title, description, styles = [], js = [], socialImage = false } = Astro.props as Props
+const { title, description, socialImage = false } = Astro.props as Props
 
 let socialImageURL: SocialImageResult = undefined
 if (socialImage) {

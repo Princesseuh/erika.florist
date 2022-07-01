@@ -1,26 +1,36 @@
 ---
 import ArticleListLayout from "$layouts/ArticleListLayout.astro"
 import { postProcessArticle, Article } from "$data/articles"
+import { GetStaticPaths, MarkdownInstance, Page } from "$data/shared"
 
-export async function getStaticPaths({ paginate }) {
-  let articles = (await Astro.fetchContent("/content/articles/**/*.md")) as Article[]
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+  let articles = await Astro.glob<Article>("/content/articles/**/*.md")
   articles = articles
-    .map((article) => postProcessArticle(article))
+    .map((article) => {
+      article.frontmatter = postProcessArticle(article.frontmatter, article.file)
+      return article
+    })
     .sort((a, b) => {
-      return b.date.getTime() - a.date.getTime()
+      return b.frontmatter.date.getTime() - a.frontmatter.date.getTime()
     })
 
-  const years = articles.map((article) => article.date.getFullYear())
-  const uniqueYears = [...new Set<number>(years)]
+  const years = articles.map((article) => article.frontmatter.date.getFullYear())
+  const uniqueYears = [...new Set(years)]
 
-  return uniqueYears.map((year) => {
-    const filteredArticles = articles.filter((article) => article.date.getFullYear() === year)
-    return paginate(filteredArticles, { params: { year: year.toString() }, pageSize: 6 })
+  return uniqueYears.flatMap((year) => {
+    const filteredArticles = articles.filter(
+      (article) => article.frontmatter.date.getUTCFullYear() === year,
+    )
+    return paginate(filteredArticles, { params: { year: year.toString() } })
   })
 }
 
-const { page } = Astro.props
-const year = Astro.request.params.year
+export interface Props {
+  page: Page<MarkdownInstance<Article>>
+}
+
+const { page } = Astro.props as Props
+const { year } = Astro.params
 ---
 
 <ArticleListLayout page={page} title={"Articles from " + year} />

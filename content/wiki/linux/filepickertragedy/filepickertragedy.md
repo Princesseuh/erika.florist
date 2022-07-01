@@ -5,8 +5,6 @@
   navigation:
     label: File pickers dilemma
     category: linux
-  setup: |
-    import Image from '$components/MarkdownImage.astro';
 ---
 
 File pickers on Linux are.. not good. Pretty much all of them have a few shortcomings that makes the experience fairly deplorable
@@ -114,11 +112,9 @@ It does have shortcomings, this is computers after all, but overall it has a fai
 
 macOS's file picker is also much better than Linux's offerings. While Finder is.. not always a very good software, the file picking part is pretty good. I especially like how some things are combined, for instance opening a folder or a file is done in the same window, unlike Windows which has a special view for folders (which is also good imo, depends on your needs)
 
-{% note "Fun fact" %}
 You'll be impressed to know that even though I had to install multiple complete DE for this article, the only thing that broke on my system was my monospace font in my browser
 
 The reason being that Deepin put a config file in `.config/fontconfig/` and it wasn't removed when I removed the package. Twas an easy fix. Apart from that, I was able to get back to the same exact state I was in before starting, no orphans left behind or config files. Computing is cool, sometimes
-{% endnote %}
 
 ## TODOs
 

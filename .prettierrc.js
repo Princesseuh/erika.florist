@@ -1,10 +1,10 @@
-/** @type {import("@types/prettier").Options */
+/** @type {import("@types/prettier").Options} */
 module.exports = {
   printWidth: 100,
   tabWidth: 2,
   trailingComma: "all",
   semi: false,
-  plugins: ["./node_modules/prettier-plugin-astro"],
+  plugins: ["./node_modules/prettier-plugin-astro", "./node_modules/prettier-plugin-tailwindcss"],
   astroAllowShorthand: false,
   overrides: [
     {

@@ -4,8 +4,6 @@
   navigation:
     category: floristry
     label: "Readings about flowers"
-  setup: |
-    import Image from '$components/MarkdownImage.astro';
 ---
 
 Floristry doesn't really have the best presence online, sure you can find plenty of pictures of bouquets and various other arrangements but it's surprisingly hard to find lessons, guides etc about it (special mention however to the MANY Youtube channels such as [FlowerSchool](https://www.youtube.com/user/FlowerSchool/videos) or [Flower Joos](https://www.youtube.com/c/FlowerJoos/videos), those are great!)

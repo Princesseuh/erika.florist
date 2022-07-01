@@ -1,10 +1,10 @@
 ---
 import { Article } from "$data/articles"
 
-const articles = (await Astro.fetchContent("/content/articles/**/*.md")) as Article[]
+const articles = await Astro.glob<Article>("/content/articles/**/*.md")
 const tags: Array<[string, number]> = [
   ...articles
-    .flatMap((article) => [...article.tags])
+    .flatMap((article) => [...article.frontmatter.tags])
     .reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
 ].sort((a, b) => {
   return b[1] - a[1]
@@ -12,7 +12,7 @@ const tags: Array<[string, number]> = [
 
 const years: Array<[string, number]> = [
   ...articles
-    .map((article) => new Date(article.date).getFullYear())
+    .map((article) => new Date(article.frontmatter.date).getFullYear())
     .reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
 ].sort((a, b) => {
   return b[0] - a[0]

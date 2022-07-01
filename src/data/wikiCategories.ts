@@ -26,7 +26,7 @@ export const wikiCategories: WikiCategory[] = [
   },
 ]
 
-export function getCategory(key: string): WikiCategory {
+export function getCategory(key: string): WikiCategory | undefined {
   return wikiCategories.find((category) => {
     category.key === key
   })

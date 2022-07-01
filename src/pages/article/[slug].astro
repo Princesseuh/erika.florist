@@ -1,26 +1,29 @@
 ---
-// TODO: Due to this issue: https://github.com/snowpackjs/astro/issues/1438, this route can't be in the same folder
+// TODO: Due to this issue: https://github.com/withastro/astro/issues/1438, this route can't be in the same folder
 // as the paginated article list is or they'll conflict, so this means our articles URL are `/article/${slug}` instead
 // of `/articles/${slug}` (with a s), once that issue is fixed, we'll be able to put it back in the right place
 import ArticleLayout from "$layouts/ArticleLayout.astro"
 import { getSlugFromFile } from "$utils"
 import { postProcessArticle, Article } from "$data/articles"
+import { MarkdownInstance, GetStaticPaths } from "$data/shared"
 
-export async function getStaticPaths() {
-  const articles = await Astro.fetchContent("/content/articles/**/*.md")
+export const getStaticPaths: GetStaticPaths = async () => {
+  const articles = await Astro.glob<Article>("/content/articles/**/*.md")
   return articles.map((article) => {
+    article.frontmatter = postProcessArticle(article.frontmatter, article.file)
+
     return {
-      params: { slug: getSlugFromFile(article.file.pathname) },
-      props: { article: postProcessArticle(article) },
+      params: { slug: getSlugFromFile(article.file) },
+      props: { article: article },
     }
   })
 }
 
 export interface Props {
-  article: Article
+  article: MarkdownInstance<Article>
 }
 
-const { article } = Astro.props
+const { article } = Astro.props as Props
 ---
 
 <ArticleLayout article={article} />

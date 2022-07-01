@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const plugin = require("tailwindcss/plugin")
 
-/** @type {import('@types/tailwindcss/tailwind-config').TailwindConfig} */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{astro,js,ts,tsx,md}", "./content/**/*.md"],
   corePlugins: {
@@ -120,8 +120,6 @@ module.exports = {
         },
         ".social-icon": {
           color: "inherit",
-          width: "26px",
-          height: "26px",
           display: "inline-block",
           marginRight: "1.2em",
         },

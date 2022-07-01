@@ -1,5 +1,4 @@
 ---
-import { Markdown } from "astro/components"
 export interface Props {
   title?: string
 }
@@ -9,6 +8,5 @@ const { title } = Astro.props as Props
 
 <div class="block-note">
   <span class="block-title">{title}</span>
-  <!-- prettier-ignore -->
-  <slot/>
+  <slot></slot>
 </div>

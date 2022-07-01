@@ -5,8 +5,6 @@
   navigation:
     label: Wayland status
     category: linux
-  setup: |
-    import Image from '$components/MarkdownImage.astro';
 ---
 
 I've been using Wayland [since May 2020](https://github.com/Princesseuh/dotfiles/commit/42d18db2db41e4de08396d367d90612d2ec98f30) through [Sway](https://swaywm.org/), an i3 compatible windows manager

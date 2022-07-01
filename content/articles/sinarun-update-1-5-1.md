@@ -1,7 +1,7 @@
 ---
 title: SinaRun Update 1.5.1
 date: 2016-07-26
-tags: ['SinaRun', 'games']
+tags: ["SinaRun", "games"]
 ---
 
 Today I watched the French movie 'Comment c'est loin' which is about the
@@ -41,7 +41,6 @@ on the leaderboards.
 
 ### Engine Changes
 
-
 That might sound totally insane but I backported the entire game back to
 Unity 4. Unity 5 actually present too much issues that I don't really
 want to deal with for the moment at least.
@@ -58,18 +57,18 @@ Unity 4 that didn't break transparent things and anti-aliasing too much)
 
 - Re-enabled multiplayer and leaderboards
 - Removed the link to my Twitter in the menu, some users commented that it
-felt too mobile game-like and beside I didn't have enough room for this
-version number
+  felt too mobile game-like and beside I didn't have enough room for this
+  version number
 - Maximum shadow distance is now 225 (it was pretty destructive to set it
-higher anyway)
+  higher anyway)
 - The 'Automatic' settings for resolution is now disabled when in
-fullscreen (it was intended to be used only in windowed)
+  fullscreen (it was intended to be used only in windowed)
 - Due to the engine changes, Post-AA is re-enabled by default (it look
-pretty okay in Unity 4. For Post-AA that is!)
+  pretty okay in Unity 4. For Post-AA that is!)
 - Invert Sprint is now disabled by default (Left-over from testing.
-Sorry)
+  Sorry)
 - In Training F3 now allow you to hide the training UI. No-clip is now on
-F4
+  F4
 
 ### Controller Changes
 
@@ -82,28 +81,32 @@ but for the time being these two changes should already help a lot!
 ### Maps Changes
 
 - Fixed additional floating pillars in Slick Talk (specially at the end of
-the level)
+  the level)
 - Fixed clipping issues in maps where pillars reached kinda high (Slick
-Talk, Elevated Highground etc)
+  Talk, Elevated Highground etc)
 - Slightly improved performance of some level previews
 
 **Golden Opportunity**
+
 - Made a 'wall' sliiighty larger to make a shortcut easier and more
-consistent
+  consistent
 - Moved a pillar to allow for more creative jumps toward the end of the
-level
+  level
 - Moved a wall slightly out of the way toward the end to allow for a
-tighter turn
+  tighter turn
 
 **Blue Horse**
+
 - Reduced shadow opacity to make it easier to see platforms (Thanks
-GoldenRoxGaming for his video!)
+  GoldenRoxGaming for his video!)
 
 **Blast Tendency**
+
 - Moved a pillar after the first angled pillar (arch thing) jump to make
-it less frustating (and more consistent)
+  it less frustating (and more consistent)
 
 **Elastic Light**
+
 - Improved performances
 - Moved many platforms around to better balance the paths
 
@@ -118,14 +121,12 @@ it's faster but these changes should already contribute toward a better
 balanced map (and also allow for more creativity from the center path).
 Further work will be done toward this in the future
 
-UI Changes
-----------
+## UI Changes
 
 Added padding to notes (fix issues where at some low resolution it
 looked like the text was overflowing)
 
-Bugs Fixes
-----------
+## Bugs Fixes
 
 Fixed various typos in both English and French
 Fixed a few crashes related to leaderboards

@@ -1,7 +1,64 @@
 ---
-import { Sprite } from "astro-icon"
+import { headerMenu as globalMenu } from "$data/headerMenu"
+import Socials from "./Socials.astro"
+import { getWikiItemsByCategory, WikiItem, postProcessWikiItem } from "$data/wiki"
+import { wikiCategories, WikiCategory } from "$data/wikiCategories"
+import { MarkdownInstance, WikiItemInstance } from "$data/shared"
+
+let rawWikiItems: MarkdownInstance<WikiItem>[] = []
+let wikiItems: MarkdownInstance<WikiItem>[] = []
+
+const url = new URL(Astro.request.url)
+const isWikiPage = url.pathname.startsWith("/wiki")
+
+if (isWikiPage) {
+  rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")
+  wikiItems = rawWikiItems.map((item) => ({
+    ...item,
+    frontmatter: postProcessWikiItem(item.frontmatter, item.file),
+  }))
+}
 ---
 
-<div class="flex items-center sm:hidden">
-  <Sprite name="menu" size="26px" />
+<div
+  id="mobile-menu"
+  class="fixed top-16 w-0 h-[calc(100%-4rem)] bg-baltic-sea overflow-y-auto overflow-x-hidden whitespace-nowrap"
+>
+  <div class="p-3 flex flex-col gap-4">
+    {/* Global header menu */}
+    {globalMenu.map((item) => (
+      <a class="header-link bg-fin-lanka mr-0 p-3 text-xl" href={`/${item.toLowerCase()}/`}>
+        {item}
+      </a>
+    ))}
+  </div>
+
+  {/* Wiki-exclusive menu */}
+  {isWikiPage && (
+    <div class="flex flex-col gap-3 p-3">
+      {wikiCategories.map((category: WikiCategory) => (
+        <>
+          <span class="text-sugar-cane block font-bold">{category.title}</span>
+          {getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItemInstance) => (
+            <a
+              class="header-link bg-fin-lanka mr-0 p-2 text-lg"
+              href={item.frontmatter.url.pathname}
+            >
+              {item.frontmatter.navigation.label || item.frontmatter.title}
+            </a>
+          ))}
+        </>
+      ))}
+    </div>
+  )}
+
+  <Socials classes="mt-4 justify-center gap-7 mb-8" size={45} />
 </div>
+
+{/* Since we disabled Tailwind's default border color system, we need to add a border to the menu manually */}
+<style>
+  #mobile-menu {
+    transition: width 0.1s linear;
+    border-top: 3px solid #211f24;
+  }
+</style>

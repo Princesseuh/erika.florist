@@ -1,25 +1,14 @@
-import { getSlugFromFile } from "$utils"
-import type { FetchContentResultBase } from "astro"
+// Trying to import those type in a .astro file creates a weird error so we re-export it from here
+import type { GetStaticPaths, MarkdownInstance, Page } from "astro"
+import type { WikiItem } from "./wiki"
 
-// Trying to import this type in a .astro file creates a weird error so we re-export it from here
-export type { Page } from "astro"
-
-interface BaseObject extends Omit<FetchContentResultBase, "url"> {
-  [propName: string]: unknown
-  loadCSSModules?: string[]
+interface BaseFrontmatter {
+  slug: string
   socialImage: boolean
-
-  // Astro stuff
-  file: URL
   url: URL
 }
 
-// This post process the results of Astro.fetchContent with some values we use for everything (notably, slugs)
-function postProcessBase(fetchedObject: BaseObject): BaseObject {
-  fetchedObject.slug = getSlugFromFile(fetchedObject.file.pathname)
-  fetchedObject.loadCSSModules = fetchedObject.loadCSSModules || []
+// HACK: Using MarkdownInstance<WikiItem> directly inside the template leads to a weird error in Astro
+type WikiItemInstance = MarkdownInstance<WikiItem>
 
-  return fetchedObject
-}
-
-export { BaseObject, postProcessBase }
+export type { BaseFrontmatter, Page, GetStaticPaths, WikiItemInstance, MarkdownInstance }

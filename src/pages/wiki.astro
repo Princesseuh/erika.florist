@@ -1,9 +1,14 @@
 ---
 import WikiLayout from "$layouts/WikiLayout.astro"
-import { postProcessWikiItem } from "$data/wiki"
+import { postProcessWikiItem, WikiItem } from "$data/wiki"
+import { MarkdownInstance } from "$data/shared"
 
-let wikiIndex = await Astro.fetchContent("/content/wiki/index.md")[0]
-wikiIndex = postProcessWikiItem(wikiIndex)
+let rawWikiIndex = await Astro.glob<WikiItem>("/content/wiki/index.md")
+
+const wikiIndex: MarkdownInstance<WikiItem> = {
+  ...rawWikiIndex[0],
+  frontmatter: postProcessWikiItem(rawWikiIndex[0].frontmatter, rawWikiIndex[0].file),
+}
 ---
 
 <WikiLayout wikiItem={wikiIndex} />

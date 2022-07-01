@@ -5,41 +5,38 @@ import ContentHeader from "$components/shared/ContentHeader.astro"
 import WikiTOC from "$components/wiki/WikiTOC.astro"
 import { readableDate } from "$utils"
 import type { WikiItem } from "$data/wiki"
+import type { MarkdownInstance } from "$data/shared"
 
 export interface Props {
-  wikiItem: WikiItem
+  wikiItem: MarkdownInstance<WikiItem>
 }
 
 const { wikiItem } = Astro.props as Props
+const headers = await wikiItem.getHeaders()
 ---
 
-<BaseLayout
-  title={wikiItem.title}
-  description={wikiItem.tagline}
-  styles={wikiItem.loadCSSModules}
-  socialImage={wikiItem.socialImage ?? true}
->
+<BaseLayout title={wikiItem.frontmatter.title} description={wikiItem.frontmatter.tagline}>
   <section class="gap-[3%] grid sm:grid-cols-wiki mx-auto my-0 w-wiki">
     <aside class="mb-4 duration-100 ease-linear mt-10 transition-opacity hidden sm:block">
       <WikiNavigation />
     </aside>
 
     <article class="post">
-      <ContentHeader item={wikiItem} includeTags={false} />
-      <!-- prettier-ignore -->
-      <wikiItem.Content></wikiItem.Content>
+      <ContentHeader item={wikiItem.frontmatter} includeTags={false} />
+      <wikiItem.Content />
 
       <span class="text-right block text-creative-work mb-4">
         Page last modified <a
-          href={wikiItem.lastModifiedCommitUrl}
-          data-date={wikiItem.lastModified}>{readableDate(wikiItem.lastModified)}</a
-        >
+          href={wikiItem.frontmatter.lastModifiedCommitUrl}
+          data-date={wikiItem.frontmatter.lastModified}
+          >{readableDate(wikiItem.frontmatter.lastModified)}
+        </a>
       </span>
     </article>
 
     <aside class="mt-10 mb-4 transition-opacity duration-100 ease-linear hidden sm:block">
-      {wikiItem.astro.headers.length > 0 && (
-        <WikiTOC headers={wikiItem.astro.headers} maxDepth={wikiItem.maxDepthTOC || 4} />
+      {headers.length > 0 && (
+        <WikiTOC headers={headers} maxDepth={wikiItem.frontmatter.maxDepthTOC || 4} />
       )}
     </aside>
   </section>

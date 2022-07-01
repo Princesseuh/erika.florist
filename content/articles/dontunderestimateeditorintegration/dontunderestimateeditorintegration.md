@@ -3,8 +3,6 @@ title: Don't underestimate the power of good editor integration
 tagline: Close to 100% of programmers are typing code in a code editor!
 date: 2022-04-01
 tags: ["programming"]
-setup: |
-  import Image from '$components/MarkdownImage.astro';
 ---
 
 You're finally ready to unveil your new programming language / framework / thing that developers work with. You tell yourself, "It's so amazing, it's so modern, it's so new, surely it'll take the world by storm!". You've added all the coolest features, it even makes you a cup of coffee on the side!
@@ -13,7 +11,7 @@ Alas, you had no time for editor integration and thus, when working with your ne
 
 But, you tell yourself that it's okay, because what matter at the end of the day is the product itself being awesome, right?
 
-[image]
+<Image src="epicdsl.png" alt="Screenshot of an imaginary language showing a lot of red squigglies" caption="Don't mind the red squigglies, I'm just waiting for Microsoft to add native support inside VS Code for me!" />
 
 Well, unfortunately, 100% of your users are using your product in a code editor. Which means that, ultimately, **the experience you provide in the editor is part of your product**.
 
@@ -25,7 +23,7 @@ Don't underestimate the power of a good editor integration, in all cases, It'll 
 
 Again, 100% of your users are using your product in a code editor. Unless they've read your entire documentation, their first point of contact with a feature has a fairly high chance to be a random completion or hover info
 
-<Image src="astro_completions.png" alt="Shows a list of completions for Astro, including a little description of the feature with a link to the documentation" caption="Modern editors even allows you to use Markdown and add links in your hover info! Abuse it!" />
+<Image src="responsedoc.png" alt="Shows the hover info for Astro.request, showing hyperlinks and a snippet of code with syntax coloring" caption="Modern editors even allows you to use Markdown and add links in your hover info! Abuse it!" />
 
 Funnily enough, that's kinda how I learned how to use [GameMaker](https://www.yoyogames.com/en/gamemaker) when I was young. I couldn't read the english-only documentation and would search for functions using the completions 😅
 
@@ -38,3 +36,5 @@ Anyone who has tried to write C#, Java and other similarly verbose languages in 
 But, C# and Java's verbosity isn't as much of a problem if your editor is auto completing half of what you're trying to write. For C#, you can combine this [with a powerful refactoring tool](https://www.jetbrains.com/resharper/) to make things even easier
 
 If [your product](https://www.rust-lang.org/) is hard to learn, your users will be very happy to have [a powerful linter](https://github.com/rust-lang/rust-clippy) teaching them how to write better code. Combine this with [insanely good editor tooling](https://rust-analyzer.github.io/) and while your product is still hard to learn, you're at least providing your users with tools that will set them up for success!
+
+<Image src="rust-clippy.png" alt="Shows a lint example from Clippy directly in the user's editor" caption="The rendering of the actual message isn't amazing, but Clippy and Rust-Analyzer definitely makes for a very nice editing experience" />

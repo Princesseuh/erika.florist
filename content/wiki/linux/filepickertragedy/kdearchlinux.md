@@ -4,8 +4,6 @@
   navigation:
     category: "linux"
     hidden: true
-  setup: |
-    import Image from '$components/MarkdownImage.astro';
 ---
 
 While trying to install the KDE file picker on Arch Linux, you'll most likely encounter the following situation unless you're already using KDE softwares: You'll install `kdialog` expecting it to be enough to open the KDE file dialog, but instead, you'll see this:
@@ -30,10 +28,8 @@ After installing those, make sure their previews are enabled in Dolphin's settin
 
 For full compatibility, you need to start programs with `XDG_CURRENT_DESKTOP` set to `KDE` (which might unfortunately cause side effects in certain cases) or for programs that supports it, `GTK_USE_PORTAL` set to `1` with `xdg-desktop-portal` and `xdg-desktop-portal-kde` installed should be enough. For Electron apps, make sure its version is higher than 14 as it needs [this PR](https://github.com/electron/electron/pull/19159)
 
-{% note 'Quick note' %}
 Make sure `xdg-desktop-portal-kde` is running otherwise it won't work
 
 You might need to restart the `xdg-desktop-portal` service after running `xdg-desktop-portal-kde` using `systemctl restart --user xdg-desktop-portal`
-{% endnote %}
 
 Congrats, with all that you literally installed more than 100 packages for a file picker. But it works and it's pretty so who's the winner really? 🥲

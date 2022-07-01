@@ -1,7 +1,6 @@
-import type { BaseObject } from "./shared"
-import { postProcessBase } from "./shared"
+import type { BaseFrontmatter } from "./shared"
 import { basename, dirname } from "path"
-import { getBaseSiteURL } from "$utils"
+import { getBaseSiteURL, getSlugFromFile } from "$utils"
 import { generateImage, generatePlaceholder, ImageFormat } from "astro-eleventy-img"
 
 enum CatalogueType {
@@ -11,13 +10,13 @@ enum CatalogueType {
   SHOW = "show",
 }
 
-interface CatalogueItemBase extends BaseObject {
+interface CatalogueItemBase extends BaseFrontmatter {
   type: CatalogueType // This isn't used to generate pages (we know the types from Typescript), it's used for the list so it can filter by type
   title: string
   genre: string
   started_on: Date
   ended_on?: Date // If we don't have an ended_on, it means it was done in a day (for movies, one shots etc)
-  cover?: string
+  cover: string
   cover_alt: string // Used for alt attribute on the cover, a11y yay
 }
 
@@ -25,32 +24,38 @@ interface CatalogueItemBase extends BaseObject {
 // Unfortunately, we want different metadata depending on that variable, for instance, it doesn't make sense to list
 // the number of pages for a collection of books. It's much more interesting to write the number of volumes or chapters, in the case of mangas
 interface CatalogueBookBase extends CatalogueItemBase {
-  formatType: string
+  type: CatalogueType.BOOK
+  formatType: "single" | "multiple"
   author: string
 }
 
 interface CatalogueBookSingle extends CatalogueBookBase {
   pages: number
   format: string // We only care about the format for single books because the format can vary between volumes in a collection
+  formatType: "single"
 }
 
 interface CatalogueBookMultiple extends CatalogueBookBase {
   chapters?: number // The number of chapters is really only interesting in the case of mangas, so it's optional
   volumes: number
+  formatType: "multiple"
 }
 
 interface CatalogueGame extends CatalogueItemBase {
+  type: CatalogueType.GAME
   developer: string
   playtime: number
   platform: string
 }
 
 interface CatalogueMovie extends CatalogueItemBase {
+  type: CatalogueType.MOVIE
   studio: string
   length: number
 }
 
 interface CatalogueShow extends CatalogueItemBase {
+  type: CatalogueType.SHOW
   studio: string
   seasons: number
   episodes: number
@@ -64,10 +69,16 @@ type CatalogueItem =
   | CatalogueBookSingle
   | CatalogueBookMultiple
 
-async function postProcessCatalogueItem(item: CatalogueItem): Promise<CatalogueItem> {
-  item = postProcessBase(item) as CatalogueItem
+export const isBook = (
+  item: CatalogueItem,
+): item is CatalogueBookMultiple | CatalogueBookSingle => {
+  return item.type === CatalogueType.BOOK
+}
 
-  item.type = getCatalogueTypeFromURL(item.file.pathname)
+async function postProcessCatalogueItem(item: CatalogueItem, file: string): Promise<CatalogueItem> {
+  item.slug = getSlugFromFile(file)
+  item.type = getCatalogueTypeFromURL(file)
+
   const itemBaseDir = `/catalogue/${item.type}s/${item.slug}/`
   item.url = new URL(itemBaseDir, getBaseSiteURL())
 
@@ -84,7 +95,7 @@ async function postProcessCatalogueItem(item: CatalogueItem): Promise<CatalogueI
     "content/assets" + itemBaseDir.slice(0, -1) + `.jpg`,
   )
 
-  function escapeHtml(unsafe) {
+  function escapeHtml(unsafe: string) {
     return unsafe.replace(/</g, "&lt;").replace(/>/g, "&gt;")
   }
 
@@ -121,8 +132,8 @@ async function postProcessCatalogueItem(item: CatalogueItem): Promise<CatalogueI
   }
 
   // NOTE: This is a special exception needed for books as we need to display different infos depending on the format even though they're technically the same type. Maybe there's a better way to do this, I don't know
-  if (item.type === CatalogueType.BOOK) {
-    item.formatType = item.volumes ? "multiple" : "single"
+  if (isBook(item)) {
+    item.formatType = (item as CatalogueBookMultiple).volumes ? "multiple" : "single"
   }
 
   return item

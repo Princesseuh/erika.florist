@@ -5,8 +5,6 @@
   navigation:
     label: "PICO-8 + VS Code"
     category: computers
-  setup: |
-    import Image from '$components/MarkdownImage.astro';
 ---
 
 I like [PICO-8, the fantasy console by Lexaloffle](https://www.lexaloffle.com/pico-8.php). It's really useful and cute whenever I feel like making small games. It's pretty good

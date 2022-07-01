@@ -1,7 +1,16 @@
 ---
 import { Sprite } from "astro-icon"
 
-const { classes } = Astro.props
+export interface Props {
+  classes?: string
+  size?: number
+}
+
+let { classes, size } = Astro.props
+
+if (!size) {
+  size = 26
+}
 ---
 
 <div class={"flex items-center" + (classes ? " " + classes : "")}>
@@ -10,7 +19,7 @@ const { classes } = Astro.props
     title="Link to my Twitter profile"
     class="social-icon social-twitter"
   >
-    <Sprite name="twitter" size="26px" />
+    <Sprite name="twitter" size={`${size}px`} />
   </a>
 
   <a
@@ -18,7 +27,7 @@ const { classes } = Astro.props
     title="Link to my GitHub profile"
     class="social-icon social-other"
   >
-    <Sprite name="github" size="26px" />
+    <Sprite name="github" size={`${size}px`} />
   </a>
 
   <a
@@ -26,6 +35,6 @@ const { classes } = Astro.props
     title="Link to email me"
     class="social-icon social-other mr-0"
   >
-    <Sprite name="mail" size="26px" />
+    <Sprite name="mail" size={`${size}px`} />
   </a>
 </div>

@@ -15,11 +15,11 @@ Please keep in mind that most of these entries are written out of immediate frus
 
 ## Shopify
 
-Shopify itself is mostly fine, the admin dashboard is terribly slow, there's a few weirdness everywhere, you'll sometimes get random 404s but it usually mostly work
+Shopify itself is mostly fine, the admin dashboard is terribly slow, there's a few weirdness everywhere, but it usually mostly work
 
-Its API however, is unusable. The documentation is very hard to browse in addition of being often incomplete and the libraries and frameworks they provide to developers are unmaintained, not up to standards and full of issues
+Its API however, is very unpleasant to use. The documentation is very hard to browse in addition of being often incomplete and the libraries and frameworks they provide to developers are unmaintained, not up to standards and full of issues
 
-It's very painful to work with - no matter what programming language and way you try to use it, it's always extremely unpleasant and has been so for years now. In addition, the support they provide to developers is laughable, most questions on their forums and Discord goes unanswered forever
+No matter what programming language and way you try to use it, it's always as unpleasant and has been so for years now. In addition, the support provided to developers ins't always super good, most questions on their forums and Discord seems to goes unanswered forever
 
 It also ties into another thing that I've been having almost exclusively bad experiences with now:
 

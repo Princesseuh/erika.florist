@@ -1,12 +1,13 @@
-import { BaseObject, postProcessBase } from "./shared"
+import { BaseFrontmatter } from "./shared"
 import { basename, dirname } from "path"
-import { getBaseSiteURL } from "$utils"
+import { getBaseSiteURL, getSlugFromFile } from "$utils"
 
 import { generateImage, ImageFormat } from "astro-eleventy-img"
 
-interface Project extends BaseObject {
+interface Project extends BaseFrontmatter {
   type: ProjectType
   title: string
+  description: string
   startDate: Date
   endDate?: Date
   assets?: {
@@ -27,10 +28,9 @@ enum ProjectType {
   SOFTWARE = "software",
 }
 
-function postProcessProject(project: Project): Project {
-  project = postProcessBase(project) as Project
-
-  project.type = getProjectTypeFromURL(project.file.pathname)
+function postProcessProject(project: Project, file: string): Project {
+  project.slug = getSlugFromFile(file)
+  project.type = getProjectTypeFromURL(file)
 
   const projectBaseDir = `/projects/${project.type}s/${project.slug}/`
   project.url = project.external_url

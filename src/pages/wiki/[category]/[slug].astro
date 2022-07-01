@@ -1,24 +1,28 @@
 ---
 import WikiLayout from "$layouts/WikiLayout.astro"
 import { WikiItem, postProcessWikiItem } from "$data/wiki"
+import { MarkdownInstance, GetStaticPaths } from "$data/shared"
 
-export async function getStaticPaths() {
-  const wikiItems = await Astro.fetchContent("/content/wiki/**/*.md")
+export const getStaticPaths: GetStaticPaths = async () => {
+  const wikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")
   return wikiItems.map((wikiItem) => {
-    wikiItem = postProcessWikiItem(wikiItem)
+    const augmentedFrontmatter = postProcessWikiItem(wikiItem.frontmatter, wikiItem.file)
 
     return {
-      params: { category: wikiItem.navigation.category, slug: wikiItem.slug },
+      params: {
+        category: augmentedFrontmatter.navigation.category,
+        slug: augmentedFrontmatter.slug,
+      },
       props: { wikiItem },
     }
   })
 }
 
 export interface Props {
-  article: WikiItem
+  wikiItem: MarkdownInstance<WikiItem>
 }
 
-const { wikiItem } = Astro.props
+const { wikiItem } = Astro.props as Props
 ---
 
-<WikiLayout {wikiItem} />
+<WikiLayout wikiItem={wikiItem} />

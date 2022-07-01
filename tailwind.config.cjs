@@ -68,6 +68,10 @@ module.exports = {
   plugins: [
     plugin(({ addComponents, theme }) => {
       addComponents({
+        ".mobile-menu": {
+          transition: "width 0.1s linear",
+          borderTop: "3px solid #211f24",
+        },
         ".header-link": {
           color: theme("colors.inherit"),
           marginRight: "1rem",

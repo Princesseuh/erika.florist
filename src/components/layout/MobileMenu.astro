@@ -21,8 +21,7 @@ if (isWikiPage) {
 ---
 
 <div
-  id="mobile-menu"
-  class="fixed top-16 w-0 h-[calc(100%-4rem)] bg-baltic-sea overflow-y-auto overflow-x-hidden whitespace-nowrap"
+  class="mobile-menu fixed top-16 w-0 h-[calc(100%-4rem)] bg-baltic-sea overflow-y-auto overflow-x-hidden whitespace-nowrap"
 >
   <div class="p-3 flex flex-col gap-4">
     {/* Global header menu */}
@@ -54,11 +53,3 @@ if (isWikiPage) {
 
   <Socials classes="mt-4 justify-center gap-7 mb-8" size={45} />
 </div>
-
-{/* Since we disabled Tailwind's default border color system, we need to add a border to the menu manually */}
-<style>
-  #mobile-menu {
-    transition: width 0.1s linear;
-    border-top: 3px solid #211f24;
-  }
-</style>

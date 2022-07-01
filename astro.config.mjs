@@ -15,7 +15,11 @@ export default defineConfig({
     },
   },
   integrations: [
-    tailwind(),
+    tailwind({
+      config: {
+        applyBaseStyles: false,
+      },
+    }),
     AutoImport({
       imports: [
         {

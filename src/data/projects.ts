@@ -65,7 +65,6 @@ function postProcessProject(project: Project, file: string): Project {
         width="377"
         height="180"
         alt="${project.indexCoverAlt}"
-        loading="lazy"
         decoding="async">
     </picture>`
   }

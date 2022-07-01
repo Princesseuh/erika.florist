@@ -15,11 +15,7 @@ const { wikiItem } = Astro.props as Props
 const headers = await wikiItem.getHeaders()
 ---
 
-<BaseLayout
-  title={wikiItem.frontmatter.title}
-  description={wikiItem.frontmatter.tagline}
-  socialImage={wikiItem.frontmatter.socialImage ?? true}
->
+<BaseLayout title={wikiItem.frontmatter.title} description={wikiItem.frontmatter.tagline}>
   <section class="gap-[3%] grid sm:grid-cols-wiki mx-auto my-0 w-wiki">
     <aside class="mb-4 duration-100 ease-linear mt-10 transition-opacity hidden sm:block">
       <WikiNavigation />

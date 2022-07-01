@@ -3,13 +3,10 @@ import { headerMenu as globalMenu } from "$data/headerMenu"
 import Socials from "./Socials.astro"
 import { getWikiItemsByCategory, WikiItem, postProcessWikiItem } from "$data/wiki"
 import { wikiCategories, WikiCategory } from "$data/wikiCategories"
-import { MarkdownInstance } from "$data/shared"
+import { MarkdownInstance, WikiItemInstance } from "$data/shared"
 
-// HACK: If we directly use MarkdownInstance<WikiItem>, Astro fails with a weird error
-type WikiItemInstance = MarkdownInstance<WikiItem>
-
-let rawWikiItems = []
-let wikiItems = []
+let rawWikiItems: MarkdownInstance<WikiItem>[] = []
+let wikiItems: MarkdownInstance<WikiItem>[] = []
 
 const url = new URL(Astro.request.url)
 const isWikiPage = url.pathname.startsWith("/wiki")
@@ -30,7 +27,7 @@ if (isWikiPage) {
   <div class="p-3 flex flex-col gap-4">
     {/* Global header menu */}
     {globalMenu.map((item) => (
-      <a class="header-link mr-0 text-xl bg-fin-lanka p-3" href={`/${item.toLowerCase()}/`}>
+      <a class="header-link bg-fin-lanka mr-0 p-3 text-xl" href={`/${item.toLowerCase()}/`}>
         {item}
       </a>
     ))}
@@ -38,13 +35,13 @@ if (isWikiPage) {
 
   {/* Wiki-exclusive menu */}
   {isWikiPage && (
-    <div class="p-3 flex flex-col gap-3">
+    <div class="flex flex-col gap-3 p-3">
       {wikiCategories.map((category: WikiCategory) => (
         <>
-          <span class="block font-bold text-sugar-cane">{category.title}</span>
+          <span class="text-sugar-cane block font-bold">{category.title}</span>
           {getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItemInstance) => (
             <a
-              class="header-link mr-0 text-lg bg-fin-lanka p-2"
+              class="header-link bg-fin-lanka mr-0 p-2 text-lg"
               href={item.frontmatter.url.pathname}
             >
               {item.frontmatter.navigation.label || item.frontmatter.title}

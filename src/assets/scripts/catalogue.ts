@@ -68,7 +68,8 @@ function buildLibrary(subset: CatalogueJSONItem[] = fullElements) {
         subset.length
       } element${subset.length > 0 ? "s" : ""}`),
   )
-  catalogueContent.replaceChildren(contentFragment)
+
+  catalogueContent?.replaceChildren(contentFragment)
 }
 
 function updateFilters(build = true, resetPage = false) {
@@ -94,7 +95,8 @@ function updateFilters(build = true, resetPage = false) {
       const qs = new QuickScore(this.library, ["title", "author"])
       const result = qs.search(search.value)
 
-      const library = []
+      const library: CatalogueJSONItem[] = []
+
       result.forEach((hit) => {
         library.push(hit.item)
       })
@@ -164,11 +166,13 @@ function updateFiltersFromURL() {
   const urlParams = new URLSearchParams(queryString)
 
   if (urlParams.has("type")) {
-    typeFilter.value = urlParams.get("type")
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    typeFilter.value = urlParams.get("type")!
   }
 
   if (urlParams.has("page")) {
-    currentPage = parseInt(urlParams.get("page"))
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    currentPage = parseInt(urlParams.get("page")!)
 
     if (isNaN(currentPage)) {
       currentPage = 0
@@ -202,15 +206,20 @@ function updatePageButtonStatus() {
   pageDownButtons.forEach((button) => (button.disabled = currentPage === 0))
 }
 
-// Astro currently doesn't support generating .json using Astro.fetchContent, so we need to generate a .html which imply
+// Astro currently doesn't support generating .json using Astro.glob, so we need to generate a .html which imply
 // That we need to get our json from the page's body, unfortunate
 ;(function initCatalogue() {
   fetch("/catalogue/content.json/")
     .then((response) => response.text())
     .then((data) => {
       const parser = new DOMParser()
-      data = parser.parseFromString(data, "text/html").getElementsByTagName("body")[0].textContent
-      fullElements = JSON.parse(data)
-      buildLibrary(updateFilters(false).library)
+      const result = parser
+        .parseFromString(data, "text/html")
+        .getElementsByTagName("body")[0].textContent
+
+      if (result) {
+        fullElements = JSON.parse(result)
+        buildLibrary(updateFilters(false).library)
+      }
     })
 })()

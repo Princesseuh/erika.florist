@@ -52,14 +52,16 @@ const readableTitles = {
       .map((type) => (
         <div>
           <h3>{readableTitles[type[0]]}</h3>
-          <div class="flex gap-4">
+          <div class="flex lg:gap-4 sm:flex-row flex-col flex-wrap">
             {type[1].map((project) => (
               <a
                 href={
                   project.frontmatter.external_url ? project.frontmatter.external_url : project.url
                 }
                 class={
-                  project.frontmatter.featured ? "project-box project-featured" : "project-box"
+                  project.frontmatter.featured
+                    ? "project-box project-featured max-w-full sm:max-w-[50%]"
+                    : "project-box max-w-full sm:max-w-[50%]"
                 }
               >
                 {project.frontmatter.featured && (

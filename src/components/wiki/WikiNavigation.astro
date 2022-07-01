@@ -1,10 +1,7 @@
 ---
 import { getWikiItemsByCategory, WikiItem, postProcessWikiItem } from "$data/wiki"
 import { wikiCategories, WikiCategory } from "$data/wikiCategories"
-import { MarkdownInstance } from "$data/shared"
-
-// HACK: If we directly use MarkdownInstance<WikiItem>, Astro fails with a weird error
-type WikiItemInstance = MarkdownInstance<WikiItem>
+import { WikiItemInstance } from "$data/shared"
 
 const rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")
 const wikiItems = rawWikiItems.map((item) => ({
@@ -18,7 +15,7 @@ const url = new URL(Astro.request.url)
 <ul class="m-0 list-none p-0 wiki-navigation hidden sm:block">
   {wikiCategories.map((category: WikiCategory) => (
     <li>
-      <span class="block font-bold text-sugar-cane">{category.title}</span>
+      <span class="text-sugar-cane block font-bold">{category.title}</span>
       {getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItemInstance) => (
         <a
           class={`block ${

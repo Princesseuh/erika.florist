@@ -5,7 +5,7 @@ function makeDatesRelative(): void {
   const dateElements = document.querySelectorAll<HTMLElement>("[data-date]")
 
   dateElements.forEach((element) => {
-    if (element.dataset.date === "Invalid Date") {
+    if (element.dataset.date === "Invalid Date" || element.dataset.date === undefined) {
       return
     }
 

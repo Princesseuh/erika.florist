@@ -11,11 +11,7 @@ export interface Props {
 const { article } = Astro.props as Props
 ---
 
-<BaseLayout
-  title={article.frontmatter.title}
-  description={article.frontmatter.tagline}
-  socialImage={article.frontmatter.socialImage ?? true}
->
+<BaseLayout title={article.frontmatter.title} description={article.frontmatter.tagline}>
   <article class="post mx-auto">
     <ContentHeader item={article.frontmatter} includeTags={true} />
     <!-- prettier-ignore -->

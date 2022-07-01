@@ -4,41 +4,14 @@ import MobileMenu from "$components/layout/MobileMenu.astro"
 import Socials from "$components/layout/Socials.astro"
 import { getBaseSiteURL } from "$utils"
 import { Sprite } from "astro-icon"
-import { generateSocialImage,SocialImageResult } from "astro-social-images"
 import "src/assets/style/prin.css"
 
 export interface Props {
   title?: string
   description?: string
-  socialImage?: boolean
 }
 
-const { title, description, socialImage = false } = Astro.props as Props
-
-let socialImageURL: SocialImageResult = undefined
-if (socialImage) {
-  socialImageURL = generateSocialImage(
-    {
-      backgroundColor: "#28262c",
-      images: [{ url: "static/resized-social-card.png", attributes: { top: 375, left: 900 } }],
-      texts: [
-        {
-          content: title ? `${title}` : "Princesseuh",
-          attributes: { x: "55", y: "105", "font-size": "70px", fill: "#fefffe" },
-        },
-        {
-          content: description,
-          attributes: { x: "50", y: "325", "font-size": "40px", fill: "#fefffe" },
-        },
-      ],
-    },
-    {
-      outputDir: "static/assets/socials",
-      urlPath: getBaseSiteURL(),
-      publicDir: "static",
-    },
-  )
-}
+const { title, description } = Astro.props as Props
 ---
 
 <!DOCTYPE html>
@@ -73,21 +46,15 @@ if (socialImage) {
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="princesseuh.dev" />
 
-    {socialImage ? (
-      <meta property="og:image" content={socialImageURL.url} />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:image" content={socialImageURL.url} />
-    ) : (
-      <meta property="og:image" content={getBaseSiteURL() + "social-card.png"} />
-      <meta name="twitter:card" content="summary"/>
-      <meta name="twitter:image" content={getBaseSiteURL() + "social-card.png"} />
-    )}
+    <meta property="og:image" content={getBaseSiteURL() + "social-card.png"} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:image" content={getBaseSiteURL() + "social-card.png"} />
 
     <link rel="canonical" href={Astro.canonicalURL} />
     <meta property="og:url" href={Astro.canonicalURL} />
 
     <script>
-      import "../assets/scripts/main.ts";
+      import "../assets/scripts/main.ts"
     </script>
   </head>
   <body>
@@ -96,7 +63,7 @@ if (socialImage) {
         <Header />
 
         <main class="px-6 lg:px-0">
-          <slot />
+          <slot></slot>
         </main>
 
         <footer class="px-5 sm:px-0 py-6 flex justify-center leading-tight bg-darker-skylines">

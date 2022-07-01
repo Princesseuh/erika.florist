@@ -15,7 +15,7 @@ export default defineConfig({
     },
   },
   integrations: [
-    tailwind({}),
+    tailwind(),
     AutoImport({
       imports: [
         {

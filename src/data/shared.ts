@@ -1,6 +1,6 @@
 // Trying to import those type in a .astro file creates a weird error so we re-export it from here
-export type { Page } from "astro"
-export type { MarkdownInstance } from "astro"
+import type { GetStaticPaths, MarkdownInstance, Page } from "astro"
+import type { WikiItem } from "./wiki"
 
 interface BaseFrontmatter {
   slug: string
@@ -8,4 +8,7 @@ interface BaseFrontmatter {
   url: URL
 }
 
-export { BaseFrontmatter }
+// HACK: Using MarkdownInstance<WikiItem> directly inside the template leads to a weird error in Astro
+type WikiItemInstance = MarkdownInstance<WikiItem>
+
+export type { BaseFrontmatter, Page, GetStaticPaths, WikiItemInstance, MarkdownInstance }

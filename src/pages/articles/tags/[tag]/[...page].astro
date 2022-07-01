@@ -1,8 +1,9 @@
 ---
 import ArticleListLayout from "$layouts/ArticleListLayout.astro"
 import { postProcessArticle, Article } from "$data/articles"
+import { GetStaticPaths, MarkdownInstance, Page } from "$data/shared"
 
-export async function getStaticPaths({ paginate }) {
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   let articles = await Astro.glob<Article>("/content/articles/**/*.md")
   articles = articles
     .map((article) => {
@@ -15,12 +16,16 @@ export async function getStaticPaths({ paginate }) {
 
   // We need to create a list of unique tags here otherwise Astro will try to create already existing pages and complain
   const tags = articles.flatMap((article) => [...article.frontmatter.tags])
-  const uniqueTags = [...new Set<string>(tags)]
+  const uniqueTags = [...new Set(tags)]
 
-  return uniqueTags.map((tag) => {
+  return uniqueTags.flatMap((tag) => {
     const filteredArticles = articles.filter((article) => article.frontmatter.tags.includes(tag))
     return paginate(filteredArticles, { params: { tag }, pageSize: 6 })
   })
+}
+
+export interface Props {
+  page: Page<MarkdownInstance<Article>>
 }
 
 const { page } = Astro.props

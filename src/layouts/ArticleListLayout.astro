@@ -3,10 +3,10 @@ import BaseLayout from "$layouts/BaseLayout.astro"
 import ArticlePreview from "$components/shared/ArticlePreview.astro"
 import ArticleListAside from "$components/articleList/ArticleListAside.astro"
 import type { Article } from "$data/articles"
-import type { Page } from "$data/shared"
+import type { MarkdownInstance, Page } from "$data/shared"
 
 export interface Props {
-  page: Page<Article>
+  page: Page<MarkdownInstance<Article>>
   title: string
 }
 

@@ -11,8 +11,10 @@ import { Sprite } from "astro-icon"
   const mobileMenu = document.getElementById("mobile-menu")
   const body = document.body
 
-  mobileMenuToggle.addEventListener("click", () => {
-    mobileMenu.classList.toggle("w-full")
-    body.classList.toggle("overflow-hidden")
-  })
+  if (mobileMenu && mobileMenuToggle) {
+    mobileMenuToggle.addEventListener("click", () => {
+      mobileMenu.classList.toggle("w-full")
+      body.classList.toggle("overflow-hidden")
+    })
+  }
 </script>

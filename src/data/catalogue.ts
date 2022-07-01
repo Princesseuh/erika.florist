@@ -16,7 +16,7 @@ interface CatalogueItemBase extends BaseFrontmatter {
   genre: string
   started_on: Date
   ended_on?: Date // If we don't have an ended_on, it means it was done in a day (for movies, one shots etc)
-  cover?: string
+  cover: string
   cover_alt: string // Used for alt attribute on the cover, a11y yay
 }
 
@@ -95,7 +95,7 @@ async function postProcessCatalogueItem(item: CatalogueItem, file: string): Prom
     "content/assets" + itemBaseDir.slice(0, -1) + `.jpg`,
   )
 
-  function escapeHtml(unsafe) {
+  function escapeHtml(unsafe: string) {
     return unsafe.replace(/</g, "&lt;").replace(/>/g, "&gt;")
   }
 

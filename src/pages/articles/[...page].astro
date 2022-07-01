@@ -1,8 +1,9 @@
 ---
 import ArticleListLayout from "$layouts/ArticleListLayout.astro"
 import { postProcessArticle, Article } from "$data/articles"
+import { GetStaticPaths, MarkdownInstance, Page } from "$data/shared"
 
-export async function getStaticPaths({ paginate }) {
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   let articles = await Astro.glob<Article>("/content/articles/**/*.md")
   articles = articles
     .map((article) => {
@@ -14,6 +15,10 @@ export async function getStaticPaths({ paginate }) {
     })
 
   return paginate(articles, { pageSize: 6 })
+}
+
+export interface Props {
+  page: Page<MarkdownInstance<Article>>
 }
 
 const { page } = Astro.props

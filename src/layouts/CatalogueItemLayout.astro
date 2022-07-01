@@ -14,7 +14,7 @@ function unescapeHtml(unsafe: string) {
 
 const { catalogueItem } = Astro.props as Props
 
-let metaInfo = []
+let metaInfo: Array<Record<string, string | number>> = []
 
 switch (catalogueItem.frontmatter.type) {
   case CatalogueType.BOOK:
@@ -34,7 +34,8 @@ switch (catalogueItem.frontmatter.type) {
     // and we don't care much about the format (which can vary by volume anyway) and for single books, we want the number of pages
     switch (catalogueItem.frontmatter.formatType) {
       case "multiple":
-        metaInfo[0].Chapters = catalogueItem.frontmatter.chapters
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        metaInfo[0].Chapters = catalogueItem.frontmatter.chapters!
         metaInfo[1].Volumes = catalogueItem.frontmatter.volumes
         break
       case "single":

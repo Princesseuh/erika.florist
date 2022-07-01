@@ -12,7 +12,7 @@ interface WikiItem extends BaseFrontmatter {
   navigation: {
     label?: string
     category: string
-    order?: number
+    order: number
     hidden?: boolean
   }
 }

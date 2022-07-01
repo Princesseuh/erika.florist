@@ -24,7 +24,7 @@ export interface Props {
   item: CatalogueItem
 }
 
-const { item } = Astro.props
+const { item } = Astro.props as Props
 ---
 
 <CatalogueItemLayout catalogueItem={item} />

@@ -10,7 +10,7 @@ interface Project extends BaseFrontmatter {
   description: string
   startDate: Date
   endDate?: Date
-  assets?: {
+  assets: {
     logo?: URL
     indexCover?: string
     miniLogo?: string
@@ -97,7 +97,7 @@ function postProcessProject(project: Project, file: string): Project {
         decoding="async">
     </picture>`
 
-  // NOTE: Workaround an Astro bug regarding dates in frontmatter, see data/articles.ts for more info
+  // HACK: Workaround an Astro bug regarding dates in frontmatter, see data/articles.ts for more info
   if (typeof project.startDate === "string") {
     project.startDate = new Date(project.startDate)
   }

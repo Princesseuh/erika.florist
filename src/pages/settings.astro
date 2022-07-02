@@ -18,12 +18,14 @@ import BaseLayout from "$layouts/BaseLayout.astro"
 
   <script>
     ;(function () {
-      const disablePrefetch = document.getElementById("cb--prefetch")
-      disablePrefetch.checked = localStorage.getItem("prefetchDisabled") == "true"
+      const disablePrefetch = document.getElementById("cb--prefetch") as HTMLInputElement | null
+      if (disablePrefetch) {
+        disablePrefetch.checked = localStorage.getItem("prefetchDisabled") == "true"
 
-      disablePrefetch.addEventListener("change", () => {
-        localStorage.setItem("prefetchDisabled", disablePrefetch.checked ? "true" : "false")
-      })
+        disablePrefetch.addEventListener("change", () => {
+          localStorage.setItem("prefetchDisabled", disablePrefetch.checked ? "true" : "false")
+        })
+      }
     })()
   </script>
 </BaseLayout>

@@ -15,11 +15,11 @@ const url = new URL(Astro.request.url)
 <ul class="m-0 list-none p-0 wiki-navigation hidden sm:block">
   {wikiCategories.map((category: WikiCategory) => (
     <li>
-      <span class="text-sugar-cane block font-bold">{category.title}</span>
+      <span class="block font-bold text-sugar-cane">{category.title}</span>
       {getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItemInstance) => (
         <a
           class={`block ${
-            url.pathname == item.frontmatter.url.pathname ? "text-pinky-unicorny font-bold" : ""
+            url.pathname == item.frontmatter.url.pathname ? "font-bold text-pinky-unicorny" : ""
           }`}
           href={item.frontmatter.url.pathname}
         >

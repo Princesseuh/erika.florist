@@ -27,7 +27,7 @@ const readableTitles = {
   game: "Games",
   website: "Websites",
   software: "Softwares and libraries",
-}
+} as const
 ---
 
 <BaseLayout title="Projects">
@@ -51,8 +51,8 @@ const readableTitles = {
       .filter((type) => type[1].length > 0)
       .map((type) => (
         <div>
-          <h3>{readableTitles[type[0]]}</h3>
-          <div class="flex lg:gap-4 sm:flex-row flex-col flex-wrap">
+          <h3>{readableTitles[(type[0] as keyof typeof readableTitles)]}</h3>
+          <div class="flex flex-col flex-wrap sm:flex-row lg:gap-4">
             {type[1].map((project) => (
               <a
                 href={
@@ -66,7 +66,7 @@ const readableTitles = {
               >
                 {project.frontmatter.featured && (
                   <span
-                    class="absolute right-2 top-1 w-5 h-5 fill-current"
+                    class="absolute right-2 top-1 h-5 w-5 fill-current"
                     title="Featured project"
                   >
                     🌟
@@ -74,7 +74,7 @@ const readableTitles = {
                 )}
                 {project.frontmatter.external_url && (
                   <span
-                    class="absolute right-2 top-1 w-5 h-5 fill-current"
+                    class="absolute right-2 top-1 h-5 w-5 fill-current"
                     title="Project is hosted on an external website"
                   >
                     🔗
@@ -82,8 +82,8 @@ const readableTitles = {
                 )}
                 <Fragment set:html={project.frontmatter.assets.miniLogo} />
                 <div>
-                  <h4 class="block font-bold m-0">{project.frontmatter.title}</h4>
-                  <span class="text-sm text-creative-work">{project.frontmatter.description}</span>
+                  <h4 class="m-0 block font-bold">{project.frontmatter.title}</h4>
+                  <span class="text-creative-work text-sm">{project.frontmatter.description}</span>
                 </div>
               </a>
             ))}

@@ -68,7 +68,7 @@ module.exports = {
   plugins: [
     plugin(({ addComponents, theme }) => {
       addComponents({
-        ".mobile-menu": {
+        "#mobile-menu": {
           transition: "width 0.1s linear",
           borderTop: "3px solid #211f24",
         },

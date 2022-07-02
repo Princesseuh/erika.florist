@@ -1,5 +1,12 @@
 ---
-const { headers, maxDepth } = Astro.props
+import { MarkdownHeader } from "$data/shared"
+
+export interface Props {
+  headers: MarkdownHeader[]
+  maxDepth: number
+}
+
+const { headers, maxDepth } = Astro.props as Props
 const filteredHeaders = headers.filter((header) => header.depth > 1 && header.depth < maxDepth + 1)
 ---
 

@@ -50,7 +50,7 @@ const { title, description } = Astro.props as Props
     <meta name="twitter:image" content={getBaseSiteURL() + "social-card.png"} />
 
     <link rel="canonical" href={Astro.canonicalURL} />
-    <meta property="og:url" href={Astro.canonicalURL} />
+    <meta property="og:url" content={Astro.canonicalURL} />
 
     <script>
       import "../assets/scripts/main.ts"

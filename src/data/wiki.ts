@@ -6,7 +6,7 @@ import { MarkdownInstance } from "astro"
 interface WikiItem extends BaseFrontmatter {
   title: string
   tagline?: string
-  lastModified?: Date
+  lastModified: Date
   lastModifiedCommitUrl?: URL
   maxDepthTOC: number
   navigation: {

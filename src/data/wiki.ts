@@ -3,13 +3,13 @@ import { execSync } from "child_process"
 import { getBaseSiteURL, getSlugFromFile } from "$utils"
 import { MarkdownInstance } from "astro"
 
-const gitInfoRaw = execSync("bash ./scripts/getLastModified.sh").toString().split(";")
+const gitInfoRaw = execSync("bash ./scripts/getLastModified.sh").toString().split(";").slice(0, -1)
 const gitInfo = gitInfoRaw.map((info) => {
   const [file, date, ref] = info.split("|")
 
   return {
-    file: file.trim(),
-    date,
+    file,
+    date: date.trim(),
     ref,
   }
 })

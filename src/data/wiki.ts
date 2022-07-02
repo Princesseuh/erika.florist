@@ -3,6 +3,17 @@ import { execSync } from "child_process"
 import { getBaseSiteURL, getSlugFromFile } from "$utils"
 import { MarkdownInstance } from "astro"
 
+const gitInfoRaw = execSync("bash ./scripts/getLastModified.sh").toString().split(";")
+const gitInfo = gitInfoRaw.map((info) => {
+  const [file, date, ref] = info.split("|")
+
+  return {
+    file: file.trim(),
+    date,
+    ref,
+  }
+})
+
 interface WikiItem extends BaseFrontmatter {
   title: string
   tagline?: string
@@ -24,20 +35,12 @@ function postProcessWikiItem(wikiItem: WikiItem, file: string): WikiItem {
   wikiItem.navigation.order ??= 0
 
   if (import.meta.env.PROD) {
-    // Get the last modified time and commit ref from Git as getting it from file system is not accurate
-    // PERF: This is slow, we should attempt to do it once for the entire website instead of once per file
-    const gitInfoRaw = execSync(`git log -1 --date=iso --pretty="format:%cI|%H" -- ${file}`)
-      .toString()
-      .split("|")
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const info = gitInfo.find((info) => file.endsWith(info.file))!
 
-    const gitInfo = {
-      date: gitInfoRaw[0],
-      ref: gitInfoRaw[1],
-    }
-
-    wikiItem.lastModified = new Date(gitInfo.date)
+    wikiItem.lastModified = new Date(info.date)
     wikiItem.lastModifiedCommitUrl = new URL(
-      gitInfo.ref,
+      info.ref,
       "https://github.com/Princesseuh/princesseuh.dev/commit/",
     )
   } else {

@@ -1,12 +1,12 @@
 # princesseuh.dev
 
-Source code for my website, [princesseuh.dev](https://princesseuh.dev).
+Source code for my website, [princesseuh.dev](https://princesseuh.dev) and [its own custom CMS](apps/cms).
 
 This website contains [articles I wrote](https://princesseuh.dev/articles), a [list of projects](https://princesseuh.dev/projects) I made, a [catalogue of the things I played/read/watched](https://princesseuh.dev/catalogue) and finally, [a wiki about various things](https://princesseuh.dev/wiki)
 
 ## Tech stack
 
-The website is made using [Astro](https://astro.build), styled using [Tailwind](https://tailwindcss.com/) and the interactive parts are written in [Typescript](https://www.typescriptlang.org/) however, no framework is used
+Both the website and the CMS are made using [Astro](https://astro.build), styled using [Tailwind](https://tailwindcss.com/) and the interactive parts are written in [Typescript](https://www.typescriptlang.org/)
 
 ### Technical motivations
 

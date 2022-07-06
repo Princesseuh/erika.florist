@@ -2,7 +2,7 @@
 dist
 
 # dependencies
-node_modules/
+node_modules
 
 # logs
 npm-debug.log*
@@ -15,14 +15,16 @@ yarn-error.log*
 
 # macOS-specific files
 .DS_Store
-workspace.code-workspace
 
 # Generated images (we'll cache those on Netlify)
-static/assets/socials/*
-static/assets/images/*
-src/assets/placeholders/*
+apps/princesseuh.dev/static/assets/socials/*
+apps/princesseuh.dev/static/assets/images/*
+apps/princesseuh.dev/src/assets/placeholders/*
 
-src/pages/test.astro
+apps/princesseuh.dev/src/pages/test.astro
 
 # Local Netlify folder
 .netlify
+
+# Turborepo cache
+.turbo

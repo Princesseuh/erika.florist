@@ -14,7 +14,7 @@ export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
       return b.frontmatter.date.getTime() - a.frontmatter.date.getTime()
     })
 
-  const years = articles.map((article) => article.frontmatter.date.getFullYear())
+  const years = articles.map((article) => article.frontmatter.date.getUTCFullYear())
   const uniqueYears = [...new Set(years)]
 
   return uniqueYears.flatMap((year) => {

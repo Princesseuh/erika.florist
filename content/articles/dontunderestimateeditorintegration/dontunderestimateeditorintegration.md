@@ -15,7 +15,7 @@ But, you tell yourself that it's okay, because what matter at the end of the day
 
 Well, unfortunately, 100% of your users are using your product in a code editor. Which means that, ultimately, **the experience you provide in the editor is part of your product**.
 
-It's especially disappointing if you advertise that your product has "good developer experience" because no matter how quick your HMR is, without completions, your users are losing time compared to if they were using another slower tool with better editor integration
+It's especially disappointing if you advertise that your product has "good developer experience" because no matter how quick your HMR is, without completions, not only are your users losing time compared to if they were using another slower tool with better editor integration, they're also having a bad developer experience
 
 Don't underestimate the power of a good editor integration, in all cases, It'll majorly help the users of your product, and it might also help your product itself because:
 
@@ -23,7 +23,7 @@ Don't underestimate the power of a good editor integration, in all cases, It'll 
 
 Again, 100% of your users are using your product in a code editor. Unless they've read your entire documentation, their first point of contact with a feature has a fairly high chance to be a random completion or hover info
 
-<Image src="responsedoc.png" alt="Shows the hover info for Astro.request, showing hyperlinks and a snippet of code with syntax coloring" caption="Modern editors even allows you to use Markdown and add links in your hover info! Abuse it!" />
+<Image src="responsedoc.png" alt="Shows the hover info for Astro.request, showing hyperlinks and a snippet of code with syntax coloring" caption="Modern editors even allows you to use Markdown in your hover info! Abuse it!" />
 
 Funnily enough, that's kinda how I learned how to use [GameMaker](https://www.yoyogames.com/en/gamemaker) when I was young. I couldn't read the english-only documentation and would search for functions using the completions 😅
 

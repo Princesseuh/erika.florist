@@ -54,6 +54,7 @@ module.exports = {
         index: "min(880px, 100%)",
         articleList: "min(920px, 100%)",
         article: "min(800px, 100%)",
+        image: "min(1080px, 100%)",
         wiki: "min(1280px, 100%)",
       },
       gridTemplateColumns: {
@@ -105,6 +106,9 @@ module.exports = {
             transition: "all 0.1s ease-out",
           },
         },
+        "a:focus > .cover-title": {
+          opacity: "100",
+        },
         // TODO: Figure out a way to simplify this perhaps? This is by far the most complex element on the website
         ".cover-title": {
           position: "absolute",
@@ -124,8 +128,9 @@ module.exports = {
         },
         ".social-icon": {
           color: "inherit",
-          display: "inline-block",
           marginRight: "1.2em",
+          display: "flex",
+          alignItems: "center",
         },
         ".social-twitter": {
           "&:hover": {
@@ -310,7 +315,7 @@ module.exports = {
         ".post figure": {
           marginTop: "1.4rem",
           marginBottom: "1rem",
-          maxWidth: "100%",
+          maxWidth: theme("width.image"),
           textAlign: "center",
         },
 

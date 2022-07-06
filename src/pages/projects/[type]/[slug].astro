@@ -1,0 +1,30 @@
+---
+import { postProcessProject, Project } from "$data/projects"
+import { MarkdownInstance, GetStaticPaths } from "$data/shared"
+import ProjectLayout from "$layouts/ProjectLayout.astro"
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const projects = await Astro.glob<Project>("/content/projects/**/*.md")
+  return projects
+    .filter((project) => project.frontmatter.external_url === undefined)
+    .map((project) => {
+      const augmentedFrontmatter = postProcessProject(project.frontmatter, project.file)
+
+      return {
+        params: {
+          type: augmentedFrontmatter.type + "s",
+          slug: augmentedFrontmatter.slug,
+        },
+        props: { project },
+      }
+    })
+}
+
+export interface Props {
+  project: MarkdownInstance<Project>
+}
+
+const { project } = Astro.props as Props
+---
+
+<ProjectLayout project={project} />

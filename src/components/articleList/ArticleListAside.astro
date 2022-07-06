@@ -12,7 +12,7 @@ const tags: Array<[string, number]> = [
 
 const years: Array<[string, number]> = [
   ...articles
-    .map((article) => new Date(article.frontmatter.date).getFullYear())
+    .map((article) => new Date(article.frontmatter.date).getUTCFullYear())
     .reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
 ].sort((a, b) => {
   return b[0] - a[0]

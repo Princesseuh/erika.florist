@@ -1,6 +1,6 @@
 ---
   title: "wiki.fairedesjeux.fr"
-  description: "A wiki for fairedesjeux.fr"
+  tagline: "A wiki for fairedesjeux.fr"
   featured: true
 ---
 

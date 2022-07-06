@@ -2,13 +2,14 @@
 import { readableDate } from "$utils"
 import type { Article } from "$data/articles"
 import type { WikiItem } from "$data/wiki"
+import type { Project } from "$data/projects"
 
 export interface Props {
-  item: Article | WikiItem
+  item: Article | WikiItem | Project
   includeTags: boolean
 }
 
-const isArticle = (item: Article | WikiItem): item is Article => {
+const isArticle = (item: Article | WikiItem | Project): item is Article => {
   return (item as Article).date !== undefined || (item as Article).tags !== undefined
 }
 

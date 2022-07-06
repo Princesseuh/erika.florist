@@ -1,0 +1,19 @@
+---
+import ContentHeader from "$components/shared/ContentHeader.astro"
+import { Project } from "$data/projects"
+import { MarkdownInstance } from "$data/shared"
+import BaseLayout from "./BaseLayout.astro"
+
+export interface Props {
+  project: MarkdownInstance<Project>
+}
+
+const { project } = Astro.props as Props
+---
+
+<BaseLayout>
+  <article class="post mx-auto">
+    <ContentHeader item={project.frontmatter} includeTags={false} />
+    <project.Content />
+  </article>
+</BaseLayout>

@@ -44,7 +44,7 @@ function postProcessWikiItem(wikiItem: WikiItem, file: string): WikiItem {
       "https://github.com/Princesseuh/princesseuh.dev/commit/",
     )
   } else {
-    // In dev, we just set those to the current date and the website URL, to avoid useless work
+    // In dev, when working on new pages we don't have a git commit yet, so data gets garbled
     wikiItem.lastModified = new Date()
     wikiItem.lastModifiedCommitUrl = new URL("/", getBaseSiteURL())
   }

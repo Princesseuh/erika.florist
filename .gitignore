@@ -23,3 +23,6 @@ static/assets/images/*
 src/assets/placeholders/*
 
 src/pages/test.astro
+
+# Local Netlify folder
+.netlify

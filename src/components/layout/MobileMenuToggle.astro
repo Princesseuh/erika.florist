@@ -13,6 +13,7 @@ import { Sprite } from "astro-icon"
 
   if (mobileMenu && mobileMenuToggle) {
     mobileMenuToggle.addEventListener("click", () => {
+      mobileMenu.toggleAttribute("inert")
       mobileMenu.classList.toggle("w-full")
       body.classList.toggle("overflow-hidden")
     })

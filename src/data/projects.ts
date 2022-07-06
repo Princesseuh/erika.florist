@@ -7,7 +7,7 @@ import { generateImage, ImageFormat } from "astro-eleventy-img"
 interface Project extends BaseFrontmatter {
   type: ProjectType
   title: string
-  description: string
+  tagline: string
   startDate: Date
   endDate?: Date
   assets: {

@@ -4,7 +4,7 @@ module.exports = {
   tabWidth: 2,
   trailingComma: "all",
   semi: false,
-  plugins: ["./node_modules/prettier-plugin-astro", "./node_modules/prettier-plugin-tailwindcss"],
+  plugins: ["./node_modules/prettier-plugin-astro"],
   astroAllowShorthand: false,
   overrides: [
     {

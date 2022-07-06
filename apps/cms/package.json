@@ -6,9 +6,16 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "format": "prettier -w --plugin-search-dir=../.. --cache .",
+    "lint": "eslint . --ext .ts,.js,.astro"
   },
   "devDependencies": {
+    "@astrojs/netlify": "^0.4.8",
+    "@astrojs/tailwind": "^0.2.2",
     "astro": "^1.0.0-beta.63"
+  },
+  "dependencies": {
+    "octokit": "^1.8.1"
   }
 }

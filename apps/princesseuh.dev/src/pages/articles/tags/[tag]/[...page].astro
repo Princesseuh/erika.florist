@@ -6,10 +6,10 @@ import { GetStaticPaths, MarkdownInstance, Page } from "$data/shared"
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   let articles = await Astro.glob<Article>("/content/articles/**/*.md")
   articles = articles
-    .map((article) => {
-      article.frontmatter = postProcessArticle(article.frontmatter, article.file)
-      return article
-    })
+    .map((article) => ({
+      ...article,
+      frontmatter: postProcessArticle(article.frontmatter, article.file),
+    }))
     .sort((a, b) => {
       return b.frontmatter.date.getTime() - a.frontmatter.date.getTime()
     })

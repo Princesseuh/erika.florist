@@ -9,6 +9,9 @@
       "cache": false,
       "outputs": []
     },
+    "check": {
+      "outputs": []
+    },
     "lint": {
       "outputs": []
     },

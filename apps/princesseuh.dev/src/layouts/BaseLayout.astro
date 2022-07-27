@@ -12,6 +12,7 @@ export interface Props {
 }
 
 const { title, description } = Astro.props as Props
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <html lang="en">
@@ -49,8 +50,8 @@ const { title, description } = Astro.props as Props
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:image" content={getBaseSiteURL() + "social-card.png"} />
 
-    <link rel="canonical" href={Astro.canonicalURL} />
-    <meta property="og:url" content={Astro.canonicalURL} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta property="og:url" content={canonicalURL} />
 
     <script>
       import "../assets/scripts/main.ts"
@@ -62,7 +63,7 @@ const { title, description } = Astro.props as Props
         <Header />
 
         <main class="px-6 lg:px-0">
-          <slot></slot>
+          <slot />
         </main>
 
         <footer class="px-5 sm:px-0 py-6 flex justify-center leading-tight bg-darker-skylines">

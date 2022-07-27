@@ -10,11 +10,11 @@ import { MarkdownInstance, GetStaticPaths } from "$data/shared"
 export const getStaticPaths: GetStaticPaths = async () => {
   const articles = await Astro.glob<Article>("/content/articles/**/*.md")
   return articles.map((article) => {
-    article.frontmatter = postProcessArticle(article.frontmatter, article.file)
+    const augmentedFrontmatter = postProcessArticle(article.frontmatter, article.file)
 
     return {
       params: { slug: getSlugFromFile(article.file) },
-      props: { article: article },
+      props: { article: { ...article, frontmatter: augmentedFrontmatter } },
     }
   })
 }

@@ -3,19 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev --experimental-integrations",
-    "build": "astro build --experimental-integrations && npm run copy:images",
-    "preview": "astro preview --experimental-integrations",
-    "format": "prettier -w --plugin-search-dir=../.. --cache .",
+    "dev": "astro dev",
+    "build": "astro build && npm run copy:images",
+    "preview": "astro preview",
+    "check": "astro check",
     "lint": "eslint . --ext .ts,.js,.astro",
+    "format": "prettier -w --plugin-search-dir=../.. --cache .",
     "copy:images": "cp -r static/assets/images dist/assets/"
   },
   "devDependencies": {
-    "@astrojs/tailwind": "^0.2.2",
-    "astro": "1.0.0-beta.63",
+    "@astrojs/tailwind": "^0.2.5",
+    "astro": "1.0.0-rc.1",
     "astro-auto-import": "^0.1.2",
     "astro-eleventy-img": "^0.4.0",
-    "astro-icon": "0.7.1",
+    "astro-icon": "0.7.3",
     "netlify-plugin-cache": "^1.0.3",
     "quick-score": "^0.2.0",
     "quicklink": "^2.2.0"

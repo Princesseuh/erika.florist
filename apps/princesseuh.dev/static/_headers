@@ -4,11 +4,13 @@
   X-Frame-Options: SAMEORIGIN
   X-XSS-Protection: 1; mode=block
 
-/assets/fonts/*
+/chunks/*.js
   cache-control: public,max-age=31536000,immutable
-/assets/*.js
+/hoisted.*.js
   cache-control: public,max-age=31536000,immutable
 /assets/*.css
+  cache-control: public,max-age=31536000,immutable
+/assets/fonts/*
   cache-control: public,max-age=31536000,immutable
 /assets/images/*
   cache-control: public,max-age=604800

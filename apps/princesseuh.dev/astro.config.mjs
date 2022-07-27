@@ -6,6 +6,9 @@ import AutoImport from "astro-auto-import"
 export default defineConfig({
   publicDir: "./static",
   site: "https://princesseuh.netlify.app/",
+  legacy: {
+    astroFlavoredMarkdown: true,
+  },
   markdown: {
     syntaxHighlight: "shiki",
     shikiConfig: {

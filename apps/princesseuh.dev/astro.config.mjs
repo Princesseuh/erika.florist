@@ -5,7 +5,7 @@ import AutoImport from "astro-auto-import"
 // https://astro.build/config
 export default defineConfig({
   publicDir: "./static",
-  site: "https://princesseuh.netlify.app/",
+  site: "https://princesseuh.dev/",
   legacy: {
     astroFlavoredMarkdown: true,
   },

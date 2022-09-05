@@ -2,7 +2,7 @@
 
 Source code for my website, [princesseuh.dev](https://princesseuh.dev) and [its own custom CMS](apps/cms).
 
-This website contains [articles I wrote](https://princesseuh.dev/articles), a [list of projects](https://princesseuh.dev/projects) I made, a [catalogue of the things I played/read/watched](https://princesseuh.dev/catalogue) and finally, [a wiki about various things](https://princesseuh.dev/wiki)
+This website contains [articles I wrote](https://princesseuh.dev/articles), a [list of projects](https://princesseuh.dev/projects) I made, and finally, [a wiki about various things](https://princesseuh.dev/wiki)
 
 ## Tech stack
 
@@ -15,8 +15,7 @@ While I don't necessarily have big ambitions for this website, I'm still trying 
 #### Performance
 
 - Pages should be as lightweight as possible. A page shouldn't initially weight more than 2mb. Heavy content such as images or embeds should be lazy-loaded when possible, otherwise, only loaded on interaction or through a link. Pages should load under 200-300ms on a fast internet and under 2s on much slower internet connections. All in all, that means that:
-- Javascript should only be ever used for progressive enhancements or if there's no alternative.
-  Apart from a few exceptions (such as the catalogue), the website should work with Javascript disabled or not loaded yet. In cases where that isn't possible, an alternative experience albeit not as complete should be provided
+- Javascript should only be ever used for progressive enhancements or if there's no alternative. The website should work with Javascript disabled or not loaded yet. In cases where that isn't possible, an alternative experience albeit not as complete should be provided
 
 #### Accessibility
 

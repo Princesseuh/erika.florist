@@ -7,9 +7,9 @@ navigation:
 
 You might be wondering what a floristry section is doing on this website, after all the others categories are all about more-or-less nerdy stuff such as computers or video games!
 
-Well, I unexpectedly got an interest in floristry back in 2018, it came to me.. through a dream? It definitely does sounds a bit weird to say haha but I saw myself as the cute lesbian florist on the corner, it was so cute. Funnily enough, it was a nightmare because eventually in the dream a bunch of teenagers burned down my shop while calling me homophobic slurs but still, most of the dream was good
+Well, I unexpectedly got an interest in floristry back in 2018, it came to me.. through a dream? It definitely does sounds a bit weird to say ha! But it really inspired to start learning about it
 
-This really inspired to start learning about it and so I started visiting florists around town to ask questions about the job etc. It was a really pleasant experience, most florists welcomed me happily and answered all my questions. One even gave me a free floral composition to bring back home, that was cute!
+I started visiting florists around town to ask questions about the job etc. It was a really pleasant experience, most florists welcomed me happily and answered all my questions. One even gave me a free floral composition to bring back home, that was cute!
 
 I wanted to go to school for it but unfortunately, the school where the class took place was too far and the class was cancelled every year anyway due to low participation, so much like I did with programming, I started learning by myself thanks to the internet and [books](/wiki/flowerreadings)
 

@@ -38,14 +38,12 @@ importers:
     specifiers:
       '@astrojs/netlify': ^0.5.0
       '@astrojs/tailwind': ^0.2.5
-      astro: 1.0.0-rc.1
       octokit: ^2.0.4
     dependencies:
       octokit: 2.0.4
     devDependencies:
       '@astrojs/netlify': 0.5.0
       '@astrojs/tailwind': 0.2.5
-      astro: 1.0.0-rc.1
 
   apps/princesseuh.dev:
     specifiers:

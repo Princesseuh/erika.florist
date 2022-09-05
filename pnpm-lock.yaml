@@ -38,12 +38,14 @@ importers:
     specifiers:
       '@astrojs/netlify': ^0.5.0
       '@astrojs/tailwind': ^0.2.5
+      astro: 1.1.5
       octokit: ^2.0.4
     dependencies:
       octokit: 2.0.4
     devDependencies:
       '@astrojs/netlify': 0.5.0
       '@astrojs/tailwind': 0.2.5
+      astro: 1.1.5
 
   apps/princesseuh.dev:
     specifiers:
@@ -179,8 +181,8 @@ packages:
     dependencies:
       '@astrojs/micromark-extension-mdx-jsx': 1.0.3
       '@astrojs/prism': 1.0.1
-      acorn: 8.7.1
-      acorn-jsx: 5.3.2_acorn@8.7.1
+      acorn: 8.8.0
+      acorn-jsx: 5.3.2_acorn@8.8.0
       github-slugger: 1.4.0
       mdast-util-mdx-expression: 1.2.1
       mdast-util-mdx-jsx: 1.2.0
@@ -941,18 +943,6 @@ packages:
       aggregate-error: 3.1.0
     dev: false
 
-  /@pkgr/utils/2.3.0:
-    resolution: {integrity: sha512-7dIJ9CRVzBnqyEl7diUHPUFJf/oty2SeoVzcMocc5PeOUDK9KGzvgIBjGRRzzlRDaOjh3ADwH0WeibQvi3ls2Q==}
-    engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
-    dependencies:
-      cross-spawn: 7.0.3
-      is-glob: 4.0.3
-      open: 8.4.0
-      picocolors: 1.0.0
-      tiny-glob: 0.2.9
-      tslib: 2.4.0
-    dev: true
-
   /@pkgr/utils/2.3.1:
     resolution: {integrity: sha512-wfzX8kc1PMyUILA+1Z/EqoE4UCXGy0iRGMhPwdfae1+f0OXlLqCk+By+aMzgJBzR9AzS4CDizioG6Ss1gvAFJw==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
@@ -1241,7 +1231,7 @@ packages:
       emmet: 2.3.6
       jsonc-parser: 2.3.1
       vscode-languageserver-textdocument: 1.0.5
-      vscode-languageserver-types: 3.17.1
+      vscode-languageserver-types: 3.17.2
       vscode-nls: 5.0.1
       vscode-uri: 2.1.2
     dev: true
@@ -1552,8 +1542,8 @@ packages:
       ora: 6.1.2
       path-browserify: 1.0.1
       path-to-regexp: 6.2.1
-      postcss: 8.4.14
-      postcss-load-config: 3.1.4_postcss@8.4.14
+      postcss: 8.4.16
+      postcss-load-config: 3.1.4_postcss@8.4.16
       preferred-pm: 3.0.3
       prompts: 2.4.2
       recast: 0.20.5
@@ -4501,6 +4491,23 @@ packages:
       yaml: 1.10.2
     dev: true
 
+  /postcss-load-config/3.1.4_postcss@8.4.16:
+    resolution: {integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==}
+    engines: {node: '>= 10'}
+    peerDependencies:
+      postcss: '>=8.0.9'
+      ts-node: '>=9.0.0'
+    peerDependenciesMeta:
+      postcss:
+        optional: true
+      ts-node:
+        optional: true
+    dependencies:
+      lilconfig: 2.0.5
+      postcss: 8.4.16
+      yaml: 1.10.2
+    dev: true
+
   /postcss-nested/5.0.6_postcss@8.4.14:
     resolution: {integrity: sha512-rKqm2Fk0KbA8Vt3AdGN0FB9OBOMDVajMG6ZCf/GoHgdxUJ4sBFp0A/uMIRm+MJUdo33YXEtjqIz8u7DAp8B7DA==}
     engines: {node: '>=12.0'}
@@ -5245,7 +5252,7 @@ packages:
     resolution: {integrity: sha512-CSZRtSRZ8RhJGMtWyLRqlarmWPPlsgZJHtV6cz0VTHNOg+R7UBoE2eNPQmB5Qrhtk3RX2AAcJmVwMXFULVQSwg==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
     dependencies:
-      '@pkgr/utils': 2.3.0
+      '@pkgr/utils': 2.3.1
       tslib: 2.4.0
     dev: true
 
@@ -5834,10 +5841,6 @@ packages:
 
   /vscode-languageserver-textdocument/1.0.5:
     resolution: {integrity: sha512-1ah7zyQjKBudnMiHbZmxz5bYNM9KKZYz+5VQLj+yr8l+9w3g+WAhCkUkWbhMEdC5u0ub4Ndiye/fDyS8ghIKQg==}
-    dev: true
-
-  /vscode-languageserver-types/3.17.1:
-    resolution: {integrity: sha512-K3HqVRPElLZVVPtMeKlsyL9aK0GxGQpvtAUTfX4k7+iJ4mc1M+JM+zQwkgGy2LzY0f0IAafe8MKqIkJrxfGGjQ==}
     dev: true
 
   /vscode-languageserver-types/3.17.2:

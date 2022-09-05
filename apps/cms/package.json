@@ -13,7 +13,8 @@
   },
   "devDependencies": {
     "@astrojs/netlify": "^0.5.0",
-    "@astrojs/tailwind": "^0.2.5"
+    "@astrojs/tailwind": "^0.2.5",
+    "astro": "1.1.5"
   },
   "dependencies": {
     "octokit": "^2.0.4"

@@ -1,5 +1,5 @@
 ---
-import { Article } from "$data/articles"
+import type { Article } from "$data/articles"
 
 const articles = await Astro.glob<Article>("/content/articles/**/*.md")
 const tags: Array<[string, number]> = [
@@ -23,21 +23,25 @@ const years: Array<[string, number]> = [
   <section>
     <h2 class="mb-3">Tags</h2>
     <ul class="list-none m-0 p-0">
-      {tags.map((tag) => (
-        <li>
-          <a href={"/articles/tags/" + tag[0] + "/"}>{tag[0]}</a> ({tag[1]})
-        </li>
-      ))}
+      {
+        tags.map((tag) => (
+          <li>
+            <a href={"/articles/tags/" + tag[0] + "/"}>{tag[0]}</a> ({tag[1]})
+          </li>
+        ))
+      }
     </ul>
   </section>
   <section>
     <h2 class="mb-3">Year</h2>
     <ul class="list-none m-0 p-0">
-      {years.map((year) => (
-        <li>
-          <a href={"/articles/years/" + year[0] + "/"}>{year[0]}</a> ({year[1]})
-        </li>
-      ))}
+      {
+        years.map((year) => (
+          <li>
+            <a href={"/articles/years/" + year[0] + "/"}>{year[0]}</a> ({year[1]})
+          </li>
+        ))
+      }
     </ul>
   </section>
 </aside>

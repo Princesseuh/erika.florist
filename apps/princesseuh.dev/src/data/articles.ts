@@ -20,4 +20,5 @@ function postProcessArticle(article: Article, file: string): Article {
   return article
 }
 
-export { Article, postProcessArticle }
+export { postProcessArticle }
+export type { Article }

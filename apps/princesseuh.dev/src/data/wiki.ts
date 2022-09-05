@@ -1,11 +1,15 @@
-import { BaseFrontmatter } from "./shared"
-import { execSync } from "child_process"
 import { getBaseSiteURL, getSlugFromFile } from "$utils"
-import { MarkdownInstance } from "astro"
+import type { MarkdownInstance } from "astro"
+import { execSync } from "child_process"
+import type { BaseFrontmatter } from "./shared"
 
 const gitInfoRaw = execSync("bash ./scripts/getLastModified.sh").toString().split(";").slice(0, -1)
 const gitInfo = gitInfoRaw.map((info) => {
   const [file, date, ref] = info.split("|")
+
+  if (!date || !file || !ref) {
+    throw new Error("Couldn't parse file info from " + info)
+  }
 
   return {
     file,
@@ -72,4 +76,5 @@ function getWikiItemsByCategory(
     })
 }
 
-export { WikiItem, postProcessWikiItem, getWikiItemsByCategory }
+export { postProcessWikiItem, getWikiItemsByCategory }
+export type { WikiItem }

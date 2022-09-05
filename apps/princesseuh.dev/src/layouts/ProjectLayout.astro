@@ -1,14 +1,14 @@
 ---
 import ContentHeader from "$components/shared/ContentHeader.astro"
-import { Project } from "$data/projects"
-import { MarkdownInstance } from "$data/shared"
+import type { Project } from "$data/projects"
+import type { MarkdownInstance } from "$data/shared"
 import BaseLayout from "./BaseLayout.astro"
 
 export interface Props {
   project: MarkdownInstance<Project>
 }
 
-const { project } = Astro.props as Props
+const { project } = Astro.props
 ---
 
 <BaseLayout>

@@ -11,8 +11,8 @@ export interface Props {
   wikiItem: MarkdownInstance<WikiItem>
 }
 
-const { wikiItem } = Astro.props as Props
-const headings = await wikiItem.getHeadings()
+const { wikiItem } = Astro.props
+const headings = wikiItem.getHeadings()
 ---
 
 <BaseLayout title={wikiItem.frontmatter.title} description={wikiItem.frontmatter.tagline}>
@@ -35,9 +35,11 @@ const headings = await wikiItem.getHeadings()
     </article>
 
     <aside class="mt-10 mb-4 transition-opacity duration-100 ease-linear hidden sm:block">
-      {headings.length > 0 && (
-        <WikiTOC headers={headings} maxDepth={wikiItem.frontmatter.maxDepthTOC || 4} />
-      )}
+      {
+        headings.length > 0 && (
+          <WikiTOC headers={headings} maxDepth={wikiItem.frontmatter.maxDepthTOC || 4} />
+        )
+      }
     </aside>
   </section>
 </BaseLayout>

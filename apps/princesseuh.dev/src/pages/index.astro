@@ -1,13 +1,13 @@
 ---
-import BaseLayout from "$layouts/BaseLayout.astro"
 import ArticlePreview from "$components/shared/ArticlePreview.astro"
-import { postProcessArticle } from "$data/articles"
-import { postProcessWikiItem } from "$data/wiki"
-import { postProcessProject } from "$data/projects"
-import { readableDate } from "$utils"
 import type { Article } from "$data/articles"
-import type { WikiItem } from "$data/wiki"
+import { postProcessArticle } from "$data/articles"
 import type { Project } from "$data/projects"
+import { postProcessProject } from "$data/projects"
+import type { WikiItem } from "$data/wiki"
+import { postProcessWikiItem } from "$data/wiki"
+import BaseLayout from "$layouts/BaseLayout.astro"
+import { readableDate } from "$utils"
 
 const rawArticles = await Astro.glob<Article>("/content/articles/**/*.md")
 const articles = rawArticles
@@ -71,14 +71,16 @@ const featuredProjects = rawFeaturedProjects
 
     <h3 class="text-2xl mb-5">Featured works</h3>
     <div class="flex flex-wrap sm:mx-10 mt-2 mb-6 gap-5 sm:gap-4 justify-center items-center">
-      {featuredProjects.map((project) => (
-        <div class="relative h-[180px]">
-          <a href={project.frontmatter.url}>
-            <Fragment set:html={project.frontmatter.assets.indexCover} />
-            <h4 class="cover-title">{project.frontmatter.title}</h4>
-          </a>
-        </div>
-      ))}
+      {
+        featuredProjects.map((project) => (
+          <div class="relative h-[180px]">
+            <a href={project.frontmatter.url}>
+              <Fragment set:html={project.frontmatter.assets.indexCover} />
+              <h4 class="cover-title">{project.frontmatter.title}</h4>
+            </a>
+          </div>
+        ))
+      }
     </div>
 
     <div class="flex justify-around gap-4 flex-col sm:flex-row">
@@ -89,19 +91,21 @@ const featuredProjects = rawFeaturedProjects
 
       <div class="sm:w-[37%]">
         <h3 class="text-2xl mb-4 mt-2 sm:mt-4">Latest wiki modifications</h3>
-        {wikiItems.map((item) => (
-          <section class="mb-3">
-            <a class="block font-bold leading-tight" href={item.frontmatter.url}>
-              {item.frontmatter.title}
-            </a>
-            <span
-              class="block text-sm first-letter:uppercase"
-              data-date={item.frontmatter.lastModified}
-            >
-              {readableDate(item.frontmatter.lastModified)}
-            </span>
-          </section>
-        ))}
+        {
+          wikiItems.map((item) => (
+            <section class="mb-3">
+              <a class="block font-bold leading-tight" href={item.frontmatter.url}>
+                {item.frontmatter.title}
+              </a>
+              <span
+                class="block text-sm first-letter:uppercase"
+                data-date={item.frontmatter.lastModified}
+              >
+                {readableDate(item.frontmatter.lastModified)}
+              </span>
+            </section>
+          ))
+        }
       </div>
     </div>
   </article>

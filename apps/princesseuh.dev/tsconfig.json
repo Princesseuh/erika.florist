@@ -1,12 +1,7 @@
 {
+  "extends": "astro/tsconfigs/strictest",
   "compilerOptions": {
-    "strict": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "target": "ESNext",
-    "noEmit": true,
-    "types": ["node", "vite/client"],
+    "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "$components/*": ["src/components/*"],

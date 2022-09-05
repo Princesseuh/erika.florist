@@ -8,10 +8,10 @@ import "src/assets/style/prin.css"
 
 export interface Props {
   title?: string
-  description?: string
+  description?: string | undefined
 }
 
-const { title, description } = Astro.props as Props
+const { title, description } = Astro.props
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 

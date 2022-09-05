@@ -1,7 +1,7 @@
 ---
+import type { GetStaticPaths, MarkdownInstance } from "$data/shared"
+import { postProcessWikiItem, WikiItem } from "$data/wiki"
 import WikiLayout from "$layouts/WikiLayout.astro"
-import { WikiItem, postProcessWikiItem } from "$data/wiki"
-import { MarkdownInstance, GetStaticPaths } from "$data/shared"
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const wikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")
@@ -22,7 +22,7 @@ export interface Props {
   wikiItem: MarkdownInstance<WikiItem>
 }
 
-const { wikiItem } = Astro.props as Props
+const { wikiItem } = Astro.props
 ---
 
 <WikiLayout wikiItem={wikiItem} />

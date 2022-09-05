@@ -1,22 +1,24 @@
 ---
-import { MarkdownHeader } from "$data/shared"
+import type { MarkdownHeading } from "$data/shared"
 
 export interface Props {
-  headers: MarkdownHeader[]
+  headers: MarkdownHeading[]
   maxDepth: number
 }
 
-const { headers, maxDepth } = Astro.props as Props
+const { headers, maxDepth } = Astro.props
 const filteredHeaders = headers.filter((header) => header.depth > 1 && header.depth < maxDepth + 1)
 ---
 
 <span class="font-semibold mb-2">On this page</span>
 <nav class="toc">
   <ol>
-    {filteredHeaders.map((header) => (
-      <li class={`toc-depth-${header.depth}`}>
-        <a href={`#${header.slug}`}>{header.text}</a>
-      </li>
-    ))}
+    {
+      filteredHeaders.map((header) => (
+        <li class={`toc-depth-${header.depth}`}>
+          <a href={`#${header.slug}`}>{header.text}</a>
+        </li>
+      ))
+    }
   </ol>
 </nav>

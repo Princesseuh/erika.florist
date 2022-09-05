@@ -1,6 +1,6 @@
 ---
-import Socials from "$components/layout/Socials.astro"
 import MobileMenuToggle from "$components/layout/MobileMenuToggle.astro"
+import Socials from "$components/layout/Socials.astro"
 
 import { headerMenu as menu } from "$data/headerMenu"
 ---
@@ -13,11 +13,13 @@ import { headerMenu as menu } from "$data/headerMenu"
       </h1>
 
       <nav class="hidden ml-2 sm:inline-block">
-        {menu.map((item) => (
-          <a class="header-link" href={`/${item.toLowerCase()}/`}>
-            {item}
-          </a>
-        ))}
+        {
+          menu.map((item) => (
+            <a class="header-link" href={`/${item.toLowerCase()}/`}>
+              {item}
+            </a>
+          ))
+        }
       </nav>
     </div>
 

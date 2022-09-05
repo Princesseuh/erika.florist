@@ -1,12 +1,12 @@
 ---
-import { Article } from "$data/articles"
+import type { Article } from "$data/articles"
 import { readableDate } from "$utils"
 
 export interface Props {
   article: Article
 }
 
-const { article } = Astro.props as Props
+const { article } = Astro.props
 ---
 
 <section class="mb-3">
@@ -17,9 +17,11 @@ const { article } = Astro.props as Props
   <div class="mb-2 text-creative-work text-sm">
     {readableDate(article.date)}
     ·
-    {article.tags
-      .map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)
-      .reduce((prev: string, curr: string) => (prev === null ? [curr] : [prev, ", ", curr]))}
+    {
+      article.tags
+        .map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)
+        .reduce((prev: string, curr: string) => (prev === null ? [curr] : [prev, ", ", curr]))
+    }
   </div>
 
   {article.tagline || null}

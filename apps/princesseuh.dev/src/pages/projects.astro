@@ -1,7 +1,7 @@
 ---
-import BaseLayout from "$layouts/BaseLayout.astro"
 import { postProcessProject, Project, ProjectType } from "$data/projects"
-import { MarkdownInstance } from "$data/shared"
+import type { MarkdownInstance } from "$data/shared"
+import BaseLayout from "$layouts/BaseLayout.astro"
 
 const rawProjects = await Astro.glob<Project>("/content/projects/**/*.md")
 const projects = rawProjects.map((project) => ({
@@ -47,48 +47,52 @@ const readableTitles = {
     To see more projects, feel free to visit my <a href="https://github.com/Princesseuh">GitHub</a> or
     for games especially, my <a href="https://princesseuh.itch.io/">Itch.io</a>
 
-    {Object.entries(projectsPerType)
-      .filter((type) => type[1].length > 0)
-      .map((type) => (
-        <div>
-          <h3>{readableTitles[(type[0] as keyof typeof readableTitles)]}</h3>
-          <div class="flex flex-col flex-wrap sm:flex-row lg:gap-4">
-            {type[1].map((project) => (
-              <a
-                href={
-                  project.frontmatter.external_url ? project.frontmatter.external_url : project.frontmatter.url
-                }
-                class={
-                  project.frontmatter.featured
-                    ? "project-box project-featured max-w-full sm:max-w-[50%]"
-                    : "project-box max-w-full sm:max-w-[50%]"
-                }
-              >
-                {project.frontmatter.featured && (
-                  <span
-                    class="absolute right-2 top-1 h-5 w-5 fill-current"
-                    title="Featured project"
-                  >
-                    🌟
-                  </span>
-                )}
-                {project.frontmatter.external_url && (
-                  <span
-                    class="absolute right-2 top-1 h-5 w-5 fill-current"
-                    title="Project is hosted on an external website"
-                  >
-                    🔗
-                  </span>
-                )}
-                <Fragment set:html={project.frontmatter.assets.miniLogo} />
-                <div>
-                  <h4 class="m-0 block font-bold">{project.frontmatter.title}</h4>
-                  <span class="text-creative-work text-sm">{project.frontmatter.tagline}</span>
-                </div>
-              </a>
-            ))}
+    {
+      Object.entries(projectsPerType)
+        .filter((type) => type[1].length > 0)
+        .map((type) => (
+          <div>
+            <h3>{readableTitles[type[0] as keyof typeof readableTitles]}</h3>
+            <div class="flex flex-col flex-wrap sm:flex-row lg:gap-4">
+              {type[1].map((project) => (
+                <a
+                  href={
+                    project.frontmatter.external_url
+                      ? project.frontmatter.external_url
+                      : project.frontmatter.url
+                  }
+                  class={
+                    project.frontmatter.featured
+                      ? "project-box project-featured max-w-full sm:max-w-[50%]"
+                      : "project-box max-w-full sm:max-w-[50%]"
+                  }
+                >
+                  {project.frontmatter.featured && (
+                    <span
+                      class="absolute right-2 top-1 h-5 w-5 fill-current"
+                      title="Featured project"
+                    >
+                      🌟
+                    </span>
+                  )}
+                  {project.frontmatter.external_url && (
+                    <span
+                      class="absolute right-2 top-1 h-5 w-5 fill-current"
+                      title="Project is hosted on an external website"
+                    >
+                      🔗
+                    </span>
+                  )}
+                  <Fragment set:html={project.frontmatter.assets.miniLogo} />
+                  <div>
+                    <h4 class="m-0 block font-bold">{project.frontmatter.title}</h4>
+                    <span class="text-creative-work text-sm">{project.frontmatter.tagline}</span>
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+    }
   </article>
 </BaseLayout>

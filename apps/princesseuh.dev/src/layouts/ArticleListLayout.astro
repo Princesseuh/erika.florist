@@ -10,7 +10,7 @@ export interface Props {
   title: string
 }
 
-const { page, title } = Astro.props as Props
+const { page, title } = Astro.props
 ---
 
 <BaseLayout title={title}>
@@ -20,11 +20,13 @@ const { page, title } = Astro.props as Props
       {page.data.map((item) => <ArticlePreview article={item.frontmatter} />)}
       <div>
         {page.url.prev && <a href={page.url.prev}>Newer posts</a>}
-        {page.url.next && (
-          <a class="float-right" href={page.url.next}>
-            Older posts
-          </a>
-        )}
+        {
+          page.url.next && (
+            <a class="float-right" href={page.url.next}>
+              Older posts
+            </a>
+          )
+        }
       </div>
     </div>
 

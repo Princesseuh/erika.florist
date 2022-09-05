@@ -2,13 +2,13 @@
 import BaseLayout from "$layouts/BaseLayout.astro"
 import ContentHeader from "$components/shared/ContentHeader.astro"
 import type { Article } from "$data/articles"
-import { MarkdownInstance } from "$data/shared"
+import type { MarkdownInstance } from "$data/shared"
 
 export interface Props {
   article: MarkdownInstance<Article>
 }
 
-const { article } = Astro.props as Props
+const { article } = Astro.props
 ---
 
 <BaseLayout title={article.frontmatter.title} description={article.frontmatter.tagline}>

@@ -1,9 +1,9 @@
 ---
 import { headerMenu as globalMenu } from "$data/headerMenu"
-import Socials from "./Socials.astro"
-import { getWikiItemsByCategory, WikiItem, postProcessWikiItem } from "$data/wiki"
+import type { MarkdownInstance, WikiItemInstance } from "$data/shared"
+import { getWikiItemsByCategory, postProcessWikiItem, WikiItem } from "$data/wiki"
 import { wikiCategories, WikiCategory } from "$data/wikiCategories"
-import { MarkdownInstance, WikiItemInstance } from "$data/shared"
+import Socials from "./Socials.astro"
 
 let rawWikiItems: MarkdownInstance<WikiItem>[] = []
 let wikiItems: MarkdownInstance<WikiItem>[] = []
@@ -27,31 +27,35 @@ if (isWikiPage) {
 >
   <div class="p-3 flex flex-col gap-4">
     {/* Global header menu */}
-    {globalMenu.map((item) => (
-      <a class="header-link bg-fin-lanka mr-0 p-3 text-xl" href={`/${item.toLowerCase()}/`}>
-        {item}
-      </a>
-    ))}
+    {
+      globalMenu.map((item) => (
+        <a class="header-link bg-fin-lanka mr-0 p-3 text-xl" href={`/${item.toLowerCase()}/`}>
+          {item}
+        </a>
+      ))
+    }
   </div>
 
   {/* Wiki-exclusive menu */}
-  {isWikiPage && (
-    <div class="flex flex-col gap-3 p-3">
-      {wikiCategories.map((category: WikiCategory) => (
-        <>
-          <span class="text-sugar-cane block font-bold">{category.title}</span>
-          {getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItemInstance) => (
-            <a
-              class="header-link bg-fin-lanka mr-0 p-2 text-lg"
-              href={item.frontmatter.url.pathname}
-            >
-              {item.frontmatter.navigation.label || item.frontmatter.title}
-            </a>
-          ))}
-        </>
-      ))}
-    </div>
-  )}
+  {
+    isWikiPage && (
+      <div class="flex flex-col gap-3 p-3">
+        {wikiCategories.map((category: WikiCategory) => (
+          <>
+            <span class="text-sugar-cane block font-bold">{category.title}</span>
+            {getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItemInstance) => (
+              <a
+                class="header-link bg-fin-lanka mr-0 p-2 text-lg"
+                href={item.frontmatter.url.pathname}
+              >
+                {item.frontmatter.navigation.label || item.frontmatter.title}
+              </a>
+            ))}
+          </>
+        ))}
+      </div>
+    )
+  }
 
   <Socials classes="mt-4 justify-center gap-7 mb-8" size={45} />
 </div>

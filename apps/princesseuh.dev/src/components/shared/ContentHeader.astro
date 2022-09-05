@@ -1,8 +1,8 @@
 ---
-import { readableDate } from "$utils"
 import type { Article } from "$data/articles"
-import type { WikiItem } from "$data/wiki"
 import type { Project } from "$data/projects"
+import type { WikiItem } from "$data/wiki"
+import { readableDate } from "$utils"
 
 export interface Props {
   item: Article | WikiItem | Project
@@ -13,18 +13,20 @@ const isArticle = (item: Article | WikiItem | Project): item is Article => {
   return (item as Article).date !== undefined || (item as Article).tags !== undefined
 }
 
-const { item, includeTags } = Astro.props as Props
+const { item, includeTags } = Astro.props
 ---
 
 <header class="mb-4 mt-4">
   <h1 class="text-4xl sm:text-[3.5rem] mb-4 mt-0 leading-none">{item.title}</h1>
-  {item.tagline && <h2 class="relative top-[-5px] m-0 text-xl">{item.tagline}</h2>}
-  {isArticle(item) && includeTags && (
-    <div class="text-creative-work">
-      {readableDate(item.date)} ·{" "}
-      {item.tags
-        .map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)
-        .reduce((prev: string, curr: string) => (prev === null ? [curr] : [prev, ", ", curr]))}
-    </div>
-  )}
+  {item.tagline ? <h2 class="relative top-[-5px] m-0 text-xl">{item.tagline}</h2> : <></>}
+  {
+    isArticle(item) && includeTags ? (
+      <div class="text-creative-work">
+        {readableDate(item.date)} ·{" "}
+        {item.tags
+          .map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)
+          .reduce((prev: string, curr: string) => (prev === null ? [curr] : [prev, ", ", curr]))}
+      </div>
+    ) : null
+  }
 </header>

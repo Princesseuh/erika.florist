@@ -1,6 +1,6 @@
 // Trying to import those type in a .astro file creates a weird error so we re-export it from here
+import type { MarkdownHeading } from "@astrojs/markdown-remark"
 import type { GetStaticPaths, MarkdownInstance, Page } from "astro"
-import type { MarkdownHeader } from "@astrojs/markdown-remark"
 import type { WikiItem } from "./wiki"
 
 interface BaseFrontmatter {
@@ -19,5 +19,5 @@ export type {
   GetStaticPaths,
   WikiItemInstance,
   MarkdownInstance,
-  MarkdownHeader,
+  MarkdownHeading,
 }

@@ -12,16 +12,7 @@ interface Props {
   placeholderOptions?: PlaceholderOptions
 }
 
-const {
-  src,
-  alt,
-  caption,
-  options = {},
-  sizes = "",
-  classes = undefined,
-  quality = 90,
-  placeholderOptions = {},
-} = Astro.props as Props
+const { src, alt } = Astro.props
 
 const url = new URL(Astro.request.url).pathname
 

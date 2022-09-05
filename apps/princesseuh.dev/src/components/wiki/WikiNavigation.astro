@@ -1,7 +1,7 @@
 ---
-import { getWikiItemsByCategory, WikiItem, postProcessWikiItem } from "$data/wiki"
+import type { WikiItemInstance } from "$data/shared"
+import { getWikiItemsByCategory, postProcessWikiItem, WikiItem } from "$data/wiki"
 import { wikiCategories, WikiCategory } from "$data/wikiCategories"
-import { WikiItemInstance } from "$data/shared"
 
 const rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")
 const wikiItems = rawWikiItems.map((item) => ({
@@ -13,19 +13,21 @@ const url = new URL(Astro.request.url)
 ---
 
 <ul class="m-0 list-none p-0 wiki-navigation hidden sm:block">
-  {wikiCategories.map((category: WikiCategory) => (
-    <li>
-      <span class="text-sugar-cane block font-bold">{category.title}</span>
-      {getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItemInstance) => (
-        <a
-          class={`block ${
-            url.pathname == item.frontmatter.url.pathname ? "text-pinky-unicorny font-bold" : ""
-          }`}
-          href={item.frontmatter.url.pathname}
-        >
-          {item.frontmatter.navigation.label || item.frontmatter.title}
-        </a>
-      ))}
-    </li>
-  ))}
+  {
+    wikiCategories.map((category: WikiCategory) => (
+      <li>
+        <span class="text-sugar-cane block font-bold">{category.title}</span>
+        {getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItemInstance) => (
+          <a
+            class={`block ${
+              url.pathname == item.frontmatter.url.pathname ? "text-pinky-unicorny font-bold" : ""
+            }`}
+            href={item.frontmatter.url.pathname}
+          >
+            {item.frontmatter.navigation.label || item.frontmatter.title}
+          </a>
+        ))}
+      </li>
+    ))
+  }
 </ul>

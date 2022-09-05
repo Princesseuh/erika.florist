@@ -1,4 +1,4 @@
-import { BaseFrontmatter } from "./shared"
+import type { BaseFrontmatter } from "./shared"
 import { basename, dirname } from "path"
 import { getBaseSiteURL, getSlugFromFile } from "$utils"
 
@@ -61,7 +61,7 @@ function postProcessProject(project: Project, file: string): Project {
       .join("\n")}
       <img
         class="object-cover object-top rounded-sm"
-        src="${indexCover.jpeg[0].url}"
+        src="${indexCover.jpeg?.[0].url}"
         width="377"
         height="180"
         alt="${project.indexCoverAlt}"
@@ -89,7 +89,7 @@ function postProcessProject(project: Project, file: string): Project {
       .join("\n")}
       <img
         class="w-[48px] h-[48px] mr-4"
-        src="${miniLogo.png[0].url}"
+        src="${miniLogo.png?.[0].url}"
         width="48"
         height="48"
         alt="${project.miniLogoAlt}"
@@ -113,4 +113,5 @@ function getProjectTypeFromURL(path: string): ProjectType {
   return basename(dirname(path)).slice(0, -1) as ProjectType
 }
 
-export { Project, ProjectType, postProcessProject }
+export { ProjectType, postProcessProject }
+export type { Project }

@@ -15,7 +15,7 @@ But, you tell yourself that it's okay, because what matter at the end of the day
 
 Well, unfortunately, 100% of your users are using your product in a code editor. Which means that, ultimately, **the experience you provide in the editor is part of your product**.
 
-It's especially disappointing if you advertise that your product has "good developer experience" because no matter how quick your HMR is, without completions, not only are your users losing time compared to if they were using another slower tool with better editor integration, they're also having a bad developer experience
+It's especially disappointing if you advertise that your product has "good developer experience" because no matter how quick your HMR is, without completions, not only are your users losing time compared to if they were using another slower tool with better editor integration, they're also having: a bad developer experience
 
 Don't underestimate the power of a good editor integration, in all cases, It'll majorly help the users of your product, and it might also help your product itself because:
 

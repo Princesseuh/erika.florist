@@ -6,5 +6,5 @@ export function getSlugFromFile(path: string): string {
 }
 
 export function getBaseSiteURL(): string {
-  return import.meta.env.PROD ? "https://princesseuh.dev/" : "http://localhost:3000/"
+  return import.meta.env.PROD ? "https://erika.florist/" : "http://localhost:3000/"
 }

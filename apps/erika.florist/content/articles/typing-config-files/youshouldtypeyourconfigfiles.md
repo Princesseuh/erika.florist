@@ -52,16 +52,14 @@ It's that easy and the benefits are very clear immediately. Frankly, in my opini
 
 ## Tailwind
 
-The types available for [Tailwind](https://tailwindcss.com/) are unfortunately not perfect, however, it's still an improvement over nothing
+[Tailwind](https://tailwindcss.com/) ships types directly. They're unfortunately not that great, but it's an improvement over nothing!
 
 ```js
-/** @type {import('@types/tailwindcss/tailwind-config').TailwindConfig} */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   // ... your tailwind config here
 }
 ```
-
-Alternatively to the DefinitelyTyped's types, you can use [the types found here](https://github.com/tailwindlabs/play.tailwindcss.com/blob/master/src/monaco/types-v3.d.ts) which I personally find to be better in most cases. Hopefully one day the Tailwind team will provide official type definitions ([GitHub discussion about that here](https://github.com/tailwindlabs/tailwindcss/discussions/1077))
 
 ## Bonus: Astro
 

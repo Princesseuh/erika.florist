@@ -1,8 +1,8 @@
-# princesseuh.dev
+# erika.florist
 
-Source code for my website, [princesseuh.dev](https://princesseuh.dev) and [its own custom CMS](apps/cms).
+Source code for my website, [erika.florist](https://erika.florist) and [its own custom WIP CMS](apps/cms).
 
-This website contains [articles I wrote](https://princesseuh.dev/articles), a [list of projects](https://princesseuh.dev/projects) I made, and finally, [a wiki about various things](https://princesseuh.dev/wiki)
+This website contains [articles I wrote](https://erika.florist/articles), a [list of projects](https://erika.florist/projects) I made, and finally, [a wiki about various things](https://erika.florist/wiki)
 
 ## Tech stack
 

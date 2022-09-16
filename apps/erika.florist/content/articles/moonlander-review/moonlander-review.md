@@ -7,21 +7,21 @@
 
 A few months ago, my keyboard broke. Is it related to me dropping coffee on it? _Perhaps_, but that's not the point. I had been using a [CODE keyboard](http://codekeyboards.com/) for about 2 years now, it was a really good experience. My only regret being buying the 104-key version instead of the 87 one back then
 
-It's a really good keyboard that I recommend a lot if normal looking keyboards are what you're after because today we're gonna be talking about the Moonlander by ZSA, a clearly not normal looking keyboard
+It's a really good keyboard that I recommend a lot if normal looking keyboards are what you're after because today we're gonna be talking about the [Moonlander by ZSA](https://www.zsa.io/moonlander/), a clearly not normal looking keyboard
 
 <Image src="keyboard.png" alt="A picture of the Moonlander keyboard, a two splits keyboard. The picture showcase the two coloring available, black and white" caption="Available in two colors!" />
 
-What got me into ergonomic keyboards is mainly that these past few years I've been getting intermittent wrists issues. Nothing huge but still annoying once in a while, luckily just taking breaks and doing wrist exercises before usage was enough to fix them, but still, **wrists issues being a reality when you work at a computer all day long**, I might as well try to delay the inevitable as much as possible, also, I like fancy keyboards, they're cool
+What firstgot me into ergonomic keyboards is mainly that these past few years I've been getting intermittent wrists issues. Nothing huge but still annoying once in a while, luckily just taking breaks and doing wrist exercises was enough to fix them, but I wanted to prevent them from happening in the first place (or least, delay the inevitable as much as possible)
 
-I first started with a [Microsoft Natural Ergonomic Keyboard 4000](https://www.microsoft.com/accessories/en-ww/products/keyboards/natural-ergonomic-keyboard-4000/b2m-00012) provided by my previous job. I thought it wouldn't be too good, being a bottom of the line ergonomic keyboard but I ended up liking it a lot! It was really comfortable and I got used to it really quickly. Also, the 1234 keys at the top were pretty useful for switching between workspaces on i3/Sway, cool stuff
+I first started with a [Microsoft Natural Ergonomic Keyboard 4000](https://www.microsoft.com/accessories/en-ww/products/keyboards/natural-ergonomic-keyboard-4000/b2m-00012) provided by my previous job. I ended up liking it a lot! It was really comfortable and I got used to it really quickly. Also, the 1234 keys at the top were pretty useful for switching between workspaces on my tilling window manager
 
-However I still needed an option for at home and I felt like I spend enough time on a computer every day that I can afford more expensive options and so after looking a bit around **I finally got the Moonlander**
+However I still needed an option for at home and I felt like I spend enough time on a computer every day that I can afford more expensive options and so after looking a bit around I decided to get a Moonlander
 
 And well, to resume quickly before going in: It's good, but, I personally do not like it all that much all things considered. Or at least, I'm very unsure about it. It's very cool, has a lot of cool features, Oryx and the other tools provided works really well but it sliding around my desk turns out to be fairly frustating and it definitely takes a long time before finding "the perfect layout" (if it exists)
 
 ## Build Quality
 
-**The Moonlander is an expensive product**, it cost me close to **450$CAD** total including handling fees, taxes and stuff and so, for this price I think it's reasonable to expect really good build quality. **On that point, it definitely delivers** apart from a few details that are perhaps a bit subjective:
+**The Moonlander is an expensive product**, it cost me close to **450$CAD** total including handling fees, taxes and stuff and so, for this price I think it's reasonable to expect really good build quality.
 
 The keyboard is kinda light compared to my previous one and the rubber things under it to avoid it slipping are not really good I feel like? Or perhaps they're not at the right spot, I don't know but the result is that the keyboard move a lot on my desk. I mostly fixed this issue by buying a deskpad (I always wanted one anyway) but it still does move quite a bit, which I find kinda frustating
 

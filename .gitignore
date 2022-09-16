@@ -17,11 +17,11 @@ yarn-error.log*
 .DS_Store
 
 # Generated images (we'll cache those on Netlify)
-apps/princesseuh.dev/static/assets/socials/*
-apps/princesseuh.dev/static/assets/images/*
-apps/princesseuh.dev/src/assets/placeholders/*
+apps/erika.florist/static/assets/socials/*
+apps/erika.florist/static/assets/images/*
+apps/erika.florist/src/assets/placeholders/*
 
-apps/princesseuh.dev/src/pages/test.astro
+apps/erika.florist/src/pages/test.astro
 
 # Local Netlify folder
 .netlify

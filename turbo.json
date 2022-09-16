@@ -3,7 +3,7 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["./apps/princesseuh.dev/dist/**", "./apps/cms/dist/**"]
+      "outputs": ["./apps/erika.florist/dist/**", "./apps/cms/dist/**"]
     },
     "dev": {
       "cache": false,

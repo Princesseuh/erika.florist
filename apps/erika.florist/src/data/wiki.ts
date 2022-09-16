@@ -45,7 +45,7 @@ function postProcessWikiItem(wikiItem: WikiItem, file: string): WikiItem {
     wikiItem.lastModified = new Date(info.date)
     wikiItem.lastModifiedCommitUrl = new URL(
       info.ref,
-      "https://github.com/Princesseuh/princesseuh.dev/commit/",
+      "https://github.com/Princesseuh/erika.florist/commit/",
     )
   } else {
     // In dev, when working on new pages we don't have a git commit yet, so data gets garbled

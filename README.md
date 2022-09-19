@@ -1,12 +1,12 @@
 # erika.florist
 
-Source code for my website, [erika.florist](https://erika.florist) and [its own custom WIP CMS](apps/cms).
+Source code for my website, [erika.florist](https://erika.florist)
 
 This website contains [articles I wrote](https://erika.florist/articles), a [list of projects](https://erika.florist/projects) I made, and finally, [a wiki about various things](https://erika.florist/wiki)
 
 ## Tech stack
 
-Both the website and the CMS are made using [Astro](https://astro.build), styled using [Tailwind](https://tailwindcss.com/) and the interactive parts are written in [Typescript](https://www.typescriptlang.org/)
+Made using [Astro](https://astro.build), styled using [Tailwind](https://tailwindcss.com/) and the interactive parts are written in [Typescript](https://www.typescriptlang.org/)
 
 ### Technical motivations
 

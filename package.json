@@ -1,29 +1,25 @@
 {
-  "name": "root",
+  "name": "erika.florist",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "check": "turbo run check",
-    "lint": "turbo run lint",
-    "format": "turbo run format",
-    "update-dependencies": "ncu -u --deep"
+    "dev": "astro dev",
+    "build": "astro build && npm run copy:images",
+    "preview": "astro preview",
+    "check": "astro check",
+    "lint": "eslint . --ext .ts,.js,.astro",
+    "format": "prettier -w --plugin-search-dir=../.. --cache .",
+    "copy:images": "cp -r static/assets/images dist/assets/"
   },
-  "version": "1.0.0",
   "devDependencies": {
-    "@types/eslint": "^8.4.6",
-    "@types/node": "^18.7.15",
-    "@types/prettier": "^2.7.0",
-    "@typescript-eslint/eslint-plugin": "^5.36.2",
-    "@typescript-eslint/parser": "^5.36.2",
-    "eslint": "^8.23.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-astro": "^0.18.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.7.1",
-    "prettier-plugin-astro": "^0.5.4",
-    "turbo": "^1.4.5",
-    "typescript": "^4.8.2"
+    "@astrojs/tailwind": "^1.0.0",
+    "astro": "1.1.5",
+    "astro-auto-import": "^0.1.2",
+    "astro-eleventy-img": "^0.5.0",
+    "astro-icon": "0.7.3",
+    "netlify-plugin-cache": "^1.0.3",
+    "quick-score": "^0.2.0",
+    "quicklink": "^2.3.0"
   },
   "pnpm": {
     "packageExtensions": {

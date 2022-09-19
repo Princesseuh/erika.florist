@@ -11,7 +11,7 @@ export interface Props {
 const { project } = Astro.props
 ---
 
-<BaseLayout>
+<BaseLayout title={project.frontmatter.title} description={project.frontmatter.tagline}>
   <article class="post mx-auto">
     <ContentHeader item={project.frontmatter} includeTags={false} />
     <project.Content />

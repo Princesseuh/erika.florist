@@ -1,6 +1,5 @@
 ---
   title: Installing the KDE file picker on Arch Linux
-  loadCSSModules: ["code"]
   navigation:
     category: "linux"
     hidden: true

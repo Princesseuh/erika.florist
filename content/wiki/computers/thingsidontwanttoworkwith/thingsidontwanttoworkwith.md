@@ -1,7 +1,6 @@
 ---
   title: "Things I don't want to work with anymore"
   tagline: "Some softwares, libraries, frameworks are just not for me - and that's okay"
-  loadCSSModules: ["code"]
   navigation:
     label: "Things I don't want to use"
     category: computers

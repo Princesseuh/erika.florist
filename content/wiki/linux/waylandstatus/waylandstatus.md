@@ -1,7 +1,6 @@
 ---
   title: "Experience with Wayland on my setup"
   tagline: "Almost there Wayland, almost there"
-  loadCSSModules: ["code"]
   navigation:
     label: Wayland status
     category: linux

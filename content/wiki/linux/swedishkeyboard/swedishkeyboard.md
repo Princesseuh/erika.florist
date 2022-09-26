@@ -1,7 +1,6 @@
 ---
   title: "Swedish characters w/ a French Canadian layout"
   tagline: "Admittedly a weird mix, but it's what I need"
-  loadCSSModules: ["code"]
   navigation:
     label: Swedish + FR CA Layout
     category: linux

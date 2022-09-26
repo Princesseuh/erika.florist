@@ -1,7 +1,6 @@
 ---
 title: "Eleventy pain points"
 tagline: "In an unsurprising turns of event, it turns out you really can't write any kind of software without at least a few things going wrong"
-loadCSSModules: ["code"]
 date: 2020-10-18
 tags: ["eleventy", "website", "programming"]
 ---

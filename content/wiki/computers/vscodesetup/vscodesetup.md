@@ -1,7 +1,6 @@
 ---
   title: "My VS Code setup"
   tagline: "Because feeling at home is important"
-  loadCSSModules: ["code"]
   navigation:
     label: 'VS Code setup'
     category: computers

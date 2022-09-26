@@ -1,7 +1,6 @@
 ---
 title: Your config files should be typechecked
 tagline: aka, How to use the power of Typescript for your Prettier, ESLint and other config files
-loadCSSModules: ["code"]
 date: 2022-01-12
 tags: ["programming", "javascript"]
 ---

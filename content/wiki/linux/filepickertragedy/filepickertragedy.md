@@ -1,7 +1,6 @@
 ---
   title: "The great Linux file pickers tragedy"
   tagline: "Spoiler: the moral behind this article is 'well yeah but no'"
-  loadCSSModules: ["code"]
   navigation:
     label: File pickers dilemma
     category: linux

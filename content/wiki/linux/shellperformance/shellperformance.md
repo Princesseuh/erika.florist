@@ -1,6 +1,5 @@
 ---
   title: "Performance tips and tricks for Fish Shell"
-  loadCSSModules: ["code"]
   navigation:
     label: Fish Shell Performance
     category: linux

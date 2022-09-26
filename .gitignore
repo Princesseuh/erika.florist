@@ -17,14 +17,11 @@ yarn-error.log*
 .DS_Store
 
 # Generated images (we'll cache those on Netlify)
-apps/erika.florist/static/assets/socials/*
-apps/erika.florist/static/assets/images/*
-apps/erika.florist/src/assets/placeholders/*
+static/assets/socials/*
+static/assets/images/*
+src/assets/placeholders/*
 
 apps/erika.florist/src/pages/test.astro
 
 # Local Netlify folder
 .netlify
-
-# Turborepo cache
-.turbo

@@ -40,7 +40,13 @@ function postProcessWikiItem(wikiItem: WikiItem, file: string): WikiItem {
 
   if (import.meta.env.PROD) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const info = gitInfo.find((info) => file.endsWith(info.file))!
+    const info = gitInfo.find((info) => file.endsWith(info.file))
+
+    if (!info) {
+      throw new Error(
+        `Couldn't find commit information for ${file}. Make sure to create a commit before building`,
+      )
+    }
 
     wikiItem.lastModified = new Date(info.date)
     wikiItem.lastModifiedCommitUrl = new URL(

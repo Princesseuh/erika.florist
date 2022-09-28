@@ -3,7 +3,7 @@ import type { WikiItemInstance } from "$data/shared"
 import { getWikiItemsByCategory, postProcessWikiItem, WikiItem } from "$data/wiki"
 import { wikiCategories, WikiCategory } from "$data/wikiCategories"
 
-const rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")
+const rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.mdx")
 const wikiItems = rawWikiItems.map((item) => ({
   ...item,
   frontmatter: postProcessWikiItem(item.frontmatter, item.file),

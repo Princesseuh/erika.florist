@@ -8,7 +8,7 @@ import ArticleLayout from "$layouts/ArticleLayout.astro"
 import { getSlugFromFile } from "$utils"
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const articles = await Astro.glob<Article>("/content/articles/**/*.md")
+  const articles = await Astro.glob<Article>("/content/articles/**/*.mdx")
   return articles.map((article) => {
     const augmentedFrontmatter = postProcessArticle(article.frontmatter, article.file)
 

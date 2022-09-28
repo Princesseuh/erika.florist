@@ -4,7 +4,7 @@ import type { GetStaticPaths, MarkdownInstance, Page } from "$data/shared"
 import ArticleListLayout from "$layouts/ArticleListLayout.astro"
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
-  let articles = await Astro.glob<Article>("/content/articles/**/*.md")
+  let articles = await Astro.glob<Article>("/content/articles/**/*.mdx")
   articles = articles
     .map((article) => ({
       ...article,

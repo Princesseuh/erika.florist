@@ -1,14 +1,12 @@
 import { defineConfig } from "astro/config"
 import tailwind from "@astrojs/tailwind"
 import AutoImport from "astro-auto-import"
+import mdx from "@astrojs/mdx"
 
 // https://astro.build/config
 export default defineConfig({
   publicDir: "./static",
   site: "https://erika.florist/",
-  legacy: {
-    astroFlavoredMarkdown: true,
-  },
   markdown: {
     syntaxHighlight: "shiki",
     shikiConfig: {
@@ -34,6 +32,7 @@ export default defineConfig({
         },
       ],
     }),
+    mdx(),
   ],
   vite: {
     optimizeDeps: {

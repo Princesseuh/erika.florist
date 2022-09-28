@@ -9,7 +9,7 @@ import { postProcessWikiItem } from "$data/wiki"
 import BaseLayout from "$layouts/BaseLayout.astro"
 import { readableDate } from "$utils"
 
-const rawArticles = await Astro.glob<Article>("/content/articles/**/*.md")
+const rawArticles = await Astro.glob<Article>("/content/articles/**/*.mdx")
 const articles = rawArticles
   .map((article) => ({
     ...article,
@@ -20,7 +20,7 @@ const articles = rawArticles
   })
   .slice(0, 3)
 
-const rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")
+const rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.mdx")
 const wikiItems = rawWikiItems
   .map((wikiItem) => ({
     ...wikiItem,
@@ -31,7 +31,7 @@ const wikiItems = rawWikiItems
   })
   .slice(0, 6)
 
-let rawFeaturedProjects = await Astro.glob<Project>("/content/projects/**/*.md")
+let rawFeaturedProjects = await Astro.glob<Project>("/content/projects/**/*.mdx")
 const featuredProjects = rawFeaturedProjects
   .filter((project) => project.frontmatter.featured)
   .map((project) => ({

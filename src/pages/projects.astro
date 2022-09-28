@@ -3,7 +3,7 @@ import { postProcessProject, Project, ProjectType } from "$data/projects"
 import type { MarkdownInstance } from "$data/shared"
 import BaseLayout from "$layouts/BaseLayout.astro"
 
-const rawProjects = await Astro.glob<Project>("/content/projects/**/*.md")
+const rawProjects = await Astro.glob<Project>("/content/projects/**/*.mdx")
 const projects = rawProjects.map((project) => ({
   ...project,
   frontmatter: postProcessProject(project.frontmatter, project.file),

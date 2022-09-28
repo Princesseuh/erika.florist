@@ -4,7 +4,7 @@ import { postProcessWikiItem, WikiItem } from "$data/wiki"
 import WikiLayout from "$layouts/WikiLayout.astro"
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const wikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.md")
+  const wikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.mdx")
   return wikiItems.map((wikiItem) => {
     const augmentedFrontmatter = postProcessWikiItem(wikiItem.frontmatter, wikiItem.file)
 

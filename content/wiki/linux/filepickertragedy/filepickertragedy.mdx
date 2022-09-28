@@ -11,9 +11,9 @@ File pickers on Linux are.. not good. Pretty much all of them have a few shortco
 But, first of all, what is a file picker? A file picker is the window that open whenever you press "Save As" or "Open" on most softwares. To try it out, press the following buttons (the save button saves the html of the current page, nothing harmful)
 
 <div class="flex justify-center gap-4 mb-4">
-  <input type="file" id="input">
-  <a href="#" target='_blank' download>
-    <input type="button" value="Save dialog" class="block">
+  <input type="file" id="input" />
+  <a href="#" target="_blank" download>
+    <input type="button" value="Save dialog" class="block" />
   </a>
 </div>
 
@@ -25,7 +25,11 @@ There's usually only minors differences between the two, oftentimes the only cha
 
 Right now, if you're using Gnome or any other DE that doesn't have its own file picker and try to save this page, you'll see something that looks like this:
 
-<Image src="gnomepicker.png" alt="The GNOME default filepicker" caption="Don't mind the double video folders, it's my fault" />
+<Image
+  src="gnomepicker.png"
+  alt="The GNOME default filepicker"
+  caption="Don't mind the double video folders, it's my fault"
+/>
 
 This is the default GTK file picker, all applications using GTK (which is a lot) use it. It works nicely but.. It's extremely impractical compared to its alternatives
 
@@ -50,13 +54,21 @@ Frankly, it's much much better than the GNOME one these days, first it has thumb
 
 However it's still has flaws, it cannot open URLs and doesn't really have a search feature outside of those, it has all you would expect from a file picker
 
-<Image src="kdepicker.png" alt="The KDE default filepicker" caption="Thumbnails only appear when you are a bit more zoomed but I swear, they definitely exists" />
+<Image
+  src="kdepicker.png"
+  alt="The KDE default filepicker"
+  caption="Thumbnails only appear when you are a bit more zoomed but I swear, they definitely exists"
+/>
 
 So it has thumbnails and bookmarks, the "url" bar works like the one on Windows where it works both as navigation and a typing area and it even has syntax coloring in his text preview! It's definitely much better than the GNOME one so, what's the catch?
 
 Well, it's KDE. Unless you're already using KDE softwares, you'll have to install a lot of dependencies for it (kdialog doesn't suffice on a non-KDE setup, see the Arch install guide below). KDE also has the tendency to absolutely rampage through your `.config` folder, creating many config files for softwares you didn't even know the existence of. It's unfortunately really hard to cleanly get specific parts of KDE due to its design
 
-<Image src="kdeexperience.png" alt="Trojan horse meme where the horse is the KDE file picker and the soldiers inside are 'thousands of dependencies'" caption="Stop baiting me with the pretty UI KDE! I know what you're up to!" />
+<Image
+  src="kdeexperience.png"
+  alt="Trojan horse meme where the horse is the KDE file picker and the soldiers inside are 'thousands of dependencies'"
+  caption="Stop baiting me with the pretty UI KDE! I know what you're up to!"
+/>
 
 Additionally, some softwares just.. don't support it. Chrome and Firefox both does (Chrome does natively, Firefox does through `xdg-desktop-portal`) but for instance, Electron apps using a version older than 14 won't use it. Which, unfortunately for computing, means that even on a full KDE setup, you might eventually encounter the GTK file dialog at some point
 
@@ -70,7 +82,11 @@ See [Installing the KDE file picker on Arch Linux](/wiki/linux/kdearchlinux) for
 
 Deepin and Wayland are not the biggest friends so I was not able to install this on my normal setup, in general integrating the Deepin file picker in your system is a bit troublesome. Deepin programs tend to not work too well outside of a full Deepin setup. Additionally, much like the KDE one, it doesn't come alone (damn trojan horse!) and isn't well supported
 
-<Image src="deepinpicker.png" alt="Deepin default file picker, it's pretty" caption="It's pretty, it has thumbnails and it comes with a dark theme too!" />
+<Image
+  src="deepinpicker.png"
+  alt="Deepin default file picker, it's pretty"
+  caption="It's pretty, it has thumbnails and it comes with a dark theme too!"
+/>
 
 It's possible to integrate it in Chromium using the following value for `XDG_CURRENT_DESKTOP`: `KDE:deepin`. The reason it works is because Chromium checks if any of the values (separated by colons) is equal to KDE and if so, it uses kdialog. Just putting KDE won't work however because kdialog needs `XDG_CURRENT_DESKTOP` to be set to `deepin` in order to get the proper dialog
 
@@ -82,7 +98,11 @@ In general, Deepin unfortunately tends to be not so stable, have performance iss
 
 Despite Elementary being known for its beautiful apps, the Pantheon file picker is essentially the base GTK one with a few minors changes, unfortunately it seems to be forked from an older version and thus lacks the ability to complete paths in the input field
 
-<Image src="pantheonpicker.png" alt="Pantheon's picker, same as GNOME more or less" caption="Yeah, we've seen this before" />
+<Image
+  src="pantheonpicker.png"
+  alt="Pantheon's picker, same as GNOME more or less"
+  caption="Yeah, we've seen this before"
+/>
 
 It has the buttons at the top, which is probably a more efficient usage of space at least. Also, the search function isn't hidden behind a keybind/typing on this one, that's for the better really. Outside of that, there's not much to say
 

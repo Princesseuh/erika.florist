@@ -1,7 +1,7 @@
 ---
 import type { Article } from "$data/articles"
 
-const articles = await Astro.glob<Article>("/content/articles/**/*.md")
+const articles = await Astro.glob<Article>("/content/articles/**/*.mdx")
 const tags: Array<[string, number]> = [
   ...articles
     .flatMap((article) => [...article.frontmatter.tags])

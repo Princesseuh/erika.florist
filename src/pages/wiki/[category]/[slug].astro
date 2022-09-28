@@ -1,5 +1,5 @@
 ---
-import type { GetStaticPaths, MarkdownInstance } from "$data/shared"
+import type { GetStaticPaths, MDXInstance } from "$data/shared"
 import { postProcessWikiItem, WikiItem } from "$data/wiki"
 import WikiLayout from "$layouts/WikiLayout.astro"
 
@@ -19,7 +19,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export interface Props {
-  wikiItem: MarkdownInstance<WikiItem>
+  wikiItem: MDXInstance<WikiItem>
 }
 
 const { wikiItem } = Astro.props

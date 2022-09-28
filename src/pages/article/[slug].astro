@@ -3,7 +3,7 @@
 // as the paginated article list is or they'll conflict, so this means our articles URL are `/article/${slug}` instead
 // of `/articles/${slug}` (with a s), once that issue is fixed, we'll be able to put it back in the right place
 import { Article, postProcessArticle } from "$data/articles"
-import type { GetStaticPaths, MarkdownInstance } from "$data/shared"
+import type { GetStaticPaths, MDXInstance } from "$data/shared"
 import ArticleLayout from "$layouts/ArticleLayout.astro"
 import { getSlugFromFile } from "$utils"
 
@@ -20,7 +20,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export interface Props {
-  article: MarkdownInstance<Article>
+  article: MDXInstance<Article>
 }
 
 const { article } = Astro.props

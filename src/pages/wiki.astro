@@ -1,13 +1,16 @@
 ---
 import WikiLayout from "$layouts/WikiLayout.astro"
 import { postProcessWikiItem, WikiItem } from "$data/wiki"
-import type { MarkdownInstance } from "$data/shared"
+import type { MDXInstance } from "astro"
 
-const rawWikiIndex = (await import("/content/wiki/index.md")) as MarkdownInstance<WikiItem>
+const rawWikiIndex = await import("/content/wiki/index.mdx")
 
-const wikiIndex: MarkdownInstance<WikiItem> = {
+const wikiIndex: MDXInstance<WikiItem> = {
   ...rawWikiIndex,
-  frontmatter: postProcessWikiItem(rawWikiIndex.frontmatter, rawWikiIndex.file),
+  frontmatter: postProcessWikiItem(rawWikiIndex.frontmatter as WikiItem, rawWikiIndex.file),
+  // HACK: Seems like the types are different between an Astro.glob import and a direct import?
+  getHeaders: () => undefined,
+  default: () => undefined as never,
 }
 ---
 

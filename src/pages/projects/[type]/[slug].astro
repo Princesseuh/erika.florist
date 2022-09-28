@@ -1,6 +1,6 @@
 ---
 import { postProcessProject, Project } from "$data/projects"
-import type { GetStaticPaths, MarkdownInstance } from "$data/shared"
+import type { GetStaticPaths, MDXInstance } from "$data/shared"
 import ProjectLayout from "$layouts/ProjectLayout.astro"
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -21,7 +21,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export interface Props {
-  project: MarkdownInstance<Project>
+  project: MDXInstance<Project>
 }
 
 const { project } = Astro.props

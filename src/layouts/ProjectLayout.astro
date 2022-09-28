@@ -1,11 +1,11 @@
 ---
 import ContentHeader from "$components/shared/ContentHeader.astro"
 import type { Project } from "$data/projects"
-import type { MarkdownInstance } from "$data/shared"
+import type { MDXInstance } from "$data/shared"
 import BaseLayout from "./BaseLayout.astro"
 
 export interface Props {
-  project: MarkdownInstance<Project>
+  project: MDXInstance<Project>
 }
 
 const { project } = Astro.props

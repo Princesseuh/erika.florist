@@ -1,6 +1,6 @@
 // Trying to import those type in a .astro file creates a weird error so we re-export it from here
 import type { MarkdownHeading } from "@astrojs/markdown-remark"
-import type { GetStaticPaths, MarkdownInstance, Page } from "astro"
+import type { GetStaticPaths, MDXInstance, Page } from "astro"
 import type { WikiItem } from "./wiki"
 
 interface BaseFrontmatter {
@@ -9,15 +9,15 @@ interface BaseFrontmatter {
   url: URL
 }
 
-// HACK: Using MarkdownInstance<WikiItem> directly inside the template leads to an error due to an issue in Astro
+// HACK: Using MDXInstance<WikiItem> directly inside the template leads to an error due to an issue in Astro
 // See: https://github.com/withastro/astro/issues/3793
-type WikiItemInstance = MarkdownInstance<WikiItem>
+type WikiItemInstance = MDXInstance<WikiItem>
 
 export type {
   BaseFrontmatter,
   Page,
   GetStaticPaths,
   WikiItemInstance,
-  MarkdownInstance,
+  MDXInstance,
   MarkdownHeading,
 }

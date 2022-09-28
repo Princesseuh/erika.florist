@@ -2,10 +2,10 @@
 import BaseLayout from "$layouts/BaseLayout.astro"
 import ContentHeader from "$components/shared/ContentHeader.astro"
 import type { Article } from "$data/articles"
-import type { MarkdownInstance } from "$data/shared"
+import type { MDXInstance } from "$data/shared"
 
 export interface Props {
-  article: MarkdownInstance<Article>
+  article: MDXInstance<Article>
 }
 
 const { article } = Astro.props

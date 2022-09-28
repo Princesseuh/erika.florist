@@ -1,5 +1,5 @@
 import { getBaseSiteURL, getSlugFromFile } from "$utils"
-import type { MarkdownInstance } from "astro"
+import type { MDXInstance } from "astro"
 import { execSync } from "child_process"
 import type { BaseFrontmatter } from "./shared"
 
@@ -68,16 +68,16 @@ function postProcessWikiItem(wikiItem: WikiItem, file: string): WikiItem {
 }
 
 function getWikiItemsByCategory(
-  wikiItems: MarkdownInstance<WikiItem>[],
+  wikiItems: MDXInstance<WikiItem>[],
   key: string,
-): MarkdownInstance<WikiItem>[] {
+): MDXInstance<WikiItem>[] {
   return wikiItems
-    .filter((wikiItem: MarkdownInstance<WikiItem>) => {
+    .filter((wikiItem: MDXInstance<WikiItem>) => {
       return (
         wikiItem.frontmatter.navigation.category === key && !wikiItem.frontmatter.navigation.hidden
       )
     })
-    .sort((a: MarkdownInstance<WikiItem>, b: MarkdownInstance<WikiItem>) => {
+    .sort((a: MDXInstance<WikiItem>, b: MDXInstance<WikiItem>) => {
       return a.frontmatter.navigation.order - b.frontmatter.navigation.order
     })
 }

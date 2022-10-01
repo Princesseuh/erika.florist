@@ -25,7 +25,7 @@ if (isWikiPage) {
   id="mobile-menu"
   class="fixed top-16 w-0 h-[calc(100%-4rem)] bg-baltic-sea overflow-y-auto overflow-x-hidden whitespace-nowrap"
 >
-  <div class="p-3 flex flex-col gap-4">
+  <nav class="p-3 flex flex-col gap-4">
     {/* Global header menu */}
     {
       globalMenu.map((item) => (
@@ -34,12 +34,12 @@ if (isWikiPage) {
         </a>
       ))
     }
-  </div>
+  </nav>
 
   {/* Wiki-exclusive menu */}
   {
     isWikiPage && (
-      <div class="flex flex-col gap-3 p-3">
+      <nav class="flex flex-col gap-3 p-3">
         {wikiCategories.map((category: WikiCategory) => (
           <>
             <span class="text-sugar-cane block font-bold">{category.title}</span>
@@ -53,7 +53,7 @@ if (isWikiPage) {
             ))}
           </>
         ))}
-      </div>
+      </nav>
     )
   }
 

@@ -1,14 +1,14 @@
 ---
-import ContentHeader from "$components/shared/ContentHeader.astro"
-import type { Project } from "$data/projects"
-import type { MDXInstance } from "$data/shared"
-import BaseLayout from "./BaseLayout.astro"
+import ContentHeader from "$components/shared/ContentHeader.astro";
+import type { Project } from "$data/projects";
+import type { MDXInstance } from "$data/shared";
+import BaseLayout from "./BaseLayout.astro";
 
 export interface Props {
-  project: MDXInstance<Project>
+  project: MDXInstance<Project>;
 }
 
-const { project } = Astro.props
+const { project } = Astro.props;
 ---
 
 <BaseLayout title={project.frontmatter.title} description={project.frontmatter.tagline}>

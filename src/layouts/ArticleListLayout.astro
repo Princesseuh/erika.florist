@@ -1,16 +1,16 @@
 ---
-import BaseLayout from "$layouts/BaseLayout.astro"
-import ArticlePreview from "$components/shared/ArticlePreview.astro"
-import ArticleListAside from "$components/articleList/ArticleListAside.astro"
-import type { Article } from "$data/articles"
-import type { MDXInstance, Page } from "$data/shared"
+import BaseLayout from "$layouts/BaseLayout.astro";
+import ArticlePreview from "$components/shared/ArticlePreview.astro";
+import ArticleListAside from "$components/articleList/ArticleListAside.astro";
+import type { Article } from "$data/articles";
+import type { MDXInstance, Page } from "$data/shared";
 
 export interface Props {
-  page: Page<MDXInstance<Article>>
-  title: string
+  page: Page<MDXInstance<Article>>;
+  title: string;
 }
 
-const { page, title } = Astro.props
+const { page, title } = Astro.props;
 ---
 
 <BaseLayout title={title}>

@@ -1,9 +1,9 @@
 ---
-import WikiLayout from "$layouts/WikiLayout.astro"
-import { postProcessWikiItem, WikiItem } from "$data/wiki"
-import type { MDXInstance } from "astro"
+import WikiLayout from "$layouts/WikiLayout.astro";
+import { postProcessWikiItem, WikiItem } from "$data/wiki";
+import type { MDXInstance } from "astro";
 
-const rawWikiIndex = await import("/content/wiki/index.mdx")
+const rawWikiIndex = await import("/content/wiki/index.mdx");
 
 const wikiIndex: MDXInstance<WikiItem> = {
   ...rawWikiIndex,
@@ -11,7 +11,7 @@ const wikiIndex: MDXInstance<WikiItem> = {
   // HACK: Seems like the types are different between an Astro.glob import and a direct import?
   getHeaders: () => undefined,
   default: () => undefined as never,
-}
+};
 ---
 
 <WikiLayout wikiItem={wikiIndex} />

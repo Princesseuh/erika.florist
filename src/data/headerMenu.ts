@@ -1,1 +1,1 @@
-export const headerMenu = ["Projects", "Articles", "Wiki"] as const
+export const headerMenu = ["Projects", "Articles", "Wiki"] as const;

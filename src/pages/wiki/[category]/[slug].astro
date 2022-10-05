@@ -1,12 +1,12 @@
 ---
-import type { GetStaticPaths, MDXInstance } from "$data/shared"
-import { postProcessWikiItem, WikiItem } from "$data/wiki"
-import WikiLayout from "$layouts/WikiLayout.astro"
+import type { GetStaticPaths, MDXInstance } from "$data/shared";
+import { postProcessWikiItem, WikiItem } from "$data/wiki";
+import WikiLayout from "$layouts/WikiLayout.astro";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const wikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.mdx")
+  const wikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.mdx");
   return wikiItems.map((wikiItem) => {
-    const augmentedFrontmatter = postProcessWikiItem(wikiItem.frontmatter, wikiItem.file)
+    const augmentedFrontmatter = postProcessWikiItem(wikiItem.frontmatter, wikiItem.file);
 
     return {
       params: {
@@ -14,15 +14,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
         slug: augmentedFrontmatter.slug,
       },
       props: { wikiItem },
-    }
-  })
-}
+    };
+  });
+};
 
 export interface Props {
-  wikiItem: MDXInstance<WikiItem>
+  wikiItem: MDXInstance<WikiItem>;
 }
 
-const { wikiItem } = Astro.props
+const { wikiItem } = Astro.props;
 ---
 
 <WikiLayout wikiItem={wikiItem} />

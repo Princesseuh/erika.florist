@@ -1,14 +1,14 @@
 ---
-import { postProcessProject, Project } from "$data/projects"
-import type { GetStaticPaths, MDXInstance } from "$data/shared"
-import ProjectLayout from "$layouts/ProjectLayout.astro"
+import { postProcessProject, Project } from "$data/projects";
+import type { GetStaticPaths, MDXInstance } from "$data/shared";
+import ProjectLayout from "$layouts/ProjectLayout.astro";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const projects = await Astro.glob<Project>("/content/projects/**/*.mdx")
+  const projects = await Astro.glob<Project>("/content/projects/**/*.mdx");
   return projects
     .filter((project) => project.frontmatter.external_url === undefined)
     .map((project) => {
-      const augmentedFrontmatter = postProcessProject(project.frontmatter, project.file)
+      const augmentedFrontmatter = postProcessProject(project.frontmatter, project.file);
 
       return {
         params: {
@@ -16,15 +16,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
           slug: augmentedFrontmatter.slug,
         },
         props: { project },
-      }
-    })
-}
+      };
+    });
+};
 
 export interface Props {
-  project: MDXInstance<Project>
+  project: MDXInstance<Project>;
 }
 
-const { project } = Astro.props
+const { project } = Astro.props;
 ---
 
 <ProjectLayout project={project} />

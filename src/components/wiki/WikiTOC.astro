@@ -1,13 +1,13 @@
 ---
-import type { MarkdownHeading } from "$data/shared"
+import type { MarkdownHeading } from "$data/shared";
 
 export interface Props {
-  headers: MarkdownHeading[]
-  maxDepth: number
+  headers: MarkdownHeading[];
+  maxDepth: number;
 }
 
-const { headers, maxDepth } = Astro.props
-const filteredHeaders = headers.filter((header) => header.depth > 1 && header.depth < maxDepth + 1)
+const { headers, maxDepth } = Astro.props;
+const filteredHeaders = headers.filter((header) => header.depth > 1 && header.depth < maxDepth + 1);
 ---
 
 <span class="font-semibold mb-2">On this page</span>

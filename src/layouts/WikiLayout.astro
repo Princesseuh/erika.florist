@@ -1,18 +1,18 @@
 ---
-import BaseLayout from "$layouts/BaseLayout.astro"
-import WikiNavigation from "$components/wiki/WikiNavigation.astro"
-import ContentHeader from "$components/shared/ContentHeader.astro"
-import WikiTOC from "$components/wiki/WikiTOC.astro"
-import { readableDate } from "$utils"
-import type { WikiItem } from "$data/wiki"
-import type { MDXInstance } from "astro"
+import BaseLayout from "$layouts/BaseLayout.astro";
+import WikiNavigation from "$components/wiki/WikiNavigation.astro";
+import ContentHeader from "$components/shared/ContentHeader.astro";
+import WikiTOC from "$components/wiki/WikiTOC.astro";
+import { readableDate } from "$utils";
+import type { WikiItem } from "$data/wiki";
+import type { MDXInstance } from "astro";
 
 export interface Props {
-  wikiItem: MDXInstance<WikiItem>
+  wikiItem: MDXInstance<WikiItem>;
 }
 
-const { wikiItem } = Astro.props
-const headings = wikiItem.getHeadings()
+const { wikiItem } = Astro.props;
+const headings = wikiItem.getHeadings();
 ---
 
 <BaseLayout title={wikiItem.frontmatter.title} description={wikiItem.frontmatter.tagline}>

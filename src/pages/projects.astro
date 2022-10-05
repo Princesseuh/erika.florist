@@ -1,33 +1,33 @@
 ---
-import { postProcessProject, Project, ProjectType } from "$data/projects"
-import type { MDXInstance } from "$data/shared"
-import BaseLayout from "$layouts/BaseLayout.astro"
+import { postProcessProject, Project, ProjectType } from "$data/projects";
+import type { MDXInstance } from "$data/shared";
+import BaseLayout from "$layouts/BaseLayout.astro";
 
-const rawProjects = await Astro.glob<Project>("/content/projects/**/*.mdx")
+const rawProjects = await Astro.glob<Project>("/content/projects/**/*.mdx");
 const projects = rawProjects.map((project) => ({
   ...project,
   frontmatter: postProcessProject(project.frontmatter, project.file),
-}))
+}));
 
 // Create an object with sub-objects corresponding to the different types of projects that exist
 // The cool part about this: it's 100% automated based on types and content, we'll practically never have to touch this
 type ProjectList = {
-  [projectType in ProjectType]?: MDXInstance<Project>[]
-}
+  [projectType in ProjectType]?: MDXInstance<Project>[];
+};
 
-const projectsPerType: ProjectList = {}
+const projectsPerType: ProjectList = {};
 Object.values(ProjectType).forEach((projectType) => {
   projectsPerType[projectType] = projects.filter(
     (project) => project.frontmatter.type === projectType,
-  )
-})
+  );
+});
 
 // Utils
 const readableTitles = {
   game: "Games",
   website: "Websites",
   software: "Softwares and libraries",
-} as const
+} as const;
 ---
 
 <BaseLayout title="Projects">

@@ -1,18 +1,18 @@
 ---
-import Header from "$components/layout/Header.astro"
-import MobileMenu from "$components/layout/MobileMenu.astro"
-import Socials from "$components/layout/Socials.astro"
-import { getBaseSiteURL } from "$utils"
-import { Sprite } from "astro-icon"
-import "src/assets/style/prin.css"
+import Header from "$components/layout/Header.astro";
+import MobileMenu from "$components/layout/MobileMenu.astro";
+import Socials from "$components/layout/Socials.astro";
+import { getBaseSiteURL } from "$utils";
+import { Sprite } from "astro-icon";
+import "src/assets/style/prin.css";
 
 export interface Props {
-  title?: string
-  description?: string | undefined
+  title?: string;
+  description?: string | undefined;
 }
 
-const { title, description } = Astro.props
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const { title, description } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <html lang="en">
@@ -64,7 +64,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <meta property="og:url" content={canonicalURL} />
 
     <script>
-      import "../assets/scripts/main.ts"
+      import "../assets/scripts/main.ts";
     </script>
   </head>
   <body>

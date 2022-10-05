@@ -1,25 +1,25 @@
-import type { BaseFrontmatter } from "./shared"
-import { basename, dirname } from "path"
-import { getBaseSiteURL, getSlugFromFile } from "$utils"
+import type { BaseFrontmatter } from "./shared";
+import { basename, dirname } from "path";
+import { getBaseSiteURL, getSlugFromFile } from "$utils";
 
-import { generateImage, ImageFormat } from "astro-eleventy-img"
+import { generateImage, ImageFormat } from "astro-eleventy-img";
 
 interface Project extends BaseFrontmatter {
-  type: ProjectType
-  title: string
-  tagline: string
-  startDate: Date
-  endDate?: Date
+  type: ProjectType;
+  title: string;
+  tagline: string;
+  startDate: Date;
+  endDate?: Date;
   assets: {
-    logo?: URL
-    indexCover?: string
-    miniLogo?: string
-  }
-  indexCoverAlt?: string
-  miniLogoAlt?: string
-  githubRepo?: URL
-  featured: boolean
-  external_url?: string
+    logo?: URL;
+    indexCover?: string;
+    miniLogo?: string;
+  };
+  indexCoverAlt?: string;
+  miniLogoAlt?: string;
+  githubRepo?: URL;
+  featured: boolean;
+  external_url?: string;
 }
 
 enum ProjectType {
@@ -29,16 +29,16 @@ enum ProjectType {
 }
 
 function postProcessProject(project: Project, file: string): Project {
-  project.slug = getSlugFromFile(file)
-  project.type = getProjectTypeFromURL(file)
+  project.slug = getSlugFromFile(file);
+  project.type = getProjectTypeFromURL(file);
 
-  const projectBaseDir = `/projects/${project.type}s/${project.slug}/`
+  const projectBaseDir = `/projects/${project.type}s/${project.slug}/`;
   project.url = project.external_url
     ? new URL(project.external_url)
-    : new URL(projectBaseDir, getBaseSiteURL())
+    : new URL(projectBaseDir, getBaseSiteURL());
 
   // Assets
-  project.assets = {}
+  project.assets = {};
 
   if (project.featured) {
     const indexCover: Record<string, Array<ImageFormat>> = generateImage(
@@ -48,7 +48,7 @@ function postProcessProject(project: Project, file: string): Project {
         widths: [380, 600],
         formats: ["avif", "webp", "jpeg"],
       },
-    )
+    );
 
     project.assets.indexCover = `<picture>
     ${Object.values(indexCover)
@@ -66,7 +66,7 @@ function postProcessProject(project: Project, file: string): Project {
         height="180"
         alt="${project.indexCoverAlt}"
         decoding="async">
-    </picture>`
+    </picture>`;
   }
 
   const miniLogo: Record<string, Array<ImageFormat>> = generateImage(
@@ -76,7 +76,7 @@ function postProcessProject(project: Project, file: string): Project {
       widths: [128, 96],
       formats: ["avif", "webp", "png"], // We need transparency on those so can't use jpegs
     },
-  )
+  );
 
   project.assets.miniLogo = `<picture>
     ${Object.values(miniLogo)
@@ -95,23 +95,23 @@ function postProcessProject(project: Project, file: string): Project {
         alt="${project.miniLogoAlt}"
         loading="lazy"
         decoding="async">
-    </picture>`
+    </picture>`;
 
   // HACK: Workaround an Astro bug regarding dates in frontmatter, see data/articles.ts for more info
   if (typeof project.startDate === "string") {
-    project.startDate = new Date(project.startDate)
+    project.startDate = new Date(project.startDate);
   }
 
   if (typeof project.endDate === "string") {
-    project.endDate = new Date(project.endDate)
+    project.endDate = new Date(project.endDate);
   }
 
-  return project
+  return project;
 }
 
 function getProjectTypeFromURL(path: string): ProjectType {
-  return basename(dirname(path)).slice(0, -1) as ProjectType
+  return basename(dirname(path)).slice(0, -1) as ProjectType;
 }
 
-export { ProjectType, postProcessProject }
-export type { Project }
+export { ProjectType, postProcessProject };
+export type { Project };

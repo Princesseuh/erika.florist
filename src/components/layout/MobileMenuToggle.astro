@@ -1,5 +1,5 @@
 ---
-import { Sprite } from "astro-icon"
+import { Sprite } from "astro-icon";
 ---
 
 <div id="mobile-menu-toggle" class="flex items-center sm:hidden">
@@ -7,15 +7,15 @@ import { Sprite } from "astro-icon"
 </div>
 
 <script>
-  const mobileMenuToggle = document.getElementById("mobile-menu-toggle")
-  const mobileMenu = document.getElementById("mobile-menu")
-  const body = document.body
+  const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const body = document.body;
 
   if (mobileMenu && mobileMenuToggle) {
     mobileMenuToggle.addEventListener("click", () => {
-      mobileMenu.toggleAttribute("inert")
-      mobileMenu.classList.toggle("w-full")
-      body.classList.toggle("overflow-hidden")
-    })
+      mobileMenu.toggleAttribute("inert");
+      mobileMenu.classList.toggle("w-full");
+      body.classList.toggle("overflow-hidden");
+    });
   }
 </script>

@@ -1,6 +1,6 @@
 export interface WikiCategory {
-  key: string
-  title: string
+  key: string;
+  title: string;
 }
 
 export const wikiCategories: WikiCategory[] = [
@@ -24,10 +24,10 @@ export const wikiCategories: WikiCategory[] = [
     key: "misc",
     title: "Misc",
   },
-]
+];
 
 export function getCategory(key: string): WikiCategory | undefined {
   return wikiCategories.find((category) => {
-    category.key === key
-  })
+    category.key === key;
+  });
 }

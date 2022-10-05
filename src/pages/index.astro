@@ -1,44 +1,44 @@
 ---
-import ArticlePreview from "$components/shared/ArticlePreview.astro"
-import type { Article } from "$data/articles"
-import { postProcessArticle } from "$data/articles"
-import type { Project } from "$data/projects"
-import { postProcessProject } from "$data/projects"
-import type { WikiItem } from "$data/wiki"
-import { postProcessWikiItem } from "$data/wiki"
-import BaseLayout from "$layouts/BaseLayout.astro"
-import { readableDate } from "$utils"
+import ArticlePreview from "$components/shared/ArticlePreview.astro";
+import type { Article } from "$data/articles";
+import { postProcessArticle } from "$data/articles";
+import type { Project } from "$data/projects";
+import { postProcessProject } from "$data/projects";
+import type { WikiItem } from "$data/wiki";
+import { postProcessWikiItem } from "$data/wiki";
+import BaseLayout from "$layouts/BaseLayout.astro";
+import { readableDate } from "$utils";
 
-const rawArticles = await Astro.glob<Article>("/content/articles/**/*.mdx")
+const rawArticles = await Astro.glob<Article>("/content/articles/**/*.mdx");
 const articles = rawArticles
   .map((article) => ({
     ...article,
     frontmatter: postProcessArticle(article.frontmatter, article.file),
   }))
   .sort((a, b) => {
-    return b.frontmatter.date.getTime() - a.frontmatter.date.getTime()
+    return b.frontmatter.date.getTime() - a.frontmatter.date.getTime();
   })
-  .slice(0, 3)
+  .slice(0, 3);
 
-const rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.mdx")
+const rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.mdx");
 const wikiItems = rawWikiItems
   .map((wikiItem) => ({
     ...wikiItem,
     frontmatter: postProcessWikiItem(wikiItem.frontmatter, wikiItem.file),
   }))
   .sort((a, b) => {
-    return b.frontmatter.lastModified.getTime() - a.frontmatter.lastModified.getTime()
+    return b.frontmatter.lastModified.getTime() - a.frontmatter.lastModified.getTime();
   })
-  .slice(0, 6)
+  .slice(0, 6);
 
-let rawFeaturedProjects = await Astro.glob<Project>("/content/projects/**/*.mdx")
+let rawFeaturedProjects = await Astro.glob<Project>("/content/projects/**/*.mdx");
 const featuredProjects = rawFeaturedProjects
   .filter((project) => project.frontmatter.featured)
   .map((project) => ({
     ...project,
     frontmatter: postProcessProject(project.frontmatter, project.file),
   }))
-  .slice(0, 3)
+  .slice(0, 3);
 ---
 
 <BaseLayout>

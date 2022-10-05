@@ -1,22 +1,22 @@
 ---
-import { headerMenu as globalMenu } from "$data/headerMenu"
-import type { MDXInstance, WikiItemInstance } from "$data/shared"
-import { getWikiItemsByCategory, postProcessWikiItem, WikiItem } from "$data/wiki"
-import { wikiCategories, WikiCategory } from "$data/wikiCategories"
-import Socials from "./Socials.astro"
+import { headerMenu as globalMenu } from "$data/headerMenu";
+import type { MDXInstance, WikiItemInstance } from "$data/shared";
+import { getWikiItemsByCategory, postProcessWikiItem, WikiItem } from "$data/wiki";
+import { wikiCategories, WikiCategory } from "$data/wikiCategories";
+import Socials from "./Socials.astro";
 
-let rawWikiItems: MDXInstance<WikiItem>[] = []
-let wikiItems: MDXInstance<WikiItem>[] = []
+let rawWikiItems: MDXInstance<WikiItem>[] = [];
+let wikiItems: MDXInstance<WikiItem>[] = [];
 
-const url = new URL(Astro.request.url)
-const isWikiPage = url.pathname.startsWith("/wiki")
+const url = new URL(Astro.request.url);
+const isWikiPage = url.pathname.startsWith("/wiki");
 
 if (isWikiPage) {
-  rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.mdx")
+  rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.mdx");
   wikiItems = rawWikiItems.map((item) => ({
     ...item,
     frontmatter: postProcessWikiItem(item.frontmatter, item.file),
-  }))
+  }));
 }
 ---
 

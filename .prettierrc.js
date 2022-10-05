@@ -3,7 +3,7 @@ module.exports = {
   printWidth: 100,
   tabWidth: 2,
   trailingComma: "all",
-  semi: false,
+  semi: true,
   plugins: ["./node_modules/prettier-plugin-astro"],
   astroAllowShorthand: false,
   overrides: [
@@ -14,4 +14,4 @@ module.exports = {
       },
     },
   ],
-}
+};

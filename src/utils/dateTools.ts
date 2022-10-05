@@ -8,8 +8,8 @@ export function readableDate(
   },
 ): string {
   if (date === undefined) {
-    return "Invalid Date"
+    return "Invalid Date";
   }
 
-  return date.toLocaleDateString("en-US", options)
+  return date.toLocaleDateString("en-US", options);
 }

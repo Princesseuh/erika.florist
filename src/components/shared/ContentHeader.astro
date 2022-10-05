@@ -1,19 +1,19 @@
 ---
-import type { Article } from "$data/articles"
-import type { Project } from "$data/projects"
-import type { WikiItem } from "$data/wiki"
-import { readableDate } from "$utils"
+import type { Article } from "$data/articles";
+import type { Project } from "$data/projects";
+import type { WikiItem } from "$data/wiki";
+import { readableDate } from "$utils";
 
 export interface Props {
-  item: Article | WikiItem | Project
-  includeTags: boolean
+  item: Article | WikiItem | Project;
+  includeTags: boolean;
 }
 
 const isArticle = (item: Article | WikiItem | Project): item is Article => {
-  return (item as Article).date !== undefined || (item as Article).tags !== undefined
-}
+  return (item as Article).date !== undefined || (item as Article).tags !== undefined;
+};
 
-const { item, includeTags } = Astro.props
+const { item, includeTags } = Astro.props;
 ---
 
 <header class="mb-4 mt-4">

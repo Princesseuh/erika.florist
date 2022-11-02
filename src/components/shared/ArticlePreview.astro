@@ -19,7 +19,11 @@ const { article } = Astro.props;
     ·
     {
       article.tags
-        .map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)
+        .map((tag) => (
+          <a href={"/articles/tags/" + tag + "/"} class="underline">
+            {tag}
+          </a>
+        ))
         .reduce((prev: string, curr: string) => (prev === null ? [curr] : [prev, ", ", curr]))
     }
   </div>

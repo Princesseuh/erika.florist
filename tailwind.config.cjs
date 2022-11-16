@@ -132,6 +132,11 @@ module.exports = {
           display: "flex",
           alignItems: "center",
         },
+        ".social-mastodon": {
+          "&:hover": {
+            color: "#6364FF",
+          },
+        },
         ".social-twitter": {
           "&:hover": {
             color: "#1DA1F2",

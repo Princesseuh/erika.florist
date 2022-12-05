@@ -31,7 +31,7 @@ const readableTitles = {
 ---
 
 <BaseLayout title="Projects">
-  <article class="w-index mx-auto mt-4 sm:mt-6">
+  <article class="mx-auto mt-4 w-index sm:mt-6">
     <h2>Projects</h2>
 
     <p>
@@ -63,7 +63,7 @@ const readableTitles = {
                   }
                   class={
                     project.frontmatter.featured
-                      ? "project-box project-featured max-w-full sm:max-w-[50%]"
+                      ? "project-featured project-box max-w-full sm:max-w-[50%]"
                       : "project-box max-w-full sm:max-w-[50%]"
                   }
                 >
@@ -86,7 +86,7 @@ const readableTitles = {
                   <Fragment set:html={project.frontmatter.assets.miniLogo} />
                   <div>
                     <h4 class="m-0 block font-bold">{project.frontmatter.title}</h4>
-                    <span class="text-creative-work text-sm">{project.frontmatter.tagline}</span>
+                    <span class="text-sm text-creative-work">{project.frontmatter.tagline}</span>
                   </div>
                 </a>
               ))}

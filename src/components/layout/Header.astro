@@ -5,14 +5,14 @@ import Socials from "$components/layout/Socials.astro";
 import { headerMenu as menu } from "$data/headerMenu";
 ---
 
-<header class="px-4 xl:px-0 py-[.8rem] flex justify-center">
-  <section class="w-header flex justify-between">
+<header class="flex justify-center px-4 py-[.8rem] xl:px-0">
+  <section class="flex w-header justify-between">
     <div class="flex items-center">
       <h1 class="m-0 inline-block">
         <a class="header-link" href="/">Erika 🌺</a>
       </h1>
 
-      <nav class="hidden ml-2 sm:inline-block">
+      <nav class="ml-2 hidden sm:inline-block">
         {
           menu.map((item) => (
             <a class="header-link" href={`/${item.toLowerCase()}/`}>

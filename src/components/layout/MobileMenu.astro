@@ -23,13 +23,13 @@ if (isWikiPage) {
 <div
   inert
   id="mobile-menu"
-  class="fixed top-16 w-0 h-[calc(100%-4rem)] bg-baltic-sea overflow-y-auto overflow-x-hidden whitespace-nowrap"
+  class="fixed top-16 h-[calc(100%-4rem)] w-0 overflow-y-auto overflow-x-hidden whitespace-nowrap bg-baltic-sea"
 >
-  <nav class="p-3 flex flex-col gap-4" aria-label="Mobile menu">
+  <nav class="flex flex-col gap-4 p-3" aria-label="Mobile menu">
     {/* Global header menu */}
     {
       globalMenu.map((item) => (
-        <a class="header-link bg-fin-lanka mr-0 p-3 text-xl" href={`/${item.toLowerCase()}/`}>
+        <a class="header-link mr-0 bg-fin-lanka p-3 text-xl" href={`/${item.toLowerCase()}/`}>
           {item}
         </a>
       ))
@@ -42,10 +42,10 @@ if (isWikiPage) {
       <nav class="flex flex-col gap-3 p-3">
         {wikiCategories.map((category: WikiCategory) => (
           <>
-            <span class="text-sugar-cane block font-bold">{category.title}</span>
+            <span class="block font-bold text-sugar-cane">{category.title}</span>
             {getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItemInstance) => (
               <a
-                class="header-link bg-fin-lanka mr-0 p-2 text-lg"
+                class="header-link mr-0 bg-fin-lanka p-2 text-lg"
                 href={item.frontmatter.url.pathname}
               >
                 {item.frontmatter.navigation.label || item.frontmatter.title}

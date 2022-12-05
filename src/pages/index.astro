@@ -42,7 +42,7 @@ const featuredProjects = rawFeaturedProjects
 ---
 
 <BaseLayout>
-  <article class="w-index mx-auto mt-2 sm:mt-6">
+  <article class="mx-auto mt-2 w-index sm:mt-6">
     <h2 class="mb-4 mt-0 text-4xl">Hello! 💐</h2>
 
     <p>
@@ -67,8 +67,8 @@ const featuredProjects = rawFeaturedProjects
       </a>!&nbsp;🎉
     </p>
 
-    <h3 class="text-2xl mb-5">Featured works</h3>
-    <div class="flex flex-wrap sm:mx-10 mt-2 mb-6 gap-5 sm:gap-4 justify-center items-center">
+    <h3 class="mb-5 text-2xl">Featured works</h3>
+    <div class="mt-2 mb-6 flex flex-wrap items-center justify-center gap-5 sm:mx-10 sm:gap-4">
       {
         featuredProjects.map((project) => (
           <div class="relative h-[180px]">
@@ -81,14 +81,14 @@ const featuredProjects = rawFeaturedProjects
       }
     </div>
 
-    <div class="flex justify-around gap-4 flex-col sm:flex-row">
+    <div class="flex flex-col justify-around gap-4 sm:flex-row">
       <div class="sm:w-[63%]">
-        <h3 class="text-2xl mb-4 mt-2 sm:mt-4">Latest blog posts</h3>
+        <h3 class="mb-4 mt-2 text-2xl sm:mt-4">Latest blog posts</h3>
         {articles.map((article) => <ArticlePreview article={article.frontmatter} />)}
       </div>
 
       <div class="sm:w-[37%]">
-        <h3 class="text-2xl mb-4 mt-2 sm:mt-4">Latest wiki modifications</h3>
+        <h3 class="mb-4 mt-2 text-2xl sm:mt-4">Latest wiki modifications</h3>
         {
           wikiItems.map((item) => (
             <section class="mb-3">

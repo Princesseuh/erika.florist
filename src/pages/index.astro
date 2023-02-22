@@ -32,13 +32,15 @@ const wikiItems = rawWikiItems
   .slice(0, 6);
 
 let rawFeaturedProjects = await Astro.glob<Project>("/content/projects/**/*.mdx");
-const featuredProjects = rawFeaturedProjects
-  .filter((project) => project.frontmatter.featured)
-  .map((project) => ({
-    ...project,
-    frontmatter: postProcessProject(project.frontmatter, project.file),
-  }))
-  .slice(0, 3);
+const featuredProjects = await Promise.all(
+  rawFeaturedProjects
+    .filter((project) => project.frontmatter.featured)
+    .map(async (project) => ({
+      ...project,
+      frontmatter: await postProcessProject(project.frontmatter, project.file),
+    }))
+    .slice(0, 3),
+);
 ---
 
 <BaseLayout>

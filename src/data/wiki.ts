@@ -39,7 +39,6 @@ function postProcessWikiItem(wikiItem: WikiItem, file: string): WikiItem {
   wikiItem.navigation.order ??= 0;
 
   if (import.meta.env.PROD) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const info = gitInfo.find((info) => file.endsWith(info.file));
 
     if (!info) {

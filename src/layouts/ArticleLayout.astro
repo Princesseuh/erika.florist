@@ -1,10 +1,10 @@
 ---
-import BaseLayout from "$layouts/BaseLayout.astro";
 import ContentHeader from "$components/shared/ContentHeader.astro";
 import type { Article } from "$data/articles";
 import type { MDXInstance } from "$data/shared";
+import BaseLayout from "$layouts/BaseLayout.astro";
 
-export interface Props {
+interface Props {
   article: MDXInstance<Article>;
 }
 

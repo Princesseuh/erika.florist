@@ -4,7 +4,7 @@ import type { Project } from "$data/projects";
 import type { WikiItem } from "$data/wiki";
 import { readableDate } from "$utils";
 
-export interface Props {
+interface Props {
   item: Article | WikiItem | Project;
   includeTags: boolean;
 }

@@ -1,8 +1,8 @@
-import type { BaseFrontmatter } from "./shared";
-import { basename, dirname } from "path";
 import { getBaseSiteURL, getSlugFromFile } from "$utils";
+import { basename, dirname } from "path";
+import type { BaseFrontmatter } from "./shared";
 
-import { generateImage, ImageFormat } from "astro-eleventy-img";
+import { generateImage } from "astro-eleventy-img";
 
 interface Project extends BaseFrontmatter {
   type: ProjectType;
@@ -28,7 +28,7 @@ enum ProjectType {
   SOFTWARE = "software",
 }
 
-function postProcessProject(project: Project, file: string): Project {
+async function postProcessProject(project: Project, file: string): Promise<Project> {
   project.slug = getSlugFromFile(file);
   project.type = getProjectTypeFromURL(file);
 
@@ -41,27 +41,24 @@ function postProcessProject(project: Project, file: string): Project {
   project.assets = {};
 
   if (project.featured) {
-    const indexCover: Record<string, Array<ImageFormat>> = generateImage(
-      "content/assets" + projectBaseDir + "cover.png",
-      {
-        outputDir: "static/assets/images",
-        widths: [380, 600],
-        formats: ["avif", "webp", "jpeg"],
-      },
-    );
+    const indexCover = await generateImage("content/assets" + projectBaseDir + "cover.png", {
+      outputDir: "static/assets/images",
+      widths: [380, 600],
+      formats: ["avif", "webp", "jpeg"],
+    });
 
     project.assets.indexCover = `<picture>
     ${Object.values(indexCover)
       .map(
         (imageFormat) =>
-          `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat
+          `  <source type="${imageFormat[0]?.sourceType}" srcset="${imageFormat
             .map((entry) => entry.srcset)
             .join(", ")}">`,
       )
       .join("\n")}
       <img
         class="object-cover object-top rounded-sm"
-        src="${indexCover.jpeg?.[0].url}"
+        src="${indexCover?.jpeg?.[0]?.url}"
         width="377"
         height="180"
         alt="${project.indexCoverAlt}"
@@ -69,27 +66,24 @@ function postProcessProject(project: Project, file: string): Project {
     </picture>`;
   }
 
-  const miniLogo: Record<string, Array<ImageFormat>> = generateImage(
-    "content/assets" + projectBaseDir + "mini-logo.png",
-    {
-      outputDir: "static/assets/images",
-      widths: [128, 96],
-      formats: ["avif", "webp", "png"], // We need transparency on those so can't use jpegs
-    },
-  );
+  const miniLogo = await generateImage("content/assets" + projectBaseDir + "mini-logo.png", {
+    outputDir: "static/assets/images",
+    widths: [128, 96],
+    formats: ["avif", "webp", "png"], // We need transparency on those so can't use jpegs
+  });
 
   project.assets.miniLogo = `<picture>
     ${Object.values(miniLogo)
       .map(
         (imageFormat) =>
-          `  <source type="${imageFormat[0].sourceType}" srcset="${imageFormat
+          `  <source type="${imageFormat[0]?.sourceType}" srcset="${imageFormat
             .map((entry) => entry.srcset)
             .join(", ")}">`,
       )
       .join("\n")}
       <img
         class="w-[48px] h-[48px] mr-4"
-        src="${miniLogo.png?.[0].url}"
+        src="${miniLogo?.png?.[0]?.url}"
         width="48"
         height="48"
         alt="${project.miniLogoAlt}"

@@ -1,11 +1,11 @@
 ---
-import BaseLayout from "$layouts/BaseLayout.astro";
-import ArticlePreview from "$components/shared/ArticlePreview.astro";
 import ArticleListAside from "$components/articleList/ArticleListAside.astro";
+import ArticlePreview from "$components/shared/ArticlePreview.astro";
 import type { Article } from "$data/articles";
 import type { MDXInstance, Page } from "$data/shared";
+import BaseLayout from "$layouts/BaseLayout.astro";
 
-export interface Props {
+interface Props {
   page: Page<MDXInstance<Article>>;
   title: string;
 }

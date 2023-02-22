@@ -17,7 +17,7 @@ export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   return paginate(articles, { pageSize: 6 });
 };
 
-export interface Props {
+interface Props {
   page: Page<MDXInstance<Article>>;
 }
 

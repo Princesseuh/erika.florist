@@ -21,7 +21,10 @@ module.exports = {
         parser: "@typescript-eslint/parser",
         extraFileExtensions: [".astro"],
       },
-      rules: { "prettier/prettier": "off" },
+      rules: {
+        "prettier/prettier": "off",
+        "@typescript-eslint/no-unused-vars": ["warn", { varsIgnorePattern: "Props" }],
+      },
     },
     {
       files: ["./src/scripts/*"],

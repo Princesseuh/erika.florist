@@ -1,13 +1,13 @@
 ---
-import BaseLayout from "$layouts/BaseLayout.astro";
-import WikiNavigation from "$components/wiki/WikiNavigation.astro";
 import ContentHeader from "$components/shared/ContentHeader.astro";
+import WikiNavigation from "$components/wiki/WikiNavigation.astro";
 import WikiTOC from "$components/wiki/WikiTOC.astro";
-import { readableDate } from "$utils";
 import type { WikiItem } from "$data/wiki";
+import BaseLayout from "$layouts/BaseLayout.astro";
+import { readableDate } from "$utils";
 import type { MDXInstance } from "astro";
 
-export interface Props {
+interface Props {
   wikiItem: MDXInstance<WikiItem>;
 }
 

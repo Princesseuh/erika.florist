@@ -1,4 +1,4 @@
-import mdx from "@astrojs/mdx"; // https://astro.build/config
+import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
 import AutoImport from "astro-auto-import";
 import { defineConfig } from "astro/config";

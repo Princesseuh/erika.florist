@@ -2,9 +2,8 @@
 // TODO: Due to this issue: https://github.com/withastro/astro/issues/1438, this route can't be in the same folder
 // as the paginated article list is or they'll conflict, so this means our articles URL are `/article/${slug}` instead
 // of `/articles/${slug}` (with a s), once that issue is fixed, we'll be able to put it back in the right place
-import type { GetStaticPaths } from "$data/shared";
 import ArticleLayout from "$layouts/ArticleLayout.astro";
-import type { InferGetStaticPropsType } from "astro";
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 
 export const getStaticPaths = (async () => {

@@ -1,7 +1,6 @@
 ---
-import type { GetStaticPaths } from "$data/shared";
 import WikiLayout from "$layouts/WikiLayout.astro";
-import type { InferGetStaticPropsType } from "astro";
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 
 export const getStaticPaths = (async () => {

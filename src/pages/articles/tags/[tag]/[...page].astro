@@ -1,6 +1,6 @@
 ---
-import type { GetStaticPaths, Page } from "$data/shared";
 import ArticleListLayout from "$layouts/ArticleListLayout.astro";
+import type { GetStaticPaths, Page } from "astro";
 import { CollectionEntry, getCollection } from "astro:content";
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {

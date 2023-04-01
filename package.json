@@ -5,12 +5,11 @@
   "scripts": {
     "astro": "astro",
     "dev": "astro dev",
-    "build": "astro build && npm run copy:images",
+    "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
     "lint": "eslint . --ext .ts,.js,.astro",
-    "format": "prettier -w --plugin-search-dir=. --cache .",
-    "copy:images": "cp -r static/assets/images dist/assets/"
+    "format": "prettier -w --plugin-search-dir=. --cache ."
   },
   "devDependencies": {
     "@astrojs/tailwind": "^3.1.1",

@@ -46,7 +46,6 @@
     }
   },
   "dependencies": {
-    "@astrojs/markdoc": "^0.1.0",
     "@astrojs/mdx": "^0.18.2",
     "markdown-it": "^13.0.1",
     "prettier-plugin-tailwindcss": "^0.2.6",

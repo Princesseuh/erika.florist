@@ -8,7 +8,5 @@
   cache-control: public,max-age=31536000,immutable
 /assets/fonts/*
   cache-control: public,max-age=31536000,immutable
-/assets/images/*
-  cache-control: public,max-age=604800
 /favicon.svg
   cache-control: public,max-age=2628000

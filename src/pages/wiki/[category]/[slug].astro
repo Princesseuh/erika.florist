@@ -1,26 +1,17 @@
 ---
-import type { GetStaticPaths, MDXInstance } from "$data/shared";
-import { postProcessWikiItem, WikiItem } from "$data/wiki";
 import WikiLayout from "$layouts/WikiLayout.astro";
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import { getCollection } from "astro:content";
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const wikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.mdx");
-  return wikiItems.map((wikiItem) => {
-    const augmentedFrontmatter = postProcessWikiItem(wikiItem.frontmatter, wikiItem.file);
+export const getStaticPaths = (async () => {
+  const wikiEntries = await getCollection("wiki");
+  return wikiEntries.map((entry) => ({
+    params: { slug: entry.slug, category: entry.data.navigation.category },
+    props: { wikiItem: entry },
+  }));
+}) satisfies GetStaticPaths;
 
-    return {
-      params: {
-        category: augmentedFrontmatter.navigation.category,
-        slug: augmentedFrontmatter.slug,
-      },
-      props: { wikiItem },
-    };
-  });
-};
-
-interface Props {
-  wikiItem: MDXInstance<WikiItem>;
-}
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { wikiItem } = Astro.props;
 ---

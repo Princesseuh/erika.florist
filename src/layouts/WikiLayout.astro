@@ -2,42 +2,43 @@
 import ContentHeader from "$components/shared/ContentHeader.astro";
 import WikiNavigation from "$components/wiki/WikiNavigation.astro";
 import WikiTOC from "$components/wiki/WikiTOC.astro";
-import type { WikiItem } from "$data/wiki";
+import { getLastModified } from "$data/wiki";
 import BaseLayout from "$layouts/BaseLayout.astro";
 import { readableDate } from "$utils";
-import type { MDXInstance } from "astro";
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  wikiItem: MDXInstance<WikiItem>;
+  wikiItem: CollectionEntry<"wiki">;
 }
 
 const { wikiItem } = Astro.props;
-const headings = wikiItem.getHeadings();
+const { Content, headings } = await wikiItem.render();
+const lastModified = getLastModified(wikiItem);
 ---
 
-<BaseLayout title={wikiItem.frontmatter.title} description={wikiItem.frontmatter.tagline}>
+<BaseLayout title={wikiItem.data.title} description={wikiItem.data.tagline}>
   <section class="mx-auto my-0 grid w-wiki gap-[3%] sm:grid-cols-wiki">
     <aside class="mb-4 mt-10 hidden transition-opacity duration-100 ease-linear sm:block">
       <WikiNavigation />
     </aside>
 
     <article class="post">
-      <ContentHeader item={wikiItem.frontmatter} includeTags={false} />
-      <wikiItem.Content />
+      <ContentHeader item={wikiItem} includeTags={false} />
+      <Content />
 
       <span class="mb-4 block text-right text-creative-work">
         Page last modified <a
-          href={wikiItem.frontmatter.lastModifiedCommitUrl}
-          data-date={wikiItem.frontmatter.lastModified}
-          >{readableDate(wikiItem.frontmatter.lastModified)}
+          href={lastModified.lastModifiedCommitUrl}
+          data-date={lastModified.lastModifiedDate}
+          >{readableDate(lastModified.lastModifiedDate)}
         </a>
       </span>
     </article>
 
-    <aside class="mt-10 mb-4 hidden transition-opacity duration-100 ease-linear sm:block">
+    <aside class="mb-4 mt-10 hidden transition-opacity duration-100 ease-linear sm:block">
       {
         headings.length > 0 && (
-          <WikiTOC headers={headings} maxDepth={wikiItem.frontmatter.maxDepthTOC || 4} />
+          <WikiTOC headers={headings} maxDepth={wikiItem.data.maxDepthTOC || 4} />
         )
       }
     </aside>

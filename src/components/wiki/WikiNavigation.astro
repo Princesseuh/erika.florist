@@ -1,14 +1,10 @@
 ---
-import type { WikiItemInstance } from "$data/shared";
-import { getWikiItemsByCategory, postProcessWikiItem, WikiItem } from "$data/wiki";
+import { getWikiItemsByCategory } from "$data/wiki";
 import { wikiCategories, WikiCategory } from "$data/wikiCategories";
+import { getURLFromEntry } from "$utils";
+import { CollectionEntry, getCollection } from "astro:content";
 
-const rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.mdx");
-const wikiItems = rawWikiItems.map((item) => ({
-  ...item,
-  frontmatter: postProcessWikiItem(item.frontmatter, item.file),
-}));
-
+const wikiItems = await getCollection("wiki");
 const url = new URL(Astro.request.url);
 ---
 
@@ -17,14 +13,14 @@ const url = new URL(Astro.request.url);
     wikiCategories.map((category: WikiCategory) => (
       <li>
         <span class="block font-bold text-sugar-cane">{category.title}</span>
-        {getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItemInstance) => (
+        {getWikiItemsByCategory(wikiItems, category.key).map((item: CollectionEntry<"wiki">) => (
           <a
             class={`block ${
-              url.pathname == item.frontmatter.url.pathname ? "font-bold text-pinky-unicorny" : ""
+              url.pathname == getURLFromEntry(item) ? "font-bold text-pinky-unicorny" : ""
             }`}
-            href={item.frontmatter.url.pathname}
+            href={getURLFromEntry(item)}
           >
-            {item.frontmatter.navigation.label || item.frontmatter.title}
+            {item.data.navigation.label || item.data.title}
           </a>
         ))}
       </li>

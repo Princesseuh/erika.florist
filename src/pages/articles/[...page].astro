@@ -1,24 +1,17 @@
 ---
-import { Article, postProcessArticle } from "$data/articles";
-import type { GetStaticPaths, MDXInstance, Page } from "$data/shared";
 import ArticleListLayout from "$layouts/ArticleListLayout.astro";
+import type { GetStaticPaths, Page } from "astro";
+import { CollectionEntry, getCollection } from "astro:content";
 
-export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
-  let articles = await Astro.glob<Article>("/content/articles/**/*.mdx");
-  articles = articles
-    .map((article) => ({
-      ...article,
-      frontmatter: postProcessArticle(article.frontmatter, article.file),
-    }))
-    .sort((a, b) => {
-      return b.frontmatter.date.getTime() - a.frontmatter.date.getTime();
-    });
-
+export const getStaticPaths = (async ({ paginate }) => {
+  const articles = (await getCollection("blog")).sort((a, b) => {
+    return b.data.date.getTime() - a.data.date.getTime();
+  });
   return paginate(articles, { pageSize: 6 });
-};
+}) satisfies GetStaticPaths;
 
 interface Props {
-  page: Page<MDXInstance<Article>>;
+  page: Page<CollectionEntry<"blog">>;
 }
 
 const { page } = Astro.props;

@@ -3,7 +3,7 @@ const plugin = require("tailwindcss/plugin");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{astro,js,ts,tsx,md}", "./content/**/*.mdx"],
+  content: ["./src/**/*.{astro,js,ts,tsx,md,mdx}"],
   corePlugins: {
     preflight: false,
 

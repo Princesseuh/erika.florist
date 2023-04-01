@@ -25,3 +25,5 @@ apps/erika.florist/src/pages/test.astro
 
 # Local Netlify folder
 .netlify
+
+.astro

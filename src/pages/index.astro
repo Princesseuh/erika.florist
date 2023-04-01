@@ -1,46 +1,21 @@
 ---
+import Image from "$components/Image.astro";
 import ArticlePreview from "$components/shared/ArticlePreview.astro";
-import type { Article } from "$data/articles";
-import { postProcessArticle } from "$data/articles";
-import type { Project } from "$data/projects";
-import { postProcessProject } from "$data/projects";
-import type { WikiItem } from "$data/wiki";
-import { postProcessWikiItem } from "$data/wiki";
+import { getLastModified } from "$data/wiki";
 import BaseLayout from "$layouts/BaseLayout.astro";
-import { readableDate } from "$utils";
+import { getURLFromEntry, readableDate } from "$utils";
+import { getCollection } from "astro:content";
 
-const rawArticles = await Astro.glob<Article>("/content/articles/**/*.mdx");
-const articles = rawArticles
-  .map((article) => ({
-    ...article,
-    frontmatter: postProcessArticle(article.frontmatter, article.file),
-  }))
+const articles = (await getCollection("blog"))
   .sort((a, b) => {
-    return b.frontmatter.date.getTime() - a.frontmatter.date.getTime();
+    return b.data.date.getTime() - a.data.date.getTime();
   })
   .slice(0, 3);
 
-const rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.mdx");
-const wikiItems = rawWikiItems
-  .map((wikiItem) => ({
-    ...wikiItem,
-    frontmatter: postProcessWikiItem(wikiItem.frontmatter, wikiItem.file),
-  }))
-  .sort((a, b) => {
-    return b.frontmatter.lastModified.getTime() - a.frontmatter.lastModified.getTime();
-  })
-  .slice(0, 6);
-
-let rawFeaturedProjects = await Astro.glob<Project>("/content/projects/**/*.mdx");
-const featuredProjects = await Promise.all(
-  rawFeaturedProjects
-    .filter((project) => project.frontmatter.featured)
-    .map(async (project) => ({
-      ...project,
-      frontmatter: await postProcessProject(project.frontmatter, project.file),
-    }))
-    .slice(0, 3),
-);
+const wikiItems = (await getCollection("wiki")).slice(0, 6);
+const featuredProjects = (await getCollection("projects"))
+  .filter((project) => project.data.featured)
+  .slice(0, 3);
 ---
 
 <BaseLayout>
@@ -70,13 +45,21 @@ const featuredProjects = await Promise.all(
     </p>
 
     <h3 class="mb-5 text-2xl">Featured works</h3>
-    <div class="mt-2 mb-6 flex flex-wrap items-center justify-center gap-5 sm:mx-10 sm:gap-4">
+    <div class="mb-6 mt-2 flex flex-wrap items-center justify-center gap-5 sm:mx-10 sm:gap-4">
       {
         featuredProjects.map((project) => (
           <div class="relative h-[180px]">
-            <a href={project.frontmatter.url}>
-              <Fragment set:html={project.frontmatter.assets.indexCover} />
-              <h4 class="cover-title">{project.frontmatter.title}</h4>
+            <a href={getURLFromEntry(project)}>
+              <Image
+                class="h-[180px] w-[377px] rounded-sm object-cover object-top"
+                src={project.data.indexCover}
+                alt={project.data.indexCoverAlt ?? ""}
+                imageWidth={755}
+                width={377}
+                height={180}
+                loading={"eager"}
+              />
+              <h4 class="cover-title">{project.data.title}</h4>
             </a>
           </div>
         ))
@@ -86,7 +69,7 @@ const featuredProjects = await Promise.all(
     <div class="flex flex-col justify-around gap-4 sm:flex-row">
       <div class="sm:w-[63%]">
         <h3 class="mb-4 mt-2 text-2xl sm:mt-4">Latest blog posts</h3>
-        {articles.map((article) => <ArticlePreview article={article.frontmatter} />)}
+        {articles.map((article) => <ArticlePreview article={article} />)}
       </div>
 
       <div class="sm:w-[37%]">
@@ -94,14 +77,14 @@ const featuredProjects = await Promise.all(
         {
           wikiItems.map((item) => (
             <section class="mb-3">
-              <a class="block font-bold leading-tight" href={item.frontmatter.url}>
-                {item.frontmatter.title}
+              <a class="block font-bold leading-tight" href={getURLFromEntry(item)}>
+                {item.data.title}
               </a>
               <span
                 class="block text-sm first-letter:uppercase"
-                data-date={item.frontmatter.lastModified}
+                data-date={getLastModified(item).lastModifiedDate}
               >
-                {readableDate(item.frontmatter.lastModified)}
+                {readableDate(getLastModified(item).lastModifiedDate)}
               </span>
             </section>
           ))

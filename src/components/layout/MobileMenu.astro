@@ -1,22 +1,18 @@
 ---
 import { headerMenu as globalMenu } from "$data/headerMenu";
-import type { MDXInstance, WikiItemInstance } from "$data/shared";
-import { getWikiItemsByCategory, postProcessWikiItem, WikiItem } from "$data/wiki";
-import { wikiCategories, WikiCategory } from "$data/wikiCategories";
+import { getWikiItemsByCategory } from "$data/wiki";
+import { WikiCategory, wikiCategories } from "$data/wikiCategories";
+import { getURLFromEntry } from "$utils";
+import { CollectionEntry, getCollection } from "astro:content";
 import Socials from "./Socials.astro";
 
-let rawWikiItems: MDXInstance<WikiItem>[] = [];
-let wikiItems: MDXInstance<WikiItem>[] = [];
+let wikiItems: CollectionEntry<"wiki">[] = [];
 
 const url = new URL(Astro.request.url);
 const isWikiPage = url.pathname.startsWith("/wiki");
 
 if (isWikiPage) {
-  rawWikiItems = await Astro.glob<WikiItem>("/content/wiki/**/*.mdx");
-  wikiItems = rawWikiItems.map((item) => ({
-    ...item,
-    frontmatter: postProcessWikiItem(item.frontmatter, item.file),
-  }));
+  wikiItems = await getCollection("wiki");
 }
 ---
 
@@ -43,14 +39,13 @@ if (isWikiPage) {
         {wikiCategories.map((category: WikiCategory) => (
           <>
             <span class="block font-bold text-sugar-cane">{category.title}</span>
-            {getWikiItemsByCategory(wikiItems, category.key).map((item: WikiItemInstance) => (
-              <a
-                class="header-link mr-0 bg-fin-lanka p-2 text-lg"
-                href={item.frontmatter.url.pathname}
-              >
-                {item.frontmatter.navigation.label || item.frontmatter.title}
-              </a>
-            ))}
+            {getWikiItemsByCategory(wikiItems, category.key).map(
+              (item: CollectionEntry<"wiki">) => (
+                <a class="header-link mr-0 bg-fin-lanka p-2 text-lg" href={getURLFromEntry(item)}>
+                  {item.data.navigation.label || item.data.title}
+                </a>
+              ),
+            )}
           </>
         ))}
       </nav>

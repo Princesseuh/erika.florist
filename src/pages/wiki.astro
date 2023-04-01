@@ -1,15 +1,8 @@
 ---
-import { postProcessWikiItem, WikiItem } from "$data/wiki";
 import WikiLayout from "$layouts/WikiLayout.astro";
-import type { MDXInstance } from "astro";
+import { getEntryBySlug } from "astro:content";
 
-const rawWikiIndex = await import("/content/wiki/index.mdx");
-
-const wikiIndex: MDXInstance<WikiItem> = {
-  ...rawWikiIndex,
-  frontmatter: postProcessWikiItem(rawWikiIndex.frontmatter as WikiItem, rawWikiIndex.file),
-  default: () => undefined as never,
-};
+const wikiIndex = await getEntryBySlug("wiki", "index");
 ---
 
 <WikiLayout wikiItem={wikiIndex} />

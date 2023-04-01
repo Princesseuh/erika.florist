@@ -1,7 +1,10 @@
 ---
+import { getBaseSiteURL } from "$utils";
 import type { ImageMetadata } from "astro";
+import type { LocalImageService } from "astro/dist/assets/services/service";
 import type { HTMLAttributes } from "astro/types";
-import { getImage } from "astro:assets";
+import { getConfiguredImageService, getImage } from "astro:assets";
+import { readFileSync } from "fs";
 
 export interface Props extends Omit<HTMLAttributes<"img">, "src"> {
   src: ImageMetadata;
@@ -27,6 +30,52 @@ for (let format of formats) {
   });
 }
 
+const imageService: LocalImageService = await getConfiguredImageService();
+
+function getBitmapDimensions(
+  imgWidth: number,
+  imgHeight: number,
+  pixelTarget: number,
+): { width: number; height: number } {
+  // Aims for a bitmap of ~P pixels (w * h = ~P).
+  // Gets the ratio of the width to the height. (r = w0 / h0 = w / h)
+  const ratioWH = imgWidth / imgHeight;
+  // Express the width in terms of height by multiply the ratio by the
+  // height. (h * r = (w / h) * h)
+  // Plug this representation of the width into the original equation.
+  // (h * r * h = ~P).
+  // Divide the bitmap size by the ratio to get the all expressions using
+  // height on one side. (h * h = ~P / r)
+  let bitmapHeight = pixelTarget / ratioWH;
+  // Take the square root of the height instances to find the singular value
+  // for the height. (h = sqrt(~P / r))
+  bitmapHeight = Math.sqrt(bitmapHeight);
+  // Divide the goal total pixel amount by the height to get the width.
+  // (w = ~P / h).
+  const bitmapWidth = pixelTarget / bitmapHeight;
+  return { width: Math.round(bitmapWidth), height: Math.round(bitmapHeight) };
+}
+
+const placeholderDimensions = getBitmapDimensions(
+  Astro.props.src.width,
+  Astro.props.src.height,
+  600,
+);
+
+const originalFileBuffer = import.meta.env.PROD
+  ? readFileSync("./dist/" + Astro.props.src.src)
+  : await fetch(new URL(Astro.props.src.src, getBaseSiteURL()))
+      .then((response) => response.arrayBuffer())
+      .then((buffer) => Buffer.from(buffer));
+
+const placeholderBuffer = await imageService.transform(originalFileBuffer, {
+  src: Astro.props.src.src,
+  width: placeholderDimensions.width,
+  height: placeholderDimensions.height,
+  format: "png",
+});
+const placeholderUrl = `data:image/png;base64,${placeholderBuffer.data.toString("base64")}`;
+
 const { src, imageHeight, imageWidth, ...passedAttributes } = Astro.props;
 if (!passedAttributes.width) {
   passedAttributes.width = originalFormat.attributes.width;
@@ -43,5 +92,11 @@ const { width, height, ...attributes } = originalFormat.attributes;
       <source srcset={source.src} type={"image/" + source.options.format} />
     ))
   }
-  <img src={originalFormat.src} {...attributes} {...passedAttributes} />
+  <img
+    src={originalFormat.src}
+    style={`background-size: cover;background-image: url(${placeholderUrl})`}
+    onload="this.style.backgroundImage='none'"
+    {...passedAttributes}
+    {...attributes}
+  />
 </picture>

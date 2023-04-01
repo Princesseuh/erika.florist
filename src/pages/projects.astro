@@ -1,33 +1,32 @@
 ---
-import { postProcessProject, Project, ProjectType } from "$data/projects";
-import type { MDXInstance } from "$data/shared";
+import Image from "$components/Image.astro";
 import BaseLayout from "$layouts/BaseLayout.astro";
+import { getURLFromEntry } from "$utils";
+import { CollectionEntry, getCollection } from "astro:content";
 
-const rawProjects = await Astro.glob<Project>("/content/projects/**/*.mdx");
-const projects = await Promise.all(
-  rawProjects.map(async (project) => ({
-    ...project,
-    frontmatter: await postProcessProject(project.frontmatter, project.file),
-  })),
-);
+const projects = await getCollection("projects");
 
-// Create an object with sub-objects corresponding to the different types of projects that exist
-// The cool part about this: it's 100% automated based on types and content, we'll practically never have to touch this
+enum ProjectType {
+  GAME = "game",
+  WEBSITE = "site",
+  SOFTWARE = "software",
+}
+
 type ProjectList = {
-  [projectType in ProjectType]?: MDXInstance<Project>[];
+  [projectType in ProjectType]?: CollectionEntry<"projects">[];
 };
 
 const projectsPerType: ProjectList = {};
 Object.values(ProjectType).forEach((projectType) => {
   projectsPerType[projectType] = projects.filter(
-    (project) => project.frontmatter.type === projectType,
+    (project) => project.data.projectType === projectType,
   );
 });
 
 // Utils
 const readableTitles = {
   game: "Games",
-  website: "Websites",
+  site: "Websites",
   software: "Softwares and libraries",
 } as const;
 ---
@@ -59,17 +58,15 @@ const readableTitles = {
               {type[1].map((project) => (
                 <a
                   href={
-                    project.frontmatter.external_url
-                      ? project.frontmatter.external_url
-                      : project.frontmatter.url
+                    project.data.external_url ? project.data.external_url : getURLFromEntry(project)
                   }
                   class={
-                    project.frontmatter.featured
+                    project.data.featured
                       ? "project-featured project-box max-w-full sm:max-w-[50%]"
                       : "project-box max-w-full sm:max-w-[50%]"
                   }
                 >
-                  {project.frontmatter.featured && (
+                  {project.data.featured && (
                     <span
                       class="absolute right-2 top-1 h-5 w-5 fill-current"
                       title="Featured project"
@@ -77,7 +74,7 @@ const readableTitles = {
                       🌟
                     </span>
                   )}
-                  {project.frontmatter.external_url && (
+                  {project.data.external_url && (
                     <span
                       class="absolute right-2 top-1 h-5 w-5 fill-current"
                       title="Project is hosted on an external website"
@@ -85,10 +82,17 @@ const readableTitles = {
                       🔗
                     </span>
                   )}
-                  <Fragment set:html={project.frontmatter.assets.miniLogo} />
+                  <Image
+                    src={project.data.miniLogo}
+                    alt={project.data.miniLogoAlt ?? ""}
+                    imageWidth={72}
+                    width={48}
+                    height={48}
+                    class="mr-4"
+                  />
                   <div>
-                    <h4 class="m-0 block font-bold">{project.frontmatter.title}</h4>
-                    <span class="text-sm text-creative-work">{project.frontmatter.tagline}</span>
+                    <h4 class="m-0 block font-bold">{project.data.title}</h4>
+                    <span class="text-sm text-creative-work">{project.data.tagline}</span>
                   </div>
                 </a>
               ))}

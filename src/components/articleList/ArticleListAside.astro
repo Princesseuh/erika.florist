@@ -1,10 +1,10 @@
 ---
-import type { Article } from "$data/articles";
+import { getCollection } from "astro:content";
 
-const articles = await Astro.glob<Article>("/content/articles/**/*.mdx");
+const articles = await getCollection("blog");
 const tags: Array<[string, number]> = [
   ...articles
-    .flatMap((article) => [...article.frontmatter.tags])
+    .flatMap((article) => [...article.data.tags])
     .reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
 ].sort((a, b) => {
   return b[1] - a[1];
@@ -12,7 +12,7 @@ const tags: Array<[string, number]> = [
 
 const years: Array<[string, number]> = [
   ...articles
-    .map((article) => new Date(article.frontmatter.date).getUTCFullYear())
+    .map((article) => new Date(article.data.date).getUTCFullYear())
     .reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
 ].sort((a, b) => {
   return b[0] - a[0];

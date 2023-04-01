@@ -1,30 +1,18 @@
 ---
-import { postProcessProject, Project } from "$data/projects";
-import type { GetStaticPaths, MDXInstance } from "$data/shared";
+import type { GetStaticPaths } from "$data/shared";
 import ProjectLayout from "$layouts/ProjectLayout.astro";
+import type { InferGetStaticPropsType } from "astro";
+import { getCollection } from "astro:content";
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const projects = await Astro.glob<Project>("/content/projects/**/*.mdx");
-  return await Promise.all(
-    projects
-      .filter((project) => project.frontmatter.external_url === undefined)
-      .map(async (project) => {
-        const augmentedFrontmatter = await postProcessProject(project.frontmatter, project.file);
+export const getStaticPaths = (async () => {
+  const projectEntries = await getCollection("projects");
+  return projectEntries.map((entry) => ({
+    params: { slug: entry.slug, type: entry.data.projectType },
+    props: { project: entry },
+  }));
+}) satisfies GetStaticPaths;
 
-        return {
-          params: {
-            type: augmentedFrontmatter.type + "s",
-            slug: augmentedFrontmatter.slug,
-          },
-          props: { project },
-        };
-      }),
-  );
-};
-
-interface Props {
-  project: MDXInstance<Project>;
-}
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { project } = Astro.props;
 ---

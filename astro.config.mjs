@@ -1,7 +1,7 @@
-import { defineConfig } from "astro/config";
+import mdx from "@astrojs/mdx"; // https://astro.build/config
 import tailwind from "@astrojs/tailwind";
 import AutoImport from "astro-auto-import";
-import mdx from "@astrojs/mdx";
+import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,6 +14,12 @@ export default defineConfig({
       langs: [],
       wrap: false,
     },
+  },
+  experimental: {
+    assets: true,
+  },
+  image: {
+    service: "astro/assets/services/sharp",
   },
   integrations: [
     tailwind({
@@ -34,13 +40,4 @@ export default defineConfig({
     }),
     mdx(),
   ],
-  vite: {
-    optimizeDeps: {
-      exclude: ["astro-eleventy-img"],
-    },
-    ssr: {
-      external: ["svgo", "@11ty/eleventy-img"],
-    },
-    plugins: [],
-  },
 });

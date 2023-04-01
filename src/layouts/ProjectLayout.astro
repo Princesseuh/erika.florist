@@ -1,19 +1,19 @@
 ---
 import ContentHeader from "$components/shared/ContentHeader.astro";
-import type { Project } from "$data/projects";
-import type { MDXInstance } from "$data/shared";
+import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 
 interface Props {
-  project: MDXInstance<Project>;
+  project: CollectionEntry<"projects">;
 }
 
 const { project } = Astro.props;
+const { Content } = await project.render();
 ---
 
-<BaseLayout title={project.frontmatter.title} description={project.frontmatter.tagline}>
+<BaseLayout title={project.data.title} description={project.data.tagline}>
   <article class="post mx-auto">
-    <ContentHeader item={project.frontmatter} includeTags={false} />
-    <project.Content />
+    <ContentHeader item={project} includeTags={false} />
+    <Content />
   </article>
 </BaseLayout>

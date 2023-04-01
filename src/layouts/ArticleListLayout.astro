@@ -1,12 +1,12 @@
 ---
 import ArticleListAside from "$components/articleList/ArticleListAside.astro";
 import ArticlePreview from "$components/shared/ArticlePreview.astro";
-import type { Article } from "$data/articles";
-import type { MDXInstance, Page } from "$data/shared";
+import type { Page } from "$data/shared";
 import BaseLayout from "$layouts/BaseLayout.astro";
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  page: Page<MDXInstance<Article>>;
+  page: Page<CollectionEntry<"blog">>;
   title: string;
 }
 
@@ -17,7 +17,7 @@ const { page, title } = Astro.props;
   <article class="mx-auto mt-4 flex w-articleList flex-col sm:mt-6 md:flex-row">
     <div class="sm:w-[80%]">
       <h2 class="mt-0">{title}</h2>
-      {page.data.map((item) => <ArticlePreview article={item.frontmatter} />)}
+      {page.data.map((item) => <ArticlePreview article={item} />)}
       <div>
         {page.url.prev && <a href={page.url.prev}>Newer posts</a>}
         {

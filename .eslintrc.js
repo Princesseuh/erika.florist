@@ -23,7 +23,10 @@ module.exports = {
       },
       rules: {
         "prettier/prettier": "off",
-        "@typescript-eslint/no-unused-vars": ["warn", { varsIgnorePattern: "Props" }],
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          { varsIgnorePattern: "Props", ignoreRestSiblings: true },
+        ],
       },
     },
     {

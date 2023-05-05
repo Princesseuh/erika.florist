@@ -19,7 +19,7 @@ export default defineConfig({
     assets: true,
   },
   image: {
-    service: "./src/imageService.ts",
+    service: { entrypoint: "./src/imageService.ts" },
   },
   integrations: [
     tailwind({

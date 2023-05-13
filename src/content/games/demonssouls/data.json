@@ -1,0 +1,41 @@
+{
+  "first_release_date": 1233792000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 9,
+      "abbreviation": "PS3"
+    }
+  ],
+  "companies": [
+    {
+      "id": 1012,
+      "name": "FromSoftware",
+      "role": "developer"
+    },
+    {
+      "id": 400,
+      "name": "SCE Japan Studio",
+      "role": "developer"
+    },
+    {
+      "id": 818,
+      "name": "Atlus",
+      "role": "publisher"
+    },
+    {
+      "id": 6330,
+      "name": "Namco Bandai Games",
+      "role": "publisher"
+    }
+  ]
+}

@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "lint": "eslint . --ext .ts,.js,.astro",
-    "format": "prettier -w --plugin-search-dir=. --cache ."
+    "format": "prettier -w --plugin-search-dir=. --cache .",
+    "update-data": "tsx ./scripts/getInfoCoverGame.mts"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^3.1.2",
@@ -47,10 +48,16 @@
     }
   },
   "dependencies": {
+    "@11ty/eleventy-fetch": "^4.0.0",
     "@astrojs/mdx": "^0.19.1",
+    "@types/igdb-api-node": "^5.0.0",
+    "dotenv": "^16.0.3",
+    "gray-matter": "^4.0.3",
+    "igdb-api-node": "^5.0.2",
     "markdown-it": "^13.0.1",
     "prettier-plugin-tailwindcss": "^0.2.8",
     "sharp": "^0.32.1",
-    "tailwindcss": "^3.3.2"
+    "tailwindcss": "^3.3.2",
+    "tsx": "^3.12.7"
   }
 }

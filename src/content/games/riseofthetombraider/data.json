@@ -1,0 +1,60 @@
+{
+  "first_release_date": 1447113600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 3,
+      "abbreviation": "Linux"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 12,
+      "abbreviation": "X360"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 170,
+      "abbreviation": "Stadia"
+    }
+  ],
+  "companies": [
+    {
+      "id": 1010,
+      "name": "Microsoft Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 552,
+      "name": "Crystal Dynamics",
+      "role": "developer"
+    },
+    {
+      "id": 4940,
+      "name": "Square Enix Europe",
+      "role": "publisher"
+    }
+  ]
+}

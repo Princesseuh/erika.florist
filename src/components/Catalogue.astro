@@ -1,0 +1,138 @@
+<div>
+  <header class="flex justify-between">
+    <div id="catalogue-filters" class="flex flex-grow gap-4">
+      <div>
+        <label for="catalogue-search">Search</label>
+        <input id="catalogue-search" type={"search"} />
+      </div>
+
+      <div>
+        <label for="catalogue-ratings">Rating</label>
+        <select name="ratings" id="catalogue-ratings">
+          <option value="">Rating</option>
+          <option value="masterpiece">Masterpiece</option>
+          <option value="loved">Loved</option>
+          <option value="liked">Liked</option>
+          <option value="okay">Okay</option>
+          <option value="disliked">Disliked</option>
+          <option value="hated">Hated</option>
+        </select>
+      </div>
+    </div>
+    <div id="catalogue-entry-count" class="flex items-center">0 entries</div>
+  </header>
+  <div id="catalogue-content" class="mt-4 flex flex-wrap gap-x-4">
+    <span class="block text-center">Loading...</span>
+  </div>
+</div>
+
+<style>
+  label {
+    display: block;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+  }
+</style>
+
+<script>
+  import { QuickScore } from "quick-score";
+  const searchInput = document.getElementById(
+    "catalogue-search"
+  ) as HTMLInputElement;
+  const ratingSelect = document.getElementById(
+    "catalogue-ratings"
+  ) as HTMLSelectElement;
+
+  searchInput.addEventListener("input", () => {
+    buildLibrary(searchLibrary(), "covers");
+  });
+
+  ratingSelect.addEventListener("change", () => {
+    buildLibrary(searchLibrary(), "covers");
+  });
+
+  let qs: QuickScore<CatalogueData>;
+  let library: CatalogueData[] = [];
+
+  type CatalogueData = {
+    cover: { src: string; width: number; height: number; placeholder: string };
+    title: string;
+    author: string;
+    rating: string;
+    platform: string;
+    finishedDate: string;
+  };
+
+  function searchLibrary(): CatalogueData[] {
+    const searchInputValue = searchInput.value;
+    const ratingSelectValue = ratingSelect.value;
+
+    return qs
+      .search(searchInputValue)
+      .map((entry) => entry.item)
+      .filter(filterRating);
+
+    function filterRating(entry: CatalogueData) {
+      if (ratingSelectValue !== "") return entry.rating === ratingSelectValue;
+      return true;
+    }
+  }
+
+  function buildLibrary(
+    catalogueData: CatalogueData[],
+    view: "covers" | "list"
+  ) {
+    const entryCount = document.getElementById("catalogue-entry-count");
+    const catalogueContent = document.getElementById("catalogue-content");
+    const fragment = new DocumentFragment();
+
+    view;
+
+    for (const dataEntry of catalogueData) {
+      const div = document.createElement("div");
+      div.className = "w-[calc(20%-1rem)]";
+      div.innerHTML = `<div class="relative"><img class="max-w-full h-auto" style="background-size: cover;background-image: url(${
+        dataEntry.cover.placeholder
+      });image-rendering:auto;" onload="this.removeAttribute('style');" src=${
+        dataEntry.cover.src
+      } width=${dataEntry.cover.width} height=${
+        dataEntry.cover.height
+      } loading="lazy" decoding="async" />
+      <span class="absolute top-0 right-0 pr-[0.15rem] pl-[0.2rem] bg-black/5 rounded-bl-lg">${getRatingEmoji(
+        dataEntry.rating
+      )}</span>
+      </div>
+      <h4 class="m-0 leading-tight">${dataEntry.title}</h4>
+      <p class="text-sm">${dataEntry.author}</p>`;
+      fragment.appendChild(div);
+    }
+
+    catalogueContent?.replaceChildren(fragment);
+    if (entryCount) entryCount.innerText = `${catalogueData.length} entries`;
+
+    function getRatingEmoji(rating: string) {
+      switch (rating) {
+        case "masterpiece":
+          return "❤️";
+        case "loved":
+          return "🥰";
+        case "liked":
+          return "🙂";
+        case "okay":
+          return "😐";
+        case "disliked":
+          return "😕";
+        case "hated":
+          return "☹️";
+        default:
+          return "🧒";
+      }
+    }
+  }
+
+  library = await fetch("/catalogue.json").then((response) => response.json());
+
+  qs = new QuickScore(library);
+  const filteredLibrary = searchLibrary();
+  buildLibrary(filteredLibrary, "covers");
+</script>

@@ -1,0 +1,64 @@
+{
+  "first_release_date": 1607472000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    },
+    {
+      "id": 170,
+      "abbreviation": "Stadia"
+    }
+  ],
+  "companies": [
+    {
+      "id": 12943,
+      "name": "2 Ton Studios",
+      "role": "developer"
+    },
+    {
+      "id": 12942,
+      "name": "Digital Uppercut Productions",
+      "role": "publisher"
+    },
+    {
+      "id": 24039,
+      "name": "Big Sugar",
+      "role": "publisher"
+    }
+  ]
+}

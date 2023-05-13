@@ -1,0 +1,63 @@
+{
+  "first_release_date": 1616803200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    },
+    {
+      "id": 169,
+      "abbreviation": "Series X"
+    }
+  ],
+  "companies": [
+    {
+      "id": 23125,
+      "name": "PLAYISM",
+      "role": "publisher"
+    },
+    {
+      "id": 15341,
+      "name": "Team Ladybug",
+      "role": "developer"
+    }
+  ]
+}

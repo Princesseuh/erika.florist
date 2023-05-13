@@ -27,3 +27,4 @@ apps/erika.florist/src/pages/test.astro
 .netlify
 
 .astro
+.env

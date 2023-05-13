@@ -19,7 +19,6 @@ export const get = (async () => {
         cover.height,
       );
 
-      console.log(game);
       const metadataPath = import.meta.env.DEV
         ? path.join(path.dirname(cover.src), "./data.json")
         : path.join(

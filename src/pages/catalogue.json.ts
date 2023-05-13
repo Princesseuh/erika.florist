@@ -19,7 +19,15 @@ export const get = (async () => {
         cover.height,
       );
 
-      const metadataPath = path.join(path.dirname(cover.src), "./data.json");
+      console.log(game);
+      const metadataPath = import.meta.env.DEV
+        ? path.join(path.dirname(cover.src), "./data.json")
+        : path.join(
+            path.dirname(cover.src),
+            "../src/content/games/",
+            game.slug.split("/")[0]!,
+            "./data.json",
+          );
       const metadata = JSON.parse((await readFile("./" + metadataPath)).toString());
       const author = metadata.companies.find((company: any) => company.role === "developer")?.name;
 

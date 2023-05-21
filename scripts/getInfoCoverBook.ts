@@ -59,7 +59,7 @@ export async function getDataForBooks() {
     };
 
     fs.writeFileSync(dataFilePath, JSON.stringify(resultData, null, 2));
-    Logger.info(`Data saved for ${bold(dirBasename)}`);
+    Logger.success(`Data saved for ${bold(dirBasename)}!`);
 
     if (!responseData.thumbnail_url) {
       Logger.warn(`No cover found for ${bold(dirBasename)}, skipping...`);
@@ -75,6 +75,8 @@ export async function getDataForBooks() {
     } else {
       fs.writeFileSync(coverPath, Buffer.from(coverData));
     }
-    Logger.info(`Cover saved for ${bookDir.pathname}`);
+    Logger.success(`Cover saved for ${dirBasename}!`);
   }
+
+  return booksDirs.length;
 }

@@ -87,12 +87,15 @@ export async function getDataForGames() {
     };
 
     fs.writeFileSync(dataFilePath, JSON.stringify(resultData, null, 2));
-    Logger.info(`Data saved for ${bold(dirBasename)}`);
+    Logger.success(`Data saved for ${bold(dirBasename)}!`);
 
     const coverPath = new URL("./cover.png", gameDir);
     const coverURL = `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${gameData.cover.image_id}.png`;
     const coverData = await (await fetch(coverURL)).arrayBuffer();
+    Logger.success(`Cover saved for ${bold(dirBasename)}!`);
 
     fs.writeFileSync(coverPath, Buffer.from(coverData));
   }
+
+  return gamesDirs.length;
 }

@@ -11,7 +11,7 @@
     "check": "astro check",
     "lint": "eslint . --ext .ts,.js,.astro",
     "format": "prettier -w --plugin-search-dir=. --cache .",
-    "update-data": "tsx ./scripts/update-catalogue-info.ts"
+    "update-data": "tsx ./scripts/update-catalogue-info.ts --silent"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^3.1.3",

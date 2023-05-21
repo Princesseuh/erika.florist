@@ -1,4 +1,4 @@
-import { gray, yellow } from "kleur/colors";
+import { bold, gray, green, red, yellow } from "kleur/colors";
 import fs from "node:fs";
 
 export function getContentDirs(type: "games" | "books"): URL[] {
@@ -16,12 +16,12 @@ const dt = new Intl.DateTimeFormat("en-gb", {
   minute: "2-digit",
 });
 
+const isSilent = process.argv.includes("--silent");
 export const Logger = {
-  log: (...args: any[]) => console.log(Logger.printDate(), args.join(" ")),
-  error: (...args: any[]) => console.error(Logger.printDate(), args.join(" ")),
-  warn: (...args: any[]) =>
-    console.warn(Logger.printDate(), [yellow("WARNING"), ...args].join(" ")),
-  info: (...args: any[]) => console.info(Logger.printDate(), args.join(" ")),
-  debug: (...args: any[]) => console.debug(Logger.printDate(), args.join(" ")),
+  success: (...args: string[]) => console.log(Logger.printDate(), bold(green("SUCCESS")), ...args),
+  error: (...args: string[]) => console.error(Logger.printDate(), bold(red("ERROR")), ...args),
+  warn: (...args: string[]) => console.warn(Logger.printDate(), bold(yellow("WARNING")), ...args),
+  info: (...args: string[]) =>
+    !isSilent ? console.info(Logger.printDate(), bold(gray("INFO")), ...args) : null,
   printDate: () => gray(`[${dt.format(new Date())}]`),
 };

@@ -16,7 +16,7 @@ export const getStaticPaths = (async () => {
     catalogueContent.flatMap(async (entry) => ({
       params: { type: entry.data.type + "s", slug: entry.slug.split("/")[1] },
       props: { entry: entry, metadata: await getCatalogueData(entry) },
-    })),
+    }))
   );
 }) satisfies GetStaticPaths;
 
@@ -29,7 +29,6 @@ const { entry, metadata } = Astro.props;
 const { Content } = await entry.render();
 
 const processedCover = await getImage({ src: entry.data.cover, width: 240 });
-console.log(metadata);
 ---
 
 <BaseLayout>
@@ -45,7 +44,11 @@ console.log(metadata);
       >
       <section class="w-3/4">
         <h2 class="m-0">{entry.data.title}</h2>
-        <span>{new Date(new Date(0).setUTCSeconds(1607472000)).getUTCFullYear()} - {}</span>
+        <span
+          >{new Date(new Date(0).setUTCSeconds(1607472000)).getUTCFullYear()} - {
+
+          }</span
+        >
         {JSON.stringify(entry.data)}
         {JSON.stringify(metadata)}
       </section>

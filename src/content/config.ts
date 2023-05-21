@@ -51,13 +51,16 @@ const ratingSchema = z.union([
 ]);
 
 const booksCollection = defineCollection({
-  schema: z.object({
-    title: z.string(),
-    rating: ratingSchema,
-    platform: z.union([z.literal("ebook"), z.literal("physical")]),
-    finishedDate: z.date(),
-    type: z.literal("book").default("book"),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      rating: ratingSchema,
+      platform: z.union([z.literal("ebook"), z.literal("physical")]),
+      finishedDate: z.date(),
+      cover: z.preprocess(() => "./cover.png", image()),
+      isbn: z.string(),
+      type: z.literal("book").default("book"),
+    }),
 });
 
 const gamesCollection = defineCollection({

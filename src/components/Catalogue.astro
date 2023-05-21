@@ -7,6 +7,15 @@
       </div>
 
       <div>
+        <label for="catalogue-types">Type</label>
+        <select name="types" id="catalogue-types">
+          <option value="">Type</option>
+          <option value="book">Book</option>
+          <option value="game">Game</option>
+        </select>
+      </div>
+
+      <div>
         <label for="catalogue-ratings">Rating</label>
         <select name="ratings" id="catalogue-ratings">
           <option value="">Rating</option>
@@ -42,14 +51,9 @@
   const ratingSelect = document.getElementById(
     "catalogue-ratings"
   ) as HTMLSelectElement;
-
-  searchInput.addEventListener("input", () => {
-    buildLibrary(searchLibrary(), "covers");
-  });
-
-  ratingSelect.addEventListener("change", () => {
-    buildLibrary(searchLibrary(), "covers");
-  });
+  const typeSelect = document.getElementById(
+    "catalogue-types"
+  ) as HTMLSelectElement;
 
   let qs: QuickScore<CatalogueData>;
   let library: CatalogueData[] = [];
@@ -61,19 +65,26 @@
     rating: string;
     platform: string;
     finishedDate: string;
+    type: "game" | "book";
   };
 
   function searchLibrary(): CatalogueData[] {
     const searchInputValue = searchInput.value;
     const ratingSelectValue = ratingSelect.value;
+    const typeSelectValue = typeSelect.value;
 
     return qs
       .search(searchInputValue)
       .map((entry) => entry.item)
-      .filter(filterRating);
+      .filter((entry) => filterRating(entry) && filterType(entry));
 
     function filterRating(entry: CatalogueData) {
       if (ratingSelectValue !== "") return entry.rating === ratingSelectValue;
+      return true;
+    }
+
+    function filterType(entry: CatalogueData) {
+      if (typeSelectValue !== "") return entry.type === typeSelectValue;
       return true;
     }
   }
@@ -91,7 +102,7 @@
     for (const dataEntry of catalogueData) {
       const div = document.createElement("div");
       div.className = "w-[calc(20%-1rem)]";
-      div.innerHTML = `<div class="relative"><img class="max-w-full h-auto" style="background-size: cover;background-image: url(${
+      div.innerHTML = `<div class="relative"><img class="max-w-full h-auto aspect-[3/4] object-cover" style="background-size: cover;background-image: url(${
         dataEntry.cover.placeholder
       });image-rendering:auto;" onload="this.removeAttribute('style');" src=${
         dataEntry.cover.src
@@ -135,4 +146,16 @@
   qs = new QuickScore(library);
   const filteredLibrary = searchLibrary();
   buildLibrary(filteredLibrary, "covers");
+
+  searchInput.addEventListener("input", () => {
+    buildLibrary(searchLibrary(), "covers");
+  });
+
+  ratingSelect.addEventListener("change", () => {
+    buildLibrary(searchLibrary(), "covers");
+  });
+
+  typeSelect.addEventListener("change", () => {
+    buildLibrary(searchLibrary(), "covers");
+  });
 </script>

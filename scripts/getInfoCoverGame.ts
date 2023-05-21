@@ -1,8 +1,10 @@
 import "dotenv/config";
 import matter from "gray-matter";
 import igdb from "igdb-api-node";
+import { bold, gray } from "kleur/colors";
 import fs from "node:fs";
 import path from "node:path";
+import { Logger, getContentDirs } from "./catalogueUtils";
 
 async function getAccessToken() {
   const response = await (
@@ -35,20 +37,22 @@ export interface GameData {
   platforms: { id: number; abbreviation: string }[];
 }
 
-async function getDataForGames() {
+export async function getDataForGames() {
   const accessToken = await getAccessToken();
   // @ts-expect-error Some sort of weirdness with igdb-api-node, don't get it
   const client = igdb.default(process.env.IGDB_CLIENT, accessToken);
 
-  const gamesDirPath = new URL("../src/content/games/", import.meta.url);
-  const gamesDir = fs
-    .readdirSync(gamesDirPath, { withFileTypes: true })
-    .filter((dir) => dir.isDirectory())
-    .map((dir) => new URL(dir.name + "/", gamesDirPath));
+  const gamesDirs = getContentDirs("games");
 
-  for (const gameDir of gamesDir) {
-    const dataFilePath = new URL("./data.json", gameDir);
-    if (fs.existsSync(dataFilePath)) continue;
+  for (const gameDir of gamesDirs) {
+    const dirBasename = path.basename(gameDir.pathname);
+    const dataFilePath = new URL("./_data.json", gameDir);
+
+    Logger.info(`Getting data for ${bold(dirBasename)}...`);
+    if (fs.existsSync(dataFilePath)) {
+      Logger.info(gray(`Data already exists, skipping...`));
+      continue;
+    }
 
     const markdownContent = fs
       .readFileSync(new URL(path.basename(gameDir.pathname) + ".md", gameDir))
@@ -83,6 +87,7 @@ async function getDataForGames() {
     };
 
     fs.writeFileSync(dataFilePath, JSON.stringify(resultData, null, 2));
+    Logger.info(`Data saved for ${bold(dirBasename)}`);
 
     const coverPath = new URL("./cover.png", gameDir);
     const coverURL = `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${gameData.cover.image_id}.png`;
@@ -91,5 +96,3 @@ async function getDataForGames() {
     fs.writeFileSync(coverPath, Buffer.from(coverData));
   }
 }
-
-await getDataForGames();

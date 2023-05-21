@@ -3,6 +3,7 @@ title: Convenience Store Woman
 rating: "loved"
 platform: "ebook"
 finishedDate: 2020-04-22
+isbn: "9780802129628"
 ---
 
 I really like this book, it's a great showcase of how non-verbose books can be yet still say a lot of things (it's also really short!)

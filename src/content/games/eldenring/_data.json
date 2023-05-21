@@ -1,25 +1,13 @@
 {
-  "first_release_date": 1616803200,
+  "first_release_date": 1645747200,
   "genres": [
-    {
-      "id": 8,
-      "name": "Platform"
-    },
     {
       "id": 12,
       "name": "Role-playing (RPG)"
     },
     {
-      "id": 25,
-      "name": "Hack and slash/Beat 'em up"
-    },
-    {
       "id": 31,
       "name": "Adventure"
-    },
-    {
-      "id": 32,
-      "name": "Indie"
     }
   ],
   "platforms": [
@@ -36,10 +24,6 @@
       "abbreviation": "XONE"
     },
     {
-      "id": 130,
-      "abbreviation": "Switch"
-    },
-    {
       "id": 167,
       "abbreviation": "PS5"
     },
@@ -50,13 +34,13 @@
   ],
   "companies": [
     {
-      "id": 23125,
-      "name": "PLAYISM",
+      "id": 248,
+      "name": "Bandai Namco Entertainment",
       "role": "publisher"
     },
     {
-      "id": 15341,
-      "name": "Team Ladybug",
+      "id": 1012,
+      "name": "FromSoftware",
       "role": "developer"
     }
   ]

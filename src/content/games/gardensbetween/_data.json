@@ -1,13 +1,17 @@
 {
-  "first_release_date": 1447113600,
+  "first_release_date": 1537401600,
   "genres": [
     {
-      "id": 5,
-      "name": "Shooter"
+      "id": 9,
+      "name": "Puzzle"
     },
     {
       "id": 31,
       "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
     }
   ],
   "platforms": [
@@ -20,12 +24,16 @@
       "abbreviation": "PC"
     },
     {
-      "id": 12,
-      "abbreviation": "X360"
-    },
-    {
       "id": 14,
       "abbreviation": "Mac"
+    },
+    {
+      "id": 34,
+      "abbreviation": "Android"
+    },
+    {
+      "id": 39,
+      "abbreviation": "iOS"
     },
     {
       "id": 48,
@@ -36,25 +44,23 @@
       "abbreviation": "XONE"
     },
     {
+      "id": 130,
+      "abbreviation": "Switch"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    },
+    {
       "id": 170,
       "abbreviation": "Stadia"
     }
   ],
   "companies": [
     {
-      "id": 1010,
-      "name": "Microsoft Studios",
-      "role": "publisher"
-    },
-    {
-      "id": 552,
-      "name": "Crystal Dynamics",
+      "id": 13740,
+      "name": "The Voxel Agents",
       "role": "developer"
-    },
-    {
-      "id": 4940,
-      "name": "Square Enix Europe",
-      "role": "publisher"
     }
   ]
 }

@@ -1,20 +1,24 @@
 {
-  "first_release_date": 1574121600,
+  "first_release_date": 1607472000,
   "genres": [
     {
-      "id": 5,
-      "name": "Shooter"
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
     },
     {
       "id": 31,
       "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
     }
   ],
   "platforms": [
-    {
-      "id": 3,
-      "abbreviation": "Linux"
-    },
     {
       "id": 6,
       "abbreviation": "PC"
@@ -32,34 +36,28 @@
       "abbreviation": "XONE"
     },
     {
+      "id": 130,
+      "abbreviation": "Switch"
+    },
+    {
       "id": 170,
       "abbreviation": "Stadia"
     }
   ],
   "companies": [
     {
-      "id": 552,
-      "name": "Crystal Dynamics",
+      "id": 12943,
+      "name": "2 Ton Studios",
       "role": "developer"
     },
     {
-      "id": 27,
-      "name": "Eidos Montréal",
-      "role": "developer"
-    },
-    {
-      "id": 26,
-      "name": "Square Enix",
+      "id": 12942,
+      "name": "Digital Uppercut Productions",
       "role": "publisher"
     },
     {
-      "id": 291,
-      "name": "Nixxes Software",
-      "role": "publisher"
-    },
-    {
-      "id": 23,
-      "name": "Feral Interactive",
+      "id": 24039,
+      "name": "Big Sugar",
       "role": "publisher"
     }
   ]

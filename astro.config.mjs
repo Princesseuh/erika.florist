@@ -18,6 +18,7 @@ export default defineConfig({
   experimental: {
     assets: true,
   },
+  compressHTML: true,
   image: {
     service: { entrypoint: "./src/imageService.ts" },
   },

@@ -1,0 +1,56 @@
+---
+import { allCatalogueTypes, getCatalogueData } from "$data/catalogue";
+import BaseLayout from "$layouts/BaseLayout.astro";
+import type { GetStaticPaths } from "astro";
+import { getImage } from "astro:assets";
+import { CollectionEntry, getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+  let catalogueContent: allCatalogueTypes[] = [];
+
+  for (const catalogueType of ["games"] as const) {
+    catalogueContent.push(...(await getCollection(catalogueType)));
+  }
+
+  return await Promise.all(
+    catalogueContent.flatMap(async (entry) => ({
+      params: { type: entry.data.type + "s", slug: entry.slug.split("/")[1] },
+      props: { entry: entry, metadata: await getCatalogueData(entry) },
+    })),
+  );
+}) satisfies GetStaticPaths;
+
+interface Props {
+  entry: CollectionEntry<"games"> | CollectionEntry<"books">;
+  metadata: any;
+}
+
+const { entry, metadata } = Astro.props;
+const { Content } = await entry.render();
+
+const processedCover = await getImage({ src: entry.data.cover, width: 240 });
+console.log(metadata);
+---
+
+<BaseLayout>
+  <article class="post mx-auto">
+    <header class="flex justify-around gap-4">
+      <a href={entry.data.cover.src} class="w-1/4"
+        ><img
+          src={processedCover.src}
+          width={processedCover.attributes.width}
+          height={processedCover.attributes.height}
+          decoding="async"
+        /></a
+      >
+      <section class="w-3/4">
+        <h2 class="m-0">{entry.data.title}</h2>
+        <span>{new Date(new Date(0).setUTCSeconds(1607472000)).getUTCFullYear()} - {}</span>
+        {JSON.stringify(entry.data)}
+        {JSON.stringify(metadata)}
+      </section>
+    </header>
+    <h2>Thoughts</h2>
+    <Content />
+  </article>
+</BaseLayout>

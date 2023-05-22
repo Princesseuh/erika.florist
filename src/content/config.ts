@@ -74,6 +74,7 @@ const gamesCollection = defineCollection({
         z.literal("mobile"),
         z.literal("ps3"),
         z.literal("ds"),
+        z.literal("gcn"),
       ]),
       finishedDate: z.union([z.date(), z.literal("N/A")]),
       type: z.literal("game").default("game"),

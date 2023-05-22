@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1006300800,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 21,
+      "abbreviation": "NGC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 762,
+      "name": "HAL Laboratory",
+      "role": "developer"
+    }
+  ]
+}

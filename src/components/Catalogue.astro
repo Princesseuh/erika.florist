@@ -104,7 +104,7 @@
     for (const dataEntry of catalogueData) {
       const div = document.createElement("div");
       div.className = "w-[calc(20%-1rem)]";
-      div.innerHTML = `<div class="relative"><img class="max-w-full h-auto aspect-[3/4] object-cover" style="background-size: cover;background-image: url(${
+      div.innerHTML = `<div class="relative"><img class="max-w-full h-auto aspect-[3/4.3] object-cover" style="background-size: cover;background-image: url(${
         dataEntry.cover.placeholder
       });image-rendering:auto;" onload="this.removeAttribute('style');" src=${
         dataEntry.cover.src

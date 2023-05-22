@@ -82,10 +82,36 @@ const gamesCollection = defineCollection({
     }),
 });
 
+const moviesCollection = defineCollection({
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      rating: ratingSchema,
+      finishedDate: z.date(),
+      cover: z.preprocess(() => "./cover.png", image()),
+      imdb: z.string(),
+      type: z.literal("movie").default("movie"),
+    }),
+});
+
+const showsCollection = defineCollection({
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      rating: ratingSchema,
+      finishedDate: z.date(),
+      cover: z.preprocess(() => "./cover.png", image()),
+      imdb: z.string(),
+      type: z.literal("show").default("show"),
+    }),
+});
+
 export const collections = {
   blog: blogCollection,
   wiki: wikiCollection,
   projects: projectCollection,
   books: booksCollection,
   games: gamesCollection,
+  movies: moviesCollection,
+  shows: showsCollection,
 };

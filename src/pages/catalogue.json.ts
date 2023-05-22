@@ -62,13 +62,39 @@ export const get = (async () => {
       };
     }),
   );
-  const catalogueContent = [...processedGames, ...processedBooks].sort((a, b) => {
-    if (a.finishedDate === "N/A" || b.finishedDate === "N/A") {
-      return 0;
-    }
 
-    return b.finishedDate.getTime() - a.finishedDate.getTime();
-  });
+  const movies = await getCollection("movies");
+  const shows = await getCollection("shows");
+  const processedMoviesAndShows = await Promise.all(
+    [...shows, ...movies].map(async (movieOrShow) => {
+      const { imdb, cover, ...movieData } = movieOrShow.data;
+      const [processedCover, placeholderURL] = await getCoverAndPlaceholder(cover);
+
+      const metadata = await getCatalogueData(movieOrShow);
+      const author = metadata.companies[0];
+
+      return {
+        cover: {
+          src: processedCover.src,
+          width: processedCover.attributes.width,
+          height: processedCover.attributes.height,
+          placeholder: placeholderURL,
+        },
+        author: author,
+        ...movieData,
+      };
+    }),
+  );
+
+  const catalogueContent = [...processedGames, ...processedBooks, ...processedMoviesAndShows].sort(
+    (a, b) => {
+      if (a.finishedDate === "N/A" || b.finishedDate === "N/A") {
+        return 0;
+      }
+
+      return b.finishedDate.getTime() - a.finishedDate.getTime();
+    },
+  );
 
   return {
     body: JSON.stringify(catalogueContent),

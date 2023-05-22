@@ -2,7 +2,11 @@ import type { CollectionEntry } from "astro:content";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-export type allCatalogueTypes = CollectionEntry<"games"> | CollectionEntry<"books">;
+export type allCatalogueTypes =
+  | CollectionEntry<"games">
+  | CollectionEntry<"books">
+  | CollectionEntry<"movies">
+  | CollectionEntry<"shows">;
 
 export async function getCatalogueData(entry: allCatalogueTypes) {
   // HACK: Replace with data collections once I figure a directory structure that's not painful
@@ -23,4 +27,8 @@ export function isCatalogueGame(entry: allCatalogueTypes): entry is CollectionEn
 
 export function isCatalogueBook(entry: allCatalogueTypes): entry is CollectionEntry<"books"> {
   return entry.data.type === "book";
+}
+
+export function isCatalogueMovie(entry: allCatalogueTypes): entry is CollectionEntry<"movies"> {
+  return entry.data.type === "movie";
 }

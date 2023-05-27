@@ -1,0 +1,32 @@
+diff --git a/dist/content/vite-plugin-content-imports.js b/dist/content/vite-plugin-content-imports.js
+index 89029889cb9a26dd7d6646d9a625beb7c32406e7..136f7480d101c7adb2cfc4acf5166c936e3d0138 100644
+--- a/dist/content/vite-plugin-content-imports.js
++++ b/dist/content/vite-plugin-content-imports.js
+@@ -18,7 +18,8 @@ import {
+   globalContentConfigObserver,
+   hasContentFlag,
+   parseEntrySlug,
+-  reloadContentConfigObserver
++  reloadContentConfigObserver,
++  hasUnderscoreBelowContentDirectoryPath,
+ } from "./utils.js";
+ function getContentRendererByViteId(viteId, settings) {
+   let ext = viteId.split(".").pop();
+@@ -51,7 +52,16 @@ function astroContentImportPlugin({
+     {
+       name: "astro:content-imports",
+       async transform(_, viteId) {
+-        if (hasContentFlag(viteId, DATA_FLAG)) {
++				if (hasContentFlag(viteId, DATA_FLAG)) {
++					if (
++						contentPaths.contentDir &&
++						hasUnderscoreBelowContentDirectoryPath(
++							new URL(viteId, "file:"),
++							contentPaths.contentDir
++						)
++					) {
++						return null;
++					}
+           const fileId = viteId.split("?")[0] ?? viteId;
+           const { id, data, collection, _internal } = await getDataEntryModule({
+             fileId,

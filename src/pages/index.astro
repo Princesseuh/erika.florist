@@ -19,33 +19,39 @@ const featuredProjects = (await getCollection("projects"))
 ---
 
 <BaseLayout>
-  <article class="mx-auto mt-2 w-index sm:mt-6">
+  <article class="w-index">
     <h2 class="mb-4 mt-0 text-4xl">Hello! 💐</h2>
 
     <p>
-      I'm <span class="font-bold text-beach-watermelon">Erika</span>, a web/game developer from
-      Canada 🇨🇦, pleased to meet you! Alternatively, I also go by the nickname <span
-        class="font-semibold text-pinky-unicorny"
+      I'm <span class="font-bold text-beach-watermelon">Erika</span>, a web/game
+      developer from Canada 🇨🇦, pleased to meet you! Alternatively, I also go by
+      the nickname <span class="font-semibold text-pinky-unicorny"
         >Princesseuh
       </span> 👸, use whichever you prefer!
     </p>
 
     <p>
-      I am currently employed at <a href="https://astro.build/">Astro</a> where I work as a core developer.
-      While I do touch everything, I notably focus on making sure our users always get just the right
-      tools needed for a good and efficient developer experience!
+      I am currently employed at <a href="https://astro.build/">Astro</a> where I
+      work as a core developer. While I do touch everything, I notably focus on making
+      sure our users always get just the right tools needed for a good and efficient
+      developer experience!
     </p>
 
     <p>
-      Interested in seeing stuff I worked on? Click <a href="/projects/">here for my projects</a>!
-      Wanna read stuff I wrote? Well, lucky you, <a href="/articles/">here's my blog</a>! You want
-      to read random stuff I wrote mostly for myself? <a href="/wiki/"
+      Interested in seeing stuff I worked on? Click <a href="/projects/"
+        >here for my projects</a
+      >! Wanna read stuff I wrote? Well, lucky you, <a href="/articles/"
+        >here's my blog</a
+      >! You want to read random stuff I wrote mostly for myself? <a
+        href="/wiki/"
         >Take a look at my wiki
       </a>!&nbsp;🎉
     </p>
 
     <h3 class="mb-5 text-2xl">Featured works</h3>
-    <div class="mb-6 mt-2 flex flex-wrap items-center justify-center gap-5 sm:mx-10 sm:gap-4">
+    <div
+      class="mb-6 mt-2 flex flex-wrap items-center justify-center gap-5 sm:mx-10 sm:gap-4"
+    >
       {
         featuredProjects.map((project) => (
           <div class="relative h-[180px]">
@@ -77,7 +83,10 @@ const featuredProjects = (await getCollection("projects"))
         {
           wikiItems.map((item) => (
             <section class="mb-3">
-              <a class="block font-bold leading-tight" href={getURLFromEntry(item)}>
+              <a
+                class="block font-bold leading-tight"
+                href={getURLFromEntry(item)}
+              >
                 {item.data.title}
               </a>
               <span

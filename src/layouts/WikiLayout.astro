@@ -1,8 +1,7 @@
 ---
 import ContentHeader from "$components/shared/ContentHeader.astro";
-import WikiNavigation from "$components/wiki/WikiNavigation.astro";
-import WikiTOC from "$components/wiki/WikiTOC.astro";
-import { getLastModified } from "$data/wiki";
+import TableOfContent from "$components/shared/TableOfContent.astro";
+import { getLastModified, getWikiNavigation } from "$data/wiki";
 import BaseLayout from "$layouts/BaseLayout.astro";
 import { readableDate } from "$utils";
 import type { CollectionEntry } from "astro:content";
@@ -16,13 +15,13 @@ const { Content, headings } = await wikiItem.render();
 const lastModified = getLastModified(wikiItem);
 ---
 
-<BaseLayout title={wikiItem.data.title} description={wikiItem.data.tagline}>
-  <section class="mx-auto my-0 grid w-wiki gap-[3%] sm:grid-cols-wiki">
-    <aside class="mb-4 mt-10 hidden transition-opacity duration-100 ease-linear sm:block">
-      <WikiNavigation />
-    </aside>
-
-    <article class="post">
+<BaseLayout
+  title={wikiItem.data.title}
+  description={wikiItem.data.tagline}
+  navItems={await getWikiNavigation(new URL(Astro.request.url))}
+>
+  <section class="mx-auto grid grid-cols-content gap-6">
+    <article class="post max-w-[72ch]">
       <ContentHeader item={wikiItem} includeTags={false} />
       <Content />
 
@@ -35,10 +34,13 @@ const lastModified = getLastModified(wikiItem);
       </span>
     </article>
 
-    <aside class="mb-4 mt-10 hidden transition-opacity duration-100 ease-linear sm:block">
+    <aside class="mr-4 mt-10 hidden sm:block xl:mr-0">
       {
         headings.length > 0 && (
-          <WikiTOC headers={headings} maxDepth={wikiItem.data.maxDepthTOC || 4} />
+          <TableOfContent
+            headers={headings}
+            maxDepth={wikiItem.data.maxDepthTOC || 4}
+          />
         )
       }
     </aside>

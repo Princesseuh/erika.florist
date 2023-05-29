@@ -38,7 +38,12 @@ module.exports = {
         inherit: "inherit",
 
         // Theme
-        // Color Names from colornames.org unless too long
+        isabelline: "#EEEAE8",
+        bittersweet: "#FF5E5B",
+        "rose-ebony": "#5A464C",
+        "tropical-indigo": "#907AD6",
+        puce: "#DB7F8E",
+
         "sugar-cane": "#FEFFFE", // Main text color
         "creative-work": "#D8D9D8", // Used for subtle texts
         "baltic-sea": "#28262C", // Main background color
@@ -49,6 +54,7 @@ module.exports = {
         "pinky-unicorny": "#F291A0", // Alt Accent Color, used when links are hovered
       },
       width: {
+        layout: "min(1280px, 100%)",
         header: "min(1040px, 100%)",
         footer: "min(980px, 100%)",
         index: "min(880px, 100%)",
@@ -58,7 +64,8 @@ module.exports = {
         wiki: "min(1280px, 100%)",
       },
       gridTemplateColumns: {
-        wiki: "17% 60% 17%",
+        layout: "minmax(0, 0.75fr) minmax(0, 3.25fr);",
+        content: "minmax(0, 4.25fr) minmax(0, 1.25fr);",
       },
       opacity: {
         15: "0.15",
@@ -72,13 +79,6 @@ module.exports = {
         "#mobile-menu": {
           transition: "width 0.1s linear",
           borderTop: "3px solid #211f24",
-        },
-        ".header-link": {
-          color: theme("colors.inherit"),
-          marginRight: "1rem",
-          "&:hover": {
-            textDecoration: "none",
-          },
         },
         ".wiki-navigation": {
           "& > li": {
@@ -259,7 +259,7 @@ module.exports = {
           fontFamily:
             "'Cantarell', system- ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'",
           backgroundColor: theme("colors.darker-skylines"),
-          color: theme("colors.sugar-cane"),
+          color: theme("colors.rose-ebony"),
           counterReset: "footnotes",
         },
 
@@ -289,11 +289,6 @@ module.exports = {
           transition: "opacity .1s linear",
         },
 
-        ".post > *": {
-          maxWidth: theme("width.article"),
-          margin: "0 auto",
-        },
-
         "article p, .post p, .post ul, .post pre": {
           marginBottom: "1em",
         },
@@ -320,7 +315,6 @@ module.exports = {
         ".post figure": {
           marginTop: "1.4rem",
           marginBottom: "1rem",
-          maxWidth: theme("width.image"),
           textAlign: "center",
         },
 

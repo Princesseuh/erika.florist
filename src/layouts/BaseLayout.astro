@@ -1,17 +1,19 @@
 ---
-import Header from "$components/layout/Header.astro";
 import MobileMenu from "$components/layout/MobileMenu.astro";
+import Sidebar from "$components/layout/SideBar.astro";
 import Socials from "$components/layout/Socials.astro";
 import { getBaseSiteURL } from "$utils";
 import { Sprite } from "astro-icon";
 import "src/assets/style/prin.css";
+import type { MenuItem } from "../data/sidebarMenu";
 
 interface Props {
   title?: string;
   description?: string | undefined;
+  navItems?: MenuItem[];
 }
 
-const { title, description } = Astro.props;
+const { title, description, navItems } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -49,9 +51,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     }
 
     <title>{title ? `${title} - Erika` : "Erika"}</title>
-    <meta name="description" content={description ? description : "My personal website"} />
+    <meta
+      name="description"
+      content={description ? description : "My personal website"}
+    />
     <meta property="og:title" content={title ? title : "Erika"} />
-    <meta property="og:description" content={description ? description : "My personal website"} />
+    <meta
+      property="og:description"
+      content={description ? description : "My personal website"}
+    />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="erika.florist" />
@@ -63,26 +71,30 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="canonical" href={canonicalURL} />
     <meta property="og:url" content={canonicalURL} />
 
-    <script>
-      import "../assets/scripts/main.ts";
-    </script>
+    <script src="../assets/scripts/main.ts"></script>
   </head>
   <body>
     <Sprite.Provider>
-      <div id="app" class="bg-baltic-sea">
-        <Header />
+      <div id="app" class="bg-isabelline">
+        <section class="mx-auto grid w-layout grid-cols-layout gap-x-6">
+          <Sidebar navMenu={navItems ?? []} />
 
-        <main class="px-6 lg:px-0">
-          <slot />
-        </main>
+          <main class="mt-9">
+            <slot />
+          </main>
+        </section>
 
-        <footer class="flex justify-center bg-darker-skylines px-5 py-6 leading-tight sm:px-0">
+        <footer
+          class="flex justify-center bg-darker-skylines px-5 py-6 leading-tight sm:px-0"
+        >
           <section class="flex w-footer justify-between">
             <Socials />
 
             <div>
               Powered by <a href="https://astro.build/">Astro</a><br />
-              <a href="https://github.com/Princesseuh/erika.florist">Source Code</a><br />
+              <a href="https://github.com/Princesseuh/erika.florist"
+                >Source Code</a
+              ><br />
               <a href="/settings/">Settings</a>
             </div>
           </section>

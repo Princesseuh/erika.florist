@@ -1,19 +1,8 @@
 ---
-import { headerMenu as globalMenu } from "$data/headerMenu";
-import { getWikiItemsByCategory } from "$data/wiki";
-import { WikiCategory, wikiCategories } from "$data/wikiCategories";
-import { getURLFromEntry } from "$utils";
-import { CollectionEntry, getCollection } from "astro:content";
+import { headerMenu as globalMenu } from "$data/sidebarMenu";
 import Socials from "./Socials.astro";
 
-let wikiItems: CollectionEntry<"wiki">[] = [];
-
 const url = new URL(Astro.request.url);
-const isWikiPage = url.pathname.startsWith("/wiki");
-
-if (isWikiPage) {
-  wikiItems = await getCollection("wiki");
-}
 ---
 
 <div
@@ -25,32 +14,15 @@ if (isWikiPage) {
     {/* Global header menu */}
     {
       globalMenu.map((item) => (
-        <a class="header-link mr-0 bg-fin-lanka p-3 text-xl" href={`/${item.toLowerCase()}/`}>
+        <a
+          class="header-link mr-0 bg-fin-lanka p-3 text-xl"
+          href={`/${item.toLowerCase()}/`}
+        >
           {item}
         </a>
       ))
     }
   </nav>
-
-  {/* Wiki-exclusive menu */}
-  {
-    isWikiPage && (
-      <nav class="flex flex-col gap-3 p-3">
-        {wikiCategories.map((category: WikiCategory) => (
-          <>
-            <span class="block font-bold text-sugar-cane">{category.title}</span>
-            {getWikiItemsByCategory(wikiItems, category.key).map(
-              (item: CollectionEntry<"wiki">) => (
-                <a class="header-link mr-0 bg-fin-lanka p-2 text-lg" href={getURLFromEntry(item)}>
-                  {item.data.navigation.label || item.data.title}
-                </a>
-              ),
-            )}
-          </>
-        ))}
-      </nav>
-    )
-  }
 
   <Socials classes="mt-4 justify-center gap-7 mb-8" size={45} />
 </div>

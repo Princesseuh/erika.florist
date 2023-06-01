@@ -1,41 +1,33 @@
 ---
 import { readableDate } from "$utils";
 import type { CollectionEntry } from "astro:content";
+import image from "image/image.png"
 
 interface Props {
-  item:
-    | CollectionEntry<"blog">
-    | CollectionEntry<"projects">
-    | CollectionEntry<"wiki">;
-  includeTags: boolean;
+	item: CollectionEntry<"blog"> | CollectionEntry<"projects"> | CollectionEntry<"wiki">;
+	includeTags: boolean;
 }
 
 const isArticle = (item: Props["item"]): item is CollectionEntry<"blog"> => {
-  return item.data.type === "blog";
+	return item.data.type === "blog";
 };
 
 const { item, includeTags } = Astro.props;
 ---
 
 <header class="mb-4 mt-0">
-  <h1 class="mb-4 mt-0 text-4xl leading-none sm:text-[3.5rem]">
-    {item.data.title}
-  </h1>
-  {
-    item.data.tagline && (
-      <h2 class="relative top-[-5px] m-0 text-xl">{item.data.tagline}</h2>
-    )
-  }
-  {
-    isArticle(item) && includeTags && (
-      <div class="text-creative-work">
-        {readableDate(item.data.date)} ·{" "}
-        {item.data.tags
-          .map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)
-          .reduce((prev: string, curr: string) =>
-            prev === null ? [curr] : [prev, ", ", curr]
-          )}
-      </div>
-    )
-  }
+	<h1 class="mb-4 mt-0 text-4xl leading-none sm:text-[3.5rem]">
+		{item.data.title}
+	</h1>
+	{item.data.tagline && <h2 class="relative top-[-5px] m-0 text-xl">{item.data.tagline}</h2>}
+	{
+		isArticle(item) && includeTags && (
+			<div class="text-creative-work">
+				{readableDate(item.data.date)} ·{" "}
+				{item.data.tags
+					.map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)
+					.reduce((prev: string, curr: string) => (prev === null ? [curr] : [prev, ", ", curr]))}
+			</div>
+		)
+	}
 </header>

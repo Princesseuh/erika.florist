@@ -3,6 +3,8 @@ import type { APIRoute, ImageMetadata } from "astro";
 import { getConfiguredImageService, getImage } from "astro:assets";
 import { getCollection } from "astro:content";
 import type { LocalImageServiceWithPlaceholder } from "src/imageService";
+import image from "../icons/github.svg";
+image;
 
 async function getCoverAndPlaceholder(cover: ImageMetadata) {
   return await Promise.all([

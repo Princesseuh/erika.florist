@@ -51,15 +51,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     }
 
     <title>{title ? `${title} - Erika` : "Erika"}</title>
-    <meta
-      name="description"
-      content={description ? description : "My personal website"}
-    />
+    <meta name="description" content={description ? description : "My personal website"} />
     <meta property="og:title" content={title ? title : "Erika"} />
-    <meta
-      property="og:description"
-      content={description ? description : "My personal website"}
-    />
+    <meta property="og:description" content={description ? description : "My personal website"} />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="erika.florist" />
@@ -84,17 +78,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           </main>
         </section>
 
-        <footer
-          class="flex justify-center bg-darker-skylines px-5 py-6 leading-tight sm:px-0"
-        >
+        <footer class="flex justify-center bg-darker-skylines px-5 py-6 leading-tight sm:px-0">
           <section class="flex w-footer justify-between">
             <Socials />
 
             <div>
               Powered by <a href="https://astro.build/">Astro</a><br />
-              <a href="https://github.com/Princesseuh/erika.florist"
-                >Source Code</a
-              ><br />
+              <a href="https://github.com/Princesseuh/erika.florist">Source Code</a><br />
               <a href="/settings/">Settings</a>
             </div>
           </section>

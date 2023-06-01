@@ -54,7 +54,9 @@ const { width, height, ...attributes } = originalFormat.attributes;
   <img
     src={originalFormat.src}
     style={`background-size: cover;background-image: url(${placeholderURL});image-rendering:auto;`}
-    onload="this.removeAttribute('style');"
+    onload="
+    this.removeAttribute('style');
+    "
     {...passedAttributes}
     {...attributes}
   />

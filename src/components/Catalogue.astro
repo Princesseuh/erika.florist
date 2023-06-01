@@ -47,15 +47,9 @@
 
 <script>
   import { QuickScore } from "quick-score";
-  const searchInput = document.getElementById(
-    "catalogue-search"
-  ) as HTMLInputElement;
-  const ratingSelect = document.getElementById(
-    "catalogue-ratings"
-  ) as HTMLSelectElement;
-  const typeSelect = document.getElementById(
-    "catalogue-types"
-  ) as HTMLSelectElement;
+  const searchInput = document.getElementById("catalogue-search") as HTMLInputElement;
+  const ratingSelect = document.getElementById("catalogue-ratings") as HTMLSelectElement;
+  const typeSelect = document.getElementById("catalogue-types") as HTMLSelectElement;
 
   let qs: QuickScore<CatalogueData>;
   let library: CatalogueData[] = [];
@@ -91,10 +85,7 @@
     }
   }
 
-  function buildLibrary(
-    catalogueData: CatalogueData[],
-    view: "covers" | "list"
-  ) {
+  function buildLibrary(catalogueData: CatalogueData[], view: "covers" | "list") {
     const entryCount = document.getElementById("catalogue-entry-count");
     const catalogueContent = document.getElementById("catalogue-content");
     const fragment = new DocumentFragment();
@@ -112,7 +103,7 @@
         dataEntry.cover.height
       } loading="lazy" decoding="async" />
       <span class="absolute top-0 right-0 pr-[0.15rem] pl-[0.2rem] bg-black/5 rounded-bl-lg">${getRatingEmoji(
-        dataEntry.rating
+        dataEntry.rating,
       )}</span>
       </div>
       <h4 class="m-0 leading-tight">${dataEntry.title}</h4>

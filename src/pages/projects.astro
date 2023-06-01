@@ -19,7 +19,7 @@ type ProjectList = {
 const projectsPerType: ProjectList = {};
 Object.values(ProjectType).forEach((projectType) => {
   projectsPerType[projectType] = projects.filter(
-    (project) => project.data.projectType === projectType
+    (project) => project.data.projectType === projectType,
   );
 });
 
@@ -36,20 +36,17 @@ const readableTitles = {
     <h2 class="mt-0">Projects</h2>
 
     <p>
-      A list of my projects, it isn't necessarily exhaustive and mostly contain
-      the projects I'm the most proud of.
+      A list of my projects, it isn't necessarily exhaustive and mostly contain the projects I'm the
+      most proud of.
     </p>
     <p>
-      Additionally, projects marked with a star (🌟) are featured projects I'm
-      even more proud of! Projects marked with a chain (🔗) will be opened on
-      another website (for instance, their GitHub repo)
+      Additionally, projects marked with a star (🌟) are featured projects I'm even more proud of!
+      Projects marked with a chain (🔗) will be opened on another website (for instance, their
+      GitHub repo)
     </p>
 
-    To see more projects, feel free to visit my <a
-      href="https://github.com/Princesseuh">GitHub</a
-    > or for games especially, my <a href="https://princesseuh.itch.io/"
-      >Itch.io</a
-    >
+    To see more projects, feel free to visit my <a href="https://github.com/Princesseuh">GitHub</a> or
+    for games especially, my <a href="https://princesseuh.itch.io/">Itch.io</a>
 
     {
       Object.entries(projectsPerType)
@@ -61,9 +58,7 @@ const readableTitles = {
               {type[1].map((project) => (
                 <a
                   href={
-                    project.data.external_url
-                      ? project.data.external_url
-                      : getURLFromEntry(project)
+                    project.data.external_url ? project.data.external_url : getURLFromEntry(project)
                   }
                   class={
                     project.data.featured
@@ -97,9 +92,7 @@ const readableTitles = {
                   />
                   <div>
                     <h4 class="m-0 block font-bold">{project.data.title}</h4>
-                    <span class="text-sm text-creative-work">
-                      {project.data.tagline}
-                    </span>
+                    <span class="text-sm text-creative-work">{project.data.tagline}</span>
                   </div>
                 </a>
               ))}

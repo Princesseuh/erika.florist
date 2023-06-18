@@ -38,19 +38,19 @@ module.exports = {
         inherit: "inherit",
 
         // Theme
-        isabelline: "#EEEAE8",
+        isabelline: "#F5F5F5",
         bittersweet: "#FF5E5B",
-        "rose-ebony": "#5A464C",
+        "rose-ebony": "#463539",
         "tropical-indigo": "#907AD6",
         puce: "#DB7F8E",
 
         "sugar-cane": "#FEFFFE", // Main text color
-        "creative-work": "#D8D9D8", // Used for subtle texts
+        "creative-work": "#5a5053", // Used for subtle texts
         "baltic-sea": "#28262C", // Main background color
-        "darker-skylines": "#211f24", // Footer background color
+        "darker-skylines": "#1f191a", // Footer background color
         "fin-lanka": "#201e24", // Alternative background color, used for footnotes and blockquotes
         "engineer-black": "#1f1f1f", // Background color used for code blocks
-        "beach-watermelon": "#E46370", // Accent color, used mainly for links
+        "beach-watermelon": "#e65161", // Accent color, used mainly for links
         "pinky-unicorny": "#F291A0", // Alt Accent Color, used when links are hovered
       },
       width: {
@@ -257,7 +257,7 @@ module.exports = {
         // Custom stuff
         "html, body": {
           fontFamily:
-            "'Cantarell', system- ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'",
+            "Anuphan, system- ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'",
           backgroundColor: theme("colors.darker-skylines"),
           color: theme("colors.rose-ebony"),
           counterReset: "footnotes",
@@ -265,11 +265,13 @@ module.exports = {
 
         a: {
           textDecoration: "none",
+          fontWeight: "500",
           color: theme("colors.beach-watermelon"),
           transition: "color .1s",
           "&:hover": {
             textDecoration: "underline",
-            textDecorationOffset: "3px",
+            textUnderlinePosition: "from-font",
+            textDecorationThickness: "2px",
             color: theme("colors.pinky-unicorny"),
           },
         },

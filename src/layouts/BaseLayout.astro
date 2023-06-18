@@ -11,9 +11,10 @@ interface Props {
   title?: string;
   description?: string | undefined;
   navItems?: MenuItem[];
+  preloadCatalogue?: boolean;
 }
 
-const { title, description, navItems } = Astro.props;
+const { title, description, navItems, preloadCatalogue } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -27,18 +28,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <link
       rel="preload"
-      href="/assets/fonts/cantarell-bold-webfont.woff2"
+      href="/assets/fonts/anuphan.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
-    <link
-      rel="preload"
-      href="/assets/fonts/cantarell-regular-webfont.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+
     {
       import.meta.env.PROD && (
         <link
@@ -49,6 +44,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         />
       )
     }
+
+    {preloadCatalogue && <link rel="preload" href="/catalogue.json" as="fetch" crossorigin />}
 
     <title>{title ? `${title} - Erika` : "Erika"}</title>
     <meta name="description" content={description ? description : "My personal website"} />
@@ -78,7 +75,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           </main>
         </section>
 
-        <footer class="flex justify-center bg-darker-skylines px-5 py-6 leading-tight sm:px-0">
+        <footer
+          class="flex justify-center bg-darker-skylines px-5 py-6 leading-tight text-isabelline sm:px-0"
+        >
           <section class="flex w-footer justify-between">
             <Socials />
 

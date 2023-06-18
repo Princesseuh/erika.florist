@@ -3,8 +3,6 @@ import type { APIRoute, ImageMetadata } from "astro";
 import { getConfiguredImageService, getImage } from "astro:assets";
 import { getCollection } from "astro:content";
 import type { LocalImageServiceWithPlaceholder } from "src/imageService";
-import image from "../icons/github.svg";
-image;
 
 async function getCoverAndPlaceholder(cover: ImageMetadata) {
   return await Promise.all([
@@ -90,8 +88,12 @@ export const get = (async () => {
 
   const catalogueContent = [...processedGames, ...processedBooks, ...processedMoviesAndShows].sort(
     (a, b) => {
-      if (a.finishedDate === "N/A" || b.finishedDate === "N/A") {
+      if (a.finishedDate === "N/A" && b.finishedDate === "N/A") {
         return 0;
+      } else if (a.finishedDate === "N/A") {
+        return 1;
+      } else if (b.finishedDate === "N/A") {
+        return -1;
       }
 
       return b.finishedDate.getTime() - a.finishedDate.getTime();

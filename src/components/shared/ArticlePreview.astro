@@ -11,7 +11,7 @@ const { article } = Astro.props;
 
 <section class="mb-3">
   <a href={getURLFromEntry(article)}>
-    <h4 class="m-0 inline-block text-xl">{article.data.title}</h4>
+    <h4 class="m-0 inline-block text-xl font-semibold">{article.data.title}</h4>
   </a>
 
   <div class="mb-2 text-sm text-creative-work">
@@ -19,11 +19,7 @@ const { article } = Astro.props;
     ·
     {
       article.data.tags
-        .map((tag) => (
-          <a href={"/articles/tags/" + tag + "/"} class="underline">
-            {tag}
-          </a>
-        ))
+        .map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)
         .reduce((prev: string, curr: string) => (prev === null ? [curr] : [prev, ", ", curr]))
     }
   </div>

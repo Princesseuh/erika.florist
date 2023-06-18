@@ -1,0 +1,63 @@
+{
+  "first_release_date": 1443052800,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 3,
+      "abbreviation": "Linux"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    }
+  ],
+  "companies": [
+    {
+      "id": 7837,
+      "name": "Erik Svedäng",
+      "role": "developer"
+    },
+    {
+      "id": 7838,
+      "name": "El Huervo / Niklas Åkerblad",
+      "role": "developer"
+    },
+    {
+      "id": 7839,
+      "name": "Tobias Sjögren",
+      "role": "developer"
+    },
+    {
+      "id": 7840,
+      "name": "Oscar \"Ratvader\" Rydelius",
+      "role": "developer"
+    },
+    {
+      "id": 7843,
+      "name": "Johannes Gotlén",
+      "role": "developer"
+    },
+    {
+      "id": 7844,
+      "name": "Erik Svedäng AB",
+      "role": "publisher"
+    }
+  ]
+}

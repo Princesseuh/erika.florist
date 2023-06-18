@@ -1,9 +1,9 @@
 ---
-import CatalogueCore from "$components/Catalogue.astro";
+import CatalogueCore from "$components/catalogue/Core.astro";
 import BaseLayout from "$layouts/BaseLayout.astro";
 ---
 
-<BaseLayout>
+<BaseLayout preloadCatalogue>
   {/* TODO: Build a server side version of this */}
   <article class="w-index">
     <h2 class="mt-0">Catalogue</h2>

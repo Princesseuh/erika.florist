@@ -2,7 +2,7 @@
 title: The Gardens Between
 platform: "pc"
 finishedDate: 2021-03-02
-rating: "liked"
+rating: "okay"
 cover_alt: The cover depicts two characters standing in front of a dreamy environnement
 igdb: 27324
 ---

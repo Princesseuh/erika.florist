@@ -20,14 +20,11 @@ const featuredProjects = (await getCollection("projects"))
 
 <BaseLayout>
   <article class="w-index">
-    <h2 class="mb-4 mt-0 text-4xl">Hello! 💐</h2>
+    <h2 class="mb-4 mt-0 text-4xl no-underline">Hello! 💐</h2>
 
     <p>
-      I'm <span class="font-bold text-beach-watermelon">Erika</span>, a web/game developer from
-      Canada 🇨🇦, pleased to meet you! Alternatively, I also go by the nickname <span
-        class="font-semibold text-pinky-unicorny"
-        >Princesseuh
-      </span> 👸, use whichever you prefer!
+      I'm <span class="font-semibold text-beach-watermelon">Erika</span>, a web/game developer from
+      Sweden 🇸🇪, pleased to meet you!
     </p>
 
     <p>
@@ -77,7 +74,7 @@ const featuredProjects = (await getCollection("projects"))
         {
           wikiItems.map((item) => (
             <section class="mb-3">
-              <a class="block font-bold leading-tight" href={getURLFromEntry(item)}>
+              <a class="block font-semibold leading-tight" href={getURLFromEntry(item)}>
                 {item.data.title}
               </a>
               <span

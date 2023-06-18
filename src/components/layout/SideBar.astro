@@ -2,17 +2,14 @@
 import MobileMenuToggle from "$components/layout/MobileMenuToggle.astro";
 import Socials from "$components/layout/Socials.astro";
 import { MenuItem, MenuItemLink, headerMenu as mainMenu } from "$data/sidebarMenu";
+import { randomArrayEntry } from "$utils";
 
 interface Props {
   navMenu: MenuItem[];
 }
 
-function randomArrayEntry(array: any[]) {
-  return array[Math.floor(Math.random() * array.length)];
-}
-
-const title = randomArrayEntry(["erika", "erika", "erika", "Erika"]);
-const ponctuation = randomArrayEntry(["", "", "", "", "", ".", "!"]);
+const title = Math.random() > 0.1 ? "erika" : "Erika";
+const ponctuation = randomArrayEntry(["", "", "", "", "", "", ";", ".", "!"]);
 const { navMenu } = Astro.props;
 
 let processedNavMenu: { heading: string | undefined; children: MenuItemLink[] }[] = [];
@@ -44,16 +41,16 @@ if (navMenu && navMenu.length > 0) {
 }
 ---
 
-<aside class="ml-4 flex flex-col text-[0.95rem] xl:ml-0 my-8">
+<aside class="my-8 ml-4 flex flex-col text-[0.95rem] xl:ml-0">
   <section>
     <h1 class="m-0 inline-block text-2xl">
-      <a class="text-inherit" href="/">{title}{ponctuation}</a>
+      <a class="font-semibold text-inherit no-underline" href="/">{title}{ponctuation}</a>
     </h1>
 
     <nav class="hidden flex-wrap items-center gap-x-4 sm:flex">
       {
         mainMenu.map((item) => (
-          <a class="text-inherit" href={`/${item.toLowerCase()}/`}>
+          <a class="block text-inherit" href={`/${item.toLowerCase()}/`}>
             {item}
           </a>
         ))
@@ -68,7 +65,7 @@ if (navMenu && navMenu.length > 0) {
       processedNavMenu
         .filter((navItem) => navItem.children.length > 0)
         .flatMap((navItem) => (
-          <ul class="m-0 list-none p-0 mb-4">
+          <ul class="m-0 mb-4 list-none p-0">
             <h3 class="m-0 text-lg">{navItem.heading}</h3>
             {navItem.children.map((child) => (
               <li>

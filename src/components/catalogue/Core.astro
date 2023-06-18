@@ -1,4 +1,9 @@
-<div>
+---
+import Skeleton from "./Skeleton.astro";
+const pageLenth = 30;
+---
+
+<div id="catalogue-core" data-pagelength={pageLenth}>
   <header class="flex justify-between">
     <div id="catalogue-filters" class="flex flex-grow gap-4">
       <div>
@@ -33,7 +38,10 @@
     <div id="catalogue-entry-count" class="flex items-center">0 entries</div>
   </header>
   <div id="catalogue-content" class="mt-4 flex flex-wrap gap-x-4">
-    <span class="block text-center">Loading...</span>
+    {Array.from({ length: pageLenth }).map(() => <Skeleton />)}
+  </div>
+  <div class="mt-4 flex">
+    <button id="catalogue-seemore" class="h-6 w-full">Load more</button>
   </div>
 </div>
 
@@ -50,9 +58,14 @@
   const searchInput = document.getElementById("catalogue-search") as HTMLInputElement;
   const ratingSelect = document.getElementById("catalogue-ratings") as HTMLSelectElement;
   const typeSelect = document.getElementById("catalogue-types") as HTMLSelectElement;
+  const seeMoreButton = document.getElementById("catalogue-seemore") as HTMLButtonElement;
+  const core = document.getElementById("catalogue-core") as HTMLDivElement;
 
   let qs: QuickScore<CatalogueData>;
   let library: CatalogueData[] = [];
+
+  let currentIndex = 0;
+  const pageLength = parseInt(core.dataset.pagelength ?? "30") ?? 30;
 
   type CatalogueData = {
     cover: { src: string; width: number; height: number; placeholder: string };
@@ -85,14 +98,26 @@
     }
   }
 
-  function buildLibrary(catalogueData: CatalogueData[], view: "covers" | "list") {
+  function buildLibrary(
+    catalogueData: CatalogueData[],
+    append = false,
+    view: "covers" | "list" = "covers",
+  ) {
     const entryCount = document.getElementById("catalogue-entry-count");
     const catalogueContent = document.getElementById("catalogue-content");
     const fragment = new DocumentFragment();
+    currentIndex = Math.min(catalogueData.length, currentIndex);
+    seeMoreButton.disabled =
+      currentIndex === catalogueData.length || currentIndex + pageLength >= catalogueData.length;
 
+    // TODO: Implement list view
     view;
 
-    for (const dataEntry of catalogueData) {
+    const slicedData = catalogueData.slice(
+      currentIndex,
+      Math.min(catalogueData.length, currentIndex + pageLength),
+    );
+    for (const dataEntry of slicedData) {
       const div = document.createElement("div");
       div.className = "w-[calc(20%-1rem)]";
       div.innerHTML = `<div class="relative"><img class="max-w-full h-auto aspect-[3/4.3] object-cover" style="background-size: cover;background-image: url(${
@@ -111,8 +136,16 @@
       fragment.appendChild(div);
     }
 
-    catalogueContent?.replaceChildren(fragment);
-    if (entryCount) entryCount.innerText = `${catalogueData.length} entries`;
+    if (append) {
+      catalogueContent?.appendChild(fragment);
+    } else {
+      catalogueContent?.replaceChildren(fragment);
+    }
+    if (entryCount)
+      entryCount.innerText = `${Math.min(
+        (currentIndex / pageLength + 1) * pageLength,
+        catalogueData.length,
+      )}/${catalogueData.length} entries`;
 
     function getRatingEmoji(rating: string) {
       switch (rating) {
@@ -138,17 +171,25 @@
 
   qs = new QuickScore(library);
   const filteredLibrary = searchLibrary();
-  buildLibrary(filteredLibrary, "covers");
+  buildLibrary(filteredLibrary, false, "covers");
 
   searchInput.addEventListener("input", () => {
-    buildLibrary(searchLibrary(), "covers");
+    currentIndex = 0;
+    buildLibrary(searchLibrary(), false, "covers");
   });
 
   ratingSelect.addEventListener("change", () => {
-    buildLibrary(searchLibrary(), "covers");
+    currentIndex = 0;
+    buildLibrary(searchLibrary(), false, "covers");
   });
 
   typeSelect.addEventListener("change", () => {
-    buildLibrary(searchLibrary(), "covers");
+    currentIndex = 0;
+    buildLibrary(searchLibrary(), false, "covers");
+  });
+
+  seeMoreButton.addEventListener("click", () => {
+    currentIndex += pageLength;
+    buildLibrary(searchLibrary(), true, "covers");
   });
 </script>

@@ -2,7 +2,7 @@
 title: Young Royals
 finishedDate: 2021-08-15
 rating: "liked"
-imdb: "tt14664414"
+tmdb: "tt14664414"
 ---
 
 There's not many Swedish shows available on Netflix Canada so it was really cool to be able to experience it in VO. I could read most of the sentences more or less, that was pretty cool

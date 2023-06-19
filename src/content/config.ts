@@ -91,7 +91,7 @@ const moviesCollection = defineCollection({
       rating: ratingSchema,
       finishedDate: z.date(),
       cover: z.preprocess(() => "./cover.png", image()),
-      imdb: z.string(),
+      tmdb: z.string(),
       type: z.literal("movie").default("movie"),
     }),
 });
@@ -103,7 +103,7 @@ const showsCollection = defineCollection({
       rating: ratingSchema,
       finishedDate: z.date(),
       cover: z.preprocess(() => "./cover.png", image()),
-      imdb: z.string(),
+      tmdb: z.string(),
       type: z.literal("show").default("show"),
     }),
 });

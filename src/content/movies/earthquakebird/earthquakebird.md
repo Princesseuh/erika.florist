@@ -2,7 +2,7 @@
 title: "Earthquake Bird"
 rating: "liked"
 finishedDate: 2021-03-22
-imdb: "tt8178486"
+tmdb: "tt8178486"
 ---
 
 The storyline isn't necessarily exceptional but there's SUCH a mood throughout the movie

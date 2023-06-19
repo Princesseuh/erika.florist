@@ -2,7 +2,7 @@
 title: She-Ra and the Princesses of Power
 finishedDate: 2021-10-28
 rating: "liked"
-imdb: "tt7745956"
+tmdb: "tt7745956"
 ---
 
 I overall liked this, it made me feel good. Though I definitely think it's weaker compared to similar shows. It does a lot of things well, it has nice representation and diversity (though sometimes it does feel a bit "White savior come to the rescue"), it has some very fun characters (My favorites being Entrapta, Catra and Angela) and certain scenes are really powerful and emotional on their own

@@ -40,8 +40,6 @@ export async function getDataForMoviesAndShows(type: "movies" | "shows") {
       `https://api.themoviedb.org/3/${type === "movies" ? "movie" : "tv"}/${id}?api_key=${apiKey}`,
     ).then((response) => response.json())) as MovieData;
 
-    console.log(response);
-
     const resultData = {
       title: response.title,
       tagline: response.tagline,

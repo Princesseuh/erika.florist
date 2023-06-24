@@ -47,7 +47,7 @@ module.exports = {
         "sugar-cane": "#FEFFFE", // Main text color
         "creative-work": "#5a5053", // Used for subtle texts
         "baltic-sea": "#28262C", // Main background color
-        "darker-skylines": "#1f191a", // Footer background color
+        "darker-skylines": "#1d191a", // Footer background color
         "fin-lanka": "#201e24", // Alternative background color, used for footnotes and blockquotes
         "engineer-black": "#1f1f1f", // Background color used for code blocks
         "beach-watermelon": "#e65161", // Accent color, used mainly for links
@@ -76,10 +76,6 @@ module.exports = {
   plugins: [
     plugin(({ addComponents, theme }) => {
       addComponents({
-        "#mobile-menu": {
-          transition: "width 0.1s linear",
-          borderTop: "3px solid #211f24",
-        },
         ".wiki-navigation": {
           "& > li": {
             marginBottom: "1rem",
@@ -184,6 +180,7 @@ module.exports = {
           margin: "1.5em auto",
           maxWidth: "min(675px, 100%)",
           backgroundColor: theme("colors.fin-lanka"),
+          color: theme("colors.isabelline"),
           borderRadius: "4px",
 
           ".block-title": {
@@ -318,6 +315,7 @@ module.exports = {
           marginTop: "1.4rem",
           marginBottom: "1rem",
           textAlign: "center",
+          "@apply sm:mx-8 mx-0": {},
         },
 
         ".post img": {
@@ -334,11 +332,7 @@ module.exports = {
         },
 
         ".post .image-left": {
-          float: "left",
-          marginRight: "1.5rem",
-          marginLeft: ".5rem",
-          marginTop: ".8rem",
-          maxWidth: "max-content",
+          "@apply sm:float-left sm:mr-6 sm:ml-2 sm:mt-3 sm:max-w-max": {},
         },
 
         ".post figcaption": {

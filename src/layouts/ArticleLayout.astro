@@ -14,7 +14,7 @@ const { Content, headings } = await article.render();
 
 <BaseLayout title={article.data.title} description={article.data.tagline}>
   <section class="mx-auto flex gap-6">
-    <article class="post w-[72ch]">
+    <article class="post w-[72ch] max-w-full">
       <ContentHeader item={article} includeTags />
       <Content />
     </article>

@@ -1,5 +1,6 @@
 ---
 import MobileMenu from "$components/layout/MobileMenu.astro";
+import MobileMenuSide from "$components/layout/MobileMenuSide.astro";
 import Sidebar from "$components/layout/SideBar.astro";
 import Socials from "$components/layout/Socials.astro";
 import { getBaseSiteURL } from "$utils";
@@ -67,10 +68,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <body>
     <Sprite.Provider>
       <div id="app" class="bg-isabelline">
-        <section class="mx-auto grid w-layout grid-cols-layout gap-x-6">
+        <section class="mx-auto w-layout p-5 sm:grid sm:grid-cols-layout sm:gap-x-6 sm:p-0">
           <Sidebar navMenu={navItems ?? []} />
 
-          <main class="mt-9">
+          <main class="sm:mt-9">
             <slot />
           </main>
         </section>
@@ -90,6 +91,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         </footer>
 
         <MobileMenu />
+        <MobileMenuSide navMenu={navItems ?? []} />
       </div>
     </Sprite.Provider>
   </body>

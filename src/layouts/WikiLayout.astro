@@ -20,7 +20,7 @@ const lastModified = getLastModified(wikiItem);
   description={wikiItem.data.tagline}
   navItems={await getWikiNavigation(new URL(Astro.request.url))}
 >
-  <section class="mx-auto grid grid-cols-content gap-6">
+  <section class="mx-auto grid-cols-content gap-6 sm:grid">
     <article class="post max-w-[72ch]">
       <ContentHeader item={wikiItem} includeTags={false} />
       <Content />
@@ -37,10 +37,7 @@ const lastModified = getLastModified(wikiItem);
     <aside class="mr-4 mt-10 hidden sm:block xl:mr-0">
       {
         headings.length > 0 && (
-          <TableOfContent
-            headers={headings}
-            maxDepth={wikiItem.data.maxDepthTOC || 4}
-          />
+          <TableOfContent headers={headings} maxDepth={wikiItem.data.maxDepthTOC || 4} />
         )
       }
     </aside>

@@ -56,7 +56,7 @@ const booksCollection = defineCollection({
     z.object({
       title: z.string(),
       rating: ratingSchema,
-      platform: z.union([z.literal("ebook"), z.literal("physical")]),
+      platform: z.union([z.literal("ebook"), z.literal("physical"), z.literal("audiobook")]),
       finishedDate: z.date(),
       cover: z.preprocess(() => "./cover.png", image()),
       isbn: z.string(),

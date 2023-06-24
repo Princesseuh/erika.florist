@@ -1,51 +1,19 @@
 ---
-import MobileMenuToggle from "$components/layout/MobileMenuToggle.astro";
 import Socials from "$components/layout/Socials.astro";
-import { MenuItem, MenuItemLink, headerMenu as mainMenu } from "$data/sidebarMenu";
-import { randomArrayEntry } from "$utils";
+import { headerMenu as mainMenu, processNavMenu, type MenuItem } from "$data/sidebarMenu";
+import Logo from "./Logo.astro";
 
 interface Props {
   navMenu: MenuItem[];
 }
 
-const title = Math.random() > 0.1 ? "erika" : "Erika";
-const ponctuation = randomArrayEntry(["", "", "", "", "", "", ";", ".", "!"]);
 const { navMenu } = Astro.props;
-
-let processedNavMenu: { heading: string | undefined; children: MenuItemLink[] }[] = [];
-if (navMenu && navMenu.length > 0) {
-  let commitedNav: { heading: string | undefined; children: MenuItemLink[] } | undefined =
-    undefined;
-  // This could be a reduce... but it'd probably be super unreadable so whatever
-  navMenu.forEach((item) => {
-    switch (item.type) {
-      case "header":
-        if (commitedNav) {
-          processedNavMenu.push(commitedNav);
-          commitedNav = undefined;
-        }
-        commitedNav = { heading: item.label, children: [] };
-        break;
-      case "link":
-        if (commitedNav) {
-          commitedNav.children.push(item);
-          break;
-        }
-        commitedNav = { heading: undefined, children: [item] };
-        break;
-    }
-  });
-  if (commitedNav) {
-    processedNavMenu.push(commitedNav);
-  }
-}
+const processedNavMenu = processNavMenu(navMenu);
 ---
 
-<aside class="my-8 ml-4 flex flex-col text-[0.95rem] xl:ml-0">
+<aside class="my-8 ml-4 hidden flex-col text-[0.95rem] sm:flex xl:ml-0">
   <section>
-    <h1 class="m-0 inline-block text-2xl">
-      <a class="font-semibold text-inherit no-underline" href="/">{title}{ponctuation}</a>
-    </h1>
+    <Logo />
 
     <nav class="hidden flex-wrap items-center gap-x-4 sm:flex">
       {
@@ -62,21 +30,18 @@ if (navMenu && navMenu.length > 0) {
 
   <nav>
     {
-      processedNavMenu
-        .filter((navItem) => navItem.children.length > 0)
-        .flatMap((navItem) => (
-          <ul class="m-0 mb-4 list-none p-0">
-            <h3 class="m-0 text-lg">{navItem.heading}</h3>
-            {navItem.children.map((child) => (
-              <li>
-                <a href={child.link}>{child.label}</a>
-              </li>
-            ))}
-          </ul>
-        ))
+      processedNavMenu.flatMap((navItem) => (
+        <ul class="m-0 mb-4 list-none p-0">
+          <h3 class="m-0 text-lg">{navItem.heading}</h3>
+          {navItem.children.map((child) => (
+            <li>
+              <a href={child.link}>{child.label}</a>
+            </li>
+          ))}
+        </ul>
+      ))
     }
   </nav>
 
   <Socials classes="hidden sm:flex justify-center mt-4" />
-  <MobileMenuToggle />
 </aside>

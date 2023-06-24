@@ -21,6 +21,7 @@ pre {
 
 .post code {
   padding: 0.08em 0.3em;
+  word-break: break-word;
 }
 
 .post code::before {

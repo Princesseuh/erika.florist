@@ -1,4 +1,4 @@
-export const headerMenu = ["Projects", "Articles", "Wiki", "Catalogue", "Settings"];
+export const headerMenu = ["Projects", "Articles", "Wiki", "Catalogue", "Settings"] as const;
 
 export type MenuItem = MenuItemLink | MenuItemHeader;
 

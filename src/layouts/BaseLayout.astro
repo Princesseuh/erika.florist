@@ -64,10 +64,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:url" content={canonicalURL} />
 
     <script src="../assets/scripts/main.ts"></script>
+    <script is:inline>
+      const theme = localStorage.getItem("theme");
+      const isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (theme === "dark" || (!theme && isSystemDark)) {
+        document.documentElement.classList.add("dark");
+      } else if (theme === "light") {
+        document.documentElement.classList.remove("dark");
+      } else if (theme === "system" && isSystemDark) {
+        document.documentElement.classList.add("dark");
+      }
+    </script>
   </head>
   <body>
     <Sprite.Provider>
-      <div id="app" class="bg-isabelline">
+      <div id="app" class="bg-isabelline dark:bg-darker-skylines">
         <section class="mx-auto w-layout p-5 sm:grid sm:grid-cols-layout sm:gap-x-6 sm:p-0">
           <Sidebar navMenu={navItems ?? []} />
 
@@ -77,7 +88,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         </section>
 
         <footer
-          class="flex justify-center bg-darker-skylines px-5 py-6 leading-tight text-isabelline sm:px-0"
+          class="flex justify-center bg-darker-skylines px-5 py-6 leading-tight text-isabelline dark:bg-mobile-menu sm:px-0"
         >
           <section class="flex w-footer justify-between">
             <Socials />

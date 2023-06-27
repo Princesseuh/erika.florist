@@ -1,6 +1,7 @@
 ---
 import Socials from "$components/layout/Socials.astro";
 import { headerMenu as mainMenu, processNavMenu, type MenuItem } from "$data/sidebarMenu";
+import DarkModeToggle from "./DarkModeToggle.astro";
 import Logo from "./Logo.astro";
 
 interface Props {
@@ -13,7 +14,10 @@ const processedNavMenu = processNavMenu(navMenu);
 
 <aside class="my-8 ml-4 hidden flex-col text-[0.95rem] sm:flex xl:ml-0">
   <section>
-    <Logo />
+    <section class="flex items-center justify-between">
+      <Logo />
+      <DarkModeToggle />
+    </section>
 
     <nav class="hidden flex-wrap items-center gap-x-4 sm:flex">
       {

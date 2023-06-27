@@ -4,6 +4,7 @@ const plugin = require("tailwindcss/plugin");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{astro,js,ts,tsx,md,mdx}"],
+  darkMode: "class",
   corePlugins: {
     preflight: false,
 
@@ -40,15 +41,19 @@ module.exports = {
         // Theme
         isabelline: "#F5F5F5",
         bittersweet: "#FF5E5B",
+        "dark-text": "#F1E7E4",
+        "dark-subtle-text": "#dcdcdc",
         "rose-ebony": "#463539",
         "tropical-indigo": "#907AD6",
         puce: "#DB7F8E",
+        "mobile-menu": "#191516",
+        "mobile-menu-side": "#161313",
 
         "sugar-cane": "#FEFFFE", // Main text color
         "creative-work": "#5a5053", // Used for subtle texts
         "baltic-sea": "#28262C", // Main background color
         "darker-skylines": "#1d191a", // Footer background color
-        "fin-lanka": "#201e24", // Alternative background color, used for footnotes and blockquotes
+        "fin-lanka": "#212121", // Alternative background color, used for footnotes and blockquotes
         "engineer-black": "#1f1f1f", // Background color used for code blocks
         "beach-watermelon": "#e65161", // Accent color, used mainly for links
         "pinky-unicorny": "#F291A0", // Alt Accent Color, used when links are hovered
@@ -258,6 +263,7 @@ module.exports = {
           backgroundColor: theme("colors.darker-skylines"),
           color: theme("colors.rose-ebony"),
           counterReset: "footnotes",
+          "@apply dark:text-dark-text": {},
         },
 
         a: {

@@ -21,7 +21,7 @@ const { item, includeTags } = Astro.props;
   {item.data.tagline && <h2 class="relative top-[-5px] m-0 text-xl">{item.data.tagline}</h2>}
   {
     isArticle(item) && includeTags && (
-      <div class="text-creative-work">
+      <div class="text-creative-work dark:text-dark-subtle-text">
         {readableDate(item.data.date)} ·{" "}
         {item.data.tags
           .map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)

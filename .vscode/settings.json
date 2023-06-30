@@ -9,9 +9,6 @@
     "pnpm-lock.yaml"
   ],
   "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
   "[markdown]": {
     "editor.wordWrap": "on",
     "editor.codeActionsOnSave": {

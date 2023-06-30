@@ -8,12 +8,12 @@ pre {
   background-color: #212121;
   border-radius: 4px;
   line-height: 1.3;
+  color: #F5F5F5;
 }
 
 .post > pre {
   padding: 1em;
   margin: 1.5em auto;
-  max-width: min(960px, 100%);
   vertical-align: middle;
   overflow-x: auto;
   font-size: 17px;
@@ -21,6 +21,7 @@ pre {
 
 .post code {
   padding: 0.08em 0.3em;
+  word-break: break-word;
 }
 
 .post code::before {
@@ -32,18 +33,8 @@ pre {
 }
 
 @font-face {
-  font-family: "Cantarell";
-  font-style: normal;
-  font-weight: 400;
+  font-family: "Anuphan";
+  font-weight: 1 900;
   font-display: swap;
-  src: local("Cantarell"), url("/assets/fonts/cantarell-regular-webfont.woff2") format("woff2"),
-    url("/assets/fonts/cantarell-regular-webfont.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Cantarell";
-  font-weight: 700;
-  font-display: swap;
-  src: local("Cantarell"), url("/assets/fonts/cantarell-bold-webfont.woff2") format("woff2"),
-    url("/assets/fonts/cantarell-bold-webfont.woff") format("woff");
+  src: url("/assets/fonts/anuphan.woff2") format('woff2');
 }

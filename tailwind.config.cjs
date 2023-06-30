@@ -4,6 +4,7 @@ const plugin = require("tailwindcss/plugin");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{astro,js,ts,tsx,md,mdx}"],
+  darkMode: "class",
   corePlugins: {
     preflight: false,
 
@@ -38,17 +39,28 @@ module.exports = {
         inherit: "inherit",
 
         // Theme
-        // Color Names from colornames.org unless too long
+        isabelline: "#F5F5F5",
+        bittersweet: "#FF5E5B",
+        "dark-text": "#F1E7E4",
+        "dark-subtle-text": "#dcdcdc",
+        "rose-ebony": "#463539",
+        "tropical-indigo": "#907AD6",
+        puce: "#DB7F8E",
+        "mobile-menu": "#191516",
+        "mobile-menu-side": "#161313",
+        "dark-skeleton": "#332e2f",
+
         "sugar-cane": "#FEFFFE", // Main text color
-        "creative-work": "#D8D9D8", // Used for subtle texts
+        "creative-work": "#5a5053", // Used for subtle texts
         "baltic-sea": "#28262C", // Main background color
-        "darker-skylines": "#211f24", // Footer background color
-        "fin-lanka": "#201e24", // Alternative background color, used for footnotes and blockquotes
+        "darker-skylines": "#1d191a", // Footer background color
+        "fin-lanka": "#212121", // Alternative background color, used for footnotes and blockquotes
         "engineer-black": "#1f1f1f", // Background color used for code blocks
-        "beach-watermelon": "#E46370", // Accent color, used mainly for links
+        "beach-watermelon": "#e65161", // Accent color, used mainly for links
         "pinky-unicorny": "#F291A0", // Alt Accent Color, used when links are hovered
       },
       width: {
+        layout: "min(1280px, 100%)",
         header: "min(1040px, 100%)",
         footer: "min(980px, 100%)",
         index: "min(880px, 100%)",
@@ -58,7 +70,8 @@ module.exports = {
         wiki: "min(1280px, 100%)",
       },
       gridTemplateColumns: {
-        wiki: "17% 60% 17%",
+        layout: "minmax(0, 0.75fr) minmax(0, 3.25fr);",
+        content: "minmax(0, 4.25fr) minmax(0, 1.25fr);",
       },
       opacity: {
         15: "0.15",
@@ -69,17 +82,6 @@ module.exports = {
   plugins: [
     plugin(({ addComponents, theme }) => {
       addComponents({
-        "#mobile-menu": {
-          transition: "width 0.1s linear",
-          borderTop: "3px solid #211f24",
-        },
-        ".header-link": {
-          color: theme("colors.inherit"),
-          marginRight: "1rem",
-          "&:hover": {
-            textDecoration: "none",
-          },
-        },
         ".wiki-navigation": {
           "& > li": {
             marginBottom: "1rem",
@@ -164,6 +166,7 @@ module.exports = {
           },
           "& a": {
             color: theme("colors.creative-work"),
+            "@apply dark:text-dark-subtle-text": {},
           },
         },
 
@@ -184,6 +187,7 @@ module.exports = {
           margin: "1.5em auto",
           maxWidth: "min(675px, 100%)",
           backgroundColor: theme("colors.fin-lanka"),
+          color: theme("colors.isabelline"),
           borderRadius: "4px",
 
           ".block-title": {
@@ -237,7 +241,7 @@ module.exports = {
         },
 
         html: {
-          fontSize: "18px",
+          fontSize: "17px",
           lineHeight: "1.5",
         },
 
@@ -257,19 +261,26 @@ module.exports = {
         // Custom stuff
         "html, body": {
           fontFamily:
-            "'Cantarell', system- ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'",
+            "Anuphan, system- ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'",
           backgroundColor: theme("colors.darker-skylines"),
-          color: theme("colors.sugar-cane"),
+          color: theme("colors.rose-ebony"),
           counterReset: "footnotes",
+          "@apply dark:text-dark-text": {},
+        },
+
+        ".dark": {
+          "@apply bg-mobile-menu": {},
         },
 
         a: {
           textDecoration: "none",
+          fontWeight: "500",
           color: theme("colors.beach-watermelon"),
           transition: "color .1s",
           "&:hover": {
             textDecoration: "underline",
-            textDecorationOffset: "3px",
+            textUnderlinePosition: "from-font",
+            textDecorationThickness: "2px",
             color: theme("colors.pinky-unicorny"),
           },
         },
@@ -287,11 +298,6 @@ module.exports = {
         article: {
           marginBottom: "3rem",
           transition: "opacity .1s linear",
-        },
-
-        ".post > *": {
-          maxWidth: theme("width.article"),
-          margin: "0 auto",
         },
 
         "article p, .post p, .post ul, .post pre": {
@@ -320,8 +326,8 @@ module.exports = {
         ".post figure": {
           marginTop: "1.4rem",
           marginBottom: "1rem",
-          maxWidth: theme("width.image"),
           textAlign: "center",
+          "@apply sm:mx-8 mx-0": {},
         },
 
         ".post img": {
@@ -338,11 +344,7 @@ module.exports = {
         },
 
         ".post .image-left": {
-          float: "left",
-          marginRight: "1.5rem",
-          marginLeft: ".5rem",
-          marginTop: ".8rem",
-          maxWidth: "max-content",
+          "@apply sm:float-left sm:mr-6 sm:ml-2 sm:mt-3 sm:max-w-max": {},
         },
 
         ".post figcaption": {
@@ -352,6 +354,7 @@ module.exports = {
           fontStyle: "italic",
           color: theme("colors.creative-work"),
           fontSize: ".95rem",
+          "@apply dark:text-dark-subtle-text": {},
         },
 
         ".post > iframe": {

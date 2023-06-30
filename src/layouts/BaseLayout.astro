@@ -1,17 +1,21 @@
 ---
-import Header from "$components/layout/Header.astro";
 import MobileMenu from "$components/layout/MobileMenu.astro";
+import MobileMenuSide from "$components/layout/MobileMenuSide.astro";
+import Sidebar from "$components/layout/SideBar.astro";
 import Socials from "$components/layout/Socials.astro";
 import { getBaseSiteURL } from "$utils";
 import { Sprite } from "astro-icon";
 import "src/assets/style/prin.css";
+import type { MenuItem } from "../data/sidebarMenu";
 
 interface Props {
   title?: string;
   description?: string | undefined;
+  navItems?: MenuItem[];
+  preloadCatalogue?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, navItems, preloadCatalogue } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -25,18 +29,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <link
       rel="preload"
-      href="/assets/fonts/cantarell-bold-webfont.woff2"
+      href="/assets/fonts/anuphan.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
-    <link
-      rel="preload"
-      href="/assets/fonts/cantarell-regular-webfont.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+
     {
       import.meta.env.PROD && (
         <link
@@ -47,6 +45,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         />
       )
     }
+
+    {preloadCatalogue && <link rel="preload" href="/catalogue.json" as="fetch" crossorigin />}
 
     <title>{title ? `${title} - Erika` : "Erika"}</title>
     <meta name="description" content={description ? description : "My personal website"} />
@@ -63,32 +63,46 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="canonical" href={canonicalURL} />
     <meta property="og:url" content={canonicalURL} />
 
-    <script>
-      import "../assets/scripts/main.ts";
+    <script src="../assets/scripts/main.ts"></script>
+    <script is:inline>
+      const theme = localStorage.getItem("theme");
+      const isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (theme === "dark" || (!theme && isSystemDark)) {
+        document.documentElement.classList.add("dark");
+      } else if (theme === "light") {
+        document.documentElement.classList.remove("dark");
+      } else if (theme === "system" && isSystemDark) {
+        document.documentElement.classList.add("dark");
+      }
     </script>
   </head>
   <body>
     <Sprite.Provider>
-      <div id="app" class="bg-baltic-sea">
-        <Header />
+      <div id="app" class="bg-isabelline dark:bg-darker-skylines">
+        <section class="mx-auto w-layout p-5 sm:grid sm:grid-cols-layout sm:gap-x-6 sm:p-0">
+          <Sidebar navMenu={navItems ?? []} />
 
-        <main class="px-6 lg:px-0">
-          <slot />
-        </main>
+          <main class="sm:mt-9">
+            <slot />
+          </main>
+        </section>
 
-        <footer class="flex justify-center bg-darker-skylines px-5 py-6 leading-tight sm:px-0">
+        <footer
+          class="flex justify-center bg-darker-skylines px-5 py-6 leading-tight text-isabelline dark:bg-mobile-menu sm:px-0"
+        >
           <section class="flex w-footer justify-between">
             <Socials />
 
             <div>
               Powered by <a href="https://astro.build/">Astro</a><br />
               <a href="https://github.com/Princesseuh/erika.florist">Source Code</a><br />
-              <a href="/settings/">Settings</a>
+              <a href="/changelog/">Changelog</a>
             </div>
           </section>
         </footer>
 
         <MobileMenu />
+        <MobileMenuSide navMenu={navItems ?? []} />
       </div>
     </Sprite.Provider>
   </body>

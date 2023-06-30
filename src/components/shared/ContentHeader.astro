@@ -14,12 +14,14 @@ const isArticle = (item: Props["item"]): item is CollectionEntry<"blog"> => {
 const { item, includeTags } = Astro.props;
 ---
 
-<header class="mb-4 mt-4">
-  <h1 class="mb-4 mt-0 text-4xl leading-none sm:text-[3.5rem]">{item.data.title}</h1>
+<header class="mb-4 mt-0">
+  <h1 class="mb-4 mt-0 text-4xl leading-none sm:text-[3.5rem]">
+    {item.data.title}
+  </h1>
   {item.data.tagline && <h2 class="relative top-[-5px] m-0 text-xl">{item.data.tagline}</h2>}
   {
     isArticle(item) && includeTags && (
-      <div class="text-creative-work">
+      <div class="text-creative-work dark:text-dark-subtle-text">
         {readableDate(item.data.date)} ·{" "}
         {item.data.tags
           .map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)

@@ -9,17 +9,17 @@ import { Logger, getContentDirs } from "./catalogueUtils";
 export interface MovieData {
   id: string;
   title: string;
-  image: string;
-  year: string;
-  plot: string;
-  releaseDate: string;
-  companyList: { id: string; name: string }[];
-  genreList: { key: string; value: string }[];
-  runtimeStr: string;
+  tagline: string;
+  overview: string;
+  release_date: string;
+  production_companies: { id: string; name: string; logo_path: string; origin_country: string }[];
+  genres: { id: number; name: string }[];
+  runtime: number;
+  poster_path: string;
 }
 
 export async function getDataForMoviesAndShows(type: "movies" | "shows") {
-  const apiKey = process.env.IMDB_KEY;
+  const apiKey = process.env.TMDB_KEY;
   const moviesShowsDirs = getContentDirs(type);
 
   for (const movieShowDir of moviesShowsDirs) {
@@ -35,35 +35,36 @@ export async function getDataForMoviesAndShows(type: "movies" | "shows") {
     const markdownContent = fs
       .readFileSync(new URL(path.basename(movieShowDir.pathname) + ".md", movieShowDir))
       .toString();
-    const movieId = matter(markdownContent).data.imdb;
+    const id = matter(markdownContent).data.tmdb;
     const response = (await fetch(
-      `https://imdb-api.com/en/API/Title/${apiKey}/${movieId}/Posters`,
+      `https://api.themoviedb.org/3/${type === "movies" ? "movie" : "tv"}/${id}?api_key=${apiKey}`,
     ).then((response) => response.json())) as MovieData;
-    const { image } = response;
+
     const resultData = {
       title: response.title,
+      tagline: response.tagline,
       id: response.id,
-      plot: response.plot,
-      releaseDate: response.releaseDate,
-      runtimeStr: response.runtimeStr,
-      year: response.year,
-      companies: response.companyList.map((company) => company.name),
-      genres: response.genreList.map((genre) => genre.value),
+      overview: response.overview,
+      releaseDate: response.release_date,
+      runtime: response.runtime,
+      companies: response.production_companies.map((company) => company.name),
+      genres: response.genres.map((genre) => genre.name),
     };
 
     fs.writeFileSync(dataFilePath, JSON.stringify(resultData, null, 2));
     Logger.success(`Data saved for ${bold(dirBasename)}!`);
 
-    const coverURL = image;
-    const coverData = await fetch(coverURL).then((response) => response.arrayBuffer());
+    const { poster_path } = response;
+    const posterURL = `https://image.tmdb.org/t/p/w780${poster_path}`;
+    const coverData = await fetch(posterURL).then((response) => response.arrayBuffer());
     const coverPath = new URL("./cover.png", movieShowDir);
-    if (!coverURL.endsWith("png")) {
+
+    if (!posterURL.endsWith("png")) {
       sharp(coverData).toFile(coverPath.pathname);
     } else {
       fs.writeFileSync(coverPath, Buffer.from(coverData));
     }
 
-    fs.writeFileSync(coverPath, Buffer.from(coverData));
     Logger.success(`Cover saved for ${bold(dirBasename)}!`);
   }
 

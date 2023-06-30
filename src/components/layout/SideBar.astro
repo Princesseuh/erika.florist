@@ -1,0 +1,51 @@
+---
+import Socials from "$components/layout/Socials.astro";
+import { headerMenu as mainMenu, processNavMenu, type MenuItem } from "$data/sidebarMenu";
+import DarkModeToggle from "./DarkModeToggle.astro";
+import Logo from "./Logo.astro";
+
+interface Props {
+  navMenu: MenuItem[];
+}
+
+const { navMenu } = Astro.props;
+const processedNavMenu = processNavMenu(navMenu);
+---
+
+<aside class="my-8 ml-4 hidden flex-col text-[0.95rem] sm:flex xl:ml-0">
+  <section>
+    <section class="flex items-center justify-between">
+      <Logo />
+      <DarkModeToggle />
+    </section>
+
+    <nav class="hidden flex-wrap items-center gap-x-4 sm:flex">
+      {
+        mainMenu.map((item) => (
+          <a class="block text-inherit" href={`/${item.toLowerCase()}/`}>
+            {item}
+          </a>
+        ))
+      }
+    </nav>
+  </section>
+
+  <hr class="w-full" />
+
+  <nav>
+    {
+      processedNavMenu.flatMap((navItem) => (
+        <ul class="m-0 mb-4 list-none p-0">
+          <h3 class="m-0 text-lg">{navItem.heading}</h3>
+          {navItem.children.map((child) => (
+            <li>
+              <a href={child.link}>{child.label}</a>
+            </li>
+          ))}
+        </ul>
+      ))
+    }
+  </nav>
+
+  <Socials classes="hidden sm:flex justify-center mt-4" />
+</aside>

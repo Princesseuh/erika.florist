@@ -1,0 +1,16 @@
+---
+import { randomArrayEntry } from "$utils";
+
+const title = Math.random() > 0.1 || Astro.url.pathname === "/" ? "erika" : "Erika";
+const ponctuation = randomArrayEntry(["", "", "", "", "", "", ";", ".", "!"]);
+
+interface Props {
+  classes?: string;
+}
+
+const { classes } = Astro.props;
+---
+
+<h1 class="m-0 inline-block text-2xl">
+  <a class={`font-semibold text-inherit no-underline ${classes}`} href="/">{title}{ponctuation}</a>
+</h1>

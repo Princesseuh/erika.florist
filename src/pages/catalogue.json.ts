@@ -88,8 +88,12 @@ export const get = (async () => {
 
   const catalogueContent = [...processedGames, ...processedBooks, ...processedMoviesAndShows].sort(
     (a, b) => {
-      if (a.finishedDate === "N/A" || b.finishedDate === "N/A") {
+      if (a.finishedDate === "N/A" && b.finishedDate === "N/A") {
         return 0;
+      } else if (a.finishedDate === "N/A") {
+        return 1;
+      } else if (b.finishedDate === "N/A") {
+        return -1;
       }
 
       return b.finishedDate.getTime() - a.finishedDate.getTime();

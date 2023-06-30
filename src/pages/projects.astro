@@ -32,8 +32,8 @@ const readableTitles = {
 ---
 
 <BaseLayout title="Projects">
-  <article class="mx-auto mt-4 w-index sm:mt-6">
-    <h2>Projects</h2>
+  <article class="w-index">
+    <h2 class="mt-0">Projects</h2>
 
     <p>
       A list of my projects, it isn't necessarily exhaustive and mostly contain the projects I'm the
@@ -91,8 +91,12 @@ const readableTitles = {
                     class="mr-4"
                   />
                   <div>
-                    <h4 class="m-0 block font-bold">{project.data.title}</h4>
-                    <span class="text-sm text-creative-work">{project.data.tagline}</span>
+                    <h4 class="m-0 block font-bold text-rose-ebony dark:text-isabelline">
+                      {project.data.title}
+                    </h4>
+                    <span class="text-sm text-creative-work dark:text-dark-subtle-text">
+                      {project.data.tagline}
+                    </span>
                   </div>
                 </a>
               ))}

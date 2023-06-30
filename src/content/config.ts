@@ -4,6 +4,7 @@ const blogCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     tagline: z.string().optional(),
+    maxDepthTOC: z.number().optional(),
     date: z.date(),
     tags: z.array(z.string()).default([]),
     type: z.literal("blog").default("blog"),
@@ -55,7 +56,7 @@ const booksCollection = defineCollection({
     z.object({
       title: z.string(),
       rating: ratingSchema,
-      platform: z.union([z.literal("ebook"), z.literal("physical")]),
+      platform: z.union([z.literal("ebook"), z.literal("physical"), z.literal("audiobook")]),
       finishedDate: z.date(),
       cover: z.preprocess(() => "./cover.png", image()),
       isbn: z.string(),
@@ -90,7 +91,7 @@ const moviesCollection = defineCollection({
       rating: ratingSchema,
       finishedDate: z.date(),
       cover: z.preprocess(() => "./cover.png", image()),
-      imdb: z.string(),
+      tmdb: z.string(),
       type: z.literal("movie").default("movie"),
     }),
 });
@@ -102,7 +103,7 @@ const showsCollection = defineCollection({
       rating: ratingSchema,
       finishedDate: z.date(),
       cover: z.preprocess(() => "./cover.png", image()),
-      imdb: z.string(),
+      tmdb: z.string(),
       type: z.literal("show").default("show"),
     }),
 });

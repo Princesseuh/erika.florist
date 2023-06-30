@@ -2,7 +2,7 @@
 title: Castlevania
 finishedDate: 2021-11-17
 rating: "loved"
-imdb: "tt6517102"
+tmdb: "tt6517102"
 ---
 
 I really really liked this! I found the artstyle very charming. All the characters having long faces made me simp for most of them, especially the ladies, season 4 could've been a 10 episodes Lenore fan cam and I would have liked it just as much.

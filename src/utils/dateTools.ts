@@ -13,3 +13,11 @@ export function readableDate(
 
   return date.toLocaleDateString("en-US", options);
 }
+
+export function monthYearDate(date: Date) {
+  return date.toLocaleDateString("en-US", {
+    timeZone: "UTC",
+    year: "numeric",
+    month: "long",
+  });
+}

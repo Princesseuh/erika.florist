@@ -1,56 +1,27 @@
 ---
-import { headerMenu as globalMenu } from "$data/headerMenu";
-import { getWikiItemsByCategory } from "$data/wiki";
-import { WikiCategory, wikiCategories } from "$data/wikiCategories";
-import { getURLFromEntry } from "$utils";
-import { CollectionEntry, getCollection } from "astro:content";
-import Socials from "./Socials.astro";
-
-let wikiItems: CollectionEntry<"wiki">[] = [];
-
-const url = new URL(Astro.request.url);
-const isWikiPage = url.pathname.startsWith("/wiki");
-
-if (isWikiPage) {
-  wikiItems = await getCollection("wiki");
-}
+import { Sprite } from "astro-icon";
+import Logo from "./Logo.astro";
 ---
 
 <div
-  inert
-  id="mobile-menu"
-  class="fixed top-16 h-[calc(100%-4rem)] w-0 overflow-y-auto overflow-x-hidden whitespace-nowrap bg-baltic-sea"
+  class="fixed bottom-0 flex h-12 w-full items-center justify-between bg-mobile-menu px-3 text-isabelline sm:hidden"
 >
-  <nav class="flex flex-col gap-4 p-3" aria-label="Mobile menu">
-    {/* Global header menu */}
-    {
-      globalMenu.map((item) => (
-        <a class="header-link mr-0 bg-fin-lanka p-3 text-xl" href={`/${item.toLowerCase()}/`}>
-          {item}
-        </a>
-      ))
-    }
-  </nav>
+  <Logo />
 
-  {/* Wiki-exclusive menu */}
-  {
-    isWikiPage && (
-      <nav class="flex flex-col gap-3 p-3">
-        {wikiCategories.map((category: WikiCategory) => (
-          <>
-            <span class="block font-bold text-sugar-cane">{category.title}</span>
-            {getWikiItemsByCategory(wikiItems, category.key).map(
-              (item: CollectionEntry<"wiki">) => (
-                <a class="header-link mr-0 bg-fin-lanka p-2 text-lg" href={getURLFromEntry(item)}>
-                  {item.data.navigation.label || item.data.title}
-                </a>
-              ),
-            )}
-          </>
-        ))}
-      </nav>
-    )
-  }
-
-  <Socials classes="mt-4 justify-center gap-7 mb-8" size={45} />
+  <div id="mobile-side-toggle" class="h-7">
+    <Sprite name="menu" size="28px" />
+  </div>
 </div>
+
+<script>
+  const mobileMenuToggle = document.getElementById("mobile-side-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const body = document.body;
+
+  if (mobileMenu && mobileMenuToggle) {
+    mobileMenuToggle.addEventListener("click", () => {
+      mobileMenu.classList.toggle("w-full");
+      body.classList.toggle("overflow-hidden");
+    });
+  }
+</script>

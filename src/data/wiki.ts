@@ -1,6 +1,8 @@
-import { getBaseSiteURL } from "$utils";
-import type { CollectionEntry } from "astro:content";
+import { getBaseSiteURL, getURLFromEntry } from "$utils";
+import { CollectionEntry, getCollection } from "astro:content";
 import { execSync } from "child_process";
+import type { MenuItem } from "./sidebarMenu";
+import { WikiCategory, wikiCategories } from "./wikiCategories";
 
 const gitInfoRaw = execSync("bash ./scripts/getLastModified.sh").toString().split(";").slice(0, -1);
 const gitInfo = gitInfoRaw.map((info) => {
@@ -55,4 +57,27 @@ function getWikiItemsByCategory(
     });
 }
 
-export { getLastModified, getWikiItemsByCategory };
+async function getWikiNavigation(currentPage: URL): Promise<MenuItem[]> {
+  const wikiItems = await getCollection("wiki");
+  const navigation: MenuItem[] = [];
+  wikiCategories.map((category: WikiCategory) => {
+    navigation.push({ type: "header", label: category.title });
+    const subItems = getWikiItemsByCategory(wikiItems, category.key).map(
+      (item: CollectionEntry<"wiki">) => {
+        const itemUrl = getURLFromEntry(item);
+        return {
+          label: item.data.navigation.label || item.data.title,
+          link: itemUrl,
+          isCurrent: currentPage.pathname == itemUrl,
+          type: "link" as MenuItem["type"],
+        };
+      },
+    );
+
+    navigation.push(...subItems);
+  });
+
+  return navigation;
+}
+
+export { getLastModified, getWikiNavigation };

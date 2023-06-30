@@ -11,14 +11,15 @@ export type allCatalogueTypes =
 export async function getCatalogueData(entry: allCatalogueTypes) {
   // HACK: Replace with data collections once I figure a directory structure that's not painful
   const metadataPath = import.meta.env.DEV
-    ? path.join(path.dirname(entry.data.cover.src), "./_data.json")
-    : path.join(
+    ? "/" + path.join(path.dirname(entry.data.cover.src.slice("/@fs/".length)), "./_data.json")
+    : "./" +
+      path.join(
         path.dirname(entry.data.cover.src),
         `../src/content/${entry.data.type}s/`,
         entry.slug.split("/")[0]!,
         "./_data.json",
       );
-  return JSON.parse((await fs.readFile("./" + metadataPath)).toString());
+  return JSON.parse((await fs.readFile(metadataPath)).toString());
 }
 
 export function isCatalogueGame(entry: allCatalogueTypes): entry is CollectionEntry<"games"> {

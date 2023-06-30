@@ -48,6 +48,7 @@ module.exports = {
         puce: "#DB7F8E",
         "mobile-menu": "#191516",
         "mobile-menu-side": "#161313",
+        "dark-skeleton": "#332e2f",
 
         "sugar-cane": "#FEFFFE", // Main text color
         "creative-work": "#5a5053", // Used for subtle texts
@@ -165,6 +166,7 @@ module.exports = {
           },
           "& a": {
             color: theme("colors.creative-work"),
+            "@apply dark:text-dark-subtle-text": {},
           },
         },
 
@@ -239,7 +241,7 @@ module.exports = {
         },
 
         html: {
-          fontSize: "18px",
+          fontSize: "17px",
           lineHeight: "1.5",
         },
 
@@ -264,6 +266,10 @@ module.exports = {
           color: theme("colors.rose-ebony"),
           counterReset: "footnotes",
           "@apply dark:text-dark-text": {},
+        },
+
+        ".dark": {
+          "@apply bg-mobile-menu": {},
         },
 
         a: {
@@ -348,6 +354,7 @@ module.exports = {
           fontStyle: "italic",
           color: theme("colors.creative-work"),
           fontSize: ".95rem",
+          "@apply dark:text-dark-subtle-text": {},
         },
 
         ".post > iframe": {

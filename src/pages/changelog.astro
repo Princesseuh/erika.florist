@@ -1,0 +1,70 @@
+---
+import TableOfContent from "$components/shared/TableOfContent.astro";
+import { Changelog, getChangelog } from "$data/changelog";
+import BaseLayout from "$layouts/BaseLayout.astro";
+import { monthYearDate } from "$utils";
+import { slug } from "github-slugger";
+
+const changelog = getChangelog();
+
+const monthYears = changelog.map(
+	(changelogEntry) =>
+		`${changelogEntry.date.getUTCMonth()}|${changelogEntry.date.getUTCFullYear()}`,
+);
+const uniqueMonthYears = new Set(monthYears);
+const groupedMonths: Record<string, Changelog> = {};
+
+for (const entry of uniqueMonthYears) {
+	const [month, year] = entry.split("|").map((date) => parseInt(date));
+	if (!month || !year) continue;
+
+	groupedMonths[monthYearDate(new Date(year, month + 1, 1))] = changelog
+		.filter(
+			(changelogEntry) =>
+				changelogEntry.date.getMonth() === month && changelogEntry.date.getFullYear() === year,
+		)
+		.flat();
+}
+---
+
+<BaseLayout>
+	<section class="mx-auto flex gap-6">
+		<article class="w-[72ch] max-w-full">
+			<h2 class="mt-0">Changelog</h2>
+			<div class="mb-4">Things changes, and that's okay.</div>
+			{
+				Object.entries(groupedMonths).map(([key, value]) => (
+					<>
+						<h3 id={slug(key)}>{key}</h3>
+						<ul>
+							{value.map((changelogEntry) => (
+								<li>
+									<a
+										href={`https://github.com/Princesseuh/erika.florist/commit/${changelogEntry.ref}`}
+										class="mr-2 font-mono"
+									>
+										{changelogEntry.ref}
+									</a>
+									<span>{changelogEntry.desc}</span>
+								</li>
+							))}
+						</ul>
+					</>
+				))
+			}
+		</article>
+
+		<aside
+			class="mb-4 mt-10 hidden w-1/4 flex-1 pr-2 transition-opacity duration-100 ease-linear sm:block"
+		>
+			<TableOfContent
+				headers={Object.keys(groupedMonths).map((key) => ({
+					slug: slug(key),
+					text: key,
+					depth: 2,
+				}))}
+				maxDepth={4}
+			/>
+		</aside>
+	</section>
+</BaseLayout>

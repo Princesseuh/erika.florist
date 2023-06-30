@@ -4,194 +4,194 @@ const pageLenth = 30;
 ---
 
 <div id="catalogue-core" data-pagelength={pageLenth}>
-	<header class="flex flex-col justify-between gap-y-4 sm:flex-row sm:gap-y-0">
-		<div id="catalogue-filters" class="flex flex-grow flex-col gap-x-4 sm:flex-row">
-			<div>
-				<label for="catalogue-search">Search</label>
-				<input id="catalogue-search" type={"search"} />
-			</div>
+  <header class="flex flex-col justify-between gap-y-4 sm:flex-row sm:gap-y-0">
+    <div id="catalogue-filters" class="flex flex-grow flex-col gap-x-4 sm:flex-row">
+      <div>
+        <label for="catalogue-search">Search</label>
+        <input id="catalogue-search" type={"search"} />
+      </div>
 
-			<div>
-				<label for="catalogue-types">Type</label>
-				<select name="types" id="catalogue-types">
-					<option value="">Type</option>
-					<option value="book">Book</option>
-					<option value="game">Game</option>
-					<option value="movie">Movie</option>
-					<option value="show">Show</option>
-				</select>
-			</div>
+      <div>
+        <label for="catalogue-types">Type</label>
+        <select name="types" id="catalogue-types">
+          <option value="">Type</option>
+          <option value="book">Book</option>
+          <option value="game">Game</option>
+          <option value="movie">Movie</option>
+          <option value="show">Show</option>
+        </select>
+      </div>
 
-			<div>
-				<label for="catalogue-ratings">Rating</label>
-				<select name="ratings" id="catalogue-ratings">
-					<option value="">Rating</option>
-					<option value="masterpiece">Masterpiece</option>
-					<option value="loved">Loved</option>
-					<option value="liked">Liked</option>
-					<option value="okay">Okay</option>
-					<option value="disliked">Disliked</option>
-					<option value="hated">Hated</option>
-				</select>
-			</div>
-		</div>
-		<div id="catalogue-entry-count" class="flex items-center justify-end sm:justify-start">
-			... entries
-		</div>
-	</header>
-	<div id="catalogue-content" class="mt-4 flex flex-wrap gap-x-8 sm:gap-x-4">
-		{Array.from({ length: pageLenth }).map(() => <Skeleton />)}
-	</div>
-	<div class="mt-4 flex">
-		<button id="catalogue-seemore" class="h-6 w-full">Load more</button>
-	</div>
+      <div>
+        <label for="catalogue-ratings">Rating</label>
+        <select name="ratings" id="catalogue-ratings">
+          <option value="">Rating</option>
+          <option value="masterpiece">Masterpiece</option>
+          <option value="loved">Loved</option>
+          <option value="liked">Liked</option>
+          <option value="okay">Okay</option>
+          <option value="disliked">Disliked</option>
+          <option value="hated">Hated</option>
+        </select>
+      </div>
+    </div>
+    <div id="catalogue-entry-count" class="flex items-center justify-end sm:justify-start">
+      ... entries
+    </div>
+  </header>
+  <div id="catalogue-content" class="mt-4 flex flex-wrap gap-x-8 sm:gap-x-4">
+    {Array.from({ length: pageLenth }).map(() => <Skeleton />)}
+  </div>
+  <div class="mt-4 flex">
+    <button id="catalogue-seemore" class="h-6 w-full">Load more</button>
+  </div>
 </div>
 
 <style>
-	label {
-		display: block;
-		font-size: 0.875rem;
-		line-height: 1.5rem;
-	}
+  label {
+    display: block;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+  }
 </style>
 
 <script>
-	import { QuickScore } from "quick-score";
-	const searchInput = document.getElementById("catalogue-search") as HTMLInputElement;
-	const ratingSelect = document.getElementById("catalogue-ratings") as HTMLSelectElement;
-	const typeSelect = document.getElementById("catalogue-types") as HTMLSelectElement;
-	const seeMoreButton = document.getElementById("catalogue-seemore") as HTMLButtonElement;
-	const core = document.getElementById("catalogue-core") as HTMLDivElement;
+  import { QuickScore } from "quick-score";
+  const searchInput = document.getElementById("catalogue-search") as HTMLInputElement;
+  const ratingSelect = document.getElementById("catalogue-ratings") as HTMLSelectElement;
+  const typeSelect = document.getElementById("catalogue-types") as HTMLSelectElement;
+  const seeMoreButton = document.getElementById("catalogue-seemore") as HTMLButtonElement;
+  const core = document.getElementById("catalogue-core") as HTMLDivElement;
 
-	let qs: QuickScore<CatalogueData>;
-	let library: CatalogueData[] = [];
+  let qs: QuickScore<CatalogueData>;
+  let library: CatalogueData[] = [];
 
-	let currentIndex = 0;
-	const pageLength = parseInt(core.dataset.pagelength ?? "30") ?? 30;
+  let currentIndex = 0;
+  const pageLength = parseInt(core.dataset.pagelength ?? "30") ?? 30;
 
-	type CatalogueData = {
-		cover: { src: string; width: number; height: number; placeholder: string };
-		title: string;
-		author: string;
-		rating: string;
-		platform: string;
-		finishedDate: string;
-		type: "game" | "book";
-	};
+  type CatalogueData = {
+    cover: { src: string; width: number; height: number; placeholder: string };
+    title: string;
+    author: string;
+    rating: string;
+    platform: string;
+    finishedDate: string;
+    type: "game" | "book";
+  };
 
-	function searchLibrary(): CatalogueData[] {
-		const searchInputValue = searchInput.value;
-		const ratingSelectValue = ratingSelect.value;
-		const typeSelectValue = typeSelect.value;
+  function searchLibrary(): CatalogueData[] {
+    const searchInputValue = searchInput.value;
+    const ratingSelectValue = ratingSelect.value;
+    const typeSelectValue = typeSelect.value;
 
-		return qs
-			.search(searchInputValue)
-			.map((entry) => entry.item)
-			.filter((entry) => filterRating(entry) && filterType(entry));
+    return qs
+      .search(searchInputValue)
+      .map((entry) => entry.item)
+      .filter((entry) => filterRating(entry) && filterType(entry));
 
-		function filterRating(entry: CatalogueData) {
-			if (ratingSelectValue !== "") return entry.rating === ratingSelectValue;
-			return true;
-		}
+    function filterRating(entry: CatalogueData) {
+      if (ratingSelectValue !== "") return entry.rating === ratingSelectValue;
+      return true;
+    }
 
-		function filterType(entry: CatalogueData) {
-			if (typeSelectValue !== "") return entry.type === typeSelectValue;
-			return true;
-		}
-	}
+    function filterType(entry: CatalogueData) {
+      if (typeSelectValue !== "") return entry.type === typeSelectValue;
+      return true;
+    }
+  }
 
-	function buildLibrary(
-		catalogueData: CatalogueData[],
-		append = false,
-		view: "covers" | "list" = "covers",
-	) {
-		const entryCount = document.getElementById("catalogue-entry-count");
-		const catalogueContent = document.getElementById("catalogue-content");
-		const fragment = new DocumentFragment();
-		currentIndex = Math.min(catalogueData.length, currentIndex);
-		seeMoreButton.disabled =
-			currentIndex === catalogueData.length || currentIndex + pageLength >= catalogueData.length;
+  function buildLibrary(
+    catalogueData: CatalogueData[],
+    append = false,
+    view: "covers" | "list" = "covers",
+  ) {
+    const entryCount = document.getElementById("catalogue-entry-count");
+    const catalogueContent = document.getElementById("catalogue-content");
+    const fragment = new DocumentFragment();
+    currentIndex = Math.min(catalogueData.length, currentIndex);
+    seeMoreButton.disabled =
+      currentIndex === catalogueData.length || currentIndex + pageLength >= catalogueData.length;
 
-		// TODO: Implement list view
-		view;
+    // TODO: Implement list view
+    view;
 
-		const slicedData = catalogueData.slice(
-			currentIndex,
-			Math.min(catalogueData.length, currentIndex + pageLength),
-		);
-		for (const dataEntry of slicedData) {
-			const div = document.createElement("div");
-			div.className = "w-[calc(50%-1rem)] sm:w-[calc(20%-1rem)]";
-			div.innerHTML = `<div class="relative"><img class="max-w-full h-auto aspect-[3/4.3] object-cover" style="background-size: cover;background-image: url(${
-				dataEntry.cover.placeholder
-			});image-rendering:auto;" onload="this.removeAttribute('style');" src=${
-				dataEntry.cover.src
-			} width=${dataEntry.cover.width} height=${
-				dataEntry.cover.height
-			} loading="lazy" decoding="async" />
+    const slicedData = catalogueData.slice(
+      currentIndex,
+      Math.min(catalogueData.length, currentIndex + pageLength),
+    );
+    for (const dataEntry of slicedData) {
+      const div = document.createElement("div");
+      div.className = "w-[calc(50%-1rem)] sm:w-[calc(20%-1rem)]";
+      div.innerHTML = `<div class="relative"><img class="max-w-full h-auto aspect-[3/4.3] object-cover" style="background-size: cover;background-image: url(${
+        dataEntry.cover.placeholder
+      });image-rendering:auto;" onload="this.removeAttribute('style');" src=${
+        dataEntry.cover.src
+      } width=${dataEntry.cover.width} height=${
+        dataEntry.cover.height
+      } loading="lazy" decoding="async" />
       <span class="absolute top-0 right-0 pr-[0.15rem] pl-[0.2rem] bg-black/5 rounded-bl-lg">${getRatingEmoji(
-				dataEntry.rating,
-			)}</span>
+        dataEntry.rating,
+      )}</span>
       </div>
       <h4 class="m-0 leading-tight">${dataEntry.title}</h4>
       <p class="text-sm">${dataEntry.author}</p>`;
-			fragment.appendChild(div);
-		}
+      fragment.appendChild(div);
+    }
 
-		if (append) {
-			catalogueContent?.appendChild(fragment);
-		} else {
-			catalogueContent?.replaceChildren(fragment);
-		}
-		if (entryCount)
-			entryCount.innerText = `${Math.min(
-				(currentIndex / pageLength + 1) * pageLength,
-				catalogueData.length,
-			)}/${catalogueData.length} entries`;
+    if (append) {
+      catalogueContent?.appendChild(fragment);
+    } else {
+      catalogueContent?.replaceChildren(fragment);
+    }
+    if (entryCount)
+      entryCount.innerText = `${Math.min(
+        (currentIndex / pageLength + 1) * pageLength,
+        catalogueData.length,
+      )}/${catalogueData.length} entries`;
 
-		function getRatingEmoji(rating: string) {
-			switch (rating) {
-				case "masterpiece":
-					return "❤️";
-				case "loved":
-					return "🥰";
-				case "liked":
-					return "🙂";
-				case "okay":
-					return "😐";
-				case "disliked":
-					return "😕";
-				case "hated":
-					return "🙁";
-				default:
-					return "😐";
-			}
-		}
-	}
+    function getRatingEmoji(rating: string) {
+      switch (rating) {
+        case "masterpiece":
+          return "❤️";
+        case "loved":
+          return "🥰";
+        case "liked":
+          return "🙂";
+        case "okay":
+          return "😐";
+        case "disliked":
+          return "😕";
+        case "hated":
+          return "🙁";
+        default:
+          return "😐";
+      }
+    }
+  }
 
-	library = await fetch("/catalogue.json").then((response) => response.json());
+  library = await fetch("/catalogue.json").then((response) => response.json());
 
-	qs = new QuickScore(library);
-	const filteredLibrary = searchLibrary();
-	buildLibrary(filteredLibrary, false, "covers");
+  qs = new QuickScore(library);
+  const filteredLibrary = searchLibrary();
+  buildLibrary(filteredLibrary, false, "covers");
 
-	searchInput.addEventListener("input", () => {
-		currentIndex = 0;
-		buildLibrary(searchLibrary(), false, "covers");
-	});
+  searchInput.addEventListener("input", () => {
+    currentIndex = 0;
+    buildLibrary(searchLibrary(), false, "covers");
+  });
 
-	ratingSelect.addEventListener("change", () => {
-		currentIndex = 0;
-		buildLibrary(searchLibrary(), false, "covers");
-	});
+  ratingSelect.addEventListener("change", () => {
+    currentIndex = 0;
+    buildLibrary(searchLibrary(), false, "covers");
+  });
 
-	typeSelect.addEventListener("change", () => {
-		currentIndex = 0;
-		buildLibrary(searchLibrary(), false, "covers");
-	});
+  typeSelect.addEventListener("change", () => {
+    currentIndex = 0;
+    buildLibrary(searchLibrary(), false, "covers");
+  });
 
-	seeMoreButton.addEventListener("click", () => {
-		currentIndex += pageLength;
-		buildLibrary(searchLibrary(), true, "covers");
-	});
+  seeMoreButton.addEventListener("click", () => {
+    currentIndex += pageLength;
+    buildLibrary(searchLibrary(), true, "covers");
+  });
 </script>

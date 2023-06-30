@@ -52,8 +52,10 @@
   "dependencies": {
     "@11ty/eleventy-fetch": "^4.0.0",
     "@astrojs/mdx": "^0.19.7",
+    "@types/github-slugger": "^2.0.0",
     "@types/igdb-api-node": "^5.0.0",
     "dotenv": "^16.3.1",
+    "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
     "igdb-api-node": "^5.0.2",
     "markdown-it": "^13.0.1",

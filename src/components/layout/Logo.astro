@@ -1,7 +1,7 @@
 ---
 import { randomArrayEntry } from "$utils";
 
-const title = Math.random() > 0.1 ? "erika" : "Erika";
+const title = Math.random() > 0.1 || Astro.url.pathname === "/" ? "erika" : "Erika";
 const ponctuation = randomArrayEntry(["", "", "", "", "", "", ";", ".", "!"]);
 
 interface Props {

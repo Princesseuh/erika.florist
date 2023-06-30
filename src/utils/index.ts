@@ -1,5 +1,5 @@
 import type { CollectionEntry } from "astro:content";
-export { readableDate } from "./dateTools";
+export { monthYearDate, readableDate } from "./dateTools";
 export { getPlaceholderURL } from "./placeholder";
 
 export function getURLFromEntry(

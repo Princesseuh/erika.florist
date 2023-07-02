@@ -46,7 +46,7 @@ Having properly designed visuals also brings all the usual benefits that good de
 
 In the message themselves you can also do some visual work: add some bold to key elements, some inline code styling, maybe even italics if you have a nice hint that needs nuance.
 
-For Astro, I added partial Markdown support that works in both the web overlay and the terminal so developers can write cool error messages in a language they're comfortable with. This also gave us the benefits of the 90s technology of: clickable URLs.
+For Astro, I added partial Markdown support that works in both the web overlay and the terminal so developers can write cool error messages in a language they're comfortable with.
 
 <Image
   src={import("./markdown-terminal.png")}
@@ -60,7 +60,9 @@ Additionally, although this is more of a writing thing than a look one, keeping 
 
 To ensure errors are good in Astro, always and forever, it needed to be more than just "Erika did a pass once and made the errors better". Every other Astro maintainers, and future ones as well needed to know how to make good errors.
 
-As such, the first thing I did, before even rewriting any errors was to write a guide for other maintainers. The guide [reside in a `README.md`, next to where all the errors are defined.](https://github.com/withastro/astro/blob/main/packages/astro/src/core/errors/README.md) so it's easy to find and update when needed.
+As such, the first thing I did, before even rewriting any errors was to write a guide for other maintainers. The guide [reside in a `README.md`, next to where all the errors are defined.](https://github.com/withastro/astro/blob/main/packages/astro/src/core/errors/README.md) so it's easy to find (and update) when needed. It's also linked in a comment at the top of the error definition file, so it's hard to miss.
+
+The result is that I don't need to review all the Pull Requests adding / modifying errors, I trust that the maintainers will do a good job. And if they don't, I (or someone else) can just point them to the guide.
 
 ## Good errors are...
 

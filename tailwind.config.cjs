@@ -333,6 +333,7 @@ module.exports = {
         ".post img": {
           maxWidth: "100%",
           height: "auto",
+          borderRadius: theme("borderRadius.sm"),
         },
 
         ".post .image-right": {

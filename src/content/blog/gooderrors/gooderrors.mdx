@@ -66,17 +66,17 @@ As such, the first thing I did, before even rewriting any errors was to write a 
 
 Finally, a few more things that I think are important to keep in mind when writing errors:
 
-### **Good errors don't change (too much)**.
+### Good errors don't change (too much)
 
 Users should have a static way to find their errors when looking through your documentation / searching the web. Think HTTP status codes.
 
 For Astro, we decided to include a name for each error that we don't change. Updating the message itself is fine, but the name should stay the same.
 
-### **Good errors are actionable (if possible)**.
+### Good errors are actionable (if possible)
 
 If you can, provide a solution to the problem. If you can't, provide a link to a resource that can help. Get the user back on track as fast as possible.
 
-### **Good errors have contextual information (when applicable)**.
+### Good errors have contextual information (when applicable)
 
 In addition to the file and line number (and maybe a box showing around the code where the error is), adding contextual information can be very helpful.
 

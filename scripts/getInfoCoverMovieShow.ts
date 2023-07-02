@@ -23,7 +23,7 @@ export async function getDataForMoviesAndShows(type: "movies" | "shows") {
   const moviesShowsDirs = getContentDirs(type);
 
   for (const movieShowDir of moviesShowsDirs) {
-    const dirBasename = path.basename(movieShowDir.pathname);
+    const dirBasename = path.basename(decodeURI(movieShowDir.pathname));
     const dataFilePath = new URL("./_data.json", movieShowDir);
 
     Logger.info(`Getting data for ${type}/${bold(dirBasename)}...`);
@@ -60,7 +60,7 @@ export async function getDataForMoviesAndShows(type: "movies" | "shows") {
     const coverPath = new URL("./cover.png", movieShowDir);
 
     if (!posterURL.endsWith("png")) {
-      sharp(coverData).toFile(coverPath.pathname);
+      sharp(coverData).toFile(decodeURI(coverPath.pathname));
     } else {
       fs.writeFileSync(coverPath, Buffer.from(coverData));
     }

@@ -26,7 +26,7 @@ const years: Array<[string, number]> = [
       {
         tags.map((tag) => (
           <li>
-            <a href={"/articles/tags/" + tag[0] + "/"}>{tag[0]}</a> ({tag[1]})
+            <a href={"/articles/tags/" + tag[0] + "/"}>{tag[0]}</a>&nbsp;({tag[1]})
           </li>
         ))
       }
@@ -38,7 +38,7 @@ const years: Array<[string, number]> = [
       {
         years.map((year) => (
           <li>
-            <a href={"/articles/years/" + year[0] + "/"}>{year[0]}</a> ({year[1]})
+            <a href={"/articles/years/" + year[0] + "/"}>{year[0]}</a>&nbsp;({year[1]})
           </li>
         ))
       }

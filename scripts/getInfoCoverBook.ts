@@ -26,7 +26,7 @@ export async function getDataForBooks() {
   const booksDirs = getContentDirs("books");
 
   for (const bookDir of booksDirs) {
-    const dirBasename = path.basename(bookDir.pathname);
+    const dirBasename = path.basename(decodeURI(bookDir.pathname));
     Logger.info(`Getting data for ${bold(dirBasename)}...`);
     const dataFilePath = new URL("./_data.json", bookDir);
     if (fs.existsSync(dataFilePath)) {

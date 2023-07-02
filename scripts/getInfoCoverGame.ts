@@ -45,7 +45,7 @@ export async function getDataForGames() {
   const gamesDirs = getContentDirs("games");
 
   for (const gameDir of gamesDirs) {
-    const dirBasename = path.basename(gameDir.pathname);
+    const dirBasename = path.basename(decodeURI(gameDir.pathname));
     const dataFilePath = new URL("./_data.json", gameDir);
 
     Logger.info(`Getting data for ${bold(dirBasename)}...`);

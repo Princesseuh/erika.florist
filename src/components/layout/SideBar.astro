@@ -22,7 +22,7 @@ const processedNavMenu = processNavMenu(navMenu);
     <nav class="hidden flex-wrap items-center gap-x-4 sm:flex">
       {
         mainMenu.map((item) => (
-          <a class="block text-inherit" href={`/${item.toLowerCase()}/`}>
+          <a class="block text-inherit dark:text-inherit" href={`/${item.toLowerCase()}/`}>
             {item}
           </a>
         ))

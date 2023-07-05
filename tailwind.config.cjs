@@ -56,8 +56,10 @@ module.exports = {
         "darker-skylines": "#1d191a", // Footer background color
         "fin-lanka": "#212121", // Alternative background color, used for footnotes and blockquotes
         "engineer-black": "#1f1f1f", // Background color used for code blocks
-        "beach-watermelon": "#e65161", // Accent color, used mainly for links
-        "pinky-unicorny": "#F291A0", // Alt Accent Color, used when links are hovered
+        "beach-watermelon": "#DB1F3F", // Accent color, used mainly for links
+        "pinky-unicorny": "#e65161", // Alt Accent Color, used when links are hovered
+        "dark-beach-watermelon": "#e65161", // Accent color, used mainly for links
+        "dark-pinky-unicorny": "#F291A0", // Alt Accent Color, used when links are hovered
       },
       width: {
         layout: "min(1280px, 100%)",
@@ -101,7 +103,7 @@ module.exports = {
           },
           "&:hover": {
             // NOTE: When applied through the CSS-in-JS syntax, opacity information doesn't stay on colors, this workaround it
-            "@apply bg-beach-watermelon hover:bg-opacity-15": {},
+            "@apply bg-beach-watermelon dark:bg-dark-beach-watermelon hover:bg-opacity-15": {},
             opacity: "1",
             color: theme("colors.white"),
             textDecoration: "none",
@@ -133,6 +135,7 @@ module.exports = {
           marginRight: "1.2em",
           display: "flex",
           alignItems: "center",
+          "@apply dark:text-inherit": {},
         },
         ".social-mastodon": {
           "&:hover": {
@@ -188,7 +191,7 @@ module.exports = {
           maxWidth: "min(675px, 100%)",
           backgroundColor: theme("colors.fin-lanka"),
           color: theme("colors.isabelline"),
-          borderRadius: "4px",
+          borderRadius: theme("borderRadius.sm"),
 
           ".block-title": {
             display: "block",
@@ -200,6 +203,13 @@ module.exports = {
 
           "& p:last-of-type": {
             marginBottom: "0",
+          },
+
+          a: {
+            color: theme("colors.dark-beach-watermelon"),
+            "&:hover": {
+              color: theme("colors.dark-pinky-unicorny"),
+            },
           },
         },
 
@@ -277,11 +287,20 @@ module.exports = {
           fontWeight: "500",
           color: theme("colors.beach-watermelon"),
           transition: "color .1s",
+          "@apply dark:text-dark-beach-watermelon": {},
           "&:hover": {
             textDecoration: "underline",
             textUnderlinePosition: "from-font",
             textDecorationThickness: "2px",
             color: theme("colors.pinky-unicorny"),
+            "@apply dark:text-dark-pinky-unicorny": {},
+          },
+        },
+
+        "footer a": {
+          color: theme("colors.dark-beach-watermelon"),
+          "&:hover": {
+            color: theme("colors.dark-pinky-unicorny"),
           },
         },
 
@@ -300,7 +319,7 @@ module.exports = {
           transition: "opacity .1s linear",
         },
 
-        "article p, .post p, .post ul, .post pre": {
+        "article p, .post p, .post ul, .post pre, .post blockquote": {
           marginBottom: "1em",
         },
 
@@ -318,9 +337,19 @@ module.exports = {
         },
 
         ".post blockquote": {
-          paddingLeft: "0.75rem",
-          borderLeft: "5px solid #e2747fb9",
+          paddingTop: "0.5rem",
+          paddingBottom: "0.5rem",
+          paddingLeft: "1rem",
+          borderLeft: "5px solid",
+          borderColor: theme("colors.pinky-unicorny"),
+          backgroundColor: "#e6516124",
+          borderRadius: theme("borderRadius.sm"),
           fontStyle: "italic",
+          fontWeight: "450",
+          "@apply sm:mx-5": {},
+          "& p:last-child": {
+            marginBottom: "0",
+          },
         },
 
         ".post figure": {

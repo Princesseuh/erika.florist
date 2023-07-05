@@ -49,10 +49,11 @@ const featuredProjects = (await getCollection("projects"))
                 class="h-[180px] w-[377px] rounded-sm object-cover object-top"
                 src={project.data.indexCover}
                 alt={project.data.indexCoverAlt ?? ""}
-                imageWidth={755}
+                imageWidth={754}
                 width={377}
                 height={180}
                 loading={"eager"}
+                quality={45}
               />
               <h4 class="cover-title">{project.data.title}</h4>
             </a>

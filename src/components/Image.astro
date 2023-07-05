@@ -5,59 +5,61 @@ import { getConfiguredImageService, getImage } from "astro:assets";
 import type { LocalImageServiceWithPlaceholder } from "../imageService";
 
 export interface Props extends Omit<HTMLAttributes<"img">, "src"> {
-	src: ImageMetadata;
-	alt: string;
-	imageWidth?: number;
-	imageHeight?: number;
+  src: ImageMetadata;
+  alt: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  quality?: number;
 }
 
 const originalFormat = await getImage({
-	src: Astro.props.src,
-	width: Astro.props.imageWidth,
-	height: Astro.props.imageHeight,
-	format: Astro.props.src.format,
+  src: Astro.props.src,
+  width: Astro.props.imageWidth,
+  height: Astro.props.imageHeight,
+  format: Astro.props.src.format,
 });
 const formats = ["avif", "webp"];
 const sources: Record<string, Awaited<ReturnType<typeof getImage>>> = {};
 for (let format of formats) {
-	sources[format] = await getImage({
-		src: Astro.props.src,
-		width: Astro.props.imageWidth,
-		height: Astro.props.imageHeight,
-		format: format,
-	});
+  sources[format] = await getImage({
+    src: Astro.props.src,
+    width: Astro.props.imageWidth,
+    height: Astro.props.imageHeight,
+    format: format,
+    quality: Astro.props.quality,
+  });
 }
 
 const imageService = (await getConfiguredImageService()) as LocalImageServiceWithPlaceholder;
 const placeholderURL = await imageService.generatePlaceholder(
-	Astro.props.src.src,
-	Astro.props.src.width,
-	Astro.props.src.height,
+  Astro.props.src.src,
+  Astro.props.src.width,
+  Astro.props.src.height,
 );
 
 const { src, imageHeight, imageWidth, ...passedAttributes } = Astro.props;
 if (!passedAttributes.width) {
-	passedAttributes.width = originalFormat.attributes.width;
+  passedAttributes.width = originalFormat.attributes.width;
 }
 if (!passedAttributes.height) {
-	passedAttributes.height = originalFormat.attributes.height;
+  passedAttributes.height = originalFormat.attributes.height;
 }
 const { width, height, ...attributes } = originalFormat.attributes;
 ---
 
 <picture>
-	{
-		Object.values(sources).map((source) => (
-			<source srcset={source.src} type={"image/" + source.options.format} />
-		))
-	}
-	<img
-		src={originalFormat.src}
-		style={`background-size: cover;background-image: url(${placeholderURL});image-rendering:auto;`}
-		onload="
-		this.removeAttribute('style');
-		"
-		{...passedAttributes}
-		{...attributes}
-	/>
+  {
+    Object.values(sources).map((source) => (
+      <source srcset={source.src} type={"image/" + source.options.format} />
+    ))
+  }
+  <img
+    src={originalFormat.src}
+    style={`background-size: cover;background-image: url(${placeholderURL});image-rendering:auto;`}
+    onload="
+    this.removeAttribute('style');
+    "
+    {...passedAttributes}
+    {...attributes}
+  />
 </picture>

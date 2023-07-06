@@ -35,7 +35,7 @@ pre {
 @font-face {
   font-family: "Anuphan";
   font-weight: 1 900;
-  font-display: swap;
+  font-display: optional;
   src: url("/assets/fonts/anuphan.woff2") format("woff2"),
     url("/assets/fonts/anuphan.woff") format("woff");
 }

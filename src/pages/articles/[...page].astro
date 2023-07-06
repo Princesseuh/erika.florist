@@ -1,20 +1,29 @@
 ---
+import ArticleLayout from "$layouts/ArticleLayout.astro";
 import ArticleListLayout from "$layouts/ArticleListLayout.astro";
+import { blogDateSort } from "$utils";
 import type { GetStaticPaths, Page } from "astro";
 import { CollectionEntry, getCollection } from "astro:content";
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const articles = (await getCollection("blog")).sort((a, b) => {
-    return b.data.date.getTime() - a.data.date.getTime();
-  });
-  return paginate(articles, { pageSize: 8 });
+  const blogCollection = await getCollection("blog");
+  return [
+    ...paginate(blogCollection.concat().sort(blogDateSort), { pageSize: 8 }),
+    ...blogCollection.map((entry) => ({
+      params: { page: entry.slug },
+      props: { entry: entry },
+    })),
+  ];
 }) satisfies GetStaticPaths;
 
-interface Props {
-  page: Page<CollectionEntry<"blog">>;
-}
+type Props =
+  | {
+      page: Page<CollectionEntry<"blog">>;
+      entry: undefined;
+    }
+  | { entry: CollectionEntry<"blog">; page: undefined };
 
-const { page } = Astro.props;
+const { page, entry } = Astro.props;
 ---
 
-<ArticleListLayout page={page} title="Articles" />
+{entry ? <ArticleLayout article={entry} /> : <ArticleListLayout page={page} title="Articles" />}

@@ -1,8 +1,7 @@
 ---
-// TODO: Due to this issue: https://github.com/withastro/astro/issues/1438, this route can't be in the same folder
-// as the paginated article list is or they'll conflict, so this means our articles URL are `/article/${slug}` instead
-// of `/articles/${slug}` (with a s), once that issue is fixed, we'll be able to put it back in the right place
-import ArticleLayout from "$layouts/ArticleLayout.astro";
+// We used to have articles at `/article/slug` to workaround an issue, but we figured it out, so this is just to redirect
+// for people who bookmarked the old URLs or something. Might remove at some point, but probably shouldn't, arf.
+import { getBaseSiteURL } from "$utils";
 import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 
@@ -19,4 +18,6 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { entry } = Astro.props;
 ---
 
-<ArticleLayout article={entry} />
+<head>
+  <meta http-equiv="refresh" content={`0; url=${getBaseSiteURL()}articles/${entry.slug}`} />
+</head>

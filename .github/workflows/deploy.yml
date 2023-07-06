@@ -30,10 +30,10 @@ jobs:
         run: pnpm install
 
       - name: Pull Vercel Environment Information
-        run: pnpx vercel pull --yes --token=${{ secrets.VERCEL_TOKEN }}
+        run: pnpx vercel pull --environment production --yes --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Project Artifacts
-        run: pnpx vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        run: pnpx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
         run: pnpx vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}

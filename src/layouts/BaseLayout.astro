@@ -24,8 +24,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title ? `${title} - Erika` : "Erika"}</title>
 
     <link
       rel="preload"
@@ -48,7 +47,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     {preloadCatalogue && <link rel="preload" href="/catalogue.json" as="fetch" crossorigin />}
 
-    <title>{title ? `${title} - Erika` : "Erika"}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="description" content={description ? description : "My personal website"} />
     <meta property="og:title" content={title ? title : "Erika"} />
     <meta property="og:description" content={description ? description : "My personal website"} />

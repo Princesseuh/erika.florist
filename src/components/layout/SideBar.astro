@@ -19,7 +19,10 @@ const processedNavMenu = processNavMenu(navMenu);
       <DarkModeToggle />
     </section>
 
-    <nav class="hidden flex-wrap items-center gap-x-4 sm:flex">
+    <nav
+      class="hidden flex-wrap items-center gap-x-4 sm:flex"
+      aria-label="Sidebar - In Page navigation"
+    >
       {
         mainMenu.map((item) => (
           <a class="block text-inherit dark:text-inherit" href={`/${item.toLowerCase()}/`}>
@@ -32,7 +35,7 @@ const processedNavMenu = processNavMenu(navMenu);
 
   <hr class="w-full" />
 
-  <nav>
+  <nav aria-label="Sidebar - General navigation">
     {
       processedNavMenu.flatMap((navItem) => (
         <ul class="m-0 mb-4 list-none p-0">

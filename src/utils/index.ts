@@ -25,3 +25,6 @@ export function getBaseSiteURL(): string {
 export function randomArrayEntry<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)] as T;
 }
+
+export const blogDateSort = (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+  b.data.date.getTime() - a.data.date.getTime();

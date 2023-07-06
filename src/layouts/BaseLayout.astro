@@ -64,6 +64,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:url" content={canonicalURL} />
 
     <script src="../assets/scripts/main.ts"></script>
+  </head>
+  <body>
     <script is:inline>
       const theme = localStorage.getItem("theme");
       const isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -75,8 +77,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         document.documentElement.classList.add("dark");
       }
     </script>
-  </head>
-  <body>
     <Sprite.Provider>
       <div id="app" class="bg-isabelline dark:bg-darker-skylines">
         <section class="mx-auto w-layout p-5 sm:grid sm:grid-cols-layout sm:gap-x-6 sm:p-0">

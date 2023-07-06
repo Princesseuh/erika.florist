@@ -49,6 +49,7 @@
       }
     }
   },
+  "packageManager": "pnpm@8.6.2",
   "dependencies": {
     "@astrojs/mdx": "^0.19.7",
     "@types/github-slugger": "^2.0.0",

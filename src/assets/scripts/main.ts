@@ -32,7 +32,7 @@ function onPageLoad() {
   makeDatesRelative();
 
   if ((localStorage.getItem("prefetchDisabled") ?? "false") === "false") {
-    listen();
+    listen({ ignores: [/\/_astro\/?/] });
   }
 }
 

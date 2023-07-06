@@ -50,7 +50,6 @@
     }
   },
   "dependencies": {
-    "@11ty/eleventy-fetch": "^4.0.0",
     "@astrojs/mdx": "^0.19.7",
     "@types/github-slugger": "^2.0.0",
     "@types/igdb-api-node": "^5.0.0",
@@ -62,6 +61,7 @@
     "prettier-plugin-tailwindcss": "^0.3.0",
     "sharp": "^0.32.1",
     "tailwindcss": "^3.3.2",
-    "tsx": "^3.12.7"
+    "tsx": "^3.12.7",
+    "vercel": "^31.0.1"
   }
 }

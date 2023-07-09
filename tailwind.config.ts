@@ -1,8 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const plugin = require("tailwindcss/plugin");
+import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ["./src/**/*.{astro,js,ts,tsx,md,mdx}"],
   darkMode: "class",
   corePlugins: {
@@ -98,12 +97,15 @@ module.exports = {
           transition: "all 0.1s ease-out",
           display: "flex",
           width: "431px",
+          borderRadius: theme("borderRadius.sm"),
+          "@apply bg-rose-ebony bg-opacity-5 dark:bg-isabelline dark:bg-opacity-5": {},
           "&.project-featured": {
             opacity: "1",
           },
           "&:hover": {
             // NOTE: When applied through the CSS-in-JS syntax, opacity information doesn't stay on colors, this workaround it
-            "@apply bg-beach-watermelon dark:bg-dark-beach-watermelon hover:bg-opacity-15": {},
+            "@apply hover:bg-opacity-20 hover:bg-pinky-unicorny hover:dark:bg-pinky-unicorny dark:hover:bg-opacity-30":
+              {},
             opacity: "1",
             color: theme("colors.white"),
             textDecoration: "none",
@@ -357,6 +359,8 @@ module.exports = {
           borderRadius: theme("borderRadius.sm"),
           fontStyle: "italic",
           fontWeight: "450",
+          marginLeft: "0",
+          marginRight: "0",
           "@apply sm:mx-5": {},
           "& p:last-child": {
             marginBottom: "0",
@@ -427,4 +431,4 @@ module.exports = {
       });
     }),
   ],
-};
+} satisfies Config;

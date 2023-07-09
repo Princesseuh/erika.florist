@@ -31,9 +31,7 @@ export default defineConfig({
   },
   integrations: [
     tailwind({
-      config: {
-        applyBaseStyles: false,
-      },
+      applyBaseStyles: false,
     }),
     AutoImport({
       imports: [
@@ -68,7 +66,7 @@ export default defineConfig({
               color: #fff;
             }
             `,
-          hooks: [],
+          hooks: {},
         },
       ],
       frames: {

@@ -13,42 +13,44 @@ const processedNavMenu = processNavMenu(navMenu);
 ---
 
 <aside class="my-8 ml-4 hidden flex-col text-[0.95rem] sm:flex xl:ml-0">
-  <section>
-    <section class="flex items-center justify-between">
-      <Logo />
-      <DarkModeToggle />
+  <section class="sticky top-4">
+    <section>
+      <section class="flex items-center justify-between">
+        <Logo />
+        <DarkModeToggle />
+      </section>
+
+      <nav
+        class="hidden flex-wrap items-center gap-x-4 sm:flex"
+        aria-label="Sidebar - In Page navigation"
+      >
+        {
+          mainMenu.map((item) => (
+            <a class="block text-inherit dark:text-inherit" href={`/${item.toLowerCase()}/`}>
+              {item}
+            </a>
+          ))
+        }
+      </nav>
     </section>
 
-    <nav
-      class="hidden flex-wrap items-center gap-x-4 sm:flex"
-      aria-label="Sidebar - In Page navigation"
-    >
+    <hr class="w-full" />
+
+    <nav aria-label="Sidebar - General navigation">
       {
-        mainMenu.map((item) => (
-          <a class="block text-inherit dark:text-inherit" href={`/${item.toLowerCase()}/`}>
-            {item}
-          </a>
+        processedNavMenu.flatMap((navItem) => (
+          <ul class="m-0 mb-4 list-none p-0">
+            <h3 class="m-0 text-lg">{navItem.heading}</h3>
+            {navItem.children.map((child) => (
+              <li>
+                <a href={child.link}>{child.label}</a>
+              </li>
+            ))}
+          </ul>
         ))
       }
     </nav>
+
+    <Socials classes="hidden sm:flex justify-center mt-4" />
   </section>
-
-  <hr class="w-full" />
-
-  <nav aria-label="Sidebar - General navigation">
-    {
-      processedNavMenu.flatMap((navItem) => (
-        <ul class="m-0 mb-4 list-none p-0">
-          <h3 class="m-0 text-lg">{navItem.heading}</h3>
-          {navItem.children.map((child) => (
-            <li>
-              <a href={child.link}>{child.label}</a>
-            </li>
-          ))}
-        </ul>
-      ))
-    }
-  </nav>
-
-  <Socials classes="hidden sm:flex justify-center mt-4" />
 </aside>

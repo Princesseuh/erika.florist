@@ -22,7 +22,7 @@ So, in order to achieve this unofficially, I wrote myself a quick and dirty post
 
 ## Script
 
-```bash
+```bash title="build.sh"
 #!/bin/bash
 
 result=`
@@ -80,7 +80,7 @@ Out of the box VS Code doesn't allow to run actions on save outside of making an
 
 With the following config added to your workspace settings, the script will automatically run whenever you save, pretty cool huh
 
-```json
+```json title="settings.json"
 "emeraldwalk.runonsave": {
     "commands": [
         {
@@ -97,7 +97,7 @@ Change `build.sh` for the name you used for the script file. I would recommend a
 
 Thanks to the `files.associations` setting, you can make it so the proper language is used by default for .lua files
 
-```json
+```json title="settings.json"
 "files.associations": {
   "**/*.lua": "pico8p8"
 },

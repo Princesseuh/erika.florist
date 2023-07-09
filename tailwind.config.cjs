@@ -319,7 +319,18 @@ module.exports = {
           transition: "opacity .1s linear",
         },
 
-        "article p, .post p, .post ul, .post pre, .post blockquote": {
+        code: {
+          fontFamily: theme("fontFamily.mono"),
+          backgroundColor: "#212121",
+          borderRadius: "4px",
+          fontSize: "0.875rem",
+          lineHeight: "1.25rem",
+          color: "#f5f5f5",
+          padding: "0.08em 0.3em",
+          wordBreak: "break-word",
+        },
+
+        "article p, .post p, .post ul, .post pre, .post blockquote, .post .expressive-code": {
           marginBottom: "1em",
         },
 

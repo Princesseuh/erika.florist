@@ -1,0 +1,54 @@
+diff --git a/dist/content/vite-plugin-content-virtual-mod.js b/dist/content/vite-plugin-content-virtual-mod.js
+index 37fad4848076936df3e3dfad2c3385c0fe3fd54e..278baeadc06a220ac6e466f76a133de7df31022b 100644
+--- a/dist/content/vite-plugin-content-virtual-mod.js
++++ b/dist/content/vite-plugin-content-virtual-mod.js
+@@ -4,19 +4,18 @@ import { extname } from "node:path";
+ import { fileURLToPath, pathToFileURL } from "node:url";
+ import pLimit from "p-limit";
+ import { AstroError, AstroErrorData } from "../core/errors/index.js";
+-import { appendForwardSlash } from "../core/path.js";
+ import { rootRelativePath } from "../core/util.js";
+ import { VIRTUAL_MODULE_ID } from "./consts.js";
+ import {
+-  getContentEntryIdAndSlug,
+-  getContentPaths,
+-  getDataEntryExts,
+-  getDataEntryId,
+-  getEntryCollectionName,
+-  getEntryConfigByExtMap,
+-  getEntrySlug,
+-  getEntryType,
+-  getExtGlob
++	getContentEntryIdAndSlug,
++	getContentPaths,
++	getDataEntryExts,
++	getDataEntryId,
++	getEntryCollectionName,
++	getEntryConfigByExtMap,
++	getEntrySlug,
++	getEntryType,
++	getExtGlob
+ } from "./utils.js";
+ function astroContentVirtualModPlugin({
+   settings
+@@ -165,14 +164,14 @@ const UnexpectedLookupMapError = new AstroError({
+ });
+ function globWithUnderscoresIgnored(relContentDir, exts) {
+   const extGlob = getExtGlob(exts);
+-  const contentDir = appendForwardSlash(relContentDir);
+   return [
+-    `${contentDir}**/*${extGlob}`,
+-    `!${contentDir}_*/**${extGlob}`,
+-    `!${contentDir}_*${extGlob}`
++    `${relContentDir}/**/*${extGlob}`,
++    `!**/_*/**${extGlob}`,
++    `!**/_*${extGlob}`,
+   ];
+ }
+ export {
+-  astroContentVirtualModPlugin,
+-  getStringifiedLookupMap
++	astroContentVirtualModPlugin,
++	getStringifiedLookupMap
+ };
++

@@ -21,7 +21,7 @@
     "@types/prettier": "^2.7.3",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
-    "astro": "2.8.0",
+    "astro": "^2.8.0",
     "astro-auto-import": "^0.3.0",
     "astro-icon": "0.8.1",
     "eslint": "^8.44.0",
@@ -47,13 +47,16 @@
           }
         }
       }
+    },
+    "patchedDependencies": {
+      "astro@2.8.0": "patches/astro@2.8.0.patch"
     }
   },
   "packageManager": "pnpm@8.6.2",
   "dependencies": {
     "@astrojs/mdx": "^0.19.7",
     "@types/igdb-api-node": "^5.0.0",
-    "astro-expressive-code": "^0.12.1",
+    "astro-expressive-code": "^0.13.0",
     "dotenv": "^16.3.1",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",

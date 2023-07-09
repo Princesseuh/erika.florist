@@ -77,6 +77,8 @@ export default defineConfig({
           tooltipSuccessBackground: "#e65161",
         },
       },
+      useThemedScrollbars: false,
+      useThemedSelectionColors: false,
       styleOverrides: {
         uiLineHeight: "inherit",
         codeFontSize: "0.875rem",

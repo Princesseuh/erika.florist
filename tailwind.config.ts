@@ -308,6 +308,7 @@ export default {
 
         "h1, h2, h3, h4": {
           letterSpacing: "-.01em",
+          fontWeight: "650",
         },
 
         dt: { fontWeight: "bold" },

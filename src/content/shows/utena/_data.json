@@ -5,13 +5,6 @@
   "releaseDate": "1997-04-02",
   "runtimeStr": null,
   "year": "1997",
-  "companies": [
-    "TV Tokyo",
-    "Yomiko Advertising"
-  ],
-  "genres": [
-    "Animation",
-    "Comedy",
-    "Drama"
-  ]
+  "companies": ["TV Tokyo", "Yomiko Advertising"],
+  "genres": ["Animation", "Comedy", "Drama"]
 }

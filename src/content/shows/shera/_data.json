@@ -5,14 +5,6 @@
   "releaseDate": "2018-11-13",
   "runtimeStr": null,
   "year": "2018",
-  "companies": [
-    "DreamWorks Animation Television",
-    "DreamWorks Animation",
-    "Mattel Creations"
-  ],
-  "genres": [
-    "Animation",
-    "Action",
-    "Adventure"
-  ]
+  "companies": ["DreamWorks Animation Television", "DreamWorks Animation", "Mattel Creations"],
+  "genres": ["Animation", "Action", "Adventure"]
 }

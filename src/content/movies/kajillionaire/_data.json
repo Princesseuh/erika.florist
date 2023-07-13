@@ -5,13 +5,6 @@
   "releaseDate": "2020-09-25",
   "runtimeStr": "1h 44min",
   "year": "2020",
-  "companies": [
-    "Annapurna Pictures",
-    "Plan B Entertainment"
-  ],
-  "genres": [
-    "Comedy",
-    "Crime",
-    "Drama"
-  ]
+  "companies": ["Annapurna Pictures", "Plan B Entertainment"],
+  "genres": ["Comedy", "Crime", "Drama"]
 }

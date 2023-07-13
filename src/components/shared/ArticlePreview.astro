@@ -16,7 +16,7 @@ const { article } = Astro.props;
 
   <div class="mb-2 text-sm text-creative-work dark:text-dark-subtle-text">
     {readableDate(article.data.date)}
-    ·
+     ·
     {
       article.data.tags
         .map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)

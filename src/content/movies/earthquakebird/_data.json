@@ -5,14 +5,6 @@
   "releaseDate": "2019-11-15",
   "runtimeStr": "1h 47min",
   "year": "2019",
-  "companies": [
-    "Scott Free Productions",
-    "Trevanna Post",
-    "Twenty First City"
-  ],
-  "genres": [
-    "Crime",
-    "Drama",
-    "Mystery"
-  ]
+  "companies": ["Scott Free Productions", "Trevanna Post", "Twenty First City"],
+  "genres": ["Crime", "Drama", "Mystery"]
 }

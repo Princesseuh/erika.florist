@@ -5,11 +5,6 @@
   "releaseDate": "2021-07-01",
   "runtimeStr": null,
   "year": "2021",
-  "companies": [
-    "Nexiko AB"
-  ],
-  "genres": [
-    "Drama",
-    "Romance"
-  ]
+  "companies": ["Nexiko AB"],
+  "genres": ["Drama", "Romance"]
 }

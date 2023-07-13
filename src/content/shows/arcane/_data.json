@@ -5,13 +5,6 @@
   "releaseDate": "2021-11-06",
   "runtimeStr": null,
   "year": "2021",
-  "companies": [
-    "Riot Games",
-    "Fortiche Production"
-  ],
-  "genres": [
-    "Animation",
-    "Action",
-    "Adventure"
-  ]
+  "companies": ["Riot Games", "Fortiche Production"],
+  "genres": ["Animation", "Action", "Adventure"]
 }

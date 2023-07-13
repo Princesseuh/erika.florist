@@ -1,12 +1,8 @@
 {
   "title": "Ella Minnow Pea",
   "subtitle": "a progressively lipogrammatic epistolary fable",
-  "authors": [
-    "Mark Dunn"
-  ],
-  "publishers": [
-    "MacAdam/Cage Pub."
-  ],
+  "authors": ["Mark Dunn"],
+  "publishers": ["MacAdam/Cage Pub."],
   "pages": 205,
   "publishDate": 978307200
 }

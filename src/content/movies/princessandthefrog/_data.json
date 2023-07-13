@@ -5,13 +5,6 @@
   "releaseDate": "2009-12-11",
   "runtimeStr": "1h 37min",
   "year": "2009",
-  "companies": [
-    "Walt Disney Animation Studios",
-    "Walt Disney Pictures"
-  ],
-  "genres": [
-    "Animation",
-    "Adventure",
-    "Comedy"
-  ]
+  "companies": ["Walt Disney Animation Studios", "Walt Disney Pictures"],
+  "genres": ["Animation", "Adventure", "Comedy"]
 }

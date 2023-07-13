@@ -24,10 +24,7 @@ const { Content, headings } = await article.render();
     >
       {
         headings.length > 0 && (
-          <TableOfContent
-            headers={headings}
-            maxDepth={article.data.maxDepthTOC || 4}
-          />
+          <TableOfContent headers={headings} maxDepth={article.data.maxDepthTOC || 4} />
         )
       }
     </aside>

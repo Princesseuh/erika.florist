@@ -5,13 +5,6 @@
   "releaseDate": "2016-01-15",
   "runtimeStr": "1h 58min",
   "year": "2015",
-  "companies": [
-    "The Weinstein Company",
-    "Film4",
-    "Number 9 Films"
-  ],
-  "genres": [
-    "Drama",
-    "Romance"
-  ]
+  "companies": ["The Weinstein Company", "Film4", "Number 9 Films"],
+  "genres": ["Drama", "Romance"]
 }

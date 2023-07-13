@@ -5,14 +5,6 @@
   "releaseDate": "2007-10-26",
   "runtimeStr": "1h 31min",
   "year": "2007",
-  "companies": [
-    "Searchlight Pictures",
-    "Collage Cinemagraphique",
-    "American Empirical Pictures"
-  ],
-  "genres": [
-    "Adventure",
-    "Comedy",
-    "Drama"
-  ]
+  "companies": ["Searchlight Pictures", "Collage Cinemagraphique", "American Empirical Pictures"],
+  "genres": ["Adventure", "Comedy", "Drama"]
 }

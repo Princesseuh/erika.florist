@@ -12,7 +12,15 @@ const articles = (await getCollection("blog"))
   })
   .slice(0, 3);
 
-const wikiItems = (await getCollection("wiki")).slice(0, 6);
+const wikiItems = (await getCollection("wiki"))
+  .map((wikiItem) => ({
+    ...wikiItem,
+    lastModified: getLastModified(wikiItem).lastModifiedDate,
+  }))
+  .sort((a, b) => {
+    return b.lastModified.getTime() - a.lastModified.getTime();
+  })
+  .slice(0, 6);
 const featuredProjects = (await getCollection("projects"))
   .filter((project) => project.data.featured)
   .slice(0, 3);
@@ -78,11 +86,8 @@ const featuredProjects = (await getCollection("projects"))
               <a class="block font-semibold leading-tight" href={getURLFromEntry(item)}>
                 {item.data.title}
               </a>
-              <span
-                class="block text-sm first-letter:uppercase"
-                data-date={getLastModified(item).lastModifiedDate}
-              >
-                {readableDate(getLastModified(item).lastModifiedDate)}
+              <span class="block text-sm first-letter:uppercase" data-date={item.lastModified}>
+                {readableDate(item.lastModified)}
               </span>
             </section>
           ))

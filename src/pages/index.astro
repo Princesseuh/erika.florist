@@ -43,7 +43,7 @@ const featuredProjects = (await getCollection("projects"))
     <h3 class="mb-5 text-2xl">Featured works</h3>
     <div class="mb-6 mt-2 flex flex-wrap items-center justify-center gap-5 sm:mx-10 sm:gap-4">
       {
-        featuredProjects.map((project) => (
+        featuredProjects.map((project, i) => (
           <div class="relative h-[180px]">
             <a href={getURLFromEntry(project)}>
               <Image
@@ -55,6 +55,7 @@ const featuredProjects = (await getCollection("projects"))
                 height={180}
                 loading={"eager"}
                 quality={45}
+                fetchpriority={i === 0 ? "high" : undefined}
               />
               <h4 class="cover-title">{project.data.title}</h4>
             </a>

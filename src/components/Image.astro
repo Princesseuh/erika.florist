@@ -37,7 +37,7 @@ const placeholderURL = await imageService.generatePlaceholder(
   Astro.props.src.height,
 );
 
-const { src, imageHeight, imageWidth, ...passedAttributes } = Astro.props;
+const { src, imageHeight, imageWidth, quality, ...passedAttributes } = Astro.props;
 if (!passedAttributes.width) {
   passedAttributes.width = originalFormat.attributes.width;
 }
@@ -57,7 +57,7 @@ const { width, height, ...attributes } = originalFormat.attributes;
     src={originalFormat.src}
     style={`background-size: cover;background-image: url(${placeholderURL});image-rendering:auto;`}
     onload="
-    this.removeAttribute('style');
+    this.removeAttribute('style'); this.removeAttribute('onload');
     "
     {...passedAttributes}
     {...attributes}

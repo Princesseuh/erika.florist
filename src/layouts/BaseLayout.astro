@@ -34,17 +34,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       crossorigin
     />
 
-    {
-      import.meta.env.PROD && (
-        <link
-          rel="preload"
-          href="/_astro/DarkModeToggle.astro_astro_type_script_index_0_lang.0760a8ec.js"
-          as="script"
-          crossorigin
-        />
-      )
-    }
-
     {preloadCatalogue && <link rel="preload" href="/catalogue.json" as="fetch" crossorigin />}
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -66,15 +55,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   </head>
   <body>
     <script is:inline>
-      const theme = localStorage.getItem("theme");
-      const isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      if (theme === "dark" || (!theme && isSystemDark)) {
-        document.documentElement.classList.add("dark");
-      } else if (theme === "light") {
-        document.documentElement.classList.remove("dark");
-      } else if (theme === "system" && isSystemDark) {
-        document.documentElement.classList.add("dark");
-      }
+      const theme = localStorage.getItem("theme"),
+        isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      theme === "dark" || (!theme && isSystemDark)
+        ? document.documentElement.classList.add("dark")
+        : theme === "light"
+        ? document.documentElement.classList.remove("dark")
+        : theme === "system" && isSystemDark && document.documentElement.classList.add("dark");
     </script>
     <Sprite.Provider>
       <div id="app" class="bg-isabelline dark:bg-darker-skylines">

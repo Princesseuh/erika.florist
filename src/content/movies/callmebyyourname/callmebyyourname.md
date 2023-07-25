@@ -1,7 +1,7 @@
 ---
 title: Call Me By Your Name
 rating: "liked"
-finishedDate: 2023-05-20
+finishedDate: 2023-05-19
 tmdb: "tt5726616"
 ---
 

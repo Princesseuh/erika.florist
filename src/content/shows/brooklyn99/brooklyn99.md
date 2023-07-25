@@ -1,7 +1,7 @@
 ---
 title: Brooklyn Nine-Nine
 rating: "loved"
-finishedDate: 2023-04-09
+finishedDate: 2023-04-21
 tmdb: "48891"
 ---
 

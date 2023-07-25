@@ -2,7 +2,7 @@
 import Image from "$components/Image.astro";
 import BaseLayout from "$layouts/BaseLayout.astro";
 import { getURLFromEntry } from "$utils";
-import { CollectionEntry, getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
 const projects = await getCollection("projects");
 

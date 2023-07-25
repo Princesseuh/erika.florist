@@ -1,6 +1,5 @@
 import { getBaseSiteURL } from "$utils";
 import type { LocalImageService } from "astro";
-// @ts-expect-error Can't get types here without using moduleResolution: node-next
 import sharpService from "astro/assets/services/sharp";
 import { readFileSync } from "fs";
 import sharp from "sharp";

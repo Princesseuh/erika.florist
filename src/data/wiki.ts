@@ -1,8 +1,8 @@
 import { getBaseSiteURL, getURLFromEntry } from "$utils";
-import { CollectionEntry, getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import { execSync } from "child_process";
 import type { MenuItem } from "./sidebarMenu";
-import { WikiCategory, wikiCategories } from "./wikiCategories";
+import { wikiCategories, type WikiCategory } from "./wikiCategories";
 
 const gitInfoRaw = execSync("bash ./scripts/getLastModified.sh").toString().split(";").slice(0, -1);
 const gitInfo = gitInfoRaw.map((info) => {

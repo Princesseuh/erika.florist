@@ -67,7 +67,7 @@ export const get = (async () => {
   const shows = await getCollection("shows");
   const processedMoviesAndShows = await Promise.all(
     [...shows, ...movies].map(async (movieOrShow) => {
-      const { imdb, cover, ...movieData } = movieOrShow.data;
+      const { tmdb, cover, ...movieData } = movieOrShow.data;
       const [processedCover, placeholderURL] = await getCoverAndPlaceholder(cover);
 
       const metadata = await getCatalogueData(movieOrShow);

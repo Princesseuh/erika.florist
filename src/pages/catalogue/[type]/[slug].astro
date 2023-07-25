@@ -1,9 +1,9 @@
 ---
-import { allCatalogueTypes, getCatalogueData } from "$data/catalogue";
+import { getCatalogueData, type allCatalogueTypes } from "$data/catalogue";
 import BaseLayout from "$layouts/BaseLayout.astro";
 import type { GetStaticPaths } from "astro";
 import { getImage } from "astro:assets";
-import { CollectionEntry, getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
 export const getStaticPaths = (async () => {
   let catalogueContent: allCatalogueTypes[] = [];

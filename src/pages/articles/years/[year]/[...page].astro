@@ -2,7 +2,7 @@
 import ArticleListLayout from "$layouts/ArticleListLayout.astro";
 import { blogDateSort } from "$utils";
 import type { GetStaticPaths, Page } from "astro";
-import { CollectionEntry, getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const articles = await getCollection("blog");

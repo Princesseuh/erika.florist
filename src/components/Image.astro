@@ -17,6 +17,8 @@ const originalFormat = await getImage({
   width: Astro.props.imageWidth,
   height: Astro.props.imageHeight,
   format: Astro.props.src.format,
+  loading: Astro.props.loading,
+  decoding: Astro.props.decoding,
 });
 const formats = ["avif", "webp"];
 const sources: Record<string, Awaited<ReturnType<typeof getImage>>> = {};

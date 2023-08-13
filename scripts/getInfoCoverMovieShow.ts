@@ -12,7 +12,7 @@ export interface MovieData {
   tagline: string;
   overview: string;
   release_date: string;
-  production_companies: { id: string; name: string; logo_path: string; origin_country: string }[];
+  production_companies?: { id: string; name: string; logo_path: string; origin_country: string }[];
   genres: { id: number; name: string }[];
   runtime: number;
   poster_path: string;
@@ -47,8 +47,8 @@ export async function getDataForMoviesAndShows(type: "movies" | "shows") {
       overview: response.overview,
       releaseDate: response.release_date,
       runtime: response.runtime,
-      companies: response.production_companies.map((company) => company.name),
-      genres: response.genres.map((genre) => genre.name),
+      companies: response.production_companies?.map((company) => company.name),
+      genres: response.genres?.map((genre) => genre.name),
     };
 
     fs.writeFileSync(dataFilePath, JSON.stringify(resultData, null, 2));

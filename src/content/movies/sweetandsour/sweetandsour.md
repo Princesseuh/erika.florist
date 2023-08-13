@@ -1,6 +1,6 @@
 ---
 title: "Sweet and Sour"
-rating: "masterpiece"
+rating: "loved"
 finishedDate: 2022-04-10
 tmdb: "662237"
 ---

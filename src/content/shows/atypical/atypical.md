@@ -1,6 +1,6 @@
 ---
 title: "Atypical"
-rating: "loved"
+rating: "liked"
 finishedDate: 2022-09-01
 tmdb: "71578"
 ---

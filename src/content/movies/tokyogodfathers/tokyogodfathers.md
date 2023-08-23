@@ -1,7 +1,7 @@
 ---
 title: "Tokyo Godfathers"
 finishedDate: 2022-10-02
-rating: "loved"
+rating: "liked"
 tmdb: "13398"
 ---
 

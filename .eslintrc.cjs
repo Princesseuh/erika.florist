@@ -32,7 +32,7 @@ module.exports = {
       },
     },
     {
-      files: ["./src/scripts/*"],
+      files: ["./src/assets/scripts/*"],
       env: {
         node: false,
         browser: true,

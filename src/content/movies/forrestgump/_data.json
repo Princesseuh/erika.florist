@@ -1,0 +1,18 @@
+{
+  "title": "Forrest Gump",
+  "tagline": "The world will never be the same once you've seen it through the eyes of Forrest Gump.",
+  "id": 13,
+  "overview": "A man with a low IQ has accomplished great things in his life and been present during significant historic events—in each case, far exceeding what anyone imagined he could do. But despite all he has achieved, his one true love eludes him.",
+  "releaseDate": "1994-06-23",
+  "runtime": 142,
+  "companies": [
+    "Paramount",
+    "The Steve Tisch Company",
+    "Wendy Finerman Productions"
+  ],
+  "genres": [
+    "Comedy",
+    "Drama",
+    "Romance"
+  ]
+}

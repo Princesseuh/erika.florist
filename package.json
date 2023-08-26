@@ -17,14 +17,14 @@
     "@astrojs/tailwind": "^4.0.0",
     "@types/eslint": "^8.44.2",
     "@types/markdown-it": "^13.0.0",
-    "@types/node": "^20.5.3",
+    "@types/node": "^20.5.6",
     "@types/prettier": "^2.7.3",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
-    "astro": "^2.10.12",
+    "astro": "^2.10.14",
     "astro-auto-import": "^0.3.1",
     "astro-icon": "0.8.1",
-    "eslint": "^8.47.0",
+    "eslint": "^8.48.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-astro": "^0.29.0",
     "eslint-plugin-prettier": "^5.0.0",
@@ -33,7 +33,7 @@
     "prettier-plugin-astro": "^0.12.0",
     "quick-score": "^0.2.0",
     "quicklink": "^2.3.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
   "pnpm": {
     "packageExtensions": {
@@ -63,6 +63,6 @@
     "sharp": "^0.32.5",
     "tailwindcss": "^3.3.3",
     "tsx": "^3.12.7",
-    "vercel": "^32.0.1"
+    "vercel": "^32.1.0"
   }
 }

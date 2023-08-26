@@ -4,6 +4,7 @@ import MobileMenuSide from "$components/layout/MobileMenuSide.astro";
 import Sidebar from "$components/layout/SideBar.astro";
 import Socials from "$components/layout/Socials.astro";
 import { getBaseSiteURL } from "$utils";
+import { Head } from "astro-capo";
 import { Sprite } from "astro-icon";
 import "src/assets/style/prin.css";
 import type { MenuItem } from "../data/sidebarMenu";
@@ -20,7 +21,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <html lang="en">
-  <head>
+  <Head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -52,7 +53,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:url" content={canonicalURL} />
 
     <script src="../assets/scripts/main.ts"></script>
-  </head>
+  </Head>
   <body>
     <script is:inline>
       const theme = localStorage.getItem("theme"),

@@ -54,6 +54,7 @@
     "@astrojs/check": "^0.1.0",
     "@astrojs/mdx": "1.0.0-rc.2",
     "@types/igdb-api-node": "^5.0.0",
+    "astro-capo": "^0.0.0",
     "astro-expressive-code": "^0.22.2",
     "dotenv": "^16.3.1",
     "github-slugger": "^2.0.0",

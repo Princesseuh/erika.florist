@@ -19,7 +19,7 @@ async function getCoverAndPlaceholder(cover: ImageMetadata) {
   ]);
 }
 
-export const get = (async () => {
+export const GET = (async () => {
   const books = await getCollection("books");
   const processedBooks = await Promise.all(
     books.map(async (book) => {
@@ -100,8 +100,5 @@ export const get = (async () => {
     },
   );
 
-  return {
-    body: JSON.stringify(catalogueContent),
-    encoding: "utf-8",
-  };
+  return new Response(JSON.stringify(catalogueContent));
 }) satisfies APIRoute;

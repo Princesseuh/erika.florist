@@ -18,7 +18,7 @@ export function getURLFromEntry(
 }
 
 export function getBaseSiteURL(): string {
-  return import.meta.env.PROD ? "https://erika.florist/" : "http://localhost:3000/";
+  return import.meta.env.PROD ? "https://erika.florist/" : "http://localhost:4321/";
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

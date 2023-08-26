@@ -2,7 +2,6 @@
   "extends": "astro/tsconfigs/strictest",
   "compilerOptions": {
     "baseUrl": ".",
-    "moduleResolution": "Bundler",
     "paths": {
       "$components/*": ["src/components/*"],
       "$data/*": ["src/data/*"],

@@ -17,8 +17,8 @@ dependencies:
     specifier: ^5.0.0
     version: 5.0.0
   astro-capo:
-    specifier: ^0.0.0
-    version: 0.0.0(astro@3.0.0-rc.7)
+    specifier: ^0.0.1
+    version: 0.0.1(astro@3.0.0-rc.7)
   astro-expressive-code:
     specifier: ^0.22.2
     version: 0.22.2(astro@3.0.0-rc.7)
@@ -61,8 +61,8 @@ devDependencies:
     specifier: ^8.44.2
     version: 8.44.2
   '@types/markdown-it':
-    specifier: ^13.0.0
-    version: 13.0.0
+    specifier: ^13.0.1
+    version: 13.0.1
   '@types/node':
     specifier: ^20.5.6
     version: 20.5.6
@@ -1462,8 +1462,8 @@ packages:
     resolution: {integrity: sha512-HZQYqbiFVWufzCwexrvh694SOim8z2d+xJl5UNamcvQFejLY/2YUtzXHYi3cHdI7PMlS8ejH2slRAOJQ32aNbA==}
     dev: true
 
-  /@types/markdown-it@13.0.0:
-    resolution: {integrity: sha512-mPTaUl5glYfzdJFeCsvhXQwZKdyszNAZcMm5ZTP5SfpTu+vIbog7J3z8Fa4x/Fzv5TB4R6OA/pHBYIYmkYOWGQ==}
+  /@types/markdown-it@13.0.1:
+    resolution: {integrity: sha512-SUEb8Frsxs3D5Gg9xek6i6EG6XQ5s+O+ZdQzIPESZVZw3Pv3CPQfjCJBI+RgqZd1IBeu18S0Rn600qpPnEK37w==}
     dependencies:
       '@types/linkify-it': 3.0.2
       '@types/mdurl': 1.0.2
@@ -2043,8 +2043,8 @@ packages:
       astro: 3.0.0-rc.7(@types/node@20.5.6)
     dev: true
 
-  /astro-capo@0.0.0(astro@3.0.0-rc.7):
-    resolution: {integrity: sha512-laz90tUwj4Yu/meRwVs1FEvZDn2Q/E9QANBh36wBoz1r8BrLO3U5bpHjawZAiz/xJB1nMZ0t3otaiz3Y9pXcZw==}
+  /astro-capo@0.0.1(astro@3.0.0-rc.7):
+    resolution: {integrity: sha512-KyQD1mzgEQnbqrKpYdoIZMAYejkOcIJocdGuQBH9Yzr4KqGzIR8P2DDNbV/FQXaSyq900lCZwWJH45tBIQCG8w==}
     peerDependencies:
       astro: '>= 2.8'
     dependencies:

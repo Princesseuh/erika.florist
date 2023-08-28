@@ -46,7 +46,7 @@ if (!passedAttributes.width) {
 if (!passedAttributes.height) {
   passedAttributes.height = originalFormat.attributes.height;
 }
-const { width, height, ...attributes } = originalFormat.attributes;
+const { width, height, loading, decoding, ...attributes } = originalFormat.attributes;
 ---
 
 <picture>

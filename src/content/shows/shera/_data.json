@@ -1,10 +1,10 @@
 {
-  "title": "She-Ra and the Princesses of Power",
-  "id": "tt7745956",
-  "plot": "She-Ra, Princess of Power, leads a rebellion to free her land of Etheria from the monstrous invaders the Horde.",
-  "releaseDate": "2018-11-13",
-  "runtimeStr": null,
-  "year": "2018",
-  "companies": ["DreamWorks Animation Television", "DreamWorks Animation", "Mattel Creations"],
-  "genres": ["Animation", "Action", "Adventure"]
+	"title": "She-Ra and the Princesses of Power",
+	"id": "tt7745956",
+	"plot": "She-Ra, Princess of Power, leads a rebellion to free her land of Etheria from the monstrous invaders the Horde.",
+	"releaseDate": "2018-11-13",
+	"runtimeStr": null,
+	"year": "2018",
+	"companies": ["DreamWorks Animation Television", "DreamWorks Animation", "Mattel Creations"],
+	"genres": ["Animation", "Action", "Adventure"]
 }

@@ -1,14 +1,7 @@
 {
-  "tagline": "What the fork?!",
-  "id": 66573,
-  "overview": "Eleanor Shellstrop, an ordinary woman who, through an extraordinary string of events, enters the afterlife where she comes to realize that she hasn't been a very good person. With the help of her wise afterlife mentor, she's determined to shed her old way of living and discover the awesome (or at least the pretty good) person within.",
-  "companies": [
-    "Fremulon",
-    "3 Arts Entertainment",
-    "Universal Television"
-  ],
-  "genres": [
-    "Sci-Fi & Fantasy",
-    "Comedy"
-  ]
+	"tagline": "What the fork?!",
+	"id": 66573,
+	"overview": "Eleanor Shellstrop, an ordinary woman who, through an extraordinary string of events, enters the afterlife where she comes to realize that she hasn't been a very good person. With the help of her wise afterlife mentor, she's determined to shed her old way of living and discover the awesome (or at least the pretty good) person within.",
+	"companies": ["Fremulon", "3 Arts Entertainment", "Universal Television"],
+	"genres": ["Sci-Fi & Fantasy", "Comedy"]
 }

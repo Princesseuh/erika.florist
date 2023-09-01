@@ -6,22 +6,22 @@ import type { GetStaticPaths, Page } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const blogCollection = await getCollection("blog");
-  return [
-    ...paginate(blogCollection.concat().sort(blogDateSort), { pageSize: 8 }),
-    ...blogCollection.map((entry) => ({
-      params: { page: entry.slug },
-      props: { entry: entry },
-    })),
-  ];
+	const blogCollection = await getCollection("blog");
+	return [
+		...paginate(blogCollection.concat().sort(blogDateSort), { pageSize: 8 }),
+		...blogCollection.map((entry) => ({
+			params: { page: entry.slug },
+			props: { entry: entry },
+		})),
+	];
 }) satisfies GetStaticPaths;
 
 type Props =
-  | {
-      page: Page<CollectionEntry<"blog">>;
-      entry: undefined;
-    }
-  | { entry: CollectionEntry<"blog">; page: undefined };
+	| {
+			page: Page<CollectionEntry<"blog">>;
+			entry: undefined;
+	  }
+	| { entry: CollectionEntry<"blog">; page: undefined };
 
 const { page, entry } = Astro.props;
 ---

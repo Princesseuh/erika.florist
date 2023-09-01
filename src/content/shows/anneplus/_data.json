@@ -1,12 +1,7 @@
 {
-  "tagline": "",
-  "id": 82835,
-  "overview": "The weekend Anne (24) moves into her own place she unexpectedly runs into her ex-girlfriend Lily, and a lot has happened since they broke up four years ago. Over the weekend, Anne reflects on the relationships she has had throughout her student years in Amsterdam.",
-  "companies": [
-    "Millstreet Films",
-    "BNNVARA"
-  ],
-  "genres": [
-    "Drama"
-  ]
+	"tagline": "",
+	"id": 82835,
+	"overview": "The weekend Anne (24) moves into her own place she unexpectedly runs into her ex-girlfriend Lily, and a lot has happened since they broke up four years ago. Over the weekend, Anne reflects on the relationships she has had throughout her student years in Amsterdam.",
+	"companies": ["Millstreet Films", "BNNVARA"],
+	"genres": ["Drama"]
 }

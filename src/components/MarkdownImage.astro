@@ -6,23 +6,23 @@ import type { Props as ImageProps } from "./Image.astro";
 import Image from "./Image.astro";
 
 type Props = Omit<ImageProps, "src" | "slot"> & {
-  src: Promise<{ default: ImageMetadata }>;
-  caption?: string;
-  figureProps: HTMLAttributes<"figure">;
+	src: Promise<{ default: ImageMetadata }>;
+	caption?: string;
+	figureProps: HTMLAttributes<"figure">;
 };
 
 let { alt, caption, src, figureProps, ...props } = Astro.props;
 
 if (caption) {
-  caption = md({}).renderInline(caption);
+	caption = md({}).renderInline(caption);
 }
 
 const resolvedSrc = (await src).default;
 ---
 
 <figure {...figureProps ?? {}}>
-  <a href={resolvedSrc.src}>
-    <Image src={resolvedSrc} alt={alt} {...props} />
-  </a>
-  {caption && <figcaption set:html={caption} />}
+	<a href={resolvedSrc.src}>
+		<Image src={resolvedSrc} alt={alt} {...props} />
+	</a>
+	{caption && <figcaption set:html={caption} />}
 </figure>

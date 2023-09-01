@@ -1,15 +1,10 @@
 {
-  "title": "Love Hard",
-  "tagline": "A romantic comedy about the lies we tell for love.",
-  "id": 734265,
-  "overview": "An LA girl, unlucky in love, falls for an East Coast guy on a dating app and decides to surprise him for Christmas, only to discover that she's been catfished. But the object of her affection actually lives in the same town, and the guy who duped her offers to set them up if she pretends to be his own girlfriend for the holidays.",
-  "releaseDate": "2021-11-05",
-  "runtime": 105,
-  "companies": [
-    "Wonderland Sound and Vision"
-  ],
-  "genres": [
-    "Comedy",
-    "Romance"
-  ]
+	"title": "Love Hard",
+	"tagline": "A romantic comedy about the lies we tell for love.",
+	"id": 734265,
+	"overview": "An LA girl, unlucky in love, falls for an East Coast guy on a dating app and decides to surprise him for Christmas, only to discover that she's been catfished. But the object of her affection actually lives in the same town, and the guy who duped her offers to set them up if she pretends to be his own girlfriend for the holidays.",
+	"releaseDate": "2021-11-05",
+	"runtime": 105,
+	"companies": ["Wonderland Sound and Vision"],
+	"genres": ["Comedy", "Romance"]
 }

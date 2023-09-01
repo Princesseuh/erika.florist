@@ -1,17 +1,10 @@
 {
-  "title": "Little Miss Sunshine",
-  "tagline": "A family on the verge of a breakdown",
-  "id": 773,
-  "overview": "A family loaded with quirky, colorful characters piles into an old van and road trips to California for little Olive to compete in a beauty pageant.",
-  "releaseDate": "2006-07-26",
-  "runtime": 102,
-  "companies": [
-    "Fox Searchlight Pictures",
-    "Bona Fide Productions",
-    "Big Beach"
-  ],
-  "genres": [
-    "Comedy",
-    "Drama"
-  ]
+	"title": "Little Miss Sunshine",
+	"tagline": "A family on the verge of a breakdown",
+	"id": 773,
+	"overview": "A family loaded with quirky, colorful characters piles into an old van and road trips to California for little Olive to compete in a beauty pageant.",
+	"releaseDate": "2006-07-26",
+	"runtime": 102,
+	"companies": ["Fox Searchlight Pictures", "Bona Fide Productions", "Big Beach"],
+	"genres": ["Comedy", "Drama"]
 }

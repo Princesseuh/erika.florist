@@ -3,29 +3,29 @@ import BaseLayout from "$layouts/BaseLayout.astro";
 ---
 
 <BaseLayout>
-  <article class="w-index">
-    <h2 class="mt-0">Settings</h2>
+	<article class="w-index">
+		<h2 class="mt-0">Settings</h2>
 
-    <p>Trying to make it feel more like home, eh?</p>
+		<p>Trying to make it feel more like home, eh?</p>
 
-    <div>
-      <input type="checkbox" id="cb--prefetch" />
-      <label for="cb--prefetch">
-        Disable page prefetch (using <a href="https://getquick.link/">Quicklink</a>)
-      </label><br />
-    </div>
-  </article>
+		<div>
+			<input type="checkbox" id="cb--prefetch" />
+			<label for="cb--prefetch">
+				Disable page prefetch (using <a href="https://getquick.link/">Quicklink</a>)
+			</label><br />
+		</div>
+	</article>
 
-  <script>
-    (function () {
-      const disablePrefetch = document.getElementById("cb--prefetch") as HTMLInputElement | null;
-      if (disablePrefetch) {
-        disablePrefetch.checked = localStorage.getItem("prefetchDisabled") == "true";
+	<script>
+		(function () {
+			const disablePrefetch = document.getElementById("cb--prefetch") as HTMLInputElement | null;
+			if (disablePrefetch) {
+				disablePrefetch.checked = localStorage.getItem("prefetchDisabled") == "true";
 
-        disablePrefetch.addEventListener("change", () => {
-          localStorage.setItem("prefetchDisabled", disablePrefetch.checked ? "true" : "false");
-        });
-      }
-    })();
-  </script>
+				disablePrefetch.addEventListener("change", () => {
+					localStorage.setItem("prefetchDisabled", disablePrefetch.checked ? "true" : "false");
+				});
+			}
+		})();
+	</script>
 </BaseLayout>

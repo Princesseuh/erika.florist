@@ -1,16 +1,10 @@
 {
-  "title": "You Can Live Forever",
-  "tagline": "",
-  "id": 887580,
-  "overview": "When Jaime, a gay teenager, is sent to live in a community of Jehovah's Witnesses in small-town Quebec, she falls madly in love with a devout Witness girl. The two embark on an intense affair with consequences that will reshape the rest of their lives.",
-  "releaseDate": "2023-03-24",
-  "runtime": 96,
-  "companies": [
-    "Prospector Films",
-    "Good Deed Entertainment"
-  ],
-  "genres": [
-    "Drama",
-    "Romance"
-  ]
+	"title": "You Can Live Forever",
+	"tagline": "",
+	"id": 887580,
+	"overview": "When Jaime, a gay teenager, is sent to live in a community of Jehovah's Witnesses in small-town Quebec, she falls madly in love with a devout Witness girl. The two embark on an intense affair with consequences that will reshape the rest of their lives.",
+	"releaseDate": "2023-03-24",
+	"runtime": 96,
+	"companies": ["Prospector Films", "Good Deed Entertainment"],
+	"genres": ["Drama", "Romance"]
 }

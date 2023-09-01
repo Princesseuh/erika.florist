@@ -1,47 +1,47 @@
 {
-  "first_release_date": 1645747200,
-  "genres": [
-    {
-      "id": 12,
-      "name": "Role-playing (RPG)"
-    },
-    {
-      "id": 31,
-      "name": "Adventure"
-    }
-  ],
-  "platforms": [
-    {
-      "id": 6,
-      "abbreviation": "PC"
-    },
-    {
-      "id": 48,
-      "abbreviation": "PS4"
-    },
-    {
-      "id": 49,
-      "abbreviation": "XONE"
-    },
-    {
-      "id": 167,
-      "abbreviation": "PS5"
-    },
-    {
-      "id": 169,
-      "abbreviation": "Series X"
-    }
-  ],
-  "companies": [
-    {
-      "id": 248,
-      "name": "Bandai Namco Entertainment",
-      "role": "publisher"
-    },
-    {
-      "id": 1012,
-      "name": "FromSoftware",
-      "role": "developer"
-    }
-  ]
+	"first_release_date": 1645747200,
+	"genres": [
+		{
+			"id": 12,
+			"name": "Role-playing (RPG)"
+		},
+		{
+			"id": 31,
+			"name": "Adventure"
+		}
+	],
+	"platforms": [
+		{
+			"id": 6,
+			"abbreviation": "PC"
+		},
+		{
+			"id": 48,
+			"abbreviation": "PS4"
+		},
+		{
+			"id": 49,
+			"abbreviation": "XONE"
+		},
+		{
+			"id": 167,
+			"abbreviation": "PS5"
+		},
+		{
+			"id": 169,
+			"abbreviation": "Series X"
+		}
+	],
+	"companies": [
+		{
+			"id": 248,
+			"name": "Bandai Namco Entertainment",
+			"role": "publisher"
+		},
+		{
+			"id": 1012,
+			"name": "FromSoftware",
+			"role": "developer"
+		}
+	]
 }

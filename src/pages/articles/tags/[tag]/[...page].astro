@@ -5,22 +5,22 @@ import type { GetStaticPaths, Page } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
-  const articles = await getCollection("blog");
+	const articles = await getCollection("blog");
 
-  // We need to create a list of unique tags here otherwise Astro will try to create already existing pages and complain
-  const tags = articles.flatMap((article) => [...article.data.tags]);
-  const uniqueTags = [...new Set(tags)];
+	// We need to create a list of unique tags here otherwise Astro will try to create already existing pages and complain
+	const tags = articles.flatMap((article) => [...article.data.tags]);
+	const uniqueTags = [...new Set(tags)];
 
-  return uniqueTags.flatMap((tag) => {
-    const filteredArticles = articles
-      .filter((article) => article.data.tags.includes(tag))
-      .sort(blogDateSort);
-    return paginate(filteredArticles, { params: { tag }, pageSize: 8 });
-  });
+	return uniqueTags.flatMap((tag) => {
+		const filteredArticles = articles
+			.filter((article) => article.data.tags.includes(tag))
+			.sort(blogDateSort);
+		return paginate(filteredArticles, { params: { tag }, pageSize: 8 });
+	});
 };
 
 interface Props {
-  page: Page<CollectionEntry<"blog">>;
+	page: Page<CollectionEntry<"blog">>;
 }
 
 const { page } = Astro.props;

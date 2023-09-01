@@ -1,16 +1,10 @@
 {
-  "title": "Friends with Benefits",
-  "tagline": "",
-  "id": 50544,
-  "overview": "Dylan and Jamie think it's going to be easy to add the simple act of sex to their friendship, despite what Hollywood romantic comedies would have them believe. They soon discover however that getting physical really does always lead to complications.",
-  "releaseDate": "2011-07-21",
-  "runtime": 109,
-  "companies": [
-    "Castle Rock Entertainment",
-    "Olive Bridge Entertainment"
-  ],
-  "genres": [
-    "Romance",
-    "Comedy"
-  ]
+	"title": "Friends with Benefits",
+	"tagline": "",
+	"id": 50544,
+	"overview": "Dylan and Jamie think it's going to be easy to add the simple act of sex to their friendship, despite what Hollywood romantic comedies would have them believe. They soon discover however that getting physical really does always lead to complications.",
+	"releaseDate": "2011-07-21",
+	"runtime": 109,
+	"companies": ["Castle Rock Entertainment", "Olive Bridge Entertainment"],
+	"genres": ["Romance", "Comedy"]
 }

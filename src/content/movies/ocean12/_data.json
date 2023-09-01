@@ -1,19 +1,16 @@
 {
-  "title": "Ocean's Twelve",
-  "tagline": "Twelve is the new eleven.",
-  "id": 163,
-  "overview": "Danny Ocean reunites with his old flame and the rest of his merry band of thieves in carrying out three huge heists in Rome, Paris and Amsterdam – but a Europol agent is hot on their heels.",
-  "releaseDate": "2004-12-09",
-  "runtime": 125,
-  "companies": [
-    "Village Roadshow Pictures",
-    "Jerry Weintraub Productions",
-    "Section Eight",
-    "WV Films III",
-    "Warner Bros. Pictures"
-  ],
-  "genres": [
-    "Thriller",
-    "Crime"
-  ]
+	"title": "Ocean's Twelve",
+	"tagline": "Twelve is the new eleven.",
+	"id": 163,
+	"overview": "Danny Ocean reunites with his old flame and the rest of his merry band of thieves in carrying out three huge heists in Rome, Paris and Amsterdam – but a Europol agent is hot on their heels.",
+	"releaseDate": "2004-12-09",
+	"runtime": 125,
+	"companies": [
+		"Village Roadshow Pictures",
+		"Jerry Weintraub Productions",
+		"Section Eight",
+		"WV Films III",
+		"Warner Bros. Pictures"
+	],
+	"genres": ["Thriller", "Crime"]
 }

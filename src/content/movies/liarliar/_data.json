@@ -1,15 +1,10 @@
 {
-  "title": "Liar Liar",
-  "tagline": "Trust me.",
-  "id": 1624,
-  "overview": "Fletcher Reede is a fast-talking attorney and habitual liar. When his son Max blows out the candles on his fifth birthday he has just one wish - that his dad will stop lying for 24 hours. When Max's wish comes true, Fletcher discovers that his mouth has suddenly become his biggest liability.",
-  "releaseDate": "1997-03-21",
-  "runtime": 86,
-  "companies": [
-    "Universal Pictures",
-    "Imagine Entertainment"
-  ],
-  "genres": [
-    "Comedy"
-  ]
+	"title": "Liar Liar",
+	"tagline": "Trust me.",
+	"id": 1624,
+	"overview": "Fletcher Reede is a fast-talking attorney and habitual liar. When his son Max blows out the candles on his fifth birthday he has just one wish - that his dad will stop lying for 24 hours. When Max's wish comes true, Fletcher discovers that his mouth has suddenly become his biggest liability.",
+	"releaseDate": "1997-03-21",
+	"runtime": 86,
+	"companies": ["Universal Pictures", "Imagine Entertainment"],
+	"genres": ["Comedy"]
 }

@@ -1,66 +1,66 @@
 {
-  "first_release_date": 1537401600,
-  "genres": [
-    {
-      "id": 9,
-      "name": "Puzzle"
-    },
-    {
-      "id": 31,
-      "name": "Adventure"
-    },
-    {
-      "id": 32,
-      "name": "Indie"
-    }
-  ],
-  "platforms": [
-    {
-      "id": 3,
-      "abbreviation": "Linux"
-    },
-    {
-      "id": 6,
-      "abbreviation": "PC"
-    },
-    {
-      "id": 14,
-      "abbreviation": "Mac"
-    },
-    {
-      "id": 34,
-      "abbreviation": "Android"
-    },
-    {
-      "id": 39,
-      "abbreviation": "iOS"
-    },
-    {
-      "id": 48,
-      "abbreviation": "PS4"
-    },
-    {
-      "id": 49,
-      "abbreviation": "XONE"
-    },
-    {
-      "id": 130,
-      "abbreviation": "Switch"
-    },
-    {
-      "id": 167,
-      "abbreviation": "PS5"
-    },
-    {
-      "id": 170,
-      "abbreviation": "Stadia"
-    }
-  ],
-  "companies": [
-    {
-      "id": 13740,
-      "name": "The Voxel Agents",
-      "role": "developer"
-    }
-  ]
+	"first_release_date": 1537401600,
+	"genres": [
+		{
+			"id": 9,
+			"name": "Puzzle"
+		},
+		{
+			"id": 31,
+			"name": "Adventure"
+		},
+		{
+			"id": 32,
+			"name": "Indie"
+		}
+	],
+	"platforms": [
+		{
+			"id": 3,
+			"abbreviation": "Linux"
+		},
+		{
+			"id": 6,
+			"abbreviation": "PC"
+		},
+		{
+			"id": 14,
+			"abbreviation": "Mac"
+		},
+		{
+			"id": 34,
+			"abbreviation": "Android"
+		},
+		{
+			"id": 39,
+			"abbreviation": "iOS"
+		},
+		{
+			"id": 48,
+			"abbreviation": "PS4"
+		},
+		{
+			"id": 49,
+			"abbreviation": "XONE"
+		},
+		{
+			"id": 130,
+			"abbreviation": "Switch"
+		},
+		{
+			"id": 167,
+			"abbreviation": "PS5"
+		},
+		{
+			"id": 170,
+			"abbreviation": "Stadia"
+		}
+	],
+	"companies": [
+		{
+			"id": 13740,
+			"name": "The Voxel Agents",
+			"role": "developer"
+		}
+	]
 }

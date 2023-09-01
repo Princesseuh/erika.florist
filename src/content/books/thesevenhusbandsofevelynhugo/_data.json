@@ -1,12 +1,8 @@
 {
-  "title": "The Seven Husbands of Evelyn Hugo",
-  "subtitle": "A Novel",
-  "authors": [
-    "Taylor Jenkins Reid"
-  ],
-  "publishers": [
-    "Washington Square Press"
-  ],
-  "pages": 400,
-  "publishDate": 1577836800
+	"title": "The Seven Husbands of Evelyn Hugo",
+	"subtitle": "A Novel",
+	"authors": ["Taylor Jenkins Reid"],
+	"publishers": ["Washington Square Press"],
+	"pages": 400,
+	"publishDate": 1577836800
 }

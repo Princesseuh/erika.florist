@@ -4,7 +4,7 @@ import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 
 interface Props {
-  project: CollectionEntry<"projects">;
+	project: CollectionEntry<"projects">;
 }
 
 const { project } = Astro.props;
@@ -12,8 +12,8 @@ const { Content } = await project.render();
 ---
 
 <BaseLayout title={project.data.title} description={project.data.tagline}>
-  <article class="post w-[72ch] max-w-full">
-    <ContentHeader item={project} includeTags={false} />
-    <Content />
-  </article>
+	<article class="post w-[72ch] max-w-full">
+		<ContentHeader item={project} includeTags={false} />
+		<Content />
+	</article>
 </BaseLayout>

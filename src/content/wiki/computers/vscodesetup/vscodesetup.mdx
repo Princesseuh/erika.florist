@@ -14,9 +14,9 @@ Previously it was [Sublime Text](https://www.sublimetext.com/) but a Python-base
 Ok! Now that the goodbyes are done, let's talk about my VS Code setup
 
 <Image
-  src={import("./screenshot.png")}
-  alt="Screenshot of my VS Code setup, the color scheme is dark, the sidebar is on the right"
-  caption="My setup is pretty classic so don't expect anything too crazy. Some newly added settings might be missing from this particular screenshot"
+	src={import("./screenshot.png")}
+	alt="Screenshot of my VS Code setup, the color scheme is dark, the sidebar is on the right"
+	caption="My setup is pretty classic so don't expect anything too crazy. Some newly added settings might be missing from this particular screenshot"
 />
 
 ## Settings
@@ -25,51 +25,51 @@ Those are intentionally not complete, some of the settings I have in my full con
 
 ```json title="settings.json"
 {
-  // Visuals
-  "workbench.colorTheme": "lucy-evening",
-  "editor.fontFamily": "'Iosevka', 'Fira Code', 'Font Awesome 5 Free Regular', 'Font Awesome 5 Free Solid', 'Font Awesome 5 Brands Regular'",
-  "editor.fontSize": 15,
-  "editor.fontWeight": "500",
-  "editor.fontLigatures": true,
-  "editor.minimap.enabled": false,
-  "workbench.sideBar.location": "right",
-  "window.menuBarVisibility": "toggle",
-  "editor.wordWrap": "on",
-  "editor.rulers": [80, 120],
-  "workbench.colorCustomizations": {
-    "terminal.background": "#17161b",
-    "panel.background": "#131317",
-    "statusBar.background": "#17161b",
-    "tab.activeBackground": "#25242b",
-    "sideBarSectionHeader.background": "#131317",
-    "activityBar.foreground": "#b8aba5",
-    "sideBar.foreground": "#a39793"
-  },
+	// Visuals
+	"workbench.colorTheme": "lucy-evening",
+	"editor.fontFamily": "'Iosevka', 'Fira Code', 'Font Awesome 5 Free Regular', 'Font Awesome 5 Free Solid', 'Font Awesome 5 Brands Regular'",
+	"editor.fontSize": 15,
+	"editor.fontWeight": "500",
+	"editor.fontLigatures": true,
+	"editor.minimap.enabled": false,
+	"workbench.sideBar.location": "right",
+	"window.menuBarVisibility": "toggle",
+	"editor.wordWrap": "on",
+	"editor.rulers": [80, 120],
+	"workbench.colorCustomizations": {
+		"terminal.background": "#17161b",
+		"panel.background": "#131317",
+		"statusBar.background": "#17161b",
+		"tab.activeBackground": "#25242b",
+		"sideBarSectionHeader.background": "#131317",
+		"activityBar.foreground": "#b8aba5",
+		"sideBar.foreground": "#a39793"
+	},
 
-  // Usability
-  "files.autoSave": "afterDelay",
-  "files.trimTrailingWhitespace": true,
-  "files.trimFinalNewlines": true,
-  "files.insertFinalNewline": true,
-  "editor.formatOnSave": false,
-  "editor.formatOnPaste": true,
-  "editor.linkedEditing": true,
-  "files.exclude": {
-    "**/node_modules/**": true
-  },
-  "workbench.startupEditor": "newUntitledFile",
-  "workbench.editor.highlightModifiedTabs": true,
-  "editor.suggest.preview": true,
-  "editor.bracketPairColorization.enabled": true,
+	// Usability
+	"files.autoSave": "afterDelay",
+	"files.trimTrailingWhitespace": true,
+	"files.trimFinalNewlines": true,
+	"files.insertFinalNewline": true,
+	"editor.formatOnSave": false,
+	"editor.formatOnPaste": true,
+	"editor.linkedEditing": true,
+	"files.exclude": {
+		"**/node_modules/**": true
+	},
+	"workbench.startupEditor": "newUntitledFile",
+	"workbench.editor.highlightModifiedTabs": true,
+	"editor.suggest.preview": true,
+	"editor.bracketPairColorization.enabled": true,
 
-  // Language specifics
-  "html.format.indentInnerHtml": true,
-  "[markdown]": {
-    "editor.wordWrap": "on",
-    "editor.quickSuggestions": false,
-    "files.trimTrailingWhitespace": false,
-    "editor.rulers": [] // Disable rulers in Markdown
-  }
+	// Language specifics
+	"html.format.indentInnerHtml": true,
+	"[markdown]": {
+		"editor.wordWrap": "on",
+		"editor.quickSuggestions": false,
+		"files.trimTrailingWhitespace": false,
+		"editor.rulers": [] // Disable rulers in Markdown
+	}
 }
 ```
 

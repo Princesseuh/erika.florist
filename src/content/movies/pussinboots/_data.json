@@ -1,20 +1,10 @@
 {
-  "title": "Puss in Boots",
-  "tagline": "Live for danger. Fight for justice. Pray for mercy.",
-  "id": 417859,
-  "overview": "Long before he even met Shrek, the notorious fighter, lover and outlaw Puss in Boots becomes a hero when he sets off on an adventure with the tough and street smart Kitty Softpaws and the mastermind Humpty Dumpty to save his town. This is the true story of The Cat, The Myth, The Legend... The Boots.",
-  "releaseDate": "2011-10-27",
-  "runtime": 90,
-  "companies": [
-    "DreamWorks Animation",
-    "Paramount"
-  ],
-  "genres": [
-    "Animation",
-    "Family",
-    "Fantasy",
-    "Adventure",
-    "Comedy",
-    "Western"
-  ]
+	"title": "Puss in Boots",
+	"tagline": "Live for danger. Fight for justice. Pray for mercy.",
+	"id": 417859,
+	"overview": "Long before he even met Shrek, the notorious fighter, lover and outlaw Puss in Boots becomes a hero when he sets off on an adventure with the tough and street smart Kitty Softpaws and the mastermind Humpty Dumpty to save his town. This is the true story of The Cat, The Myth, The Legend... The Boots.",
+	"releaseDate": "2011-10-27",
+	"runtime": 90,
+	"companies": ["DreamWorks Animation", "Paramount"],
+	"genres": ["Animation", "Family", "Fantasy", "Adventure", "Comedy", "Western"]
 }

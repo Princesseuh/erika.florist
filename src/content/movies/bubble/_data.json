@@ -1,21 +1,17 @@
 {
-  "title": "Bubble",
-  "tagline": "Is she a calamity or a blessing?",
-  "id": 912598,
-  "overview": "In an abandoned Tokyo overrun by bubbles and gravitational abnormalities, one gifted young man has a fateful meeting with a mysterious girl.",
-  "releaseDate": "2022-02-14",
-  "runtime": 101,
-  "companies": [
-    "WIT STUDIO",
-    "Story",
-    "Nitroplus",
-    "Lawson Entertainment",
-    "Straight Edge",
-    "Warner Bros. Japan"
-  ],
-  "genres": [
-    "Animation",
-    "Adventure",
-    "Science Fiction"
-  ]
+	"title": "Bubble",
+	"tagline": "Is she a calamity or a blessing?",
+	"id": 912598,
+	"overview": "In an abandoned Tokyo overrun by bubbles and gravitational abnormalities, one gifted young man has a fateful meeting with a mysterious girl.",
+	"releaseDate": "2022-02-14",
+	"runtime": 101,
+	"companies": [
+		"WIT STUDIO",
+		"Story",
+		"Nitroplus",
+		"Lawson Entertainment",
+		"Straight Edge",
+		"Warner Bros. Japan"
+	],
+	"genres": ["Animation", "Adventure", "Science Fiction"]
 }

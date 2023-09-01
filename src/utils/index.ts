@@ -3,28 +3,28 @@ export { monthYearDate, readableDate } from "./dateTools";
 export { getPlaceholderURL } from "./placeholder";
 
 export function getURLFromEntry(
-  item: CollectionEntry<"blog"> | CollectionEntry<"projects"> | CollectionEntry<"wiki">,
+	item: CollectionEntry<"blog"> | CollectionEntry<"projects"> | CollectionEntry<"wiki">,
 ): string {
-  switch (item.data.type) {
-    case "blog":
-      return `/articles/${item.slug}`;
-    case "wiki":
-      return `/wiki/${item.data.navigation?.category}/${item.slug}`;
-    case "project":
-      return `/projects/${item.data.projectType}/${item.slug}`;
-    default:
-      return "ERROR!";
-  }
+	switch (item.data.type) {
+		case "blog":
+			return `/articles/${item.slug}`;
+		case "wiki":
+			return `/wiki/${item.data.navigation?.category}/${item.slug}`;
+		case "project":
+			return `/projects/${item.data.projectType}/${item.slug}`;
+		default:
+			return "ERROR!";
+	}
 }
 
 export function getBaseSiteURL(): string {
-  return import.meta.env.PROD ? "https://erika.florist/" : "http://localhost:4321/";
+	return import.meta.env.PROD ? "https://erika.florist/" : "http://localhost:4321/";
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function randomArrayEntry<T>(array: T[]): T {
-  return array[Math.floor(Math.random() * array.length)] as T;
+	return array[Math.floor(Math.random() * array.length)] as T;
 }
 
 export const blogDateSort = (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
-  b.data.date.getTime() - a.data.date.getTime();
+	b.data.date.getTime() - a.data.date.getTime();

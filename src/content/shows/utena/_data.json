@@ -1,10 +1,10 @@
 {
-  "title": "Revolutionary Girl Utena",
-  "id": "tt0205410",
-  "plot": "A tomboyish schoolgirl finds herself forced into repeated duels for another girl who has a role in a world revolution.",
-  "releaseDate": "1997-04-02",
-  "runtimeStr": null,
-  "year": "1997",
-  "companies": ["TV Tokyo", "Yomiko Advertising"],
-  "genres": ["Animation", "Comedy", "Drama"]
+	"title": "Revolutionary Girl Utena",
+	"id": "tt0205410",
+	"plot": "A tomboyish schoolgirl finds herself forced into repeated duels for another girl who has a role in a world revolution.",
+	"releaseDate": "1997-04-02",
+	"runtimeStr": null,
+	"year": "1997",
+	"companies": ["TV Tokyo", "Yomiko Advertising"],
+	"genres": ["Animation", "Comedy", "Drama"]
 }

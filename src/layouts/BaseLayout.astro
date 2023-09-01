@@ -10,10 +10,10 @@ import "src/assets/style/prin.css";
 import type { MenuItem } from "../data/sidebarMenu";
 
 interface Props {
-  title?: string;
-  description?: string | undefined;
-  navItems?: MenuItem[];
-  preloadCatalogue?: boolean;
+	title?: string;
+	description?: string | undefined;
+	navItems?: MenuItem[];
+	preloadCatalogue?: boolean;
 }
 
 const { title, description, navItems, preloadCatalogue } = Astro.props;
@@ -21,76 +21,76 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <html lang="en">
-  <Head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title ? `${title} - Erika` : "Erika"}</title>
+	<Head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{title ? `${title} - Erika` : "Erika"}</title>
 
-    <link
-      rel="preload"
-      href="/assets/fonts/anuphan.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+		<link
+			rel="preload"
+			href="/assets/fonts/anuphan.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
 
-    {preloadCatalogue && <link rel="preload" href="/catalogue.json" as="fetch" crossorigin />}
+		{preloadCatalogue && <link rel="preload" href="/catalogue.json" as="fetch" crossorigin />}
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="description" content={description ? description : "My personal website"} />
-    <meta property="og:title" content={title ? title : "Erika"} />
-    <meta property="og:description" content={description ? description : "My personal website"} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="description" content={description ? description : "My personal website"} />
+		<meta property="og:title" content={title ? title : "Erika"} />
+		<meta property="og:description" content={description ? description : "My personal website"} />
 
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="erika.florist" />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="erika.florist" />
 
-    <meta property="og:image" content={getBaseSiteURL() + "social-card.png"} />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:image" content={getBaseSiteURL() + "social-card.png"} />
+		<meta property="og:image" content={getBaseSiteURL() + "social-card.png"} />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:image" content={getBaseSiteURL() + "social-card.png"} />
 
-    <link rel="canonical" href={canonicalURL} />
-    <meta property="og:url" content={canonicalURL} />
+		<link rel="canonical" href={canonicalURL} />
+		<meta property="og:url" content={canonicalURL} />
 
-    <script src="../assets/scripts/main.ts"></script>
-  </Head>
-  <body>
-    <script is:inline>
-      const theme = localStorage.getItem("theme"),
-        isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      theme === "dark" || (!theme && isSystemDark)
-        ? document.documentElement.classList.add("dark")
-        : theme === "light"
-        ? document.documentElement.classList.remove("dark")
-        : theme === "system" && isSystemDark && document.documentElement.classList.add("dark");
-    </script>
-    <Sprite.Provider>
-      <div id="app" class="bg-isabelline dark:bg-darker-skylines">
-        <section class="mx-auto w-layout p-5 sm:grid sm:grid-cols-layout sm:gap-x-6 sm:p-0">
-          <Sidebar navMenu={navItems ?? []} />
+		<script src="../assets/scripts/main.ts"></script>
+	</Head>
+	<body>
+		<script is:inline>
+			const theme = localStorage.getItem("theme"),
+				isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+			theme === "dark" || (!theme && isSystemDark)
+				? document.documentElement.classList.add("dark")
+				: theme === "light"
+				? document.documentElement.classList.remove("dark")
+				: theme === "system" && isSystemDark && document.documentElement.classList.add("dark");
+		</script>
+		<Sprite.Provider>
+			<div id="app" class="bg-isabelline dark:bg-darker-skylines">
+				<section class="mx-auto w-layout p-5 sm:grid sm:grid-cols-layout sm:gap-x-6 sm:p-0">
+					<Sidebar navMenu={navItems ?? []} />
 
-          <main class="sm:mt-9">
-            <slot />
-          </main>
-        </section>
+					<main class="sm:mt-9">
+						<slot />
+					</main>
+				</section>
 
-        <footer
-          class="flex justify-center bg-darker-skylines px-5 py-6 leading-tight text-isabelline dark:bg-mobile-menu sm:px-0"
-        >
-          <section class="flex w-footer justify-between">
-            <Socials />
+				<footer
+					class="flex justify-center bg-darker-skylines px-5 py-6 leading-tight text-isabelline dark:bg-mobile-menu sm:px-0"
+				>
+					<section class="flex w-footer justify-between">
+						<Socials />
 
-            <div>
-              Powered by <a href="https://astro.build/">Astro</a><br />
-              <a href="https://github.com/Princesseuh/erika.florist">Source Code</a><br />
-              <a href="/changelog/">Changelog</a>
-            </div>
-          </section>
-        </footer>
+						<div>
+							Powered by <a href="https://astro.build/">Astro</a><br />
+							<a href="https://github.com/Princesseuh/erika.florist">Source Code</a><br />
+							<a href="/changelog/">Changelog</a>
+						</div>
+					</section>
+				</footer>
 
-        <MobileMenu />
-        <MobileMenuSide navMenu={navItems ?? []} />
-      </div>
-    </Sprite.Provider>
-  </body>
+				<MobileMenu />
+				<MobileMenuSide navMenu={navItems ?? []} />
+			</div>
+		</Sprite.Provider>
+	</body>
 </html>

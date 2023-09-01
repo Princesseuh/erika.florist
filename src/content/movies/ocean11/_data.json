@@ -1,19 +1,16 @@
 {
-  "title": "Ocean's Eleven",
-  "tagline": "Are you in or out?",
-  "id": 161,
-  "overview": "Less than 24 hours into his parole, charismatic thief Danny Ocean is already rolling out his next plan: In one night, Danny's hand-picked crew of specialists will attempt to steal more than $150 million from three Las Vegas casinos. But to score the cash, Danny risks his chances of reconciling with ex-wife, Tess.",
-  "releaseDate": "2001-12-07",
-  "runtime": 116,
-  "companies": [
-    "Village Roadshow Pictures",
-    "NPV Entertainment",
-    "Jerry Weintraub Productions",
-    "Section Eight",
-    "Warner Bros. Pictures"
-  ],
-  "genres": [
-    "Thriller",
-    "Crime"
-  ]
+	"title": "Ocean's Eleven",
+	"tagline": "Are you in or out?",
+	"id": 161,
+	"overview": "Less than 24 hours into his parole, charismatic thief Danny Ocean is already rolling out his next plan: In one night, Danny's hand-picked crew of specialists will attempt to steal more than $150 million from three Las Vegas casinos. But to score the cash, Danny risks his chances of reconciling with ex-wife, Tess.",
+	"releaseDate": "2001-12-07",
+	"runtime": 116,
+	"companies": [
+		"Village Roadshow Pictures",
+		"NPV Entertainment",
+		"Jerry Weintraub Productions",
+		"Section Eight",
+		"Warner Bros. Pictures"
+	],
+	"genres": ["Thriller", "Crime"]
 }

@@ -1,23 +1,23 @@
 {
-  "cSpell.words": ["Astro", "fdir", "Rehype", "vite", "Segoe", "Roboto"],
-  "cSpell.ignorePaths": [
-    "package-lock.json",
-    "node_modules",
-    "vscode-extension",
-    ".git/objects",
-    ".vscode",
-    "pnpm-lock.yaml"
-  ],
-  "editor.formatOnSave": true,
-  "[markdown]": {
-    "editor.wordWrap": "on",
-    "editor.codeActionsOnSave": {
-      "source.fixAll.markdownlint": true
-    }
-  },
-  "prettier.documentSelectors": ["**/*.astro"],
-  "markdownlint.config": {
-    "MD033": false // Since we use components in our markdown files, we disable this rule that prevents HTML
-  },
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "astro"]
+	"cSpell.words": ["Astro", "fdir", "Rehype", "vite", "Segoe", "Roboto"],
+	"cSpell.ignorePaths": [
+		"package-lock.json",
+		"node_modules",
+		"vscode-extension",
+		".git/objects",
+		".vscode",
+		"pnpm-lock.yaml"
+	],
+	"editor.formatOnSave": true,
+	"[markdown]": {
+		"editor.wordWrap": "on",
+		"editor.codeActionsOnSave": {
+			"source.fixAll.markdownlint": true
+		}
+	},
+	"prettier.documentSelectors": ["**/*.astro"],
+	"markdownlint.config": {
+		"MD033": false // Since we use components in our markdown files, we disable this rule that prevents HTML
+	},
+	"eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "astro"]
 }

@@ -1,23 +1,19 @@
 {
-  "title": "The World to Come",
-  "tagline": "",
-  "id": 506281,
-  "overview": "In 1856, two women forge a close connection despite their isolation on the American frontier.",
-  "releaseDate": "2021-02-12",
-  "runtime": 105,
-  "companies": [
-    "Sea Change Media",
-    "Sailor Bear",
-    "Killer Films",
-    "Arsia Production",
-    "M.Y.R.A. Entertainment",
-    "Yellow Bear Films",
-    "Hype Film",
-    "Charades"
-  ],
-  "genres": [
-    "Romance",
-    "Drama",
-    "Western"
-  ]
+	"title": "The World to Come",
+	"tagline": "",
+	"id": 506281,
+	"overview": "In 1856, two women forge a close connection despite their isolation on the American frontier.",
+	"releaseDate": "2021-02-12",
+	"runtime": 105,
+	"companies": [
+		"Sea Change Media",
+		"Sailor Bear",
+		"Killer Films",
+		"Arsia Production",
+		"M.Y.R.A. Entertainment",
+		"Yellow Bear Films",
+		"Hype Film",
+		"Charades"
+	],
+	"genres": ["Romance", "Drama", "Western"]
 }

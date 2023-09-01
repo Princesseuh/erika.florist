@@ -1,10 +1,10 @@
 {
-  "title": "Everything Everywhere All at Once",
-  "id": "tt6710474",
-  "plot": "A middle-aged Chinese immigrant is swept up into an insane adventure in which she alone can save existence by exploring other universes and connecting with the lives she could have led.",
-  "releaseDate": "2022-04-08",
-  "runtimeStr": "2h 19min",
-  "year": "2022",
-  "companies": ["A24", "IAC Films", "AGBO"],
-  "genres": ["Action", "Adventure", "Comedy"]
+	"title": "Everything Everywhere All at Once",
+	"id": "tt6710474",
+	"plot": "A middle-aged Chinese immigrant is swept up into an insane adventure in which she alone can save existence by exploring other universes and connecting with the lives she could have led.",
+	"releaseDate": "2022-04-08",
+	"runtimeStr": "2h 19min",
+	"year": "2022",
+	"companies": ["A24", "IAC Films", "AGBO"],
+	"genres": ["Action", "Adventure", "Comedy"]
 }

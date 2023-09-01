@@ -1,13 +1,13 @@
 {
-  "extends": "astro/tsconfigs/strictest",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "$components/*": ["src/components/*"],
-      "$data/*": ["src/data/*"],
-      "$layouts/*": ["src/layouts/*"],
-      "$utils": ["src/utils/index.ts"]
-    }
-  },
-  "exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist"]
+	"extends": "astro/tsconfigs/strictest",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"$components/*": ["src/components/*"],
+			"$data/*": ["src/data/*"],
+			"$layouts/*": ["src/layouts/*"],
+			"$utils": ["src/utils/index.ts"]
+		}
+	},
+	"exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist"]
 }

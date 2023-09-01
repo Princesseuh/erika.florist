@@ -1,10 +1,10 @@
 {
-  "title": "The Dutch House",
-  "publishers": [
-    "Harper, An Imprint of HarperCollinsPublishers",
-    "Harper, an imprint of Harper Collins Publishers"
-  ],
-  "pages": 337,
-  "authors": ["Ann Patchett"],
-  "publishDate": 1546300800
+	"title": "The Dutch House",
+	"publishers": [
+		"Harper, An Imprint of HarperCollinsPublishers",
+		"Harper, an imprint of Harper Collins Publishers"
+	],
+	"pages": 337,
+	"authors": ["Ann Patchett"],
+	"publishDate": 1546300800
 }

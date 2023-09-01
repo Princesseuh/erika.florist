@@ -1,10 +1,10 @@
 {
-  "title": "The Darjeeling Limited",
-  "id": "tt0838221",
-  "plot": "A year after their father's funeral, three brothers travel across India by train in an attempt to bond with each other.",
-  "releaseDate": "2007-10-26",
-  "runtimeStr": "1h 31min",
-  "year": "2007",
-  "companies": ["Searchlight Pictures", "Collage Cinemagraphique", "American Empirical Pictures"],
-  "genres": ["Adventure", "Comedy", "Drama"]
+	"title": "The Darjeeling Limited",
+	"id": "tt0838221",
+	"plot": "A year after their father's funeral, three brothers travel across India by train in an attempt to bond with each other.",
+	"releaseDate": "2007-10-26",
+	"runtimeStr": "1h 31min",
+	"year": "2007",
+	"companies": ["Searchlight Pictures", "Collage Cinemagraphique", "American Empirical Pictures"],
+	"genres": ["Adventure", "Comedy", "Drama"]
 }

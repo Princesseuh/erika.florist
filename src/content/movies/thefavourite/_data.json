@@ -1,20 +1,16 @@
 {
-  "title": "The Favourite",
-  "tagline": "",
-  "id": 375262,
-  "overview": "England, early 18th century. The close relationship between Queen Anne and Sarah Churchill is threatened by the arrival of Sarah's cousin, Abigail Hill, resulting in a bitter rivalry between the two cousins to be the Queen's favourite.",
-  "releaseDate": "2018-11-23",
-  "runtime": 119,
-  "companies": [
-    "Waypoint Entertainment",
-    "Element Pictures",
-    "Scarlet Films",
-    "Film4 Productions",
-    "Fox Searchlight Pictures"
-  ],
-  "genres": [
-    "Drama",
-    "Comedy",
-    "Thriller"
-  ]
+	"title": "The Favourite",
+	"tagline": "",
+	"id": 375262,
+	"overview": "England, early 18th century. The close relationship between Queen Anne and Sarah Churchill is threatened by the arrival of Sarah's cousin, Abigail Hill, resulting in a bitter rivalry between the two cousins to be the Queen's favourite.",
+	"releaseDate": "2018-11-23",
+	"runtime": 119,
+	"companies": [
+		"Waypoint Entertainment",
+		"Element Pictures",
+		"Scarlet Films",
+		"Film4 Productions",
+		"Fox Searchlight Pictures"
+	],
+	"genres": ["Drama", "Comedy", "Thriller"]
 }

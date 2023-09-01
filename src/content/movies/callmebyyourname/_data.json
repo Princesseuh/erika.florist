@@ -1,10 +1,10 @@
 {
-  "title": "Call Me by Your Name",
-  "id": "tt5726616",
-  "plot": "In 1980s Italy, romance blossoms between a seventeen-year-old student and the older man hired as his father's research assistant.",
-  "releaseDate": "2018-01-19",
-  "runtimeStr": "2h 12min",
-  "year": "2017",
-  "companies": ["Frenesy Film Company", "La Cinéfacture", "RT Features"],
-  "genres": ["Drama", "Romance"]
+	"title": "Call Me by Your Name",
+	"id": "tt5726616",
+	"plot": "In 1980s Italy, romance blossoms between a seventeen-year-old student and the older man hired as his father's research assistant.",
+	"releaseDate": "2018-01-19",
+	"runtimeStr": "2h 12min",
+	"year": "2017",
+	"companies": ["Frenesy Film Company", "La Cinéfacture", "RT Features"],
+	"genres": ["Drama", "Romance"]
 }

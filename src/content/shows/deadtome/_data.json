@@ -1,15 +1,7 @@
 {
-  "tagline": "There's always a way out.",
-  "id": 81357,
-  "overview": "A hotheaded widow searching for the hit-and-run driver who mowed down her husband befriends an eccentric optimist who isn't quite what she seems.",
-  "companies": [
-    "Gloria Sanchez Productions",
-    "CBS Studios",
-    "Visualized"
-  ],
-  "genres": [
-    "Drama",
-    "Comedy",
-    "Crime"
-  ]
+	"tagline": "There's always a way out.",
+	"id": 81357,
+	"overview": "A hotheaded widow searching for the hit-and-run driver who mowed down her husband befriends an eccentric optimist who isn't quite what she seems.",
+	"companies": ["Gloria Sanchez Productions", "CBS Studios", "Visualized"],
+	"genres": ["Drama", "Comedy", "Crime"]
 }

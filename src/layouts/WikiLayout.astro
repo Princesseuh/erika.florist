@@ -7,7 +7,7 @@ import { readableDate } from "$utils";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  wikiItem: CollectionEntry<"wiki">;
+	wikiItem: CollectionEntry<"wiki">;
 }
 
 const { wikiItem } = Astro.props;
@@ -16,30 +16,30 @@ const lastModified = getLastModified(wikiItem);
 ---
 
 <BaseLayout
-  title={wikiItem.data.title}
-  description={wikiItem.data.tagline}
-  navItems={await getWikiNavigation(new URL(Astro.request.url))}
+	title={wikiItem.data.title}
+	description={wikiItem.data.tagline}
+	navItems={await getWikiNavigation(new URL(Astro.request.url))}
 >
-  <section class="mx-auto grid-cols-content gap-6 sm:grid">
-    <article class="post max-w-[72ch]">
-      <ContentHeader item={wikiItem} includeTags={false} />
-      <Content />
+	<section class="mx-auto grid-cols-content gap-6 sm:grid">
+		<article class="post max-w-[72ch]">
+			<ContentHeader item={wikiItem} includeTags={false} />
+			<Content />
 
-      <span class="mb-4 block text-right text-creative-work dark:text-dark-subtle-text">
-        Page last modified <a
-          href={lastModified.lastModifiedCommitUrl}
-          data-date={lastModified.lastModifiedDate}
-          >{readableDate(lastModified.lastModifiedDate)}
-        </a>
-      </span>
-    </article>
+			<span class="mb-4 block text-right text-creative-work dark:text-dark-subtle-text">
+				Page last modified <a
+					href={lastModified.lastModifiedCommitUrl}
+					data-date={lastModified.lastModifiedDate}
+					>{readableDate(lastModified.lastModifiedDate)}
+				</a>
+			</span>
+		</article>
 
-    <aside class="mr-4 mt-10 hidden sm:block xl:mr-0">
-      {
-        headings.length > 0 && (
-          <TableOfContent headers={headings} maxDepth={wikiItem.data.maxDepthTOC || 4} />
-        )
-      }
-    </aside>
-  </section>
+		<aside class="mr-4 mt-10 hidden sm:block xl:mr-0">
+			{
+				headings.length > 0 && (
+					<TableOfContent headers={headings} maxDepth={wikiItem.data.maxDepthTOC || 4} />
+				)
+			}
+		</aside>
+	</section>
 </BaseLayout>

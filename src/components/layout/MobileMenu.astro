@@ -4,24 +4,24 @@ import Logo from "./Logo.astro";
 ---
 
 <div
-  class="fixed bottom-0 flex h-12 w-full items-center justify-between bg-mobile-menu px-3 text-isabelline sm:hidden"
+	class="fixed bottom-0 flex h-12 w-full items-center justify-between bg-mobile-menu px-3 text-isabelline sm:hidden"
 >
-  <Logo />
+	<Logo />
 
-  <div id="mobile-side-toggle" class="h-7" aria-label="Toggle mobile menu" role="button">
-    <Sprite name="menu" size="28px" />
-  </div>
+	<div id="mobile-side-toggle" class="h-7" aria-label="Toggle mobile menu" role="button">
+		<Sprite name="menu" size="28px" />
+	</div>
 </div>
 
 <script>
-  const mobileMenuToggle = document.getElementById("mobile-side-toggle");
-  const mobileMenu = document.getElementById("mobile-menu");
-  const body = document.body;
+	const mobileMenuToggle = document.getElementById("mobile-side-toggle");
+	const mobileMenu = document.getElementById("mobile-menu");
+	const body = document.body;
 
-  if (mobileMenu && mobileMenuToggle) {
-    mobileMenuToggle.addEventListener("click", () => {
-      mobileMenu.classList.toggle("w-full");
-      body.classList.toggle("overflow-hidden");
-    });
-  }
+	if (mobileMenu && mobileMenuToggle) {
+		mobileMenuToggle.addEventListener("click", () => {
+			mobileMenu.classList.toggle("w-full");
+			body.classList.toggle("overflow-hidden");
+		});
+	}
 </script>

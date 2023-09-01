@@ -1,11 +1,7 @@
 {
-  "tagline": "",
-  "id": 79063,
-  "overview": "Landmark mockumentary-maker Philomena Cunk traces the history of Britain and Earth.",
-  "companies": [
-    "House of Tomorrow"
-  ],
-  "genres": [
-    "Comedy"
-  ]
+	"tagline": "",
+	"id": 79063,
+	"overview": "Landmark mockumentary-maker Philomena Cunk traces the history of Britain and Earth.",
+	"companies": ["House of Tomorrow"],
+	"genres": ["Comedy"]
 }

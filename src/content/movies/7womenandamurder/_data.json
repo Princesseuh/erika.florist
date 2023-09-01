@@ -1,16 +1,10 @@
 {
-  "title": "7 Women and a Murder",
-  "tagline": "",
-  "id": 890541,
-  "overview": "When their family patriarch is stabbed, seven women, each with ulterior motives, become trapped together in a mansion to solve the puzzle of his murder. This is the  Italian remake of François Ozon's 8 Women.",
-  "releaseDate": "2021-12-25",
-  "runtime": 84,
-  "companies": [
-    "Wildside",
-    "Warner Bros. Entertainment Italia"
-  ],
-  "genres": [
-    "Comedy",
-    "Mystery"
-  ]
+	"title": "7 Women and a Murder",
+	"tagline": "",
+	"id": 890541,
+	"overview": "When their family patriarch is stabbed, seven women, each with ulterior motives, become trapped together in a mansion to solve the puzzle of his murder. This is the  Italian remake of François Ozon's 8 Women.",
+	"releaseDate": "2021-12-25",
+	"runtime": 84,
+	"companies": ["Wildside", "Warner Bros. Entertainment Italia"],
+	"genres": ["Comedy", "Mystery"]
 }

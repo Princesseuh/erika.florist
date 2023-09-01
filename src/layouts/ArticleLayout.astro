@@ -5,7 +5,7 @@ import BaseLayout from "$layouts/BaseLayout.astro";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  article: CollectionEntry<"blog">;
+	article: CollectionEntry<"blog">;
 }
 
 const { article } = Astro.props;
@@ -13,20 +13,20 @@ const { Content, headings } = await article.render();
 ---
 
 <BaseLayout title={article.data.title} description={article.data.tagline}>
-  <section class="mx-auto flex gap-6">
-    <article class="post w-[72ch] max-w-full">
-      <ContentHeader item={article} includeTags />
-      <Content />
-    </article>
+	<section class="mx-auto flex gap-6">
+		<article class="post w-[72ch] max-w-full">
+			<ContentHeader item={article} includeTags />
+			<Content />
+		</article>
 
-    <aside
-      class="mb-4 mt-10 hidden w-1/4 flex-1 pr-2 transition-opacity duration-100 ease-linear sm:block"
-    >
-      {
-        headings.length > 0 && (
-          <TableOfContent headers={headings} maxDepth={article.data.maxDepthTOC || 4} />
-        )
-      }
-    </aside>
-  </section>
+		<aside
+			class="mb-4 mt-10 hidden w-1/4 flex-1 pr-2 transition-opacity duration-100 ease-linear sm:block"
+		>
+			{
+				headings.length > 0 && (
+					<TableOfContent headers={headings} maxDepth={article.data.maxDepthTOC || 4} />
+				)
+			}
+		</aside>
+	</section>
 </BaseLayout>

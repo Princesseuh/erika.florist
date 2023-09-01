@@ -1,17 +1,10 @@
 {
-  "title": "The Addams Family",
-  "tagline": "Weird Is Relative",
-  "id": 2907,
-  "overview": "When a man claiming to be long-lost Uncle Fester reappears after 25 years lost, the family plans a celebration to wake the dead. But the kids barely have time to warm up the electric chair before Morticia begins to suspect Fester is fraud when he can't recall any of the details of Fester's life.",
-  "releaseDate": "1991-11-22",
-  "runtime": 102,
-  "companies": [
-    "Scott Rudin Productions",
-    "Orion Pictures",
-    "Paramount"
-  ],
-  "genres": [
-    "Comedy",
-    "Fantasy"
-  ]
+	"title": "The Addams Family",
+	"tagline": "Weird Is Relative",
+	"id": 2907,
+	"overview": "When a man claiming to be long-lost Uncle Fester reappears after 25 years lost, the family plans a celebration to wake the dead. But the kids barely have time to warm up the electric chair before Morticia begins to suspect Fester is fraud when he can't recall any of the details of Fester's life.",
+	"releaseDate": "1991-11-22",
+	"runtime": 102,
+	"companies": ["Scott Rudin Productions", "Orion Pictures", "Paramount"],
+	"genres": ["Comedy", "Fantasy"]
 }

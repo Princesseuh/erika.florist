@@ -7,92 +7,92 @@ import { getURLFromEntry, readableDate } from "$utils";
 import { getCollection } from "astro:content";
 
 const articles = (await getCollection("blog"))
-  .sort((a, b) => {
-    return b.data.date.getTime() - a.data.date.getTime();
-  })
-  .slice(0, 3);
+	.sort((a, b) => {
+		return b.data.date.getTime() - a.data.date.getTime();
+	})
+	.slice(0, 3);
 
 const wikiItems = (await getCollection("wiki"))
-  .map((wikiItem) => ({
-    ...wikiItem,
-    lastModified: getLastModified(wikiItem).lastModifiedDate,
-  }))
-  .sort((a, b) => {
-    return b.lastModified.getTime() - a.lastModified.getTime();
-  })
-  .slice(0, 6);
+	.map((wikiItem) => ({
+		...wikiItem,
+		lastModified: getLastModified(wikiItem).lastModifiedDate,
+	}))
+	.sort((a, b) => {
+		return b.lastModified.getTime() - a.lastModified.getTime();
+	})
+	.slice(0, 6);
 const featuredProjects = (await getCollection("projects"))
-  .filter((project) => project.data.featured)
-  .slice(0, 3);
+	.filter((project) => project.data.featured)
+	.slice(0, 3);
 ---
 
 <BaseLayout>
-  <article class="w-index">
-    <h2 class="mb-4 mt-0 text-4xl no-underline">Hello! 💐</h2>
+	<article class="w-index">
+		<h2 class="mb-4 mt-0 text-4xl no-underline">Hello! 💐</h2>
 
-    <p>
-      I'm <span class="font-semibold text-beach-watermelon dark:text-dark-beach-watermelon"
-        >Erika</span
-      >, a software engineer living in Sweden&nbsp;🇸🇪, pleased to meet you!
-    </p>
+		<p>
+			I'm <span class="font-semibold text-beach-watermelon dark:text-dark-beach-watermelon"
+				>Erika</span
+			>, a software engineer living in Sweden&nbsp;🇸🇪, pleased to meet you!
+		</p>
 
-    <p>
-      I am currently employed at <a href="https://astro.build/">Astro</a> where I work as a core
-      developer. While I do touch everything, I notably focus on editor tooling (a big passion of
-      mine) and improving the general developer experience.
-    </p>
+		<p>
+			I am currently employed at <a href="https://astro.build/">Astro</a> where I work as a core
+			developer. While I do touch everything, I notably focus on editor tooling (a big passion of
+			mine) and improving the general developer experience.
+		</p>
 
-    <p>
-      Wanna read stuff I wrote? Well, <a href="/articles/">here's my blog</a>! Interested in seeing
-      stuff I worked on? Click <a href="/projects/">here for my projects</a>. You want to read more
-      stuff I wrote, but this time, mostly for myself? <a href="/wiki/">Take a look at my wiki</a>.
-    </p>
+		<p>
+			Wanna read stuff I wrote? Well, <a href="/articles/">here's my blog</a>! Interested in seeing
+			stuff I worked on? Click <a href="/projects/">here for my projects</a>. You want to read more
+			stuff I wrote, but this time, mostly for myself? <a href="/wiki/">Take a look at my wiki</a>.
+		</p>
 
-    <h3 class="mb-5 text-2xl">Featured works</h3>
-    <div class="mb-6 mt-2 flex flex-wrap items-center justify-center gap-5 sm:mx-10 sm:gap-4">
-      {
-        featuredProjects.map((project, i) => (
-          <div class="relative h-[180px]">
-            <a href={getURLFromEntry(project)}>
-              <Image
-                class="h-[180px] w-[377px] rounded-sm object-cover object-top"
-                src={project.data.indexCover}
-                alt={project.data.indexCoverAlt ?? ""}
-                imageWidth={754}
-                width={377}
-                height={180}
-                loading={"eager"}
-                quality={45}
-                fetchpriority={i === 0 ? "high" : undefined}
-              />
-              <h4 class="cover-title">{project.data.title}</h4>
-            </a>
-          </div>
-        ))
-      }
-    </div>
+		<h3 class="mb-5 text-2xl">Featured works</h3>
+		<div class="mb-6 mt-2 flex flex-wrap items-center justify-center gap-5 sm:mx-10 sm:gap-4">
+			{
+				featuredProjects.map((project, i) => (
+					<div class="relative h-[180px]">
+						<a href={getURLFromEntry(project)}>
+							<Image
+								class="h-[180px] w-[377px] rounded-sm object-cover object-top"
+								src={project.data.indexCover}
+								alt={project.data.indexCoverAlt ?? ""}
+								imageWidth={754}
+								width={377}
+								height={180}
+								loading={"eager"}
+								quality={45}
+								fetchpriority={i === 0 ? "high" : undefined}
+							/>
+							<h4 class="cover-title">{project.data.title}</h4>
+						</a>
+					</div>
+				))
+			}
+		</div>
 
-    <div class="flex flex-col justify-around gap-4 sm:flex-row">
-      <div class="sm:w-[63%]">
-        <h3 class="mb-4 mt-2 text-2xl sm:mt-4">Latest blog posts</h3>
-        {articles.map((article) => <ArticlePreview article={article} />)}
-      </div>
+		<div class="flex flex-col justify-around gap-4 sm:flex-row">
+			<div class="sm:w-[63%]">
+				<h3 class="mb-4 mt-2 text-2xl sm:mt-4">Latest blog posts</h3>
+				{articles.map((article) => <ArticlePreview article={article} />)}
+			</div>
 
-      <div class="sm:w-[37%]">
-        <h3 class="mb-4 mt-2 text-2xl sm:mt-4">Latest wiki modifications</h3>
-        {
-          wikiItems.map((item) => (
-            <section class="mb-3">
-              <a class="block font-semibold leading-tight" href={getURLFromEntry(item)}>
-                {item.data.title}
-              </a>
-              <span class="block text-sm first-letter:uppercase" data-date={item.lastModified}>
-                {readableDate(item.lastModified)}
-              </span>
-            </section>
-          ))
-        }
-      </div>
-    </div>
-  </article>
+			<div class="sm:w-[37%]">
+				<h3 class="mb-4 mt-2 text-2xl sm:mt-4">Latest wiki modifications</h3>
+				{
+					wikiItems.map((item) => (
+						<section class="mb-3">
+							<a class="block font-semibold leading-tight" href={getURLFromEntry(item)}>
+								{item.data.title}
+							</a>
+							<span class="block text-sm first-letter:uppercase" data-date={item.lastModified}>
+								{readableDate(item.lastModified)}
+							</span>
+						</section>
+					))
+				}
+			</div>
+		</div>
+	</article>
 </BaseLayout>

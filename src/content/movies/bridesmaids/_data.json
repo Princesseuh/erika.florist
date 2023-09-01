@@ -1,16 +1,10 @@
 {
-  "title": "Bridesmaids",
-  "tagline": "Save the date.",
-  "id": 55721,
-  "overview": "Annie's life is a mess. But when she finds out her lifetime best friend is engaged, she simply must serve as Lillian's maid of honor. Though lovelorn and broke, Annie bluffs her way through the expensive and bizarre rituals. With one chance to get it perfect, she’ll show Lillian and her bridesmaids just how far you’ll go for someone you love.",
-  "releaseDate": "2011-05-13",
-  "runtime": 125,
-  "companies": [
-    "Apatow Productions",
-    "Relativity Media"
-  ],
-  "genres": [
-    "Comedy",
-    "Romance"
-  ]
+	"title": "Bridesmaids",
+	"tagline": "Save the date.",
+	"id": 55721,
+	"overview": "Annie's life is a mess. But when she finds out her lifetime best friend is engaged, she simply must serve as Lillian's maid of honor. Though lovelorn and broke, Annie bluffs her way through the expensive and bizarre rituals. With one chance to get it perfect, she’ll show Lillian and her bridesmaids just how far you’ll go for someone you love.",
+	"releaseDate": "2011-05-13",
+	"runtime": 125,
+	"companies": ["Apatow Productions", "Relativity Media"],
+	"genres": ["Comedy", "Romance"]
 }

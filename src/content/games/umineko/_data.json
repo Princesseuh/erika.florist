@@ -1,26 +1,26 @@
 {
-  "first_release_date": 1187376479,
-  "genres": [
-    {
-      "id": 34,
-      "name": "Visual Novel"
-    }
-  ],
-  "platforms": [
-    {
-      "id": 6,
-      "abbreviation": "PC"
-    },
-    {
-      "id": 9,
-      "abbreviation": "PS3"
-    }
-  ],
-  "companies": [
-    {
-      "id": 2997,
-      "name": "07th Expansion",
-      "role": "developer"
-    }
-  ]
+	"first_release_date": 1187376479,
+	"genres": [
+		{
+			"id": 34,
+			"name": "Visual Novel"
+		}
+	],
+	"platforms": [
+		{
+			"id": 6,
+			"abbreviation": "PC"
+		},
+		{
+			"id": 9,
+			"abbreviation": "PS3"
+		}
+	],
+	"companies": [
+		{
+			"id": 2997,
+			"name": "07th Expansion",
+			"role": "developer"
+		}
+	]
 }

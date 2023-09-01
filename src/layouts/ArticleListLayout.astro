@@ -6,30 +6,30 @@ import type { Page } from "astro";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
-  page: Page<CollectionEntry<"blog">>;
-  title: string;
+	page: Page<CollectionEntry<"blog">>;
+	title: string;
 }
 
 const { page, title } = Astro.props;
 ---
 
 <BaseLayout title={title}>
-  <article class="flex w-articleList flex-col md:flex-row">
-    <div class="sm:w-[80%]">
-      <h2 class="mt-0">{title}</h2>
-      {page.data.map((item) => <ArticlePreview article={item} />)}
-      <div>
-        {page.url.prev && <a href={page.url.prev}>Newer posts</a>}
-        {
-          page.url.next && (
-            <a class="float-right" href={page.url.next}>
-              Older posts
-            </a>
-          )
-        }
-      </div>
-    </div>
+	<article class="flex w-articleList flex-col md:flex-row">
+		<div class="sm:w-[80%]">
+			<h2 class="mt-0">{title}</h2>
+			{page.data.map((item) => <ArticlePreview article={item} />)}
+			<div>
+				{page.url.prev && <a href={page.url.prev}>Newer posts</a>}
+				{
+					page.url.next && (
+						<a class="float-right" href={page.url.next}>
+							Older posts
+						</a>
+					)
+				}
+			</div>
+		</div>
 
-    <ArticleListAside />
-  </article>
+		<ArticleListAside />
+	</article>
 </BaseLayout>

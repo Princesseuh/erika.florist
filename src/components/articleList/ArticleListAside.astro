@@ -3,45 +3,45 @@ import { getCollection } from "astro:content";
 
 const articles = await getCollection("blog");
 const tags: Array<[string, number]> = [
-  ...articles
-    .flatMap((article) => [...article.data.tags])
-    .reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
+	...articles
+		.flatMap((article) => [...article.data.tags])
+		.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
 ].sort((a, b) => {
-  return b[1] - a[1];
+	return b[1] - a[1];
 });
 
 const years: Array<[string, number]> = [
-  ...articles
-    .map((article) => new Date(article.data.date).getUTCFullYear())
-    .reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
+	...articles
+		.map((article) => new Date(article.data.date).getUTCFullYear())
+		.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
 ].sort((a, b) => {
-  return b[0] - a[0];
+	return b[0] - a[0];
 });
 ---
 
 <aside class="sm:w-[20%]">
-  <section>
-    <h2 class="mb-3">Tags</h2>
-    <ul class="m-0 list-none p-0">
-      {
-        tags.map((tag) => (
-          <li>
-            <a href={"/articles/tags/" + tag[0] + "/"}>{tag[0]}</a>&nbsp;({tag[1]})
-          </li>
-        ))
-      }
-    </ul>
-  </section>
-  <section>
-    <h2 class="mb-3">Year</h2>
-    <ul class="m-0 list-none p-0">
-      {
-        years.map((year) => (
-          <li>
-            <a href={"/articles/years/" + year[0] + "/"}>{year[0]}</a>&nbsp;({year[1]})
-          </li>
-        ))
-      }
-    </ul>
-  </section>
+	<section>
+		<h2 class="mb-3">Tags</h2>
+		<ul class="m-0 list-none p-0">
+			{
+				tags.map((tag) => (
+					<li>
+						<a href={"/articles/tags/" + tag[0] + "/"}>{tag[0]}</a>&nbsp;({tag[1]})
+					</li>
+				))
+			}
+		</ul>
+	</section>
+	<section>
+		<h2 class="mb-3">Year</h2>
+		<ul class="m-0 list-none p-0">
+			{
+				years.map((year) => (
+					<li>
+						<a href={"/articles/years/" + year[0] + "/"}>{year[0]}</a>&nbsp;({year[1]})
+					</li>
+				))
+			}
+		</ul>
+	</section>
 </aside>

@@ -4,11 +4,11 @@ import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 
 export const getStaticPaths = (async () => {
-  const wikiEntries = await getCollection("wiki");
-  return wikiEntries.map((entry) => ({
-    params: { slug: entry.slug, category: entry.data.navigation.category },
-    props: { wikiItem: entry },
-  }));
+	const wikiEntries = await getCollection("wiki");
+	return wikiEntries.map((entry) => ({
+		params: { slug: entry.slug, category: entry.data.navigation.category },
+		props: { wikiItem: entry },
+	}));
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;

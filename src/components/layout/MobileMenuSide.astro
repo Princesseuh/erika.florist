@@ -2,7 +2,7 @@
 import { headerMenu as mainMenu, processNavMenu, type MenuItem } from "$data/sidebarMenu";
 
 interface Props {
-  navMenu: MenuItem[];
+	navMenu: MenuItem[];
 }
 
 const { navMenu } = Astro.props;
@@ -10,49 +10,49 @@ const processedNavMenu = processNavMenu(navMenu);
 ---
 
 <div class="fixed -right-px top-0 flex h-full w-0 transition-[width]" id="mobile-menu">
-  <div id="empty-area" class="w-2/6"></div>
-  <div class="flex w-4/6 flex-col-reverse overflow-y-auto bg-mobile-menu-side px-4 py-6 text-right">
-    <nav aria-label="Mobile Menu - In page navigation" class="flex flex-col gap-2">
-      {
-        [...mainMenu.concat().reverse(), "Home"].map((item) => (
-          <a
-            class="text-xl text-isabelline"
-            href={`/${item === "Home" ? "" : item.toLowerCase() + "/"}`}
-          >
-            {item}
-          </a>
-        ))
-      }
-    </nav>
+	<div id="empty-area" class="w-2/6"></div>
+	<div class="flex w-4/6 flex-col-reverse overflow-y-auto bg-mobile-menu-side px-4 py-6 text-right">
+		<nav aria-label="Mobile Menu - In page navigation" class="flex flex-col gap-2">
+			{
+				[...mainMenu.concat().reverse(), "Home"].map((item) => (
+					<a
+						class="text-xl text-isabelline"
+						href={`/${item === "Home" ? "" : item.toLowerCase() + "/"}`}
+					>
+						{item}
+					</a>
+				))
+			}
+		</nav>
 
-    {processedNavMenu.length > 0 && <hr class="w-full" />}
+		{processedNavMenu.length > 0 && <hr class="w-full" />}
 
-    <nav aria-label="Mobile Menu - General navigation">
-      {
-        processedNavMenu.flatMap((navItem) => (
-          <ul class="m-0 mb-4 list-none p-0">
-            <h3 class="m-0 text-lg">{navItem.heading}</h3>
-            {navItem.children.map((child) => (
-              <li>
-                <a href={child.link}>{child.label}</a>
-              </li>
-            ))}
-          </ul>
-        ))
-      }
-    </nav>
-  </div>
+		<nav aria-label="Mobile Menu - General navigation">
+			{
+				processedNavMenu.flatMap((navItem) => (
+					<ul class="m-0 mb-4 list-none p-0">
+						<h3 class="m-0 text-lg">{navItem.heading}</h3>
+						{navItem.children.map((child) => (
+							<li>
+								<a href={child.link}>{child.label}</a>
+							</li>
+						))}
+					</ul>
+				))
+			}
+		</nav>
+	</div>
 </div>
 
 <script>
-  const emptyArea = document.getElementById("empty-area");
-  const mobileMenu = document.getElementById("mobile-menu");
-  const body = document.body;
+	const emptyArea = document.getElementById("empty-area");
+	const mobileMenu = document.getElementById("mobile-menu");
+	const body = document.body;
 
-  if (emptyArea && mobileMenu) {
-    emptyArea.addEventListener("click", () => {
-      mobileMenu.classList.toggle("w-full");
-      body.classList.toggle("overflow-hidden");
-    });
-  }
+	if (emptyArea && mobileMenu) {
+		emptyArea.addEventListener("click", () => {
+			mobileMenu.classList.toggle("w-full");
+			body.classList.toggle("overflow-hidden");
+		});
+	}
 </script>

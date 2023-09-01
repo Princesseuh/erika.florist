@@ -1,17 +1,10 @@
 {
-  "title": "Guardians of the Galaxy Vol. 3",
-  "tagline": "Once more with feeling.",
-  "id": 447365,
-  "overview": "Peter Quill, still reeling from the loss of Gamora, must rally his team around him to defend the universe along with protecting one of their own. A mission that, if not completed successfully, could quite possibly lead to the end of the Guardians as we know them.",
-  "releaseDate": "2023-05-03",
-  "runtime": 150,
-  "companies": [
-    "Marvel Studios",
-    "Kevin Feige Productions"
-  ],
-  "genres": [
-    "Science Fiction",
-    "Adventure",
-    "Action"
-  ]
+	"title": "Guardians of the Galaxy Vol. 3",
+	"tagline": "Once more with feeling.",
+	"id": 447365,
+	"overview": "Peter Quill, still reeling from the loss of Gamora, must rally his team around him to defend the universe along with protecting one of their own. A mission that, if not completed successfully, could quite possibly lead to the end of the Guardians as we know them.",
+	"releaseDate": "2023-05-03",
+	"runtime": 150,
+	"companies": ["Marvel Studios", "Kevin Feige Productions"],
+	"genres": ["Science Fiction", "Adventure", "Action"]
 }

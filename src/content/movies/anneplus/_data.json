@@ -1,16 +1,10 @@
 {
-  "title": "Anne+: The Film",
-  "tagline": "",
-  "id": 808579,
-  "overview": "Just before Anne is moving from Amsterdam to live with her great love Sara in Montreal, her publisher criticizes the manuscript for her first novel. What exactly is the story she's trying to tell? Does she even have something to say at all? Anne is forced to search for what she wants in life, because it is not only the main character in her novel who seems to be a little lost.",
-  "releaseDate": "2021-10-14",
-  "runtime": 94,
-  "companies": [
-    "Millstreet Films",
-    "BNNVARA"
-  ],
-  "genres": [
-    "Drama",
-    "Romance"
-  ]
+	"title": "Anne+: The Film",
+	"tagline": "",
+	"id": 808579,
+	"overview": "Just before Anne is moving from Amsterdam to live with her great love Sara in Montreal, her publisher criticizes the manuscript for her first novel. What exactly is the story she's trying to tell? Does she even have something to say at all? Anne is forced to search for what she wants in life, because it is not only the main character in her novel who seems to be a little lost.",
+	"releaseDate": "2021-10-14",
+	"runtime": 94,
+	"companies": ["Millstreet Films", "BNNVARA"],
+	"genres": ["Drama", "Romance"]
 }

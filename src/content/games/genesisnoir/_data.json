@@ -1,43 +1,43 @@
 {
-  "first_release_date": 1615507200,
-  "genres": [
-    {
-      "id": 31,
-      "name": "Adventure"
-    },
-    {
-      "id": 32,
-      "name": "Indie"
-    }
-  ],
-  "platforms": [
-    {
-      "id": 6,
-      "abbreviation": "PC"
-    },
-    {
-      "id": 14,
-      "abbreviation": "Mac"
-    },
-    {
-      "id": 49,
-      "abbreviation": "XONE"
-    },
-    {
-      "id": 130,
-      "abbreviation": "Switch"
-    }
-  ],
-  "companies": [
-    {
-      "id": 27525,
-      "name": "Feral Cat Den",
-      "role": "developer"
-    },
-    {
-      "id": 18629,
-      "name": "Fellow Traveller",
-      "role": "publisher"
-    }
-  ]
+	"first_release_date": 1615507200,
+	"genres": [
+		{
+			"id": 31,
+			"name": "Adventure"
+		},
+		{
+			"id": 32,
+			"name": "Indie"
+		}
+	],
+	"platforms": [
+		{
+			"id": 6,
+			"abbreviation": "PC"
+		},
+		{
+			"id": 14,
+			"abbreviation": "Mac"
+		},
+		{
+			"id": 49,
+			"abbreviation": "XONE"
+		},
+		{
+			"id": 130,
+			"abbreviation": "Switch"
+		}
+	],
+	"companies": [
+		{
+			"id": 27525,
+			"name": "Feral Cat Den",
+			"role": "developer"
+		},
+		{
+			"id": 18629,
+			"name": "Fellow Traveller",
+			"role": "publisher"
+		}
+	]
 }

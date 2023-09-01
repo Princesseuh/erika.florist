@@ -1,66 +1,66 @@
 {
-  "first_release_date": 1574121600,
-  "genres": [
-    {
-      "id": 5,
-      "name": "Shooter"
-    },
-    {
-      "id": 31,
-      "name": "Adventure"
-    }
-  ],
-  "platforms": [
-    {
-      "id": 3,
-      "abbreviation": "Linux"
-    },
-    {
-      "id": 6,
-      "abbreviation": "PC"
-    },
-    {
-      "id": 14,
-      "abbreviation": "Mac"
-    },
-    {
-      "id": 48,
-      "abbreviation": "PS4"
-    },
-    {
-      "id": 49,
-      "abbreviation": "XONE"
-    },
-    {
-      "id": 170,
-      "abbreviation": "Stadia"
-    }
-  ],
-  "companies": [
-    {
-      "id": 552,
-      "name": "Crystal Dynamics",
-      "role": "developer"
-    },
-    {
-      "id": 27,
-      "name": "Eidos Montréal",
-      "role": "developer"
-    },
-    {
-      "id": 26,
-      "name": "Square Enix",
-      "role": "publisher"
-    },
-    {
-      "id": 291,
-      "name": "Nixxes Software",
-      "role": "publisher"
-    },
-    {
-      "id": 23,
-      "name": "Feral Interactive",
-      "role": "publisher"
-    }
-  ]
+	"first_release_date": 1574121600,
+	"genres": [
+		{
+			"id": 5,
+			"name": "Shooter"
+		},
+		{
+			"id": 31,
+			"name": "Adventure"
+		}
+	],
+	"platforms": [
+		{
+			"id": 3,
+			"abbreviation": "Linux"
+		},
+		{
+			"id": 6,
+			"abbreviation": "PC"
+		},
+		{
+			"id": 14,
+			"abbreviation": "Mac"
+		},
+		{
+			"id": 48,
+			"abbreviation": "PS4"
+		},
+		{
+			"id": 49,
+			"abbreviation": "XONE"
+		},
+		{
+			"id": 170,
+			"abbreviation": "Stadia"
+		}
+	],
+	"companies": [
+		{
+			"id": 552,
+			"name": "Crystal Dynamics",
+			"role": "developer"
+		},
+		{
+			"id": 27,
+			"name": "Eidos Montréal",
+			"role": "developer"
+		},
+		{
+			"id": 26,
+			"name": "Square Enix",
+			"role": "publisher"
+		},
+		{
+			"id": 291,
+			"name": "Nixxes Software",
+			"role": "publisher"
+		},
+		{
+			"id": 23,
+			"name": "Feral Interactive",
+			"role": "publisher"
+		}
+	]
 }

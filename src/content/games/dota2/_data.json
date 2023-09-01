@@ -1,34 +1,34 @@
 {
-  "first_release_date": 1373328000,
-  "genres": [
-    {
-      "id": 15,
-      "name": "Strategy"
-    },
-    {
-      "id": 36,
-      "name": "MOBA"
-    }
-  ],
-  "platforms": [
-    {
-      "id": 3,
-      "abbreviation": "Linux"
-    },
-    {
-      "id": 6,
-      "abbreviation": "PC"
-    },
-    {
-      "id": 14,
-      "abbreviation": "Mac"
-    }
-  ],
-  "companies": [
-    {
-      "id": 56,
-      "name": "Valve",
-      "role": "developer"
-    }
-  ]
+	"first_release_date": 1373328000,
+	"genres": [
+		{
+			"id": 15,
+			"name": "Strategy"
+		},
+		{
+			"id": 36,
+			"name": "MOBA"
+		}
+	],
+	"platforms": [
+		{
+			"id": 3,
+			"abbreviation": "Linux"
+		},
+		{
+			"id": 6,
+			"abbreviation": "PC"
+		},
+		{
+			"id": 14,
+			"abbreviation": "Mac"
+		}
+	],
+	"companies": [
+		{
+			"id": 56,
+			"name": "Valve",
+			"role": "developer"
+		}
+	]
 }

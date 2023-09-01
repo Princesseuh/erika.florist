@@ -1,55 +1,55 @@
 {
-  "first_release_date": 1337040000,
-  "genres": [
-    {
-      "id": 12,
-      "name": "Role-playing (RPG)"
-    },
-    {
-      "id": 25,
-      "name": "Hack and slash/Beat 'em up"
-    },
-    {
-      "id": 31,
-      "name": "Adventure"
-    }
-  ],
-  "platforms": [
-    {
-      "id": 6,
-      "abbreviation": "PC"
-    },
-    {
-      "id": 9,
-      "abbreviation": "PS3"
-    },
-    {
-      "id": 12,
-      "abbreviation": "X360"
-    },
-    {
-      "id": 14,
-      "abbreviation": "Mac"
-    },
-    {
-      "id": 48,
-      "abbreviation": "PS4"
-    },
-    {
-      "id": 49,
-      "abbreviation": "XONE"
-    }
-  ],
-  "companies": [
-    {
-      "id": 51,
-      "name": "Blizzard Entertainment",
-      "role": "developer"
-    },
-    {
-      "id": 26,
-      "name": "Square Enix",
-      "role": "publisher"
-    }
-  ]
+	"first_release_date": 1337040000,
+	"genres": [
+		{
+			"id": 12,
+			"name": "Role-playing (RPG)"
+		},
+		{
+			"id": 25,
+			"name": "Hack and slash/Beat 'em up"
+		},
+		{
+			"id": 31,
+			"name": "Adventure"
+		}
+	],
+	"platforms": [
+		{
+			"id": 6,
+			"abbreviation": "PC"
+		},
+		{
+			"id": 9,
+			"abbreviation": "PS3"
+		},
+		{
+			"id": 12,
+			"abbreviation": "X360"
+		},
+		{
+			"id": 14,
+			"abbreviation": "Mac"
+		},
+		{
+			"id": 48,
+			"abbreviation": "PS4"
+		},
+		{
+			"id": 49,
+			"abbreviation": "XONE"
+		}
+	],
+	"companies": [
+		{
+			"id": 51,
+			"name": "Blizzard Entertainment",
+			"role": "developer"
+		},
+		{
+			"id": 26,
+			"name": "Square Enix",
+			"role": "publisher"
+		}
+	]
 }

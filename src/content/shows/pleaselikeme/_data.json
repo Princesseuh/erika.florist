@@ -1,14 +1,11 @@
 {
-  "tagline": "",
-  "id": 61350,
-  "overview": "After breaking up with his girlfriend, Josh comes to the realization that he is homosexual. With the support of his now ex girlfriend Claire, and his best friend and house mate Tom, Josh must help his mother with her battle with depression and the rest of his family embrace his new found lifestyle.",
-  "companies": [
-    "John & Josh International",
-    "Australian Broadcasting Corporation",
-    "Pigeon Fancier Productions"
-  ],
-  "genres": [
-    "Drama",
-    "Comedy"
-  ]
+	"tagline": "",
+	"id": 61350,
+	"overview": "After breaking up with his girlfriend, Josh comes to the realization that he is homosexual. With the support of his now ex girlfriend Claire, and his best friend and house mate Tom, Josh must help his mother with her battle with depression and the rest of his family embrace his new found lifestyle.",
+	"companies": [
+		"John & Josh International",
+		"Australian Broadcasting Corporation",
+		"Pigeon Fancier Productions"
+	],
+	"genres": ["Drama", "Comedy"]
 }

@@ -1,14 +1,10 @@
 {
-  "title": "Outside In",
-  "tagline": "Things are never the same on the outside.",
-  "id": 472805,
-  "overview": "An ex-con struggling to readjust to life in his small town forms an intense bond with his former high-school teacher.",
-  "releaseDate": "2018-03-30",
-  "runtime": 109,
-  "companies": [
-    "Duplass Brothers Productions"
-  ],
-  "genres": [
-    "Drama"
-  ]
+	"title": "Outside In",
+	"tagline": "Things are never the same on the outside.",
+	"id": 472805,
+	"overview": "An ex-con struggling to readjust to life in his small town forms an intense bond with his former high-school teacher.",
+	"releaseDate": "2018-03-30",
+	"runtime": 109,
+	"companies": ["Duplass Brothers Productions"],
+	"genres": ["Drama"]
 }

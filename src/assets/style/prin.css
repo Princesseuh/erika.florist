@@ -1,19 +1,19 @@
 @font-face {
-  font-family: "Anuphan";
-  font-weight: 1 900;
-  font-display: optional;
-  src:
-    url("/assets/fonts/anuphan.woff2") format("woff2"),
-    url("/assets/fonts/anuphan.woff") format("woff");
+	font-family: "Anuphan";
+	font-weight: 1 900;
+	font-display: optional;
+	src:
+		url("/assets/fonts/anuphan.woff2") format("woff2"),
+		url("/assets/fonts/anuphan.woff") format("woff");
 }
 
 @font-face {
-  font-family: "fallback-arial";
-  size-adjust: 101.55%;
-  ascent-override: 100%;
-  descent-override: normal;
-  line-gap-override: normal;
-  src: local("Arial");
+	font-family: "fallback-arial";
+	size-adjust: 101.55%;
+	ascent-override: 100%;
+	descent-override: normal;
+	line-gap-override: normal;
+	src: local("Arial");
 }
 
 @tailwind base;

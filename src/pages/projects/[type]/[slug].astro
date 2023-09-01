@@ -4,11 +4,11 @@ import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 
 export const getStaticPaths = (async () => {
-  const projectEntries = await getCollection("projects");
-  return projectEntries.map((entry) => ({
-    params: { slug: entry.slug, type: entry.data.projectType },
-    props: { project: entry },
-  }));
+	const projectEntries = await getCollection("projects");
+	return projectEntries.map((entry) => ({
+		params: { slug: entry.slug, type: entry.data.projectType },
+		props: { project: entry },
+	}));
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;

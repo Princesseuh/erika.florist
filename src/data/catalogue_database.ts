@@ -35,7 +35,11 @@ type CatalogueTable = {
 let db: Kysely<Database>;
 
 export async function createDatabase() {
-	await rm("./api/cataloguedb.db");
+	try {
+		await rm("./api/cataloguedb.db");
+	} catch {
+		// Ignore, it's fine
+	}
 
 	const dialect = new SqliteDialect({
 		database: new SQLite("./api/cataloguedb.db"),

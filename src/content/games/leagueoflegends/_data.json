@@ -26,14 +26,14 @@
 	],
 	"companies": [
 		{
-			"id": 1494,
-			"name": "GOA Games Services Ltd.",
-			"role": "publisher"
-		},
-		{
 			"id": 41,
 			"name": "Riot Games",
 			"role": "developer"
+		},
+		{
+			"id": 1494,
+			"name": "GOA Games Services Ltd.",
+			"role": "publisher"
 		},
 		{
 			"id": 42,

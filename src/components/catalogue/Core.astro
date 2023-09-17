@@ -57,142 +57,84 @@ const pageLenth = 30;
 </style>
 
 <script>
-	import { QuickScore } from "quick-score";
 	const searchInput = document.getElementById("catalogue-search") as HTMLInputElement;
 	const ratingSelect = document.getElementById("catalogue-ratings") as HTMLSelectElement;
 	const typeSelect = document.getElementById("catalogue-types") as HTMLSelectElement;
 	const seeMoreButton = document.getElementById("catalogue-seemore") as HTMLButtonElement;
 	const core = document.getElementById("catalogue-core") as HTMLDivElement;
+	const content = document.getElementById("catalogue-content") as HTMLDivElement;
 
-	let qs: QuickScore<CatalogueData>;
-	let library: CatalogueData[] = [];
-
-	let currentIndex = 0;
-	const pageLength = parseInt(core.dataset.pagelength ?? "30") ?? 30;
-
-	type CatalogueData = {
-		cover: { src: string; width: number; height: number; placeholder: string };
-		title: string;
-		author: string;
-		rating: string;
-		platform: string;
-		finishedDate: string;
-		type: "game" | "book";
-	};
-
-	function searchLibrary(): CatalogueData[] {
-		const searchInputValue = searchInput.value;
-		const ratingSelectValue = ratingSelect.value;
-		const typeSelectValue = typeSelect.value;
-
-		return qs
-			.search(searchInputValue)
-			.map((entry) => entry.item)
-			.filter((entry) => filterRating(entry) && filterType(entry));
-
-		function filterRating(entry: CatalogueData) {
-			if (ratingSelectValue !== "") return entry.rating === ratingSelectValue;
-			return true;
-		}
-
-		function filterType(entry: CatalogueData) {
-			if (typeSelectValue !== "") return entry.type === typeSelectValue;
-			return true;
-		}
+	interface Status {
+		totalItems: number;
+		itemsPerPage: number;
+		currentPage: number;
+		currentOffset: number;
+		totalPages: number;
 	}
 
-	function buildLibrary(
-		catalogueData: CatalogueData[],
-		append = false,
-		view: "covers" | "list" = "covers",
-	) {
-		const entryCount = document.getElementById("catalogue-entry-count");
-		const catalogueContent = document.getElementById("catalogue-content");
-		const fragment = new DocumentFragment();
-		currentIndex = Math.min(catalogueData.length, currentIndex);
-		seeMoreButton.disabled =
-			currentIndex === catalogueData.length || currentIndex + pageLength >= catalogueData.length;
+	let serverStatus: Status;
+	let _currentPage = 1;
 
-		// TODO: Implement list view
-		view;
+	function updateCurrentPage(value: number) {
+		_currentPage = value;
+		seeMoreButton.disabled = _currentPage === serverStatus.totalPages;
+	}
 
-		const slicedData = catalogueData.slice(
-			currentIndex,
-			Math.min(catalogueData.length, currentIndex + pageLength),
-		);
-		for (const dataEntry of slicedData) {
-			const div = document.createElement("div");
-			div.className = "w-[calc(50%-1rem)] sm:w-[calc(20%-1rem)]";
-			div.innerHTML = `<div class="relative"><img class="max-w-full h-auto aspect-[3/4.3] object-cover" style="background-size: cover;background-image: url(${
-				dataEntry.cover.placeholder
-			});image-rendering:auto;" onload="this.removeAttribute('style');" src=${
-				dataEntry.cover.src
-			} width=${dataEntry.cover.width} height=${
-				dataEntry.cover.height
-			} loading="lazy" decoding="async" />
-      <span class="absolute top-0 right-0 pr-[0.15rem] pl-[0.2rem] bg-black/5 rounded-bl-lg">${getRatingEmoji(
-				dataEntry.rating,
-			)}</span>
-      </div>
-      <h4 class="m-0 leading-tight">${dataEntry.title}</h4>
-      <p class="text-sm">${dataEntry.author}</p>`;
-			fragment.appendChild(div);
-		}
+	let searchDebounce: ReturnType<typeof setTimeout>;
+	searchInput.addEventListener("input", async () => {
+		clearTimeout(searchDebounce);
+		searchDebounce = setTimeout(async () => {
+			updateCurrentPage(1);
+			await buildLibrary();
+		}, 75);
+	});
+
+	[ratingSelect, typeSelect].forEach((select) => {
+		select.addEventListener("change", async () => {
+			updateCurrentPage(1);
+			await buildLibrary();
+		});
+	});
+
+	seeMoreButton.addEventListener("click", async () => {
+		updateCurrentPage(_currentPage + 1);
+		await buildLibrary(true);
+	});
+
+	await buildLibrary();
+
+	async function buildLibrary(append: boolean = false) {
+		const entryCount = document.getElementById("catalogue-entry-count") as HTMLDivElement;
+		const url = buildQueryParams(new URL("/api/catalogue", "http://dummy"));
+		const data = await fetch(url.pathname + url.search)
+			.then((response) => response.text())
+			.catch((err) => {
+				content.innerHTML =
+					"Could not build library! If this still happens after refreshing, please create an issue or reach me on any platforms you can find.";
+				throw new Error(`Couldn't build library ${err}`);
+			});
+
+		const [currentStatus, library] = data.split("!METAEND") as [string, string];
+		serverStatus = JSON.parse(currentStatus);
 
 		if (append) {
-			catalogueContent?.appendChild(fragment);
+			content.innerHTML += library;
 		} else {
-			catalogueContent?.replaceChildren(fragment);
+			content.innerHTML = library;
 		}
-		if (entryCount)
-			entryCount.innerText = `${Math.min(
-				(currentIndex / pageLength + 1) * pageLength,
-				catalogueData.length,
-			)}/${catalogueData.length} entries`;
 
-		function getRatingEmoji(rating: string) {
-			switch (rating) {
-				case "masterpiece":
-					return "❤️";
-				case "loved":
-					return "🥰";
-				case "liked":
-					return "🙂";
-				case "okay":
-					return "😐";
-				case "disliked":
-					return "😕";
-				case "hated":
-					return "🙁";
-				default:
-					return "😐";
-			}
-		}
+		entryCount.innerText = `${Math.min(
+			serverStatus.currentOffset + serverStatus.itemsPerPage,
+			serverStatus.totalItems,
+		)}/${serverStatus.totalItems} entries`;
 	}
 
-	library = await fetch("/catalogue.json").then((response) => response.json());
+	function buildQueryParams(url: URL): URL {
+		url.searchParams.append("search", searchInput.value);
+		url.searchParams.append("type", typeSelect.value);
+		url.searchParams.append("rating", ratingSelect.value);
+		url.searchParams.append("page", _currentPage.toString());
 
-	qs = new QuickScore(library);
-	const filteredLibrary = searchLibrary();
-	buildLibrary(filteredLibrary, false, "covers");
-
-	searchInput.addEventListener("input", () => {
-		currentIndex = 0;
-		buildLibrary(searchLibrary(), false, "covers");
-	});
-
-	ratingSelect.addEventListener("change", () => {
-		currentIndex = 0;
-		buildLibrary(searchLibrary(), false, "covers");
-	});
-
-	typeSelect.addEventListener("change", () => {
-		currentIndex = 0;
-		buildLibrary(searchLibrary(), false, "covers");
-	});
-
-	seeMoreButton.addEventListener("click", () => {
-		currentIndex += pageLength;
-		buildLibrary(searchLibrary(), true, "covers");
-	});
+		return url;
+	}
 </script>

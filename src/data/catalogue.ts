@@ -8,6 +8,8 @@ export type allCatalogueTypes =
 	| CollectionEntry<"movies">
 	| CollectionEntry<"shows">;
 
+export type CatalogueType = allCatalogueTypes["data"]["type"];
+
 export async function getCatalogueData(entry: allCatalogueTypes) {
 	// HACK: Replace with data collections once I figure a directory structure that's not painful
 	const metadataPath = import.meta.env.DEV

@@ -1,5 +1,6 @@
 # build output
 dist
+target
 
 # dependencies
 node_modules
@@ -29,3 +30,5 @@ apps/erika.florist/src/pages/test.astro
 .astro
 .env
 .vercel
+api/cataloguedb.db
+.cargo

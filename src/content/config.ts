@@ -50,6 +50,7 @@ const ratingSchema = z.union([
 	z.literal("disliked"),
 	z.literal("hated"),
 ]);
+export type CatalogueRating = z.infer<typeof ratingSchema>;
 
 const booksCollection = defineCollection({
 	schema: ({ image }) =>

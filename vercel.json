@@ -1,0 +1,8 @@
+{
+	"functions": {
+		"api/**/*.rs": {
+			"runtime": "vercel-rust@4.0.6",
+			"includeFiles": "api/cataloguedb.db"
+		}
+	}
+}

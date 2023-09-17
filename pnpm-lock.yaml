@@ -13,6 +13,9 @@ dependencies:
   '@astrojs/mdx':
     specifier: 1.0.0
     version: 1.0.0(astro@3.0.6)
+  '@types/better-sqlite3':
+    specifier: ^7.6.4
+    version: 7.6.4
   '@types/igdb-api-node':
     specifier: ^5.0.0
     version: 5.0.0
@@ -22,6 +25,9 @@ dependencies:
   astro-expressive-code:
     specifier: ^0.22.2
     version: 0.22.2(astro@3.0.6)
+  better-sqlite3:
+    specifier: ^8.6.0
+    version: 8.6.0
   dotenv:
     specifier: ^16.3.1
     version: 16.3.1
@@ -34,6 +40,9 @@ dependencies:
   igdb-api-node:
     specifier: ^5.0.2
     version: 5.0.2
+  kysely:
+    specifier: ^0.26.3
+    version: 0.26.3
   markdown-it:
     specifier: ^13.0.1
     version: 13.0.1
@@ -1205,6 +1214,12 @@ packages:
     dependencies:
       '@babel/types': 7.22.11
 
+  /@types/better-sqlite3@7.6.4:
+    resolution: {integrity: sha512-dzrRZCYPXIXfSR1/surNbJ/grU3scTaygS0OMzjlGf71i9sc2fGyHPXXiXmEvNIoE0cGwsanEFMVJxPXmco9Eg==}
+    dependencies:
+      '@types/node': 20.5.7
+    dev: false
+
   /@types/debug@4.1.7:
     resolution: {integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==}
     dependencies:
@@ -2032,6 +2047,14 @@ packages:
       better-queue-memory: 1.0.4
       node-eta: 0.9.0
       uuid: 9.0.0
+    dev: false
+
+  /better-sqlite3@8.6.0:
+    resolution: {integrity: sha512-jwAudeiTMTSyby+/SfbHDebShbmC2MCH8mU2+DXi0WJfv13ypEJm47cd3kljmy/H130CazEvkf2Li//ewcMJ1g==}
+    requiresBuild: true
+    dependencies:
+      bindings: 1.5.0
+      prebuild-install: 7.1.1
     dev: false
 
   /binary-extensions@2.2.0:
@@ -3735,6 +3758,11 @@ packages:
   /kleur@4.1.5:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
+
+  /kysely@0.26.3:
+    resolution: {integrity: sha512-yWSgGi9bY13b/W06DD2OCDDHQmq1kwTGYlQ4wpZkMOJqMGCstVCFIvxCCVG4KfY1/3G0MhDAcZsip/Lw8/vJWw==}
+    engines: {node: '>=14.0.0'}
+    dev: false
 
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}

@@ -1,6 +1,9 @@
 ---
 import CatalogueCore from "$components/catalogue/Core.astro";
+import { createDatabase } from "$data/catalogue_database";
 import BaseLayout from "$layouts/BaseLayout.astro";
+
+await createDatabase();
 ---
 
 <BaseLayout preloadCatalogue>

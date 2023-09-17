@@ -17,8 +17,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Rust MUSL Builder
-        uses: NSCoder/rust-musl-action@v1.0.0
+      - name: Install Rust target
+        run: rustup target add x86_64-unknown-linux-musl
 
       - name: Setup PNPM
         uses: pnpm/action-setup@v2

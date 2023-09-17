@@ -31,4 +31,3 @@ apps/erika.florist/src/pages/test.astro
 .env
 .vercel
 api/cataloguedb.db
-.cargo

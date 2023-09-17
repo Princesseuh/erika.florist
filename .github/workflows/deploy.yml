@@ -17,6 +17,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Rust MUSL Builder
+        uses: NSCoder/rust-musl-action@v1.0.0
+
       - name: Setup PNPM
         uses: pnpm/action-setup@v2
 

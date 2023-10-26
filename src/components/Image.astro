@@ -1,36 +1,20 @@
 ---
-import type { ImageMetadata } from "astro";
+import type { ImageMetadata, ImageOutputFormat } from "astro";
 import type { HTMLAttributes } from "astro/types";
-import { getConfiguredImageService, getImage } from "astro:assets";
-import type { LocalImageServiceWithPlaceholder } from "../imageService";
+import {
+	Picture as AstroPicture,
+	getConfiguredImageService,
+	type LocalImageProps,
+} from "astro:assets";
+import type { LocalImageServiceWithPlaceholder } from "src/imageService";
 
-export interface Props extends Omit<HTMLAttributes<"img">, "src"> {
+type Props = Omit<LocalImageProps, "src"> & {
 	src: ImageMetadata;
-	alt: string;
-	imageWidth?: number;
-	imageHeight?: number;
-	quality?: number;
-}
-
-const originalFormat = await getImage({
-	src: Astro.props.src,
-	width: Astro.props.imageWidth,
-	height: Astro.props.imageHeight,
-	format: Astro.props.src.format,
-	loading: Astro.props.loading,
-	decoding: Astro.props.decoding,
-});
-const formats = ["avif", "webp"];
-const sources: Record<string, Awaited<ReturnType<typeof getImage>>> = {};
-for (let format of formats) {
-	sources[format] = await getImage({
-		src: Astro.props.src,
-		width: Astro.props.imageWidth,
-		height: Astro.props.imageHeight,
-		format: format,
-		quality: Astro.props.quality,
-	});
-}
+	formats?: ImageOutputFormat[];
+	fallbackFormat?: ImageOutputFormat | undefined;
+	pictureAttributes?: HTMLAttributes<"picture"> | undefined;
+	forceHeight?: boolean;
+};
 
 const imageService = (await getConfiguredImageService()) as LocalImageServiceWithPlaceholder;
 const placeholderURL = await imageService.generatePlaceholder(
@@ -39,29 +23,16 @@ const placeholderURL = await imageService.generatePlaceholder(
 	Astro.props.src.height,
 );
 
-const { src, imageHeight, imageWidth, quality, ...passedAttributes } = Astro.props;
-if (!passedAttributes.width) {
-	passedAttributes.width = originalFormat.attributes.width;
-}
-if (!passedAttributes.height) {
-	passedAttributes.height = originalFormat.attributes.height;
-}
-const { width, height, loading, decoding, ...attributes } = originalFormat.attributes;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const { forceHeight, ...props } = Astro.props as any;
 ---
 
-<picture>
-	{
-		Object.values(sources).map((source) => (
-			<source srcset={source.src} type={"image/" + source.options.format} />
-		))
-	}
-	<img
-		src={originalFormat.src}
-		style={`background-size: cover;background-image: url(${placeholderURL});image-rendering:auto;`}
-		onload="
-    this.removeAttribute('style'); this.removeAttribute('onload');
-    "
-		{...passedAttributes}
-		{...attributes}
-	/>
-</picture>
+<AstroPicture
+	{...props}
+	width={Astro.props.src.width / 2}
+	densities={Astro.props.densities ?? [1.5, 2]}
+	formats={Astro.props.formats ?? ["avif", "webp"]}
+	style={(forceHeight ? `height:${Astro.props.src.height}px;width:auto;` : "") +
+		`background-size: cover;background-image: url(${placeholderURL});image-rendering:auto;`}
+	onload="this.style.backgroundSize = null; this.style.backgroundImage = null; this.style.imageRendering = null; this.removeAttribute('onload');"
+/>

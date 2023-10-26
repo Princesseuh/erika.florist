@@ -1,8 +1,8 @@
 ---
 import WikiLayout from "$layouts/WikiLayout.astro";
-import { getEntryBySlug } from "astro:content";
+import { getEntry } from "astro:content";
 
-const wikiIndex = await getEntryBySlug("wiki", "index");
+const wikiIndex = await getEntry("wiki", "index");
 ---
 
 <WikiLayout wikiItem={wikiIndex} />

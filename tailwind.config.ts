@@ -376,6 +376,7 @@ export default {
 				},
 
 				".post img": {
+					width: "100%",
 					maxWidth: "100%",
 					height: "auto",
 					borderRadius: theme("borderRadius.sm"),

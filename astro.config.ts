@@ -12,10 +12,13 @@ export default defineConfig({
 	markdown: {
 		syntaxHighlight: "shiki",
 		shikiConfig: {
-			theme: "material-darker",
+			theme: "material-theme-darker",
 			langs: [],
 			wrap: false,
 		},
+	},
+	experimental: {
+		devOverlay: true,
 	},
 	image: {
 		service: {

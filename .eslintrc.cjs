@@ -32,7 +32,7 @@ module.exports = {
 			},
 		},
 		{
-			files: ["./src/assets/scripts/*"],
+			files: ["./src/assets/scripts/*", "./api/**/*.js"],
 			env: {
 				node: false,
 				browser: true,

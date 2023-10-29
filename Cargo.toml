@@ -15,6 +15,15 @@ strum = "0.25"
 strum_macros = "0.25"
 sublime_fuzzy = "0.7.0"
 paginate = "1.1.11"
+http = "0.2.9"
+reqwest = { version = "0.11.22", features = ["blocking"] }
+serde_json = "1.0.107"
+form_urlencoded = "1.2.0"
+base64 = "0.21.5"
+cookie = "0.18.0"
+sha2 = "0.10.8"
+chrono = "0.4.31"
+slug = "0.1.4"
 
 # You can specify a library for shared logic here (optional)
 # [lib]
@@ -26,9 +35,10 @@ name = "catalogue"
 path = "api/catalogue.rs"
 
 # Note that you need to provide unique names for each binary:
-# [[bin]]
-# name = "user-id"
-# path = "api/user/[id].rs"
+[[bin]]
+name = "user-id"
+path = "api/add.rs"
+
 #
 # [[bin]]
 # name = "group-id"

@@ -4,6 +4,7 @@ env:
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   FORCE_COLOR: true
 on:
+  workflow_dispatch:
   push:
     branches:
       - main

@@ -5,6 +5,7 @@ env:
   TMDB_API_KEY: ${{ secrets.TMDB_KEY }}
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main

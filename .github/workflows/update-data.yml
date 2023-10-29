@@ -1,0 +1,41 @@
+name: Update catalogue data
+env:
+  IGDB_API_KEY: ${{ secrets.IGDB_KEY }}
+  IGDB_CLIENT_ID: ${{ secrets.IGDB_CLIENT }}
+  TMDB_API_KEY: ${{ secrets.TMDB_KEY }}
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.head_commit.message, 'content(catalogue):') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Update catalogue data
+        run: pnpm run update-data
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "[ci] update catalogue data"
+          branch: ${{ github.head_ref }}

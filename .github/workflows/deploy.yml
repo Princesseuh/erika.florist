@@ -35,6 +35,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Restore cached Images
+        id: cache-images-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            node_modules/.astro
+          key: ${{ runner.os }}-images
+
       - name: Pull Vercel Environment Information
         run: pnpx vercel pull --environment production --yes --token=${{ secrets.VERCEL_TOKEN }}
 
@@ -43,3 +51,11 @@ jobs:
 
       - name: Deploy Project Artifacts to Vercel
         run: pnpx vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Save build images
+        id: cache-image-save
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            node_modules/.astro
+          key: ${{ steps.cache-images-restore.outputs.cache-primary-key }}

@@ -32,6 +32,10 @@ jobs:
         run: pnpm install
 
       - name: Update catalogue data
+        env:
+          IGDB_KEY: ${{ secrets.IGDB_KEY }}
+          IGDB_CLIENT: ${{ secrets.IGDB_CLIENT }}
+          TMDB_KEY: ${{ secrets.TMDB_KEY }}
         run: pnpm run update-data
 
       - name: Commit changes

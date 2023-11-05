@@ -9,7 +9,7 @@
  */
 let suggestions = [];
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
 	/**
 	 * @type {HTMLInputElement | null}
 	 */
@@ -33,10 +33,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 		return;
 	}
 
+	/**
+	 * @type {number | undefined}
+	 */
 	let nameInputTimeout;
 	let preventChange = false;
 
-	nameInput.addEventListener("input", async () => {
+	nameInput.addEventListener("input", () => {
 		if (preventChange) {
 			return;
 		}
@@ -64,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		}, 500);
 	});
 
-	nameInput.addEventListener("change", async () => {
+	nameInput.addEventListener("change", () => {
 		clearTimeout(nameInputTimeout);
 		preventChange = true;
 		const selectedSuggestion = suggestions.find(
@@ -72,7 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		);
 
 		if (selectedSuggestion) {
-			nameInput.value = selectedSuggestion?.name;
+			nameInput.value = selectedSuggestion.name;
 
 			if (selectedSuggestion.poster_path) {
 				const body = document.querySelector("body");
@@ -88,7 +91,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		preventChange = false;
 	});
 
-	typeInput.addEventListener("change", async () => {
+	typeInput.addEventListener("change", () => {
 		clearTimeout(nameInputTimeout);
 		suggestions = [];
 	});
@@ -106,11 +109,13 @@ async function getDataForType(type, query) {
 			});
 			const responseData = await response.json();
 
-			suggestions = responseData.map((result) => ({
-				name: result.name,
-				id: result.id,
-				poster_path: result.cover && result.cover.url.replace("t_thumb", "t_cover_big"),
-			}));
+			suggestions = responseData.map(
+				(/** @type {{ name: any; id: any; cover?: { url: string; }; }} */ result) => ({
+					name: result.name,
+					id: result.id,
+					poster_path: result.cover?.url.replace("t_thumb", "t_cover_big"),
+				}),
+			);
 
 			break;
 		}
@@ -121,12 +126,16 @@ async function getDataForType(type, query) {
 			});
 			const responseData = await response.json();
 
-			suggestions = responseData.results.map((result) => ({
-				name: result.title ?? result.name,
-				id: result.id,
-				poster_path: "https://image.tmdb.org/t/p/w300/" + result.poster_path,
-				type,
-			}));
+			suggestions = responseData.results.map(
+				(
+					/** @type {{ title: string | undefined; name: string | undefined; id: any; poster_path: string; }} */ result,
+				) => ({
+					name: result.title ?? result.name,
+					id: result.id,
+					poster_path: "https://image.tmdb.org/t/p/w300/" + result.poster_path,
+					type,
+				}),
+			);
 
 			break;
 		}

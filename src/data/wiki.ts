@@ -66,7 +66,7 @@ async function getWikiNavigation(currentPage: URL): Promise<MenuItem[]> {
 			(item: CollectionEntry<"wiki">) => {
 				const itemUrl = getURLFromEntry(item);
 				return {
-					label: item.data.navigation.label || item.data.title,
+					label: item.data.navigation.label ?? item.data.title,
 					link: itemUrl,
 					isCurrent: currentPage.pathname == itemUrl,
 					type: "link" as MenuItem["type"],

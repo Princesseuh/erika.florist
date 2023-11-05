@@ -18,6 +18,7 @@ export async function getCatalogueData(entry: allCatalogueTypes) {
 		  path.join(
 				path.dirname(entry.data.cover.src),
 				`../src/content/${entry.data.type}s/`,
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				entry.slug.split("/")[0]!,
 				"./_data.json",
 		  );

@@ -1,7 +1,6 @@
+dist/**/*
 node_modules
-dist
-pnpm-lock.yaml
 target
 .vercel
 .astro
-**/_data.json
+.github

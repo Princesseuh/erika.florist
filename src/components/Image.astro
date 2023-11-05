@@ -8,7 +8,7 @@ import {
 } from "astro:assets";
 import type { LocalImageServiceWithPlaceholder } from "src/imageService";
 
-type Props = Omit<LocalImageProps, "src"> & {
+export type Props = Omit<LocalImageProps, "src"> & {
 	src: ImageMetadata;
 	formats?: ImageOutputFormat[];
 	fallbackFormat?: ImageOutputFormat | undefined;

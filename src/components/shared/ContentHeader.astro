@@ -25,7 +25,9 @@ const { item, includeTags } = Astro.props;
 				{readableDate(item.data.date)} ·{" "}
 				{item.data.tags
 					.map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)
-					.reduce((prev: string, curr: string) => (prev === null ? [curr] : [prev, ", ", curr]))}
+					.reduce((prev: string | null, curr: string) =>
+						prev === null ? [curr] : [prev, ", ", curr],
+					)}
 			</div>
 		)
 	}

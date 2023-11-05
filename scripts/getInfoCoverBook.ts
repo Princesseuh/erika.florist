@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+
 import matter from "gray-matter";
 import { bold, gray } from "kleur/colors";
 import fs from "node:fs";
@@ -71,7 +73,7 @@ export async function getDataForBooks() {
 
 		const coverPath = new URL("./cover.png", bookDir);
 		if (!coverURL.endsWith("png")) {
-			sharp(coverData).toFile(coverPath.pathname);
+			await sharp(coverData).toFile(coverPath.pathname);
 		} else {
 			fs.writeFileSync(coverPath, Buffer.from(coverData));
 		}

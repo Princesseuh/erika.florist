@@ -1,8 +1,8 @@
 ---
 import ArticleListLayout from "$layouts/ArticleListLayout.astro";
 import { blogDateSort } from "$utils";
-import type { GetStaticPaths, Page } from "astro";
-import { getCollection, type CollectionEntry } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
 
 export const getStaticPaths = (async ({ paginate }) => {
 	const articles = await getCollection("blog");
@@ -17,10 +17,6 @@ export const getStaticPaths = (async ({ paginate }) => {
 		return paginate(filteredArticles, { params: { year: year.toString() }, pageSize: 8 });
 	});
 }) satisfies GetStaticPaths;
-
-interface Props {
-	page: Page<CollectionEntry<"blog">>;
-}
 
 const { page } = Astro.props;
 const { year } = Astro.params;

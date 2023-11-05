@@ -5,11 +5,11 @@ const changelogRaw = execSync("bash ./scripts/getChangelog.sh")
 	.split("$END$")
 	.slice(0, -1);
 
-export type ChangelogEntry = {
+export interface ChangelogEntry {
 	ref: string;
 	date: Date;
 	desc: string;
-};
+}
 
 export type Changelog = ChangelogEntry[];
 

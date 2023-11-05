@@ -1,10 +1,10 @@
 ---
 import ArticleListLayout from "$layouts/ArticleListLayout.astro";
 import { blogDateSort } from "$utils";
-import type { GetStaticPaths, Page } from "astro";
-import { getCollection, type CollectionEntry } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
 
-export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+export const getStaticPaths = (async ({ paginate }) => {
 	const articles = await getCollection("blog");
 
 	// We need to create a list of unique tags here otherwise Astro will try to create already existing pages and complain
@@ -17,11 +17,7 @@ export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
 			.sort(blogDateSort);
 		return paginate(filteredArticles, { params: { tag }, pageSize: 8 });
 	});
-};
-
-interface Props {
-	page: Page<CollectionEntry<"blog">>;
-}
+}) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
 const { tag } = Astro.params;

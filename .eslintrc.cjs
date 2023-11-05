@@ -9,15 +9,37 @@ module.exports = {
 	plugins: ["@typescript-eslint", "prettier"],
 	extends: [
 		"eslint:recommended",
-		"plugin:@typescript-eslint/recommended",
-		"plugin:prettier/recommended",
+		"plugin:@typescript-eslint/strict-type-checked",
+		"plugin:@typescript-eslint/stylistic-type-checked",
+		"prettier",
 		"plugin:astro/recommended",
 	],
+	parserOptions: {
+		project: true,
+		tsconfigRootDir: __dirname,
+	},
 	rules: {
 		"@typescript-eslint/no-unused-vars": [
 			"warn",
-			{ varsIgnorePattern: "Props", ignoreRestSiblings: true },
+			{
+				argsIgnorePattern: "^_",
+				varsIgnorePattern: "^_",
+				caughtErrorsIgnorePattern: "^_",
+				ignoreRestSiblings: true,
+			},
 		],
+
+		// All the rules below are disabled because they're cumbersome to fix. Would be great to one day though
+		"@typescript-eslint/no-unsafe-return": "off",
+		"@typescript-eslint/no-unsafe-assignment": "off",
+		"@typescript-eslint/no-misused-promises": [
+			"error",
+			{
+				checksVoidReturn: false,
+			},
+		],
+		"@typescript-eslint/no-unsafe-member-access": "off",
+		"@typescript-eslint/no-unsafe-call": "off",
 	},
 	overrides: [
 		{
@@ -26,9 +48,6 @@ module.exports = {
 			parserOptions: {
 				parser: "@typescript-eslint/parser",
 				extraFileExtensions: [".astro"],
-			},
-			rules: {
-				"prettier/prettier": "off",
 			},
 		},
 		{

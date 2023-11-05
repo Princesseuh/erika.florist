@@ -1,12 +1,12 @@
 ---
-import { getCatalogueData, type allCatalogueTypes } from "$data/catalogue";
+import { getCatalogueData } from "$data/catalogue";
 import BaseLayout from "$layouts/BaseLayout.astro";
 import type { GetStaticPaths } from "astro";
 import { getImage } from "astro:assets";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
 export const getStaticPaths = (async () => {
-	let catalogueContent: allCatalogueTypes[] = [];
+	let catalogueContent = [];
 
 	for (const catalogueType of ["games"] as const) {
 		catalogueContent.push(...(await getCollection(catalogueType)));
@@ -19,11 +19,6 @@ export const getStaticPaths = (async () => {
 		})),
 	);
 }) satisfies GetStaticPaths;
-
-interface Props {
-	entry: CollectionEntry<"games"> | CollectionEntry<"books">;
-	metadata: any;
-}
 
 const { entry, metadata } = Astro.props;
 const { Content } = await entry.render();

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { getConfiguredImageService, getImage } from "astro:assets";
 import { getCollection } from "astro:content";
 import SQLite from "better-sqlite3";
@@ -12,15 +13,15 @@ interface Database {
 	catalogue: CatalogueTable;
 }
 
-type CoverTable = {
+interface CoverTable {
 	id: Generated<number>;
 	src: string;
 	width: number;
 	height: number;
 	placeholder: string;
-};
+}
 
-type CatalogueTable = {
+interface CatalogueTable {
 	id: Generated<number>;
 	type: "game" | "show" | "book" | "movie";
 	title: string;
@@ -30,7 +31,7 @@ type CatalogueTable = {
 	finishedDate: number | null;
 	platform: string | null;
 	metadata: string;
-};
+}
 
 let db: Kysely<Database>;
 

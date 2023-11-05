@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import "dotenv/config";
 import matter from "gray-matter";
 import { bold, gray } from "kleur/colors";
@@ -60,7 +61,7 @@ export async function getDataForMoviesAndShows(type: "movies" | "shows") {
 		const coverPath = new URL("./cover.png", movieShowDir);
 
 		if (!posterURL.endsWith("png")) {
-			sharp(coverData).toFile(decodeURI(coverPath.pathname));
+			await sharp(coverData).toFile(decodeURI(coverPath.pathname));
 		} else {
 			fs.writeFileSync(coverPath, Buffer.from(coverData));
 		}

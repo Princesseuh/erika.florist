@@ -9,7 +9,7 @@ export function getURLFromEntry(
 		case "blog":
 			return `/articles/${item.slug}`;
 		case "wiki":
-			return `/wiki/${item.data.navigation?.category}/${item.slug}`;
+			return `/wiki/${item.data.navigation.category}/${item.slug}`;
 		case "project":
 			return `/projects/${item.data.projectType}/${item.slug}`;
 		default:
@@ -21,7 +21,6 @@ export function getBaseSiteURL(): string {
 	return import.meta.env.PROD ? "https://erika.florist/" : "http://localhost:4321/";
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function randomArrayEntry<T>(array: T[]): T {
 	return array[Math.floor(Math.random() * array.length)] as T;
 }

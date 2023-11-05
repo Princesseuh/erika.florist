@@ -2,7 +2,7 @@
 // We used to have articles at `/article/slug` to workaround an issue, but we figured it out, so this is just to redirect
 // for people who bookmarked the old URLs or something. Might remove at some point, but probably shouldn't, arf.
 import { getBaseSiteURL } from "$utils";
-import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 
 export const getStaticPaths = (async () => {
@@ -12,8 +12,6 @@ export const getStaticPaths = (async () => {
 		props: { entry },
 	}));
 }) satisfies GetStaticPaths;
-
-type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { entry } = Astro.props;
 ---

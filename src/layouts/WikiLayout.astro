@@ -37,7 +37,7 @@ const lastModified = getLastModified(wikiItem);
 		<aside class="mr-4 mt-10 hidden sm:block xl:mr-0">
 			{
 				headings.length > 0 && (
-					<TableOfContent headers={headings} maxDepth={wikiItem.data.maxDepthTOC || 4} />
+					<TableOfContent headers={headings} maxDepth={wikiItem.data.maxDepthTOC ?? 4} />
 				)
 			}
 		</aside>

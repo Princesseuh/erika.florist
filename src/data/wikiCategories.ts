@@ -25,9 +25,3 @@ export const wikiCategories: WikiCategory[] = [
 		title: "Misc",
 	},
 ];
-
-export function getCategory(key: string): WikiCategory | undefined {
-	return wikiCategories.find((category) => {
-		category.key === key;
-	});
-}

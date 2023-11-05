@@ -8,7 +8,7 @@ import Image from "./Image.astro";
 type Props = Omit<ImageProps, "src" | "slot"> & {
 	src: Promise<{ default: ImageMetadata }>;
 	caption?: string;
-	figureProps: HTMLAttributes<"figure">;
+	figureProps?: HTMLAttributes<"figure">;
 };
 
 let { alt, caption, src, figureProps, ...props } = Astro.props;

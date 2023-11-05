@@ -18,10 +18,19 @@ const dt = new Intl.DateTimeFormat("en-gb", {
 
 const isSilent = process.argv.includes("--silent");
 export const Logger = {
-	success: (...args: string[]) => console.log(Logger.printDate(), bold(green("SUCCESS")), ...args),
-	error: (...args: string[]) => console.error(Logger.printDate(), bold(red("ERROR")), ...args),
-	warn: (...args: string[]) => console.warn(Logger.printDate(), bold(yellow("WARNING")), ...args),
-	info: (...args: string[]) =>
-		!isSilent ? console.info(Logger.printDate(), bold(gray("INFO")), ...args) : null,
+	success: (...args: string[]) => {
+		console.log(Logger.printDate(), bold(green("SUCCESS")), ...args);
+	},
+	error: (...args: string[]) => {
+		console.error(Logger.printDate(), bold(red("ERROR")), ...args);
+	},
+	warn: (...args: string[]) => {
+		console.warn(Logger.printDate(), bold(yellow("WARNING")), ...args);
+	},
+	info: (...args: string[]) => {
+		if (!isSilent) {
+			console.info(Logger.printDate(), bold(gray("INFO")), ...args);
+		}
+	},
 	printDate: () => gray(`[${dt.format(new Date())}]`),
 };

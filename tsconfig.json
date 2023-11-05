@@ -1,6 +1,7 @@
 {
 	"extends": "astro/tsconfigs/strictest",
 	"compilerOptions": {
+		"allowJs": true,
 		"baseUrl": ".",
 		"paths": {
 			"$components/*": ["src/components/*"],
@@ -9,5 +10,6 @@
 			"$utils": ["src/utils/index.ts"]
 		}
 	},
+	"include": ["./.eslintrc.cjs", "**/*"],
 	"exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist"]
 }

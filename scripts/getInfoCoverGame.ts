@@ -82,7 +82,7 @@ export async function getDataForGames() {
 				.map((company) => ({
 					id: company.company.id,
 					name: company.company.name,
-					role: company.developer === true ? "developer" : "publisher",
+					role: company.developer ? "developer" : "publisher",
 				})),
 		};
 

@@ -69,7 +69,7 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
 
                 let name = data.get("name").unwrap();
                 let markdown_content = format!(
-                    "---\ntitle: \"{name}\"\nrating: \"{rating}\"\nfinishedDate: {date}\n{source}: \"{sourceId}\"\n---\n\n{comment}",
+                    "---\ntitle: \"{name}\"\nrating: \"{rating}\"\nfinishedDate: {date}\n{source}: \"{sourceId}\"\n---\n\n{comment}\n",
                     comment = data.get("comment").unwrap(),
                     rating = data.get("rating").unwrap(),
                     date = data.get("date").unwrap(),

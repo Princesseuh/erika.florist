@@ -19,6 +19,7 @@ export default defineConfig({
 	},
 	experimental: {
 		devOverlay: true,
+		contentCollectionCache: true,
 	},
 	image: {
 		service: {

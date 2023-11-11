@@ -41,7 +41,7 @@ export default defineConfig({
 			],
 		}),
 		expressiveCode({
-			theme: "material-theme-darker",
+			themes: ["material-theme-darker"],
 			plugins: [
 				{
 					name: "custom-style",
@@ -65,15 +65,13 @@ export default defineConfig({
 					hooks: {},
 				},
 			],
-			frames: {
-				styleOverrides: {
-					frameBoxShadowCssValue: "none",
-					tooltipSuccessBackground: "#e65161",
-				},
-			},
 			useThemedScrollbars: false,
 			useThemedSelectionColors: false,
 			styleOverrides: {
+				frames: {
+					frameBoxShadowCssValue: "none",
+					tooltipSuccessBackground: "#e65161",
+				},
 				uiLineHeight: "inherit",
 				codeFontSize: "0.875rem",
 				codeLineHeight: "1.25rem",

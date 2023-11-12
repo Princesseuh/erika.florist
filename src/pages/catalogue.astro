@@ -3,11 +3,10 @@ import CatalogueCore from "$components/catalogue/Core.astro";
 import { createDatabase } from "$data/catalogue_database";
 import BaseLayout from "$layouts/BaseLayout.astro";
 
-await createDatabase();
+if (import.meta.env.PROD) await createDatabase();
 ---
 
 <BaseLayout preloadCatalogue>
-	{/* TODO: Build a server side version of this */}
 	<article class="w-index">
 		<h2 class="mt-0">Catalogue</h2>
 		<div class="mb-4">

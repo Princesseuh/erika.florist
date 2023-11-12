@@ -8,7 +8,7 @@ import { getCollection } from "astro:content";
 export const getStaticPaths = (async () => {
 	let catalogueContent = [];
 
-	for (const catalogueType of ["games"] as const) {
+	for (const catalogueType of ["games", "movies", "shows", "books"] as const) {
 		catalogueContent.push(...(await getCollection(catalogueType)));
 	}
 
@@ -28,6 +28,7 @@ const processedCover = await getImage({ src: entry.data.cover, width: 240 });
 
 <BaseLayout>
 	<article class="post mx-auto">
+		<a href="/catalogue" class="my-2 inline-block">← Back to catalogue</a>
 		<header class="flex justify-around gap-4">
 			<a href={entry.data.cover.src} class="w-1/4"
 				><img

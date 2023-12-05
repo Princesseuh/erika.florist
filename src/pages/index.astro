@@ -1,4 +1,5 @@
 ---
+import ExternalLink from "$components/ExternalLink.astro";
 import Image from "$components/Image.astro";
 import ArticlePreview from "$components/shared/ArticlePreview.astro";
 import { getLastModified } from "$data/wiki";
@@ -10,7 +11,7 @@ const articles = (await getCollection("blog"))
 	.sort((a, b) => {
 		return b.data.date.getTime() - a.data.date.getTime();
 	})
-	.slice(0, 3);
+	.slice(0, 4);
 
 const wikiItems = (await getCollection("wiki"))
 	.map((wikiItem) => ({
@@ -20,7 +21,7 @@ const wikiItems = (await getCollection("wiki"))
 	.sort((a, b) => {
 		return b.lastModified.getTime() - a.lastModified.getTime();
 	})
-	.slice(0, 6);
+	.slice(0, 7);
 const featuredProjects = (await getCollection("projects"))
 	.filter((project) => project.data.featured)
 	.slice(0, 3);
@@ -33,13 +34,10 @@ const featuredProjects = (await getCollection("projects"))
 		<p>
 			I'm <span class="font-semibold text-beach-watermelon dark:text-dark-beach-watermelon"
 				>Erika</span
-			>, a software engineer living in Sweden&nbsp;🇸🇪, pleased to meet you!
-		</p>
-
-		<p>
-			I am currently employed at <a href="https://astro.build/">Astro</a> where I work as a core
-			developer. While I do touch everything, I notably focus on editor tooling (a big passion of
-			mine) and improving the general developer experience.
+			>, a software engineer living in Sweden&nbsp;🇸🇪, pleased to meet you! I am currently employed
+			at <ExternalLink href="https://astro.build">Astro</ExternalLink> where I do a bit of
+			everything, though I am mostly found in high impact but often overlooked areas such as editor
+			tooling.
 		</p>
 
 		<p>
@@ -49,13 +47,13 @@ const featuredProjects = (await getCollection("projects"))
 		</p>
 
 		<h3 class="mb-5 text-2xl">Featured works</h3>
-		<div class="mb-6 mt-2 flex flex-wrap items-center justify-center gap-5 sm:mx-10 sm:gap-4">
+		<div class="mb-6 mt-2 flex flex-wrap items-center justify-center gap-5 sm:mx-10 sm:gap-3">
 			{
 				featuredProjects.map((project, i) => (
-					<div class="relative h-[180px]">
+					<div class="relative h-[170px]">
 						<a href={getURLFromEntry(project)}>
 							<Image
-								class="h-[180px] w-[377px] rounded-sm object-cover object-top"
+								class="h-[170px] w-[359px] rounded-sm object-cover object-top"
 								src={project.data.indexCover}
 								alt={project.data.indexCoverAlt ?? ""}
 								loading={"eager"}

@@ -1,0 +1,64 @@
+---
+title: The Shells of the 2000s
+date: 2023-11-27
+tags: ["shell", "terminal"]
+tagline: Del, I'm feeling like a ghost in a shell
+---
+
+At the time of writing, [fish](https://fishshell.com/)'s homepage, probably jokingly, says "Finally, a command line shell for the 90s". Tangentially, in 2019 macOS made the switch from [bash](https://www.gnu.org/software/bash/) to [zsh](https://www.zsh.org/) as its default shell.
+
+With this intro, the three actors are set on the stage: Those three are the most popular shells of the 2000s. (In order, `bash`, `zsh`, and then `fish`.)
+
+(There's also Windows's part of this history, we'll get to it later, much like the rest of the world will.)
+
+!!! PICTURE OF A TERMINAL WITH SHELLS OR SOMETHING !!!
+
+
+My own personal story is the usual one, I started with bash, then zsh, I then proceeded to install way too many plugins using [Oh-My-Zsh](https://ohmyz.sh/), and then I switched to fish. I've been using fish for a few years now, and honestly, apart from the standard scripting language (that a shebang will take care of anyway), I don't miss anything from bash or zsh. Just having actual working completions without installing a plugin or having to configure anything is great.
+
+In this article, I'm not going to try to convince you to switch to fish or anything if you're happy with your current shell, that's great. But, I'd like to explore the future shells.
+
+To re-use fish's joke, **what will be the shell of the 2020s?**
+
+## A tale of two Users
+
+[As Oil describe it, there's two type of shell users: the people who just type commands and the people who write long scripts.](http://www.oilshell.org/blog/2021/01/why-a-new-shell.html#how-is-oil-different-than-bash-or-zsh)
+
+On that spectrum, I'd say that I am much closer to the casual user than the power user. I know *how* to write scripts, but I: generally don't need to, and more importantly, don't *want* to. As such, the shells that I find interesting are definitely mostly the one that cater to the more casual users. Elvish having a built-in file manager is a great example of that, for instance.
+
+Notably, this means that shells like [PowerShell](https://docs.microsoft.com/en-us/powershell/) or [Oil](https://www.oilshell.org/) don't get much more of a "Huh, that's cool" reaction from me.
+
+## The contenders
+
+There's a lot of shells coming out left and right on GitHub, I'll focus on the ones I know of (duh) and the ones that seem to be the most liked / popular.
+
+Every shell obviously has its own vision and goals, but they do share a few common points over older shells:
+
+- They're all cross-platform, and work on Linux, macOS, and Windows.
+- For the ones that focuses on the interactive aspect of things, they'll typically include a lot of features that are usually only available through plugins or hidden in settings in other shells. Fuzzy completions, color highlighting, file manager, default prompts with a lot of information, etc.
+
+### PowerShell
+
+PowerShell is a shell that comes with Windows, and is probably the oldest "shell of the future" (2006). While it does work on other platforms, it's very Windows-specific and since I don't use Windows, I don't have much to say about it. Nonetheless, it is definitely worth mentionning because it was one of the modern inspiration for a lot of shells that came after it.
+
+It features a fairly neat system they call "Cmdlets" which wrap around the usual commands (`ls`, `cat`, `echo`, etc.), and allow for a more object-oriented approach to the shell. For instance, `Get-ChildItem` is the equivalent of `ls`, but it returns a list of "objects" instead of raw text, which you can then pipe to other commands that are also aware of the type of the objects.
+
+It takes a while to get used to the commands, but it's honestly really cool what you can do with it.
+
+```powershell
+# List all the files in the current directory whose filename ends with .txt
+# and only show the name and length of the file
+Get-ChildItem -Include *.txt | Select-Object Name, Length
+```
+
+### Elvish
+
+[Elvish](https://elv.sh/)
+
+### Oil
+
+Oil is a shell that aims to be a "better bash". As noted previously, it's not really what I'm personally looking for in a shell, since it mostly focuses on the scripting aspect of things. Still, it's quite interesting and [their blog](https://www.oilshell.org/blog/) is a great read.
+
+### Nushell
+
+[Nushell](https://www.nushell.sh/)

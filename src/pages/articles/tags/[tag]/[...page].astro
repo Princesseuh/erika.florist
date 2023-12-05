@@ -15,7 +15,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 		const filteredArticles = articles
 			.filter((article) => article.data.tags.includes(tag))
 			.sort(blogDateSort);
-		return paginate(filteredArticles, { params: { tag }, pageSize: 8 });
+		return paginate(filteredArticles, { params: { tag }, pageSize: 5 });
 	});
 }) satisfies GetStaticPaths;
 

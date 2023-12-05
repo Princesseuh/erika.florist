@@ -1,6 +1,7 @@
 ---
 import { readableDate } from "$utils";
 import type { CollectionEntry } from "astro:content";
+import Tags from "./Tags.astro";
 
 interface Props {
 	item: CollectionEntry<"blog"> | CollectionEntry<"projects"> | CollectionEntry<"wiki">;
@@ -22,12 +23,8 @@ const { item, includeTags } = Astro.props;
 	{
 		isArticle(item) && includeTags && (
 			<div class="text-creative-work dark:text-dark-subtle-text">
-				{readableDate(item.data.date)} ·{" "}
-				{item.data.tags
-					.map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)
-					.reduce((prev: string | null, curr: string) =>
-						prev === null ? [curr] : [prev, ", ", curr],
-					)}
+				{readableDate(item.data.date)}
+				<Tags tags={item.data.tags} />
 			</div>
 		)
 	}

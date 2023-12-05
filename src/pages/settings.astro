@@ -1,4 +1,5 @@
 ---
+import ExternalLink from "$components/ExternalLink.astro";
 import BaseLayout from "$layouts/BaseLayout.astro";
 ---
 
@@ -11,7 +12,9 @@ import BaseLayout from "$layouts/BaseLayout.astro";
 		<div>
 			<input type="checkbox" id="cb--prefetch" />
 			<label for="cb--prefetch">
-				Disable page prefetch (using <a href="https://getquick.link/">Quicklink</a>)
+				Disable page prefetch (using <ExternalLink href="https://getquick.link/">
+					Quicklink
+				</ExternalLink>)
 			</label><br />
 		</div>
 	</article>

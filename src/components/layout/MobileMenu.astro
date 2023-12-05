@@ -1,5 +1,5 @@
 ---
-import { Sprite } from "astro-icon";
+import Icon from "$components/Icon.astro";
 import Logo from "./Logo.astro";
 ---
 
@@ -9,7 +9,7 @@ import Logo from "./Logo.astro";
 	<Logo />
 
 	<div id="mobile-side-toggle" class="h-7" aria-label="Toggle mobile menu" role="button">
-		<Sprite name="menu" size="28px" />
+		<Icon name="menu" size={28} title="Toggle mobile menu" />
 	</div>
 </div>
 

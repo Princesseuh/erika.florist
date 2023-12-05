@@ -1,5 +1,5 @@
 ---
-import { Sprite } from "astro-icon";
+import Icon from "$components/Icon.astro";
 
 interface Props {
 	classes?: string;
@@ -20,7 +20,7 @@ if (!size) {
 		title="Link to my Mastodon profile"
 		class="social-icon social-mastodon"
 	>
-		<Sprite name="mastodon" size={`${size}px`} />
+		<Icon name="mastodon" size={size} title="Mastodon" />
 	</a>
 
 	<a
@@ -28,7 +28,7 @@ if (!size) {
 		title="Link to my GitHub profile"
 		class="social-icon social-other"
 	>
-		<Sprite name="github" size={`${size}px`} />
+		<Icon name="github" size={size} title="GitHub" />
 	</a>
 
 	<a
@@ -36,6 +36,6 @@ if (!size) {
 		title="Link to email me"
 		class="social-icon social-other mr-0"
 	>
-		<Sprite name="mail" size={`${size}px`} />
+		<Icon name="mail" size={size} title="Mail" />
 	</a>
 </div>

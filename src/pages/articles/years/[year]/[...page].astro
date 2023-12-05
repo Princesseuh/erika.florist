@@ -14,7 +14,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 		const filteredArticles = articles
 			.filter((article) => article.data.date.getUTCFullYear() === year)
 			.sort(blogDateSort);
-		return paginate(filteredArticles, { params: { year: year.toString() }, pageSize: 8 });
+		return paginate(filteredArticles, { params: { year: year.toString() }, pageSize: 5 });
 	});
 }) satisfies GetStaticPaths;
 

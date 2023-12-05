@@ -1,4 +1,5 @@
 ---
+import ExternalLink from "$components/ExternalLink.astro";
 import ContentHeader from "$components/shared/ContentHeader.astro";
 import TableOfContent from "$components/shared/TableOfContent.astro";
 import BaseLayout from "$layouts/BaseLayout.astro";
@@ -16,7 +17,7 @@ const { Content, headings } = await article.render();
 	<section class="mx-auto flex gap-6">
 		<article class="post w-[72ch] max-w-full">
 			<ContentHeader item={article} includeTags />
-			<Content />
+			<Content components={{ a: ExternalLink }} />
 		</article>
 
 		<aside

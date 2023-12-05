@@ -5,9 +5,9 @@ import Sidebar from "$components/layout/SideBar.astro";
 import Socials from "$components/layout/Socials.astro";
 import { getBaseSiteURL } from "$utils";
 import { Head } from "astro-capo";
-import { Sprite } from "astro-icon";
 import "src/assets/style/prin.css";
 import type { MenuItem } from "../data/sidebarMenu";
+import Spritesheet from "$components/Spritesheet.astro";
 
 interface Props {
 	title?: string;
@@ -62,36 +62,35 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 			theme === "dark" || (!theme && isSystemDark)
 				? document.documentElement.classList.add("dark")
 				: theme === "light"
-				? document.documentElement.classList.remove("dark")
-				: theme === "system" && isSystemDark && document.documentElement.classList.add("dark");
+				  ? document.documentElement.classList.remove("dark")
+				  : theme === "system" && isSystemDark && document.documentElement.classList.add("dark");
 		</script>
-		<Sprite.Provider>
-			<div id="app" class="bg-isabelline dark:bg-darker-skylines">
-				<section class="mx-auto w-layout p-5 sm:grid sm:grid-cols-layout sm:gap-x-6 sm:p-0">
-					<Sidebar navMenu={navItems ?? []} />
+		<div id="app" class="bg-isabelline dark:bg-darker-skylines">
+			<section class="mx-auto w-layout p-5 sm:grid sm:grid-cols-layout sm:gap-x-6 sm:p-0">
+				<Sidebar navMenu={navItems ?? []} />
 
-					<main class="sm:mt-9">
-						<slot />
-					</main>
+				<main class="sm:mt-9">
+					<slot />
+				</main>
+			</section>
+
+			<footer
+				class="flex justify-center bg-darker-skylines px-5 py-6 leading-tight text-isabelline dark:bg-mobile-menu sm:px-0"
+			>
+				<section class="flex w-footer justify-between">
+					<Socials />
+
+					<div>
+						Powered by <a href="https://astro.build/">Astro</a><br />
+						<a href="https://github.com/Princesseuh/erika.florist">Source Code</a><br />
+						<a href="/changelog/">Changelog</a>
+					</div>
 				</section>
+			</footer>
 
-				<footer
-					class="flex justify-center bg-darker-skylines px-5 py-6 leading-tight text-isabelline dark:bg-mobile-menu sm:px-0"
-				>
-					<section class="flex w-footer justify-between">
-						<Socials />
-
-						<div>
-							Powered by <a href="https://astro.build/">Astro</a><br />
-							<a href="https://github.com/Princesseuh/erika.florist">Source Code</a><br />
-							<a href="/changelog/">Changelog</a>
-						</div>
-					</section>
-				</footer>
-
-				<MobileMenu />
-				<MobileMenuSide navMenu={navItems ?? []} />
-			</div>
-		</Sprite.Provider>
+			<MobileMenu />
+			<MobileMenuSide navMenu={navItems ?? []} />
+		</div>
+		<Spritesheet />
 	</body>
 </html>

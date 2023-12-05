@@ -1,4 +1,5 @@
 ---
+import ExternalLink from "$components/ExternalLink.astro";
 import ContentHeader from "$components/shared/ContentHeader.astro";
 import TableOfContent from "$components/shared/TableOfContent.astro";
 import { getLastModified, getWikiNavigation } from "$data/wiki";
@@ -23,7 +24,7 @@ const lastModified = getLastModified(wikiItem);
 	<section class="mx-auto grid-cols-content gap-6 sm:grid">
 		<article class="post max-w-[72ch]">
 			<ContentHeader item={wikiItem} includeTags={false} />
-			<Content />
+			<Content components={{ a: ExternalLink }} />
 
 			<span class="mb-4 block text-right text-creative-work dark:text-dark-subtle-text">
 				Page last modified <a

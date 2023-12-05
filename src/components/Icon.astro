@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = {
+	name: "github" | "mail" | "mastodon" | "system" | "menu" | "moon" | "sun";
+	size: number;
+	title: string;
+} & HTMLAttributes<"svg">;
+
+const { name, size = 26, title, ...rest } = Astro.props;
+---
+
+<svg width={`${size}px`} height={`${size}px`} {...rest}>
+	<title>{title}</title>
+	<use xlink:href={`#icon:${name}`} width={`${size}px`} height={`${size}px`}></use>
+</svg>

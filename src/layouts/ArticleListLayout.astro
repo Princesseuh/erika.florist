@@ -14,7 +14,7 @@ const { page, title } = Astro.props;
 ---
 
 <BaseLayout title={title}>
-	<article class="flex w-articleList flex-col md:flex-row">
+	<article class="flex w-articleList flex-col gap-6 md:flex-row">
 		<div class="sm:w-[80%]">
 			<h2 class="mt-0">{title}</h2>
 			{page.data.map((item) => <ArticlePreview article={item} />)}

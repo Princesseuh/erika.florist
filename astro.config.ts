@@ -17,9 +17,6 @@ export default defineConfig({
 			wrap: false,
 		},
 	},
-	experimental: {
-		devOverlay: true,
-	},
 	image: {
 		service: {
 			entrypoint: "./src/imageService.ts",

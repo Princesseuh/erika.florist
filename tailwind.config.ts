@@ -124,7 +124,7 @@ export default {
 					width: "100%",
 					textAlign: "center",
 					fontSize: theme("fontSize.3xl"),
-					lineHeight: "180px",
+					lineHeight: "170px",
 					"@apply bg-pinky-unicorny bg-opacity-80 transition-opacity": {},
 					opacity: "0",
 					borderRadius: theme("borderRadius.sm"),
@@ -375,7 +375,7 @@ export default {
 					"@apply sm:mx-8 mx-0": {},
 				},
 
-				".post img": {
+				".post img:not([data-favicon])": {
 					width: "100%",
 					maxWidth: "100%",
 					height: "auto",

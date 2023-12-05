@@ -1,6 +1,7 @@
 ---
 import { getURLFromEntry, readableDate } from "$utils";
 import type { CollectionEntry } from "astro:content";
+import Tags from "./Tags.astro";
 
 interface Props {
 	article: CollectionEntry<"blog">;
@@ -16,14 +17,7 @@ const { article } = Astro.props;
 
 	<div class="mb-2 text-sm text-creative-work dark:text-dark-subtle-text">
 		{readableDate(article.data.date)}
-		 ·
-		{
-			article.data.tags
-				.map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)
-				.reduce((prev: string | null, curr: string) =>
-					prev === null ? [curr] : [prev, ", ", curr],
-				)
-		}
+		<Tags tags={article.data.tags} />
 	</div>
 
 	{article.data.tagline ?? null}

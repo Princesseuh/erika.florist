@@ -1,0 +1,89 @@
+---
+import { parseHTML } from "linkedom";
+
+import { imageMetadata } from "astro/assets/utils";
+
+// @ts-expect-error Eleventy please
+import EleventyFetch from "@11ty/eleventy-fetch";
+
+interface Props {
+	href: string;
+}
+
+const { href } = Astro.props;
+
+let faviconUrl: string | undefined;
+
+if (href.startsWith("http")) {
+	faviconUrl =
+		"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGcgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTI0IDB2MjRIMFYwaDI0Wk0xMi42IDIzLjNoLS4ydi41aC4ydi0uNVptLjMtLjItLjIuMXYuNWwuMi4xdi0uNlptLS44IDB2LjdoLjJ2LS41bC0uMi0uMloiLz48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xMSA2YTEgMSAwIDEgMSAwIDJINXYxMWgxMXYtNmExIDEgMCAxIDEgMiAwdjZhMiAyIDAgMCAxLTIgMkg1YTIgMiAwIDAgMS0yLTJWOGEyIDIgMCAwIDEgMi0yaDZabTktM2ExIDEgMCAwIDEgMSAxdjVhMSAxIDAgMSAxLTIgMFY2LjRsLTguMyA4LjNhMSAxIDAgMCAxLTEuNC0xLjRMMTcuNiA1SDE1YTEgMSAwIDEgMSAwLTJaIi8+PC9nPjwvc3ZnPg==";
+
+	// Get favicon
+	let html = "";
+
+	try {
+		html = await EleventyFetch(href, {
+			duration: "1y",
+			type: "text",
+			directory: "node_modules/.cache",
+		});
+		const { document } = parseHTML(html);
+		const links = document.querySelectorAll("link");
+
+		const faviconElement = Array.from(links).find((link) => {
+			const rel = (link.getAttribute("rel") || "").toLowerCase();
+
+			if (["icon", "shortcut icon"].includes(rel)) {
+				const iconHref = link.getAttribute("href");
+
+				if (iconHref) {
+					return true;
+				}
+			}
+
+			return false;
+		});
+
+		let originalFaviconUrl = new URL("/favicon.ico", href);
+		if (faviconElement) {
+			originalFaviconUrl = new URL(faviconElement.getAttribute("href")!, href);
+		}
+
+		const faviconBuffer = await EleventyFetch(originalFaviconUrl.toString(), {
+			duration: "1y",
+			type: "buffer",
+			directory: "node_modules/.cache",
+		});
+
+		const faviconMetadata = await imageMetadata(faviconBuffer);
+		const mimeType =
+			(faviconMetadata.format as any) === "ico"
+				? "image/x-icon"
+				: faviconMetadata.format === "svg"
+				  ? "image/svg+xml"
+				  : `image/${faviconMetadata.format}`;
+
+		if (originalFaviconUrl) {
+			faviconUrl = `data:${mimeType};base64,${faviconBuffer.toString("base64")}`;
+		}
+	} catch (e) {
+		if (e instanceof Error && e.hasOwnProperty("message")) {
+			if (import.meta.env.DEV) console.log(e.message);
+		}
+	}
+}
+---
+
+<a href={href}>
+	{
+		faviconUrl && (
+			<img
+				class="w-4 rounded-sm align-middle"
+				src={faviconUrl.toString()}
+				alt="Favicon"
+				data-favicon
+			/>
+		)
+	}
+	<slot />
+</a>

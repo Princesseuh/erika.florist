@@ -42,7 +42,7 @@ Every shell obviously has its own vision and goals, but they do share a few comm
 
 PowerShell is a shell that comes with Windows, and is probably the oldest "shell of the future" (2006). While it does work on other platforms, it's very Windows-specific and since I don't use Windows, I don't have much to say about it. Nonetheless, it is definitely worth mentionning because it was one of the modern inspiration for a lot of shells that came after it.
 
-It features a fairly neat system they call "Cmdlets" which wrap around the usual commands (`ls`, `cat`, `echo`, etc.), and allow for a more object-oriented approach to the shell. For instance, `Get-ChildItem` is the equivalent of `ls`, but it returns a list of "objects" instead of raw text, which you can then pipe to other commands that are also aware of the type of the objects.
+It features a fairly neat system they call "Cmdlets" which wrap around the usual commands (`ls`, `cat`, `echo`, etc.), and allow for a more object-oriented approach to the shell. For instance, `Get-ChildItem` is the equivalent of `ls`, but it returns a list of "objects" instead of raw text, which you can then pipe to other commands that are also aware of the type of the objects, this is often called "structured data"
 
 It takes a while to get used to the commands, but it's honestly really cool what you can do with it.
 
@@ -54,12 +54,14 @@ Get-ChildItem -Include *.txt | Select-Object Name, Length
 
 ### Elvish
 
-[Elvish](https://elv.sh/)
+[Elvish](https://elv.sh/) mostly focuses on the interactive aspect of things, and as such, mainly target the more "casual user" that I mentioned earlier, however it still has numerous benefits for the other group, namely supporting structured data and a more modern scripting language. For the more casual user, it has a built-in file manager, fuzzy completions, and a lot of other neat features.
+
+Also, Elvish is a neat name for a shell.
 
 ### Oil
 
-Oil is a shell that aims to be a "better bash". As noted previously, it's not really what I'm personally looking for in a shell, since it mostly focuses on the scripting aspect of things. Still, it's quite interesting and [their blog](https://www.oilshell.org/blog/) is a great read.
+Oil is a shell that aims to be a "better bash", there's no interactive bells and whistle, but it has a nice(r) script language than Bash. As noted previously, it's not really what I'm personally looking for in a shell, since it mostly focuses on the scripting aspect of things. Still, it's quite interesting and [their blog](https://www.oilshell.org/blog/) is a great read.
 
 ### Nushell
 
-[Nushell](https://www.nushell.sh/)
+[Nushell](https://www.nushell.sh/) is the shell that I'm the most excited about and the one I believe to be the most likely to become the new Fish of the 2020s.

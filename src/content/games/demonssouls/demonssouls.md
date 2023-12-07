@@ -3,7 +3,7 @@ title: Demon's Souls
 rating: "masterpiece"
 platform: "ps3"
 finishedDate: 2021-07-22
-igdb: 5619
+igdb: "5619"
 ---
 
 I didn't play it as much as its successor, but it's definitely one of my favorite games of all time!

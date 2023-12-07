@@ -2,7 +2,7 @@
 title: Diablo 3
 finishedDate: "N/A"
 rating: "liked"
-igdb: 120
+igdb: "120"
 platform: "switch"
 ---
 

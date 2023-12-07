@@ -4,7 +4,7 @@ platform: "pc"
 finishedDate: 2021-03-02
 rating: "okay"
 cover_alt: The cover depicts two characters standing in front of a dreamy environnement
-igdb: 27324
+igdb: "27324"
 ---
 
 I had been eyeing the game for a while on Steam but it was a bit too pricy for me at the time

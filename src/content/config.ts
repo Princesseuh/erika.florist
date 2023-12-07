@@ -82,7 +82,7 @@ const gamesCollection = defineCollection({
 			]),
 			finishedDate: z.union([z.date(), z.literal("N/A")]),
 			type: z.literal("game").default("game"),
-			igdb: z.number(),
+			igdb: z.string(),
 			cover: z.preprocess(() => "./cover.png", image()),
 		}),
 });

@@ -3,7 +3,7 @@ title: "Castlevania: Dawn of Sorrow"
 platform: "ds"
 rating: "liked"
 finishedDate: 2021-10-02
-igdb: 1136
+igdb: "1136"
 ---
 
 I liked this! I thought it did was it was aiming for really nicely, that is being a more kid friendly Castlevania to reach new audiences

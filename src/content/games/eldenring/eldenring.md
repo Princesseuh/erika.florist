@@ -3,7 +3,7 @@ title: Elden Ring
 rating: "okay"
 platform: "pc"
 finishedDate: 2022-03-01
-igdb: 119133
+igdb: "119133"
 ---
 
 I didn't like this as much as I would have hoped. I consider myself a big fan of the series, having over a thousand hours spent on it throughout the games but this one I think was the one too much

@@ -3,7 +3,7 @@ title: "Castlevania: Portrait of Ruin"
 platform: "ds"
 finishedDate: 2021-11-30
 rating: "okay"
-igdb: 1138
+igdb: "1138"
 ---
 
 I wasn't sure if I would like the duo dynamic but ended up being a big fan, though I exclusively played as the woman (which I'm glad was entirely possible!)

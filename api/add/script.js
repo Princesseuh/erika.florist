@@ -25,11 +25,28 @@ document.addEventListener("DOMContentLoaded", () => {
 	const loader = document.querySelector(".loader");
 
 	/**
+	 * @type {HTMLDivElement | null}
+	 */
+	const platform = document.querySelector("#platform");
+
+	/**
+	 * @type {HTMLSelectElement | null}
+	 */
+	const platformSelect = document.querySelector("#platform-select");
+
+	/**
 	 * @type {HTMLInputElement | null}
 	 */
 	const typeInput = document.querySelector("#type");
 
-	if (!nameInput || !sourceIdInput || !typeInput || !loader) {
+	if (!nameInput || !sourceIdInput || !typeInput || !loader || !platform || !platformSelect) {
+		console.error("Missing required elements:");
+		console.error("nameInput", nameInput);
+		console.error("sourceIdInput", sourceIdInput);
+		console.error("typeInput", typeInput);
+		console.error("loader", loader);
+		console.error("platform", platform);
+		console.error("platformSelect", platformSelect);
 		return;
 	}
 
@@ -94,8 +111,49 @@ document.addEventListener("DOMContentLoaded", () => {
 	typeInput.addEventListener("change", () => {
 		clearTimeout(nameInputTimeout);
 		suggestions = [];
+
+		if (typeInput.value === "game" || typeInput.value === "book") {
+			updatePlaformSelect(typeInput.value, platformSelect);
+			platform.setAttribute("style", "display: block;");
+		} else {
+			platformSelect.innerHTML = "";
+			platformSelect.value = "";
+			platform.setAttribute("style", "display: none;");
+		}
 	});
 });
+
+/**
+ *
+ * @param {MediaType} type
+ * @param {HTMLSelectElement} platformSelect
+ */
+function updatePlaformSelect(type, platformSelect) {
+	switch (type) {
+		case "game":
+			platformSelect.innerHTML = `
+        <option value="pc">PC</option>
+        <option value="switch">Switch</option>
+        <option value="mobile">Mobile</option>
+        <option value="ps3">PS3</option>
+        <option value="ps4">PS4</option>
+        <option value="ps5">PS5</option>
+        <option value="ds">DS</option>
+        <option value="gcn">GameCube</option>
+      `;
+			break;
+		case "book":
+			platformSelect.innerHTML = `
+        <option value="ebook">E-Book</option>
+        <option value="physical">Physical</option>
+        <option value="audiobook">Audiobook</option>
+      `;
+			break;
+		case "tv":
+		case "movie":
+			break;
+	}
+}
 
 /**
  * @param {MediaType} type

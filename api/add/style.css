@@ -30,13 +30,36 @@ html {
 	height: 100%;
 }
 
-form {
+form,
+#success {
 	margin: 0 auto;
 	width: min(880px, 100%);
+	padding: 1em;
+}
+
+#success-buttons {
+	display: flex;
+	gap: 1em;
+}
+
+#success-buttons a {
+	cursor: pointer;
+	border: 1.5px solid #463539;
+	border-radius: 0.5em;
+	padding: 1em;
+	color: black;
+	text-decoration: none;
+	background-color: rgb(239, 239, 239);
+}
+
+#success-buttons a:hover {
+	background-color: rgb(223, 223, 223);
+}
+
+form {
 	display: flex;
 	flex-direction: column;
 	gap: 2em;
-	padding: 1em;
 }
 
 #type-name {
@@ -95,6 +118,7 @@ textarea {
 	display: flex;
 	gap: 1em;
 	max-width: 100%;
+	flex-wrap: wrap;
 }
 
 #source-id {
@@ -103,6 +127,15 @@ textarea {
 
 #date-comment div:nth-child(2) {
 	min-width: 0;
+	flex: 1;
+}
+
+#date-comment div:nth-child(3) {
+	width: 100%;
+}
+
+#date-comment div:nth-child(3) select {
+	width: 100%;
 }
 
 #confirm-submit {

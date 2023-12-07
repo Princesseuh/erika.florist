@@ -68,9 +68,14 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                 };
 
                 let name = data.get("name").unwrap();
+                let platform = format!(
+                    "platform: \"{}\"\n",
+                    data.get("platform-select").unwrap_or(&String::from(""))
+                );
                 let markdown_content = format!(
-                    "---\ntitle: \"{name}\"\nrating: \"{rating}\"\nfinishedDate: {date}\n{source}: \"{sourceId}\"\n---\n\n{comment}\n",
+                    "---\ntitle: \"{name}\"\n{platform}rating: \"{rating}\"\nfinishedDate: {date}\n{source}: \"{sourceId}\"\n---\n\n{comment}\n",
                     comment = data.get("comment").unwrap(),
+                    platform = if data.get("platform-select").unwrap_or(&String::from("")).is_empty() { "" } else { &platform },
                     rating = data.get("rating").unwrap(),
                     date = data.get("date").unwrap(),
                     source = source_key,
@@ -92,25 +97,38 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                     &markdown_content,
                     name,
                     data.get("skip-ci").unwrap_or(&String::from("false")) == "skip-ci",
-                    false,
+                    false, // NOTE: Change this to false when you're ready to deploy.
                 );
 
+                let commit_url = github_request
+                    .get("commit")
+                    .and_then(|commit| commit.get("html_url"))
+                    .and_then(|url| url.as_str())
+                    .unwrap();
+
                 Ok(Response::builder()
-                .status(StatusCode::OK)
-                .header("Content-Type", "text/html")
-                .body(
-                    layout(html! {
-                        h1 { "Success!" }
-                        p { "Your content has been added to the catalogue." }
-                        a href=(github_request.get("commit").unwrap().get("html_url").unwrap()) { "See commit" }
-                        div {
-                          button onclick="window.location.href = '/catalogue';" { "Go back to the catalogue" }
-                          button onclick="window.location.href = '/api/add';" { "Add another" }
-                        }
-                    }, false)
-                    .into_string()
-                    .into(),
-                )?)
+                    .status(StatusCode::OK)
+                    .header("Content-Type", "text/html")
+                    .body(
+                        layout(
+                            html! {
+                              div id="success" {
+                                h1 { "Success!" }
+                                p {
+                                  "Your content has been added to the catalogue. "
+                                  a href=(commit_url) { "(See commit)" }
+                                }
+                                div id="success-buttons" {
+                                  a href="/catalogue" { "Go back to the catalogue" }
+                                  a href="/api/add" { "Add another" }
+                                }
+                              }
+                            },
+                            false,
+                        )
+                        .into_string()
+                        .into(),
+                    )?)
             }
             _ => Ok(Response::builder()
                 .status(StatusCode::NOT_FOUND)
@@ -251,7 +269,7 @@ fn layout(content: Markup, include_script: bool) -> Markup {
       html {
         head {
             meta charset="utf-8";
-            title { "Test page" }
+            title { "Add to catalogue" }
             meta name="viewport" content="width=device-width, initial-scale=1";
             style { (PreEscaped(include_str!("./add/style.css").trim())) }
             @if include_script {
@@ -316,6 +334,10 @@ fn form_layout() -> Markup {
                     div {
                       label for="source-id" { "Source ID" }
                       input type="text" id="source-id" name="source-id" placeholder="Source ID" required;
+                    }
+                    div id="platform" style="display: none;" {
+                      label for="platform-select" { "Platform" }
+                      select name="platform-select" id="platform-select" {}
                     }
                   }
                   div id="comment-textarea" {

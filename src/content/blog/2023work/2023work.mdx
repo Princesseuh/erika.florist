@@ -1,0 +1,35 @@
+---
+title: Things I've worked on at Astro in 2023
+tagline: Turns out images are more complicated than I thought
+date: 2023-12-23
+tags: ["programming", "astro"]
+slug: "thingsiveworkedonatastro2023"
+---
+
+I've been working at [Astro](https://astro.build) for close to two years now. After spending most of my time during the first year on our language server, I've been working on a variety of things since then. Here's a quick overview of some of the things I've worked on in 2023.
+
+> Don't know what Astro is? Check out our [Why Astro? page](https://docs.astro.build/en/concepts/why-astro/).
+
+## Astro 2.0
+
+Most of the work on this 2.0 release was done in 2022, but still, it shipped in 2023, so it counts! In this release, I worked on improving the entire experience around errors in Astro. I added [a new error overlay](https://astro.build/blog/astro-2/#errors-redesigned) (designed by our designer at Astro, [Mark Peck](https://markpeck.me/)), I rewrote all the error messages and generally made sure people are having [a great experience, even when things go wrong](https://erika.florist/articles/gooderrors).
+
+## A proper image story for Astro
+
+Have you ever seen a content-based website without imagse? Yeah, me neither. Images are naturally a core part of the web, especially for content-drive websites, and Astro needed a proper way to use images in a performant fashion. Funnily enough, [I made one of the first attempts at this](https://github.com/Princesseuh/astro-eleventy-img) only a month or so after discovering Astro, before joining the company, so I had a pretty good idea of what I wanted to do and was a natural fit in the team for this task.
+
+We already had a semi-first party solution for image, `@astrojs/image`, but you had to install it separately and it was a bit clunky to use, suffered from poor types, documentation and in general, wasn't kept up to date with the rest of Astro, so it had many bugs when using the numerous new features we added to Astro since its creation.
+
+For this new effort, we wanted to make sure it was a first-class citizen of Astro, with all the great DX that Astro is known for. We also wanted to ensure that the APIs were easy to extend, as we knew third-party external services like Vercel, Netlify, Cloudflare, Cloudinary etc would want to integrate with it.
+
+Now that everything is done, shipped, used by people, I can say I'm pretty happy with the result and I think it's a great natural addition to Astro! For more information on this effort, you can read the following blog post: [Better Images in Astro](https://astro.build/blog/images/).
+
+## Language server 1.0 and 2.0
+
+The Astro language server is my pride and joy, my baby, the thing I've spent the most time on at Astro. It's a TypeScript language server that powers [the Astro VSCode extension](https://marketplace.visualstudio.com/items?itemName=astro-build.astro-vscode&ssr=false#overview), and provides [all the features you'd expect to have in a code editor](/articles/dontunderestimateeditorintegration).
+
+While, as said previously, it wasn't at all the focus for me this year, I nonetheless shipped a few things.
+
+### 1.0
+
+We shipped the 1.0 version of the language server in May, which was a big milestone considering it was in beta since November 2022. The main reason behind the delay were due to very tricky bugs (especially on Windows) in the new parser, the main piece of this 1.0.

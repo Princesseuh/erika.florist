@@ -8,8 +8,6 @@ export function remarkConvertImports() {
 			const srcAttribute = node.attributes.findIndex((attr: any) => attr.name === "src");
 			if (srcAttribute === -1 || typeof node.attributes[srcAttribute].value === "object") return;
 
-			console.log("do we get here2?");
-
 			const stringValue = node.attributes[srcAttribute].value;
 			node.attributes[srcAttribute].value = {
 				type: "mdxJsxAttributeValueExpression",

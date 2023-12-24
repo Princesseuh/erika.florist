@@ -4,6 +4,7 @@ import AutoImport from "astro-auto-import";
 import { defineConfig } from "astro/config";
 
 import expressiveCode from "astro-expressive-code";
+import { remarkConvertImports } from "./src/remark-convert-imports.ts";
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,6 +17,7 @@ export default defineConfig({
 			langs: [],
 			wrap: false,
 		},
+		remarkPlugins: [remarkConvertImports],
 	},
 	image: {
 		service: {

@@ -368,6 +368,10 @@ export default {
 					},
 				},
 
+				".post blockquote [data-favicon]": {
+					marginLeft: "0.25em",
+				},
+
 				".post figure": {
 					marginTop: "1.4rem",
 					marginBottom: "1rem",
@@ -376,7 +380,6 @@ export default {
 				},
 
 				".post img:not([data-favicon])": {
-					width: "100%",
 					maxWidth: "100%",
 					height: "auto",
 					borderRadius: theme("borderRadius.sm"),

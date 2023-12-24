@@ -13,7 +13,6 @@ export type Props = Omit<LocalImageProps, "src"> & {
 	formats?: ImageOutputFormat[];
 	fallbackFormat?: ImageOutputFormat | undefined;
 	pictureAttributes?: HTMLAttributes<"picture"> | undefined;
-	forceHeight?: boolean;
 };
 
 const imageService = (await getConfiguredImageService()) as LocalImageServiceWithPlaceholder;
@@ -24,7 +23,7 @@ const placeholderURL = await imageService.generatePlaceholder(
 );
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const { forceHeight, ...props } = Astro.props as any;
+const { ...props } = Astro.props as any;
 ---
 
 <AstroPicture
@@ -32,7 +31,6 @@ const { forceHeight, ...props } = Astro.props as any;
 	width={Astro.props.src.width / 2}
 	densities={Astro.props.densities ?? [1.5, 2]}
 	formats={Astro.props.formats ?? ["avif", "webp"]}
-	style={(forceHeight ? `height:${Astro.props.src.height}px;width:auto;` : "") +
-		`background-size: cover;background-image: url(${placeholderURL});image-rendering:auto;`}
+	style={`background-size: cover;background-image: url(${placeholderURL});image-rendering:auto;`}
 	onload="this.style.backgroundSize = null; this.style.backgroundImage = null; this.style.imageRendering = null; this.removeAttribute('onload');"
 />

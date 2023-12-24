@@ -1,9 +1,10 @@
 ---
-title: The Shells of the 2000s
+title: The Shells of the 2020s
 date: 2023-11-27
 tags: ["shell", "terminal"]
 tagline: Del, I'm feeling like a ghost in a shell
 slug: shellsofthe20s
+draft: true
 ---
 
 At the time of writing, [fish](https://fishshell.com/)'s homepage, probably jokingly, says "Finally, a command line shell for the 90s". Tangentially, in 2019 macOS made the switch from [bash](https://www.gnu.org/software/bash/) to [zsh](https://www.zsh.org/) as its default shell.
@@ -23,11 +24,9 @@ To re-use fish's joke, **what will be the shell of the 2020s?**
 
 ## A tale of two Users
 
-[As Oil describe it, there's two type of shell users: the people who just type commands and the people who write long scripts.](http://www.oilshell.org/blog/2021/01/why-a-new-shell.html#how-is-oil-different-than-bash-or-zsh)
+As [Oil](https://www.oilshell.org/) describe it, there's two type of shell users: [the people who just type commands and the people who write long scripts.](http://www.oilshell.org/blog/2021/01/why-a-new-shell.html#how-is-oil-different-than-bash-or-zsh)
 
-On that spectrum, I'd say that I am much closer to the casual user than the power user. I know *how* to write scripts, but I: generally don't need to, and more importantly, don't *want* to. As such, the shells that I find interesting are definitely mostly the one that cater to the more casual users. Elvish having a built-in file manager is a great example of that, for instance.
-
-Notably, this means that shells like [PowerShell](https://docs.microsoft.com/en-us/powershell/) or [Oil](https://www.oilshell.org/) don't get much more of a "Huh, that's cool" reaction from me.
+I know *how* to write scripts, but I: generally don't need to, and more importantly, don't *want* to. As such, the shells that I find interesting are definitely mostly the one that cater to the command-typers. [Elvish](https://elv.sh/) having a built-in file manager is a great example of that, for instance.
 
 ## The contenders
 
@@ -40,7 +39,7 @@ Every shell obviously has its own vision and goals, but they do share a few comm
 
 ### PowerShell
 
-PowerShell is a shell that comes with Windows, and is probably the oldest "shell of the future" (2006). While it does work on other platforms, it's very Windows-specific and since I don't use Windows, I don't have much to say about it. Nonetheless, it is definitely worth mentionning because it was one of the modern inspiration for a lot of shells that came after it.
+PowerShell is a shell that comes with Windows, and is probably the oldest "shell of the future" (2006). It does (apparently) work on other platforms, but still, it's very Windows-specific and since I don't use Windows, well I don't have much to say about it. Nonetheless, it is definitely worth mentionning because it was one of the modern inspiration for a lot of shells that came after it.
 
 It features a fairly neat system they call "Cmdlets" which wrap around the usual commands (`ls`, `cat`, `echo`, etc.), and allow for a more object-oriented approach to the shell. For instance, `Get-ChildItem` is the equivalent of `ls`, but it returns a list of "objects" instead of raw text, which you can then pipe to other commands that are also aware of the type of the objects, this is often called "structured data"
 
@@ -54,7 +53,7 @@ Get-ChildItem -Include *.txt | Select-Object Name, Length
 
 ### Elvish
 
-[Elvish](https://elv.sh/) mostly focuses on the interactive aspect of things, and as such, mainly target the more "casual user" that I mentioned earlier, however it still has numerous benefits for the other group, namely supporting structured data and a more modern scripting language. For the more casual user, it has a built-in file manager, fuzzy completions, and a lot of other neat features.
+Elvish mostly focuses on the interactive aspect of things, and as such, mainly target the more "casual user" mentioned earlier, however it still has numerous benefits for the other group, namely supporting structured data and a more modern scripting language.
 
 Also, Elvish is a neat name for a shell.
 

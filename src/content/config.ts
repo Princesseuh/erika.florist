@@ -7,6 +7,7 @@ const blogCollection = defineCollection({
 		maxDepthTOC: z.number().optional(),
 		date: z.date(),
 		tags: z.array(z.string()).default([]),
+		draft: z.boolean().default(false),
 		type: z.literal("blog").default("blog"),
 	}),
 });

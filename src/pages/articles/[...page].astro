@@ -8,7 +8,13 @@ import { getCollection } from "astro:content";
 export const getStaticPaths = (async ({ paginate }) => {
 	const blogCollection = await getCollection("blog");
 	return [
-		...paginate(blogCollection.concat().sort(blogDateSort), { pageSize: 5 }),
+		...paginate(
+			blogCollection
+				.concat()
+				.sort(blogDateSort)
+				.filter((article) => article.data.draft !== true),
+			{ pageSize: 5 },
+		),
 		...blogCollection.map((entry) => ({
 			params: { page: entry.slug },
 			props: { entry: entry },

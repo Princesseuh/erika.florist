@@ -13,7 +13,8 @@ export const getStaticPaths = (async ({ paginate }) => {
 	return uniqueYears.flatMap((year) => {
 		const filteredArticles = articles
 			.filter((article) => article.data.date.getUTCFullYear() === year)
-			.sort(blogDateSort);
+			.sort(blogDateSort)
+			.filter((article) => article.data.draft !== true);
 		return paginate(filteredArticles, { params: { year: year.toString() }, pageSize: 5 });
 	});
 }) satisfies GetStaticPaths;

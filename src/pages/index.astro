@@ -11,6 +11,7 @@ const articles = (await getCollection("blog"))
 	.sort((a, b) => {
 		return b.data.date.getTime() - a.data.date.getTime();
 	})
+	.filter((article) => article.data.draft !== true)
 	.slice(0, 4);
 
 const wikiItems = (await getCollection("wiki"))

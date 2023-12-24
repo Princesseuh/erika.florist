@@ -15,8 +15,7 @@ const { href } = Astro.props;
 let faviconUrl: string | undefined;
 
 if (href.startsWith("http")) {
-	faviconUrl =
-		"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGcgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTI0IDB2MjRIMFYwaDI0Wk0xMi42IDIzLjNoLS4ydi41aC4ydi0uNVptLjMtLjItLjIuMXYuNWwuMi4xdi0uNlptLS44IDB2LjdoLjJ2LS41bC0uMi0uMloiLz48cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik0xMSA2YTEgMSAwIDEgMSAwIDJINXYxMWgxMXYtNmExIDEgMCAxIDEgMiAwdjZhMiAyIDAgMCAxLTIgMkg1YTIgMiAwIDAgMS0yLTJWOGEyIDIgMCAwIDEgMi0yaDZabTktM2ExIDEgMCAwIDEgMSAxdjVhMSAxIDAgMSAxLTIgMFY2LjRsLTguMyA4LjNhMSAxIDAgMCAxLTEuNC0xLjRMMTcuNiA1SDE1YTEgMSAwIDEgMSAwLTJaIi8+PC9nPjwvc3ZnPg==";
+	faviconUrl = undefined;
 
 	// Get favicon
 	let html = "";
@@ -76,13 +75,26 @@ if (href.startsWith("http")) {
 
 <a href={href}>
 	{
-		faviconUrl && (
+		faviconUrl ? (
 			<img
-				class="w-4 rounded-sm align-middle"
+				class="relative top-[3px] w-4 rounded-sm"
 				src={faviconUrl.toString()}
 				alt="Favicon"
 				data-favicon
 			/>
+		) : (
+			<span class="relative top-[3px] inline-block w-4 rounded-sm ">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path
+						fill="none"
+						stroke="currentColor"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1 9-9m-5 0h5v5"
+					/>
+				</svg>
+			</span>
 		)
 	}
 	<slot />

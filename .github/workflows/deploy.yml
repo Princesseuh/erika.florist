@@ -41,6 +41,7 @@ jobs:
         with:
           path: |
             node_modules/.astro
+            target
           key: ${{ runner.os }}-images
 
       - name: Pull Vercel Environment Information
@@ -52,7 +53,9 @@ jobs:
       - name: Deploy Project Artifacts to Vercel
         run: pnpx vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: clear
+      - name: Clear cache
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           gh extension install actions/gh-actions-cache
           if ${{ steps.cache-restore.outputs.cache-hit == 'true' }}; then
@@ -66,4 +69,5 @@ jobs:
         with:
           path: |
             node_modules/.astro
+            target
           key: ${{ steps.cache-images-restore.outputs.cache-primary-key }}

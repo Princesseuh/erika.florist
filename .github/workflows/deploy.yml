@@ -52,9 +52,17 @@ jobs:
       - name: Deploy Project Artifacts to Vercel
         run: pnpx vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
 
+      - name: clear
+        run: |
+          gh extension install actions/gh-actions-cache
+          if ${{ steps.cache-restore.outputs.cache-hit == 'true' }}; then
+            gh actions-cache delete ${{ runner.os }}-images --confirm
+          fi
+
       - name: Save build images
         id: cache-image-save
         uses: actions/cache/save@v3
+        if: always()
         with:
           path: |
             node_modules/.astro

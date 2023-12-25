@@ -99,4 +99,4 @@ const content = (await Astro.slots.render("default")).trim();
 	)
 }
 
-<a href={href} class="ml-1">{content}</a>
+<a href={href} class="ml-1"><Fragment set:html={content} /></a>

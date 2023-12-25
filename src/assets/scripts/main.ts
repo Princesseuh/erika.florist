@@ -31,7 +31,7 @@ function makeDatesRelative(): void {
 function onPageLoad() {
 	makeDatesRelative();
 
-	if ((localStorage.getItem("prefetchDisabled") ?? "false") === "false") {
+	if ((localStorage.getItem("prefetchDisabled") ?? "false") === "false" || import.meta.env.DEV) {
 		listen({ ignores: [/\/_astro\/?/] });
 	}
 }

@@ -40,12 +40,8 @@ for (const entry of uniqueMonthYears) {
 						<ul>
 							{value.map((changelogEntry) => (
 								<li>
-									<a
-										href={`https://github.com/Princesseuh/erika.florist/commit/${changelogEntry.ref}`}
-										class="mr-2 font-mono"
-									>
-										{changelogEntry.ref}
-									</a>
+									{/* prettier-ignore */}
+									<a href={changelogEntry.link} class="mr-2 font-mono">{changelogEntry.ref}</a>
 									<span>{changelogEntry.desc}</span>
 								</li>
 							))}

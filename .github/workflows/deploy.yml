@@ -51,7 +51,7 @@ jobs:
         run: pnpx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
-        run: pnpx vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        run: pnpx vercel deploy --archive=tgz --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Clear cache
         env:

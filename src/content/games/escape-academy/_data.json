@@ -1,0 +1,56 @@
+{
+  "first_release_date": 1657670400,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    },
+    {
+      "id": 169,
+      "abbreviation": "Series X"
+    }
+  ],
+  "companies": [
+    {
+      "id": 5442,
+      "name": "iam8bit",
+      "role": "publisher"
+    },
+    {
+      "id": 16242,
+      "name": "Skybound Games",
+      "role": "publisher"
+    },
+    {
+      "id": 40493,
+      "name": "Coin Crew Games",
+      "role": "developer"
+    }
+  ]
+}

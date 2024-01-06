@@ -1,0 +1,26 @@
+{
+  "first_release_date": 1519689600,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 26,
+      "name": "Square Enix",
+      "role": "developer"
+    }
+  ]
+}

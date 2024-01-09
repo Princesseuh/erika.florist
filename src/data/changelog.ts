@@ -10,6 +10,7 @@ export interface ChangelogEntry {
 	link: string;
 	date: Date;
 	desc: string;
+	isCatalogue: boolean;
 }
 
 export type Changelog = ChangelogEntry[];
@@ -24,11 +25,13 @@ export function getChangelog(): Changelog {
 			}
 
 			const trimmedRef = ref.trim();
+			const cleanDesc = cleanChangelogDescription(desc.replace("$END$", ""));
 			return {
 				ref: trimmedRef,
 				link: `https://github.com/Princesseuh/erika.florist/commit/${trimmedRef}`,
 				date: new Date(date),
-				desc: cleanChangelogDescription(desc.replace("$END$", "")),
+				desc: cleanDesc,
+				isCatalogue: cleanDesc.startsWith("content(catalogue):"),
 			};
 		})
 		.filter((entry) => !entry.desc.startsWith("[ci]"));

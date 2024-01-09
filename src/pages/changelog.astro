@@ -16,15 +16,13 @@ const groupedMonths: Record<string, Changelog> = {};
 
 for (const entry of uniqueMonthYears) {
 	const [month, year] = entry.split("|").map((date) => parseInt(date));
-	if (!month || !year) continue;
+	if (month === undefined || Number.isNaN(month) || year === undefined || Number.isNaN(year))
+		continue;
 
-	groupedMonths[monthYearDate(new Date(Date.UTC(year, month, 1)))] = changelog
-		.filter(
-			(changelogEntry) =>
-				changelogEntry.date.getUTCMonth() === month &&
-				changelogEntry.date.getUTCFullYear() === year,
-		)
-		.flat();
+	groupedMonths[monthYearDate(new Date(Date.UTC(year, month, 1)))] = changelog.filter(
+		(changelogEntry) =>
+			changelogEntry.date.getUTCMonth() === month && changelogEntry.date.getUTCFullYear() === year,
+	);
 }
 ---
 
@@ -33,13 +31,18 @@ for (const entry of uniqueMonthYears) {
 		<article class="w-[72ch] max-w-full">
 			<h2 class="mt-0">Changelog</h2>
 			<div class="mb-4">Things change, and that's okay.</div>
+
+			<label>
+				<input type="checkbox" id="disable-catalogue-checkbox" />
+				<span>Don't show catalogue entries changes</span>
+			</label>
 			{
 				Object.entries(groupedMonths).map(([key, value]) => (
 					<>
 						<h3 id={slug(key)}>{key}</h3>
 						<ul>
 							{value.map((changelogEntry) => (
-								<li>
+								<li data-changelog-catalogue={changelogEntry.isCatalogue ? true : undefined}>
 									{/* prettier-ignore */}
 									<a href={changelogEntry.link} class="mr-2 font-mono">{changelogEntry.ref}</a>
 									<span>{changelogEntry.desc}</span>
@@ -65,3 +68,20 @@ for (const entry of uniqueMonthYears) {
 		</aside>
 	</section>
 </BaseLayout>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		const checkbox = document.getElementById("disable-catalogue-checkbox");
+		const catalogueEntries = document.querySelectorAll("[data-changelog-catalogue]");
+
+		if (!checkbox || !catalogueEntries) {
+			return;
+		}
+
+		checkbox.addEventListener("change", () => {
+			for (const entry of catalogueEntries) {
+				entry.classList.toggle("hidden");
+			}
+		});
+	});
+</script>

@@ -16,25 +16,28 @@
 	},
 	"devDependencies": {
 		"@astrojs/tailwind": "^5.1.0",
-		"@types/eslint": "^8.44.8",
+		"@types/eslint": "^8.56.2",
 		"@types/markdown-it": "^13.0.7",
-		"@types/node": "^20.10.3",
+		"@types/node": "^20.11.0",
 		"@types/prettier": "^2.7.3",
-		"@typescript-eslint/eslint-plugin": "^6.13.2",
-		"@typescript-eslint/parser": "^6.13.2",
-		"astro": "^4.1.1",
+		"@typescript-eslint/eslint-plugin": "^6.18.1",
+		"@typescript-eslint/parser": "^6.18.1",
+		"astro": "^4.1.2",
 		"astro-auto-import": "^0.4.2",
-		"eslint": "^8.55.0",
+		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-astro": "^0.30.0",
+		"eslint-plugin-astro": "^0.31.0",
 		"kleur": "^4.1.5",
-		"prettier": "^3.1.0",
-		"prettier-plugin-astro": "^0.12.2",
+		"prettier": "^3.1.1",
+		"prettier-plugin-astro": "^0.12.3",
 		"quick-score": "^0.2.0",
 		"quicklink": "^2.3.0",
-		"typescript": "^5.3.2"
+		"typescript": "^5.3.3"
 	},
 	"pnpm": {
+    "overrides": {
+      "sharp": "^0.33.0"
+    },
 		"packageExtensions": {
 			"quicklink": {
 				"peerDependenciesMeta": {
@@ -51,24 +54,24 @@
 	"packageManager": "pnpm@8.10.0",
 	"dependencies": {
 		"@11ty/eleventy-fetch": "^4.0.0",
-		"@astrojs/check": "^0.3.1",
-		"@astrojs/mdx": "2.0.0",
+		"@astrojs/check": "^0.4.1",
+		"@astrojs/mdx": "2.0.4",
 		"@types/better-sqlite3": "^7.6.8",
 		"@types/igdb-api-node": "^5.0.3",
 		"astro-capo": "^0.0.1",
-		"astro-expressive-code": "^0.29.2",
+		"astro-expressive-code": "^0.31.0",
 		"better-sqlite3": "^9.2.2",
 		"dotenv": "^16.3.1",
 		"github-slugger": "^2.0.0",
 		"gray-matter": "^4.0.3",
 		"igdb-api-node": "^5.0.2",
-		"kysely": "^0.26.3",
-		"linkedom": "^0.16.4",
-		"markdown-it": "^13.0.2",
-		"prettier-plugin-tailwindcss": "^0.5.8",
-		"sharp": "^0.33.0",
-		"tailwindcss": "^3.3.6",
-		"tsx": "^4.6.2",
-		"vercel": "^32.6.1"
+		"kysely": "^0.27.2",
+		"linkedom": "^0.16.6",
+		"markdown-it": "^14.0.0",
+		"prettier-plugin-tailwindcss": "^0.5.11",
+		"sharp": "^0.33.1",
+		"tailwindcss": "^3.4.1",
+		"tsx": "^4.7.0",
+		"vercel": "^33.1.0"
 	}
 }

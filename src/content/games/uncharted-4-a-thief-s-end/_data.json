@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1462838400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    }
+  ],
+  "companies": [
+    {
+      "id": 401,
+      "name": "Naughty Dog",
+      "role": "developer"
+    },
+    {
+      "id": 10100,
+      "name": "Sony Interactive Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

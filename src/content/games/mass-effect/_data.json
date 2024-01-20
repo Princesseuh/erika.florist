@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1620950400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    }
+  ],
+  "companies": [
+    {
+      "id": 2,
+      "name": "BioWare",
+      "role": "developer"
+    },
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    }
+  ]
+}

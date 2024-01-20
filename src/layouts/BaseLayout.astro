@@ -1,4 +1,6 @@
 ---
+import { join } from "node:path";
+import { AstroFont } from "astro-font";
 import MobileMenu from "$components/layout/MobileMenu.astro";
 import MobileMenuSide from "$components/layout/MobileMenuSide.astro";
 import Sidebar from "$components/layout/SideBar.astro";
@@ -28,14 +30,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 		<meta name="generator" content={Astro.generator} />
 		<title>{title ? `${title} - Erika` : "Erika"}</title>
 
-		<link
-			rel="preload"
-			href="/assets/fonts/anuphan.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-
 		{preloadCatalogue && <link rel="preconnect" href="/api/catalogue" crossorigin />}
 
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -53,6 +47,31 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 		<link rel="canonical" href={canonicalURL} />
 		<meta property="og:url" content={canonicalURL} />
 
+		<AstroFont
+			config={[
+				{
+					name: "Anuphan",
+					preload: false,
+					display: "swap",
+					fallback: "sans-serif",
+					cssVariable: "font-anuphan",
+					src: [
+						{
+							preload: true,
+							style: "normal",
+							weight: "1 900",
+							path: join(process.cwd(), "static", "assets", "fonts", "anuphan.woff2"),
+						},
+						{
+							style: "normal",
+							weight: "1 900",
+							path: join(process.cwd(), "static", "assets", "fonts", "anuphan.woff"),
+						},
+					],
+				},
+			]}
+		/>
+
 		<script src="../assets/scripts/main.ts"></script>
 	</Head>
 	<body>
@@ -62,8 +81,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 			theme === "dark" || (!theme && isSystemDark)
 				? document.documentElement.classList.add("dark")
 				: theme === "light"
-				  ? document.documentElement.classList.remove("dark")
-				  : theme === "system" && isSystemDark && document.documentElement.classList.add("dark");
+					? document.documentElement.classList.remove("dark")
+					: theme === "system" && isSystemDark && document.documentElement.classList.add("dark");
 		</script>
 		<div id="app" class="bg-isabelline dark:bg-darker-skylines">
 			<section class="mx-auto w-layout p-5 sm:grid sm:grid-cols-layout sm:gap-x-6 sm:p-0">

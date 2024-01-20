@@ -35,9 +35,9 @@
 		"typescript": "^5.3.3"
 	},
 	"pnpm": {
-    "overrides": {
-      "sharp": "^0.33.0"
-    },
+		"overrides": {
+			"sharp": "^0.33.0"
+		},
 		"packageExtensions": {
 			"quicklink": {
 				"peerDependenciesMeta": {
@@ -60,6 +60,7 @@
 		"@types/igdb-api-node": "^5.0.3",
 		"astro-capo": "^0.0.1",
 		"astro-expressive-code": "^0.31.0",
+		"astro-font": "^0.0.76",
 		"better-sqlite3": "^9.2.2",
 		"dotenv": "^16.3.1",
 		"github-slugger": "^2.0.0",

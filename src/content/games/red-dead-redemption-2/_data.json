@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1540512000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 170,
+      "abbreviation": "Stadia"
+    }
+  ],
+  "companies": [
+    {
+      "id": 139,
+      "name": "Take-Two Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 29,
+      "name": "Rockstar Games",
+      "role": "developer"
+    }
+  ]
+}

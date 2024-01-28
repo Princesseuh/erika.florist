@@ -31,6 +31,9 @@ dependencies:
   astro-expressive-code:
     specifier: ^0.31.0
     version: 0.31.0(astro@4.1.2)
+  astro-font:
+    specifier: ^0.0.76
+    version: 0.0.76
   better-sqlite3:
     specifier: ^9.2.2
     version: 9.2.2
@@ -2208,6 +2211,10 @@ packages:
     dependencies:
       astro: 4.1.2(@types/node@20.11.0)(typescript@5.3.3)
       remark-expressive-code: 0.31.0
+    dev: false
+
+  /astro-font@0.0.76:
+    resolution: {integrity: sha512-3BMsydy4AkB3c9cwxZegXdQlQ+uLhqFuI8YLhYfWFY4a1KgAojUIu72qdR9B2j0yJDRK2ysbIp6nlb1Us92dlg==}
     dev: false
 
   /astro@4.1.2(@types/node@20.11.0)(typescript@5.3.3):

@@ -12,7 +12,6 @@
 	"[markdown]": {
 		"editor.wordWrap": "on"
 	},
-  "[markdoc"
 	"prettier.documentSelectors": ["**/*.astro"],
 	"eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "astro"]
 }

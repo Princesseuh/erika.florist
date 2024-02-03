@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
 
 export default {
-	content: ["./src/**/*.{astro,js,ts,tsx,md,mdx}", "./api/**/*.rs"],
+	content: ["./src/**/*.{astro,js,ts,tsx,md,mdoc}", "./api/**/*.rs"],
 	darkMode: "class",
 	corePlugins: {
 		preflight: false,

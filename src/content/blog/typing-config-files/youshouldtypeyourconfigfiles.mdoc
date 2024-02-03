@@ -14,19 +14,17 @@ However, not every project has caught up yet. Have you ever tried writing by han
 
 Let's see how we can use typed configs with some of the most popular JavaScript tools.
 
-<Blocknote title="On .ts config files and helper methods">
-
+{% blockquote title="On .ts config files and helper methods" %}
 Unfortunately, most tools do not support just using a `.ts` extension or using an helper method, so we'll have to use JSDoc type annotations to achieve this
 
 While this is unfortunate, luckily JSDoc annotations are just as easy to use.
-
-</Blocknote>
+{% /blockquote %}
 
 ## ESLint
 
 First install the [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)'s type definition for [ESLint](https://eslint.org/), `@types/eslint` using your favorite package manager. And then, in your `eslintrc.js` file, write the following
 
-```js title="eslintrc.cjs"
+ ```js {% title="eslintrc.cjs" %}
 /** @type {import("@types/eslint").Linter.Config */
 module.exports = {
 	// ... your eslint config here
@@ -41,7 +39,7 @@ Let's do the same thing for Prettier.
 
 Similarly to ESLint, first install the types definition for [Prettier](https://prettier.io/) through `@types/prettier` and then add the following to your `.prettierrc.js`
 
-```js title=".prettierrc.cjs"
+ ```js {% title=".prettierrc.cjs" %}
 /** @type {import("@types/prettier").Options */
 module.exports = {
 	// ... your prettier config here
@@ -54,7 +52,7 @@ It's that easy and the benefits are very clear immediately. Frankly, in my opini
 
 [Tailwind](https://tailwindcss.com/) ships types directly and even support directly using TypeScript configs
 
-```js title="tailwind.config.ts"
+ ```js {% title="tailwind.config.ts" %}
 import type { Config } from "tailwindcss";
 
 export default {
@@ -66,7 +64,7 @@ export default {
 
 Astro ships with typechecked config files in all of its starters, and similar to Vite, also has a helper method to make it even easier to use
 
-```ts title="astro.config.ts"
+ ```ts {% title="astro.config.ts" %}
 import { defineConfig } from "astro/config";
 
 export default defineConfig({

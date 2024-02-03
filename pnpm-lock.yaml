@@ -17,11 +17,8 @@ dependencies:
     specifier: ^0.4.1
     version: 0.4.1(prettier-plugin-astro@0.13.0)(prettier@3.2.4)(typescript@5.3.3)
   '@astrojs/markdoc':
-    specifier: link:../../astro/packages/integrations/markdoc
-    version: link:../../astro/packages/integrations/markdoc
-  '@markdoc/markdoc':
-    specifier: ^0.4.0
-    version: 0.4.0
+    specifier: 0.0.0-markdoc-image-20240203035252
+    version: 0.0.0-markdoc-image-20240203035252(astro@4.3.1)
   '@types/better-sqlite3':
     specifier: ^7.6.9
     version: 7.6.9
@@ -224,6 +221,27 @@ packages:
       vscode-uri: 3.0.8
     transitivePeerDependencies:
       - typescript
+    dev: false
+
+  /@astrojs/markdoc@0.0.0-markdoc-image-20240203035252(astro@4.3.1):
+    resolution: {integrity: sha512-Bmku5m3X7ECNNbtOD0yEtLh3znIk6LDBWGcGdNfICa7V6b4et1AP9YoHzyXTxM0gxOl6j5Kzxk9gQOVtDOWqKg==}
+    engines: {node: '>=18.14.1'}
+    peerDependencies:
+      astro: ^3.0.0 || ^4.0.0
+    dependencies:
+      '@astrojs/internal-helpers': 0.2.1
+      '@astrojs/prism': 3.0.0
+      '@markdoc/markdoc': 0.3.5
+      astro: 4.3.1(@types/node@20.11.16)(typescript@5.3.3)
+      esbuild: 0.19.11
+      github-slugger: 2.0.0
+      gray-matter: 4.0.3
+      htmlparser2: 9.0.0
+      kleur: 4.1.5
+      zod: 3.22.4
+    transitivePeerDependencies:
+      - '@types/react'
+      - react
     dev: false
 
   /@astrojs/markdown-remark@4.2.1:
@@ -1049,8 +1067,8 @@ packages:
       - supports-color
     dev: false
 
-  /@markdoc/markdoc@0.4.0:
-    resolution: {integrity: sha512-fSh4P3Y4E7oaKYc2oNzSIJVPDto7SMzAuQN1Iyx53UxzleA6QzRdNWRxmiPqtVDaDi5dELd2yICoG91csrGrAw==}
+  /@markdoc/markdoc@0.3.5:
+    resolution: {integrity: sha512-Z3agu2wnodoOYd5kzKbtwZduSfX19Kbsg/FlK0TeMn29cTTEEVPJtjfgKSMTN/Wq+kUQXnPtOEhHRgke5d/Xiw==}
     engines: {node: '>=14.7.0'}
     peerDependencies:
       '@types/react': '*'

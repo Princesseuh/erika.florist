@@ -73,9 +73,6 @@ dependencies:
   tsx:
     specifier: ^4.7.0
     version: 4.7.0
-  ultrahtml:
-    specifier: ^1.5.2
-    version: 1.5.2
   vercel:
     specifier: ^33.4.1
     version: 33.4.1
@@ -105,9 +102,6 @@ devDependencies:
   astro:
     specifier: ^4.3.1
     version: 4.3.1(@types/node@20.11.16)(typescript@5.3.3)
-  astro-auto-import:
-    specifier: ^0.4.2
-    version: 0.4.2(astro@4.3.1)
   eslint:
     specifier: ^8.56.0
     version: 8.56.0
@@ -1341,12 +1335,6 @@ packages:
     resolution: {integrity: sha512-qelS/Ra6sacc4loe/3MSjXNL1dNQ/GjxNHVzuChwMfmk7HuycRLVQN2qNY3XahK+fZc5E2szqQSKUyAF0E+2bg==}
     dev: false
 
-  /@types/node@18.18.9:
-    resolution: {integrity: sha512-0f5klcuImLnG4Qreu9hPj/rEfFq6YRc5n2mAjSsH+ec/mJL+3voBH0+8T7o8RpFjH7ovc+TRsL/c7OYIQsPTfQ==}
-    dependencies:
-      undici-types: 5.26.5
-    dev: true
-
   /@types/node@20.11.16:
     resolution: {integrity: sha512-gKb0enTmRCzXSSUJDq6/sPcqrfCv2mkkG6Jt/clpn5eiCbKTY+SgZUxo+p8ZKMof5dCp9vHQUAB7wOUTod22wQ==}
     dependencies:
@@ -1922,17 +1910,6 @@ packages:
   /array-union@2.1.0:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
-    dev: true
-
-  /astro-auto-import@0.4.2(astro@4.3.1):
-    resolution: {integrity: sha512-ZgWZQ58+EhbEym1+aoUnNyECOy0wsG5uRUs+rVp/7BzHtj1V76J2qkhjaTWLplgNb+8WrzhvTQNxytmXRCW+Ow==}
-    engines: {node: '>=16.0.0'}
-    peerDependencies:
-      astro: ^2.0.0 || ^3.0.0-beta || ^4.0.0-beta
-    dependencies:
-      '@types/node': 18.18.9
-      acorn: 8.11.2
-      astro: 4.3.1(@types/node@20.11.16)(typescript@5.3.3)
     dev: true
 
   /astro-capo@0.0.1(astro@4.3.1):

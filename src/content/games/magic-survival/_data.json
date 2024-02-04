@@ -1,0 +1,30 @@
+{
+  "first_release_date": 1572480000,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 34,
+      "abbreviation": "Android"
+    }
+  ],
+  "companies": [
+    {
+      "id": 32788,
+      "name": "Leme",
+      "role": "developer"
+    }
+  ]
+}

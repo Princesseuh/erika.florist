@@ -93,7 +93,7 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                 let slug = slug::slugify(name);
 
                 let github_request = post_request(
-                    format!("{path_type}/{slug}/{slug}.md").as_str(),
+                    format!("{path_type}/{slug}/{slug}.mdoc").as_str(),
                     &markdown_content,
                     name,
                     data.get("skip-ci").unwrap_or(&String::from("false")) == "skip-ci",
@@ -255,6 +255,7 @@ fn proxy_request(_req: Request) -> Result<Response<Body>, Error> {
                 .header("Content-Type", "application/json")
                 .body(response_body.into())?);
         }
+        // TODO: Add books
         _ => {
             return Ok(Response::builder()
                 .status(StatusCode::BAD_REQUEST)
@@ -302,7 +303,7 @@ fn login_layout(error_message: Option<&str>) -> Markup {
 
 fn form_layout() -> Markup {
     let ratings = ["Hated", "Disliked", "Okay", "Liked", "Loved", "Masterpiece"];
-    let ratings_emoji = ["😡", "😠", "😐", "🙂", "😍", "❤️"];
+    let ratings_emoji = ["🙁", "😕", "😐", "🙂", "😍", "❤️"];
 
     layout(
         html! {

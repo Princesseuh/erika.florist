@@ -67,9 +67,20 @@ struct CatalogueEntry {
     search_score: isize,
 }
 
+#[derive(Eq, PartialEq, serde::Deserialize, serde::Serialize, Debug)]
+#[serde(rename_all = "snake_case")]
+enum Sort {
+    Alphabetical,
+    Date,
+    Rating,
+    #[serde(untagged)]
+    Unknown(String),
+}
+
 #[derive(Debug, serde::Deserialize)]
 struct QueryParams {
     search: Option<String>,
+    sort: Option<Sort>,
     r#type: Option<String>,
     rating: Option<String>,
     before: Option<String>,
@@ -106,6 +117,7 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
         Some(query) => serde_qs::from_str::<QueryParams>(query)?,
         None => QueryParams {
             search: None,
+            sort: None,
             r#type: None,
             rating: None,
             before: None,
@@ -158,7 +170,27 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
         None => (),
     }
 
-    statement.push_str(" ORDER BY a.finishedDate DESC;");
+    match query_params.sort {
+        Some(Sort::Alphabetical) => {
+            statement.push_str(" ORDER BY a.title ASC, a.finishedDate DESC;");
+        }
+        Some(Sort::Rating) => {
+            statement.push_str(
+                " ORDER BY CASE
+                    WHEN a.rating = 'masterpiece' THEN 1
+                    WHEN a.rating = 'loved' THEN 2
+                    WHEN a.rating = 'liked' THEN 3
+                    WHEN a.rating = 'okay' THEN 4
+                    WHEN a.rating = 'disliked' THEN 5
+                    WHEN a.rating = 'hated' THEN 6
+                    ELSE 7
+                    END ASC, a.finishedDate DESC;",
+            );
+        }
+        _ => {
+            statement.push_str(" ORDER BY a.finishedDate DESC;");
+        }
+    }
 
     let mut stmt = conn.prepare(&statement)?;
     let mut catalogue_entries: Vec<CatalogueEntry> = stmt

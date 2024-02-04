@@ -34,7 +34,7 @@ export async function getDataForMoviesAndShows(type: "movies" | "shows") {
 		}
 
 		const markdownContent = fs
-			.readFileSync(new URL(path.basename(movieShowDir.pathname) + ".md", movieShowDir))
+			.readFileSync(new URL(path.basename(movieShowDir.pathname) + ".mdoc", movieShowDir))
 			.toString();
 		const id = matter(markdownContent).data.tmdb;
 		const response = (await fetch(

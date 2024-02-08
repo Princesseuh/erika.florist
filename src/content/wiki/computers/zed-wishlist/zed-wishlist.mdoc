@@ -1,0 +1,34 @@
+---
+  title: "Zed Wishlist"
+  navigation:
+    label: 'Zed Wishlist'
+    category: computers
+  slug: 'zed-wishlist'
+---
+
+I've recently been using the [Zed code editor](https://zed.dev/) and really enjoying the experience. Nonetheless, as a fairly new project, it's missing a few features that I've come to rely on in other editors or has some rough edges. Here's a list of things I'd like to see added or improved in Zed.
+
+## Features
+
+- [x] Support for custom themes (added in 0.121.0!)
+    - [ ] Ability to customize the color of the bottom panel individually from the other backgrounds
+- [ ] Support for custom languages
+- [ ] Diff view
+- [ ] Git integration (would love a panel that shows which files changed, like VS Code has)
+- [ ] Rainbow brackets
+- [ ] Indentation guides
+    - [ ] Indentation guides in the explorer panel, too (especially, actually)
+- [ ] Client-side filtering for LSP completions
+- [ ] Image viewer
+
+## Annoyances
+
+- [ ] Quote auto-closing is sometimes annoying, notably, it tries to auto-close quotes in text contexts, for instance typing "Can't" will result in "Can''t".
+- [ ] CTRL+Click to go to definition doesn't work like in VS Code, in VS Code that shortcut does Go to Definition, Find All References, etc all at once, but it seems like Zed isn't quite as smart about it.
+
+## Bugs
+- The integrated terminal seems to not properly render certain characters, causing an issue with my `gum` script that I use for commiting.
+
+{% image src="./terminalbug.png" alt="Screenshot of the Zed terminal showing random characters showing where they shouldn't" /%}
+
+... Maybe I should contribute to the project and try to implement some of these myself! I'll note that setting up Zed's development environment is insanely easy, thanks to Rust's tooling.

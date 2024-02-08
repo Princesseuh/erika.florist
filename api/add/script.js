@@ -39,7 +39,20 @@ document.addEventListener("DOMContentLoaded", () => {
 	 */
 	const typeInput = document.querySelector("#type");
 
-	if (!nameInput || !sourceIdInput || !typeInput || !loader || !platform || !platformSelect) {
+	/**
+	 * @type {HTMLSelectElement | null}
+	 */
+	const sortSelect = document.querySelector("#sort-select");
+
+	if (
+		!nameInput ||
+		!sourceIdInput ||
+		!typeInput ||
+		!loader ||
+		!platform ||
+		!platformSelect ||
+		!sortSelect
+	) {
 		console.error("Missing required elements:");
 		console.error("nameInput", nameInput);
 		console.error("sourceIdInput", sourceIdInput);

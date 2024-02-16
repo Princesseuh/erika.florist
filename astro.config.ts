@@ -13,6 +13,9 @@ export default defineConfig({
 			entrypoint: "./src/imageService.ts",
 		},
 	},
+	prefetch: {
+		prefetchAll: true,
+	},
 	integrations: [
 		tailwind({
 			applyBaseStyles: false,

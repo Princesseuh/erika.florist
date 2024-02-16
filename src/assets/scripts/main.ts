@@ -1,39 +1,31 @@
-import { listen } from "quicklink";
+document.addEventListener("DOMContentLoaded", () => {
+	function makeDatesRelative(): void {
+		const timeFormat = new Intl.RelativeTimeFormat("en");
+		const dateElements = document.querySelectorAll<HTMLElement>("[data-date]");
 
-function makeDatesRelative(): void {
-	const timeFormat = new Intl.RelativeTimeFormat("en");
-	const dateElements = document.querySelectorAll<HTMLElement>("[data-date]");
-
-	dateElements.forEach((element) => {
-		if (element.dataset.date === "Invalid Date" || element.dataset.date === undefined) {
-			return;
-		}
-
-		const date = new Date(element.dataset.date);
-		const deltaDays = Math.round((date.getTime() - Date.now()) / (1000 * 3600 * 24));
-
-		if (deltaDays === 0) {
-			const deltaHours = Math.round((date.getTime() - Date.now()) / (1000 * 60 * 60));
-
-			if (deltaHours === 0) {
-				element.textContent = "less than an hour ago";
-			} else {
-				element.textContent = timeFormat.format(deltaHours, "hours");
+		dateElements.forEach((element) => {
+			if (element.dataset.date === "Invalid Date" || element.dataset.date === undefined) {
+				return;
 			}
-		} else {
-			element.textContent = timeFormat.format(deltaDays, "days");
-		}
 
-		element.title = date.toString();
-	});
-}
+			const date = new Date(element.dataset.date);
+			const deltaDays = Math.round((date.getTime() - Date.now()) / (1000 * 3600 * 24));
 
-function onPageLoad() {
-	makeDatesRelative();
+			if (deltaDays === 0) {
+				const deltaHours = Math.round((date.getTime() - Date.now()) / (1000 * 60 * 60));
 
-	if ((localStorage.getItem("prefetchDisabled") ?? "false") === "false" || import.meta.env.DEV) {
-		listen({ ignores: [/\/_astro\/?/] });
+				if (deltaHours === 0) {
+					element.textContent = "less than an hour ago";
+				} else {
+					element.textContent = timeFormat.format(deltaHours, "hours");
+				}
+			} else {
+				element.textContent = timeFormat.format(deltaDays, "days");
+			}
+
+			element.title = date.toString();
+		});
 	}
-}
 
-onPageLoad();
+	makeDatesRelative();
+});

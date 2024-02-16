@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	/**
-	 * @type {number | undefined}
+	 * @type {ReturnType<typeof setTimeout>}
 	 */
 	let nameInputTimeout;
 	let preventChange = false;

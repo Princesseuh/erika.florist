@@ -1,9 +1,6 @@
 ---
 import { parseHTML } from "linkedom";
-
 import { imageMetadata } from "astro/assets/utils";
-
-// @ts-expect-error Eleventy please
 import EleventyFetch from "@11ty/eleventy-fetch";
 
 interface Props {
@@ -59,8 +56,8 @@ if (href.startsWith("http")) {
 			(faviconMetadata.format as any) === "ico"
 				? "image/x-icon"
 				: faviconMetadata.format === "svg"
-				  ? "image/svg+xml"
-				  : `image/${faviconMetadata.format}`;
+					? "image/svg+xml"
+					: `image/${faviconMetadata.format}`;
 
 		if (originalFaviconUrl) {
 			faviconUrl = `data:${mimeType};base64,${faviconBuffer.toString("base64")}`;

@@ -84,6 +84,8 @@ const content = (await Astro.slots.render("default")).trim();
 		<img
 			class="relative top-[3px] mr-1 w-4 rounded-sm"
 			src={faviconUrl.toString()}
+			width="17"
+			height="17"
 			alt="Favicon"
 			fetchpriority="low"
 			loading="lazy"

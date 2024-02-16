@@ -1,7 +1,8 @@
 ---
-import { parseHTML } from "linkedom";
-import { imageMetadata } from "astro/assets/utils";
 import EleventyFetch from "@11ty/eleventy-fetch";
+import { imageMetadata } from "astro/assets/utils";
+import { parseHTML } from "linkedom";
+import sharp from "sharp";
 
 interface Props {
 	href: string;
@@ -52,15 +53,21 @@ if (href.startsWith("http")) {
 		});
 
 		const faviconMetadata = await imageMetadata(faviconBuffer);
-		const mimeType =
-			(faviconMetadata.format as any) === "ico"
-				? "image/x-icon"
-				: faviconMetadata.format === "svg"
-					? "image/svg+xml"
-					: `image/${faviconMetadata.format}`;
+		const processedFavicon =
+			(faviconMetadata.format as string) === "ico"
+				? {
+						data: faviconBuffer,
+						info: {
+							format: "ico",
+						},
+					}
+				: await sharp(faviconBuffer)
+						.toFormat("webp")
+						.resize(32, 32)
+						.toBuffer({ resolveWithObject: true });
 
 		if (originalFaviconUrl) {
-			faviconUrl = `data:${mimeType};base64,${faviconBuffer.toString("base64")}`;
+			faviconUrl = `data:${processedFavicon.info.format};base64,${processedFavicon.data.toString("base64")}`;
 		}
 	} catch (e) {
 		if (e instanceof Error && e.hasOwnProperty("message")) {
@@ -78,6 +85,9 @@ const content = (await Astro.slots.render("default")).trim();
 			class="relative top-[3px] mr-1 w-4 rounded-sm"
 			src={faviconUrl.toString()}
 			alt="Favicon"
+			fetchpriority="low"
+			loading="lazy"
+			decoding="async"
 			data-favicon
 		/>
 	) : (

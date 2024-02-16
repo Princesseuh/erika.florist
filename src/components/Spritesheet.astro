@@ -2,7 +2,8 @@
 import path from "node:path";
 
 const icons = import.meta.glob<string>("/src/icons/*.svg", {
-	as: "raw",
+	query: "?raw",
+	import: "default",
 	eager: true,
 });
 ---

@@ -36,9 +36,8 @@ const featuredProjects = (await getCollection("projects"))
 			I'm <span class="font-semibold text-beach-watermelon dark:text-dark-beach-watermelon"
 				>Erika</span
 			>, a software engineer living in Sweden&nbsp;🇸🇪, pleased to meet you! I am currently employed
-			at <ExternalLink href="https://astro.build">Astro</ExternalLink> where I do a bit of
-			everything, though I am mostly found in high impact but often overlooked areas such as editor
-			tooling.
+			at <ExternalLink href="https://astro.build">Astro</ExternalLink> where I do a bit of everything,
+			though I am mostly found in high impact but often overlooked areas such as editor tooling.
 		</p>
 
 		<p>
@@ -55,11 +54,12 @@ const featuredProjects = (await getCollection("projects"))
 						<a href={getURLFromEntry(project)}>
 							<Image
 								class="h-[170px] w-[359px] rounded-sm object-cover object-top"
+								width={359}
 								src={project.data.indexCover}
 								alt={project.data.indexCoverAlt ?? ""}
 								loading={"eager"}
 								quality={45}
-								fetchpriority={i === 0 ? "high" : undefined}
+								fetchpriority="high"
 							/>
 							<h4 class="cover-title">{project.data.title}</h4>
 						</a>

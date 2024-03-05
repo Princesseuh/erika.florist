@@ -6,13 +6,13 @@ module.exports = {
 		node: true,
 	},
 	parser: "@typescript-eslint/parser",
-	plugins: ["@typescript-eslint", "prettier"],
+	plugins: ["@typescript-eslint"],
 	extends: [
 		"eslint:recommended",
 		"plugin:@typescript-eslint/strict-type-checked",
 		"plugin:@typescript-eslint/stylistic-type-checked",
-		"prettier",
 		"plugin:astro/recommended",
+		"prettier",
 	],
 	parserOptions: {
 		project: true,
@@ -40,6 +40,8 @@ module.exports = {
 		],
 		"@typescript-eslint/no-unsafe-member-access": "off",
 		"@typescript-eslint/no-unsafe-call": "off",
+
+		"@typescript-eslint/unbound-method": "off",
 	},
 	overrides: [
 		{

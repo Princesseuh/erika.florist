@@ -12,7 +12,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 			blogCollection
 				.concat()
 				.sort(blogDateSort)
-				.filter((article) => article.data.draft !== true),
+				.filter((article) => !article.data.draft),
 			{ pageSize: 5 },
 		),
 		...blogCollection.map((entry) => ({

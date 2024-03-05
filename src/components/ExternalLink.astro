@@ -28,7 +28,7 @@ if (href.startsWith("http")) {
 		const links = document.querySelectorAll("link");
 
 		const faviconElement = Array.from(links).find((link) => {
-			const rel = (link.getAttribute("rel") || "").toLowerCase();
+			const rel = (link.getAttribute("rel") ?? "").toLowerCase();
 
 			if (["icon", "shortcut icon"].includes(rel)) {
 				const iconHref = link.getAttribute("href");
@@ -43,14 +43,15 @@ if (href.startsWith("http")) {
 
 		let originalFaviconUrl = new URL("/favicon.ico", href);
 		if (faviconElement) {
-			originalFaviconUrl = new URL(faviconElement.getAttribute("href")!, href);
+			const faviconElementHref = faviconElement.getAttribute("href");
+			if (faviconElementHref) originalFaviconUrl = new URL(faviconElementHref, href);
 		}
 
-		const faviconBuffer = await EleventyFetch(originalFaviconUrl.toString(), {
+		const faviconBuffer = (await EleventyFetch(originalFaviconUrl.toString(), {
 			duration: "1y",
 			type: "buffer",
 			directory: "node_modules/.cache",
-		});
+		})) as Buffer;
 
 		const faviconMetadata = await imageMetadata(faviconBuffer);
 		const processedFavicon =
@@ -66,11 +67,9 @@ if (href.startsWith("http")) {
 						.resize(32, 32)
 						.toBuffer({ resolveWithObject: true });
 
-		if (originalFaviconUrl) {
-			faviconUrl = `data:${processedFavicon.info.format};base64,${processedFavicon.data.toString("base64")}`;
-		}
+		faviconUrl = `data:${processedFavicon.info.format};base64,${processedFavicon.data.toString("base64")}`;
 	} catch (e) {
-		if (e instanceof Error && e.hasOwnProperty("message")) {
+		if (e instanceof Error && Object.prototype.hasOwnProperty.call(e, "message")) {
 			if (import.meta.env.DEV) console.log(e.message);
 		}
 	}

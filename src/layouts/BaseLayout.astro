@@ -62,8 +62,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 			theme === "dark" || (!theme && isSystemDark)
 				? document.documentElement.classList.add("dark")
 				: theme === "light"
-				  ? document.documentElement.classList.remove("dark")
-				  : theme === "system" && isSystemDark && document.documentElement.classList.add("dark");
+					? document.documentElement.classList.remove("dark")
+					: theme === "system" && isSystemDark && document.documentElement.classList.add("dark");
 		</script>
 		<div id="app" class="bg-isabelline dark:bg-darker-skylines">
 			<section class="mx-auto w-layout p-5 sm:grid sm:grid-cols-layout sm:gap-x-6 sm:p-0">

@@ -11,7 +11,7 @@ const articles = (await getCollection("blog"))
 	.sort((a, b) => {
 		return b.data.date.getTime() - a.data.date.getTime();
 	})
-	.filter((article) => article.data.draft !== true)
+	.filter((article) => !article.data.draft)
 	.slice(0, 4);
 
 const wikiItems = (await getCollection("wiki"))
@@ -49,7 +49,7 @@ const featuredProjects = (await getCollection("projects"))
 		<h3 class="mb-5 text-2xl">Featured works</h3>
 		<div class="mb-6 mt-2 flex flex-wrap items-center justify-center gap-5 sm:mx-10 sm:gap-3">
 			{
-				featuredProjects.map((project, i) => (
+				featuredProjects.map((project) => (
 					<div class="relative h-[170px]">
 						<a href={getURLFromEntry(project)}>
 							<Image

@@ -40,6 +40,7 @@ export interface LocalImageServiceWithPlaceholder extends LocalImageService {
 const service: LocalImageServiceWithPlaceholder = {
 	...sharpService,
 	async getHTMLAttributes(options, imageConfig) {
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const attributes = await sharpService.getHTMLAttributes!(options, imageConfig);
 
 		// Use the original dimensions of the image for the width and height attributes. Maybe that Astro should do this by default? Not sure, and I can only blame myself.

@@ -15,13 +15,13 @@ export async function getCatalogueData(entry: allCatalogueTypes) {
 	const metadataPath = import.meta.env.DEV
 		? "/" + path.join(path.dirname(entry.data.cover.src.slice("/@fs/".length)), "./_data.json")
 		: "./" +
-		  path.join(
+			path.join(
 				path.dirname(entry.data.cover.src),
 				`../src/content/${entry.data.type}s/`,
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				entry.slug.split("/")[0]!,
 				"./_data.json",
-		  );
+			);
 	return JSON.parse((await fs.readFile(metadataPath)).toString());
 }
 

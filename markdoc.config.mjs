@@ -14,6 +14,10 @@ export default defineMarkdocConfig({
 			attributes: nodes.link.attributes,
 			render: component("./src/components/ExternalLink.astro"),
 		},
+		list: {
+			attributes: nodes.list.attributes,
+			render: component("./src/components/content/List.astro"),
+		},
 	},
 	tags: {
 		blockquote: {

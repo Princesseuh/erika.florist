@@ -412,6 +412,21 @@ export default {
 					display: "block",
 				},
 
+				"article>ul, article>ol": {
+					margin: "0",
+					padding: "0",
+					paddingLeft: "1.5em",
+				},
+
+				"li>ul, li>ol": {
+					padding: "0",
+					paddingLeft: "1.5em",
+				},
+
+				".task-list-item": {
+					listStyleType: "none",
+				},
+
 				".header-anchor": {
 					color: "inherit",
 					paddingLeft: "1.5ch",

@@ -39,20 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	 */
 	const typeInput = document.querySelector("#type");
 
-	/**
-	 * @type {HTMLSelectElement | null}
-	 */
-	const sortSelect = document.querySelector("#sort-select");
-
-	if (
-		!nameInput ||
-		!sourceIdInput ||
-		!typeInput ||
-		!loader ||
-		!platform ||
-		!platformSelect ||
-		!sortSelect
-	) {
+	if (!nameInput || !sourceIdInput || !typeInput || !loader || !platform || !platformSelect) {
 		console.error("Missing required elements:");
 		console.error("nameInput", nameInput);
 		console.error("sourceIdInput", sourceIdInput);
@@ -203,7 +190,7 @@ async function getDataForType(type, query) {
 				) => ({
 					name: result.title ?? result.name,
 					id: result.id,
-					poster_path: "https://image.tmdb.org/t/p/w300/" + result.poster_path,
+					poster_path: `https://image.tmdb.org/t/p/w300/${result.poster_path}`,
 					type,
 				}),
 			);

@@ -94,7 +94,7 @@ const content = (await Astro.slots.render("default")).trim();
 	) : (
 		!href.startsWith("/") &&
 		!href.startsWith("#") && (
-			<span class="relative top-[3px] mr-1 inline-block w-4 rounded-sm">
+			<span class="relative top-[3px] mr-1 inline-block w-4 rounded-sm" data-favicon-span="">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
 					<path
 						fill="none"

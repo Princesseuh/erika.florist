@@ -31,7 +31,7 @@ function makeOutro() {
 }
 ---
 
-<Fragment set:html={makeIntro()} />
+<Fragment set:text={makeIntro()} />
 {
 	articles.map(async (article) => {
 		const start = `\t<item>
@@ -54,4 +54,4 @@ function makeOutro() {
 		);
 	})
 }
-<Fragment set:html={makeOutro()} />
+<Fragment set:text={makeOutro()} />

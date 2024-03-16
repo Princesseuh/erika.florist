@@ -25,6 +25,8 @@ export default defineConfig({
 		markdoc({
 			allowHTML: true,
 		}),
+		// HACK: Could be nicer with https://github.com/withastro/roadmap/discussions/643
+		// ... but could be even nicer with a way to render Markdoc directly in an endpoint, ha.
 		{
 			name: "RSS Generator",
 			hooks: {

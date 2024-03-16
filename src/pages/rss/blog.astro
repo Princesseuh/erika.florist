@@ -10,10 +10,15 @@ function makeIntro() {
 	return `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
       <channel>
-        <title>My Blog</title>
-        <link>https://astro.build/blog</link>
-        <description>My blog about Astro</description>
+        <title>Erika's blog</title>
+        <link>${getBaseSiteURL()}articles</link>
+        <description>My personal blog</description>
         <language>en</language>
+        <image>
+          <url>${getBaseSiteURL() + "social-card.png"}</url>
+          <title>The logo of my blog, a white ribbon seen from the back.</title>
+          <link>${getBaseSiteURL()}articles</link>
+        </image>
         <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
   `.trim();
 }
@@ -36,7 +41,7 @@ function makeOutro() {
       <pubDate>${new Date(article.data.date).toUTCString()}</pubDate>
       <content:encoded><![CDATA[`.trim();
 		const end = `]]></content:encoded>
-    </item>\n`.trim();
+    </item>\n`.trimStart();
 
 		const { Content } = await article.render();
 

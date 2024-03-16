@@ -4,7 +4,11 @@ export const partial = true;
 import { getCollection } from "astro:content";
 import { getBaseSiteURL, getURLFromEntry } from "$utils";
 
-const articles = await getCollection("blog");
+const articles = (await getCollection("blog"))
+	.filter((article) => !article.data.draft)
+	.sort((a, b) => {
+		return b.data.date.getTime() - a.data.date.getTime();
+	});
 
 function makeIntro() {
 	return `<?xml version="1.0" encoding="UTF-8" ?>

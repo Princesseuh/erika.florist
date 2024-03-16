@@ -1,0 +1,52 @@
+---
+export const partial = true;
+
+import { getCollection } from "astro:content";
+import { getBaseSiteURL, getURLFromEntry } from "$utils";
+
+const articles = await getCollection("blog");
+
+function makeIntro() {
+	return `<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+      <channel>
+        <title>My Blog</title>
+        <link>https://astro.build/blog</link>
+        <description>My blog about Astro</description>
+        <language>en</language>
+        <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+  `.trim();
+}
+
+function makeOutro() {
+	return `
+      </channel>
+    </rss>
+  `.trim();
+}
+---
+
+<Fragment set:html={makeIntro()} />
+{
+	articles.map(async (article) => {
+		const start = `\t<item>
+      <title>${article.data.title}</title>
+      <link>${getBaseSiteURL().slice(0, -1)}${getURLFromEntry(article)}</link>
+      <description>${article.data.tagline}</description>
+      <pubDate>${new Date(article.data.date).toUTCString()}</pubDate>
+      <content:encoded><![CDATA[`.trim();
+		const end = `]]></content:encoded>
+    </item>\n`.trim();
+
+		const { Content } = await article.render();
+
+		return (
+			<>
+				<Fragment set:html={start} />
+				<Content />
+				<Fragment set:html={end} />
+			</>
+		);
+	})
+}
+<Fragment set:html={makeOutro()} />

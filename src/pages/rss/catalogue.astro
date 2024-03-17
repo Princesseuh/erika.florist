@@ -51,7 +51,7 @@ function makeOutro() {
       <description><![CDATA[Entry for ${entry.data.title}]]></description>
       <enclosure url="${(await getImage({ src: entry.data.cover, width: 240 })).src}" length="0" type="image/${entry.data.cover.format}" />
       <pubDate>${new Date(entry.data.finishedDate).toUTCString()}</pubDate>
-      <guid isPermaLink="false">${entry.data.title}</guid>
+      <guid isPermaLink="false"><![CDATA[${entry.data.title}]]></guid>
       <content:encoded><![CDATA[${prettyRating(entry.data.rating)}<br/>`.trim();
 		const end = `]]></content:encoded>
     </item>\n`.trimStart();

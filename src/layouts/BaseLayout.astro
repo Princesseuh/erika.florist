@@ -50,6 +50,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:image" content={getBaseSiteURL() + "social-card.png"} />
 
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title="RSS feed for the blog"
+			href={getBaseSiteURL() + "rss/blog"}
+		/>
+
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title="RSS feed for the catalogue"
+			href={getBaseSiteURL() + "rss/catalogue"}
+		/>
+
 		<link rel="canonical" href={canonicalURL} />
 		<meta property="og:url" content={canonicalURL} />
 

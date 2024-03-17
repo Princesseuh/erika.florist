@@ -90,9 +90,36 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                     _ => "unknown",
                 };
 
-                let slug = slug::slugify(name);
+                let mut slug = slug::slugify(name);
+
+                // Check if the file already exists or not
+                // If it does, we should append a number to the slug
+                let client = reqwest::blocking::Client::new();
+                let file_exists = check_if_file_exists(&client, path_type, slug.as_str());
+
+                match file_exists {
+                    true => {
+                        let mut i = 1;
+                        loop {
+                            let file_exists = check_if_file_exists(
+                                &client,
+                                path_type,
+                                format!("{slug}-{i}", slug = slug, i = i).as_str(),
+                            );
+
+                            if file_exists {
+                                i += 1;
+                            } else {
+                                slug = format!("{slug}-{i}", slug = slug, i = i);
+                                break;
+                            }
+                        }
+                    }
+                    false => {}
+                }
 
                 let github_request = post_request(
+                    &client,
                     format!("{path_type}/{slug}/{slug}.mdoc").as_str(),
                     &markdown_content,
                     name,
@@ -103,32 +130,57 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                 let commit_url = github_request
                     .get("commit")
                     .and_then(|commit| commit.get("html_url"))
-                    .and_then(|url| url.as_str())
-                    .unwrap();
+                    .and_then(|url| url.as_str());
 
-                Ok(Response::builder()
-                    .status(StatusCode::OK)
-                    .header("Content-Type", "text/html")
-                    .body(
-                        layout(
-                            html! {
-                              div id="success" {
-                                h1 { "Success!" }
-                                p {
-                                  "Your content has been added to the catalogue. "
-                                  a href=(commit_url) { "(See commit)" }
-                                }
-                                div id="success-buttons" {
-                                  a href="/catalogue" { "Go back to the catalogue" }
-                                  a href="/api/add" { "Add another" }
-                                }
-                              }
-                            },
-                            false,
-                        )
-                        .into_string()
-                        .into(),
-                    )?)
+                match commit_url {
+                    Some(commit_url) => Ok(Response::builder()
+                        .status(StatusCode::OK)
+                        .header("Content-Type", "text/html")
+                        .body(
+                            layout(
+                                html! {
+                                  div id="success" {
+                                    h1 { "Success!" }
+                                    p {
+                                      "Your content has been added to the catalogue. "
+                                      a href=(commit_url) { "(See commit)" }
+                                    }
+                                    div id="success-buttons" {
+                                      a href="/catalogue" { "Go back to the catalogue" }
+                                      a href="/api/add" { "Add another" }
+                                    }
+                                  }
+                                },
+                                false,
+                            )
+                            .into_string()
+                            .into(),
+                        )?),
+                    None => {
+                        let request_as_string = serde_json::to_string(&github_request)
+                            .unwrap_or("Could not parse request".to_string());
+                        Ok(Response::builder()
+                            .status(StatusCode::OK)
+                            .header("Content-Type", "text/html")
+                            .body(
+                                layout(
+                                    html! {
+                                      div id="success" {
+                                        h1 { "Failed" }
+                                        p { "An error occurred while adding your content:" }
+                                        code { (request_as_string) }
+                                        div id="success-buttons" {
+                                          a href="/api/add" { "Try again" }
+                                        }
+                                      }
+                                    },
+                                    false,
+                                )
+                                .into_string()
+                                .into(),
+                            )?)
+                    }
+                }
             }
             _ => Ok(Response::builder()
                 .status(StatusCode::NOT_FOUND)
@@ -136,6 +188,28 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
         }
     } else {
         manage_login(_req, password)
+    }
+}
+
+fn check_if_file_exists(client: &reqwest::blocking::Client, path_type: &str, slug: &str) -> bool {
+    let response = client
+        .get(format!(
+            "https://api.github.com/repos/Princesseuh/erika.florist/contents/src/content/{path_type}/{slug}/{slug}.mdoc",
+            path_type = path_type,
+            slug = slug
+        ))
+        .header("Accept", "application/vnd.github+json")
+        .header("User-Agent", "Princesseuh")
+        .header(
+            "Authorization",
+            format!("Bearer {github_key}", github_key = env::var("GITHUB_KEY").unwrap()),
+        )
+        .header("X-GitHub-Api-Version", "2022-11-28")
+        .send();
+
+    match response {
+        Ok(response) => response.status().is_success(),
+        Err(_) => false,
     }
 }
 
@@ -376,6 +450,7 @@ struct GitHubCommitter {
 }
 
 fn post_request(
+    client: &reqwest::blocking::Client,
     path: &str,
     body: &str,
     clear_name: &str,
@@ -383,7 +458,6 @@ fn post_request(
     dry: bool,
 ) -> HashMap<String, Value> {
     let github_key = env::var("GITHUB_KEY").unwrap();
-    let client = reqwest::blocking::Client::new();
 
     let b64 = general_purpose::STANDARD.encode(&body);
     let skip_ci_marker = if skip_ci { "[skip ci]" } else { "[auto]" };

@@ -13,51 +13,41 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
 		const output = await transform(html, [
 			async (node) => {
 				await walk(node, (node) => {
-					// Simplify picture elements to img elements, some feeds are struggling with it
-					if (node.type === ELEMENT_NODE && node.name === "picture") {
-						if (node.parent.type === ELEMENT_NODE && node.parent.name === "a") {
-							const imgChildren = node.children.find(
-								(child) => child.type === ELEMENT_NODE && child.name === "img",
-							);
+					if (node.type === ELEMENT_NODE) {
+						// Simplify picture elements to img elements, some feeds are struggling with it
+						if (node.name === "picture") {
+							if (node.parent.type === ELEMENT_NODE && node.parent.name === "a") {
+								const imgChildren = node.children.find(
+									(child) => child.type === ELEMENT_NODE && child.name === "img",
+								);
 
-							node.name = "img";
-							node.attributes = imgChildren?.attributes;
-							node.attributes.src = getBaseSiteURL().slice(0, -1) + node.attributes.src;
-							// biome-ignore lint/performance/noDelete: <explanation>
-							delete node.attributes.srcset;
-							// biome-ignore lint/performance/noDelete: <explanation>
-							delete node.attributes.sizes;
-							// biome-ignore lint/performance/noDelete: <explanation>
-							delete node.attributes.onload;
-							// biome-ignore lint/performance/noDelete: <explanation>
-							delete node.attributes.style;
+								const { src, srcset, sizes, onload, style, ...attributes } =
+									imgChildren?.attributes || {};
+
+								node.name = "img";
+								node.attributes = attributes;
+								node.attributes.src = getBaseSiteURL().slice(0, -1) + node.attributes.src;
+							}
 						}
-					}
 
-					// Make sure links are absolute, some readers are not smart enough to figure it out
-					if (
-						node.type === ELEMENT_NODE &&
-						node.name === "a" &&
-						node.attributes.src?.startsWith("/")
-					) {
-						node.attributes.src = getBaseSiteURL().slice(0, -1) + node.attributes.src;
-					}
+						// Make sure links are absolute, some readers are not smart enough to figure it out
+						if (node.name === "a" && node.attributes.src?.startsWith("/")) {
+							node.attributes.src = getBaseSiteURL().slice(0, -1) + node.attributes.src;
+						}
 
-					// Remove favicon images, some readers don't know they should be inline and it ends up being a broken image
-					if (
-						node.type === ELEMENT_NODE &&
-						("data-favicon" in node.attributes || "data-favicon-span" in node.attributes)
-					) {
-						node = node as unknown as TextNode;
-						node.type = TEXT_NODE;
-						node.value = "";
-					}
+						// Remove favicon images, some readers don't know they should be inline and it ends up being a broken image
+						if ("data-favicon" in node.attributes || "data-favicon-span" in node.attributes) {
+							node = node as unknown as TextNode;
+							node.type = TEXT_NODE;
+							node.value = "";
+						}
 
-					// Remove EC buttons
-					if (node.type === ELEMENT_NODE && node.attributes["data-code"]) {
-						node = node as unknown as TextNode;
-						node.type = TEXT_NODE;
-						node.value = "";
+						// Remove EC buttons
+						if (node.attributes["data-code"]) {
+							node = node as unknown as TextNode;
+							node.type = TEXT_NODE;
+							node.value = "";
+						}
 					}
 				});
 

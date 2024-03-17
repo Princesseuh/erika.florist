@@ -1,4 +1,5 @@
 ---
+import { ARTICLE_PAGE_SIZE } from "$data/articles";
 import ArticleListLayout from "$layouts/ArticleListLayout.astro";
 import { blogDateSort } from "$utils";
 import type { GetStaticPaths } from "astro";
@@ -15,7 +16,10 @@ export const getStaticPaths = (async ({ paginate }) => {
 			.filter((article) => article.data.date.getUTCFullYear() === year)
 			.sort(blogDateSort)
 			.filter((article) => !article.data.draft);
-		return paginate(filteredArticles, { params: { year: year.toString() }, pageSize: 5 });
+		return paginate(filteredArticles, {
+			params: { year: year.toString() },
+			pageSize: ARTICLE_PAGE_SIZE,
+		});
 	});
 }) satisfies GetStaticPaths;
 

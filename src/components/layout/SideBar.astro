@@ -12,7 +12,9 @@ const { navMenu } = Astro.props;
 const processedNavMenu = processNavMenu(navMenu);
 ---
 
-<aside class="my-8 ml-4 hidden flex-col text-[0.95rem] sm:flex xl:ml-0">
+<aside
+	class="my-8 ml-4 hidden flex-col text-[0.95rem] transition-opacity duration-100 ease-linear hover:opacity-100 sm:flex xl:ml-0"
+>
 	<section class="sticky top-4">
 		<section>
 			<section class="flex items-center justify-between">

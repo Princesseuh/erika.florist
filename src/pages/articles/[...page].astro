@@ -1,4 +1,5 @@
 ---
+import { ARTICLE_PAGE_SIZE } from "$data/articles";
 import ArticleLayout from "$layouts/ArticleLayout.astro";
 import ArticleListLayout from "$layouts/ArticleListLayout.astro";
 import { blogDateSort } from "$utils";
@@ -13,7 +14,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 				.concat()
 				.sort(blogDateSort)
 				.filter((article) => !article.data.draft),
-			{ pageSize: 5 },
+			{ pageSize: ARTICLE_PAGE_SIZE },
 		),
 		...blogCollection.map((entry) => ({
 			params: { page: entry.slug },

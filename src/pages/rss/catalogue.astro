@@ -1,0 +1,70 @@
+---
+export const partial = true;
+
+import { prettyRating } from "$data/catalogue";
+import { getBaseSiteURL } from "$utils";
+import { getImage } from "astro:assets";
+import { getCollection } from "astro:content";
+
+const games = await getCollection("games");
+const movies = await getCollection("movies");
+const shows = await getCollection("shows");
+const books = await getCollection("books");
+
+const catalogueContent = [...games, ...movies, ...shows, ...books]
+	.filter((entry) => entry.data.finishedDate !== "N/A")
+	.sort((a, b) => {
+		return (b.data.finishedDate as Date).getTime() - (a.data.finishedDate as Date).getTime();
+	});
+
+function makeIntro() {
+	return `<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+      <channel>
+        <title>Erika's catalogue</title>
+        <link>${getBaseSiteURL()}catalogue</link>
+        <description>A feed of all the things I've watched, played, read. A catalogue!</description>
+        <language>en</language>
+        <image>
+          <url>${getBaseSiteURL() + "social-card.png"}</url>
+          <title>Erika's catalogue</title>
+          <link>${getBaseSiteURL()}catalogue</link>
+        </image>
+        <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+  `.trim();
+}
+
+function makeOutro() {
+	return `
+      </channel>
+    </rss>
+  `.trim();
+}
+---
+
+<Fragment set:text={makeIntro()} />
+{
+	catalogueContent.map(async (entry) => {
+		const start = `\t<item>
+      <title>${entry.data.title}</title>
+      <link>${getBaseSiteURL()}catalogue</link>
+      <description>Entry for ${entry.data.title}</description>
+      <enclosure url="${(await getImage({ src: entry.data.cover, width: 240 })).src}" length="0" type="image/${entry.data.cover.format}" />
+      <pubDate>${new Date(entry.data.finishedDate).toUTCString()}</pubDate>
+      <guid isPermaLink="false">${entry.data.title}</guid>
+      <content:encoded><![CDATA[${prettyRating(entry.data.rating)}<br/>`.trim();
+		const end = `]]></content:encoded>
+    </item>\n`.trimStart();
+
+		const { Content } = await entry.render();
+
+		return (
+			<>
+				<Fragment set:text={start} />
+				<Content />
+				<Fragment set:text={end} />
+			</>
+		);
+	})
+}
+<Fragment set:text={makeOutro()} />

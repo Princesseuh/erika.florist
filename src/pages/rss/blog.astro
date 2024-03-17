@@ -1,8 +1,8 @@
 ---
 export const partial = true;
 
-import { getCollection } from "astro:content";
 import { getBaseSiteURL, getURLFromEntry } from "$utils";
+import { getCollection } from "astro:content";
 
 const articles = (await getCollection("blog"))
 	.filter((article) => !article.data.draft)

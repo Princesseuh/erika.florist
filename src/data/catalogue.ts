@@ -1,6 +1,7 @@
 import type { CollectionEntry } from "astro:content";
 import fs from "node:fs/promises";
 import path from "node:path";
+import type { CatalogueRating } from "src/content/config";
 
 export type allCatalogueTypes =
 	| CollectionEntry<"games">
@@ -35,4 +36,20 @@ export function isCatalogueBook(entry: allCatalogueTypes): entry is CollectionEn
 
 export function isCatalogueMovie(entry: allCatalogueTypes): entry is CollectionEntry<"movies"> {
 	return entry.data.type === "movie";
+}
+
+const capitalize = <T extends string>(s: T) =>
+	(s[0]?.toUpperCase() + s.slice(1)) as Capitalize<typeof s>;
+
+const ratingToEmoji: Record<CatalogueRating, string> = {
+	hated: "🙁",
+	disliked: "😕",
+	okay: "😐",
+	liked: "🙂",
+	loved: "😍",
+	masterpiece: "❤️",
+};
+
+export function prettyRating(rating: CatalogueRating) {
+	return capitalize(rating) + " " + ratingToEmoji[rating];
 }

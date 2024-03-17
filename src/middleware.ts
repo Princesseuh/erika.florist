@@ -1,8 +1,8 @@
 import { getBaseSiteURL } from "$utils";
+import { defineMiddleware } from "astro:middleware";
 import { decode } from "tiny-decode";
 import { ELEMENT_NODE, TEXT_NODE, transform, walk, type TextNode } from "ultrahtml";
 import sanitize from "ultrahtml/transformers/sanitize";
-import { defineMiddleware } from "astro:middleware";
 
 export const onRequest = defineMiddleware(async (ctx, next) => {
 	const response = await next();
@@ -77,7 +77,7 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
 
 		const headers = new Headers(response.headers);
 		headers.delete("Content-Type");
-		headers.set("Content-Type", "application/rss+xml");
+		headers.set("Content-Type", "application/rss+xml; charset=utf-8");
 
 		return new Response(decode(output), {
 			status: 200,

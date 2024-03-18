@@ -38,7 +38,10 @@ const { Content, headings } = await article.render();
 	document.addEventListener(
 		"scroll",
 		() => {
-			if (window.scrollY > 350 && window.scrollY < document.body.scrollHeight - 1000) {
+			if (
+				window.scrollY > 350 &&
+				window.scrollY + window.innerHeight < document.body.scrollHeight - 250
+			) {
 				asides.forEach((aside, i) => {
 					aside.classList.toggle(i === 0 ? "opacity-35" : "opacity-65", true);
 				});

@@ -26,13 +26,13 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
 
 								node.name = "img";
 								node.attributes = attributes;
-								node.attributes.src = getBaseSiteURL().slice(0, -1) + node.attributes.src;
+								node.attributes.src = getBaseSiteURL().slice(0, -1) + src;
 							}
 						}
 
 						// Make sure links are absolute, some readers are not smart enough to figure it out
-						if (node.name === "a" && node.attributes.src?.startsWith("/")) {
-							node.attributes.src = getBaseSiteURL().slice(0, -1) + node.attributes.src;
+						if (node.name === "a" && node.attributes.href?.startsWith("/")) {
+							node.attributes.href = getBaseSiteURL().slice(0, -1) + node.attributes.href;
 						}
 
 						// Remove favicon images, some readers don't know they should be inline and it ends up being a broken image

@@ -14,14 +14,14 @@ const { Content, headings } = await article.render();
 ---
 
 <BaseLayout title={article.data.title} description={article.data.tagline}>
-	<section class="mx-auto flex gap-6">
+	<section class="mx-auto grid-cols-content gap-6 sm:grid">
 		<article class="post w-[72ch] max-w-full">
 			<ContentHeader item={article} includeTags />
 			<Content components={{ a: ExternalLink }} />
 		</article>
 
 		<aside
-			class="mb-4 mt-10 hidden w-1/4 flex-1 pr-2 transition-opacity duration-100 ease-linear hover:opacity-100 sm:block"
+			class="mr-4 mt-10 hidden transition-opacity duration-100 ease-linear hover:opacity-100 sm:block xl:mr-0"
 		>
 			{
 				headings.length > 0 && (

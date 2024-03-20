@@ -79,7 +79,7 @@ const featuredProjects = (await getCollection("projects"))
 				{
 					wikiItems.map((item) => (
 						<section class="mb-3">
-							<a class="block font-semibold leading-tight" href={getURLFromEntry(item)}>
+							<a class="block font-medium leading-tight" href={getURLFromEntry(item)}>
 								{item.data.title}
 							</a>
 							<span class="block text-sm first-letter:uppercase" data-date={item.lastModified}>

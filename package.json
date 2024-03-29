@@ -52,7 +52,7 @@
 	"dependencies": {
 		"@11ty/eleventy-fetch": "^4.0.1",
 		"@astrojs/check": "^0.5.10",
-		"@astrojs/markdoc": "link:../../astro/packages/integrations/markdoc",
+		"@astrojs/markdoc": "^0.9.3",
 		"@types/better-sqlite3": "^7.6.9",
 		"@types/igdb-api-node": "^5.0.3",
 		"astro-capo": "^0.0.1",

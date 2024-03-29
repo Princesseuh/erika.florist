@@ -17,8 +17,8 @@ dependencies:
     specifier: ^0.5.10
     version: 0.5.10(prettier-plugin-astro@0.13.0)(prettier@3.2.5)(typescript@5.4.3)
   '@astrojs/markdoc':
-    specifier: link:../../astro/packages/integrations/markdoc
-    version: link:../../astro/packages/integrations/markdoc
+    specifier: ^0.9.3
+    version: 0.9.3(astro@4.5.12)
   '@types/better-sqlite3':
     specifier: ^7.6.9
     version: 7.6.9
@@ -213,6 +213,27 @@ packages:
       vscode-uri: 3.0.8
     transitivePeerDependencies:
       - typescript
+    dev: false
+
+  /@astrojs/markdoc@0.9.3(astro@4.5.12):
+    resolution: {integrity: sha512-NbF51JS0vaHGjWc68OPIYZh5khPOEkGsK0bfYd7njtCyG0wZPCQBFYTCxox4zWL29VFuPHYR/q56RA18JUBUHQ==}
+    engines: {node: '>=18.14.1'}
+    peerDependencies:
+      astro: ^3.0.0 || ^4.0.0
+    dependencies:
+      '@astrojs/internal-helpers': 0.4.0
+      '@astrojs/prism': 3.0.0
+      '@markdoc/markdoc': 0.3.5
+      astro: 4.5.12(@types/node@20.11.30)(typescript@5.4.3)
+      esbuild: 0.19.12
+      github-slugger: 2.0.0
+      gray-matter: 4.0.3
+      htmlparser2: 9.1.0
+      kleur: 4.1.5
+      zod: 3.22.4
+    transitivePeerDependencies:
+      - '@types/react'
+      - react
     dev: false
 
   /@astrojs/markdown-remark@4.3.2:
@@ -1231,6 +1252,21 @@ packages:
       - supports-color
     dev: false
 
+  /@markdoc/markdoc@0.3.5:
+    resolution: {integrity: sha512-Z3agu2wnodoOYd5kzKbtwZduSfX19Kbsg/FlK0TeMn29cTTEEVPJtjfgKSMTN/Wq+kUQXnPtOEhHRgke5d/Xiw==}
+    engines: {node: '>=14.7.0'}
+    peerDependencies:
+      '@types/react': '*'
+      react: '*'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
+    optionalDependencies:
+      '@types/markdown-it': 12.2.3
+    dev: false
+
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -1488,7 +1524,15 @@ packages:
 
   /@types/linkify-it@3.0.5:
     resolution: {integrity: sha512-yg6E+u0/+Zjva+buc3EIb+29XEg4wltq7cSmd4Uc2EE/1nUVmxyzpX6gUXD0V8jIrG0r7YeOGVIbYRkxeooCtw==}
-    dev: true
+
+  /@types/markdown-it@12.2.3:
+    resolution: {integrity: sha512-GKMHFfv3458yYy+v/N8gjufHO6MSZKCOXpZc5GXIWWy8uldwfmPn98vp81gZ5f9SVw8YYBctgfJ22a2d7AOMeQ==}
+    requiresBuild: true
+    dependencies:
+      '@types/linkify-it': 3.0.5
+      '@types/mdurl': 1.0.5
+    dev: false
+    optional: true
 
   /@types/markdown-it@13.0.7:
     resolution: {integrity: sha512-U/CBi2YUUcTHBt5tjO2r5QV/x0Po6nsYwQU4Y04fBS6vfoImaiZ6f8bi3CjTCxBPQSO1LMyUqkByzi8AidyxfA==}
@@ -1504,7 +1548,6 @@ packages:
 
   /@types/mdurl@1.0.5:
     resolution: {integrity: sha512-6L6VymKTzYSrEf4Nev4Xa1LCHKrlTlYCBMTlQKFuddo1CvQcE52I0mwfOJayueUC7MJuXOeHTcIU683lzd0cUA==}
-    dev: true
 
   /@types/ms@0.7.34:
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}

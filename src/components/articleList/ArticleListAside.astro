@@ -1,10 +1,11 @@
 ---
+import { blogFilter } from "$utils";
 import { getCollection } from "astro:content";
 
 const articles = await getCollection("blog");
 const tags: [string, number][] = [
 	...articles
-		.filter((article) => !article.data.draft)
+		.filter(blogFilter)
 		.flatMap((article) => [...article.data.tags])
 		.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
 ].sort((a, b) => {
@@ -13,7 +14,7 @@ const tags: [string, number][] = [
 
 const years: [string, number][] = [
 	...articles
-		.filter((article) => !article.data.draft)
+		.filter(blogFilter)
 		.map((article) => new Date(article.data.date).getUTCFullYear())
 		.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
 ].sort((a, b) => {

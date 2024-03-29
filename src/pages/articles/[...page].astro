@@ -2,20 +2,16 @@
 import { ARTICLE_PAGE_SIZE } from "$data/articles";
 import ArticleLayout from "$layouts/ArticleLayout.astro";
 import ArticleListLayout from "$layouts/ArticleListLayout.astro";
-import { blogDateSort } from "$utils";
+import { blogDateSort, blogFilter } from "$utils";
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 
 export const getStaticPaths = (async ({ paginate }) => {
 	const blogCollection = await getCollection("blog");
 	return [
-		...paginate(
-			blogCollection
-				.concat()
-				.sort(blogDateSort)
-				.filter((article) => !article.data.draft),
-			{ pageSize: ARTICLE_PAGE_SIZE },
-		),
+		...paginate(blogCollection.concat().sort(blogDateSort).filter(blogFilter), {
+			pageSize: ARTICLE_PAGE_SIZE,
+		}),
 		...blogCollection.map((entry) => ({
 			params: { page: entry.slug },
 			props: { entry: entry },

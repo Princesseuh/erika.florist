@@ -36,5 +36,8 @@ export default defineMarkdocConfig({
 			children: ["text"],
 			render: component("./src/components/content/Image.astro"),
 		},
+		dinkus: {
+			render: component("./src/components/content/Dinkus.astro"),
+		},
 	},
 });

@@ -26,3 +26,11 @@ export function randomArrayEntry<T>(array: T[]): T {
 
 export const blogDateSort = (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
 	b.data.date.getTime() - a.data.date.getTime();
+
+export const blogFilter = (entry: CollectionEntry<"blog">) => {
+	if (import.meta.env.DEV) {
+		return true;
+	}
+
+	return !entry.data.draft;
+};

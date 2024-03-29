@@ -1,14 +1,12 @@
 ---
 export const partial = true;
 
-import { getBaseSiteURL, getURLFromEntry } from "$utils";
+import { blogFilter, getBaseSiteURL, getURLFromEntry } from "$utils";
 import { getCollection } from "astro:content";
 
-const articles = (await getCollection("blog"))
-	.filter((article) => !article.data.draft)
-	.sort((a, b) => {
-		return b.data.date.getTime() - a.data.date.getTime();
-	});
+const articles = (await getCollection("blog")).filter(blogFilter).sort((a, b) => {
+	return b.data.date.getTime() - a.data.date.getTime();
+});
 
 function makeIntro() {
 	return `<?xml version="1.0" encoding="UTF-8" ?>

@@ -16,25 +16,21 @@
 	},
 	"devDependencies": {
 		"@astrojs/tailwind": "^5.1.0",
-		"@types/eslint": "^8.56.6",
-		"@types/markdown-it": "^13.0.7",
-		"@types/node": "^20.11.30",
+		"@types/eslint": "^8.56.10",
+		"@types/markdown-it": "^14.0.1",
+		"@types/node": "^20.12.7",
 		"@types/prettier": "^2.7.3",
-		"@typescript-eslint/eslint-plugin": "^7.4.0",
-		"@typescript-eslint/parser": "^7.4.0",
-		"astro": "^4.5.12",
+		"@typescript-eslint/eslint-plugin": "^7.7.1",
+		"@typescript-eslint/parser": "^7.7.1",
+		"astro": "^4.7.0",
 		"eslint": "^8.57.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-astro": "^0.33.1",
+		"eslint-plugin-astro": "^1.0.3",
 		"kleur": "^4.1.5",
 		"prettier": "^3.2.5",
 		"prettier-plugin-astro": "^0.13.0",
-		"typescript": "^5.4.3"
+		"typescript": "^5.4.5"
 	},
 	"pnpm": {
-		"overrides": {
-			"sharp": "^0.33.0"
-		},
 		"packageExtensions": {
 			"quicklink": {
 				"peerDependenciesMeta": {
@@ -52,12 +48,12 @@
 	"dependencies": {
 		"@11ty/eleventy-fetch": "^4.0.1",
 		"@astrojs/check": "^0.5.10",
-		"@astrojs/markdoc": "^0.9.3",
-		"@types/better-sqlite3": "^7.6.9",
+		"@astrojs/markdoc": "^0.11.0",
+		"@types/better-sqlite3": "^7.6.10",
 		"@types/igdb-api-node": "^5.0.3",
 		"astro-capo": "^0.0.1",
-		"astro-expressive-code": "^0.33.5",
-		"better-sqlite3": "^9.4.3",
+		"astro-expressive-code": "^0.35.2",
+		"better-sqlite3": "^9.6.0",
 		"dotenv": "^16.4.5",
 		"github-slugger": "^2.0.0",
 		"gray-matter": "^4.0.3",
@@ -65,12 +61,12 @@
 		"kysely": "^0.27.3",
 		"linkedom": "^0.16.11",
 		"markdown-it": "^14.1.0",
-		"prettier-plugin-tailwindcss": "^0.5.13",
+		"prettier-plugin-tailwindcss": "^0.5.14",
 		"sharp": "^0.33.3",
 		"tailwindcss": "^3.4.3",
 		"tiny-decode": "^0.1.3",
-		"tsx": "^4.7.1",
+		"tsx": "^4.7.3",
 		"ultrahtml": "^1.5.3",
-		"vercel": "^33.6.2"
+		"vercel": "^34.1.3"
 	}
 }

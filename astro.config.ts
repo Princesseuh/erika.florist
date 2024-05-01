@@ -1,9 +1,10 @@
+import markdoc from "@astrojs/markdoc";
 import tailwind from "@astrojs/tailwind";
 import expressiveCode from "astro-expressive-code";
 import { defineConfig } from "astro/config";
+import { cp, rename } from "fs/promises";
 
-import markdoc from "@astrojs/markdoc";
-import { rename } from "fs/promises";
+import db from "@astrojs/db";
 
 // https://astro.build/config
 export default defineConfig({
@@ -32,7 +33,6 @@ export default defineConfig({
 			hooks: {
 				"astro:build:done": async (options) => {
 					const rssPages = options.pages.filter((page) => page.pathname.includes("rss"));
-
 					for (const { pathname: rssPage } of rssPages) {
 						await rename(
 							new URL(`${rssPage}index.html`, options.dir),
@@ -40,6 +40,16 @@ export default defineConfig({
 						);
 					}
 				},
+			},
+		},
+    db(),
+    // Copy the content.db file to the api folder so the serverless function can access it
+		{
+			name: "copy-db-api",
+			hooks: {
+        "astro:build:generated": async () => {
+          await cp(new URL(".astro/content.db", import.meta.url), new URL("api/cataloguedb.db", import.meta.url))
+        },
 			},
 		},
 	],

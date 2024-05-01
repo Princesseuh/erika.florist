@@ -130,8 +130,8 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
     let mut next_statement = NextStatement::Where;
 
     let mut statement = String::from(
-        "SELECT a.*, c.src, c.placeholder FROM catalogue a
-            INNER JOIN cover c
+        "SELECT a.*, c.src, c.placeholder FROM Catalogue a
+            INNER JOIN Cover c
             ON c.id = a.cover",
     );
 

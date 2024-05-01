@@ -2,7 +2,7 @@ import markdoc from "@astrojs/markdoc";
 import tailwind from "@astrojs/tailwind";
 import expressiveCode from "astro-expressive-code";
 import { defineConfig } from "astro/config";
-import { cp, rename } from "fs/promises";
+import { rename } from "fs/promises";
 
 import db from "@astrojs/db";
 
@@ -43,14 +43,5 @@ export default defineConfig({
 			},
 		},
     db(),
-    // Copy the content.db file to the api folder so the serverless function can access it
-		{
-			name: "copy-db-api",
-			hooks: {
-        "astro:build:generated": async () => {
-          await cp(new URL(".astro/content.db", import.meta.url), new URL("api/cataloguedb.db", import.meta.url))
-        },
-			},
-		},
 	],
 });

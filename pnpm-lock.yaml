@@ -14,8 +14,8 @@ dependencies:
     specifier: ^0.5.10
     version: 0.5.10(prettier-plugin-astro@0.13.0)(prettier@3.2.5)(typescript@5.4.5)
   '@astrojs/db':
-    specifier: ^0.10.6
-    version: 0.10.6
+    specifier: ^0.10.7
+    version: 0.10.7
   '@astrojs/markdoc':
     specifier: ^0.11.0
     version: 0.11.0(astro@4.7.1)
@@ -164,11 +164,12 @@ packages:
   /@astrojs/compiler@2.7.1:
     resolution: {integrity: sha512-/POejAYuj8WEw7ZI0J8JBvevjfp9jQ9Wmu/Bg52RiNwGXkMV7JnYpsenVfHvvf1G7R5sXHGKlTcxlQWhoUTiGQ==}
 
-  /@astrojs/db@0.10.6:
-    resolution: {integrity: sha512-dUh86Y2JEmmDiyha52tzK605RYWQr2lwJmwNW8UUGeDnA94XOVHnySdnubL3dtyQWIM0V5HTc/5rPhy/zHsWaQ==}
+  /@astrojs/db@0.10.7:
+    resolution: {integrity: sha512-P2jP1M0KLSe9qNlKX7Y+KMVQnVKAFj6l64JB6xomLXS3y4PsY0gxGOll+aRMFb9GShpzGYarbR5Qo/B6k+ulIA==}
     dependencies:
       '@libsql/client': 0.6.0
       async-listen: 3.0.1
+      ci-info: 4.0.0
       deep-diff: 1.0.2
       drizzle-orm: 0.30.9(@libsql/client@0.6.0)
       github-slugger: 2.0.0
@@ -179,7 +180,7 @@ packages:
       prompts: 2.4.2
       strip-ansi: 7.1.0
       yargs-parser: 21.1.1
-      zod: 3.23.4
+      zod: 3.23.5
     transitivePeerDependencies:
       - '@aws-sdk/client-rds-data'
       - '@cloudflare/workers-types'

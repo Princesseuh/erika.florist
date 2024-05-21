@@ -42,6 +42,6 @@ export default defineConfig({
 				},
 			},
 		},
-    db(),
+		db(),
 	],
 });

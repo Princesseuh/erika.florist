@@ -334,7 +334,7 @@ export default {
 					wordBreak: "break-word",
 				},
 
-				"article p, .post p, .post ul, .post pre, .post blockquote, .post .expressive-code": {
+				"article p, .post p, .post>ul, .post pre, .post blockquote, .post .expressive-code": {
 					marginBottom: "1em",
 				},
 

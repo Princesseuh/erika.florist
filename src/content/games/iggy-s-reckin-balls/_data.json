@@ -1,0 +1,35 @@
+{
+  "first_release_date": 901843200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 10,
+      "name": "Racing"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 4,
+      "abbreviation": "N64"
+    }
+  ],
+  "companies": [
+    {
+      "id": 287,
+      "name": "Acclaim Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 810,
+      "name": "Iguana Entertainment",
+      "role": "developer"
+    }
+  ]
+}

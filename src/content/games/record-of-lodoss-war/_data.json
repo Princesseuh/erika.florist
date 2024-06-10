@@ -1,0 +1,46 @@
+{
+  "first_release_date": 962236800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 23,
+      "abbreviation": "DC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 21065,
+      "name": "Neverland Co.",
+      "role": "developer"
+    },
+    {
+      "id": 2929,
+      "name": "Kadokawa Shoten",
+      "role": "publisher"
+    },
+    {
+      "id": 1796,
+      "name": "Swing! Entertainment Media",
+      "role": "publisher"
+    },
+    {
+      "id": 667,
+      "name": "Crave Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 1795,
+      "name": "Conspiracy Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

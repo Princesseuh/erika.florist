@@ -1,0 +1,45 @@
+{
+  "first_release_date": 1147651200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 20,
+      "abbreviation": "NDS"
+    },
+    {
+      "id": 41,
+      "abbreviation": "WiiU"
+    }
+  ],
+  "companies": [
+    {
+      "id": 421,
+      "name": "Nintendo EAD",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "developer"
+    },
+    {
+      "id": 5163,
+      "name": "iQue",
+      "role": "publisher"
+    }
+  ]
+}

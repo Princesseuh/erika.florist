@@ -1,0 +1,44 @@
+{
+  "first_release_date": 953856000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 4,
+      "abbreviation": "N64"
+    },
+    {
+      "id": 5,
+      "abbreviation": "Wii"
+    },
+    {
+      "id": 41,
+      "abbreviation": "WiiU"
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 762,
+      "name": "HAL Laboratory",
+      "role": "developer"
+    },
+    {
+      "id": 812,
+      "name": "Gradiente",
+      "role": "publisher"
+    }
+  ]
+}

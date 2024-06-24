@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1427932800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 9,
+      "abbreviation": "PS3"
+    },
+    {
+      "id": 12,
+      "abbreviation": "X360"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    }
+  ],
+  "companies": [
+    {
+      "id": 1012,
+      "name": "FromSoftware",
+      "role": "developer"
+    },
+    {
+      "id": 248,
+      "name": "Bandai Namco Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

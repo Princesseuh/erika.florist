@@ -1,0 +1,31 @@
+{
+  "first_release_date": 928195200,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 4,
+      "abbreviation": "N64"
+    }
+  ],
+  "companies": [
+    {
+      "id": 1031,
+      "name": "Core Design",
+      "role": "developer"
+    },
+    {
+      "id": 667,
+      "name": "Crave Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1694995200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    },
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    }
+  ],
+  "companies": [
+    {
+      "id": 30237,
+      "name": "Neowiz",
+      "role": "publisher"
+    },
+    {
+      "id": 34183,
+      "name": "Round8 Studio",
+      "role": "developer"
+    }
+  ]
+}

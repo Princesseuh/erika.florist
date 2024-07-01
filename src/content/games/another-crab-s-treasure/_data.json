@@ -1,0 +1,50 @@
+{
+  "first_release_date": 1714003200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    },
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    }
+  ],
+  "companies": [
+    {
+      "id": 21879,
+      "name": "Aggro Crab Games",
+      "role": "developer"
+    }
+  ]
+}

@@ -50,12 +50,12 @@ export async function getDataForGames() {
 
 		Logger.info(`Getting data for ${bold(dirBasename)}...`);
 		if (fs.existsSync(dataFilePath)) {
-			Logger.info(gray(`Data already exists, skipping...`));
+			Logger.info(gray("Data already exists, skipping..."));
 			continue;
 		}
 
 		const markdownContent = fs
-			.readFileSync(new URL(path.basename(gameDir.pathname) + ".mdoc", gameDir))
+			.readFileSync(new URL(`${path.basename(gameDir.pathname)}.mdoc`, gameDir))
 			.toString();
 		const gameID = matter(markdownContent).data.igdb;
 		const response = await client
@@ -77,7 +77,7 @@ export async function getDataForGames() {
 		const { id, cover, involved_companies, ...cleanedData } = gameData;
 		const resultData = {
 			...cleanedData,
-			companies: gameData.involved_companies
+			companies: (gameData?.involved_companies ?? [])
 				.filter((company) => !company.supporting)
 				.map((company) => ({
 					id: company.company.id,

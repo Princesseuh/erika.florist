@@ -6,7 +6,7 @@ export function getContentDirs(type: "games" | "books" | "movies" | "shows"): UR
 	const dirs = fs
 		.readdirSync(dirPath, { withFileTypes: true })
 		.filter((dir) => dir.isDirectory())
-		.map((dir) => new URL(dir.name + "/", dirPath));
+		.map((dir) => new URL(`${dir.name}/`, dirPath));
 
 	return dirs;
 }

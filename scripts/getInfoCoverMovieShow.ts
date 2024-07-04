@@ -29,12 +29,12 @@ export async function getDataForMoviesAndShows(type: "movies" | "shows") {
 
 		Logger.info(`Getting data for ${type}/${bold(dirBasename)}...`);
 		if (fs.existsSync(dataFilePath)) {
-			Logger.info(gray(`Data already exists, skipping...`));
+			Logger.info(gray("Data already exists, skipping..."));
 			continue;
 		}
 
 		const markdownContent = fs
-			.readFileSync(new URL(path.basename(movieShowDir.pathname) + ".mdoc", movieShowDir))
+			.readFileSync(new URL(`${path.basename(movieShowDir.pathname)}.mdoc`, movieShowDir))
 			.toString();
 		const id = matter(markdownContent).data.tmdb;
 		const response = (await fetch(

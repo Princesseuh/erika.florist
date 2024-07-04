@@ -6,16 +6,16 @@ import type { LocalImageServiceWithPlaceholder } from "src/imageService";
 
 // https://astro.build/db/seed
 export default async function seed() {
-  await prepareDB();
+	await prepareDB();
 }
 
 export async function prepareDB() {
-  const games = await getCollection("games");
+	const games = await getCollection("games");
 	const movies = await getCollection("movies");
 	const shows = await getCollection("shows");
 	const books = await getCollection("books");
 
-  const catalogueContent = [...games, ...movies, ...shows, ...books];
+	const catalogueContent = [...games, ...movies, ...shows, ...books];
 	for (const entry of catalogueContent) {
 		await addCatalogueEntry(entry);
 	}
@@ -26,16 +26,19 @@ export async function addCatalogueEntry(entry: allCatalogueTypes) {
 	const [processedCover, placeholderURL] = await getCoverAndPlaceholder(cover);
 	const metadata = await getCatalogueData(entry);
 
-  const author = getAuthorFromEntryMetadata(type, metadata);
+	const author = getAuthorFromEntryMetadata(type, metadata);
 
-  const coverId = await db.insert(Cover).values({
-    src: processedCover.src,
-    width: processedCover.attributes.width,
-    height: processedCover.attributes.height,
-    placeholder: placeholderURL,
-  }).returning({ id: Cover.id });
+	const coverId = await db
+		.insert(Cover)
+		.values({
+			src: processedCover.src,
+			width: processedCover.attributes.width,
+			height: processedCover.attributes.height,
+			placeholder: placeholderURL,
+		})
+		.returning({ id: Cover.id });
 
-  const firstCoverId = coverId[0]?.id ?? -1;
+	const firstCoverId = coverId[0]?.id ?? -1;
 
 	const insertData = {
 		type: type,
@@ -71,11 +74,11 @@ async function getCoverAndPlaceholder(cover: ImageMetadata) {
 function getAuthorFromEntryMetadata(type: CatalogueType, metadata: any) {
 	switch (type) {
 		case "game":
-			return metadata.companies[0].name;
+			return metadata?.companies?.[0]?.name ?? "Unknown";
 		case "book":
 			return metadata.authors[0] ?? "Unknown";
 		case "movie":
 		case "show":
-			return metadata.companies[0];
+			return metadata?.companies[0]?.name ?? "Unknown";
 	}
 }

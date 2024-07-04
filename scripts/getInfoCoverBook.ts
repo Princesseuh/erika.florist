@@ -32,11 +32,11 @@ export async function getDataForBooks() {
 		Logger.info(`Getting data for ${bold(dirBasename)}...`);
 		const dataFilePath = new URL("./_data.json", bookDir);
 		if (fs.existsSync(dataFilePath)) {
-			Logger.info(gray(`Data already exists, skipping...`));
+			Logger.info(gray("Data already exists, skipping..."));
 			continue;
 		}
 
-		const markdownContent = fs.readFileSync(new URL(dirBasename + ".mdoc", bookDir)).toString();
+		const markdownContent = fs.readFileSync(new URL(`${dirBasename}.mdoc`, bookDir)).toString();
 		const isbn = matter(markdownContent).data.isbn;
 		const response = await fetch(
 			`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=details&format=json`,

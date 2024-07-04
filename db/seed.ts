@@ -79,6 +79,6 @@ function getAuthorFromEntryMetadata(type: CatalogueType, metadata: any) {
 			return metadata.authors[0] ?? "Unknown";
 		case "movie":
 		case "show":
-			return metadata?.companies[0]?.name ?? "Unknown";
+			return metadata?.companies[0] ?? "Unknown";
 	}
 }

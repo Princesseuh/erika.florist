@@ -1,6 +1,6 @@
 ---
 import EleventyFetch from "@11ty/eleventy-fetch";
-import { imageMetadata } from "astro/assets/utils";
+import { isICO, parseICO } from "icojs";
 import { parseHTML } from "linkedom";
 import sharp from "sharp";
 
@@ -47,25 +47,24 @@ if (href.startsWith("http")) {
 			if (faviconElementHref) originalFaviconUrl = new URL(faviconElementHref, href);
 		}
 
-		const faviconBuffer = (await EleventyFetch(originalFaviconUrl.toString(), {
+		let faviconBuffer = (await EleventyFetch(originalFaviconUrl.toString(), {
 			duration: "1y",
 			type: "buffer",
 			directory: "node_modules/.cache",
 		})) as Buffer;
 
-		const faviconMetadata = await imageMetadata(faviconBuffer);
-		const processedFavicon =
-			(faviconMetadata.format as string) === "ico"
-				? {
-						data: faviconBuffer,
-						info: {
-							format: "ico",
-						},
-					}
-				: await sharp(faviconBuffer)
-						.toFormat("webp")
-						.resize(32, 32)
-						.toBuffer({ resolveWithObject: true });
+		if (isICO(faviconBuffer)) {
+			const ico = await parseICO(faviconBuffer, "image/png");
+			const largestIcon = ico.reduce((prev, current) =>
+				prev.width > current.width ? prev : current,
+			);
+			faviconBuffer = Buffer.from(largestIcon.buffer);
+		}
+
+		const processedFavicon = await sharp(faviconBuffer)
+			.toFormat("webp")
+			.resize(32, 32)
+			.toBuffer({ resolveWithObject: true });
 
 		faviconUrl = `data:${processedFavicon.info.format};base64,${processedFavicon.data.toString("base64")}`;
 	} catch (e) {

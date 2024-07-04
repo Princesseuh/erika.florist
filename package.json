@@ -55,6 +55,7 @@
 		"dotenv": "^16.4.5",
 		"github-slugger": "^2.0.0",
 		"gray-matter": "^4.0.3",
+		"icojs": "^0.19.3",
 		"igdb-api-node": "^5.0.2",
 		"linkedom": "^0.18.4",
 		"prettier-plugin-tailwindcss": "^0.6.5",

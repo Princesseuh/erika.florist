@@ -413,8 +413,13 @@ export default {
 					display: "block",
 				},
 
+				"article li": {
+					paddingBottom: "0.25em",
+				},
+
 				"article>ul, article>ol": {
 					margin: "0",
+					marginBottom: "1em",
 					padding: "0",
 					paddingLeft: "1.5em",
 				},

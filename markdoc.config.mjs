@@ -39,5 +39,11 @@ export default defineMarkdocConfig({
 		dinkus: {
 			render: component("./src/components/content/Dinkus.astro"),
 		},
+		sidenote: {
+			attributes: {
+				direction: { type: String, default: "right" },
+			},
+			render: component("./src/components/content/Sidenote.astro"),
+		},
 	},
 });

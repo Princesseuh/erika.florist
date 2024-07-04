@@ -321,6 +321,7 @@ export default {
 				article: {
 					marginBottom: "3rem",
 					transition: "opacity .1s linear",
+					position: "relative",
 				},
 
 				code: {

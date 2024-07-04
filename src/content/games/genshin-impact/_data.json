@@ -1,0 +1,52 @@
+{
+  "first_release_date": 1601251200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 34,
+      "abbreviation": "Android"
+    },
+    {
+      "id": 39,
+      "abbreviation": "iOS"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    }
+  ],
+  "companies": [
+    {
+      "id": 41907,
+      "name": "HoYoverse",
+      "role": "developer"
+    },
+    {
+      "id": 40242,
+      "name": "Cognosphere",
+      "role": "developer"
+    },
+    {
+      "id": 15932,
+      "name": "miHoYo",
+      "role": "developer"
+    }
+  ]
+}

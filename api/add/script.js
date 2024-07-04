@@ -39,7 +39,26 @@ document.addEventListener("DOMContentLoaded", () => {
 	 */
 	const typeInput = document.querySelector("#type");
 
-	if (!nameInput || !sourceIdInput || !typeInput || !loader || !platform || !platformSelect) {
+	/**
+	 * @type {HTMLInputElement | null}
+	 */
+	const nodateCheckbox = document.querySelector("#no-date");
+
+	/**
+	 * @type {HTMLInputElement | null}
+	 * */
+	const dateInput = document.querySelector("#date");
+
+	if (
+		!nameInput ||
+		!sourceIdInput ||
+		!typeInput ||
+		!loader ||
+		!platform ||
+		!platformSelect ||
+		!nodateCheckbox ||
+		!dateInput
+	) {
 		console.error("Missing required elements:");
 		console.error("nameInput", nameInput);
 		console.error("sourceIdInput", sourceIdInput);
@@ -47,6 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		console.error("loader", loader);
 		console.error("platform", platform);
 		console.error("platformSelect", platformSelect);
+		console.error("nodateCheckbox", nodateCheckbox);
+		console.error("dateInput", dateInput);
 		return;
 	}
 
@@ -119,6 +140,19 @@ document.addEventListener("DOMContentLoaded", () => {
 			platformSelect.innerHTML = "";
 			platformSelect.value = "";
 			platform.setAttribute("style", "display: none;");
+		}
+	});
+
+	nodateCheckbox.addEventListener("change", () => {
+		if (nodateCheckbox.checked) {
+			dateInput.removeAttribute("disabled");
+			dateInput.type = "date";
+			// @ts-ignore
+			dateInput.value = new Date().toISOString().split("T")[0];
+		} else {
+			dateInput.setAttribute("disabled", "true");
+			dateInput.type = "text";
+			dateInput.value = "N/A";
 		}
 	});
 });

@@ -72,12 +72,18 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                     "platform: \"{}\"\n",
                     data.get("platform-select").unwrap_or(&String::from(""))
                 );
+
+                let enable_date = data.get("no-date").unwrap_or(&String::from("")) == "on";
+
                 let markdown_content = format!(
                     "---\ntitle: \"{name}\"\n{platform}rating: \"{rating}\"\nfinishedDate: {date}\n{source}: \"{sourceId}\"\n---\n\n{comment}\n",
                     comment = data.get("comment").unwrap(),
                     platform = if data.get("platform-select").unwrap_or(&String::from("")).is_empty() { "" } else { &platform },
                     rating = data.get("rating").unwrap(),
-                    date = data.get("date").unwrap(),
+                    date = match enable_date {
+                        true => data.get("date").unwrap(),
+                        false => "N/A",
+                    }.to_string(),
                     source = source_key,
                     sourceId = data.get("source-id").unwrap()
                 );
@@ -403,7 +409,10 @@ fn form_layout() -> Markup {
                 div id="date-comment" {
                   div id="date-source" {
                     div {
-                      label for="date" { "Date" }
+                      div id="date-header" {
+                        label for="date" { "Date" }
+                        input type="checkbox" id="no-date" name="no-date" checked;
+                      }
                       input type="date" name="date" id="date" required value=(chrono::Local::now().format("%Y-%m-%d"));
                     }
                     div {

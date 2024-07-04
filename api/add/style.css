@@ -164,7 +164,19 @@ label {
 	display: block;
 	font-weight: 600;
 	font-size: 1.25em;
-	margin-bottom: 0.5em;
+	margin-bottom: 0.25em;
+}
+
+#date-header {
+	display: flex;
+	justify-content: space-between;
+}
+
+#no-date {
+	width: 19px;
+	height: 19px;
+	top: 2px;
+	position: relative;
 }
 
 input[type="radio"] {

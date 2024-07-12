@@ -1,0 +1,26 @@
+{
+  "first_release_date": 1344470400,
+  "genres": [
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    }
+  ],
+  "companies": [
+    {
+      "id": 5138,
+      "name": "Arcane Kids",
+      "role": "developer"
+    }
+  ]
+}

@@ -33,7 +33,7 @@ impl Render for Rating {
         };
 
         html! {
-            span."absolute top-0 right-0 pr-[0.15rem] pl-[0.2rem] bg-black/5 rounded-bl-lg" {
+            span."absolute top-0 right-0 pr-[0.15rem] pl-[0.2rem] bg-black/5 rounded-bl-lg select-none" {
                 (rating)
             }
         }

@@ -9,6 +9,7 @@ import "src/assets/style/prin.css";
 import type { MenuItem } from "../data/sidebarMenu";
 import Spritesheet from "$components/Spritesheet.astro";
 import GoBackUp from "$components/layout/GoBackUp.astro";
+import Game from "$components/Game.astro";
 
 interface Props {
 	title?: string;
@@ -106,6 +107,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 			<GoBackUp />
 			<MobileMenu />
 			<MobileMenuSide navMenu={navItems ?? []} />
+			<Game />
 		</div>
 		<Spritesheet />
 	</body>

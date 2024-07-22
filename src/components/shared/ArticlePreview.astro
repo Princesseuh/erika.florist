@@ -10,17 +10,38 @@ interface Props {
 const { article } = Astro.props;
 ---
 
-<section class="mb-3">
-	<a href={getURLFromEntry(article)}>
-		<h4 class="m-0 inline-block text-xl font-medium">{article.data.title}</h4>
+<section
+	class:list={[
+		article.data.featured
+			? "bg-orange-carrot bg-opacity-10"
+			: "border border-solid border-accent-valencia/10",
+		"group mb-3 w-full break-inside-avoid p-6 hover:bg-accent-valencia hover:text-white-sugar-cane",
+	]}
+>
+	<a href={getURLFromEntry(article)} class="flex flex-col gap-y-1">
+		<h2
+			class:list={[
+				article.data.featured ? "text-4.5xl leading-none" : "text-3xl leading-somewhat-tight",
+				"m-0 p-0 tracking-somewhat-tight text-accent-valencia group-hover:text-white-sugar-cane",
+			]}
+		>
+			{article.data.title}
+			{
+				article.data.draft && (
+					<span class="rounded-md bg-orange-carrot p-1 align-middle text-sm font-bold text-black-charcoal">
+						Draft
+					</span>
+				)
+			}
+		</h2>
+
+		<span
+			class="pb-1 pt-1 font-medium leading-tight text-black-charcoal group-hover:text-white-sugar-cane"
+			>{article.data.tagline ?? null}</span
+		>
 	</a>
-
-	{article.data.draft && <span class="text-xs font-bold text-black dark:text-white">Draft</span>}
-
-	<div class="mb-2 text-sm text-creative-work dark:text-dark-subtle-text">
+	<section class="text-sm">
 		{readableDate(article.data.date)}
 		<Tags tags={article.data.tags} />
-	</div>
-
-	{article.data.tagline ?? null}
+	</section>
 </section>

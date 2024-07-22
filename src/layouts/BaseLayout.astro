@@ -1,7 +1,7 @@
 ---
 import MobileMenu from "$components/layout/MobileMenu.astro";
 import MobileMenuSide from "$components/layout/MobileMenuSide.astro";
-import Sidebar from "$components/layout/SideBar.astro";
+import Header from "$components/layout/Header.astro";
 import Socials from "$components/layout/Socials.astro";
 import { getBaseSiteURL } from "$utils";
 import { Head } from "astro-capo";
@@ -31,7 +31,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 		<link
 			rel="preload"
-			href="/assets/fonts/anuphan.woff2"
+			href="/assets/fonts/IBMPlexResult.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
+
+		<link
+			rel="preload"
+			href="/assets/fonts/InterResult.woff2"
 			as="font"
 			type="font/woff2"
 			crossorigin
@@ -80,19 +88,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 					? document.documentElement.classList.remove("dark")
 					: theme === "system" && isSystemDark && document.documentElement.classList.add("dark");
 		</script>
-		<div id="app" class="bg-isabelline dark:bg-darker-skylines">
-			<section class="mx-auto w-layout p-5 sm:grid sm:grid-cols-layout sm:gap-x-6 sm:p-0">
-				<Sidebar navMenu={navItems ?? []} />
+		<div id="app" class="bg-white-sugar-cane">
+			<Header />
 
-				<main class="sm:mt-9">
-					<slot />
-				</main>
-			</section>
+			<main>
+				<slot />
+			</main>
 
-			<footer
-				class="mb-12 flex justify-center bg-darker-skylines px-5 py-6 leading-tight text-isabelline dark:bg-mobile-menu sm:m-0 sm:px-0"
-			>
-				<section class="flex w-footer justify-between">
+			<footer class="bg-black-charcoal">
+				<section class="">
 					<Socials />
 
 					<div>

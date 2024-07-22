@@ -2,7 +2,7 @@
 import Icon from "$components/Icon.astro";
 ---
 
-<button id="go-up" title="Scroll to top" class="opacity-0"
+<button id="go-up" title="Scroll to top" class=""
 	><Icon
 		name="arrow-up"
 		size={28}
@@ -15,29 +15,6 @@ import Icon from "$components/Icon.astro";
 
 <style>
 	button {
-		border: none;
-		margin: 0;
-		padding: 0;
-		width: auto;
-		overflow: visible;
-
-		background: transparent;
-
-		/* inherit font & color from ancestor */
-		color: inherit;
-		font: inherit;
-
-		/* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
-		line-height: normal;
-
-		/* Corrects font smoothing for webkit */
-		-webkit-font-smoothing: inherit;
-		-moz-osx-font-smoothing: inherit;
-
-		/* Corrects inability to style clickable `input` types in iOS */
-		-webkit-appearance: none;
-
-		@apply fixed bottom-0 right-0 m-6 hidden transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-dark-pinky-unicorny hover:opacity-100 sm:block print:hidden;
 	}
 </style>
 

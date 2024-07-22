@@ -1,16 +1,14 @@
 @font-face {
-	font-family: Anuphan;
+	font-family: "IBM Plex";
 	font-weight: 1 900;
 	font-display: optional;
-	src:
-		url(/assets/fonts/anuphan.woff2) format("woff2"),
-		url(/assets/fonts/anuphan.woff) format("woff");
+	src: url(/assets/fonts/IBMPlexResult.woff2) format("woff2");
 }
 
 html {
 	background-color: #f5f5f5;
 	font-family:
-		Anuphan,
+		"IBM Plex",
 		ui-sans-serif,
 		system-ui,
 		-apple-system,

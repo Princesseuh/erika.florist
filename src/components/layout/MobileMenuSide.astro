@@ -9,29 +9,26 @@ const { navMenu } = Astro.props;
 const processedNavMenu = processNavMenu(navMenu);
 ---
 
-<div class="fixed -right-px top-0 flex h-full w-0 transition-[width]" id="mobile-menu">
-	<div id="empty-area" class="w-2/6"></div>
-	<div class="flex w-4/6 flex-col-reverse overflow-y-auto bg-mobile-menu-side px-4 py-6 text-right">
-		<nav aria-label="Mobile Menu - In page navigation" class="flex flex-col gap-2">
+<div class="">
+	<div id="empty-area" class=""></div>
+	<div class="">
+		<nav aria-label="Mobile Menu - In page navigation" class="">
 			{
 				[...mainMenu.concat().reverse(), "Home"].map((item) => (
-					<a
-						class="text-xl text-isabelline"
-						href={`/${item === "Home" ? "" : item.toLowerCase() + "/"}`}
-					>
+					<a class="" href={`/${item === "Home" ? "" : item.toLowerCase() + "/"}`}>
 						{item}
 					</a>
 				))
 			}
 		</nav>
 
-		{processedNavMenu.length > 0 && <hr class="w-full" />}
+		{processedNavMenu.length > 0 && <hr class="" />}
 
 		<nav aria-label="Mobile Menu - General navigation">
 			{
 				processedNavMenu.flatMap((navItem) => (
-					<ul class="m-0 mb-4 list-none p-0">
-						<h3 class="m-0 text-lg">{navItem.heading}</h3>
+					<ul class="">
+						<h3 class="">{navItem.heading}</h3>
 						{navItem.children.map((child) => (
 							<li>
 								<a href={child.link}>{child.label}</a>

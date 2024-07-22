@@ -14,7 +14,14 @@ const hasTags = tags.length > 0;
 			·
 			<>
 				{tags
-					.map((tag) => <a href={"/articles/tags/" + tag + "/"}>{tag}</a>)
+					.map((tag) => (
+						<a
+							class="font-semibold text-accent-valencia group-hover:text-white-sugar-cane hover:group-hover:text-black-charcoal"
+							href={"/articles/tags/" + tag + "/"}
+						>
+							{tag}
+						</a>
+					))
 					.reduce((prev: string | null, curr: string) => (!prev ? [curr] : [prev, ", ", curr]))}
 			</>
 		</>

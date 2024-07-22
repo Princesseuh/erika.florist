@@ -14,15 +14,15 @@ const { page, title } = Astro.props;
 ---
 
 <BaseLayout title={title}>
-	<article class="flex w-articleList flex-col gap-6 md:flex-row">
-		<div class="sm:w-[80%]">
-			<h2 class="mt-0">{title}</h2>
+	<article class="">
+		<div class="">
+			<h2 class="">{title}</h2>
 			{page.data.map((item) => <ArticlePreview article={item} />)}
 			<div>
 				{page.url.prev && <a href={page.url.prev}>Newer posts</a>}
 				{
 					page.url.next && (
-						<a class="float-right" href={page.url.next}>
+						<a class="" href={page.url.next}>
 							Older posts
 						</a>
 					)

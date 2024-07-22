@@ -1,10 +1,17 @@
 @font-face {
-	font-family: "Anuphan";
+	font-family: "IBM Plex";
 	font-weight: 1 900;
 	font-display: optional;
-	src:
-		url("/assets/fonts/anuphan.woff2") format("woff2"),
-		url("/assets/fonts/anuphan.woff") format("woff");
+	src: url("/assets/fonts/IBMPlexResult.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Inter Variable";
+	font-style: normal;
+	font-weight: 100 900;
+	font-display: swap;
+	font-feature-settings: "ss08";
+	src: url("/assets/fonts/InterResult.woff2") format("woff2");
 }
 
 @font-face {

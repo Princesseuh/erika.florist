@@ -1,6 +1,5 @@
 ---
 import ExternalLink from "$components/ExternalLink.astro";
-import Image from "$components/Image.astro";
 import ArticlePreview from "$components/shared/ArticlePreview.astro";
 import { getLastModified } from "$data/wiki";
 import BaseLayout from "$layouts/BaseLayout.astro";
@@ -12,7 +11,7 @@ const articles = (await getCollection("blog"))
 		return b.data.date.getTime() - a.data.date.getTime();
 	})
 	.filter(blogFilter)
-	.slice(0, 4);
+	.slice(0, 10);
 
 const wikiItems = (await getCollection("wiki"))
 	.map((wikiItem) => ({
@@ -29,66 +28,37 @@ const featuredProjects = (await getCollection("projects"))
 ---
 
 <BaseLayout>
-	<article class="w-index">
-		<h2 class="mb-4 mt-0 text-4xl no-underline">Hello! 💐</h2>
-
-		<p>
-			I'm <span class="font-semibold text-beach-watermelon dark:text-dark-beach-watermelon"
-				>Erika</span
-			>, a software engineer living in Sweden&nbsp;🇸🇪, pleased to meet you! I am currently employed
-			at <ExternalLink href="https://astro.build">Astro</ExternalLink> where I do a bit of everything,
-			though I am mostly found in high impact but often overlooked areas such as editor tooling.
+	<article class="mx-auto">
+		<p class="mx-auto w-centered-width">
+			Hello. I'm <span class="">Erika</span>, a software engineer living in Sweden&nbsp;🇸🇪, pleased
+			to meet you!
 		</p>
 
-		<p>
-			Wanna read stuff I wrote? Well, <a href="/articles/">here's my blog</a>! Interested in seeing
-			stuff I worked on? Click <a href="/projects/">here for my projects</a>. You want to read more
-			stuff I wrote, but this time, mostly for myself? <a href="/wiki/">Take a look at my wiki</a>.
+		<p class="mx-auto w-centered-width">
+			I am currently employed at <ExternalLink href="https://astro.build">Astro</ExternalLink> where
+			I do a bit of everything, though I am mostly found in high impact but often overlooked areas such
+			as editor tooling.
 		</p>
 
-		<h3 class="mb-5 text-2xl">Featured works</h3>
-		<div class="mb-6 mt-2 flex flex-wrap items-center justify-center gap-5 sm:mx-10 sm:gap-3">
-			{
-				featuredProjects.map((project) => (
-					<div class="relative h-[170px]">
-						<a href={getURLFromEntry(project)}>
-							<Image
-								class="h-[170px] w-[359px] rounded-sm object-cover object-top"
-								width={359}
-								src={project.data.indexCover}
-								alt={project.data.indexCoverAlt ?? ""}
-								loading={"eager"}
-								quality={45}
-								fetchpriority="high"
-							/>
-							<h4 class="cover-title">{project.data.title}</h4>
-						</a>
-					</div>
-				))
-			}
-		</div>
-
-		<div class="flex flex-col justify-around gap-4 sm:flex-row">
-			<div class="sm:w-[63%]">
-				<h3 class="mb-4 mt-2 text-2xl sm:mt-4">Latest blog posts</h3>
-				{articles.map((article) => <ArticlePreview article={article} />)}
-			</div>
-
-			<div class="sm:w-[37%]">
-				<h3 class="mb-4 mt-2 text-2xl sm:mt-4">Latest wiki modifications</h3>
-				{
-					wikiItems.map((item) => (
-						<section class="mb-3">
-							<a class="block font-medium leading-tight" href={getURLFromEntry(item)}>
-								{item.data.title}
-							</a>
-							<span class="block text-sm first-letter:uppercase" data-date={item.lastModified}>
-								{readableDate(item.lastModified)}
-							</span>
-						</section>
-					))
-				}
-			</div>
+		<div class="columns-masonry lg:columns-max-masonry max-w-screen-3xl mx-auto gap-x-3">
+			{articles.map((article) => <ArticlePreview article={article} />)}
+			<section class="bg-orange-carrot p-6 text-black-charcoal">
+				<h2 class="m-0 mb-4 text-center text-3xl">Latest wiki modifications</h2>
+				<ul class="m-0 p-0">
+					{
+						wikiItems.map((item) => (
+							<li class="m-0 mb-3 list-none">
+								<a class="block font-medium leading-tight" href={getURLFromEntry(item)}>
+									{item.data.title}
+								</a>
+								<span class="block text-sm first-letter:uppercase" data-date={item.lastModified}>
+									{readableDate(item.lastModified)}
+								</span>
+							</li>
+						))
+					}
+				</ul>
+			</section>
 		</div>
 	</article>
 </BaseLayout>

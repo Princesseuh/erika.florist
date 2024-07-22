@@ -1,0 +1,22 @@
+---
+import { headerMenu } from "$data/sidebarMenu";
+import Logo from "./Logo.astro";
+---
+
+<header class="flex items-center justify-around">
+	<section>
+		<Logo />
+	</section>
+	<section class="flex gap-x-5 text-2xl font-[550]">
+		{
+			headerMenu.map((item) => (
+				<a
+					href={item}
+					class="p-6 tracking-wide text-black-charcoal hover:bg-accent-valencia hover:text-white-sugar-cane"
+				>
+					{item}
+				</a>
+			))
+		}
+	</section>
+</header>

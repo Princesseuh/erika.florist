@@ -27,10 +27,10 @@ for (const entry of uniqueMonthYears) {
 ---
 
 <BaseLayout>
-	<section class="mx-auto flex gap-6">
-		<article class="w-[72ch] max-w-full">
-			<h2 class="mt-0">Changelog</h2>
-			<div class="mb-4">Things change, and that's okay.</div>
+	<section class="">
+		<article class="">
+			<h2 class="">Changelog</h2>
+			<div class="">Things change, and that's okay.</div>
 
 			<label>
 				<input type="checkbox" id="disable-catalogue-checkbox" />
@@ -44,7 +44,7 @@ for (const entry of uniqueMonthYears) {
 							{value.map((changelogEntry) => (
 								<li data-changelog-catalogue={changelogEntry.isCatalogue ? true : undefined}>
 									{/* prettier-ignore */}
-									<a href={changelogEntry.link} class="mr-2 font-mono">{changelogEntry.ref}</a>
+									<a href={changelogEntry.link} class="">{changelogEntry.ref}</a>
 									<span>{changelogEntry.desc}</span>
 								</li>
 							))}
@@ -54,9 +54,7 @@ for (const entry of uniqueMonthYears) {
 			}
 		</article>
 
-		<aside
-			class="mb-4 mt-10 hidden w-1/4 flex-1 pr-2 transition-opacity duration-100 ease-linear sm:block"
-		>
+		<aside class="">
 			<TableOfContent
 				headers={Object.keys(groupedMonths).map((key) => ({
 					slug: slug(key),

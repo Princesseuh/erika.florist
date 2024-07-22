@@ -27,10 +27,10 @@ const processedCover = await getImage({ src: entry.data.cover, width: 240 });
 ---
 
 <BaseLayout>
-	<article class="post mx-auto">
-		<a href="/catalogue" class="my-2 inline-block">← Back to catalogue</a>
-		<header class="flex justify-around gap-4">
-			<a href={entry.data.cover.src} class="w-1/4"
+	<article class="">
+		<a href="/catalogue" class="">← Back to catalogue</a>
+		<header class="">
+			<a href={entry.data.cover.src} class=""
 				><img
 					src={processedCover.src}
 					width={processedCover.attributes.width}
@@ -38,8 +38,8 @@ const processedCover = await getImage({ src: entry.data.cover, width: 240 });
 					decoding="async"
 				/></a
 			>
-			<section class="w-3/4">
-				<h2 class="m-0">{entry.data.title}</h2>
+			<section class="">
+				<h2 class="">{entry.data.title}</h2>
 				<span>{new Date(new Date(0).setUTCSeconds(1607472000)).getUTCFullYear()} - {}</span>
 				{JSON.stringify(entry.data)}
 				{JSON.stringify(metadata)}

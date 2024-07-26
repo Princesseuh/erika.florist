@@ -29,31 +29,39 @@ const featuredProjects = (await getCollection("projects"))
 
 <BaseLayout>
 	<article class="mx-auto">
-		<p class="mx-auto w-centered-width">
+		<p class="content mx-auto w-centered-width">
 			Hello. I'm <span class="">Erika</span>, a software engineer living in Sweden&nbsp;🇸🇪, pleased
 			to meet you!
 		</p>
 
-		<p class="mx-auto w-centered-width">
+		<p class="content mx-auto w-centered-width">
 			I am currently employed at <ExternalLink href="https://astro.build">Astro</ExternalLink> where
 			I do a bit of everything, though I am mostly found in high impact but often overlooked areas such
 			as editor tooling.
 		</p>
 
-		<div class="columns-masonry lg:columns-max-masonry max-w-screen-3xl mx-auto gap-x-3">
+		<div class="mx-auto max-w-screen-3xl columns-masonry gap-x-3 lg:columns-max-masonry">
 			{articles.map((article) => <ArticlePreview article={article} />)}
-			<section class="bg-orange-carrot p-6 text-black-charcoal">
-				<h2 class="m-0 mb-4 text-center text-3xl">Latest wiki modifications</h2>
+			<section
+				class="border-violet-ultra/15 break-inside-avoid border-2 border-solid pb-3 text-black-charcoal"
+			>
+				<h2 class="m-0 px-6 pb-2 pt-4 text-2xl">Latest wiki modifications</h2>
 				<ul class="m-0 p-0">
 					{
 						wikiItems.map((item) => (
-							<li class="m-0 mb-3 list-none">
-								<a class="block font-medium leading-tight" href={getURLFromEntry(item)}>
+							<li class="m-0 list-none">
+								<a
+									class="group block px-6 py-2 font-medium leading-tight text-accent-valencia hover:bg-accent-valencia hover:text-white-sugar-cane focus:bg-accent-valencia focus:text-white-sugar-cane"
+									href={getURLFromEntry(item)}
+								>
 									{item.data.title}
+									<span
+										class="block text-sm text-black-charcoal first-letter:uppercase group-hover:text-white-sugar-cane group-focus:text-white-sugar-cane"
+										data-date={item.lastModified}
+									>
+										{readableDate(item.lastModified)}
+									</span>
 								</a>
-								<span class="block text-sm first-letter:uppercase" data-date={item.lastModified}>
-									{readableDate(item.lastModified)}
-								</span>
 							</li>
 						))
 					}

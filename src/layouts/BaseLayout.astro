@@ -95,11 +95,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 				<slot />
 			</main>
 
-			<footer class="bg-black-charcoal">
-				<section class="">
+			<footer
+				class="mb-12 flex justify-center bg-black-charcoal px-5 py-6 leading-tight text-white-sugar-cane sm:m-0 sm:px-0"
+			>
+				<section class="flex w-centered-width justify-between">
 					<Socials />
 
-					<div>
+					<div class="content">
 						Powered by <a href="https://astro.build/">Astro</a><br />
 						<a href="https://github.com/Princesseuh/erika.florist">Source Code</a><br />
 						<a href="/changelog/">Changelog</a>

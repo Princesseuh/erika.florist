@@ -15,14 +15,14 @@ const { article } = Astro.props;
 		article.data.featured
 			? "bg-orange-carrot bg-opacity-10"
 			: "border border-solid border-accent-valencia/10",
-		"group mb-3 w-full break-inside-avoid p-6 hover:bg-accent-valencia hover:text-white-sugar-cane",
+		"group mb-3 w-full break-inside-avoid p-6 focus-within:bg-accent-valencia focus-within:text-white-sugar-cane hover:bg-accent-valencia hover:text-white-sugar-cane",
 	]}
 >
 	<a href={getURLFromEntry(article)} class="flex flex-col gap-y-1">
 		<h2
 			class:list={[
 				article.data.featured ? "text-4.5xl leading-none" : "text-3xl leading-somewhat-tight",
-				"m-0 p-0 tracking-somewhat-tight text-accent-valencia group-hover:text-white-sugar-cane",
+				"m-0 p-0 tracking-somewhat-tight text-accent-valencia group-focus-within:text-white-sugar-cane group-hover:text-white-sugar-cane",
 			]}
 		>
 			{article.data.title}
@@ -36,7 +36,7 @@ const { article } = Astro.props;
 		</h2>
 
 		<span
-			class="pb-1 pt-1 font-medium leading-tight text-black-charcoal group-hover:text-white-sugar-cane"
+			class="pb-1 pt-1 font-medium leading-tight text-black-charcoal group-focus-within:text-white-sugar-cane group-hover:text-white-sugar-cane"
 			>{article.data.tagline ?? null}</span
 		>
 	</a>

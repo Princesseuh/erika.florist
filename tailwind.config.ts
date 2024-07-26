@@ -43,7 +43,7 @@ export default {
 				"white-sugar-cane": "#f3f4ed",
 				"black-charcoal": "#0A0908",
 				"orange-carrot": "#F9A03F",
-				"green-reseda": "#667761",
+				"violet-ultra": "#52489C",
 			},
 			lineHeight: {
 				"somewhat-tight": "1.05",
@@ -65,6 +65,25 @@ export default {
 				// Image rendering
 				".pixelated": {
 					imageRendering: "pixelated",
+				},
+
+				// Social icons
+				".social-icon": {
+					color: "inherit",
+					marginRight: "1.2em",
+					display: "flex",
+					alignItems: "center",
+					"@apply dark:text-inherit": {},
+				},
+				".social-mastodon": {
+					"&:hover, &:focus": {
+						color: "#6364FF",
+					},
+				},
+				".social-github, .social-other": {
+					"&:hover, &:focus": {
+						color: "#d8d9d8",
+					},
 				},
 			});
 		}),
@@ -104,8 +123,14 @@ export default {
 					textDecoration: "none",
 				},
 
-				"a:hover": {
+				".content a": {
 					color: theme("colors.accent-valencia"),
+					fontWeight: "500",
+				},
+
+				".content a:hover, .content a:focus": {
+					color: theme("colors.white-sugar-cane"),
+					backgroundColor: theme("colors.accent-valencia"),
 				},
 
 				p: {

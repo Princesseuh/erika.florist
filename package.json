@@ -6,7 +6,7 @@
 	"scripts": {
 		"astro": "astro",
 		"dev": "ASTRO_DATABASE_FILE=api/cataloguedb.db astro dev",
-		"dev:vercel": "vercel dev --listen 4321",
+		"dev:vercel": "vercel dev --listen 27969",
 		"build": "bash ./scripts/unshallowVercel.sh && ASTRO_DATABASE_FILE=api/cataloguedb.db astro build",
 		"preview": "astro preview",
 		"check": "astro check",

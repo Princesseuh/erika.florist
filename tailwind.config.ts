@@ -112,6 +112,7 @@ export default {
 				"html, body": {
 					fontFamily:
 						"'IBM Plex', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', fallback-arial, 'Arial', 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+					color: theme("colors.black-charcoal"),
 				},
 
 				"h1, h2, h3, h4, h5, h6": {
@@ -135,6 +136,13 @@ export default {
 
 				p: {
 					marginBottom: "1em",
+				},
+			});
+		}),
+		plugin(({ addUtilities }) => {
+			addUtilities({
+				".all-unset": {
+					all: "unset",
 				},
 			});
 		}),

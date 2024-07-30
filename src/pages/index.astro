@@ -10,8 +10,7 @@ const articles = (await getCollection("blog"))
 	.sort((a, b) => {
 		return b.data.date.getTime() - a.data.date.getTime();
 	})
-	.filter(blogFilter)
-	.slice(0, 10);
+	.filter(blogFilter);
 
 const wikiItems = (await getCollection("wiki"))
 	.map((wikiItem) => ({
@@ -28,30 +27,29 @@ const featuredProjects = (await getCollection("projects"))
 ---
 
 <BaseLayout>
-	<article class="mx-auto">
-		<p class="content mx-auto w-centered-width">
-			Hello. I'm <span class="">Erika</span>, a software engineer living in Sweden&nbsp;🇸🇪, pleased
-			to meet you!
-		</p>
+	<article class="mx-auto mb-12 mt-4">
+		<div class="mb-6">
+			<p class="content mx-auto w-centered-width">
+				Hello. I'm <span class="">Erika</span>, a software engineer living in Sweden&nbsp;🇸🇪,
+				pleased to meet you!
+			</p>
 
-		<p class="content mx-auto w-centered-width">
-			I am currently employed at <ExternalLink href="https://astro.build">Astro</ExternalLink> where
-			I do a bit of everything, though I am mostly found in high impact but often overlooked areas such
-			as editor tooling.
-		</p>
+			<p class="content mx-auto w-centered-width">
+				I am currently employed at <ExternalLink href="https://astro.build">Astro</ExternalLink> where
+				I do a bit of everything, though I am mostly found in high impact but often overlooked areas
+				such as editor tooling.
+			</p>
+		</div>
 
-		<div class="mx-auto max-w-screen-3xl columns-masonry gap-x-3 lg:columns-max-masonry">
+		<div class="mx-auto max-w-screen-3xl columns-masonry gap-x-3 px-[2px] lg:columns-max-masonry">
 			{articles.map((article) => <ArticlePreview article={article} />)}
-			<section
-				class="border-violet-ultra/15 break-inside-avoid border-2 border-solid pb-3 text-black-charcoal"
-			>
-				<h2 class="m-0 px-6 pb-2 pt-4 text-2xl">Latest wiki modifications</h2>
+			<section class="break-inside-avoid pb-3 pt-[1px] text-black-charcoal">
 				<ul class="m-0 p-0">
 					{
 						wikiItems.map((item) => (
 							<li class="m-0 list-none">
 								<a
-									class="group block px-6 py-2 font-medium leading-tight text-accent-valencia hover:bg-accent-valencia hover:text-white-sugar-cane focus:bg-accent-valencia focus:text-white-sugar-cane"
+									class="group mb-1 block border border-solid border-violet-ultra/15 px-6 py-2 font-medium leading-tight text-violet-ultra hover:bg-violet-ultra hover:text-white-sugar-cane focus:bg-violet-ultra focus:text-white-sugar-cane"
 									href={getURLFromEntry(item)}
 								>
 									{item.data.title}

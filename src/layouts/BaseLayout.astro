@@ -78,7 +78,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 		<script src="../assets/scripts/main.ts"></script>
 	</Head>
-	<body>
+	<body class="bg-black-charcoal">
 		<script is:inline>
 			const theme = localStorage.getItem("theme"),
 				isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;

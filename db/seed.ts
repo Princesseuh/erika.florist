@@ -6,7 +6,10 @@ import type { LocalImageServiceWithPlaceholder } from "src/imageService";
 
 // https://astro.build/db/seed
 export default async function seed() {
+	const t0 = performance.now();
 	await prepareDB();
+	const t1 = performance.now();
+	console.log(`Seeding time: ${t1 - t0} milliseconds.`);
 }
 
 export async function prepareDB() {
@@ -24,9 +27,6 @@ export async function prepareDB() {
 export async function addCatalogueEntry(entry: allCatalogueTypes) {
 	const { cover, type, ...data } = entry.data;
 	const [processedCover, placeholderURL] = await getCoverAndPlaceholder(cover);
-	const metadata = await getCatalogueData(entry);
-
-	const author = getAuthorFromEntryMetadata(type, metadata);
 
 	const coverId = await db
 		.insert(Cover)
@@ -40,6 +40,8 @@ export async function addCatalogueEntry(entry: allCatalogueTypes) {
 
 	const firstCoverId = coverId[0]?.id ?? -1;
 
+	const metadata = await getCatalogueData(entry);
+	const author = getAuthorFromEntryMetadata(type, metadata);
 	const insertData = {
 		type: type,
 		title: data.title,
@@ -51,7 +53,7 @@ export async function addCatalogueEntry(entry: allCatalogueTypes) {
 		metadata: JSON.stringify(metadata),
 	};
 
-	await db.insert(Catalogue).values(insertData).returning({ id: Catalogue.id });
+	db.insert(Catalogue).values(insertData);
 }
 
 async function getCoverAndPlaceholder(cover: ImageMetadata) {

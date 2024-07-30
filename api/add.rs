@@ -335,7 +335,21 @@ fn proxy_request(_req: Request) -> Result<Response<Body>, Error> {
                 .header("Content-Type", "application/json")
                 .body(response_body.into())?);
         }
-        // TODO: Add books
+        "isbn" => {
+            let response = client
+                .get(format!(
+                    "https://openlibrary.org/search.json?title={query}&fields=key,title,isbn,cover_i,editions,editions.isbn",
+                    query = query_params.query.replace(" ", "+")
+                ))
+                .send()?;
+
+            let response_body = response.text().unwrap();
+
+            return Ok(Response::builder()
+                .status(StatusCode::OK)
+                .header("Content-Type", "application/json")
+                .body(response_body.into())?);
+        }
         _ => {
             return Ok(Response::builder()
                 .status(StatusCode::BAD_REQUEST)

@@ -53,7 +53,7 @@ export async function addCatalogueEntry(entry: allCatalogueTypes) {
 		metadata: JSON.stringify(metadata),
 	};
 
-	db.insert(Catalogue).values(insertData);
+	await db.insert(Catalogue).values(insertData);
 }
 
 async function getCoverAndPlaceholder(cover: ImageMetadata) {

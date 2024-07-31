@@ -7,7 +7,7 @@ edition = "2021"
 tokio = { version = "1", features = ["macros"] }
 serde = { version = "1.0", features = ["derive"] }
 # Documentation: https://docs.rs/vercel_runtime/latest/vercel_runtime
-vercel_runtime = { version = "1.0.2" }
+vercel_runtime = { version = "1" }
 rusqlite = { version = "0.29.0", features = ["bundled"] }
 maud = "*"
 serde_qs = "0.12.0"

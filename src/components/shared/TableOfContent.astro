@@ -10,8 +10,8 @@ const { headers, maxDepth } = Astro.props;
 const filteredHeaders = headers.filter((header) => header.depth > 1 && header.depth < maxDepth + 1);
 ---
 
-<span class="">On this page</span>
-<nav class="">
+<span class="mb-2 font-medium">On this page</span>
+<nav class="toc text-[0.95rem]">
 	<ol>
 		{
 			filteredHeaders.map((header) => (

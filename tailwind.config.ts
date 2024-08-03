@@ -35,13 +35,14 @@ export default {
 			},
 			width: {
 				"full-width": "min(100%, 1536px)",
-				"centered-width": "min(100%, 76ch)",
+				"centered-width": "min(100%, 72ch)",
 			},
 			colors: {
 				// Theme
 				"accent-valencia": "#C73C2E",
-				"white-sugar-cane": "#f3f4ed",
+				"white-sugar-cane": "#F7F7F7",
 				"black-charcoal": "#0A0908",
+				"subtle-charcoal": "#4d4d4d",
 				"orange-carrot": "#F9A03F",
 				"violet-ultra": "#52489C",
 			},
@@ -55,6 +56,10 @@ export default {
 			columns: {
 				masonry: "auto 400px",
 				"max-masonry": "4 350px",
+			},
+			gridTemplateColumns: {
+				layout: "minmax(0, 0.25fr) minmax(0, 0.50fr);",
+				"layout-tablet": "minmax(0, 0.25fr) minmax(0, 0.75fr);",
 			},
 		},
 	},
@@ -124,18 +129,94 @@ export default {
 					textDecoration: "none",
 				},
 
-				".content a": {
-					color: theme("colors.accent-valencia"),
-					fontWeight: "500",
-				},
-
-				".content a:hover, .content a:focus": {
-					color: theme("colors.white-sugar-cane"),
-					backgroundColor: theme("colors.accent-valencia"),
-				},
-
 				p: {
 					marginBottom: "1em",
+				},
+
+				".toc": {
+					transition: "opacity .1s linear",
+					position: "sticky",
+					top: "2rem",
+					"& ol": {
+						listStyleType: "none",
+						margin: "0",
+						padding: "0",
+					},
+					"& .toc-depth-3": {
+						paddingLeft: "0.75rem",
+						borderLeft: "1px solid rgba(146,149,152,.15)",
+					},
+					"& a": {
+						fontWeight: "500",
+						color: theme("colors.subtle-charcoal"),
+					},
+					"& a:hover, & a:focus": {
+						color: theme("colors.black-charcoal"),
+						textDecoration: "underline",
+					},
+				},
+
+				".prose": {
+					a: {
+						color: theme("colors.accent-valencia"),
+						fontWeight: "500",
+					},
+
+					"a:hover, a:focus": {
+						color: theme("colors.white-sugar-cane"),
+						backgroundColor: theme("colors.accent-valencia"),
+					},
+
+					"& > h1, & > h2": {
+						marginTop: "1.3rem",
+						marginBottom: ".6rem",
+					},
+
+					"& > h3": {
+						marginBottom: ".6rem",
+					},
+
+					"img:not([data-favicon])": {
+						maxWidth: "100%",
+						height: "auto",
+						borderRadius: theme("borderRadius.sm"),
+					},
+
+					figure: {
+						marginTop: "1.4rem",
+						marginBottom: "1rem",
+						textAlign: "center",
+						"@apply sm:mx-8 mx-0": {},
+					},
+
+					figcaption: {
+						textAlign: "center",
+						display: "block",
+						margin: ".15rem 0",
+						fontStyle: "italic",
+						fontSize: ".95rem",
+						"@apply text-subtle-charcoal": {},
+					},
+
+					"li>p": {
+						marginBottom: ".6rem",
+					},
+
+					li: {
+						paddingBottom: "0.25em",
+					},
+
+					"ul, ol": {
+						margin: "0",
+						marginBottom: "1em",
+						padding: "0",
+						paddingLeft: "1.5em",
+					},
+
+					"li>ul, li>ol": {
+						padding: "0",
+						paddingLeft: "1.5em",
+					},
 				},
 			});
 		}),

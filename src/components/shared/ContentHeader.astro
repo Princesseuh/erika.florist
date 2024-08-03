@@ -6,20 +6,23 @@ import Tags from "./Tags.astro";
 interface Props {
 	item: CollectionEntry<"blog"> | CollectionEntry<"projects"> | CollectionEntry<"wiki">;
 	includeTags: boolean;
+	includeTitle?: boolean;
 }
 
 const isArticle = (item: Props["item"]): item is CollectionEntry<"blog"> => {
 	return item.data.type === "blog";
 };
 
-const { item, includeTags } = Astro.props;
+const { item, includeTags, includeTitle } = Astro.props;
 ---
 
-<header class="">
-	<h1 class="">
-		{item.data.title}
-	</h1>
-	{item.data.tagline && <h2 class="">{item.data.tagline}</h2>}
+<header class="mb-8">
+	{
+		includeTitle && (
+			<h1 class="mb-4 mt-0 bg-accent-valencia text-6xl text-white-sugar-cane">{item.data.title}</h1>
+		)
+	}
+	{item.data.tagline && <h2 class="relative top-[-5px] m-0 text-xl">{item.data.tagline}</h2>}
 	{
 		isArticle(item) && includeTags && (
 			<div class="">

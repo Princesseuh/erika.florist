@@ -11,7 +11,7 @@ import Logo from "./Logo.astro";
 		{
 			headerMenu.map((item) => (
 				<a
-					href={item}
+					href={`/${item}`}
 					class:list={[
 						item === "wiki" ? "hover:bg-violet-ultra" : "hover:bg-accent-valencia",
 						"p-6 tracking-wide text-black-charcoal hover:text-white-sugar-cane",

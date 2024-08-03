@@ -2,6 +2,10 @@ import { component, defineMarkdocConfig, nodes } from "@astrojs/markdoc/config";
 
 export default defineMarkdocConfig({
 	nodes: {
+		document: {
+			...nodes.document,
+			render: null,
+		},
 		fence: {
 			attributes: { ...nodes.fence.attributes, title: { type: String, render: "title" } },
 			render: component("./src/components/content/Code.astro"),

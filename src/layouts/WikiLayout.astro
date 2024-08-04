@@ -21,12 +21,12 @@ const lastModified = getLastModified(wikiItem);
 	description={wikiItem.data.tagline}
 	navItems={await getWikiNavigation(new URL(Astro.request.url))}
 >
-	<section class="mx-auto grid-cols-content gap-6 sm:grid">
-		<article class="post max-w-[72ch]">
+	<section class="">
+		<article class="">
 			<ContentHeader item={wikiItem} includeTags={false} />
 			<Content components={{ a: ExternalLink }} />
 
-			<span class="mb-4 block text-right text-creative-work dark:text-dark-subtle-text">
+			<span class="">
 				Page last modified <a
 					href={lastModified.lastModifiedCommitUrl}
 					data-date={lastModified.lastModifiedDate}
@@ -35,7 +35,7 @@ const lastModified = getLastModified(wikiItem);
 			</span>
 		</article>
 
-		<aside class="mr-4 mt-10 hidden sm:block xl:mr-0">
+		<aside class="">
 			{
 				headings.length > 0 && (
 					<TableOfContent headers={headings} maxDepth={wikiItem.data.maxDepthTOC ?? 4} />

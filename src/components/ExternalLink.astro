@@ -80,7 +80,7 @@ const content = (await Astro.slots.render("default")).trim();
 {
 	faviconUrl ? (
 		<img
-			class="relative top-[3px] mr-1 w-4 rounded-sm"
+			class="relative top-[3px] w-4 rounded-sm"
 			src={faviconUrl.toString()}
 			width="17"
 			height="17"
@@ -93,7 +93,7 @@ const content = (await Astro.slots.render("default")).trim();
 	) : (
 		!href.startsWith("/") &&
 		!href.startsWith("#") && (
-			<span class="relative top-[3px] mr-1 inline-block w-4 rounded-sm" data-favicon-span="">
+			<span class="relative top-[3px] inline-block w-4 rounded-sm" data-favicon-span="">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
 					<path
 						fill="none"

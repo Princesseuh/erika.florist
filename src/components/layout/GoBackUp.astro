@@ -2,13 +2,11 @@
 import Icon from "$components/Icon.astro";
 ---
 
-<button id="go-up" title="Scroll to top" class="opacity-0"
-	><Icon
-		name="arrow-up"
-		size={28}
-		title=""
-		class={"bg-isabelline dark:bg-darker-skylines rounded-full"}
-	/></button
+<button
+	id="go-up"
+	title="Scroll to top"
+	class="fixed bottom-0 right-0 hidden opacity-0 transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-accent-valencia hover:opacity-100 sm:block print:hidden"
+	><Icon name="arrow-up" size={28} title="" class={"bg-white-sugar-cane rounded-full"} /></button
 >
 
 <script></script>
@@ -16,7 +14,7 @@ import Icon from "$components/Icon.astro";
 <style>
 	button {
 		border: none;
-		margin: 0;
+		margin: 1.5rem;
 		padding: 0;
 		width: auto;
 		overflow: visible;
@@ -36,8 +34,6 @@ import Icon from "$components/Icon.astro";
 
 		/* Corrects inability to style clickable `input` types in iOS */
 		-webkit-appearance: none;
-
-		@apply fixed bottom-0 right-0 m-6 hidden transition-all duration-300 ease-in-out hover:cursor-pointer hover:text-dark-pinky-unicorny hover:opacity-100 sm:block print:hidden;
 	}
 </style>
 
@@ -53,10 +49,12 @@ import Icon from "$components/Icon.astro";
 		window.addEventListener("scroll", () => {
 			if (window.scrollY > 500) {
 				goUp.inert = false;
-				goUp.className = "opacity-35";
+				goUp.classList.remove("opacity-0");
+				goUp.classList.add("opacity-35");
 			} else {
 				goUp.inert = true;
-				goUp.className = "opacity-0";
+				goUp.classList.remove("opacity-35");
+				goUp.classList.add("opacity-0");
 			}
 		});
 	}

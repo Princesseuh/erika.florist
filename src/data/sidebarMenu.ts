@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-export const headerMenu = ["Articles", "Projects", "Wiki", "Catalogue"] as const;
+export const headerMenu = ["articles", "projects", "wiki", "catalogue"] as const;
 
 export type MenuItem = MenuItemLink | MenuItemHeader;
 

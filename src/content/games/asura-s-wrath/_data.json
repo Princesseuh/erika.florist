@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1329782400,
+  "genres": [
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 9,
+      "abbreviation": "PS3"
+    },
+    {
+      "id": 12,
+      "abbreviation": "X360"
+    }
+  ],
+  "companies": [
+    {
+      "id": 37,
+      "name": "Capcom",
+      "role": "publisher"
+    },
+    {
+      "id": 2438,
+      "name": "CyberConnect2",
+      "role": "developer"
+    }
+  ]
+}

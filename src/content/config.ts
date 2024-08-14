@@ -1,6 +1,11 @@
+import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
 
 const blogCollection = defineCollection({
+	loader: glob({
+		base: "./content/blog",
+		pattern: "**/*.mdoc",
+	}),
 	schema: z.object({
 		title: z.string(),
 		tagline: z.string().optional(),
@@ -13,6 +18,10 @@ const blogCollection = defineCollection({
 });
 
 const wikiCollection = defineCollection({
+	loader: glob({
+		base: "./content/wiki",
+		pattern: "**/*.mdoc",
+	}),
 	schema: z.object({
 		title: z.string(),
 		tagline: z.string().optional(),
@@ -28,6 +37,10 @@ const wikiCollection = defineCollection({
 });
 
 const projectCollection = defineCollection({
+	loader: glob({
+		base: "./content/projects",
+		pattern: "**/*.mdoc",
+	}),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
@@ -54,6 +67,10 @@ const ratingSchema = z.union([
 export type CatalogueRating = z.infer<typeof ratingSchema>;
 
 const booksCollection = defineCollection({
+	loader: glob({
+		base: "./content/books",
+		pattern: "**/*.mdoc",
+	}),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
@@ -67,6 +84,10 @@ const booksCollection = defineCollection({
 });
 
 const gamesCollection = defineCollection({
+	loader: glob({
+		base: "./content/games",
+		pattern: "**/*.mdoc",
+	}),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
@@ -89,6 +110,10 @@ const gamesCollection = defineCollection({
 });
 
 const moviesCollection = defineCollection({
+	loader: glob({
+		base: "./content/movies",
+		pattern: "**/*.mdoc",
+	}),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
@@ -101,6 +126,10 @@ const moviesCollection = defineCollection({
 });
 
 const showsCollection = defineCollection({
+	loader: glob({
+		base: "./content/shows",
+		pattern: "**/*.mdoc",
+	}),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),

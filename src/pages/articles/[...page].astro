@@ -13,7 +13,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 			pageSize: ARTICLE_PAGE_SIZE,
 		}),
 		...blogCollection.map((entry) => ({
-			params: { page: entry.slug },
+			params: { page: entry.id },
 			props: { entry: entry },
 		})),
 	];

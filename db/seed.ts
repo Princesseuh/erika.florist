@@ -6,10 +6,7 @@ import type { LocalImageServiceWithPlaceholder } from "src/imageService";
 
 // https://astro.build/db/seed
 export default async function seed() {
-	const t0 = performance.now();
-	await prepareDB();
-	const t1 = performance.now();
-	console.log(`Seeding time: ${t1 - t0} milliseconds.`);
+	return;
 }
 
 export async function prepareDB() {

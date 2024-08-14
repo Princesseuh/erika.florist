@@ -6,11 +6,11 @@ export function getURLFromEntry(
 ): string {
 	switch (item.data.type) {
 		case "blog":
-			return `/articles/${item.slug}`;
+			return `/articles/${item.id}`;
 		case "wiki":
-			return `/wiki/${item.data.navigation.category}/${item.slug}`;
+			return `/wiki/${item.data.navigation.category}/${item.id}`;
 		case "project":
-			return `/projects/${item.data.projectType}/${item.slug}`;
+			return `/projects/${item.data.projectType}/${item.id}`;
 		default:
 			return "ERROR!";
 	}

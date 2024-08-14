@@ -8,7 +8,7 @@ import { getCollection } from "astro:content";
 export const getStaticPaths = (async () => {
 	const blogEntries = await getCollection("blog");
 	return blogEntries.map((entry) => ({
-		params: { slug: entry.slug },
+		params: { slug: entry.id },
 		props: { entry },
 	}));
 }) satisfies GetStaticPaths;
@@ -17,5 +17,5 @@ const { entry } = Astro.props;
 ---
 
 <head>
-	<meta http-equiv="refresh" content={`0; url=${getBaseSiteURL()}articles/${entry.slug}`} />
+	<meta http-equiv="refresh" content={`0; url=${getBaseSiteURL()}articles/${entry.id}`} />
 </head>

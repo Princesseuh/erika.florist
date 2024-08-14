@@ -1,6 +1,7 @@
 ---
 import ContentHeader from "$components/shared/ContentHeader.astro";
 import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { Content } = await project.render();
+const { Content } = await render(project);
 ---
 
 <BaseLayout title={project.data.title} description={project.data.tagline}>

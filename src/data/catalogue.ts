@@ -13,16 +13,7 @@ export type CatalogueType = allCatalogueTypes["data"]["type"];
 
 export async function getCatalogueData(entry: allCatalogueTypes) {
 	// HACK: Replace with data collections once I figure a directory structure that's not painful
-	const metadataPath = import.meta.env.DEV
-		? "/" + path.join(path.dirname(entry.data.cover.src.slice("/@fs/".length)), "./_data.json")
-		: "./" +
-			path.join(
-				path.dirname(entry.data.cover.src),
-				`../src/content/${entry.data.type}s/`,
-				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-				entry.slug.split("/")[0]!,
-				"./_data.json",
-			);
+	const metadataPath = `${path.join(process.cwd(), path.dirname(entry.filePath), "./_data.json")}`;
 	return JSON.parse((await fs.readFile(metadataPath)).toString());
 }
 

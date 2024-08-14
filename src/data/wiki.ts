@@ -20,12 +20,12 @@ const gitInfo = gitInfoRaw.map((info) => {
 });
 
 function getLastModified(entry: CollectionEntry<"wiki">) {
-	const info = gitInfo.find((info) => info.file.endsWith(entry.id));
+	const info = gitInfo.find((info) => info.file.endsWith(entry.filePath));
 
 	if (import.meta.env.PROD) {
 		if (!info) {
 			throw new Error(
-				`Couldn't find commit information for ${entry.id}. Make sure to create a commit before building`,
+				`Couldn't find commit information for ${entry.filePath}. Make sure to create a commit before building`,
 			);
 		}
 

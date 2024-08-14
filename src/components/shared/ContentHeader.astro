@@ -16,7 +16,7 @@ const isArticle = (item: Props["item"]): item is CollectionEntry<"blog"> => {
 const { item, includeTags, includeTitle } = Astro.props;
 ---
 
-<header class="mb-8">
+<header class="mb-14">
 	{
 		includeTitle && (
 			<h1 class="mb-4 mt-0 bg-accent-valencia text-6xl text-white-sugar-cane">{item.data.title}</h1>

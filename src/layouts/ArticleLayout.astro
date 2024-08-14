@@ -13,11 +13,19 @@ const { article } = Astro.props;
 const { Content, headings } = await article.render();
 ---
 
-<BaseLayout title={article.data.title} description={article.data.tagline}>
-	<div class="my-0 mt-10 bg-accent-valencia text-white-sugar-cane">
-		<h1 class="mx-auto my-4 w-centered-width text-6xl">{article.data.title}</h1>
-	</div>
-	<section class="md:grid-cols-layout-tablet xl:grid-cols-layout grid gap-x-4 sm:gap-x-0">
+<BaseLayout title={article.data.title} description={article.data.description}>
+	{
+		article.data.featured ? (
+			<div class="my-0 mt-10 bg-accent-valencia text-white-sugar-cane">
+				<div class="mx-auto w-centered-width">
+					<h1 class="my-0 mb-4 py-4 text-6xl">{article.data.title}</h1>
+				</div>
+			</div>
+		) : (
+			<Fragment />
+		)
+	}
+	<section class="grid gap-x-4 sm:gap-x-0 md:grid-cols-layout-tablet xl:grid-cols-layout">
 		<aside
 			class="mt-36 hidden p-4 transition-opacity duration-100 ease-linear hover:opacity-100 sm:block sm:pr-0 xl:mr-0"
 		>
@@ -29,7 +37,7 @@ const { Content, headings } = await article.render();
 		</aside>
 
 		<article class="prose mx-auto w-centered-width">
-			<ContentHeader item={article} includeTags />
+			<ContentHeader item={article} includeTags includeTitle={!article.data.featured} />
 			<Content components={{ a: ExternalLink }} />
 		</article>
 	</section>

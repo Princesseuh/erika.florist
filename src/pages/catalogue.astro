@@ -1,10 +1,11 @@
 ---
 import CatalogueCore from "$components/catalogue/Core.astro";
 import BaseLayout from "$layouts/BaseLayout.astro";
+import { Catalogue as CatalogueTable, db } from "astro:db";
 
 // In prod Astro doesn't seed until the first request, but since we don't have any requests
 // in the build process, we'll simulate a request so the database is seeded.
-// if (import.meta.env.PROD) await db.select().from(CatalogueTable).limit(1);
+if (import.meta.env.PROD) await db.select().from(CatalogueTable).limit(1);
 ---
 
 <BaseLayout preloadCatalogue>

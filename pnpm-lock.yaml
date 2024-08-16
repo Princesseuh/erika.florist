@@ -16,16 +16,16 @@ dependencies:
     version: 0.10.7
   '@astrojs/markdoc':
     specifier: ^0.11.3
-    version: 0.11.3(astro@4.14.0)
+    version: 0.11.3(astro@4.14.2)
   '@types/igdb-api-node':
     specifier: ^5.0.3
     version: 5.0.3
   astro-capo:
     specifier: ^0.0.1
-    version: 0.0.1(astro@4.14.0)
+    version: 0.0.1(astro@4.14.2)
   astro-expressive-code:
     specifier: ^0.35.3
-    version: 0.35.3(astro@4.14.0)
+    version: 0.35.3(astro@4.14.2)
   dotenv:
     specifier: ^16.4.5
     version: 16.4.5
@@ -69,7 +69,7 @@ dependencies:
 devDependencies:
   '@astrojs/tailwind':
     specifier: ^5.1.0
-    version: 5.1.0(astro@4.14.0)(tailwindcss@3.4.6)
+    version: 5.1.0(astro@4.14.2)(tailwindcss@3.4.6)
   '@types/eslint':
     specifier: ^8.56.10
     version: 8.56.10
@@ -86,8 +86,8 @@ devDependencies:
     specifier: ^7.16.1
     version: 7.16.1(eslint@9.7.0)(typescript@5.5.3)
   astro:
-    specifier: ^4.14.0
-    version: 4.14.0(@types/node@20.14.11)(typescript@5.5.3)
+    specifier: ^4.14.2
+    version: 4.14.2(@types/node@20.14.11)(typescript@5.5.3)
   eslint:
     specifier: ^9.7.0
     version: 9.7.0
@@ -249,7 +249,7 @@ packages:
       - typescript
     dev: false
 
-  /@astrojs/markdoc@0.11.3(astro@4.14.0):
+  /@astrojs/markdoc@0.11.3(astro@4.14.2):
     resolution: {integrity: sha512-t9pxu//dBTkaTNC3VMMSoh3WO9bTRXHD3gMuMdEaj5s/Qy7kZUtgoBdvZ6d+QHwXurRtL16lA9n0RXT0FJhGqw==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
     peerDependencies:
@@ -259,7 +259,7 @@ packages:
       '@astrojs/markdown-remark': 5.2.0
       '@astrojs/prism': 3.1.0
       '@markdoc/markdoc': 0.4.0
-      astro: 4.14.0(@types/node@20.14.11)(typescript@5.5.3)
+      astro: 4.14.2(@types/node@20.14.11)(typescript@5.5.3)
       esbuild: 0.21.5
       github-slugger: 2.0.0
       gray-matter: 4.0.3
@@ -302,13 +302,13 @@ packages:
     dependencies:
       prismjs: 1.29.0
 
-  /@astrojs/tailwind@5.1.0(astro@4.14.0)(tailwindcss@3.4.6):
+  /@astrojs/tailwind@5.1.0(astro@4.14.2)(tailwindcss@3.4.6):
     resolution: {integrity: sha512-BJoCDKuWhU9FT2qYg+fr6Nfb3qP4ShtyjXGHKA/4mHN94z7BGcmauQK23iy+YH5qWvTnhqkd6mQPQ1yTZTe9Ig==}
     peerDependencies:
       astro: ^3.0.0 || ^4.0.0
       tailwindcss: ^3.0.24
     dependencies:
-      astro: 4.14.0(@types/node@20.14.11)(typescript@5.5.3)
+      astro: 4.14.2(@types/node@20.14.11)(typescript@5.5.3)
       autoprefixer: 10.4.19(postcss@8.4.38)
       postcss: 8.4.38
       postcss-load-config: 4.0.2(postcss@8.4.38)
@@ -2090,7 +2090,7 @@ packages:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
     dependencies:
-      debug: 4.3.5
+      debug: 4.3.6
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -2210,12 +2210,12 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /astro-capo@0.0.1(astro@4.14.0):
+  /astro-capo@0.0.1(astro@4.14.2):
     resolution: {integrity: sha512-KyQD1mzgEQnbqrKpYdoIZMAYejkOcIJocdGuQBH9Yzr4KqGzIR8P2DDNbV/FQXaSyq900lCZwWJH45tBIQCG8w==}
     peerDependencies:
       astro: '>= 2.8'
     dependencies:
-      astro: 4.14.0(@types/node@20.14.11)(typescript@5.5.3)
+      astro: 4.14.2(@types/node@20.14.11)(typescript@5.5.3)
       ultrahtml: 1.5.3
     dev: false
 
@@ -2241,17 +2241,17 @@ packages:
       - typescript
     dev: true
 
-  /astro-expressive-code@0.35.3(astro@4.14.0):
+  /astro-expressive-code@0.35.3(astro@4.14.2):
     resolution: {integrity: sha512-f1L1m3J3EzZHDEox6TXmuKo5fTSbaNxE/HU0S0UQmvlCowtOKnU/LOsoDwsbQSYGKz+fdLRPsCjFMiKqEoyfcw==}
     peerDependencies:
       astro: ^4.0.0-beta || ^3.3.0
     dependencies:
-      astro: 4.14.0(@types/node@20.14.11)(typescript@5.5.3)
+      astro: 4.14.2(@types/node@20.14.11)(typescript@5.5.3)
       rehype-expressive-code: 0.35.3
     dev: false
 
-  /astro@4.14.0(@types/node@20.14.11)(typescript@5.5.3):
-    resolution: {integrity: sha512-UWUOy0aX+x3oDlItcrc4lgLqUXm63w6iChWnWiFijnfpUSJvogtKmJzb79ZmNj56i0ZVGhNVRsbtVhofJPdIXg==}
+  /astro@4.14.2(@types/node@20.14.11)(typescript@5.5.3):
+    resolution: {integrity: sha512-x9VeYx8Ih6kYKBMVwwsfRzsZVq30+SUhiawnYQ6+46qQnEx3zH05KcH24HsJMe6dVpHD8HdH7CWR5C4o7Q/jeg==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
     dependencies:
@@ -2318,6 +2318,7 @@ packages:
       vitefu: 0.2.5(vite@5.4.0)
       which-pm: 3.0.0
       xxhash-wasm: 1.0.2
+      yargs-parser: 21.1.1
       zod: 3.23.8
       zod-to-json-schema: 3.23.2(zod@3.23.8)
       zod-to-ts: 1.2.0(typescript@5.5.3)(zod@3.23.8)
@@ -2816,6 +2817,7 @@ packages:
         optional: true
     dependencies:
       ms: 2.1.2
+    dev: true
 
   /debug@4.3.6:
     resolution: {integrity: sha512-O/09Bd4Z1fBrU4VzkhFqVgpPzaGbw6Sm9FEkBT1A/YBXQFGuuSxa1dN2nxgxS34JmKXqYx8CZAwEVoJFImUXIg==}
@@ -4148,7 +4150,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.5
+      debug: 4.3.6
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -4905,7 +4907,7 @@ packages:
     resolution: {integrity: sha512-o/sd0nMof8kYff+TqcDx3VSrgBTcZpSvYcAHIfHhv5VAuNmisCxjhx6YmxS8PFEpb9z5WKWKPdzf0jM23ro3RQ==}
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.3.5
+      debug: 4.3.6
       decode-named-character-reference: 1.0.2
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.0
@@ -6681,7 +6683,7 @@ packages:
     resolution: {integrity: sha512-NXPYyxyBSH7zB5U6+3uDdd6Nybz6o6/od9rk8bp9H8GR3L+cm/fC0uUTbqBmUTnMCUDslAGBOIKNfvvb+gGlDg==}
     dependencies:
       '@types/unist': 3.0.2
-      vfile: 6.0.1
+      vfile: 6.0.2
 
   /vfile-message@4.0.2:
     resolution: {integrity: sha512-jRDZ1IMLttGj41KcZvlrYAaI3CfqpLpfpf+Mfig13viT6NKvRzWZ+lXz0Y5D60w6uJIBAOGq9mSHf0gktF0duw==}
@@ -7021,7 +7023,6 @@ packages:
   /yargs-parser@21.1.1:
     resolution: {integrity: sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==}
     engines: {node: '>=12'}
-    dev: false
 
   /yargs@17.7.2:
     resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}

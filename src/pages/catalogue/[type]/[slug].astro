@@ -14,7 +14,7 @@ export const getStaticPaths = (async () => {
 
 	return await Promise.all(
 		catalogueContent.flatMap(async (entry) => ({
-			params: { type: entry.data.type + "s", slug: entry.id.split("/")[1] },
+			params: { type: entry.data.type + "s", slug: entry.id },
 			props: { entry: entry, metadata: await getCatalogueData(entry) },
 		})),
 	);

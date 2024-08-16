@@ -4,7 +4,6 @@
   navigation:
     label: 'VS Code setup'
     category: computers
-  slug: 'vscodesetup'
 ---
 
 These days, my editor of choice is, like many people, [VS Code](https://code.visualstudio.com/)
@@ -21,66 +20,66 @@ Those are intentionally not complete, some of the settings I have in my full con
 
 ```json title="settings.json"
 {
-  // Visuals
-  "editor.fontFamily": "'Iosevka', 'Fira Code', 'Font Awesome 5 Free Regular', 'Font Awesome 5 Free Solid', 'Font Awesome 5 Brands Regular'",
-  "editor.fontSize": 15,
-  "editor.fontWeight": "500",
-  "editor.fontLigatures": true,
-  "editor.minimap.enabled": false,
-  "workbench.sideBar.location": "right",
-  "editor.wordWrap": "on",
-  "editor.rulers": [80, 120],
-  "editor.inlayHints.fontSize": 14,
-  "workbench.colorCustomizations": {
-    "terminal.background": "#17161b",
-    "panel.background": "#131317",
-    "statusBar.background": "#17161b",
-    "tab.activeBackground": "#25242b",
-    "sideBarSectionHeader.background": "#131317",
-    "activityBar.foreground": "#b8aba5",
-    "sideBar.foreground": "#a39793",
+	// Visuals
+	"editor.fontFamily": "'Iosevka', 'Fira Code', 'Font Awesome 5 Free Regular', 'Font Awesome 5 Free Solid', 'Font Awesome 5 Brands Regular'",
+	"editor.fontSize": 15,
+	"editor.fontWeight": "500",
+	"editor.fontLigatures": true,
+	"editor.minimap.enabled": false,
+	"workbench.sideBar.location": "right",
+	"editor.wordWrap": "on",
+	"editor.rulers": [80, 120],
+	"editor.inlayHints.fontSize": 14,
+	"workbench.colorCustomizations": {
+		"terminal.background": "#17161b",
+		"panel.background": "#131317",
+		"statusBar.background": "#17161b",
+		"tab.activeBackground": "#25242b",
+		"sideBarSectionHeader.background": "#131317",
+		"activityBar.foreground": "#b8aba5",
+		"sideBar.foreground": "#a39793",
 
-    // Inlay hints
-    "editorInlayHint.background": "#00000000",
-    "editorInlayHint.foreground": "#ffffff65"
-  },
-  "editor.tabSize": 2,
-  "workbench.tree.indent": 10,
+		// Inlay hints
+		"editorInlayHint.background": "#00000000",
+		"editorInlayHint.foreground": "#ffffff65"
+	},
+	"editor.tabSize": 2,
+	"workbench.tree.indent": 10,
 
-  // Usability
-  "files.autoSave": "afterDelay",
-  "files.autoSaveDelay": 5000,
-  "files.trimTrailingWhitespace": true,
-  "files.trimFinalNewlines": true,
-  "files.insertFinalNewline": true,
-  "editor.insertSpaces": false,
-  "editor.detectIndentation": false,
-  "editor.formatOnPaste": true,
-  "editor.formatOnSave": true,
-  "editor.formatOnType": true,
-  "editor.linkedEditing": true,
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true
-  },
-  "editor.accessibilitySupport": "off",
-  "search.exclude": {
-    "**/bower_components": true,
-    "**/*.code-search": true,
-    "**/dist/**": true,
-    "**/package-lock.json": true,
-    "**/pnpm-lock.yaml": true,
-    "**/yarn.lock": true
-  },
-  "workbench.startupEditor": "newUntitledFile",
-  "workbench.editor.highlightModifiedTabs": true,
-  "explorer.confirmDelete": false,
-  "editor.suggest.preview": true,
-  "editor.quickSuggestions": {
-    "strings": true
-  },
-  "terminal.integrated.shellIntegration.enabled": true,
+	// Usability
+	"files.autoSave": "afterDelay",
+	"files.autoSaveDelay": 5000,
+	"files.trimTrailingWhitespace": true,
+	"files.trimFinalNewlines": true,
+	"files.insertFinalNewline": true,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": true,
+	"editor.formatOnType": true,
+	"editor.linkedEditing": true,
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": true
+	},
+	"editor.accessibilitySupport": "off",
+	"search.exclude": {
+		"**/bower_components": true,
+		"**/*.code-search": true,
+		"**/dist/**": true,
+		"**/package-lock.json": true,
+		"**/pnpm-lock.yaml": true,
+		"**/yarn.lock": true
+	},
+	"workbench.startupEditor": "newUntitledFile",
+	"workbench.editor.highlightModifiedTabs": true,
+	"explorer.confirmDelete": false,
+	"editor.suggest.preview": true,
+	"editor.quickSuggestions": {
+		"strings": true
+	},
+	"terminal.integrated.shellIntegration.enabled": true,
 
-  // Language specifics
+	// Language specifics
 	"html.format.indentInnerHtml": true,
 	"[markdown]": {
 		"editor.wordWrap": "on",

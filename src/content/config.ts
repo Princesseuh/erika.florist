@@ -1,13 +1,20 @@
 import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
+import path from "path";
+
+export const generateSlug = ((options) => {
+	if (options.data.slug) return options.data.slug as string;
+	return path.basename(options.entry, ".mdoc");
+}) satisfies Parameters<typeof glob>[0]["generateId"];
 
 const blogCollection = defineCollection({
 	loader: glob({
 		base: "./content/blog",
 		pattern: "**/*.mdoc",
+		generateId: generateSlug,
 	}),
 	schema: z.object({
-		title: z.string(),
+		title: z.string().describe("Title of the blog post"),
 		tagline: z.string().optional(),
 		maxDepthTOC: z.number().optional(),
 		date: z.date(),
@@ -21,6 +28,7 @@ const wikiCollection = defineCollection({
 	loader: glob({
 		base: "./content/wiki",
 		pattern: "**/*.mdoc",
+		generateId: generateSlug,
 	}),
 	schema: z.object({
 		title: z.string(),
@@ -40,6 +48,7 @@ const projectCollection = defineCollection({
 	loader: glob({
 		base: "./content/projects",
 		pattern: "**/*.mdoc",
+		generateId: generateSlug,
 	}),
 	schema: ({ image }) =>
 		z.object({
@@ -70,6 +79,7 @@ const booksCollection = defineCollection({
 	loader: glob({
 		base: "./content/books",
 		pattern: "**/*.mdoc",
+		generateId: generateSlug,
 	}),
 	schema: ({ image }) =>
 		z.object({
@@ -87,6 +97,7 @@ const gamesCollection = defineCollection({
 	loader: glob({
 		base: "./content/games",
 		pattern: "**/*.mdoc",
+		generateId: generateSlug,
 	}),
 	schema: ({ image }) =>
 		z.object({
@@ -113,6 +124,7 @@ const moviesCollection = defineCollection({
 	loader: glob({
 		base: "./content/movies",
 		pattern: "**/*.mdoc",
+		generateId: generateSlug,
 	}),
 	schema: ({ image }) =>
 		z.object({
@@ -129,6 +141,7 @@ const showsCollection = defineCollection({
 	loader: glob({
 		base: "./content/shows",
 		pattern: "**/*.mdoc",
+		generateId: generateSlug,
 	}),
 	schema: ({ image }) =>
 		z.object({

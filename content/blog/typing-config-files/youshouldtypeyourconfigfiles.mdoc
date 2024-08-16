@@ -24,7 +24,7 @@ While this is unfortunate, luckily JSDoc annotations are just as easy to use.
 
 First install the [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)'s type definition for [ESLint](https://eslint.org/), `@types/eslint` using your favorite package manager. And then, in your `eslintrc.js` file, write the following
 
- ```js {% title="eslintrc.cjs" %}
+```js {% title="eslintrc.cjs" %}
 /** @type {import("@types/eslint").Linter.Config */
 module.exports = {
 	// ... your eslint config here
@@ -39,7 +39,7 @@ Let's do the same thing for Prettier.
 
 Similarly to ESLint, first install the types definition for [Prettier](https://prettier.io/) through `@types/prettier` and then add the following to your `.prettierrc.js`
 
- ```js {% title=".prettierrc.cjs" %}
+```js {% title=".prettierrc.cjs" %}
 /** @type {import("@types/prettier").Options */
 module.exports = {
 	// ... your prettier config here
@@ -52,11 +52,11 @@ It's that easy and the benefits are very clear immediately. Frankly, in my opini
 
 [Tailwind](https://tailwindcss.com/) ships types directly and even support directly using TypeScript configs
 
- ```js {% title="tailwind.config.ts" %}
+```js {% title="tailwind.config.ts" %}
 import type { Config } from "tailwindcss";
 
 export default {
-  // ... your tailwind config here
+ // ... your tailwind config here
 } satisfies Config;
 ```
 
@@ -64,7 +64,7 @@ export default {
 
 Astro ships with typechecked config files in all of its starters, and similar to Vite, also has a helper method to make it even easier to use
 
- ```ts {% title="astro.config.ts" %}
+```ts {% title="astro.config.ts" %}
 import { defineConfig } from "astro/config";
 
 export default defineConfig({

@@ -1,0 +1,138 @@
+{
+  "first_release_date": 1305504000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 3,
+      "abbreviation": "Linux"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 9,
+      "abbreviation": "PS3"
+    },
+    {
+      "id": 12,
+      "abbreviation": "X360"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    },
+    {
+      "id": 34,
+      "abbreviation": "Android"
+    },
+    {
+      "id": 37,
+      "abbreviation": "3DS"
+    },
+    {
+      "id": 39,
+      "abbreviation": "iOS"
+    },
+    {
+      "id": 41,
+      "abbreviation": "WiiU"
+    },
+    {
+      "id": 46,
+      "abbreviation": "Vita"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 74,
+      "abbreviation": "Win Phone"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    },
+    {
+      "id": 170,
+      "abbreviation": "Stadia"
+    }
+  ],
+  "companies": [
+    {
+      "id": 3010,
+      "name": "Headup Games",
+      "role": "publisher"
+    },
+    {
+      "id": 14238,
+      "name": "Codeglue",
+      "role": "publisher"
+    },
+    {
+      "id": 910,
+      "name": "Re-Logic",
+      "role": "developer"
+    },
+    {
+      "id": 2390,
+      "name": "Engine Software",
+      "role": "publisher"
+    },
+    {
+      "id": 11034,
+      "name": "Pipeworks Studio",
+      "role": "publisher"
+    },
+    {
+      "id": 445,
+      "name": "505 Games",
+      "role": "publisher"
+    },
+    {
+      "id": 8794,
+      "name": "DR Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 8794,
+      "name": "DR Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 2390,
+      "name": "Engine Software",
+      "role": "publisher"
+    }
+  ]
+}

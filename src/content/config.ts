@@ -1,11 +1,42 @@
-import { glob } from "astro/loaders";
+import { glob, type Loader } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
-export const generateSlug = ((options) => {
+const generateSlug = ((options) => {
 	if (options.data.slug) return options.data.slug as string;
 	return path.basename(options.entry, ".mdoc");
 }) satisfies Parameters<typeof glob>[0]["generateId"];
+
+const catalogueGlob = (type: "games" | "movies" | "books" | "shows") => {
+	const originalGlob = glob({
+		base: `./content/${type}`,
+		pattern: "**/*.mdoc",
+		generateId: generateSlug,
+	});
+
+	return {
+		...originalGlob,
+		async load(context) {
+			await originalGlob.load(context);
+
+			const originalEntries = Array.from(context.store.entries());
+			context.store.clear();
+
+			for (const entry of originalEntries) {
+				if (!entry[1].filePath) continue;
+
+				const metadataPath = path.join(path.dirname(entry[1].filePath), "./_data.json");
+				const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf-8"));
+
+				context.store.set({
+					...entry[1],
+					data: { ...entry[1].data, metadata: metadata },
+				});
+			}
+		},
+	} satisfies Loader;
+};
 
 const blogCollection = defineCollection({
 	loader: glob({
@@ -76,11 +107,7 @@ const ratingSchema = z.union([
 export type CatalogueRating = z.infer<typeof ratingSchema>;
 
 const booksCollection = defineCollection({
-	loader: glob({
-		base: "./content/books",
-		pattern: "**/*.mdoc",
-		generateId: generateSlug,
-	}),
+	loader: catalogueGlob("books"),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
@@ -90,15 +117,12 @@ const booksCollection = defineCollection({
 			cover: z.preprocess(() => "./cover.png", image()),
 			isbn: z.string(),
 			type: z.literal("book").default("book"),
+			metadata: z.unknown().default({}),
 		}),
 });
 
 const gamesCollection = defineCollection({
-	loader: glob({
-		base: "./content/games",
-		pattern: "**/*.mdoc",
-		generateId: generateSlug,
-	}),
+	loader: catalogueGlob("games"),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
@@ -117,15 +141,12 @@ const gamesCollection = defineCollection({
 			type: z.literal("game").default("game"),
 			igdb: z.string(),
 			cover: z.preprocess(() => "./cover.png", image()),
+			metadata: z.unknown().default({}),
 		}),
 });
 
 const moviesCollection = defineCollection({
-	loader: glob({
-		base: "./content/movies",
-		pattern: "**/*.mdoc",
-		generateId: generateSlug,
-	}),
+	loader: catalogueGlob("movies"),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
@@ -134,15 +155,12 @@ const moviesCollection = defineCollection({
 			cover: z.preprocess(() => "./cover.png", image()),
 			tmdb: z.string(),
 			type: z.literal("movie").default("movie"),
+			metadata: z.unknown().default({}),
 		}),
 });
 
 const showsCollection = defineCollection({
-	loader: glob({
-		base: "./content/shows",
-		pattern: "**/*.mdoc",
-		generateId: generateSlug,
-	}),
+	loader: catalogueGlob("shows"),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
@@ -151,6 +169,7 @@ const showsCollection = defineCollection({
 			cover: z.preprocess(() => "./cover.png", image()),
 			tmdb: z.string(),
 			type: z.literal("show").default("show"),
+			metadata: z.unknown().default({}),
 		}),
 });
 

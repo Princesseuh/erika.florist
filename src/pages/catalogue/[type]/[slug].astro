@@ -1,5 +1,4 @@
 ---
-import { getCatalogueData } from "$data/catalogue";
 import BaseLayout from "$layouts/BaseLayout.astro";
 import type { GetStaticPaths } from "astro";
 import { getImage } from "astro:assets";
@@ -15,7 +14,7 @@ export const getStaticPaths = (async () => {
 	return await Promise.all(
 		catalogueContent.flatMap(async (entry) => ({
 			params: { type: entry.data.type + "s", slug: entry.id },
-			props: { entry: entry, metadata: await getCatalogueData(entry) },
+			props: { entry: entry, metadata: entry.data.metadata },
 		})),
 	);
 }) satisfies GetStaticPaths;

@@ -10,6 +10,5 @@
 			"$utils": ["src/utils/index.ts"]
 		}
 	},
-	"include": ["./.eslintrc.cjs", "**/*"],
-	"exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist"]
+	"exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist", "target"]
 }

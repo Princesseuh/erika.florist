@@ -200,7 +200,7 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
 fn check_if_file_exists(client: &reqwest::blocking::Client, path_type: &str, slug: &str) -> bool {
     let response = client
         .get(format!(
-            "https://api.github.com/repos/Princesseuh/erika.florist/contents/src/content/{path_type}/{slug}/{slug}.mdoc",
+            "https://api.github.com/repos/Princesseuh/erika.florist/contents/content/{path_type}/{slug}/{slug}.mdoc",
             path_type = path_type,
             slug = slug
         ))
@@ -509,7 +509,7 @@ fn post_request(
 
     let req = client
         .put(format!(
-            "https://api.github.com/repos/Princesseuh/erika.florist/contents/src/content/{path}"
+            "https://api.github.com/repos/Princesseuh/erika.florist/contents/content/{path}"
         ))
         .header("Accept", "application/vnd.github+json")
         .header("User-Agent", "Princesseuh")

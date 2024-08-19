@@ -1,6 +1,4 @@
 import type { CollectionEntry } from "astro:content";
-import fs from "node:fs/promises";
-import path from "node:path";
 import type { CatalogueRating } from "src/content/config";
 
 export type allCatalogueTypes =
@@ -10,12 +8,6 @@ export type allCatalogueTypes =
 	| CollectionEntry<"shows">;
 
 export type CatalogueType = allCatalogueTypes["data"]["type"];
-
-export async function getCatalogueData(entry: allCatalogueTypes) {
-	// HACK: Replace with data collections once I figure a directory structure that's not painful
-	const metadataPath = `${path.join(process.cwd(), path.dirname(entry.filePath), "./_data.json")}`;
-	return JSON.parse((await fs.readFile(metadataPath)).toString());
-}
 
 export function isCatalogueGame(entry: allCatalogueTypes): entry is CollectionEntry<"games"> {
 	return entry.data.type === "game";
@@ -42,5 +34,5 @@ const ratingToEmoji: Record<CatalogueRating, string> = {
 };
 
 export function prettyRating(rating: CatalogueRating) {
-	return capitalize(rating) + " " + ratingToEmoji[rating];
+	return `${capitalize(rating)} ${ratingToEmoji[rating]}`;
 }

@@ -15,11 +15,11 @@
 		"update-data": "tsx ./scripts/update-catalogue-info.ts --silent"
 	},
 	"devDependencies": {
-		"@astrojs/tailwind": "^5.1.0",
+		"@astrojs/tailwind": "6.0.0-alpha.0",
 		"@types/eslint": "^9.6.0",
 		"@types/node": "^22.4.1",
 		"@types/prettier": "^2.7.3",
-		"astro": "^4.14.2",
+		"astro": "5.0.0-alpha.0",
 		"eslint": "^9.9.0",
 		"eslint-plugin-astro": "^1.2.3",
 		"kleur": "^4.1.5",
@@ -33,7 +33,7 @@
 		"@11ty/eleventy-fetch": "^4.0.1",
 		"@astrojs/check": "^0.9.3",
 		"@astrojs/db": "~0.10.7",
-		"@astrojs/markdoc": "^0.11.3",
+		"@astrojs/markdoc": "1.0.0-alpha.0",
 		"@types/igdb-api-node": "^5.0.3",
 		"@typescript-eslint/parser": "^8.2.0",
 		"astro-capo": "^0.0.1",

@@ -43,7 +43,6 @@ export interface LocalImageServiceWithPlaceholder extends LocalImageService {
 const service: LocalImageServiceWithPlaceholder = {
 	...sharpService,
 	async getHTMLAttributes(options, imageConfig) {
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const attributes = await sharpService.getHTMLAttributes!(options, imageConfig);
 
 		// Use the original dimensions of the image for the width and height attributes. Maybe that Astro should do this by default? Not sure, and I can only blame myself.
@@ -61,7 +60,7 @@ const service: LocalImageServiceWithPlaceholder = {
 		if (import.meta.env.PROD) {
 			try {
 				return readFileSync(CACHE_PATH + hash, "utf-8");
-			} catch (e) {}
+			} catch {}
 		}
 
 		// HACK: It'd be nice to be able to get a Buffer out from an ESM import or `getImage`, wonder how we could do that..

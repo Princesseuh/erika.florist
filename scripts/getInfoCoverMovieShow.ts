@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import "dotenv/config";
 import matter from "gray-matter";
 import { bold, gray } from "kleur/colors";

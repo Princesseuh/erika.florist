@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
-
 import matter from "gray-matter";
 import { bold, gray } from "kleur/colors";
 import fs from "node:fs";

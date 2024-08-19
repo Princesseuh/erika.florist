@@ -1,0 +1,82 @@
+---
+  title: "Terminal Workflow"
+  tagline: "Truth: I really only use the terminal to impress people"
+  navigation:
+    label: "Terminal Workflow"
+    category: computers
+---
+
+On both macOS and Linux, I use the terminal for a fair amount of things, oftentimes it's not necessarily because I like the terminal better as much as it offers a more efficient workflow than the GUI. Now, don't get me wrong, the GUI isn't better on Windows, I just don't use Windows for nerdy things, ha
+
+## Terminal Emulator
+
+[Alacritty](https://alacritty.org/) on macOS and [foot](https://codeberg.org/dnkl/foot) on Linux. To be honest, I don't necessarily care all that much about the terminal emulator, most popular ones kinda offer the same features, [wezterm](https://wezfurlong.org/wezterm/index.html) and [kitty](https://sw.kovidgoyal.net/kitty/) probably would work just as well. I'm not a super big fan of "modern" ones like [Warp](https://www.warp.dev/) though
+
+## Shell
+
+[Fish](https://fishshell.com/) is my favorite shell, the default are great and it's generally easy and intuitive to use. I used to use [zsh](https://www.zsh.org/), but really I found it to be a lesser fish often, so.. I'm interested in [Nushell](https://www.nushell.sh/), but I have not tried it extensively yet. (see [this post](/articles/shellsofthe20s) for more info on shells)
+
+### Plugins
+
+I use the following plugins for Fish, and use [fisher]() to manage them:
+
+- [jorgebucaran/autopair.fish](https://github.com/jorgebucaran/autopair.fish)
+  - Automatically close parenthesis and other pairs
+- [jorgebucaran/hydro](https://github.com/jorgebucaran/hydro)
+  - Nice prompt that's very fast, [Tide](https://github.com/IlanCosman/tide) is a nice alternative.
+- [jorgebucaran/replay.fish](https://github.com/jorgebucaran/replay.fish)
+  - Very rarely, I need to run bash-only stuff, this runs the command in Bash and playback the result in Fish
+- [jorgebucaran/nvm.fish](https://github.com/jorgebucaran/nvm.fish)
+  - Node Version Manager, but in Fish. It's very fast and neat compared to the official `nvm`, very nice!
+- [PatrickF1/fzf.fish](https://github.com/PatrickF1/fzf.fish)
+  - `fzf` integration for Fish, I always forget the keybinds but it comes in handy once in a while
+
+(This segment is in fact, not sponsored by [Jorge Bucaran](https://github.com/jorgebucaran), unlike what you might think)
+
+### Abbreviations
+
+I really like [Fish's abbreviations](https://fishshell.com/docs/current/cmds/abbr.html), notably because it keeps the history clean. Below are a selection of my most used abbreviations.
+
+- `cg` expands into `cd (git rev-parse --show-toplevel)`
+  - Goes to the root of the current Git project, super useful in monorepo where you need to run commands from the root
+- `eng` expands into `LC_ALL=C`
+  - Allows me to run a command in English if need be, since I have my system in Swedish for learning purpose, I sometime don't really understand a documentation and need the english version
+- `work` expands into `cd ~/Projects`
+  - Super useful for going back to work easily, similarly I have `dots`, which expands into `cd ~/dotfiles` whenever I need to make a quick change to my config
+
+[For an exhaustive list, please check my `dotfiles`](https://github.com/Princesseuh/dotfiles/blob/main/shared/fish/abbr.fish). Notably, there's a lot of Git abbreviations that are pretty neat and that I use often.
+
+### Bindings
+
+I only have one special bind, `!!` repaint the previous command. Fish doesn't believe in history substition and instead want you to use its nice history search features, but I'm too used to `!!`..
+
+## File system navigation
+
+For this, I use two things: [`walk`](https://github.com/antonmedv/walk) and [`zoxide`](https://github.com/ajeetdsouza/zoxide). I tend to use the former whenever I'm browsing files, and the latter when I actually know where I want to go (and I've been there before.)
+
+For `walk`, there's a lot of way more powerful options out there ([`ranger`](https://github.com/ranger/ranger) is a good one), but I really wanted something simple. Only problem is that the keybinds are not necessarily amazing depending on your keyboard layout, but apart from that it's usable very easily out of the box.
+
+`zoxide` is the latest flavour of the month version of `z`, `autojump` etc. You type `z something` and it goes to a directory in your history that matches `something`. It's easy, it's nice, it works. It has some nice bells and whistle like `zi`, which allows you to fuzzy search through your history, it's very neat
+
+## Editing files
+
+I use `nano` with the default settings. I use `vim` once in a while when I need to edit something a bit bigger (but not big enough for VS Code), but really I so rarely edit stuff in the editor nowadays, I don't really care
+
+## Multiplexer
+
+In 2023, if you still need a terminal multiplexer, the only good option is [Zellij](https://zellij.dev/). It can be a bit clunky at time, especially on macOS, depending on your keyboard layout, but it's miles ahead of every other option. I love it, and it made me understand terminal multiplexers much more than `tmux` ever did. Plus, the session names are quite funny.
+
+## Random softwares
+
+I don't use all of them, but really the cool Rust ones that came out these past few years, you've seen them before
+
+- `ripgrep` instead of `grep`
+- `fd` instead of `find`
+- `bat` instead of `cat`
+
+etc.
+
+There's some cool ones I haven't had the chance to try yet, but would like to try in the future:
+
+- [`broot`](https://github.com/Canop/broot)
+- [`atuin`](https://github.com/ellie/atuin)

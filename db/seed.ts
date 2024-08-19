@@ -1,4 +1,4 @@
-import { getCatalogueData, type CatalogueType, type allCatalogueTypes } from "$data/catalogue";
+import { type CatalogueType, type allCatalogueTypes } from "$data/catalogue";
 import { getConfiguredImageService, getImage } from "astro:assets";
 import { getCollection } from "astro:content";
 import { Catalogue, Cover, db } from "astro:db";
@@ -25,7 +25,7 @@ export async function prepareDB() {
 }
 
 export async function addCatalogueEntry(entry: allCatalogueTypes) {
-	const { cover, type, ...data } = entry.data;
+	const { cover, type, metadata, ...data } = entry.data;
 	const [processedCover, placeholderURL] = await getCoverAndPlaceholder(cover);
 
 	const coverId = await db
@@ -40,7 +40,6 @@ export async function addCatalogueEntry(entry: allCatalogueTypes) {
 
 	const firstCoverId = coverId[0]?.id ?? -1;
 
-	const metadata = await getCatalogueData(entry);
 	const author = getAuthorFromEntryMetadata(type, metadata);
 	const insertData = {
 		type: type,

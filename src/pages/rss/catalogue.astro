@@ -4,7 +4,7 @@ export const partial = true;
 import { prettyRating } from "$data/catalogue";
 import { getBaseSiteURL } from "$utils";
 import { getImage } from "astro:assets";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 
 const games = await getCollection("games");
 const movies = await getCollection("movies");
@@ -56,7 +56,7 @@ function makeOutro() {
 		const end = `]]></content:encoded>
     </item>\n`.trimStart();
 
-		const { Content } = await entry.render();
+		const { Content } = await render(entry);
 
 		return (
 			<>

@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (nodateCheckbox.checked) {
 			dateInput.removeAttribute("disabled");
 			dateInput.type = "date";
-			// @ts-ignore
+			// @ts-expect-error - zzz
 			dateInput.value = new Date().toISOString().split("T")[0];
 		} else {
 			dateInput.setAttribute("disabled", "true");

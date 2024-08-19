@@ -4,13 +4,14 @@ import ContentHeader from "$components/shared/ContentHeader.astro";
 import TableOfContent from "$components/shared/TableOfContent.astro";
 import BaseLayout from "$layouts/BaseLayout.astro";
 import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
 
 interface Props {
 	article: CollectionEntry<"blog">;
 }
 
 const { article } = Astro.props;
-const { Content, headings } = await article.render();
+const { Content, headings } = await render(article);
 ---
 
 <BaseLayout title={article.data.title} description={article.data.tagline}>

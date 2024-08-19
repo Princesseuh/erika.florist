@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 export const headerMenu = ["Articles", "Projects", "Wiki", "Catalogue"] as const;
 
 export type MenuItem = MenuItemLink | MenuItemHeader;

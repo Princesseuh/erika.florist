@@ -12,7 +12,7 @@ dependencies:
     specifier: ^0.9.3
     version: 0.9.3(prettier-plugin-astro@0.14.1)(prettier@3.3.3)(typescript@5.5.4)
   '@astrojs/db':
-    specifier: ~0.10.0
+    specifier: ~0.10.7
     version: 0.10.7
   '@astrojs/markdoc':
     specifier: ^0.11.3

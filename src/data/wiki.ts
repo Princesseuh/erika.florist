@@ -9,7 +9,7 @@ const gitInfo = gitInfoRaw.map((info) => {
 	const [file, date, ref] = info.split("|");
 
 	if (!date || !file || !ref) {
-		throw new Error("Couldn't parse file info from " + info);
+		throw new Error(`Couldn't parse file info from ${info}`);
 	}
 
 	return {
@@ -68,7 +68,7 @@ async function getWikiNavigation(currentPage: URL): Promise<MenuItem[]> {
 				return {
 					label: item.data.navigation.label ?? item.data.title,
 					link: itemUrl,
-					isCurrent: currentPage.pathname == itemUrl,
+					isCurrent: currentPage.pathname === itemUrl,
 					type: "link" as MenuItem["type"],
 				};
 			},

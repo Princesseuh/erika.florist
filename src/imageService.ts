@@ -60,7 +60,9 @@ const service: LocalImageServiceWithPlaceholder = {
 		if (import.meta.env.PROD) {
 			try {
 				return readFileSync(CACHE_PATH + hash, "utf-8");
-			} catch {}
+			} catch {
+				/* empty */
+			}
 		}
 
 		// HACK: It'd be nice to be able to get a Buffer out from an ESM import or `getImage`, wonder how we could do that..

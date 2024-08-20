@@ -34,6 +34,7 @@
 		"@astrojs/check": "^0.9.3",
 		"@astrojs/db": "~0.10.7",
 		"@astrojs/markdoc": "^0.11.3",
+		"@types/eslint__js": "^8.42.3",
 		"@types/igdb-api-node": "^5.0.3",
 		"@typescript-eslint/parser": "^8.2.0",
 		"astro-capo": "^0.0.1",

@@ -118,7 +118,7 @@ const pageLenth = 30;
 
 	await buildLibrary();
 
-	async function buildLibrary(append: boolean = false) {
+	async function buildLibrary(append = false) {
 		const entryCount = document.getElementById("catalogue-entry-count") as HTMLDivElement;
 		const url = buildQueryParams(new URL("/api/catalogue", "http://dummy"));
 		const data = await fetch(url.pathname + url.search)

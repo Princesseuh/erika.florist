@@ -91,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			return;
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		nameInputTimeout = setTimeout(async () => {
 			loader.style.display = "block";
 

@@ -27,7 +27,7 @@ const catalogueGlob = (type: "games" | "movies" | "books" | "shows") => {
 				if (!entry[1].filePath) continue;
 
 				const metadataPath = path.join(path.dirname(entry[1].filePath), "./_data.json");
-				const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf-8"));
+				const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf-8")) as unknown;
 
 				context.store.set({
 					...entry[1],

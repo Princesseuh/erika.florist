@@ -11,12 +11,10 @@ export const getStaticPaths = (async () => {
 		catalogueContent.push(...(await getCollection(catalogueType)));
 	}
 
-	return await Promise.all(
-		catalogueContent.flatMap(async (entry) => ({
-			params: { type: entry.data.type + "s", slug: entry.id },
-			props: { entry: entry, metadata: entry.data.metadata },
-		})),
-	);
+	return catalogueContent.flatMap((entry) => ({
+		params: { type: entry.data.type + "s", slug: entry.id },
+		props: { entry: entry, metadata: entry.data.metadata },
+	}));
 }) satisfies GetStaticPaths;
 
 const { entry, metadata } = Astro.props;

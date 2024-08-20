@@ -2,7 +2,7 @@ import { bold, gray, green, red, yellow } from "kleur/colors";
 import fs from "node:fs";
 
 export function getContentDirs(type: "games" | "books" | "movies" | "shows"): URL[] {
-	const dirPath = new URL(`../src/content/${type}/`, import.meta.url);
+	const dirPath = new URL(`../content/${type}/`, import.meta.url);
 	const dirs = fs
 		.readdirSync(dirPath, { withFileTypes: true })
 		.filter((dir) => dir.isDirectory())

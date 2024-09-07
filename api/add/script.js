@@ -91,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			return;
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		nameInputTimeout = setTimeout(async () => {
 			loader.style.display = "block";
 
@@ -147,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (nodateCheckbox.checked) {
 			dateInput.removeAttribute("disabled");
 			dateInput.type = "date";
-			// @ts-ignore
+			// @ts-expect-error - zzz
 			dateInput.value = new Date().toISOString().split("T")[0];
 		} else {
 			dateInput.setAttribute("disabled", "true");
@@ -231,8 +232,28 @@ async function getDataForType(type, query) {
 
 			break;
 		}
-		case "book":
+		case "book": {
+			// Return open library search
+			const response = await fetch(`${window.location.href}?type=${type}&query=${query}`, {
+				headers: { Accept: "application/json", "x-proxy-source": "isbn" },
+			});
+
+			const responseData = await response.json();
+
+			suggestions = responseData.docs.map(
+				(
+					/** @type {{ title: string; key: string; cover_i: number; isbn: string[], editions: {docs: { isbn: string[]}[]}[]; }} */ result,
+				) => {
+					return {
+						name: result.title,
+						id: result.editions[0]?.docs[0]?.isbn[0] ?? result.isbn?.[0] ?? "UNKNOWN",
+						poster_path: `http://covers.openlibrary.org/b/id/${result.cover_i}-L.jpg`,
+					};
+				},
+			);
+
 			break;
+		}
 	}
 
 	updateSuggestionList();

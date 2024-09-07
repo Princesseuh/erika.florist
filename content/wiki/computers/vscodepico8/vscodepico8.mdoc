@@ -1,0 +1,142 @@
+---
+  title: "Using VS Code with PICO-8"
+  tagline: "Because indentation is always worth it"
+  navigation:
+    label: "PICO-8 + VS Code"
+    category: computers
+---
+
+I like [PICO-8, the fantasy console by Lexaloffle](https://www.lexaloffle.com/pico-8.php). It's really useful and cute whenever I feel like making small games. It's pretty good
+
+{% image
+	src="./pico8.png"
+	alt="The PICO-8 code editor, its window is really small"
+	class=""
+%}
+The PICO-8 window. It's small
+{% /image %}
+
+However, I despise programming in its window, it's **really** small, promote bad code design due to its restrictions and well, overall isn't that comfortable. Over the years, I got really used to having my code on one screen and the result on the other but this unfortunately isn't possible with PICO-8. I think promoting faster iterations would be really beneficial since it's often used for fast prototyping or jams but hey, I'm not the devs 🤷‍♀️
+
+So, in order to achieve this unofficially, I wrote myself a quick and dirty post-save script to automatically build a .p8 file out of a folder of lua files that can be edited outside PICO-8. Additionally, it reloads PICO-8 so the changes appear instantly! (You can also run it instantly on save in VS Code, see [Auto-reload on save](#auto-reload-on-save))
+
+## Script
+
+```bash title="build.sh"
+#!/bin/bash
+
+result=`
+i=0
+for f in $1/*.lua; do
+    ((i++)) && ((i!=1)) && echo "-->8";
+    cat $f;
+    echo;
+done`
+project_name=`basename "$1"`.p8
+
+sd -f gsm "(?:__lua__)(.*)(?:__gfx__)" "__lua__\nREPLACE\n__gfx__" "$HOME/.lexaloffle/pico-8/carts/$project_name"
+sd -s "REPLACE" "${result}" "$HOME/.lexaloffle/pico-8/carts/$project_name"
+
+sleep 0.2
+
+swaymsg '[class=""] focus' && sleep 0.1 && ydotool key ctrl+r
+```
+
+### Usage
+
+The script takes for sole parameter the folder name to operate in and use it to determine the name of the cart, therefore your folder **must** have the same name as your cart. The script won't create the cart for you, you'll have to create it yourself through PICO-8 or other tools first
+
+The .lua files are added by alphabetic order, a good way to use this is by prefixing your files with numbers, ex: `00-main.lua, 01-visuals.lua etc`. Also the script automatically adds `-->8` between the pages as to make a tab per file in PICO-8, this is harmless and doesn't change behavior in any way, it's purely cosmetical
+
+### Dependencies
+
+For the cart building part
+
+- [sd](https://github.com/chmln/sd)
+
+And for the auto-reload
+
+- Sway
+- [ydotool](https://github.com/ReimuNotMoe/ydotool)
+
+## Syntax coloration and snippets
+
+The script is great, it allows us to work in VS Code but the experience isn't that integrated yet. We don't have coloring, snippets and other goodies
+
+In order to get those in .p8 files there's [this extension](https://marketplace.visualstudio.com/items?itemName=Grumpydev.pico8vscodeeditor) that's available and works perfectly but it won't work out of the box in our case because not only we're not working in .p8 files, we're also missing the markers the extension check for before enabling itself
+
+Let's do a little bit of hacking to fix that:
+
+- Go to the extension folder in your VS Code installation (On Linux that's `~/.vscode/extensions/grumpydev.pico8vscodeeditor-version`)
+- In `syntaxes/lua.tmLanguage.json` remove the `begin` and `end` property in `patterns`
+
+Voilà! The extension now enable itself without needing the markers normally used in .p8 files. Don't forget to set the languages of your .lua files properly in VS Code (see [Auto-assign correct language to .lua files](#auto-assign-correct-language-to-.lua-files) for a way to do this automatically) and you should be up and ready!
+
+## Bonus tips and tricks
+
+### Auto-reload on save
+
+Out of the box VS Code doesn't allow to run actions on save outside of making an extension for it. Luckily, [an extension called Run On Save exist for that](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave)
+
+With the following config added to your workspace settings, the script will automatically run whenever you save, pretty cool huh
+
+```json title="settings.json"
+"emeraldwalk.runonsave": {
+    "commands": [
+        {
+            "match": ".lua",
+            "cmd": "bash ${workspaceFolder}/build.sh ${fileDirname}"
+        }
+    ]
+},
+```
+
+Change `build.sh` for the name you used for the script file. I would recommend avoiding using auto-save with this (or at least, use a bit delay if using it) as it's very easy for PICO-8 to bug out a bit with it
+
+### Auto-assign correct language to .lua files
+
+Thanks to the `files.associations` setting, you can make it so the proper language is used by default for .lua files
+
+```json title="settings.json"
+"files.associations": {
+  "**/*.lua": "pico8p8"
+},
+```
+
+## Windows version
+
+I also built a Windows version using Powershell and AutoHotKey, it doesn't work as well as the Linux version does for some reasons but still, it (mostly) does its job
+
+```powershell
+$projectName = ([io.fileinfo]$args[0]).BaseName
+$fileDir = $args[0] + "/*.lua"
+
+$result = Get-Content $fileDir | Out-String
+
+$p8Path = $env:APPDATA + "/pico-8/carts/inktober/" + $projectName + ".p8"
+
+(Get-Content -path $p8Path -Raw) -replace '(?ms)(?:__lua__)(.*)(?:__gfx__)', "__lua__`n$result`n__gfx__" | Set-Content -Path $p8Path
+
+Start-Sleep -Milliseconds 300
+
+Start-Process .\reload-pico8.exe
+```
+
+And to reload PICO-8, this AHK script was used:
+
+```
+if WinExist("ahk_exe pico8.exe")
+    WinActivate ; use the window found above
+    SendInput, ^{r}
+    WinActivate, ahk_exe Code.exe
+return
+```
+
+The Powershell script assume the AHK script is compiled and saved in the same folder under the name `reload-pico8.exe`
+
+The usage is the same as the Linux version (see [Usage](#usage)) however unlike the Linux version, it doesn't separate the files in multiple PICO-8 tabs
+
+## Possible improvements
+
+- Use only one call to sd, the reason why it uses two is that I couldn't figure out a way to do it in one call that didn't break whenever escape codes were used in the Lua code
+- Remove the two calls to sleep. I don't think they are needed, perhaps a bit of delay is needed but probably not that much on Linux

@@ -9,7 +9,7 @@ const gitInfo = gitInfoRaw.map((info) => {
 	const [file, date, ref] = info.split("|");
 
 	if (!date || !file || !ref) {
-		throw new Error("Couldn't parse file info from " + info);
+		throw new Error(`Couldn't parse file info from ${info}`);
 	}
 
 	return {
@@ -20,12 +20,12 @@ const gitInfo = gitInfoRaw.map((info) => {
 });
 
 function getLastModified(entry: CollectionEntry<"wiki">) {
-	const info = gitInfo.find((info) => info.file.endsWith(entry.id));
+	const info = gitInfo.find((info) => info.file.endsWith(entry.filePath));
 
 	if (import.meta.env.PROD) {
 		if (!info) {
 			throw new Error(
-				`Couldn't find commit information for ${entry.id}. Make sure to create a commit before building`,
+				`Couldn't find commit information for ${entry.filePath}. Make sure to create a commit before building`,
 			);
 		}
 
@@ -68,7 +68,7 @@ async function getWikiNavigation(currentPage: URL): Promise<MenuItem[]> {
 				return {
 					label: item.data.navigation.label ?? item.data.title,
 					link: itemUrl,
-					isCurrent: currentPage.pathname == itemUrl,
+					isCurrent: currentPage.pathname === itemUrl,
 					type: "link" as MenuItem["type"],
 				};
 			},

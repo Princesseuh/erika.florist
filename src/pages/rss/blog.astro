@@ -2,7 +2,7 @@
 export const partial = true;
 
 import { blogFilter, getBaseSiteURL, getURLFromEntry } from "$utils";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 
 const articles = (await getCollection("blog")).filter(blogFilter).sort((a, b) => {
 	return b.data.date.getTime() - a.data.date.getTime();
@@ -45,7 +45,7 @@ function makeOutro() {
 		const end = `]]></content:encoded>
     </item>\n`.trimStart();
 
-		const { Content } = await article.render();
+		const { Content } = await render(article);
 
 		return (
 			<>

@@ -200,7 +200,7 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
 fn check_if_file_exists(client: &reqwest::blocking::Client, path_type: &str, slug: &str) -> bool {
     let response = client
         .get(format!(
-            "https://api.github.com/repos/Princesseuh/erika.florist/contents/src/content/{path_type}/{slug}/{slug}.mdoc",
+            "https://api.github.com/repos/Princesseuh/erika.florist/contents/content/{path_type}/{slug}/{slug}.mdoc",
             path_type = path_type,
             slug = slug
         ))
@@ -335,7 +335,21 @@ fn proxy_request(_req: Request) -> Result<Response<Body>, Error> {
                 .header("Content-Type", "application/json")
                 .body(response_body.into())?);
         }
-        // TODO: Add books
+        "isbn" => {
+            let response = client
+                .get(format!(
+                    "https://openlibrary.org/search.json?title={query}&fields=key,title,isbn,cover_i,editions,editions.isbn",
+                    query = query_params.query.replace(" ", "+")
+                ))
+                .send()?;
+
+            let response_body = response.text().unwrap();
+
+            return Ok(Response::builder()
+                .status(StatusCode::OK)
+                .header("Content-Type", "application/json")
+                .body(response_body.into())?);
+        }
         _ => {
             return Ok(Response::builder()
                 .status(StatusCode::BAD_REQUEST)
@@ -495,7 +509,7 @@ fn post_request(
 
     let req = client
         .put(format!(
-            "https://api.github.com/repos/Princesseuh/erika.florist/contents/src/content/{path}"
+            "https://api.github.com/repos/Princesseuh/erika.florist/contents/content/{path}"
         ))
         .header("Accept", "application/vnd.github+json")
         .header("User-Agent", "Princesseuh")

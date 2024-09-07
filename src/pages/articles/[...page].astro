@@ -11,9 +11,10 @@ export const getStaticPaths = (async ({ paginate }) => {
 	return [
 		...paginate(blogCollection.concat().sort(blogDateSort).filter(blogFilter), {
 			pageSize: ARTICLE_PAGE_SIZE,
+			props: { entry: undefined },
 		}),
 		...blogCollection.map((entry) => ({
-			params: { page: entry.slug },
+			params: { page: entry.id },
 			props: { entry: entry },
 		})),
 	];

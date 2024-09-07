@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		const timeFormat = new Intl.RelativeTimeFormat("en");
 		const dateElements = document.querySelectorAll<HTMLElement>("[data-date]");
 
-		dateElements.forEach((element) => {
+		for (const element of dateElements) {
 			if (element.dataset.date === "Invalid Date" || element.dataset.date === undefined) {
-				return;
+				continue;
 			}
 
 			const date = new Date(element.dataset.date);
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 
 			element.title = date.toString();
-		});
+		}
 	}
 
 	makeDatesRelative();

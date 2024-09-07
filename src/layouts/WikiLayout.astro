@@ -5,14 +5,14 @@ import TableOfContent from "$components/shared/TableOfContent.astro";
 import { getLastModified, getWikiNavigation } from "$data/wiki";
 import BaseLayout from "$layouts/BaseLayout.astro";
 import { readableDate } from "$utils";
-import type { CollectionEntry } from "astro:content";
+import { render, type CollectionEntry } from "astro:content";
 
 interface Props {
 	wikiItem: CollectionEntry<"wiki">;
 }
 
 const { wikiItem } = Astro.props;
-const { Content, headings } = await wikiItem.render();
+const { Content, headings } = await render(wikiItem);
 const lastModified = getLastModified(wikiItem);
 ---
 

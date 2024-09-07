@@ -47,4 +47,8 @@ export default defineConfig({
 		},
 		db(),
 	],
+	experimental: {
+		contentIntellisense: true,
+		contentLayer: true,
+	},
 });

@@ -1,8 +1,11 @@
 import { getBaseSiteURL } from "$utils";
 import type { LocalImageService } from "astro";
 import sharpService from "astro/assets/services/sharp";
-import { readFileSync } from "fs";
+import { shorthash } from "astro/runtime/server/shorthash.js";
+import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import sharp from "sharp";
+
+const CACHE_PATH = "./node_modules/.astro/placeholders/";
 
 function getBitmapDimensions(
 	imgWidth: number,
@@ -40,7 +43,6 @@ export interface LocalImageServiceWithPlaceholder extends LocalImageService {
 const service: LocalImageServiceWithPlaceholder = {
 	...sharpService,
 	async getHTMLAttributes(options, imageConfig) {
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		const attributes = await sharpService.getHTMLAttributes!(options, imageConfig);
 
 		// Use the original dimensions of the image for the width and height attributes. Maybe that Astro should do this by default? Not sure, and I can only blame myself.
@@ -53,10 +55,19 @@ const service: LocalImageServiceWithPlaceholder = {
 	},
 	generatePlaceholder: async (src: string, width: number, height: number, quality = 100) => {
 		const placeholderDimensions = getBitmapDimensions(width, height, quality);
+		const hash = shorthash(src + width + height + quality);
+
+		if (import.meta.env.PROD) {
+			try {
+				return readFileSync(CACHE_PATH + hash, "utf-8");
+			} catch {
+				/* empty */
+			}
+		}
 
 		// HACK: It'd be nice to be able to get a Buffer out from an ESM import or `getImage`, wonder how we could do that..
 		const originalFileBuffer = import.meta.env.PROD
-			? readFileSync("./dist/" + src)
+			? readFileSync(`./dist/${src}`)
 			: await fetch(new URL(src, getBaseSiteURL()))
 					.then((response) => response.arrayBuffer())
 					.then((buffer) => Buffer.from(buffer));
@@ -71,9 +82,16 @@ const service: LocalImageServiceWithPlaceholder = {
 			.blur()
 			.toBuffer({ resolveWithObject: true });
 
-		return `data:image/${placeholderBuffer.info.format};base64,${placeholderBuffer.data.toString(
+		const result = `data:image/${placeholderBuffer.info.format};base64,${placeholderBuffer.data.toString(
 			"base64",
 		)}`;
+
+		if (import.meta.env.PROD) {
+			mkdirSync(CACHE_PATH, { recursive: true });
+			writeFileSync(CACHE_PATH + hash, result);
+		}
+
+		return result;
 	},
 };
 

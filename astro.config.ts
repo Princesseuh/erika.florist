@@ -2,7 +2,7 @@ import markdoc from "@astrojs/markdoc";
 import tailwind from "@astrojs/tailwind";
 import expressiveCode from "astro-expressive-code";
 import { defineConfig } from "astro/config";
-import { rename } from "fs/promises";
+import { rename } from "node:fs/promises";
 
 import db from "@astrojs/db";
 
@@ -46,6 +46,5 @@ export default defineConfig({
 	],
 	experimental: {
 		contentIntellisense: true,
-		contentLayer: true,
 	},
 });

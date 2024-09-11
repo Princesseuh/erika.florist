@@ -10,5 +10,6 @@
 			"$utils": ["src/utils/index.ts"]
 		}
 	},
+	"include": ["**/*", "**/*.astro"],
 	"exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist", "target"]
 }

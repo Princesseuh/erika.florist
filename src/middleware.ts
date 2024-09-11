@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { getBaseSiteURL } from "$utils";
 import { defineMiddleware } from "astro:middleware";
 import { decode } from "tiny-decode";

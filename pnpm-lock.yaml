@@ -17,6 +17,9 @@ dependencies:
   '@astrojs/markdoc':
     specifier: 1.0.0-alpha.0
     version: 1.0.0-alpha.0(astro@5.0.0-alpha.0)
+  '@types/eslint__js':
+    specifier: ^8.42.3
+    version: 8.42.3
   '@types/igdb-api-node':
     specifier: ^5.0.3
     version: 5.0.3
@@ -1733,7 +1736,12 @@ packages:
     dependencies:
       '@types/estree': 1.0.5
       '@types/json-schema': 7.0.15
-    dev: true
+
+  /@types/eslint__js@8.42.3:
+    resolution: {integrity: sha512-alfG737uhmPdnvkrLdZLcEKJ/B8s9Y4hrZ+YAdzUeoArBlSUERA2E87ROfOaS4jd/C45fzOoZzidLc1IPwLqOw==}
+    dependencies:
+      '@types/eslint': 9.6.0
+    dev: false
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}

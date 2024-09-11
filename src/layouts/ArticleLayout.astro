@@ -2,7 +2,9 @@
 import ExternalLink from "$components/ExternalLink.astro";
 import ContentHeader from "$components/shared/ContentHeader.astro";
 import TableOfContent from "$components/shared/TableOfContent.astro";
+import Tags from "$components/shared/Tags.astro";
 import BaseLayout from "$layouts/BaseLayout.astro";
+import { readableDate } from "$utils";
 import type { CollectionEntry } from "astro:content";
 import { render } from "astro:content";
 
@@ -14,21 +16,21 @@ const { article } = Astro.props;
 const { Content, headings } = await render(article);
 ---
 
-<BaseLayout title={article.data.title} description={article.data.description}>
-	{
-		article.data.featured ? (
-			<div class="my-0 mt-10 bg-accent-valencia text-white-sugar-cane">
-				<div class="mx-auto w-centered-width">
-					<h1 class="my-0 mb-4 py-4 text-6xl">{article.data.title}</h1>
-				</div>
+<BaseLayout title={article.data.title} description={article.data.tagline}>
+	<div id="title" class="mb-6 mt-0 bg-accent-valencia text-white-sugar-cane">
+		<div class="mx-auto w-centered-width py-12">
+			<h1 class="my-0 text-6xl">{article.data.title}</h1>
+			{article.data.tagline && <h2 class="m-0 mt-4 text-xl">{article.data.tagline}</h2>}
+			<div class="">
+				{readableDate(article.data.date)}
+				<Tags tags={article.data.tags} accentBackground />
 			</div>
-		) : (
-			<Fragment />
-		)
-	}
+		</div>
+	</div>
+
 	<section class="grid gap-x-4 sm:gap-x-0 md:grid-cols-layout-tablet xl:grid-cols-layout">
 		<aside
-			class="mt-36 hidden p-4 transition-opacity duration-100 ease-linear hover:opacity-100 sm:block sm:pr-0 xl:mr-0"
+			class="mt-8 hidden p-4 transition-opacity duration-100 ease-linear hover:opacity-100 sm:block sm:pr-0 xl:mr-0"
 		>
 			{
 				headings.length > 0 && (
@@ -38,7 +40,7 @@ const { Content, headings } = await render(article);
 		</aside>
 
 		<article class="prose mx-auto w-centered-width">
-			<ContentHeader item={article} includeTags includeTitle={!article.data.featured} />
+			<ContentHeader item={article} includeTags includeTitle={false} />
 			<Content components={{ a: ExternalLink }} />
 		</article>
 	</section>

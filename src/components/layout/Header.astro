@@ -3,18 +3,18 @@ import { headerMenu } from "$data/sidebarMenu";
 import Logo from "./Logo.astro";
 ---
 
-<header class="flex items-center justify-around">
+<header class="flex items-center justify-around py-4">
 	<section>
 		<Logo />
 	</section>
-	<section class="flex gap-x-5 text-2xl font-[550]">
+	<section class="grid grid-cols-2 gap-x-10 text-xl font-[550]">
 		{
 			headerMenu.map((item) => (
 				<a
 					href={`/${item}`}
 					class:list={[
 						item === "wiki" ? "hover:bg-violet-ultra" : "hover:bg-accent-valencia",
-						"p-6 tracking-wide text-black-charcoal hover:text-white-sugar-cane",
+						"tracking-wider text-black-charcoal hover:text-white-sugar-cane",
 					]}
 				>
 					{item}

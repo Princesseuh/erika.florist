@@ -6,7 +6,7 @@ export function getURLFromEntry(
 ): string {
 	switch (item.data.type) {
 		case "blog":
-			return `/articles/${item.id}`;
+			return `/articles/${item.id}#title`;
 		case "wiki":
 			return `/wiki/${item.data.navigation.category}/${item.id}`;
 		case "project":

@@ -1,7 +1,5 @@
 ---
-import { readableDate } from "$utils";
 import type { CollectionEntry } from "astro:content";
-import Tags from "./Tags.astro";
 
 interface Props {
 	item: CollectionEntry<"blog"> | CollectionEntry<"projects"> | CollectionEntry<"wiki">;
@@ -15,20 +13,3 @@ const isArticle = (item: Props["item"]): item is CollectionEntry<"blog"> => {
 
 const { item, includeTags, includeTitle } = Astro.props;
 ---
-
-<header class="mb-14">
-	{
-		includeTitle && (
-			<h1 class="mb-4 mt-0 bg-accent-valencia text-6xl text-white-sugar-cane">{item.data.title}</h1>
-		)
-	}
-	{item.data.tagline && <h2 class="relative top-[-5px] m-0 text-xl">{item.data.tagline}</h2>}
-	{
-		isArticle(item) && includeTags && (
-			<div class="">
-				{readableDate(item.data.date)}
-				<Tags tags={item.data.tags} />
-			</div>
-		)
-	}
-</header>

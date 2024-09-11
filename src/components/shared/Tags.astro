@@ -1,9 +1,10 @@
 ---
 interface Props {
 	tags: string[];
+	accentBackground?: boolean;
 }
 
-const { tags } = Astro.props;
+const { tags, accentBackground } = Astro.props;
 
 const hasTags = tags.length > 0;
 ---
@@ -16,7 +17,12 @@ const hasTags = tags.length > 0;
 				{tags
 					.map((tag) => (
 						<a
-							class="text-accent-valencia hover:bg-accent-valencia hover:text-white-sugar-cane group-focus-within:text-white-sugar-cane focus:group-focus-within:text-black-charcoal group-hover:text-white-sugar-cane hover:group-hover:text-black-charcoal"
+							class:list={[
+								accentBackground
+									? "text-white-sugar-cane hover:text-black-charcoal"
+									: "text-accent-valencia hover:bg-accent-valencia hover:text-white-sugar-cane",
+								"group-focus-within:text-white-sugar-cane focus:group-focus-within:text-black-charcoal group-hover:text-white-sugar-cane hover:group-hover:text-black-charcoal",
+							]}
 							href={"/articles/tags/" + tag + "/"}
 						>
 							{tag}

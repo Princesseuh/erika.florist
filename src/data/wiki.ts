@@ -1,6 +1,6 @@
 import { getBaseSiteURL, getURLFromEntry } from "$utils";
 import { getCollection, type CollectionEntry } from "astro:content";
-import { execSync } from "child_process";
+import { execSync } from "node:child_process";
 import type { MenuItem } from "./sidebarMenu";
 import { wikiCategories, type WikiCategory } from "./wikiCategories";
 

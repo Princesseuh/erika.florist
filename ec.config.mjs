@@ -1,5 +1,9 @@
+// @ts-check
+
+/**
+ * @type {import('expressive-code').ExpressiveCodeConfig}
+ */
 export default {
-	themes: ["material-theme-darker"],
 	plugins: [
 		{
 			name: "custom-style",
@@ -18,6 +22,12 @@ export default {
             font-weight: initial;
             padding-left: 1rem;
             color: #fff;
+          }
+          @media (min-width: 768px) {
+            .expressive-code {
+              margin-left: -1rem;
+              margin-right: -1rem;
+            }
           }
           `,
 			hooks: {},

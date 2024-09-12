@@ -168,6 +168,10 @@ export default {
 						backgroundColor: theme("colors.accent-valencia"),
 					},
 
+					".expressive-code": {
+						marginBottom: "1rem",
+					},
+
 					"& > h1, & > h2": {
 						marginTop: "1.3rem",
 						marginBottom: ".6rem",

@@ -14,6 +14,8 @@ interface Props {
 
 const { article } = Astro.props;
 const { Content, headings } = await render(article);
+
+const hasSidenote = article.body.includes("{% sidenote");
 ---
 
 <BaseLayout title={article.data.title} description={article.data.tagline}>
@@ -28,9 +30,14 @@ const { Content, headings } = await render(article);
 		</div>
 	</div>
 
-	<section class="grid gap-x-4 sm:gap-x-0 md:grid-cols-layout-tablet xl:grid-cols-layout">
+	<section
+		class:list={[
+			hasSidenote ? "md:grid-cols-layout-tablet-sidenote" : "md:grid-cols-layout-tablet",
+			"grid gap-x-4 lg:gap-x-0 xl:grid-cols-layout",
+		]}
+	>
 		<aside
-			class="mt-8 hidden p-4 transition-opacity duration-100 ease-linear hover:opacity-100 sm:block sm:pr-0 xl:mr-0"
+			class="mt-8 hidden p-4 transition-opacity duration-100 ease-linear hover:opacity-100 xl:mr-0 xl:block"
 		>
 			{
 				headings.length > 0 && (
@@ -39,7 +46,7 @@ const { Content, headings } = await render(article);
 			}
 		</aside>
 
-		<article class="prose mx-auto w-centered-width">
+		<article class="prose relative mx-auto w-centered-width">
 			<ContentHeader item={article} includeTags includeTitle={false} />
 			<Content components={{ a: ExternalLink }} />
 		</article>

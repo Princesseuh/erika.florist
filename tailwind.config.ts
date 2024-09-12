@@ -59,7 +59,8 @@ export default {
 			},
 			gridTemplateColumns: {
 				layout: "minmax(0, 0.25fr) minmax(0, 0.50fr);",
-				"layout-tablet": "minmax(0, 0.25fr) minmax(0, 0.75fr);",
+				"layout-tablet": "minmax(0, 1fr);",
+				"layout-tablet-sidenote": "minmax(0, 0.75fr);",
 			},
 		},
 	},
@@ -186,7 +187,7 @@ export default {
 						marginTop: "1.4rem",
 						marginBottom: "1rem",
 						textAlign: "center",
-						"@apply sm:mx-8 mx-0": {},
+						"@apply xl:-mx-4 mx-0": {},
 					},
 
 					figcaption: {

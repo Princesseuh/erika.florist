@@ -8,6 +8,8 @@ slug: "typing-config-files"
 
 Or maybe not, whatever fits your needs. Personally, I think that definitely not enough people are using TypeScript for their config files, or maybe not a lot of people know that you even can in the first place!
 
+**This article is somewhat severely outdated, as most of the tools mentioned now support using `.ts` files directly, or have types accessible easily, but I'm keeping it around for posterity.**
+
 Luckily, we're entering an era of many projects having their config files typechecked as a first-class option, for instance [Vite supports it through three(!) different methods](https://vitejs.dev/config/#config-intellisense), [Astro](https://astro.build) ships typechecked config files in all of its starters and most [projects Anthony Fu has worked on](https://antfu.me/projects) have typechecked config files, [himself being a proponent of typing your config files](https://antfu.me/notes#type-your-config)
 
 However, not every project has caught up yet. Have you ever tried writing by hand an ESLint or Prettier config only to realize that you don't know half of the settings (and their values) it can takes? Well, TypeScript can, and will, help you with that!

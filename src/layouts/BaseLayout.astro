@@ -15,9 +15,10 @@ interface Props {
 	description?: string | undefined;
 	navItems?: MenuItem[];
 	preloadCatalogue?: boolean;
+	includeAboutInHeader?: boolean;
 }
 
-const { title, description, navItems, preloadCatalogue } = Astro.props;
+const { title, description, navItems, preloadCatalogue, includeAboutInHeader } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -89,7 +90,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 					: theme === "system" && isSystemDark && document.documentElement.classList.add("dark");
 		</script>
 		<div id="app" class="bg-white-sugar-cane">
-			<Header />
+			<Header {includeAboutInHeader} />
 
 			<main>
 				<slot />

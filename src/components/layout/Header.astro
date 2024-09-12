@@ -1,25 +1,40 @@
 ---
 import { headerMenu } from "$data/sidebarMenu";
 import Logo from "./Logo.astro";
+
+interface Props {
+	includeAboutInHeader?: boolean | undefined;
+}
+
+const { includeAboutInHeader } = Astro.props;
 ---
 
-<header class="flex items-center justify-around py-4">
-	<section>
+<header class="grid grid-cols-layout items-center bg-accent-valencia py-4">
+	<section class="ml-4 text-white-sugar-cane">
 		<Logo />
-	</section>
-	<section class="grid grid-cols-2 gap-x-10 text-xl font-[550]">
 		{
-			headerMenu.map((item) => (
-				<a
-					href={`/${item}`}
-					class:list={[
-						item === "wiki" ? "hover:bg-violet-ultra" : "hover:bg-accent-valencia",
-						"tracking-wider text-black-charcoal hover:text-white-sugar-cane",
-					]}
-				>
-					{item}
-				</a>
-			))
+			includeAboutInHeader && (
+				<section class="text-sm">
+					Currently employed at <a href="https://astro.build">Astro</a>. I thrive in high-impact but
+					often overlooked areas, such as editor tooling.
+				</section>
+			)
 		}
+	</section>
+	<section class="mx-auto flex w-centered-width justify-end">
+		<section class="grid grid-cols-2 gap-x-10 justify-self-end text-xl font-[550]">
+			{
+				headerMenu.map((item) => (
+					<a
+						href={`/${item}`}
+						class:list={[
+							"p-1 tracking-wider text-white-sugar-cane hover:bg-white-sugar-cane hover:text-accent-valencia",
+						]}
+					>
+						{item}
+					</a>
+				))
+			}
+		</section>
 	</section>
 </header>

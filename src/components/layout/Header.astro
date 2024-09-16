@@ -9,7 +9,7 @@ interface Props {
 const { includeAboutInHeader } = Astro.props;
 ---
 
-<header class="grid grid-cols-layout items-center bg-accent-valencia py-4">
+<header class="grid h-[125px] grid-cols-layout bg-accent-valencia py-4">
 	<section class="ml-4 text-white-sugar-cane">
 		<Logo />
 		{
@@ -21,8 +21,8 @@ const { includeAboutInHeader } = Astro.props;
 			)
 		}
 	</section>
-	<section class="mx-auto flex w-centered-width justify-end">
-		<section class="grid grid-cols-2 gap-x-10 justify-self-end text-xl font-[550]">
+	<section class="mx-auto flex w-centered-width items-center justify-end">
+		<section class="grid h-min grid-cols-2 gap-x-10 justify-self-end text-xl font-[550]">
 			{
 				headerMenu.map((item) => (
 					<a

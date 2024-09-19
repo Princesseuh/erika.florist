@@ -13,7 +13,7 @@ const { article } = Astro.props;
 <section
 	class:list={[
 		article.data.featured
-			? "bg-orange-carrot bg-opacity-10"
+			? "bg-orange-carrot/[.080]"
 			: "border border-solid border-accent-valencia/10",
 		"group mb-3 w-full break-inside-avoid p-6 focus-within:bg-accent-valencia focus-within:text-white-sugar-cane hover:bg-accent-valencia hover:text-white-sugar-cane",
 	]}

@@ -53,9 +53,7 @@ export default tseslint.config(
 		},
 	},
 
-	// astro-eslint-plugin's types are not up to date
-	// https://github.com/ota-meshi/eslint-plugin-astro/issues/411
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+	// Astro
 	...eslintPluginAstro.configs.recommended,
 
 	// Remove some safety rules around any for various reasons

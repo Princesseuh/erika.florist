@@ -58,6 +58,7 @@ export default {
 				"max-masonry": "4 350px",
 			},
 			gridTemplateColumns: {
+				"header-xl": "minmax(0, 0.30fr) minmax(0, 0.45fr);",
 				layout: "minmax(0, 0.25fr) minmax(0, 0.50fr);",
 				"layout-tablet": "minmax(0, 1fr);",
 				"layout-tablet-sidenote": "minmax(0, 0.75fr);",
@@ -207,6 +208,20 @@ export default {
 						"@apply text-subtle-charcoal": {},
 					},
 
+					blockquote: {
+						margin: "0",
+						padding: "0.25rem",
+						paddingLeft: "1rem",
+						"@apply bg-accent-valencia bg-opacity-10": {},
+
+						borderLeft: "5px solid",
+						borderColor: theme("colors.accent-valencia"),
+
+						"& > p": {
+							margin: "0",
+						},
+					},
+
 					"li>p": {
 						marginBottom: ".6rem",
 					},
@@ -233,6 +248,20 @@ export default {
 			addUtilities({
 				".all-unset": {
 					all: "unset",
+				},
+			});
+		}),
+		plugin(({ addComponents, theme }) => {
+			addComponents({
+				".button-style-bg-accent": {
+					backgroundColor: theme("colors.accent-valencia"),
+					color: theme("colors.white-sugar-cane"),
+					padding: "0.25rem",
+					fontWeight: "600",
+					"&:hover": {
+						color: theme("colors.accent-valencia"),
+						backgroundColor: theme("colors.white-sugar-cane"),
+					},
 				},
 			});
 		}),

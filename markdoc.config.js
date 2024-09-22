@@ -36,6 +36,7 @@ export default defineMarkdocConfig({
 				...nodes.image.attributes,
 				src: { type: String },
 				figureProps: { type: Object },
+				loading: { type: String },
 			},
 			children: ["text"],
 			render: component("./src/components/content/Image.astro"),

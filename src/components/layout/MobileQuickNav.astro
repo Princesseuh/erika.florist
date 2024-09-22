@@ -5,10 +5,7 @@ import { headerMenu } from "$data/sidebarMenu";
 <div class="mt-4 flex max-w-full flex-wrap gap-x-4">
 	{
 		headerMenu.map((item) => (
-			<a
-				href={`/${item}`}
-				class="bg-accent-valencia p-2 text-lg font-semibold text-white-sugar-cane"
-			>
+			<a href={`/${item}`} class="button-style-bg-accent p-2 text-lg">
 				{item}
 			</a>
 		))

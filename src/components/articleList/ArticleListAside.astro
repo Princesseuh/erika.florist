@@ -2,6 +2,10 @@
 import { blogFilter } from "$utils";
 import { getCollection } from "astro:content";
 
+interface Props {
+	showAllButton?: boolean | undefined;
+}
+
 const articles = await getCollection("blog");
 const tags: [string, number][] = [
 	...articles
@@ -20,33 +24,41 @@ const years: [string, number][] = [
 ].sort((a, b) => {
 	return b[0] - a[0];
 });
+
+const { showAllButton } = Astro.props;
 ---
 
-<aside class="">
-	<section>
-		<h2 class="">Tags</h2>
-		<ul class="m-0 list-none p-0">
+<aside class="my-8 flex-grow-0 basis-1/5">
+	<div class="sticky top-4 flex flex-col gap-y-6">
+		{
+			showAllButton ? (
+				<a
+					class="inline w-fit bg-accent-valencia p-1 font-semibold text-white-sugar-cane hover:bg-white-sugar-cane hover:text-accent-valencia"
+					href="/articles"
+				>
+					See all
+				</a>
+			) : (
+				<div />
+			)
+		}
+		<ul class="m-0 flex list-none flex-wrap gap-1 p-0">
 			{
 				tags.map((tag) => (
-					<li class="inline bg-accent-valencia text-white-sugar-cane">
-						<a class="text-white-sugar-cane" href={"/articles/tags/" + tag[0] + "/"}>{tag[0]}</a>
-						&nbsp;({tag[1]})
-					</li>
-					<>{", "}</>
+					<a class="button-style-bg-accent inline" href={"/articles/tags/" + tag[0] + "/"}>
+						<li>{tag[0]}</li>
+					</a>
 				))
 			}
 		</ul>
-	</section>
-	<section>
-		<h2 class="">Year</h2>
-		<ul class="">
+		<ul class="m-0 flex list-none flex-wrap gap-1 p-0">
 			{
 				years.map((year) => (
-					<li>
-						<a href={"/articles/years/" + year[0] + "/"}>{year[0]}</a>&nbsp;({year[1]})
-					</li>
+					<a class="button-style-bg-accent inline" href={"/articles/years/" + year[0] + "/"}>
+						<li>{year[0]}</li>
+					</a>
 				))
 			}
 		</ul>
-	</section>
+	</div>
 </aside>

@@ -25,4 +25,4 @@ const { page } = Astro.props;
 const { tag } = Astro.params;
 ---
 
-<ArticleListLayout page={page} title={`Articles tagged ${tag}`} />
+<ArticleListLayout page={page} title={tag} showAllButton />

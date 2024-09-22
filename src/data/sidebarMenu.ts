@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 export const headerMenu = ["articles", "projects", "wiki", "catalogue"] as const;
 
+export const blurb =
+	'Currently employed at <a href="https://astro.build">Astro</a>. I thrive in high-impact but often overlooked areas, such as editor tooling.';
+
 export type MenuItem = MenuItemLink | MenuItemHeader;
 
 export interface MenuItemLink {

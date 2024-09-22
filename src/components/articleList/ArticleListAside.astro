@@ -25,12 +25,14 @@ const years: [string, number][] = [
 <aside class="">
 	<section>
 		<h2 class="">Tags</h2>
-		<ul class="">
+		<ul class="m-0 list-none p-0">
 			{
 				tags.map((tag) => (
-					<li>
-						<a href={"/articles/tags/" + tag[0] + "/"}>{tag[0]}</a>&nbsp;({tag[1]})
+					<li class="inline bg-accent-valencia text-white-sugar-cane">
+						<a class="text-white-sugar-cane" href={"/articles/tags/" + tag[0] + "/"}>{tag[0]}</a>
+						&nbsp;({tag[1]})
 					</li>
+					<>{", "}</>
 				))
 			}
 		</ul>

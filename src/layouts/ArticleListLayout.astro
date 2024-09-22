@@ -7,16 +7,16 @@ import type { CollectionEntry } from "astro:content";
 
 interface Props {
 	page: Page<CollectionEntry<"blog">>;
-	title: string;
+	title?: string;
 }
 
 const { page, title } = Astro.props;
 ---
 
 <BaseLayout title={title}>
-	<article class="">
+	<article class="flex gap-x-4">
 		<div class="">
-			<h2 class="">{title}</h2>
+			{title ?? <h2 class="">{title}</h2>}
 			{page.data.map((item) => <ArticlePreview article={item} />)}
 			<div>
 				{page.url.prev && <a href={page.url.prev}>Newer posts</a>}

@@ -1,5 +1,7 @@
 ---
+import MobileQuickNav from "$components/layout/MobileQuickNav.astro";
 import ArticlePreview from "$components/shared/ArticlePreview.astro";
+import { blurb } from "$data/sidebarMenu";
 import { getLastModified } from "$data/wiki";
 import BaseLayout from "$layouts/BaseLayout.astro";
 import { blogFilter, getURLFromEntry, readableDate } from "$utils";
@@ -23,10 +25,19 @@ const wikiItems = (await getCollection("wiki"))
 const featuredProjects = (await getCollection("projects"))
 	.filter((project) => project.data.featured)
 	.slice(0, 3);
+
+function lowercaseFirstCharacter(text: string) {
+	return `${text[0]?.toLowerCase()}${text.slice(1)}`;
+}
 ---
 
 <BaseLayout includeAboutInHeader>
-	<div class="m-4 max-w-screen-3xl columns-masonry gap-x-3 lg:columns-max-masonry">
+	<div class="p-4 sm:hidden">
+		<h1 class="m-0 text-accent-valencia">Hi! I'm Erika.</h1>
+		<Fragment set:html={"I'm " + lowercaseFirstCharacter(blurb)} />
+		<MobileQuickNav />
+	</div>
+	<div class="m-4 max-w-screen-3xl columns-masonry gap-x-3 lg:columns-max-masonry 2xl:mx-auto">
 		{articles.map((article) => <ArticlePreview article={article} />)}
 		<section class="break-inside-avoid pb-3 pt-[1px] text-black-charcoal">
 			<ul class="m-0 p-0">

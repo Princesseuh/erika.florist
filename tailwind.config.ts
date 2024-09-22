@@ -181,6 +181,10 @@ export default {
 						marginBottom: ".6rem",
 					},
 
+					"& > h1, & > h2, & > h3, & > h3, & > h4, & > h5": {
+						"@apply hyphens-auto sm:hyphens-none": {},
+					},
+
 					"img:not([data-favicon])": {
 						maxWidth: "100%",
 						height: "auto",

@@ -35,8 +35,8 @@ function lowercaseFirstCharacter(text: string) {
 	<div class="p-4 sm:hidden">
 		<h1 class="m-0 text-accent-valencia">Hi! I'm Erika.</h1>
 		<Fragment set:html={"I'm " + lowercaseFirstCharacter(blurb)} />
-		<MobileQuickNav />
 	</div>
+	<MobileQuickNav />
 	<div class="m-4 max-w-screen-3xl columns-masonry gap-x-3 lg:columns-max-masonry 2xl:mx-auto">
 		{articles.map((article) => <ArticlePreview article={article} />)}
 		<section class="break-inside-avoid pb-3 pt-[1px] text-black-charcoal">

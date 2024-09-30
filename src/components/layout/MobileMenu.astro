@@ -1,14 +1,9 @@
 ---
 import Icon from "$components/Icon.astro";
-import Logo from "./Logo.astro";
 ---
 
-<div
-	class="bg-mobile-menu text-isabelline fixed bottom-0 flex h-12 w-full items-center justify-between px-3 sm:hidden"
->
-	<Logo />
-
-	<div id="mobile-side-toggle" class="">
+<div class="fixed bottom-0 flex h-12 w-full items-center px-3 sm:hidden">
+	<div id="mobile-side-toggle" class="justify-end">
 		<Icon name="menu" size={28} title="Toggle mobile menu" />
 	</div>
 </div>

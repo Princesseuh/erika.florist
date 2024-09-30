@@ -26,7 +26,10 @@ const { includeAboutInHeader } = Astro.props;
 		<section class="grid h-min grid-cols-2 gap-x-10 justify-self-end text-xl font-[550]">
 			{
 				headerMenu.map((item) => (
-					<a href={`/${item}`} class:list={["button-style-bg-accent p-1 tracking-wider"]}>
+					<a
+						href={`/${item}`}
+						class:list={["button-style-bg-accent bg-transparent p-1 tracking-wider"]}
+					>
 						{item}
 					</a>
 				))

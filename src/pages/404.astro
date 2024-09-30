@@ -1,19 +1,23 @@
 ---
+import Dinkus from "$components/content/Dinkus.astro";
 import BaseLayout from "$layouts/BaseLayout.astro";
 ---
 
-<BaseLayout>
-	<article class="">
-		<div class="">404</div>
-		<p>This page does not exist</p>
+<BaseLayout includeAboutInHeader>
+	<article class="flex justify-around p-24">
+		<div class="flex flex-col justify-around">
+			<h2 class="m-0 text-7xl">404</h2>
 
-		<p>
-			If you believe that it should, please <a
-				href="https://github.com/Princesseuh/erika.florist/issues"
-				>create an issue
-			</a>!
-		</p>
+			<section>
+				<p>
+					This page does not exist.<br />If you believe that it should, please <a
+						href="https://github.com/Princesseuh/erika.florist/issues">create an issue</a
+					>!
+				</p>
 
-		<a href="/">Click here to go back to the home page</a>
+				<a href="/" class="button-style-bg-accent">Click here to go back to the home page</a>
+			</section>
+		</div>
+		<Dinkus classes="w-56 h-56 fill-accent-valencia" />
 	</article>
 </BaseLayout>

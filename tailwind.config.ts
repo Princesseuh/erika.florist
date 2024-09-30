@@ -210,6 +210,7 @@ export default {
 
 					blockquote: {
 						margin: "0",
+						marginBottom: "1rem",
 						padding: "0.25rem",
 						paddingLeft: "1rem",
 						"@apply bg-accent-valencia bg-opacity-10": {},
@@ -219,6 +220,12 @@ export default {
 
 						"& > p": {
 							margin: "0",
+						},
+						"& > p:has(> cite)": {
+							marginTop: "0.5rem",
+						},
+						"& > p:has(> cite)::before": {
+							content: "'— '",
 						},
 					},
 

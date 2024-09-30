@@ -23,6 +23,9 @@ if (href.startsWith("http")) {
 			duration: "1y",
 			type: "text",
 			directory: "node_modules/.cache",
+			fetchOptions: {
+				signal: import.meta.env.DEV ? AbortSignal.timeout(2000) : null,
+			},
 		});
 		const { document } = parseHTML(html);
 		const links = document.querySelectorAll("link");
@@ -51,6 +54,9 @@ if (href.startsWith("http")) {
 			duration: "1y",
 			type: "buffer",
 			directory: "node_modules/.cache",
+			fetchOptions: {
+				signal: import.meta.env.DEV ? AbortSignal.timeout(2000) : null,
+			},
 		})) as Buffer;
 
 		if (isICO(faviconBuffer)) {
@@ -68,8 +74,14 @@ if (href.startsWith("http")) {
 
 		faviconUrl = `data:${processedFavicon.info.format};base64,${processedFavicon.data.toString("base64")}`;
 	} catch (e) {
-		if (e instanceof Error && Object.prototype.hasOwnProperty.call(e, "message")) {
-			if (import.meta.env.DEV) console.log(e.message);
+		if (import.meta.env.DEV) {
+			if (e instanceof DOMException && e.name == "AbortError") {
+				console.log("Could not fetch favicon before timeout, network is probably unstable.");
+			}
+
+			if (e instanceof Error && Object.prototype.hasOwnProperty.call(e, "message")) {
+				console.log(e.message);
+			}
 		}
 	}
 }

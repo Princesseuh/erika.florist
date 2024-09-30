@@ -17,16 +17,16 @@
 	"devDependencies": {
 		"@astrojs/tailwind": "5.1.1",
 		"@types/eslint": "^9.6.1",
-		"@types/node": "^22.5.5",
+		"@types/node": "^22.7.4",
 		"@types/prettier": "^2.7.3",
 		"astro": "5.0.0-beta.1",
-		"eslint": "^9.10.0",
+		"eslint": "^9.11.1",
 		"eslint-plugin-astro": "^1.2.4",
 		"kleur": "^4.1.5",
 		"prettier": "^3.3.3",
 		"prettier-plugin-astro": "^0.14.1",
 		"typescript": "^5.6.2",
-		"typescript-eslint": "^8.6.0"
+		"typescript-eslint": "^8.8.0"
 	},
 	"packageManager": "pnpm@8.10.0",
 	"dependencies": {
@@ -36,21 +36,21 @@
 		"@astrojs/markdoc": "0.11.4",
 		"@types/eslint__js": "^8.42.3",
 		"@types/igdb-api-node": "^5.0.3",
-		"@typescript-eslint/parser": "^8.6.0",
+		"@typescript-eslint/parser": "^8.8.0",
 		"astro-capo": "^0.0.1",
-		"astro-expressive-code": "^0.36.1",
+		"astro-expressive-code": "^0.37.0",
 		"dotenv": "^16.4.5",
 		"github-slugger": "^2.0.0",
 		"gray-matter": "^4.0.3",
 		"icojs": "^0.19.4",
 		"igdb-api-node": "^5.0.2",
 		"linkedom": "^0.18.5",
-		"prettier-plugin-tailwindcss": "^0.6.6",
+		"prettier-plugin-tailwindcss": "^0.6.8",
 		"sharp": "^0.33.5",
-		"tailwindcss": "^3.4.12",
+		"tailwindcss": "^3.4.13",
 		"tiny-decode": "^0.1.3",
 		"tsx": "^4.19.1",
 		"ultrahtml": "^1.5.3",
-		"vercel": "^37.4.2"
+		"vercel": "^37.6.0"
 	}
 }

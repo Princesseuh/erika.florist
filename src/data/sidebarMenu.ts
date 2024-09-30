@@ -2,7 +2,7 @@
 export const headerMenu = ["articles", "projects", "wiki", "catalogue"] as const;
 
 export const blurb =
-	'Currently employed at <a href="https://astro.build">Astro</a>. I thrive in high-impact but often overlooked areas, such as editor tooling.';
+	'Currently employed at <a class="button-style-bg-accent p-0" href="https://astro.build">Astro</a>. I thrive in high-impact but often overlooked areas, such as editor tooling.';
 
 export type MenuItem = MenuItemLink | MenuItemHeader;
 

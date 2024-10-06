@@ -2,29 +2,25 @@
 import MobileQuickNav from "$components/layout/MobileQuickNav.astro";
 import ArticlePreview from "$components/shared/ArticlePreview.astro";
 import { blurb } from "$data/sidebarMenu";
-import { getLastModified } from "$data/wiki";
 import BaseLayout from "$layouts/BaseLayout.astro";
 import { blogFilter, getURLFromEntry, readableDate } from "$utils";
 import { getCollection } from "astro:content";
 
-const articles = (await getCollection("blog"))
-	.sort((a, b) => {
-		return b.data.date.getTime() - a.data.date.getTime();
-	})
-	.filter(blogFilter);
+const articles = (await getCollection("blog")).filter(blogFilter);
 
-const wikiItems = (await getCollection("wiki"))
-	.map((wikiItem) => ({
-		...wikiItem,
-		lastModified: getLastModified(wikiItem).lastModifiedDate,
-	}))
-	.sort((a, b) => {
-		return b.lastModified.getTime() - a.lastModified.getTime();
-	})
-	.slice(0, 7);
-const featuredProjects = (await getCollection("projects"))
-	.filter((project) => project.data.featured)
-	.slice(0, 3);
+const wikiItems = await getCollection("wiki");
+
+const fullSortedData = [...articles, ...wikiItems].sort((a, b) => {
+	// a and b can either be wikiItems or articles, so they either have a date or a lastModified property
+	const aDate = a.collection === "blog" ? a.data.date : a.data.lastModified.date;
+	const bDate = b.collection === "blog" ? b.data.date : b.data.lastModified.date;
+
+	if (aDate === undefined || bDate === undefined) {
+		console.log(a, b);
+	}
+
+	return bDate.getTime() - aDate.getTime();
+});
 
 function lowercaseFirstCharacter(text: string) {
 	return `${text[0]?.toLowerCase()}${text.slice(1)}`;
@@ -37,29 +33,38 @@ function lowercaseFirstCharacter(text: string) {
 		<Fragment set:html={"I'm " + lowercaseFirstCharacter(blurb)} />
 	</div>
 	<MobileQuickNav />
-	<div class="m-4 max-w-screen-3xl columns-masonry gap-x-3 lg:columns-max-masonry 2xl:mx-auto">
-		{articles.map((article) => <ArticlePreview article={article} />)}
-		<section class="break-inside-avoid pb-3 pt-[1px] text-black-charcoal">
-			<ul class="m-0 p-0">
-				{
-					wikiItems.map((item) => (
-						<li class="m-0 list-none">
-							<a
-								class="group mb-1 block border border-solid border-violet-ultra/15 px-6 py-2 font-medium leading-tight text-violet-ultra hover:bg-violet-ultra hover:text-white-sugar-cane focus:bg-violet-ultra focus:text-white-sugar-cane"
-								href={getURLFromEntry(item)}
+	<div class="masonry relative mt-4">
+		{
+			fullSortedData.map((entry) =>
+				entry.collection === "blog" ? (
+					<ArticlePreview article={entry} />
+				) : (
+					<div class="absolute m-0">
+						<a
+							class="group mb-1 block border border-solid border-violet-ultra/15 px-6 py-2 font-medium leading-tight text-violet-ultra hover:bg-violet-ultra hover:text-white-sugar-cane focus:bg-violet-ultra focus:text-white-sugar-cane"
+							href={getURLFromEntry(entry)}
+						>
+							{entry.data.title}
+							<span
+								class="block text-sm text-black-charcoal first-letter:uppercase group-hover:text-white-sugar-cane group-focus:text-white-sugar-cane"
+								data-date={entry.data.lastModified.date}
 							>
-								{item.data.title}
-								<span
-									class="block text-sm text-black-charcoal first-letter:uppercase group-hover:text-white-sugar-cane group-focus:text-white-sugar-cane"
-									data-date={item.lastModified}
-								>
-									{readableDate(item.lastModified)}
-								</span>
-							</a>
-						</li>
-					))
-				}
-			</ul>
-		</section>
+								{readableDate(entry.data.lastModified.date)}
+							</span>
+						</a>
+					</div>
+				),
+			)
+		}
 	</div>
 </BaseLayout>
+
+<script>
+	import MiniMasonry from "minimasonry";
+
+	new MiniMasonry({
+		gutter: 12,
+		baseWidth: 350,
+		container: ".masonry",
+	});
+</script>

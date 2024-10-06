@@ -1,42 +1,6 @@
-import { glob, type Loader } from "astro/loaders";
+import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
-import fs from "node:fs";
-import path from "node:path";
-
-const generateSlug = ((options) => {
-	if (options.data.slug) return options.data.slug as string;
-	return path.basename(options.entry, ".mdoc");
-}) satisfies Parameters<typeof glob>[0]["generateId"];
-
-const catalogueGlob = (type: "games" | "movies" | "books" | "shows") => {
-	const originalGlob = glob({
-		base: `./content/${type}`,
-		pattern: "**/*.mdoc",
-		generateId: generateSlug,
-	});
-
-	return {
-		...originalGlob,
-		async load(context) {
-			await originalGlob.load(context);
-
-			const originalEntries = Array.from(context.store.entries());
-			context.store.clear();
-
-			for (const entry of originalEntries) {
-				if (!entry[1].filePath) continue;
-
-				const metadataPath = path.join(path.dirname(entry[1].filePath), "./_data.json");
-				const metadata = JSON.parse(fs.readFileSync(metadataPath, "utf-8")) as unknown;
-
-				context.store.set({
-					...entry[1],
-					data: { ...entry[1].data, metadata: metadata },
-				});
-			}
-		},
-	} satisfies Loader;
-};
+import { catalogueGlob, generateSlug, ratingSchema, wikiGlob } from "./config-utils.js";
 
 const blogCollection = defineCollection({
 	loader: glob({
@@ -57,11 +21,7 @@ const blogCollection = defineCollection({
 });
 
 const wikiCollection = defineCollection({
-	loader: glob({
-		base: "./content/wiki",
-		pattern: "**/*.mdoc",
-		generateId: generateSlug,
-	}),
+	loader: wikiGlob(),
 	schema: z.object({
 		title: z.string(),
 		tagline: z.string().optional(),
@@ -73,6 +33,12 @@ const wikiCollection = defineCollection({
 			order: z.number().optional().default(0),
 		}),
 		type: z.literal("wiki").default("wiki"),
+		lastModified: z
+			.object({
+				date: z.date().default(new Date()),
+				commitUrl: z.string().url().default("https://erika.florist/"),
+			})
+			.default({}),
 	}),
 });
 
@@ -96,16 +62,6 @@ const projectCollection = defineCollection({
 			type: z.literal("project").default("project"),
 		}),
 });
-
-const ratingSchema = z.union([
-	z.literal("masterpiece"),
-	z.literal("loved"),
-	z.literal("liked"),
-	z.literal("okay"),
-	z.literal("disliked"),
-	z.literal("hated"),
-]);
-export type CatalogueRating = z.infer<typeof ratingSchema>;
 
 const booksCollection = defineCollection({
 	loader: catalogueGlob("books"),
@@ -178,6 +134,8 @@ export const collections = {
 	blog: blogCollection,
 	wiki: wikiCollection,
 	projects: projectCollection,
+
+	// Catalogue
 	books: booksCollection,
 	games: gamesCollection,
 	movies: moviesCollection,

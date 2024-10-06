@@ -50,14 +50,14 @@ if (href.startsWith("http")) {
 			if (faviconElementHref) originalFaviconUrl = new URL(faviconElementHref, href);
 		}
 
-		let faviconBuffer = (await EleventyFetch(originalFaviconUrl.toString(), {
+		let faviconBuffer = await EleventyFetch(originalFaviconUrl.toString(), {
 			duration: "1y",
 			type: "buffer",
 			directory: "node_modules/.cache",
 			fetchOptions: {
 				signal: import.meta.env.DEV ? AbortSignal.timeout(2000) : null,
 			},
-		})) as Buffer;
+		});
 
 		if (isICO(faviconBuffer)) {
 			const ico = await parseICO(faviconBuffer, "image/png");

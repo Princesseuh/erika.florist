@@ -60,11 +60,11 @@ function lowercaseFirstCharacter(text: string) {
 </BaseLayout>
 
 <script>
-	import MiniMasonry from "minimasonry";
+	import { MiniMasonry } from "src/assets/scripts/masonry";
 
 	new MiniMasonry({
 		gutter: 12,
 		baseWidth: 350,
-		container: ".masonry",
+		container: document.querySelector(".masonry")!,
 	});
 </script>

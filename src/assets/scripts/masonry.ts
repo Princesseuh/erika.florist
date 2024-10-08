@@ -1,149 +1,108 @@
 // Adapted from https://github.com/Spope/MiniMasonry.js
 // LICENSE: https://github.com/Spope/MiniMasonry.js/blob/master/LICENSE
 
+// May a native CSS masonry save us one day
+
 interface MasonryConfig {
+	/** Target width of elements. */
 	baseWidth?: number;
+	/** Horizontal gutter between elements. */
 	gutterX?: number;
+	/** Vertical gutter between elements. */
 	gutterY?: number;
+	/** Gutter between elements, if gutterX and gutterY are not set. */
 	gutter?: number;
+	/** Container element. */
 	container: HTMLElement;
-	minify?: boolean;
+	/** Gutter between elements when there's only one column. */
 	ultimateGutter?: number;
-	surroundingGutter?: boolean;
-	direction?: "ltr" | "rtl";
-	wedge?: boolean;
 }
 
-type NoUndefinedField<T> = { [P in keyof T]-?: NonNullable<T[P]> };
-
 export class MiniMasonry {
-	private _sizes: number[] = [];
-	private _columns: number[] = [];
-	private _container: HTMLElement;
-	private _count = 0;
-	private _width = 0;
-	private _currentGutterX: number;
-	private _currentGutterY: number;
-	private _resizeTimeout: number | null = null;
-	private conf: NoUndefinedField<Required<MasonryConfig>>;
+	#sizes: number[] = [];
+	#columns: number[] = [];
+	#container: HTMLElement;
+	#count = 0;
+	#width = 0;
+	#currentGutterX: number;
+	#currentGutterY: number;
+	#resizeTimeout: number | null = null;
+	#firstRun = true;
+	#conf: Required<MasonryConfig>;
 
 	constructor(conf: MasonryConfig) {
-		this.conf = {
+		this.#conf = {
 			baseWidth: 255,
 			gutterX: conf.gutterX ?? conf.gutter ?? 10,
 			gutterY: conf.gutterY ?? conf.gutter ?? 10,
 			gutter: 10,
-			minify: true,
 			ultimateGutter: 5,
-			surroundingGutter: true,
-			direction: "ltr",
-			wedge: false,
 			...conf,
 		};
 
-		this._currentGutterX = this.conf.gutterX;
-		this._currentGutterY = this.conf.gutterY;
-		this._container = this.conf.container;
+		this.#currentGutterX = this.#conf.gutterX;
+		this.#currentGutterY = this.#conf.gutterY;
+		this.#container = this.#conf.container;
 
-		const onResize = this.resizeThrottler.bind(this);
-		window.addEventListener("resize", onResize);
-		this._removeListener = () => {
-			window.removeEventListener("resize", onResize);
-			if (this._resizeTimeout != null) {
-				window.clearTimeout(this._resizeTimeout);
-				this._resizeTimeout = null;
-			}
-		};
+		window.addEventListener("resize", this.resizeThrottler.bind(this));
 
 		this.layout();
 	}
 
-	private reset() {
-		this._sizes = [];
-		this._columns = [];
-		this._count = 0;
-		this._width = Math.max(this._container.clientWidth, this.conf.baseWidth);
-
-		this._currentGutterX = this.getCount() === 1 ? this.conf.ultimateGutter : this.conf.gutterX;
-		if (this._width < this.conf.baseWidth + 2 * this._currentGutterX) this._currentGutterX = 0;
-	}
-
 	private getCount() {
-		const totalWidth = this.conf.surroundingGutter
-			? this._width - this._currentGutterX
-			: this._width + this._currentGutterX;
-		return Math.floor(totalWidth / (this.conf.baseWidth + this._currentGutterX));
-	}
-
-	private computeWidth() {
-		const totalWidth = this.conf.surroundingGutter
-			? this._width - this._currentGutterX
-			: this._width + this._currentGutterX;
-		return Number.parseFloat((totalWidth / this._count - this._currentGutterX).toFixed(2));
+		const totalWidth = this.#width + this.#currentGutterX;
+		return Math.floor(totalWidth / (this.#conf.baseWidth + this.#currentGutterX));
 	}
 
 	private layout() {
-		this.reset();
-		if (this._count === 0) this._count = this.getCount();
-		const colWidth = this.computeWidth();
+		this.#width = Math.max(this.#container.clientWidth, this.#conf.baseWidth);
 
-		this._columns = Array<number>(this._count).fill(0);
-		const children = this._container.children as HTMLCollectionOf<HTMLElement>;
+		// On first run, the right margin isn't taken into account correctly for some reason, so we need to reduce the width by 16px
+		if (this.#firstRun && this.#width > this.#conf.baseWidth) {
+			this.#width -= 16;
+			this.#firstRun = false;
+		}
+
+		this.#currentGutterX = this.getCount() === 1 ? this.#conf.ultimateGutter : this.#conf.gutterX;
+		if (this.#width < this.#conf.baseWidth + 2 * this.#currentGutterX) this.#currentGutterX = 0;
+		this.#count = this.getCount();
+
+		const totalWidth = this.#width + this.#currentGutterX;
+		const colWidth = Number.parseFloat(
+			(totalWidth / this.#count - this.#currentGutterX).toFixed(2),
+		);
+
+		this.#columns = Array<number>(this.#count).fill(0);
+		const children = this.#container.children as HTMLCollectionOf<HTMLElement>;
 		const childArray = Array.from(children);
 		for (const child of childArray) {
 			child.style.width = `${colWidth}px`;
 		}
-		this._sizes = childArray.map((child) => child.clientHeight);
-
-		let startX =
-			this.conf.direction === "ltr"
-				? this.conf.surroundingGutter
-					? this._currentGutterX
-					: 0
-				: this._width - (this.conf.surroundingGutter ? this._currentGutterX : 0);
-		if (this._count > this._sizes.length) {
-			const occupiedSpace =
-				this._sizes.length * (colWidth + this._currentGutterX) - this._currentGutterX;
-			startX = this.conf.wedge
-				? this.conf.direction === "ltr"
-					? startX
-					: this._width - this._currentGutterX
-				: this.conf.direction === "ltr"
-					? (this._width - occupiedSpace) / 2
-					: this._width - (this._width - occupiedSpace) / 2;
-		}
+		this.#sizes = childArray.map((child) => child.clientHeight);
 
 		let index = 0;
 		for (const child of children) {
-			const nextColumn = this.conf.minify
-				? this._columns.indexOf(Math.min(...this._columns))
-				: index % this._columns.length;
-			const childrenGutter =
-				this.conf.surroundingGutter || nextColumn !== this._columns.length
-					? this._currentGutterX
-					: 0;
-			const x =
-				this.conf.direction === "ltr"
-					? startX + (colWidth + childrenGutter) * nextColumn
-					: startX - (colWidth + childrenGutter) * nextColumn - colWidth;
-			const y = this._columns[nextColumn] ?? 0;
+			const nextColumn = index % this.#columns.length;
+			const childrenGutter = nextColumn !== this.#columns.length ? this.#currentGutterX : 0;
+			const x = (colWidth + childrenGutter) * nextColumn;
+			const y = this.#columns[nextColumn] ?? 0;
 
 			child.style.transform = `translate3d(${Math.round(x)}px,${Math.round(y)}px,0)`;
-			this._columns[nextColumn] =
-				(this._columns[nextColumn] ?? 0) +
-				(this._sizes[index] ?? 0) +
-				(this._count > 1 ? this.conf.gutterY : this.conf.ultimateGutter);
+			this.#columns[nextColumn] =
+				(this.#columns[nextColumn] ?? 0) +
+				(this.#sizes[index] ?? 0) +
+				(this.#count > 1 ? this.#conf.gutterY : this.#conf.ultimateGutter);
 			index++;
 		}
 
-		this._container.style.height = `${Math.max(...this._columns) - this._currentGutterY}px`;
+		this.#container.style.height = `${Math.max(...this.#columns) - this.#currentGutterY}px`;
 	}
 
 	private resizeThrottler() {
-		if (!this._resizeTimeout) {
-			this._resizeTimeout = window.setTimeout(() => {
-				this._resizeTimeout = null;
-				if (this._container.clientWidth !== this._width) this.layout();
+		if (!this.#resizeTimeout) {
+			this.#resizeTimeout = window.setTimeout(() => {
+				this.#resizeTimeout = null;
+				if (this.#container.clientWidth !== this.#width) this.layout();
 			}, 33);
 		}
 	}

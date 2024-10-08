@@ -33,7 +33,7 @@ function lowercaseFirstCharacter(text: string) {
 		<Fragment set:html={"I'm " + lowercaseFirstCharacter(blurb)} />
 	</div>
 	<MobileQuickNav />
-	<div class="masonry relative mt-4">
+	<div class="masonry relative mx-2 my-4 sm:m-4">
 		{
 			fullSortedData.map((entry) =>
 				entry.collection === "blog" ? (
@@ -64,7 +64,7 @@ function lowercaseFirstCharacter(text: string) {
 
 	new MiniMasonry({
 		gutter: 12,
-		baseWidth: 350,
+		baseWidth: Math.min(350, document.documentElement.clientWidth - 16), // 16px is the padding of the masonry container on mobile
 		container: document.querySelector(".masonry")!,
 	});
 </script>

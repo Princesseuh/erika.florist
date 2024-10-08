@@ -1,48 +1,7 @@
-import { getBaseSiteURL, getURLFromEntry } from "$utils";
+import { getURLFromEntry } from "$utils";
 import { getCollection, type CollectionEntry } from "astro:content";
-import { execSync } from "node:child_process";
 import type { MenuItem } from "./sidebarMenu";
 import { wikiCategories, type WikiCategory } from "./wikiCategories";
-
-const gitInfoRaw = execSync("bash ./scripts/getLastModified.sh").toString().split(";").slice(0, -1);
-const gitInfo = gitInfoRaw.map((info) => {
-	const [file, date, ref] = info.split("|");
-
-	if (!date || !file || !ref) {
-		throw new Error(`Couldn't parse file info from ${info}`);
-	}
-
-	return {
-		file,
-		date: date.trim(),
-		ref,
-	};
-});
-
-function getLastModified(entry: CollectionEntry<"wiki">) {
-	const info = gitInfo.find((info) => info.file.endsWith(entry.filePath));
-
-	if (import.meta.env.PROD) {
-		if (!info) {
-			throw new Error(
-				`Couldn't find commit information for ${entry.filePath}. Make sure to create a commit before building`,
-			);
-		}
-
-		return {
-			lastModifiedDate: new Date(info.date),
-			lastModifiedCommitUrl: new URL(
-				info.ref,
-				"https://github.com/Princesseuh/erika.florist/commit/",
-			),
-		};
-	}
-
-	return {
-		lastModifiedDate: new Date(),
-		lastModifiedCommitUrl: new URL("/", getBaseSiteURL()),
-	};
-}
 
 function getWikiItemsByCategory(
 	wikiItems: CollectionEntry<"wiki">[],
@@ -57,7 +16,7 @@ function getWikiItemsByCategory(
 		});
 }
 
-async function getWikiNavigation(currentPage: URL): Promise<MenuItem[]> {
+export async function getWikiNavigation(currentPage: URL): Promise<MenuItem[]> {
 	const wikiItems = await getCollection("wiki");
 	const navigation: MenuItem[] = [];
 	wikiCategories.map((category: WikiCategory) => {
@@ -79,5 +38,3 @@ async function getWikiNavigation(currentPage: URL): Promise<MenuItem[]> {
 
 	return navigation;
 }
-
-export { getLastModified, getWikiNavigation };

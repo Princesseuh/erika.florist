@@ -1,5 +1,5 @@
 import type { CollectionEntry } from "astro:content";
-import type { CatalogueRating } from "src/content/config";
+import type { CatalogueRating } from "../content/config-utils";
 
 export type allCatalogueTypes =
 	| CollectionEntry<"games">

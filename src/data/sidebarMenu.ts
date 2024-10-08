@@ -1,4 +1,7 @@
-export const headerMenu = ["Articles", "Projects", "Wiki", "Catalogue"] as const;
+export const headerMenu = ["articles", "projects", "wiki", "catalogue"] as const;
+
+export const blurb =
+	'Currently employed at <a class="button-style-bg-accent p-0" href="https://astro.build">Astro</a>. I thrive in high-impact but often overlooked areas, such as editor tooling.';
 
 export type MenuItem = MenuItemLink | MenuItemHeader;
 
@@ -22,8 +25,7 @@ export function processNavMenu(navMenu: MenuItem[]): ProcessedNavMenu {
 		let committedNav: { heading: string | undefined; children: MenuItemLink[] } | undefined =
 			undefined;
 
-		// This could be a reduce... but it'd probably be super unreadable so whatever
-		navMenu.forEach((item) => {
+		for (const item of navMenu) {
 			switch (item.type) {
 				case "header":
 					if (committedNav) {
@@ -40,7 +42,7 @@ export function processNavMenu(navMenu: MenuItem[]): ProcessedNavMenu {
 					committedNav = { heading: undefined, children: [item] };
 					break;
 			}
-		});
+		}
 
 		if (committedNav) {
 			processedNavMenu.push(committedNav);

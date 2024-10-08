@@ -1,94 +1,70 @@
 ---
-import ExternalLink from "$components/ExternalLink.astro";
-import Image from "$components/Image.astro";
+import MobileQuickNav from "$components/layout/MobileQuickNav.astro";
 import ArticlePreview from "$components/shared/ArticlePreview.astro";
-import { getLastModified } from "$data/wiki";
+import { blurb } from "$data/sidebarMenu";
 import BaseLayout from "$layouts/BaseLayout.astro";
 import { blogFilter, getURLFromEntry, readableDate } from "$utils";
 import { getCollection } from "astro:content";
 
-const articles = (await getCollection("blog"))
-	.sort((a, b) => {
-		return b.data.date.getTime() - a.data.date.getTime();
-	})
-	.filter(blogFilter)
-	.slice(0, 4);
+const articles = (await getCollection("blog")).filter(blogFilter);
 
-const wikiItems = (await getCollection("wiki"))
-	.map((wikiItem) => ({
-		...wikiItem,
-		lastModified: getLastModified(wikiItem).lastModifiedDate,
-	}))
-	.sort((a, b) => {
-		return b.lastModified.getTime() - a.lastModified.getTime();
-	})
-	.slice(0, 7);
-const featuredProjects = (await getCollection("projects"))
-	.filter((project) => project.data.featured)
-	.slice(0, 3);
+const wikiItems = await getCollection("wiki");
+
+const fullSortedData = [...articles, ...wikiItems].sort((a, b) => {
+	// a and b can either be wikiItems or articles, so they either have a date or a lastModified property
+	const aDate = a.collection === "blog" ? a.data.date : a.data.lastModified.date;
+	const bDate = b.collection === "blog" ? b.data.date : b.data.lastModified.date;
+
+	if (aDate === undefined || bDate === undefined) {
+		console.log(a, b);
+	}
+
+	return bDate.getTime() - aDate.getTime();
+});
+
+function lowercaseFirstCharacter(text: string) {
+	return `${text[0]?.toLowerCase()}${text.slice(1)}`;
+}
 ---
 
-<BaseLayout>
-	<article class="w-index">
-		<h2 class="mb-4 mt-0 text-4xl no-underline">Hello! 💐</h2>
-
-		<p>
-			I'm <span class="font-semibold text-beach-watermelon dark:text-dark-beach-watermelon"
-				>Erika</span
-			>, a software engineer living in Sweden&nbsp;🇸🇪, pleased to meet you! I am currently employed
-			at <ExternalLink href="https://astro.build">Astro</ExternalLink> where I do a bit of everything,
-			though I am mostly found in high impact but often overlooked areas such as editor tooling.
-		</p>
-
-		<p>
-			Wanna read stuff I wrote? Well, <a href="/articles/">here's my blog</a>! Interested in seeing
-			stuff I worked on? Click <a href="/projects/">here for my projects</a>. You want to read more
-			stuff I wrote, but this time, mostly for myself? <a href="/wiki/">Take a look at my wiki</a>.
-		</p>
-
-		<h3 class="mb-5 text-2xl">Featured works</h3>
-		<div class="mb-6 mt-2 flex flex-wrap items-center justify-center gap-5 sm:mx-10 sm:gap-3">
-			{
-				featuredProjects.map((project) => (
-					<div class="relative h-[170px]">
-						<a href={getURLFromEntry(project)}>
-							<Image
-								class="h-[170px] w-[359px] rounded-sm object-cover object-top"
-								width={359}
-								src={project.data.indexCover}
-								alt={project.data.indexCoverAlt ?? ""}
-								loading={"eager"}
-								quality={45}
-								fetchpriority="high"
-							/>
-							<h4 class="cover-title">{project.data.title}</h4>
+<BaseLayout includeAboutInHeader>
+	<div class="p-4 sm:hidden">
+		<h1 class="m-0 text-accent-valencia">Hi! I'm Erika.</h1>
+		<Fragment set:html={"I'm " + lowercaseFirstCharacter(blurb)} />
+	</div>
+	<MobileQuickNav />
+	<div class="masonry relative mx-2 my-4 sm:m-4">
+		{
+			fullSortedData.map((entry) =>
+				entry.collection === "blog" ? (
+					<ArticlePreview article={entry} />
+				) : (
+					<div class="absolute m-0">
+						<a
+							class="group mb-1 block border border-solid border-violet-ultra/15 px-6 py-2 font-medium leading-tight text-violet-ultra hover:bg-violet-ultra hover:text-white-sugar-cane focus:bg-violet-ultra focus:text-white-sugar-cane"
+							href={getURLFromEntry(entry)}
+						>
+							{entry.data.title}
+							<span
+								class="block text-sm text-black-charcoal first-letter:uppercase group-hover:text-white-sugar-cane group-focus:text-white-sugar-cane"
+								data-date={entry.data.lastModified.date}
+							>
+								{readableDate(entry.data.lastModified.date)}
+							</span>
 						</a>
 					</div>
-				))
-			}
-		</div>
-
-		<div class="flex flex-col justify-around gap-4 sm:flex-row">
-			<div class="sm:w-[63%]">
-				<h3 class="mb-4 mt-2 text-2xl sm:mt-4">Latest blog posts</h3>
-				{articles.map((article) => <ArticlePreview article={article} />)}
-			</div>
-
-			<div class="sm:w-[37%]">
-				<h3 class="mb-4 mt-2 text-2xl sm:mt-4">Latest wiki modifications</h3>
-				{
-					wikiItems.map((item) => (
-						<section class="mb-3">
-							<a class="block font-medium leading-tight" href={getURLFromEntry(item)}>
-								{item.data.title}
-							</a>
-							<span class="block text-sm first-letter:uppercase" data-date={item.lastModified}>
-								{readableDate(item.lastModified)}
-							</span>
-						</section>
-					))
-				}
-			</div>
-		</div>
-	</article>
+				),
+			)
+		}
+	</div>
 </BaseLayout>
+
+<script>
+	import { MiniMasonry } from "src/assets/scripts/masonry";
+
+	new MiniMasonry({
+		gutter: 12,
+		baseWidth: Math.min(350, document.documentElement.clientWidth - 16), // 16px is the padding of the masonry container on mobile
+		container: document.querySelector(".masonry")!,
+	});
+</script>

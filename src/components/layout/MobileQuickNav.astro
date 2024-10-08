@@ -1,0 +1,13 @@
+---
+import { headerMenu } from "$data/sidebarMenu";
+---
+
+<div class="mx-auto flex max-w-full justify-evenly sm:hidden">
+	{
+		headerMenu.map((item) => (
+			<a href={`/${item}`} class="button-style-bg-accent p-2 text-lg">
+				{item}
+			</a>
+		))
+	}
+</div>

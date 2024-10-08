@@ -6,7 +6,7 @@ export function getURLFromEntry(
 ): string {
 	switch (item.data.type) {
 		case "blog":
-			return `/articles/${item.id}`;
+			return `/articles/${item.id}#title`;
 		case "wiki":
 			return `/wiki/${item.data.navigation.category}/${item.id}`;
 		case "project":
@@ -17,7 +17,7 @@ export function getURLFromEntry(
 }
 
 export function getBaseSiteURL(): string {
-	return import.meta.env.PROD ? "https://erika.florist/" : "http://localhost:4321/";
+	return import.meta.env.PROD ? "https://erika.florist/" : "http://localhost:27969/";
 }
 
 export function randomArrayEntry<T>(array: T[]): T {

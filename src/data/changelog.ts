@@ -21,7 +21,7 @@ export function getChangelog(): Changelog {
 			const [ref, date, desc] = line.split("$SEP$");
 
 			if (!ref || !date || !desc) {
-				throw new Error("Couldn't parse file info from " + line);
+				throw new Error(`Couldn't parse file info from ${line}`);
 			}
 
 			const trimmedRef = ref.trim();

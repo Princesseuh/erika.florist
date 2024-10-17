@@ -10,6 +10,9 @@ import db from "@astrojs/db";
 export default defineConfig({
 	publicDir: "./static",
 	site: "https://erika.florist/",
+	server: {
+		port: 27969,
+	},
 	image: {
 		service: {
 			entrypoint: "./src/imageService.ts",

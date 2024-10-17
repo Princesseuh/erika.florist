@@ -4,8 +4,8 @@ const pageLenth = 30;
 ---
 
 <div id="catalogue-core" data-pagelength={pageLenth}>
-	<header class="flex flex-col justify-between gap-y-4 sm:flex-row sm:gap-y-0">
-		<div id="catalogue-filters" class="flex flex-grow flex-col gap-x-4 sm:flex-row">
+	<header class="">
+		<div id="catalogue-filters" class="">
 			<div>
 				<label for="catalogue-search">Search</label>
 				<input id="catalogue-search" type={"search"} />
@@ -44,15 +44,13 @@ const pageLenth = 30;
 				</select>
 			</div>
 		</div>
-		<div id="catalogue-entry-count" class="flex items-center justify-end sm:justify-start">
-			... entries
-		</div>
+		<div id="catalogue-entry-count" class="">... entries</div>
 	</header>
-	<div id="catalogue-content" class="mt-4 flex flex-wrap gap-x-8 sm:gap-x-4">
+	<div id="catalogue-content" class="">
 		{Array.from({ length: pageLenth }).map(() => <Skeleton />)}
 	</div>
-	<div class="mt-4 flex">
-		<button id="catalogue-seemore" class="h-6 w-full">Load more</button>
+	<div class="">
+		<button id="catalogue-seemore" class="">Load more</button>
 	</div>
 </div>
 

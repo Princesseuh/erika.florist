@@ -1,9 +1,6 @@
-// @ts-check
+import { defineEcConfig } from "astro-expressive-code";
 
-/**
- * @type {import('expressive-code').ExpressiveCodeConfig}
- */
-export default {
+export default defineEcConfig({
 	plugins: [
 		{
 			name: "custom-style",
@@ -33,6 +30,7 @@ export default {
 			hooks: {},
 		},
 	],
+	themes: ["github-dark-default"],
 	useThemedScrollbars: false,
 	useThemedSelectionColors: false,
 	styleOverrides: {
@@ -49,4 +47,4 @@ export default {
 		codeFontFamily:
 			'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
 	},
-};
+});

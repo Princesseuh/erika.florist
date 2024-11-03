@@ -27,7 +27,7 @@ function lowercaseFirstCharacter(text: string) {
 }
 ---
 
-<BaseLayout includeAboutInHeader>
+<BaseLayout>
 	<div class="p-4 sm:hidden">
 		<h1 class="m-0 text-accent-valencia">Hi! I'm Erika.</h1>
 		<Fragment set:html={"I'm " + lowercaseFirstCharacter(blurb)} />
@@ -41,7 +41,7 @@ function lowercaseFirstCharacter(text: string) {
 				) : (
 					<div class="absolute m-0">
 						<a
-							class="group mb-1 block border border-solid border-violet-ultra/15 px-6 py-2 font-medium leading-tight text-violet-ultra hover:bg-violet-ultra hover:text-white-sugar-cane focus:bg-violet-ultra focus:text-white-sugar-cane"
+							class="group block break-words border border-solid border-violet-ultra/15 px-6 py-2 font-medium leading-tight text-violet-ultra hover:bg-violet-ultra hover:text-white-sugar-cane focus:bg-violet-ultra focus:text-white-sugar-cane sm:break-normal"
 							href={getURLFromEntry(entry)}
 						>
 							{entry.data.title}
@@ -64,7 +64,7 @@ function lowercaseFirstCharacter(text: string) {
 
 	new MiniMasonry({
 		gutter: 12,
-		baseWidth: Math.min(350, document.documentElement.clientWidth - 16), // 16px is the padding of the masonry container on mobile
+		baseWidth: () => Math.min(350, document.documentElement.clientWidth - 16), // 16px is the padding of the masonry container on mobile
 		container: document.querySelector(".masonry")!,
 	});
 </script>

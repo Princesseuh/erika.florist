@@ -15,10 +15,10 @@ const { page, title, showAllButton } = Astro.props;
 ---
 
 <BaseLayout title={title}>
-	<article class="flex gap-x-4">
-		<div class="flex-1 px-4">
-			{title ? <h2 class="text-3xl text-black-charcoal">{title}</h2> : <></>}
-			<div class="columns-masonry lg:columns-max-masonry mt-4">
+	<article class="flex-col sm:flex-row flex gap-x-4">
+		<div class="flex-1">
+			{title ? <h2 class="text-3xl text-black-charcoal px-4">{title}</h2> : <></>}
+			<div class="masonry relative mx-2 my-4 sm:m-4">
 				{page.data.map((item) => <ArticlePreview article={item} />)}
 			</div>
 			<div class="text-xl mt-4">
@@ -36,3 +36,13 @@ const { page, title, showAllButton } = Astro.props;
 		<ArticleListAside showAllButton={showAllButton} />
 	</article>
 </BaseLayout>
+
+<script>
+  import { MiniMasonry } from "src/assets/scripts/masonry";
+
+	new MiniMasonry({
+		gutter: 12,
+		baseWidth: () => Math.min(350, document.documentElement.clientWidth - 16), // 16px is the padding of the masonry container on mobile
+		container: document.querySelector(".masonry")!,
+	});
+</script>

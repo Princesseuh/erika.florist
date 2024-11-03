@@ -15,12 +15,12 @@ interface Props {
 const { article } = Astro.props;
 const { Content, headings } = await render(article);
 
-const hasSidenote = article.body.includes("{% sidenote");
+const hasSidenote = article.body?.includes("{% sidenote");
 ---
 
-<BaseLayout title={article.data.title} description={article.data.tagline}>
+<BaseLayout title={article.data.title} description={article.data.tagline} removeAboutFromHeader>
 	<header id="title" class="mb-6 mt-0 bg-accent-valencia text-white-sugar-cane">
-		<div class:list={[hasSidenote ? "lg:ml-3/4 md:w-3/4 xl:w-auto" : "", "mx-4 sm:mx-0"]}>
+		<div class:list={[hasSidenote ? "lg:ml-3/4 md:w-3/4 xl:w-auto" : "", "mx-4"]}>
 			<div class="mx-auto w-centered-width py-8 sm:py-12">
 				<h1 class="my-0 hyphens-auto text-5xl sm:hyphens-none sm:text-6xl">{article.data.title}</h1>
 				{article.data.tagline && <h2 class="m-0 mt-4 text-xl">{article.data.tagline}</h2>}
@@ -48,7 +48,7 @@ const hasSidenote = article.body.includes("{% sidenote");
 			}
 		</aside>
 
-		<article class="prose relative mx-auto w-centered-width px-4 sm:px-0">
+		<article class="prose relative mx-auto w-centered-width px-4 xl:px-0">
 			<ContentHeader item={article} includeTags includeTitle={false} />
 			<Content components={{ a: ExternalLink }} />
 		</article>

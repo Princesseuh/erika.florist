@@ -5,7 +5,7 @@
 
 interface MasonryConfig {
 	/** Target width of elements. */
-	baseWidth?: number;
+	baseWidth?: () => number;
 	/** Horizontal gutter between elements. */
 	gutterX?: number;
 	/** Vertical gutter between elements. */
@@ -32,7 +32,7 @@ export class MiniMasonry {
 
 	constructor(conf: MasonryConfig) {
 		this.#conf = {
-			baseWidth: 255,
+			baseWidth: () => 255,
 			gutterX: conf.gutterX ?? conf.gutter ?? 10,
 			gutterY: conf.gutterY ?? conf.gutter ?? 10,
 			gutter: 10,
@@ -51,20 +51,20 @@ export class MiniMasonry {
 
 	private getCount() {
 		const totalWidth = this.#width + this.#currentGutterX;
-		return Math.floor(totalWidth / (this.#conf.baseWidth + this.#currentGutterX));
+		return Math.floor(totalWidth / (this.#conf.baseWidth() + this.#currentGutterX));
 	}
 
 	private layout() {
-		this.#width = Math.max(this.#container.clientWidth, this.#conf.baseWidth);
+		this.#width = Math.max(this.#container.clientWidth, this.#conf.baseWidth());
 
 		// On first run, the right margin isn't taken into account correctly for some reason, so we need to reduce the width by 16px
-		if (this.#firstRun && this.#width > this.#conf.baseWidth) {
+		if (this.#firstRun && this.#width > this.#conf.baseWidth()) {
 			this.#width -= 16;
 			this.#firstRun = false;
 		}
 
 		this.#currentGutterX = this.getCount() === 1 ? this.#conf.ultimateGutter : this.#conf.gutterX;
-		if (this.#width < this.#conf.baseWidth + 2 * this.#currentGutterX) this.#currentGutterX = 0;
+		if (this.#width < this.#conf.baseWidth() + 2 * this.#currentGutterX) this.#currentGutterX = 0;
 		this.#count = this.getCount();
 
 		const totalWidth = this.#width + this.#currentGutterX;
@@ -89,9 +89,7 @@ export class MiniMasonry {
 
 			child.style.transform = `translate3d(${Math.round(x)}px,${Math.round(y)}px,0)`;
 			this.#columns[nextColumn] =
-				(this.#columns[nextColumn] ?? 0) +
-				(this.#sizes[index] ?? 0) +
-				(this.#count > 1 ? this.#conf.gutterY : this.#conf.ultimateGutter);
+				(this.#columns[nextColumn] ?? 0) + (this.#sizes[index] ?? 0) + this.#currentGutterY;
 			index++;
 		}
 

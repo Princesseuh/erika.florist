@@ -1,7 +1,6 @@
 export const headerMenu = ["articles", "projects", "wiki", "catalogue"] as const;
 
-export const blurb =
-	'Currently employed at <a class="button-style-bg-accent p-0" href="https://astro.build">Astro</a>. I thrive in high-impact but often overlooked areas, such as editor tooling.';
+export const blurb = `Typically found in high-impact, yet often overlooked areas, such as editor tooling or error handling. Currently on <a class="button-style-bg-accent p-0" href="https://astro.build">Astro</a> and <a class="button-style-bg-accent p-0" href="https://volarjs.dev">Volar</a>.`;
 
 export type MenuItem = MenuItemLink | MenuItemHeader;
 

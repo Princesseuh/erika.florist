@@ -16,10 +16,10 @@ interface Props {
 	description?: string | undefined;
 	navItems?: MenuItem[];
 	preloadCatalogue?: boolean;
-	includeAboutInHeader?: boolean;
+	removeAboutFromHeader?: boolean;
 }
 
-const { title, description, navItems, preloadCatalogue, includeAboutInHeader } = Astro.props;
+const { title, description, navItems, preloadCatalogue, removeAboutFromHeader } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -91,7 +91,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 					: theme === "system" && isSystemDark && document.documentElement.classList.add("dark");
 		</script>
 		<div id="app" class="bg-white-sugar-cane">
-			<Header {includeAboutInHeader} />
+			<Header {removeAboutFromHeader} />
 
 			<main>
 				<slot />
@@ -100,7 +100,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 			<footer
 				class="mt-12 flex justify-center bg-black-charcoal px-5 py-6 pb-12 leading-tight text-white-sugar-cane sm:m-0 sm:mt-12 sm:px-0 sm:pb-6"
 			>
-				<section class="flex w-centered-width items-center justify-between gap-y-8">
+				<section class="flex w-centered-width flex-wrap items-center justify-between gap-y-8">
 					<Socials />
 
 					<Dinkus classes="fill-white-sugar-cane hidden sm:block" />

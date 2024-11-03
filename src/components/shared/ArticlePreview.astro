@@ -15,14 +15,14 @@ const { article } = Astro.props;
 		article.data.featured
 			? "bg-orange-carrot/[.080]"
 			: "border border-solid border-accent-valencia/10",
-		"group absolute mb-3 w-full break-inside-avoid hyphens-auto p-6 focus-within:bg-accent-valencia focus-within:text-white-sugar-cane hover:bg-accent-valencia hover:text-white-sugar-cane sm:hyphens-none",
+		"group absolute w-full break-inside-avoid hyphens-auto p-6 focus-within:bg-accent-valencia focus-within:text-white-sugar-cane hover:bg-accent-valencia hover:text-white-sugar-cane sm:hyphens-none",
 	]}
 >
 	<a href={getURLFromEntry(article)} class="flex flex-col gap-y-1">
 		<h2
 			class:list={[
 				article.data.featured ? "text-4.5xl leading-none" : "text-3xl leading-somewhat-tight",
-				"m-0 p-0 tracking-somewhat-tight text-accent-valencia group-focus-within:text-white-sugar-cane group-hover:text-white-sugar-cane",
+				"m-0 break-words p-0 tracking-somewhat-tight text-accent-valencia group-focus-within:text-white-sugar-cane group-hover:text-white-sugar-cane sm:break-normal",
 			]}
 		>
 			{article.data.title}

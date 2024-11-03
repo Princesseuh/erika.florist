@@ -196,7 +196,7 @@ export default {
 						marginTop: "1.4rem",
 						marginBottom: "1rem",
 						textAlign: "center",
-						"@apply xl:-mx-4 mx-0": {},
+						"@apply 2xl:-mx-4 mx-0": {},
 					},
 
 					figcaption: {

@@ -8,24 +8,30 @@ import type { CollectionEntry } from "astro:content";
 interface Props {
 	page: Page<CollectionEntry<"blog">>;
 	title?: string;
-  showAllButton?: boolean | undefined
+	showAllButton?: boolean | undefined;
 }
 
 const { page, title, showAllButton } = Astro.props;
 ---
 
 <BaseLayout title={title}>
-	<article class="flex-col sm:flex-row flex gap-x-4">
+	<article class="flex flex-col gap-x-4 sm:flex-row">
 		<div class="flex-1">
-			{title ? <h2 class="text-3xl text-black-charcoal px-4">{title}</h2> : <></>}
+			{title && <h2 class="px-4 text-3xl text-black-charcoal">{title}</h2>}
 			<div class="masonry relative mx-2 my-4 sm:m-4">
 				{page.data.map((item) => <ArticlePreview article={item} />)}
 			</div>
-			<div class="text-xl mt-4">
-				{page.url.prev && <a class="button-style-bg-accent" href={page.url.prev}>Newer posts</a>}
+			<div class="mt-4 text-xl">
+				{
+					page.url.prev && (
+						<a class="button-style-bg-accent" href={page.url.prev}>
+							Newer posts
+						</a>
+					)
+				}
 				{
 					page.url.next && (
-						<a class="float-right button-style-bg-accent" href={page.url.next}>
+						<a class="button-style-bg-accent float-right" href={page.url.next}>
 							Older posts
 						</a>
 					)
@@ -35,14 +41,14 @@ const { page, title, showAllButton } = Astro.props;
 
 		<ArticleListAside showAllButton={showAllButton} />
 	</article>
+
+	<script>
+		import { MiniMasonry } from "src/assets/scripts/masonry";
+
+		new MiniMasonry({
+			gutter: 12,
+			baseWidth: () => Math.min(350, document.documentElement.clientWidth - 16), // 16px is the padding of the masonry container on mobile
+			container: document.querySelector(".masonry")!,
+		});
+	</script>
 </BaseLayout>
-
-<script>
-  import { MiniMasonry } from "src/assets/scripts/masonry";
-
-	new MiniMasonry({
-		gutter: 12,
-		baseWidth: () => Math.min(350, document.documentElement.clientWidth - 16), // 16px is the padding of the masonry container on mobile
-		container: document.querySelector(".masonry")!,
-	});
-</script>

@@ -39,12 +39,12 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
             return proxy_request(_req);
         }
 
-        match _req.method() {
-            &Method::GET => Ok(Response::builder()
+        match *_req.method() {
+            Method::GET => Ok(Response::builder()
                 .status(StatusCode::OK)
                 .header("Content-Type", "text/html")
                 .body(form_layout().into_string().into())?),
-            &Method::POST => {
+            Method::POST => {
                 let form_password = env::var("FORM_PASSWORD").unwrap();
                 let data = form_urlencoded::parse(_req.body())
                     .map(|(key, value)| (key.to_string(), value.to_string()))
@@ -83,7 +83,7 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                     date = match enable_date {
                         true => data.get("date").unwrap(),
                         false => "N/A",
-                    }.to_string(),
+                    },
                     source = source_key,
                     sourceId = data.get("source-id").unwrap()
                 );
@@ -103,25 +103,22 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                 let client = reqwest::blocking::Client::new();
                 let file_exists = check_if_file_exists(&client, path_type, slug.as_str());
 
-                match file_exists {
-                    true => {
-                        let mut i = 1;
-                        loop {
-                            let file_exists = check_if_file_exists(
-                                &client,
-                                path_type,
-                                format!("{slug}-{i}", slug = slug, i = i).as_str(),
-                            );
+                if file_exists {
+                    let mut i = 1;
+                    loop {
+                        let file_exists = check_if_file_exists(
+                            &client,
+                            path_type,
+                            format!("{slug}-{i}", slug = slug, i = i).as_str(),
+                        );
 
-                            if file_exists {
-                                i += 1;
-                            } else {
-                                slug = format!("{slug}-{i}", slug = slug, i = i);
-                                break;
-                            }
+                        if file_exists {
+                            i += 1;
+                        } else {
+                            slug = format!("{slug}-{i}", slug = slug, i = i);
+                            break;
                         }
                     }
-                    false => {}
                 }
 
                 let github_request = post_request(
@@ -220,11 +217,11 @@ fn check_if_file_exists(client: &reqwest::blocking::Client, path_type: &str, slu
 }
 
 fn manage_login(_req: Request, password: String) -> Result<Response<Body>, Error> {
-    match _req.method() {
-        &Method::GET => Ok(Response::builder()
+    match *_req.method() {
+        Method::GET => Ok(Response::builder()
             .status(StatusCode::UNAUTHORIZED)
             .body(login_layout(None).into_string().into())?),
-        &Method::POST => {
+        Method::POST => {
             let data = form_urlencoded::parse(_req.body())
                 .map(|(key, value)| (key.to_string(), value.to_string()))
                 .collect::<HashMap<String, String>>();
@@ -300,10 +297,10 @@ fn proxy_request(_req: Request) -> Result<Response<Body>, Error> {
 
             let response_body = response.text().unwrap();
 
-            return Ok(Response::builder()
+            Ok(Response::builder()
                 .status(StatusCode::OK)
                 .header("Content-Type", "application/json")
-                .body(response_body.into())?);
+                .body(response_body.into())?)
         }
         "igdb" => {
             let igdb_key = env::var("IGDB_KEY").unwrap();
@@ -330,10 +327,10 @@ fn proxy_request(_req: Request) -> Result<Response<Body>, Error> {
 
             let response_body = response.text().unwrap();
 
-            return Ok(Response::builder()
+            Ok(Response::builder()
                 .status(StatusCode::OK)
                 .header("Content-Type", "application/json")
-                .body(response_body.into())?);
+                .body(response_body.into())?)
         }
         "isbn" => {
             let response = client
@@ -345,13 +342,13 @@ fn proxy_request(_req: Request) -> Result<Response<Body>, Error> {
 
             let response_body = response.text().unwrap();
 
-            return Ok(Response::builder()
+            Ok(Response::builder()
                 .status(StatusCode::OK)
                 .header("Content-Type", "application/json")
-                .body(response_body.into())?);
+                .body(response_body.into())?)
         }
         _ => {
-            return Ok(Response::builder()
+            Ok(Response::builder()
                 .status(StatusCode::BAD_REQUEST)
                 .body(Body::Empty)?)
         }
@@ -482,7 +479,7 @@ fn post_request(
 ) -> HashMap<String, Value> {
     let github_key = env::var("GITHUB_KEY").unwrap();
 
-    let b64 = general_purpose::STANDARD.encode(&body);
+    let b64 = general_purpose::STANDARD.encode(body);
     let skip_ci_marker = if skip_ci { "[skip ci]" } else { "[auto]" };
 
     let body = GitHubRequest {

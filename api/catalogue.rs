@@ -135,39 +135,27 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
             ON c.id = a.cover",
     );
 
-    match query_params.rating {
-        Some(_) => {
-            parameters.push((":rating", &query_params.rating));
-            statement.push_str(format!("{} rating = :rating", next_statement).as_str());
-            next_statement = NextStatement::And;
-        }
-        None => (),
+    if query_params.rating.is_some() {
+        parameters.push((":rating", &query_params.rating));
+        statement.push_str(format!("{} rating = :rating", next_statement).as_str());
+        next_statement = NextStatement::And;
     }
 
-    match query_params.r#type {
-        Some(_) => {
-            parameters.push((":type", &query_params.r#type));
-            statement.push_str(format!("{} type = :type", next_statement).as_str());
-            next_statement = NextStatement::And;
-        }
-        None => (),
+    if query_params.r#type.is_some() {
+        parameters.push((":type", &query_params.r#type));
+        statement.push_str(format!("{} type = :type", next_statement).as_str());
+        next_statement = NextStatement::And;
     }
 
-    match query_params.before {
-        Some(_) => {
-            parameters.push((":before", &query_params.before));
-            statement.push_str(format!("{} finishedDate < :before", next_statement).as_str());
-            next_statement = NextStatement::And;
-        }
-        None => (),
+    if query_params.before.is_some() {
+        parameters.push((":before", &query_params.before));
+        statement.push_str(format!("{} finishedDate < :before", next_statement).as_str());
+        next_statement = NextStatement::And;
     }
 
-    match query_params.after {
-        Some(_) => {
-            parameters.push((":after", &query_params.after));
-            statement.push_str(format!("{} finishedDate > :after", next_statement).as_str());
-        }
-        None => (),
+    if query_params.after.is_some() {
+        parameters.push((":after", &query_params.after));
+        statement.push_str(format!("{} finishedDate > :after", next_statement).as_str());
     }
 
     match query_params.sort {
@@ -207,13 +195,10 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                 rating: Rating::from_str(row.get_ref(5).unwrap().as_str()?).unwrap(),
                 search_score: match &query_params.search {
                     Some(search) => {
-                        let best_match =
-                            match best_match(&search, &row.get_ref(2).unwrap().as_str()?) {
+                        match best_match(search, row.get_ref(2).unwrap().as_str()?) {
                                 Some(best_match) => best_match.score(),
                                 None => 0,
-                            };
-
-                        best_match
+                            }
                     }
                     None => 0,
                 },
@@ -226,11 +211,8 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
         })
         .collect();
 
-    match query_params.search {
-        Some(_) => {
-            catalogue_entries.sort_by(|a, b| b.search_score.cmp(&a.search_score));
-        }
-        None => (),
+    if query_params.search.is_some() {
+        catalogue_entries.sort_by(|a, b| b.search_score.cmp(&a.search_score));
     }
 
     let total_items = catalogue_entries.len();

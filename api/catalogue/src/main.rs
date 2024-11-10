@@ -1,14 +1,21 @@
+use aws_lambda_events::{
+    apigw::{ApiGatewayProxyRequest, ApiGatewayProxyResponse},
+    query_map::QueryMap,
+};
 use core::fmt;
+use http::HeaderMap;
+use lambda_runtime::{service_fn, Error, LambdaEvent};
+use log::LevelFilter;
 use maud::{html, Markup, PreEscaped, Render};
 use paginate::Pages;
 use rusqlite::{Connection, OpenFlags, Result, ToSql};
+use simple_logger::SimpleLogger;
 use std::{
     fmt::{Display, Formatter},
     str::FromStr,
 };
 use strum_macros::EnumString;
 use sublime_fuzzy::best_match;
-use vercel_runtime::{run, Body, Error, Request, Response, StatusCode};
 
 #[derive(EnumString, Debug)]
 #[strum(serialize_all = "snake_case")]
@@ -67,7 +74,7 @@ struct CatalogueEntry {
     search_score: isize,
 }
 
-#[derive(Eq, PartialEq, serde::Deserialize, serde::Serialize, Debug)]
+#[derive(Eq, PartialEq, serde::Deserialize, serde::Serialize, Debug, EnumString)]
 #[serde(rename_all = "snake_case")]
 enum Sort {
     Alphabetical,
@@ -88,6 +95,20 @@ struct QueryParams {
     page: Option<usize>,
 }
 
+impl From<QueryMap> for QueryParams {
+    fn from(query_map: QueryMap) -> Self {
+        QueryParams {
+            search: query_map.first("search").map(|s| s.to_string()),
+            sort: query_map.first("sort").and_then(|s| Sort::from_str(s).ok()),
+            r#type: query_map.first("type").map(|s| s.to_string()),
+            rating: query_map.first("rating").map(|s| s.to_string()),
+            before: query_map.first("before").map(|s| s.to_string()),
+            after: query_map.first("after").map(|s| s.to_string()),
+            page: query_map.first("page").and_then(|s| s.parse().ok()),
+        }
+    }
+}
+
 enum NextStatement {
     And,
     Where,
@@ -104,27 +125,25 @@ impl Display for NextStatement {
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    run(handler).await
+    SimpleLogger::new()
+        .with_utc_timestamps()
+        .with_level(LevelFilter::Info)
+        .init()
+        .unwrap();
+    let func = service_fn(handler);
+    lambda_runtime::run(func).await?;
+    Ok(())
 }
 
-pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
+pub(crate) async fn handler(
+    event: LambdaEvent<ApiGatewayProxyRequest>,
+) -> Result<ApiGatewayProxyResponse, Error> {
     let conn = Connection::open_with_flags(
-        "./api/cataloguedb.db",
+        "../cataloguedb.db",
         OpenFlags::SQLITE_OPEN_CREATE | OpenFlags::SQLITE_OPEN_READ_WRITE,
     )?;
 
-    let query_params = match _req.uri().query() {
-        Some(query) => serde_qs::from_str::<QueryParams>(query)?,
-        None => QueryParams {
-            search: None,
-            sort: None,
-            r#type: None,
-            rating: None,
-            before: None,
-            after: None,
-            page: None,
-        },
-    };
+    let query_params = QueryParams::from(event.payload.query_string_parameters);
 
     let mut parameters: Vec<(&str, &dyn ToSql)> = Vec::new();
     let mut next_statement = NextStatement::Where;
@@ -194,12 +213,10 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                 },
                 rating: Rating::from_str(row.get_ref(5).unwrap().as_str()?).unwrap(),
                 search_score: match &query_params.search {
-                    Some(search) => {
-                        match best_match(search, row.get_ref(2).unwrap().as_str()?) {
-                                Some(best_match) => best_match.score(),
-                                None => 0,
-                            }
-                    }
+                    Some(search) => match best_match(search, row.get_ref(2).unwrap().as_str()?) {
+                        Some(best_match) => best_match.score(),
+                        None => 0,
+                    },
                     None => 0,
                 },
             })
@@ -252,9 +269,21 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
       }
     };
 
-    Ok(Response::builder()
-        .status(StatusCode::OK)
-        .header("Content-Type", "text/html; charset=utf-8")
-        .header("Cache-Control", "max-age=3600, s-maxage=604800")
-        .body(markup.into_string().into())?)
+    let mut headers = HeaderMap::new();
+
+    headers.insert("Content-Type", "text/html; charset=utf-8".parse().unwrap());
+    headers.insert(
+        "Cache-Control",
+        "max-age=3600, s-maxage=604800".parse().unwrap(),
+    );
+
+    let resp = ApiGatewayProxyResponse {
+        status_code: 200,
+        headers,
+        multi_value_headers: Default::default(),
+        body: Some(markup.into_string().into()),
+        is_base64_encoded: false,
+    };
+
+    Ok(resp)
 }

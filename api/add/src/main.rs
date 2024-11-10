@@ -1,16 +1,22 @@
 use std::{collections::HashMap, env};
 
+use aws_lambda_events::{
+    apigw::{ApiGatewayProxyRequest, ApiGatewayProxyResponse},
+    query_map::QueryMap,
+};
 use base64::{engine::general_purpose, Engine as _};
 use cookie::{
     time::{Duration, OffsetDateTime},
     Cookie,
 };
-use http::Method;
+use http::{HeaderMap, Method};
+use lambda_runtime::{service_fn, Error, LambdaEvent};
+use log::LevelFilter;
 use maud::{html, Markup, PreEscaped, DOCTYPE};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use sha2::{Digest, Sha256};
-use vercel_runtime::{run, Body, Error, Request, Response, StatusCode};
+use simple_logger::SimpleLogger;
 
 #[derive(Debug, serde::Deserialize)]
 struct QueryParams {
@@ -18,35 +24,60 @@ struct QueryParams {
     r#type: String,
 }
 
-#[tokio::main]
-async fn main() -> Result<(), Error> {
-    run(handler).await
+impl From<QueryMap> for QueryParams {
+    fn from(query_map: QueryMap) -> Self {
+        QueryParams {
+            query: query_map.first("query").unwrap().to_string(),
+            r#type: query_map.first("type").unwrap().to_string(),
+        }
+    }
 }
 
-pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
+#[tokio::main]
+async fn main() -> Result<(), Error> {
+    SimpleLogger::new()
+        .with_utc_timestamps()
+        .with_level(LevelFilter::Info)
+        .init()
+        .unwrap();
+    let func = service_fn(handler);
+    lambda_runtime::run(func).await?;
+    Ok(())
+}
+
+pub(crate) async fn handler(
+    event: LambdaEvent<ApiGatewayProxyRequest>,
+) -> Result<ApiGatewayProxyResponse, Error> {
     let password = env::var("HASHED_PASSWORD").unwrap();
 
-    if let Some(cookie) = _req.headers().get("cookie") {
+    if let Some(cookie) = event.payload.headers.get("cookie") {
         // This is not secure. Persistent cookies shouldn't be used for direct authentication.
         // Nonetheless, it's very unlikely for my own cookie to be stolen and the impact is quite minimal.
         let cookie = Cookie::parse(cookie.to_str().unwrap()).unwrap();
 
         if cookie.value() != password {
-            return manage_login(_req, password);
+            return manage_login(event, password);
         }
 
-        if _req.headers().contains_key("x-proxy-source") {
-            return proxy_request(_req);
+        if event.payload.headers.contains_key("x-proxy-source") {
+            return proxy_request(event).await;
         }
 
-        match *_req.method() {
-            Method::GET => Ok(Response::builder()
-                .status(StatusCode::OK)
-                .header("Content-Type", "text/html")
-                .body(form_layout().into_string().into())?),
+        match event.payload.http_method {
+            Method::GET => Ok(ApiGatewayProxyResponse {
+                status_code: 200,
+                headers: {
+                    let mut headers = HeaderMap::new();
+                    headers.insert("Content-Type", "text/html".parse().unwrap());
+                    headers
+                },
+                multi_value_headers: Default::default(),
+                body: Some(form_layout().into_string().into()),
+                is_base64_encoded: false,
+            }),
             Method::POST => {
                 let form_password = env::var("FORM_PASSWORD").unwrap();
-                let data = form_urlencoded::parse(_req.body())
+                let data = form_urlencoded::parse(event.payload.body.unwrap().as_bytes())
                     .map(|(key, value)| (key.to_string(), value.to_string()))
                     .collect::<HashMap<String, String>>();
 
@@ -54,9 +85,13 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                     .get("form_password")
                     .is_some_and(|f| f.to_lowercase() == form_password.to_lowercase())
                 {
-                    return Ok(Response::builder()
-                        .status(StatusCode::UNAUTHORIZED)
-                        .body(Body::Empty)?);
+                    return Ok(ApiGatewayProxyResponse {
+                        status_code: 401,
+                        headers: Default::default(),
+                        multi_value_headers: Default::default(),
+                        body: Some(login_layout(Some("Invalid password")).into_string().into()),
+                        is_base64_encoded: false,
+                    });
                 }
 
                 let source_key = match data.get("type").unwrap().as_str() {
@@ -136,10 +171,15 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                     .and_then(|url| url.as_str());
 
                 match commit_url {
-                    Some(commit_url) => Ok(Response::builder()
-                        .status(StatusCode::OK)
-                        .header("Content-Type", "text/html")
-                        .body(
+                    Some(commit_url) => Ok(ApiGatewayProxyResponse {
+                        status_code: 200,
+                        headers: {
+                            let mut headers = HeaderMap::new();
+                            headers.insert("Content-Type", "text/html".parse().unwrap());
+                            headers
+                        },
+                        multi_value_headers: Default::default(),
+                        body: Some(
                             layout(
                                 html! {
                                   div id="success" {
@@ -158,14 +198,22 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                             )
                             .into_string()
                             .into(),
-                        )?),
+                        ),
+                        is_base64_encoded: false,
+                    }),
                     None => {
                         let request_as_string = serde_json::to_string(&github_request)
                             .unwrap_or("Could not parse request".to_string());
-                        Ok(Response::builder()
-                            .status(StatusCode::OK)
-                            .header("Content-Type", "text/html")
-                            .body(
+
+                        Ok(ApiGatewayProxyResponse {
+                            status_code: 200,
+                            headers: {
+                                let mut headers = HeaderMap::new();
+                                headers.insert("Content-Type", "text/html".parse().unwrap());
+                                headers
+                            },
+                            multi_value_headers: Default::default(),
+                            body: Some(
                                 layout(
                                     html! {
                                       div id="success" {
@@ -181,16 +229,22 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                                 )
                                 .into_string()
                                 .into(),
-                            )?)
+                            ),
+                            is_base64_encoded: false,
+                        })
                     }
                 }
             }
-            _ => Ok(Response::builder()
-                .status(StatusCode::NOT_FOUND)
-                .body(Body::Empty)?),
+            _ => Ok(ApiGatewayProxyResponse {
+                status_code: 404,
+                headers: Default::default(),
+                multi_value_headers: Default::default(),
+                body: Some("Not found".into()),
+                is_base64_encoded: false,
+            }),
         }
     } else {
-        manage_login(_req, password)
+        manage_login(event, password)
     }
 }
 
@@ -216,13 +270,20 @@ fn check_if_file_exists(client: &reqwest::blocking::Client, path_type: &str, slu
     }
 }
 
-fn manage_login(_req: Request, password: String) -> Result<Response<Body>, Error> {
-    match *_req.method() {
-        Method::GET => Ok(Response::builder()
-            .status(StatusCode::UNAUTHORIZED)
-            .body(login_layout(None).into_string().into())?),
+fn manage_login(
+    event: LambdaEvent<ApiGatewayProxyRequest>,
+    password: String,
+) -> Result<ApiGatewayProxyResponse, Error> {
+    match event.payload.http_method {
+        Method::GET => Ok(ApiGatewayProxyResponse {
+            status_code: 401,
+            headers: Default::default(),
+            multi_value_headers: Default::default(),
+            body: Some(login_layout(None).into_string().into()),
+            is_base64_encoded: false,
+        }),
         Method::POST => {
-            let data = form_urlencoded::parse(_req.body())
+            let data = form_urlencoded::parse(event.payload.body.unwrap().as_bytes())
                 .map(|(key, value)| (key.to_string(), value.to_string()))
                 .collect::<HashMap<String, String>>();
 
@@ -233,56 +294,72 @@ fn manage_login(_req: Request, password: String) -> Result<Response<Body>, Error
 
                 if hashed_password == password {
                     let cookie = Cookie::build(("password", hashed_password))
-                        .path("/api/add")
+                        .path("/.netlify/functions/add")
                         .secure(true)
                         .same_site(cookie::SameSite::Strict)
                         .http_only(true)
                         .expires(OffsetDateTime::now_utc().checked_add(Duration::days(30)))
                         .build();
 
-                    Ok(Response::builder()
-                        .status(StatusCode::OK)
-                        .header("Set-Cookie", cookie.to_string())
-                        .body(
-                            // TODO: Render the main page directly instead of redirecting, this is easier though.
+                    Ok(ApiGatewayProxyResponse {
+                        status_code: 200,
+                        headers: {
+                            let mut headers = HeaderMap::new();
+                            headers.insert("Set-Cookie", cookie.to_string().parse().unwrap());
+                            headers
+                        },
+                        multi_value_headers: Default::default(),
+                        body: Some(
                             html! {(DOCTYPE) html { head { meta http-equiv="refresh" content="0" {}}}}
                                 .into_string()
                                 .into(),
-                        )?)
+                        ),
+                        is_base64_encoded: false,
+                    })
                 } else {
-                    Ok(Response::builder()
-                        .status(StatusCode::UNAUTHORIZED)
-                        .body(login_layout(Some("Invalid password")).into_string().into())?)
+                    Ok(ApiGatewayProxyResponse {
+                        status_code: 401,
+                        headers: Default::default(),
+                        multi_value_headers: Default::default(),
+                        body: Some(login_layout(Some("Invalid password")).into_string().into()),
+                        is_base64_encoded: false,
+                    })
                 }
             } else {
-                Ok(Response::builder()
-                    .status(StatusCode::UNAUTHORIZED)
-                    .body(login_layout(Some("Invalid form")).into_string().into())?)
+                Ok(ApiGatewayProxyResponse {
+                    status_code: 401,
+                    headers: Default::default(),
+                    multi_value_headers: Default::default(),
+                    body: Some(login_layout(Some("Invalid form")).into_string().into()),
+                    is_base64_encoded: false,
+                })
             }
         }
-        _ => Ok(Response::builder()
-            .status(StatusCode::UNAUTHORIZED)
-            .body(login_layout(Some("Invalid request")).into_string().into())?),
+        _ => Ok(ApiGatewayProxyResponse {
+            status_code: 401,
+            headers: Default::default(),
+            multi_value_headers: Default::default(),
+            body: Some(login_layout(Some("Invalid request")).into_string().into()),
+            is_base64_encoded: false,
+        }),
     }
 }
 
-fn proxy_request(_req: Request) -> Result<Response<Body>, Error> {
-    let source = _req
-        .headers()
+async fn proxy_request(
+    event: LambdaEvent<ApiGatewayProxyRequest>,
+) -> Result<ApiGatewayProxyResponse, Error> {
+    let source = event
+        .payload
+        .headers
         .get("x-proxy-source")
         .unwrap()
         .to_str()
         .unwrap();
 
-    let client = reqwest::blocking::Client::new();
-    let query_params = match _req.uri().query() {
-        Some(query) => serde_qs::from_str::<QueryParams>(query)?,
-        None => {
-            return Ok(Response::builder()
-                .status(StatusCode::BAD_REQUEST)
-                .body(Body::Empty)?)
-        }
-    };
+    let client = reqwest::Client::new();
+    let query_params = QueryParams::from(event.payload.query_string_parameters);
+
+    println!("{:?}", query_params);
 
     match source {
         "tmdb" => {
@@ -293,19 +370,27 @@ fn proxy_request(_req: Request) -> Result<Response<Body>, Error> {
                     "https://api.themoviedb.org/3/search/{0}?query={1}&api_key={tmdb_key}",
                     query_params.r#type, query_params.query,
                 ))
-                .send()?;
+                .send()
+                .await?;
 
-            let response_body = response.text().unwrap();
+            let response_body = response.text().await.unwrap();
 
-            Ok(Response::builder()
-                .status(StatusCode::OK)
-                .header("Content-Type", "application/json")
-                .body(response_body.into())?)
+            Ok(ApiGatewayProxyResponse {
+                status_code: 200,
+                headers: {
+                    let mut headers = HeaderMap::new();
+                    headers.insert("Content-Type", "application/json".parse().unwrap());
+                    headers
+                },
+                multi_value_headers: Default::default(),
+                body: Some(response_body.into()),
+                is_base64_encoded: false,
+            })
         }
         "igdb" => {
             let igdb_key = env::var("IGDB_KEY").unwrap();
             let igdb_client = env::var("IGDB_CLIENT").unwrap();
-            let igdb_access_request = client.post(format!("https://id.twitch.tv/oauth2/token?client_id={igdb_client}&client_secret={igdb_key}&grant_type=client_credentials")).send()?.text().unwrap();
+            let igdb_access_request = client.post(format!("https://id.twitch.tv/oauth2/token?client_id={igdb_client}&client_secret={igdb_key}&grant_type=client_credentials")).send().await?.text().await.unwrap();
             let parsed_request: HashMap<String, Value> =
                 serde_json::from_str(igdb_access_request.as_str()).unwrap();
             let igdb_access_token = parsed_request
@@ -323,14 +408,22 @@ fn proxy_request(_req: Request) -> Result<Response<Body>, Error> {
                     "fields name,cover.url,id; search \"{query}\";",
                     query = query_params.query
                 ))
-                .send()?;
+                .send()
+                .await?;
 
-            let response_body = response.text().unwrap();
+            let response_body = response.text().await.unwrap();
 
-            Ok(Response::builder()
-                .status(StatusCode::OK)
-                .header("Content-Type", "application/json")
-                .body(response_body.into())?)
+            Ok(ApiGatewayProxyResponse {
+                status_code: 200,
+                headers: {
+                    let mut headers = HeaderMap::new();
+                    headers.insert("Content-Type", "application/json".parse().unwrap());
+                    headers
+                },
+                multi_value_headers: Default::default(),
+                body: Some(response_body.into()),
+                is_base64_encoded: false,
+            })
         }
         "isbn" => {
             let response = client
@@ -338,20 +431,29 @@ fn proxy_request(_req: Request) -> Result<Response<Body>, Error> {
                     "https://openlibrary.org/search.json?title={query}&fields=key,title,isbn,cover_i,editions,editions.isbn",
                     query = query_params.query.replace(" ", "+")
                 ))
-                .send()?;
+                .send().await?;
 
-            let response_body = response.text().unwrap();
+            let response_body = response.text().await.unwrap();
 
-            Ok(Response::builder()
-                .status(StatusCode::OK)
-                .header("Content-Type", "application/json")
-                .body(response_body.into())?)
+            Ok(ApiGatewayProxyResponse {
+                status_code: 200,
+                headers: {
+                    let mut headers = HeaderMap::new();
+                    headers.insert("Content-Type", "application/json".parse().unwrap());
+                    headers
+                },
+                multi_value_headers: Default::default(),
+                body: Some(response_body.into()),
+                is_base64_encoded: false,
+            })
         }
-        _ => {
-            Ok(Response::builder()
-                .status(StatusCode::BAD_REQUEST)
-                .body(Body::Empty)?)
-        }
+        _ => Ok(ApiGatewayProxyResponse {
+            status_code: 400,
+            headers: Default::default(),
+            multi_value_headers: Default::default(),
+            body: Some("Invalid source".into()),
+            is_base64_encoded: false,
+        }),
     }
 }
 
@@ -363,10 +465,10 @@ fn layout(content: Markup, include_script: bool) -> Markup {
             meta charset="utf-8";
             title { "Add to catalogue" }
             meta name="viewport" content="width=device-width, initial-scale=1";
-            style { (PreEscaped(include_str!("./add/style.css").trim())) }
+            style { (PreEscaped(include_str!("./web/style.css").trim())) }
             @if include_script {
               script type="module" {
-                (PreEscaped(include_str!("./add/script.js").trim()))
+                (PreEscaped(include_str!("./web/script.js").trim()))
               }
             }
         }

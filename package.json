@@ -5,9 +5,9 @@
 	"private": true,
 	"scripts": {
 		"astro": "astro",
-		"dev": "ASTRO_DATABASE_FILE=api/cataloguedb.db astro dev",
+		"dev": "ASTRO_DATABASE_FILE=api/catalogue/cataloguedb.db astro dev",
 		"dev:vercel": "vercel dev --listen 27969",
-		"build": "bash ./scripts/unshallowVercel.sh && ASTRO_DATABASE_FILE=api/cataloguedb.db astro build",
+		"build": "bash ./scripts/unshallowVercel.sh && ASTRO_DATABASE_FILE=api/catalogue/cataloguedb.db astro build",
 		"preview": "astro preview",
 		"check": "astro check",
 		"lint": "eslint .",

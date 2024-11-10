@@ -1,48 +1,5 @@
-[package]
-name = "my-vercel-api"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-tokio = { version = "1", features = ["macros"] }
-serde = { version = "1.0", features = ["derive"] }
-# Documentation: https://docs.rs/vercel_runtime/latest/vercel_runtime
-vercel_runtime = { version = "1" }
-rusqlite = { version = "0.32.1", features = ["bundled"] }
-maud = "*"
-serde_qs = "0.13.0"
-strum = "0.26"
-strum_macros = "0.26"
-sublime_fuzzy = "0.7.0"
-paginate = "1.1.11"
-http = "1.1.0"
-reqwest = { version = "0.12.5", default-features = false, features = [
-  "blocking",
-  "rustls-tls",
-] }
-serde_json = "1.0.121"
-form_urlencoded = "1.2.1"
-base64 = "0.22.1"
-cookie = "0.18.1"
-sha2 = "0.10.8"
-chrono = "0.4.38"
-slug = "0.1.5"
-
-# You can specify a library for shared logic here (optional)
-# [lib]
-# path = "src-rs/lib.rs"
-
-# Each handler has to be specified as [[bin]]
-[[bin]]
-name = "catalogue"
-path = "api/catalogue.rs"
-
-# Note that you need to provide unique names for each binary:
-[[bin]]
-name = "user-id"
-path = "api/add.rs"
-
-#
-# [[bin]]
-# name = "group-id"
-# path = "api/group/[id].rs"
+[workspace]
+members = [
+    "api/catalogue",
+    "api/add"
+]

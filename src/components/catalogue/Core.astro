@@ -97,7 +97,7 @@ const pageLenth = 30;
 			updateCurrentPage(1);
 			await buildLibrary();
 			updateSeeMoreButton();
-		}, 75);
+		}, 125);
 	});
 
 	[ratingSelect, typeSelect, sortSelect].forEach((select) => {
@@ -118,8 +118,8 @@ const pageLenth = 30;
 
 	async function buildLibrary(append = false) {
 		const entryCount = document.getElementById("catalogue-entry-count") as HTMLDivElement;
-		const url = buildQueryParams(new URL("/api/catalogue", "http://dummy"));
-		const data = await fetch(url.pathname + url.search)
+		const url = buildQueryParams(new URL("/catalogue", "https://api.erika.florist/"));
+		const data = await fetch(url)
 			.then((response) => response.text())
 			.catch((err) => {
 				content.innerHTML =

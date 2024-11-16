@@ -8,6 +8,7 @@ on:
       - content/movies/**
       - content/shows/**
       - content/books/**
+      - .github/workflows/deploy-lambda.yml
 
 env:
   ONLY_SEED: true
@@ -40,6 +41,9 @@ jobs:
 
       - name: Build website
         run: pnpm build
+
+      - name: Setup Zig
+        uses: mlugg/setup-zig@v1
 
       - name: Setup Rust
         uses: moonrepo/setup-rust@v1

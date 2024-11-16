@@ -30,7 +30,5 @@ apps/erika.florist/src/pages/test.astro
 .astro
 .env
 .vercel
-api/catalogue/cataloguedb.db
-
-.cargo/config.toml
-.cargo/_config.toml
+api/cataloguedb.db
+api/cataloguedb.db-journal

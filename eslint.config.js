@@ -60,7 +60,7 @@ export default tseslint.config(
 	{
 		files: [
 			"**/*.astro", // Disabled because eslint-plugin-astro doesn't type Astro.props correctly in some contexts, so a bunch of things ends up being any
-			"api/add/script.js", // Script is in JSDoc and interact with an API, some things are any because I can't be bothered
+			"api/src/web/script.js", // Script is in JSDoc and interact with an API, some things are any because I can't be bothered
 			"scripts/**/*.ts", // Interact with untyped APIs a bunch, can't be bothered
 		],
 		rules: {

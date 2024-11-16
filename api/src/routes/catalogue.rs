@@ -1,15 +1,10 @@
-use aws_lambda_events::{
-    apigw::{ApiGatewayProxyRequest, ApiGatewayProxyResponse},
-    query_map::QueryMap,
-};
 use core::fmt;
-use http::HeaderMap;
-use lambda_runtime::{service_fn, Error, LambdaEvent};
-use log::LevelFilter;
+use lambda_http::{
+    aws_lambda_events::query_map::QueryMap, Body, Error, Request, RequestExt, Response,
+};
 use maud::{html, Markup, PreEscaped, Render};
 use paginate::Pages;
 use rusqlite::{Connection, OpenFlags, Result, ToSql};
-use simple_logger::SimpleLogger;
 use std::{
     fmt::{Display, Formatter},
     str::FromStr,
@@ -123,27 +118,13 @@ impl Display for NextStatement {
     }
 }
 
-#[tokio::main]
-async fn main() -> Result<(), Error> {
-    SimpleLogger::new()
-        .with_utc_timestamps()
-        .with_level(LevelFilter::Info)
-        .init()
-        .unwrap();
-    let func = service_fn(handler);
-    lambda_runtime::run(func).await?;
-    Ok(())
-}
-
-pub(crate) async fn handler(
-    event: LambdaEvent<ApiGatewayProxyRequest>,
-) -> Result<ApiGatewayProxyResponse, Error> {
+pub(crate) async fn catalogue_handler(event: Request) -> Result<Response<Body>, Error> {
     let conn = Connection::open_with_flags(
-        "../cataloguedb.db",
+        "./api/cataloguedb.db",
         OpenFlags::SQLITE_OPEN_CREATE | OpenFlags::SQLITE_OPEN_READ_WRITE,
     )?;
 
-    let query_params = QueryParams::from(event.payload.query_string_parameters);
+    let query_params = QueryParams::from(event.query_string_parameters());
 
     let mut parameters: Vec<(&str, &dyn ToSql)> = Vec::new();
     let mut next_statement = NextStatement::Where;
@@ -269,21 +250,12 @@ pub(crate) async fn handler(
       }
     };
 
-    let mut headers = HeaderMap::new();
+    let reps = Response::builder()
+        .status(200)
+        .header("Cache-Control", "max-age=3600, s-maxage=604800")
+        .header("Content-Type", "text/html; charset=utf-8")
+        .body(markup.into_string().into())
+        .map_err(Box::new)?;
 
-    headers.insert("Content-Type", "text/html; charset=utf-8".parse().unwrap());
-    headers.insert(
-        "Cache-Control",
-        "max-age=3600, s-maxage=604800".parse().unwrap(),
-    );
-
-    let resp = ApiGatewayProxyResponse {
-        status_code: 200,
-        headers,
-        multi_value_headers: Default::default(),
-        body: Some(markup.into_string().into()),
-        is_base64_encoded: false,
-    };
-
-    Ok(resp)
+    Ok(reps)
 }

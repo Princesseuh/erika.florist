@@ -13,9 +13,7 @@ enum ProjectType {
 	SOFTWARE = "software",
 }
 
-type ProjectList = {
-	[projectType in ProjectType]?: CollectionEntry<"projects">[];
-};
+type ProjectList = Partial<Record<ProjectType, CollectionEntry<"projects">[]>>;
 
 const projectsPerType: ProjectList = {};
 Object.values(ProjectType).forEach((projectType) => {

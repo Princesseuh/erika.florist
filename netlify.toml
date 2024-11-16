@@ -1,2 +1,0 @@
-[functions."catalogue"]
-  included_files = ["../cataloguedb.db"]

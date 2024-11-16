@@ -13,6 +13,9 @@ export default async function seed() {
 	await prepareDB();
 	const t1 = performance.now();
 	console.log(`Seeding time: ${t1 - t0} milliseconds.`);
+	if (process.env.ONLY_SEED === "true") {
+		process.exit(0);
+	}
 }
 
 export async function prepareDB() {

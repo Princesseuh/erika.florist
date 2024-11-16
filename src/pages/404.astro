@@ -1,9 +1,13 @@
 ---
 import Dinkus from "$components/content/Dinkus.astro";
 import BaseLayout from "$layouts/BaseLayout.astro";
+import { Catalogue, db } from "astro:db";
+
+// Trying to use the database in this file will cause it to be done early, so that we can exit early once we're done seeding.
+if (import.meta.env.PROD) await db.select().from(Catalogue).limit(1);
 ---
 
-<BaseLayout includeAboutInHeader>
+<BaseLayout>
 	<article class="flex justify-around p-24">
 		<div class="flex flex-col justify-around">
 			<h2 class="m-0 text-7xl">404</h2>

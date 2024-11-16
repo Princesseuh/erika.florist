@@ -1,12 +1,20 @@
 [package]
-name = "add"
+name = "florist-api"
 version = "0.1.0"
 edition = "2021"
 publish = false
 
 [dependencies]
+lambda_http = "0.13.0"
 serde = { version = "1.0", features = ["derive"] }
+rusqlite = { version = "0.32.1", features = ["bundled"] }
 maud = "*"
+serde_qs = "0.13.0"
+strum = "0.26"
+strum_macros = "0.26"
+sublime_fuzzy = "0.7.0"
+paginate = "1.1.11"
+tokio = { version = "1", features = ["macros"] }
 serde_json = "1.0.121"
 form_urlencoded = "1.2.1"
 base64 = "0.22.1"
@@ -18,9 +26,4 @@ reqwest = { version = "0.12.5", default-features = false, features = [
   "blocking",
   "rustls-tls",
 ] }
-aws_lambda_events = "0.15.1"
 http = "1.1.0"
-lambda_runtime = "0.13.0"
-tokio = "1.41.1"
-log = "0.4.22"
-simple_logger = "5.0.0"

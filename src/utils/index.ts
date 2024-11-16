@@ -17,7 +17,7 @@ export function getURLFromEntry(
 }
 
 export function getBaseSiteURL(): string {
-	return import.meta.env.PROD ? "https://erika.florist/" : "http://localhost:27969/";
+	return import.meta.env.PROD ? "https://erika.florist/" : "http://localhost:4321/";
 }
 
 export function randomArrayEntry<T>(array: T[]): T {

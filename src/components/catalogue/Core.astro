@@ -118,7 +118,12 @@ const pageLenth = 30;
 
 	async function buildLibrary(append = false) {
 		const entryCount = document.getElementById("catalogue-entry-count") as HTMLDivElement;
-		const url = buildQueryParams(new URL("/catalogue", "https://api.erika.florist/"));
+		const url = buildQueryParams(
+			new URL(
+				"/catalogue",
+				import.meta.env.DEV ? "http://localhost:9000/" : "https://api.erika.florist/",
+			),
+		);
 		const data = await fetch(url)
 			.then((response) => response.text())
 			.catch((err) => {
@@ -143,10 +148,18 @@ const pageLenth = 30;
 	}
 
 	function buildQueryParams(url: URL): URL {
-		url.searchParams.append("search", searchInput.value);
-		url.searchParams.append("type", typeSelect.value);
-		url.searchParams.append("rating", ratingSelect.value);
-		url.searchParams.append("sort", sortSelect.value);
+		if (searchInput.value) {
+			url.searchParams.append("search", searchInput.value);
+		}
+		if (typeSelect.value) {
+			url.searchParams.append("type", typeSelect.value);
+		}
+		if (ratingSelect.value) {
+			url.searchParams.append("rating", ratingSelect.value);
+		}
+		if (sortSelect.value) {
+			url.searchParams.append("sort", sortSelect.value);
+		}
 		url.searchParams.append("page", _currentPage.toString());
 
 		return url;

@@ -46,7 +46,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 			crossorigin
 		/>
 
-		{preloadCatalogue && <link rel="preconnect" href="/api/catalogue" crossorigin />}
+		{
+			preloadCatalogue && (
+				<link
+					rel="preconnect"
+					href={
+						import.meta.env.DEV
+							? "http://localhost:9000/catalogue"
+							: "https://api.erika.florist/catalogue"
+					}
+					crossorigin
+				/>
+			)
+		}
 
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="description" content={description ? description : "My personal website"} />

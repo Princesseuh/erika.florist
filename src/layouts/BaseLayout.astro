@@ -1,7 +1,7 @@
 ---
 import MobileMenu from "$components/layout/MobileMenu.astro";
 import MobileMenuSide from "$components/layout/MobileMenuSide.astro";
-import Sidebar from "$components/layout/SideBar.astro";
+import Header from "$components/layout/Header.astro";
 import Socials from "$components/layout/Socials.astro";
 import { getBaseSiteURL } from "$utils";
 import { Head } from "astro-capo";
@@ -9,35 +9,56 @@ import "src/assets/style/prin.css";
 import type { MenuItem } from "../data/sidebarMenu";
 import Spritesheet from "$components/Spritesheet.astro";
 import GoBackUp from "$components/layout/GoBackUp.astro";
+import Dinkus from "$components/content/Dinkus.astro";
 
 interface Props {
-	title?: string;
+	title?: string | undefined;
 	description?: string | undefined;
 	navItems?: MenuItem[];
 	preloadCatalogue?: boolean;
+	removeAboutFromHeader?: boolean;
 }
 
-const { title, description, navItems, preloadCatalogue } = Astro.props;
+const { title, description, navItems, preloadCatalogue, removeAboutFromHeader } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <html lang="en">
 	<Head>
 		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title ? `${title} - Erika` : "Erika"}</title>
 
 		<link
 			rel="preload"
-			href="/assets/fonts/anuphan.woff2"
+			href="/assets/fonts/IBMPlexResult.woff2"
 			as="font"
 			type="font/woff2"
 			crossorigin
 		/>
 
-		{preloadCatalogue && <link rel="preconnect" href="/api/catalogue" crossorigin />}
+		<link
+			rel="preload"
+			href="/assets/fonts/InterResult.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
+
+		{
+			preloadCatalogue && (
+				<link
+					rel="preconnect"
+					href={
+						import.meta.env.DEV
+							? "http://localhost:9000/catalogue"
+							: "https://api.erika.florist/catalogue"
+					}
+					crossorigin
+				/>
+			)
+		}
 
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="description" content={description ? description : "My personal website"} />
@@ -70,7 +91,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 		<script src="../assets/scripts/main.ts"></script>
 	</Head>
-	<body>
+	<body class="bg-black-charcoal">
 		<script is:inline>
 			const theme = localStorage.getItem("theme"),
 				isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -80,25 +101,29 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 					? document.documentElement.classList.remove("dark")
 					: theme === "system" && isSystemDark && document.documentElement.classList.add("dark");
 		</script>
-		<div id="app" class="bg-isabelline dark:bg-darker-skylines">
-			<section class="mx-auto w-layout p-5 sm:grid sm:grid-cols-layout sm:gap-x-6 sm:p-0">
-				<Sidebar navMenu={navItems ?? []} />
+		<div id="app" class="bg-white-sugar-cane">
+			<Header {removeAboutFromHeader} />
 
-				<main class="sm:mt-9">
-					<slot />
-				</main>
-			</section>
+			<main>
+				<slot />
+			</main>
 
 			<footer
-				class="mb-12 flex justify-center bg-darker-skylines px-5 py-6 leading-tight text-isabelline dark:bg-mobile-menu sm:m-0 sm:px-0"
+				class="mt-12 flex justify-center bg-black-charcoal px-5 py-6 pb-12 leading-tight text-white-sugar-cane sm:m-0 sm:mt-12 sm:px-0 sm:pb-6"
 			>
-				<section class="flex w-footer justify-between">
+				<section class="flex w-centered-width flex-wrap items-center justify-between gap-y-8">
 					<Socials />
 
-					<div>
-						Powered by <a href="https://astro.build/">Astro</a><br />
-						<a href="https://github.com/Princesseuh/erika.florist">Source Code</a><br />
-						<a href="/changelog/">Changelog</a>
+					<Dinkus classes="fill-white-sugar-cane hidden sm:block" />
+
+					<div class="leading-6">
+						Powered by <a class="button-style-bg-accent py-0" href="https://astro.build/">Astro</a
+						><br />
+						<a
+							class="button-style-bg-accent py-0"
+							href="https://github.com/Princesseuh/erika.florist">Source Code</a
+						><br />
+						<a class="button-style-bg-accent py-0" href="/changelog/">Changelog</a>
 					</div>
 				</section>
 			</footer>

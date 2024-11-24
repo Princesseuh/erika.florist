@@ -1,16 +1,17 @@
-use std::{collections::HashMap, env};
-
 use base64::{engine::general_purpose, Engine as _};
 use cookie::{
     time::{Duration, OffsetDateTime},
     Cookie,
 };
 use http::Method;
+use lambda_http::{
+    aws_lambda_events::query_map::QueryMap, Body, Error, Request, RequestExt, Response,
+};
 use maud::{html, Markup, PreEscaped, DOCTYPE};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use sha2::{Digest, Sha256};
-use vercel_runtime::{run, Body, Error, Request, Response, StatusCode};
+use std::{collections::HashMap, env};
 
 #[derive(Debug, serde::Deserialize)]
 struct QueryParams {
@@ -18,35 +19,40 @@ struct QueryParams {
     r#type: String,
 }
 
-#[tokio::main]
-async fn main() -> Result<(), Error> {
-    run(handler).await
+impl From<QueryMap> for QueryParams {
+    fn from(query_map: QueryMap) -> Self {
+        QueryParams {
+            query: query_map.first("query").unwrap().to_string(),
+            r#type: query_map.first("type").unwrap().to_string(),
+        }
+    }
 }
 
-pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
-    let password = env::var("HASHED_PASSWORD").unwrap();
+pub(crate) async fn add_handler(event: Request) -> Result<Response<Body>, Error> {
+    let password = env::var("HASHED_PASSWORD").expect("Password not set");
 
-    if let Some(cookie) = _req.headers().get("cookie") {
+    if let Some(cookie) = event.headers().get("cookie") {
         // This is not secure. Persistent cookies shouldn't be used for direct authentication.
         // Nonetheless, it's very unlikely for my own cookie to be stolen and the impact is quite minimal.
         let cookie = Cookie::parse(cookie.to_str().unwrap()).unwrap();
 
         if cookie.value() != password {
-            return manage_login(_req, password);
+            return manage_login(event, password);
         }
 
-        if _req.headers().contains_key("x-proxy-source") {
-            return proxy_request(_req);
+        if event.headers().contains_key("x-proxy-source") {
+            return proxy_request(event).await;
         }
 
-        match _req.method() {
-            &Method::GET => Ok(Response::builder()
-                .status(StatusCode::OK)
+        match *event.method() {
+            Method::GET => Ok(Response::builder()
+                .status(200)
                 .header("Content-Type", "text/html")
-                .body(form_layout().into_string().into())?),
-            &Method::POST => {
-                let form_password = env::var("FORM_PASSWORD").unwrap();
-                let data = form_urlencoded::parse(_req.body())
+                .body(form_layout().into_string().into())
+                .expect("Failed to render response")),
+            Method::POST => {
+                let form_password = env::var("FORM_PASSWORD").expect("Form password not set");
+                let data = form_urlencoded::parse(event.body())
                     .map(|(key, value)| (key.to_string(), value.to_string()))
                     .collect::<HashMap<String, String>>();
 
@@ -55,8 +61,10 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                     .is_some_and(|f| f.to_lowercase() == form_password.to_lowercase())
                 {
                     return Ok(Response::builder()
-                        .status(StatusCode::UNAUTHORIZED)
-                        .body(Body::Empty)?);
+                        .status(401)
+                        .header("Content-Type", "text/html")
+                        .body(login_layout(Some("Invalid password")).into_string().into())
+                        .expect("Failed to render response"));
                 }
 
                 let source_key = match data.get("type").unwrap().as_str() {
@@ -76,17 +84,17 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                 let enable_date = data.get("no-date").unwrap_or(&String::from("")) == "on";
 
                 let markdown_content = format!(
-                    "---\ntitle: \"{name}\"\n{platform}rating: \"{rating}\"\nfinishedDate: {date}\n{source}: \"{sourceId}\"\n---\n\n{comment}\n",
-                    comment = data.get("comment").unwrap(),
-                    platform = if data.get("platform-select").unwrap_or(&String::from("")).is_empty() { "" } else { &platform },
-                    rating = data.get("rating").unwrap(),
-                    date = match enable_date {
-                        true => data.get("date").unwrap(),
-                        false => "N/A",
-                    }.to_string(),
-                    source = source_key,
-                    sourceId = data.get("source-id").unwrap()
-                );
+          "---\ntitle: \"{name}\"\n{platform}rating: \"{rating}\"\nfinishedDate: {date}\n{source}: \"{sourceId}\"\n---\n\n{comment}\n",
+          comment = data.get("comment").unwrap(),
+          platform = if data.get("platform-select").unwrap_or(&String::from("")).is_empty() { "" } else { &platform },
+          rating = data.get("rating").unwrap(),
+          date = match enable_date {
+            true => data.get("date").unwrap(),
+            false => "N/A",
+          },
+          source = source_key,
+          sourceId = data.get("source-id").unwrap()
+        );
 
                 let path_type = match data.get("type").unwrap().as_str() {
                     "movie" => "movies",
@@ -103,25 +111,22 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
                 let client = reqwest::blocking::Client::new();
                 let file_exists = check_if_file_exists(&client, path_type, slug.as_str());
 
-                match file_exists {
-                    true => {
-                        let mut i = 1;
-                        loop {
-                            let file_exists = check_if_file_exists(
-                                &client,
-                                path_type,
-                                format!("{slug}-{i}", slug = slug, i = i).as_str(),
-                            );
+                if file_exists {
+                    let mut i = 1;
+                    loop {
+                        let file_exists = check_if_file_exists(
+                            &client,
+                            path_type,
+                            format!("{slug}-{i}", slug = slug, i = i).as_str(),
+                        );
 
-                            if file_exists {
-                                i += 1;
-                            } else {
-                                slug = format!("{slug}-{i}", slug = slug, i = i);
-                                break;
-                            }
+                        if file_exists {
+                            i += 1;
+                        } else {
+                            slug = format!("{slug}-{i}", slug = slug, i = i);
+                            break;
                         }
                     }
-                    false => {}
                 }
 
                 let github_request = post_request(
@@ -140,78 +145,83 @@ pub async fn handler(_req: Request) -> Result<Response<Body>, Error> {
 
                 match commit_url {
                     Some(commit_url) => Ok(Response::builder()
-                        .status(StatusCode::OK)
+                        .status(200)
                         .header("Content-Type", "text/html")
                         .body(
                             layout(
                                 html! {
                                   div id="success" {
-                                    h1 { "Success!" }
-                                    p {
-                                      "Your content has been added to the catalogue. "
-                                      a href=(commit_url) { "(See commit)" }
-                                    }
-                                    div id="success-buttons" {
-                                      a href="/catalogue" { "Go back to the catalogue" }
-                                      a href="/api/add" { "Add another" }
-                                    }
+                                  h1 { "Success!" }
+                                  p {
+                                    "Your content has been added to the catalogue. "
+                                    a href=(commit_url) { "(See commit)" }
+                                  }
+                                  div id="success-buttons" {
+                                    a href="/catalogue" { "Go back to the catalogue" }
+                                    a href="/api/add" { "Add another" }
+                                  }
                                   }
                                 },
                                 false,
                             )
                             .into_string()
                             .into(),
-                        )?),
+                        )
+                        .expect("Failed to render response")),
                     None => {
                         let request_as_string = serde_json::to_string(&github_request)
                             .unwrap_or("Could not parse request".to_string());
+
                         Ok(Response::builder()
-                            .status(StatusCode::OK)
+                            .status(200)
                             .header("Content-Type", "text/html")
                             .body(
                                 layout(
                                     html! {
                                       div id="success" {
-                                        h1 { "Failed" }
-                                        p { "An error occurred while adding your content:" }
-                                        code { (request_as_string) }
-                                        div id="success-buttons" {
-                                          a href="/api/add" { "Try again" }
-                                        }
+                                      h1 { "Failed" }
+                                      p { "An error occurred while adding your content:" }
+                                      code { (request_as_string) }
+                                      div id="success-buttons" {
+                                        a href="/api/add" { "Try again" }
+                                      }
                                       }
                                     },
                                     false,
                                 )
                                 .into_string()
                                 .into(),
-                            )?)
+                            )
+                            .expect("Failed to render response"))
                     }
                 }
             }
             _ => Ok(Response::builder()
-                .status(StatusCode::NOT_FOUND)
-                .body(Body::Empty)?),
+                .status(404)
+                .header("Content-Type", "text/html")
+                .body("Not found".into())
+                .expect("Failed to render response")),
         }
     } else {
-        manage_login(_req, password)
+        manage_login(event, password)
     }
 }
 
 fn check_if_file_exists(client: &reqwest::blocking::Client, path_type: &str, slug: &str) -> bool {
     let response = client
-        .get(format!(
-            "https://api.github.com/repos/Princesseuh/erika.florist/contents/content/{path_type}/{slug}/{slug}.mdoc",
-            path_type = path_type,
-            slug = slug
-        ))
-        .header("Accept", "application/vnd.github+json")
-        .header("User-Agent", "Princesseuh")
-        .header(
-            "Authorization",
-            format!("Bearer {github_key}", github_key = env::var("GITHUB_KEY").unwrap()),
-        )
-        .header("X-GitHub-Api-Version", "2022-11-28")
-        .send();
+    .get(format!(
+      "https://api.github.com/repos/Princesseuh/erika.florist/contents/content/{path_type}/{slug}/{slug}.mdoc",
+      path_type = path_type,
+      slug = slug
+    ))
+    .header("Accept", "application/vnd.github+json")
+    .header("User-Agent", "Princesseuh")
+    .header(
+      "Authorization",
+      format!("Bearer {github_key}", github_key = env::var("GITHUB_KEY").expect("GitHub key not set")),
+    )
+    .header("X-GitHub-Api-Version", "2022-11-28")
+    .send();
 
     match response {
         Ok(response) => response.status().is_success(),
@@ -219,13 +229,15 @@ fn check_if_file_exists(client: &reqwest::blocking::Client, path_type: &str, slu
     }
 }
 
-fn manage_login(_req: Request, password: String) -> Result<Response<Body>, Error> {
-    match _req.method() {
-        &Method::GET => Ok(Response::builder()
-            .status(StatusCode::UNAUTHORIZED)
-            .body(login_layout(None).into_string().into())?),
-        &Method::POST => {
-            let data = form_urlencoded::parse(_req.body())
+fn manage_login(event: Request, password: String) -> Result<Response<Body>, Error> {
+    match *event.method() {
+        Method::GET => Ok(Response::builder()
+            .status(401)
+            .header("Content-Type", "text/html")
+            .body(login_layout(None).into_string().into())
+            .expect("Failed to render response")),
+        Method::POST => {
+            let data = form_urlencoded::parse(event.body())
                 .map(|(key, value)| (key.to_string(), value.to_string()))
                 .collect::<HashMap<String, String>>();
 
@@ -236,7 +248,7 @@ fn manage_login(_req: Request, password: String) -> Result<Response<Body>, Error
 
                 if hashed_password == password {
                     let cookie = Cookie::build(("password", hashed_password))
-                        .path("/api/add")
+                        .path("/add")
                         .secure(true)
                         .same_site(cookie::SameSite::Strict)
                         .http_only(true)
@@ -244,71 +256,73 @@ fn manage_login(_req: Request, password: String) -> Result<Response<Body>, Error
                         .build();
 
                     Ok(Response::builder()
-                        .status(StatusCode::OK)
-                        .header("Set-Cookie", cookie.to_string())
-                        .body(
-                            // TODO: Render the main page directly instead of redirecting, this is easier though.
-                            html! {(DOCTYPE) html { head { meta http-equiv="refresh" content="0" {}}}}
-                                .into_string()
-                                .into(),
-                        )?)
+            .status(200)
+            .header("Set-Cookie", cookie.to_string())
+            .header("Content-Type", "text/html")
+            .body(
+              html! {(DOCTYPE) html { head { meta http-equiv="refresh" content="0" {}}}}
+                .into_string()
+                .into(),
+            )
+            .expect("Failed to render response"))
                 } else {
                     Ok(Response::builder()
-                        .status(StatusCode::UNAUTHORIZED)
-                        .body(login_layout(Some("Invalid password")).into_string().into())?)
+                        .status(401)
+                        .header("Content-Type", "text/html")
+                        .body(login_layout(Some("Invalid password")).into_string().into())
+                        .expect("Failed to render response"))
                 }
             } else {
                 Ok(Response::builder()
-                    .status(StatusCode::UNAUTHORIZED)
-                    .body(login_layout(Some("Invalid form")).into_string().into())?)
+                    .status(401)
+                    .header("Content-Type", "text/html")
+                    .body(login_layout(Some("Invalid form")).into_string().into())
+                    .expect("Failed to render response"))
             }
         }
         _ => Ok(Response::builder()
-            .status(StatusCode::UNAUTHORIZED)
-            .body(login_layout(Some("Invalid request")).into_string().into())?),
+            .status(401)
+            .header("Content-Type", "text/html")
+            .body(login_layout(Some("Invalid request")).into_string().into())
+            .expect("Failed to render response")),
     }
 }
 
-fn proxy_request(_req: Request) -> Result<Response<Body>, Error> {
-    let source = _req
+async fn proxy_request(event: Request) -> Result<Response<Body>, Error> {
+    let source = event
         .headers()
         .get("x-proxy-source")
         .unwrap()
         .to_str()
         .unwrap();
 
-    let client = reqwest::blocking::Client::new();
-    let query_params = match _req.uri().query() {
-        Some(query) => serde_qs::from_str::<QueryParams>(query)?,
-        None => {
-            return Ok(Response::builder()
-                .status(StatusCode::BAD_REQUEST)
-                .body(Body::Empty)?)
-        }
-    };
+    let client = reqwest::Client::new();
+    let query_params = QueryParams::from(event.query_string_parameters());
 
     match source {
         "tmdb" => {
-            let tmdb_key = env::var("TMDB_KEY").unwrap();
+            let tmdb_key = env::var("TMDB_KEY").expect("TMDB key not set");
 
             let response = client
                 .get(format!(
                     "https://api.themoviedb.org/3/search/{0}?query={1}&api_key={tmdb_key}",
                     query_params.r#type, query_params.query,
                 ))
-                .send()?;
+                .send()
+                .await?;
 
-            let response_body = response.text().unwrap();
+            let response_body = response.text().await.unwrap();
 
-            return Ok(Response::builder()
-                .status(StatusCode::OK)
+            Ok(Response::builder()
+                .status(200)
                 .header("Content-Type", "application/json")
-                .body(response_body.into())?);
+                .body(response_body.into())
+                .expect("Failed to render response"))
         }
         "igdb" => {
-            let igdb_key = env::var("IGDB_KEY").unwrap();
-            let igdb_client = env::var("IGDB_CLIENT").unwrap();
-            let igdb_access_request = client.post(format!("https://id.twitch.tv/oauth2/token?client_id={igdb_client}&client_secret={igdb_key}&grant_type=client_credentials")).send()?.text().unwrap();
+            let igdb_key = env::var("IGDB_KEY").expect("IGDB key not set");
+            let igdb_client = env::var("IGDB_CLIENT").expect("IGDB client not set");
+            let igdb_access_request = client.post(format!("https://id.twitch.tv/oauth2/token?client_id={igdb_client}&client_secret={igdb_key}&grant_type=client_credentials")).send().await?.text().await.unwrap();
             let parsed_request: HashMap<String, Value> =
                 serde_json::from_str(igdb_access_request.as_str()).unwrap();
             let igdb_access_token = parsed_request
@@ -326,35 +340,38 @@ fn proxy_request(_req: Request) -> Result<Response<Body>, Error> {
                     "fields name,cover.url,id; search \"{query}\";",
                     query = query_params.query
                 ))
-                .send()?;
+                .send()
+                .await?;
 
-            let response_body = response.text().unwrap();
+            let response_body = response.text().await.unwrap();
 
-            return Ok(Response::builder()
-                .status(StatusCode::OK)
+            Ok(Response::builder()
+                .status(200)
                 .header("Content-Type", "application/json")
-                .body(response_body.into())?);
+                .body(response_body.into())
+                .expect("Failed to render response"))
         }
         "isbn" => {
             let response = client
-                .get(format!(
-                    "https://openlibrary.org/search.json?title={query}&fields=key,title,isbn,cover_i,editions,editions.isbn",
-                    query = query_params.query.replace(" ", "+")
-                ))
-                .send()?;
+        .get(format!(
+          "https://openlibrary.org/search.json?title={query}&fields=key,title,isbn,cover_i,editions,editions.isbn",
+          query = query_params.query.replace(" ", "+")
+        ))
+        .send().await?;
 
-            let response_body = response.text().unwrap();
+            let response_body = response.text().await.unwrap();
 
-            return Ok(Response::builder()
-                .status(StatusCode::OK)
+            Ok(Response::builder()
+                .status(200)
                 .header("Content-Type", "application/json")
-                .body(response_body.into())?);
+                .body(response_body.into())
+                .expect("Failed to render response"))
         }
-        _ => {
-            return Ok(Response::builder()
-                .status(StatusCode::BAD_REQUEST)
-                .body(Body::Empty)?)
-        }
+        _ => Ok(Response::builder()
+            .status(400)
+            .header("Content-Type", "text/html")
+            .body("Invalid source".into())
+            .expect("Failed to render response")),
     }
 }
 
@@ -366,10 +383,10 @@ fn layout(content: Markup, include_script: bool) -> Markup {
             meta charset="utf-8";
             title { "Add to catalogue" }
             meta name="viewport" content="width=device-width, initial-scale=1";
-            style { (PreEscaped(include_str!("./add/style.css").trim())) }
+            style { (PreEscaped(include_str!("../web/style.css").trim())) }
             @if include_script {
               script type="module" {
-                (PreEscaped(include_str!("./add/script.js").trim()))
+                (PreEscaped(include_str!("../web/script.js").trim()))
               }
             }
         }
@@ -480,9 +497,9 @@ fn post_request(
     skip_ci: bool,
     dry: bool,
 ) -> HashMap<String, Value> {
-    let github_key = env::var("GITHUB_KEY").unwrap();
+    let github_key = env::var("GITHUB_KEY").expect("GitHub key not set");
 
-    let b64 = general_purpose::STANDARD.encode(&body);
+    let b64 = general_purpose::STANDARD.encode(body);
     let skip_ci_marker = if skip_ci { "[skip ci]" } else { "[auto]" };
 
     let body = GitHubRequest {

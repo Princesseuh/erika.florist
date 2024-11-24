@@ -4,7 +4,7 @@
 		"package-lock.json",
 		"node_modules",
 		"vscode-extension",
-		".git/objects",
+		".git/",
 		".vscode",
 		"pnpm-lock.yaml"
 	],
@@ -21,10 +21,8 @@
 		"astro"
 	],
 	"editor.codeActionsOnSave": {
-		"source.organizeImports": "always",
-		"source.organizeImports.biome": "never"
+		"source.organizeImports": "always"
 	},
-	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"[javascript]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
@@ -33,5 +31,6 @@
 	},
 	"files.associations": {
 		"*.mdoc": "markdown"
-	}
+	},
+	"biome.enabled": false
 }

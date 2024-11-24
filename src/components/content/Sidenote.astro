@@ -2,6 +2,11 @@
 
 ---
 
-<span class="absolute left-0 inline-block h-0 w-0">
-	<some-thing class="relative left-[50rem]"><slot /></some-thing>
+<span
+	class="left-0 mb-6 mt-4 inline-block w-full italic md:absolute md:mb-0 md:mt-0 md:h-0 md:not-italic"
+>
+	<some-thing
+		class="relative inline-block md:left-[calc(100%+1rem)] md:w-[30%] md:text-sm xl:left-[calc(100%+2rem)]"
+		><slot /></some-thing
+	>
 </span>

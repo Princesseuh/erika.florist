@@ -1,5 +1,6 @@
-export default {
-	themes: ["material-theme-darker"],
+import { defineEcConfig } from "astro-expressive-code";
+
+export default defineEcConfig({
 	plugins: [
 		{
 			name: "custom-style",
@@ -19,10 +20,17 @@ export default {
             padding-left: 1rem;
             color: #fff;
           }
+          @media (min-width: 768px) {
+            .expressive-code {
+              margin-left: -1rem;
+              margin-right: -1rem;
+            }
+          }
           `,
 			hooks: {},
 		},
 	],
+	themes: ["github-dark-default"],
 	useThemedScrollbars: false,
 	useThemedSelectionColors: false,
 	styleOverrides: {
@@ -39,4 +47,4 @@ export default {
 		codeFontFamily:
 			'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
 	},
-};
+});

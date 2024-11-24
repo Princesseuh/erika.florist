@@ -1,0 +1,39 @@
+---
+import { blurb, headerMenu } from "$data/sidebarMenu";
+import Logo from "./Logo.astro";
+
+interface Props {
+	removeAboutFromHeader?: boolean | undefined;
+}
+
+const { removeAboutFromHeader } = Astro.props;
+---
+
+<header
+	class="hidden h-[125px] bg-accent-valencia px-4 py-4 sm:flex xl:grid xl:grid-cols-header-xl"
+>
+	<section class="text-white-sugar-cane xl:basis-1/3">
+		<Logo />
+		{
+			!removeAboutFromHeader && (
+				<section class="text-sm">
+					<Fragment set:html={blurb} />
+				</section>
+			)
+		}
+	</section>
+	<section class="mx-auto flex w-centered-width items-center justify-end">
+		<section class="grid h-min grid-cols-2 gap-x-10 justify-self-end text-xl font-[550]">
+			{
+				headerMenu.map((item) => (
+					<a
+						href={`/${item}`}
+						class:list={["button-style-bg-accent bg-transparent p-1 tracking-wider"]}
+					>
+						{item}
+					</a>
+				))
+			}
+		</section>
+	</section>
+</header>

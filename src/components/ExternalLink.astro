@@ -23,6 +23,9 @@ if (href.startsWith("http")) {
 			duration: "1y",
 			type: "text",
 			directory: "node_modules/.cache",
+			fetchOptions: {
+				signal: import.meta.env.DEV ? AbortSignal.timeout(2000) : null,
+			},
 		});
 		const { document } = parseHTML(html);
 		const links = document.querySelectorAll("link");
@@ -47,11 +50,14 @@ if (href.startsWith("http")) {
 			if (faviconElementHref) originalFaviconUrl = new URL(faviconElementHref, href);
 		}
 
-		let faviconBuffer = (await EleventyFetch(originalFaviconUrl.toString(), {
+		let faviconBuffer = await EleventyFetch(originalFaviconUrl.toString(), {
 			duration: "1y",
 			type: "buffer",
 			directory: "node_modules/.cache",
-		})) as Buffer;
+			fetchOptions: {
+				signal: import.meta.env.DEV ? AbortSignal.timeout(2000) : null,
+			},
+		});
 
 		if (isICO(faviconBuffer)) {
 			const ico = await parseICO(faviconBuffer, "image/png");
@@ -68,8 +74,14 @@ if (href.startsWith("http")) {
 
 		faviconUrl = `data:${processedFavicon.info.format};base64,${processedFavicon.data.toString("base64")}`;
 	} catch (e) {
-		if (e instanceof Error && Object.prototype.hasOwnProperty.call(e, "message")) {
-			if (import.meta.env.DEV) console.log(e.message);
+		if (import.meta.env.DEV) {
+			if (e instanceof DOMException && e.name == "AbortError") {
+				console.log("Could not fetch favicon before timeout, network is probably unstable.");
+			}
+
+			if (e instanceof Error && Object.prototype.hasOwnProperty.call(e, "message")) {
+				console.log(e.message);
+			}
 		}
 	}
 }
@@ -80,7 +92,7 @@ const content = (await Astro.slots.render("default")).trim();
 {
 	faviconUrl ? (
 		<img
-			class="relative top-[3px] mr-1 w-4 rounded-sm"
+			class="relative top-[3px] mr-[4px] w-4 rounded-sm"
 			src={faviconUrl.toString()}
 			width="17"
 			height="17"
@@ -93,7 +105,7 @@ const content = (await Astro.slots.render("default")).trim();
 	) : (
 		!href.startsWith("/") &&
 		!href.startsWith("#") && (
-			<span class="relative top-[3px] mr-1 inline-block w-4 rounded-sm" data-favicon-span="">
+			<span class="relative top-[3px] mr-[4px] inline-block w-4 rounded-sm" data-favicon-span="">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
 					<path
 						fill="none"

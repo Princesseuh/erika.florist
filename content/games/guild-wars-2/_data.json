@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1345852800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    }
+  ],
+  "companies": [
+    {
+      "id": 256,
+      "name": "NCSOFT",
+      "role": "publisher"
+    },
+    {
+      "id": 255,
+      "name": "ArenaNet",
+      "role": "developer"
+    }
+  ]
+}

@@ -2,6 +2,7 @@
 import EleventyFetch from "@11ty/eleventy-fetch";
 import { isICO, parseICO } from "icojs";
 import { parseHTML } from "linkedom";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import sharp from "sharp";
 
 interface Props {
@@ -12,76 +13,84 @@ const { href } = Astro.props;
 
 let faviconUrl: string | undefined;
 
+const cacheFolder = "node_modules/.astro/favicons";
+mkdirSync(cacheFolder, { recursive: true });
+
 if (href.startsWith("http")) {
 	faviconUrl = undefined;
 
 	// Get favicon
 	let html = "";
 
+	const cachedFaviconPath = `${cacheFolder}/${new URL(href).hostname}`;
+
 	try {
-		html = await EleventyFetch(href, {
-			duration: "1y",
-			type: "text",
-			directory: "node_modules/.cache",
-			fetchOptions: {
-				signal: import.meta.env.DEV ? AbortSignal.timeout(2000) : null,
-			},
-		});
-		const { document } = parseHTML(html);
-		const links = document.querySelectorAll("link");
+		// Check cache first
+		if (existsSync(cachedFaviconPath)) {
+			faviconUrl = readFileSync(cachedFaviconPath).toString();
+		} else {
+			html = await EleventyFetch(href, {
+				duration: "1y",
+				type: "text",
+				directory: "node_modules/.cache",
+				fetchOptions: {
+					signal: import.meta.env.DEV ? AbortSignal.timeout(2000) : null,
+				},
+			});
+			const { document } = parseHTML(html);
+			const links = document.querySelectorAll("link");
 
-		const faviconElement = Array.from(links).find((link) => {
-			const rel = (link.getAttribute("rel") ?? "").toLowerCase();
+			const faviconElement = Array.from(links).find((link) => {
+				const rel = (link.getAttribute("rel") ?? "").toLowerCase();
 
-			if (["icon", "shortcut icon"].includes(rel)) {
-				const iconHref = link.getAttribute("href");
+				if (["icon", "shortcut icon"].includes(rel)) {
+					const iconHref = link.getAttribute("href");
 
-				if (iconHref) {
-					return true;
+					if (iconHref) {
+						return true;
+					}
 				}
+
+				return false;
+			});
+
+			let originalFaviconUrl = new URL("/favicon.ico", href);
+			if (faviconElement) {
+				const faviconElementHref = faviconElement.getAttribute("href");
+				if (faviconElementHref) originalFaviconUrl = new URL(faviconElementHref, href);
 			}
 
-			return false;
-		});
+			let faviconBuffer = await EleventyFetch(originalFaviconUrl.toString(), {
+				duration: "1y",
+				type: "buffer",
+				directory: "node_modules/.cache",
+				fetchOptions: {
+					signal: import.meta.env.DEV ? AbortSignal.timeout(2000) : null,
+				},
+			});
 
-		let originalFaviconUrl = new URL("/favicon.ico", href);
-		if (faviconElement) {
-			const faviconElementHref = faviconElement.getAttribute("href");
-			if (faviconElementHref) originalFaviconUrl = new URL(faviconElementHref, href);
+			if (isICO(faviconBuffer)) {
+				const ico = await parseICO(faviconBuffer, "image/png");
+				const largestIcon = ico.reduce((prev, current) =>
+					prev.width > current.width ? prev : current,
+				);
+				faviconBuffer = Buffer.from(largestIcon.buffer);
+			}
+
+			const processedFavicon = await sharp(faviconBuffer)
+				.toFormat("webp")
+				.resize(32, 32)
+				.toBuffer({ resolveWithObject: true });
+
+			faviconUrl = `data:${processedFavicon.info.format};base64,${processedFavicon.data.toString("base64")}`;
+
+			// Save favicon to caches
+			writeFileSync(cachedFaviconPath, faviconUrl);
 		}
-
-		let faviconBuffer = await EleventyFetch(originalFaviconUrl.toString(), {
-			duration: "1y",
-			type: "buffer",
-			directory: "node_modules/.cache",
-			fetchOptions: {
-				signal: import.meta.env.DEV ? AbortSignal.timeout(2000) : null,
-			},
-		});
-
-		if (isICO(faviconBuffer)) {
-			const ico = await parseICO(faviconBuffer, "image/png");
-			const largestIcon = ico.reduce((prev, current) =>
-				prev.width > current.width ? prev : current,
-			);
-			faviconBuffer = Buffer.from(largestIcon.buffer);
-		}
-
-		const processedFavicon = await sharp(faviconBuffer)
-			.toFormat("webp")
-			.resize(32, 32)
-			.toBuffer({ resolveWithObject: true });
-
-		faviconUrl = `data:${processedFavicon.info.format};base64,${processedFavicon.data.toString("base64")}`;
 	} catch (e) {
-		if (import.meta.env.DEV) {
-			if (e instanceof DOMException && e.name == "AbortError") {
-				console.log("Could not fetch favicon before timeout, network is probably unstable.");
-			}
-
-			if (e instanceof Error && Object.prototype.hasOwnProperty.call(e, "message")) {
-				console.log(e.message);
-			}
+		if (e instanceof Error && Object.prototype.hasOwnProperty.call(e, "message")) {
+			if (import.meta.env.DEV) console.log(e.message);
+			writeFileSync(cachedFaviconPath, "");
 		}
 	}
 }
@@ -90,7 +99,7 @@ const content = (await Astro.slots.render("default")).trim();
 ---
 
 {
-	faviconUrl ? (
+	faviconUrl && faviconUrl?.length > 0 ? (
 		<img
 			class="relative top-[3px] mr-[4px] w-4 rounded-sm"
 			src={faviconUrl.toString()}

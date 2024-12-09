@@ -80,7 +80,7 @@ function getAuthorFromEntryMetadata(type: CatalogueType, metadata: any) {
 		case "game":
 			return metadata?.companies?.[0]?.name ?? "Unknown";
 		case "book":
-			return metadata.authors[0] ?? "Unknown";
+			return metadata.authors?.[0] ?? metadata.publishers[0] ?? "Unknown";
 		case "movie":
 		case "show":
 			return metadata?.companies[0] ?? "Unknown";

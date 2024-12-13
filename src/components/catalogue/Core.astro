@@ -89,7 +89,7 @@ const pageLenth = 30;
 	}
 
 	function updateSeeMoreButton() {
-		seeMoreButton.disabled = _currentPage === serverStatus.totalPages;
+		seeMoreButton.style.display = _currentPage === serverStatus.totalPages ? "none" : "block";
 	}
 
 	let searchDebounce: ReturnType<typeof setTimeout>;

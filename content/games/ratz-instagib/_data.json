@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1469577600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    }
+  ],
+  "companies": [
+    {
+      "id": 5027,
+      "name": "Lino Slahuschek",
+      "role": "developer"
+    },
+    {
+      "id": 832,
+      "name": "Rising Star Games",
+      "role": "publisher"
+    }
+  ]
+}

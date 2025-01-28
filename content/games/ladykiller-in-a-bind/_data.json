@@ -1,0 +1,34 @@
+{
+  "first_release_date": 1476057600,
+  "genres": [
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 3,
+      "abbreviation": "Linux"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    }
+  ],
+  "companies": [
+    {
+      "id": 8143,
+      "name": "Love Conquers All Games",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "first_release_date": 1729728000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 44964,
+      "name": "Lemaitre Bros",
+      "role": "developer"
+    }
+  ]
+}

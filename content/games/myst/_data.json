@@ -1,0 +1,103 @@
+{
+  "first_release_date": 748828800,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 7,
+      "abbreviation": "PS1"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    },
+    {
+      "id": 16,
+      "abbreviation": "Amiga"
+    },
+    {
+      "id": 32,
+      "abbreviation": "Saturn"
+    },
+    {
+      "id": 37,
+      "abbreviation": "3DS"
+    },
+    {
+      "id": 38,
+      "abbreviation": "PSP"
+    },
+    {
+      "id": 39,
+      "abbreviation": "iOS"
+    },
+    {
+      "id": 50,
+      "abbreviation": "3DO"
+    },
+    {
+      "id": 74,
+      "abbreviation": "Win Phone"
+    },
+    {
+      "id": 117
+    },
+    {
+      "id": 410
+    },
+    {
+      "id": 487
+    }
+  ],
+  "companies": [
+    {
+      "id": 195,
+      "name": "Brøderbund Software",
+      "role": "publisher"
+    },
+    {
+      "id": 328,
+      "name": "Mean Hamster Software",
+      "role": "publisher"
+    },
+    {
+      "id": 3037,
+      "name": "Maximum Games",
+      "role": "publisher"
+    },
+    {
+      "id": 327,
+      "name": "Midway Games",
+      "role": "publisher"
+    },
+    {
+      "id": 326,
+      "name": "Cyan Worlds",
+      "role": "developer"
+    }
+  ]
+}

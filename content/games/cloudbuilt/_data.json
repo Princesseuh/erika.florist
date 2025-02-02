@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1395273600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 832,
+      "name": "Rising Star Games",
+      "role": "publisher"
+    },
+    {
+      "id": 8309,
+      "name": "Coilworks",
+      "role": "developer"
+    }
+  ]
+}

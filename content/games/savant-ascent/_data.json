@@ -1,0 +1,46 @@
+{
+  "first_release_date": 1386115200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 3,
+      "abbreviation": "Linux"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    },
+    {
+      "id": 34,
+      "abbreviation": "Android"
+    },
+    {
+      "id": 39,
+      "abbreviation": "iOS"
+    }
+  ],
+  "companies": [
+    {
+      "id": 6560,
+      "name": "D-Pad Studio",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "first_release_date": 1413936000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 170,
+      "abbreviation": "Stadia"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 37,
+      "abbreviation": "3DS"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    },
+    {
+      "id": 41,
+      "abbreviation": "WiiU"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 832,
+      "name": "Rising Star Games",
+      "role": "publisher"
+    },
+    {
+      "id": 9390,
+      "name": "Intergrow",
+      "role": "publisher"
+    },
+    {
+      "id": 28729,
+      "name": "WayForward",
+      "role": "developer"
+    }
+  ]
+}

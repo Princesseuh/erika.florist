@@ -1,0 +1,34 @@
+{
+  "first_release_date": 1360454400,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 3,
+      "abbreviation": "Linux"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    }
+  ],
+  "companies": [
+    {
+      "id": 3192,
+      "name": "Krillbite Studio",
+      "role": "developer"
+    }
+  ]
+}

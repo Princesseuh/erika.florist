@@ -1,0 +1,46 @@
+{
+  "first_release_date": 1304640000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 3,
+      "abbreviation": "Linux"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 6923,
+      "name": "Big Fat Alien",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "first_release_date": 1619395200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 82,
+      "abbreviation": "browser"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    }
+  ],
+  "companies": [
+    {
+      "id": 33642,
+      "name": "Cosmic Adventure Squad",
+      "role": "developer"
+    }
+  ]
+}

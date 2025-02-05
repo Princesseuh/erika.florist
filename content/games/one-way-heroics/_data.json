@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1393545600,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 6955,
+      "name": "SmokingWOLF",
+      "role": "developer"
+    },
+    {
+      "id": 23125,
+      "name": "PLAYISM",
+      "role": "publisher"
+    }
+  ]
+}

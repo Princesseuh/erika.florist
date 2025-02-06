@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1298332800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 9,
+      "abbreviation": "PS3"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 12,
+      "abbreviation": "X360"
+    }
+  ],
+  "companies": [
+    {
+      "id": 167,
+      "name": "People Can Fly",
+      "role": "developer"
+    },
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 17463,
+      "name": "Epic Games",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "first_release_date": 1472601600,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 198,
+      "name": "Iron Lore Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 10075,
+      "name": "THQ Nordic",
+      "role": "publisher"
+    },
+    {
+      "id": 1463,
+      "name": "Black Forest Games",
+      "role": "publisher"
+    }
+  ]
+}

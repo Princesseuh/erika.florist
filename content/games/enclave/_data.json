@@ -1,0 +1,68 @@
+{
+  "first_release_date": 1015718400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 11,
+      "abbreviation": "XBOX"
+    },
+    {
+      "id": 21,
+      "abbreviation": "NGC"
+    },
+    {
+      "id": 5,
+      "abbreviation": "Wii"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 280,
+      "name": "Starbreeze Studios",
+      "role": "developer"
+    },
+    {
+      "id": 2506,
+      "name": "Village1 Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 1189,
+      "name": "TopWare Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 1388,
+      "name": "Black Label Games",
+      "role": "publisher"
+    },
+    {
+      "id": 1795,
+      "name": "Conspiracy Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 3301,
+      "name": "Atari Europe",
+      "role": "publisher"
+    },
+    {
+      "id": 1796,
+      "name": "Swing! Entertainment Media",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1348012800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 9,
+      "abbreviation": "PS3"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 12,
+      "abbreviation": "X360"
+    }
+  ],
+  "companies": [
+    {
+      "id": 110,
+      "name": "Focus Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 1168,
+      "name": "WizarBox",
+      "role": "developer"
+    }
+  ]
+}

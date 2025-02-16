@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1379980800,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 9,
+      "abbreviation": "PS3"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 12,
+      "abbreviation": "X360"
+    }
+  ],
+  "companies": [
+    {
+      "id": 248,
+      "name": "Bandai Namco Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 8133,
+      "name": "Mine Loader Software Co., Ltd.",
+      "role": "developer"
+    }
+  ]
+}

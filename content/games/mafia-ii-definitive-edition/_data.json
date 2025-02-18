@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1589846400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    }
+  ],
+  "companies": [
+    {
+      "id": 20228,
+      "name": "2K",
+      "role": "publisher"
+    },
+    {
+      "id": 5696,
+      "name": "D3T Limited",
+      "role": "developer"
+    }
+  ]
+}

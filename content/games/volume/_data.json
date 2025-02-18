@@ -1,0 +1,51 @@
+{
+  "first_release_date": 1439856000,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 165,
+      "abbreviation": "PSVR"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    },
+    {
+      "id": 46,
+      "abbreviation": "Vita"
+    }
+  ],
+  "companies": [
+    {
+      "id": 5152,
+      "name": "Bithell Games",
+      "role": "developer"
+    },
+    {
+      "id": 728,
+      "name": "Just Add Water (Development) Ltd",
+      "role": "publisher"
+    }
+  ]
+}

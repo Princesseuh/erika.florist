@@ -1,0 +1,1125 @@
+{
+	"$schema": "./schema.json",
+	"repository": [
+		// Red Bull
+		{
+			"id": "red-bull-original",
+			"brand": "Red Bull",
+			"flavour": "Original"
+		},
+		{
+			"id": "red-bull-sugarfree",
+			"brand": "Red Bull",
+			"flavour": "Sugarfree"
+		},
+		{
+			"id": "red-bull-zero",
+			"brand": "Red Bull",
+			"flavour": "Zero"
+		},
+		{
+			"id": "red-bull-summer-2024",
+			"brand": "Red Bull",
+			"flavour": "Summer 2024"
+		},
+		{
+			"id": "red-bull-winter-2024",
+			"brand": "Red Bull",
+			"flavour": "Winter 2024"
+		},
+		{
+			"id": "red-bull-spring-2025",
+			"brand": "Red Bull",
+			"flavour": "Spring 2025"
+		},
+		{
+			"id": "red-bull-summer-2025",
+			"brand": "Red Bull",
+			"flavour": "Summer 2025"
+		},
+		{
+			"id": "red-bull-pink",
+			"brand": "Red Bull",
+			"flavour": "Pink"
+		},
+		{
+			"id": "red-bull-blue",
+			"brand": "Red Bull",
+			"flavour": "Blue"
+		},
+		{
+			"id": "red-bull-green",
+			"brand": "Red Bull",
+			"flavour": "Green"
+		},
+		{
+			"id": "red-bull-purple",
+			"brand": "Red Bull",
+			"flavour": "Purple"
+		},
+		{
+			"id": "red-bull-peach",
+			"brand": "Red Bull",
+			"flavour": "Peach"
+		},
+		{
+			"id": "red-bull-sea-blue",
+			"brand": "Red Bull",
+			"flavour": "Sea Blue"
+		},
+		{
+			"id": "red-bull-white",
+			"brand": "Red Bull",
+			"flavour": "White"
+		},
+		{
+			"id": "red-bull-apple-muscat-grape",
+			"brand": "Red Bull",
+			"flavour": "Apple & Muscat Grape"
+		},
+
+		// Monster
+		{
+			"id": "monster-original",
+			"brand": "Monster",
+			"flavour": "Original"
+		},
+		{
+			"id": "monster-zero-sugar",
+			"brand": "Monster",
+			"flavour": "Zero Sugar"
+		},
+		{
+			"id": "monster-assault",
+			"brand": "Monster",
+			"flavour": "Assault"
+		},
+		{
+			"id": "monster-reserve-white-pineapple",
+			"brand": "Monster",
+			"flavour": "Reserve White Pineapple"
+		},
+		{
+			"id": "monster-reserve-orange-dreamsicle",
+			"brand": "Monster",
+			"flavour": "Reserve Orange Dreamsicle"
+		},
+		{
+			"id": "monster-reserve-watermelon",
+			"brand": "Monster",
+			"flavour": "Reserve Watermelon"
+		},
+		{
+			"id": "monster-ripper",
+			"brand": "Monster",
+			"flavour": "Ripper"
+		},
+		{
+			"id": "monster-cuba-libre",
+			"brand": "Monster",
+			"flavour": "Cuba-Libre"
+		},
+		{
+			"id": "monster-dub-mad-dog",
+			"brand": "Monster",
+			"flavour": "Dub Mad Dog"
+		},
+		{
+			"id": "monster-maxx",
+			"brand": "Monster",
+			"flavour": "Maxx"
+		},
+		{
+			"id": "monster-nitro-super-dry",
+			"brand": "Monster",
+			"flavour": "Nitro Super Dry"
+		},
+		{
+			"id": "monster-mule",
+			"brand": "Monster",
+			"flavour": "Mule"
+		},
+		{
+			"id": "monster-vr46",
+			"brand": "Monster",
+			"flavour": "VR46 The Doctor"
+		},
+		{
+			"id": "monster-lh44",
+			"brand": "Monster",
+			"flavour": "LH44 Lewis Hamilton"
+		},
+		{
+			"id": "monster-java",
+			"brand": "Monster",
+			"flavour": "Java"
+		},
+		{
+			"id": "monster-pacific-punch",
+			"brand": "Monster",
+			"flavour": "Pacific Punch"
+		},
+		{
+			"id": "monster-pipeline-punch",
+			"brand": "Monster",
+			"flavour": "Pipeline Punch"
+		},
+		{
+			"id": "monster-mixxd",
+			"brand": "Monster",
+			"flavour": "Mixxd"
+		},
+		{
+			"id": "monster-monarch",
+			"brand": "Monster",
+			"flavour": "Monarch"
+		},
+		{
+			"id": "monster-mango-loco",
+			"brand": "Monster",
+			"flavour": "Mango Loco"
+		},
+		{
+			"id": "monster-khaotic",
+			"brand": "Monster",
+			"flavour": "Khaotic"
+		},
+		{
+			"id": "monster-aussie-lemonade",
+			"brand": "Monster",
+			"flavour": "Aussie Lemonade"
+		},
+		{
+			"id": "monster-bad-apple",
+			"brand": "Monster",
+			"flavour": "Bad Apple"
+		},
+		{
+			"id": "monster-rio-punch",
+			"brand": "Monster",
+			"flavour": "Rio Punch"
+		},
+		{
+			"id": "monster-zero-ultra",
+			"brand": "Monster",
+			"flavour": "Zero Ultra"
+		},
+		{
+			"id": "monster-ultra-blue",
+			"brand": "Monster",
+			"flavour": "Ultra Blue"
+		},
+		{
+			"id": "monster-ultra-fantasy-ruby-red",
+			"brand": "Monster",
+			"flavour": "Ultra Fantasy Ruby Red"
+		},
+		{
+			"id": "monster-ultra-fiesta",
+			"brand": "Monster",
+			"flavour": "Ultra Fiesta"
+		},
+		{
+			"id": "monster-ultra-watermelon",
+			"brand": "Monster",
+			"flavour": "Ultra Watermelon"
+		},
+		{
+			"id": "monster-ultra-paradise",
+			"brand": "Monster",
+			"flavour": "Ultra Paradise"
+		},
+		{
+			"id": "monster-ultra-rosa",
+			"brand": "Monster",
+			"flavour": "Ultra Rosá"
+		},
+		{
+			"id": "monster-ultra-gold",
+			"brand": "Monster",
+			"flavour": "Ultra Gold"
+		},
+		{
+			"id": "monster-ultra-vice-guava",
+			"brand": "Monster",
+			"flavour": "Ultra Vice Guava"
+		},
+		{
+			"id": "monster-ultra-red",
+			"brand": "Monster",
+			"flavour": "Ultra Red"
+		},
+		{
+			"id": "monster-ultra-black",
+			"brand": "Monster",
+			"flavour": "Ultra Black"
+		},
+		{
+			"id": "monster-ultra-peachy-keen",
+			"brand": "Monster",
+			"flavour": "Ultra Peachy Keen"
+		},
+		{
+			"id": "monster-ultra-sunrise",
+			"brand": "Monster",
+			"flavour": "Ultra Sunrise"
+		},
+		{
+			"id": "monster-ultra-strawberry-dreams",
+			"brand": "Monster",
+			"flavour": "Ultra Strawberry Dreams"
+		},
+		{
+			"id": "monster-ultra-violet",
+			"brand": "Monster",
+			"flavour": "Ultra Violet"
+		},
+
+		// Gaam
+		{
+			"id": "gaam-so-soda",
+			"brand": "GAAM Energy",
+			"flavour": "So Soda"
+		},
+		{
+			"id": "gaam-havana-beach",
+			"brand": "GAAM Energy",
+			"flavour": "Havana Beach"
+		},
+		{
+			"id": "gaam-wild-strawberry",
+			"brand": "GAAM Energy",
+			"flavour": "Wild Strawberry"
+		},
+		{
+			"id": "gaam-pear",
+			"brand": "GAAM Energy",
+			"flavour": "Pear"
+		},
+		{
+			"id": "gaam-white-peach",
+			"brand": "GAAM Energy",
+			"flavour": "White Peach"
+		},
+		{
+			"id": "gaam-flavour-unknown",
+			"brand": "GAAM Energy",
+			"flavour": "Flavour Unknown"
+		},
+		{
+			"id": "gaam-tropical-pineapple",
+			"brand": "GAAM Energy",
+			"flavour": "Tropical Pineapple"
+		},
+		{
+			"id": "gaam-lemonade",
+			"brand": "GAAM Energy",
+			"flavour": "Lemonade"
+		},
+		{
+			"id": "gaam-blackcurrants",
+			"brand": "GAAM Energy",
+			"flavour": "Blackcurrants"
+		},
+		{
+			"id": "gaam-golden-apple",
+			"brand": "GAAM Energy",
+			"flavour": "Golden Apple"
+		},
+		{
+			"id": "gaam-julmust",
+			"brand": "GAAM Energy",
+			"flavour": "Julmust"
+		},
+		{
+			"id": "gaam-passion-fruit",
+			"brand": "GAAM Energy",
+			"flavour": "Passion Fruit"
+		},
+		{
+			"id": "gaam-paskmust",
+			"brand": "GAAM Energy",
+			"flavour": "Påskmust"
+		},
+		{
+			"id": "gaam-blueberry-raspberry",
+			"brand": "GAAM Energy",
+			"flavour": "Blueberry & Raspberry"
+		},
+		{
+			"id": "gaam-orange",
+			"brand": "GAAM Energy",
+			"flavour": "Orange"
+		},
+		{
+			"id": "gaam-lemon-lime",
+			"brand": "GAAM Energy",
+			"flavour": "Lemon Lime"
+		},
+		{
+			"id": "gaam-cola",
+			"brand": "GAAM Energy",
+			"flavour": "Cola"
+		},
+		{
+			"id": "gaam-spicy",
+			"brand": "GAAM Energy",
+			"flavour": "Spicy"
+		},
+		{
+			"id": "gaam-kiwi",
+			"brand": "GAAM Energy",
+			"flavour": "Kiwi"
+		},
+
+		// Celsius
+		{
+			"id": "celsius-playa-vibe",
+			"brand": "Celsius",
+			"flavour": "Playa Vibe"
+		},
+		{
+			"id": "celsius-retro-vibe",
+			"brand": "Celsius",
+			"flavour": "Retro Vibe"
+		},
+		{
+			"id": "celsius-sparkling-cherry-cola",
+			"brand": "Celsius",
+			"flavour": "Sparkling Cherry Cola"
+		},
+		{
+			"id": "celsius-sparkling-kiwi-strawberry",
+			"brand": "Celsius",
+			"flavour": "Sparkling Kiwi Strawberry"
+		},
+		{
+			"id": "celsius-sparkling-watermelon-lemonade",
+			"brand": "Celsius",
+			"flavour": "Sparkling Watermelon Lemonade"
+		},
+		{
+			"id": "celsius-sparkling-raspberry-peach",
+			"brand": "Celsius",
+			"flavour": "Sparkling Raspberry Peach"
+		},
+		{
+			"id": "celsius-sparkling-galaxy-vibe",
+			"brand": "Celsius",
+			"flavour": "Sparkling Galaxy Vibe"
+		},
+		{
+			"id": "celsius-sparkling-astro-vibe",
+			"brand": "Celsius",
+			"flavour": "Sparkling Astro Vibe"
+		},
+		{
+			"id": "celsius-fizz-free-blue-razz-lemonade",
+			"brand": "Celsius",
+			"flavour": "Fizz Free Blue Razz Lemonade"
+		},
+		{
+			"id": "celsius-sparkling-cosmic-vibe",
+			"brand": "Celsius",
+			"flavour": "Sparkling Cosmic Vibe"
+		},
+		{
+			"id": "celsius-sparkling-oasis-vibe",
+			"brand": "Celsius",
+			"flavour": "Sparkling Oasis Vibe"
+		},
+		{
+			"id": "celsius-sparkling-green-apple-cherry",
+			"brand": "Celsius",
+			"flavour": "Sparkling Green Apple Cherry"
+		},
+		{
+			"id": "celsius-sparkling-fantasy-vibe",
+			"brand": "Celsius",
+			"flavour": "Sparkling Fantasy Vibe"
+		},
+		{
+			"id": "celsius-sparkling-lemon-lime",
+			"brand": "Celsius",
+			"flavour": "Sparkling Lemon Lime"
+		},
+		{
+			"id": "celsius-sparkling-arctic-vibe",
+			"brand": "Celsius",
+			"flavour": "Sparkling Arctic Vibe"
+		},
+		{
+			"id": "celsius-sparkling-strawberry-lemonade",
+			"brand": "Celsius",
+			"flavour": "Sparkling Strawberry Lemonade"
+		},
+		{
+			"id": "celsius-sparkling-mango-passionfruit",
+			"brand": "Celsius",
+			"flavour": "Sparkling Mango Passionfruit"
+		},
+		{
+			"id": "celsius-sparkling-tropical-vibe",
+			"brand": "Celsius",
+			"flavour": "Sparkling Tropical Vibe"
+		},
+		{
+			"id": "celsius-sparkling-strawberry-guava",
+			"brand": "Celsius",
+			"flavour": "Sparkling Strawberry Guava"
+		},
+		{
+			"id": "celsius-sparkling-peach-vibe",
+			"brand": "Celsius",
+			"flavour": "Sparkling Peach Vibe"
+		},
+		{
+			"id": "celsius-sparkling-fuji-apple-pear",
+			"brand": "Celsius",
+			"flavour": "Sparkling Fuji Apple Pear"
+		},
+		{
+			"id": "celsius-sparkling-orange",
+			"brand": "Celsius",
+			"flavour": "Sparkling Orange"
+		},
+		{
+			"id": "celsius-sparkling-kiwi-guava",
+			"brand": "Celsius",
+			"flavour": "Sparkling Kiwi Guava"
+		},
+		{
+			"id": "celsius-sparkling-wild-berry",
+			"brand": "Celsius",
+			"flavour": "Sparkling Wild Berry"
+		},
+		{
+			"id": "celsius-sparkling-watermelon",
+			"brand": "Celsius",
+			"flavour": "Sparkling Watermelon"
+		},
+		{
+			"id": "celsius-sparkling-grape-rush",
+			"brand": "Celsius",
+			"flavour": "Sparkling Grape Rush"
+		},
+		{
+			"id": "celsius-sparkling-cola",
+			"brand": "Celsius",
+			"flavour": "Sparkling Cola"
+		},
+		{
+			"id": "celsius-fizz-free-raspberry-acai-green-tea",
+			"brand": "Celsius",
+			"flavour": "Fizz Free Raspberry Acai Green Tea"
+		},
+		{
+			"id": "celsius-fizz-free-peach-mango-green-tea",
+			"brand": "Celsius",
+			"flavour": "Fizz Free Peach Mango Green Tea"
+		},
+
+		// NOCCO
+		{
+			"id": "nocco-peachango-bcaa",
+			"brand": "NOCCO",
+			"flavour": "Peachango BCAA+"
+		},
+		{
+			"id": "nocco-focus-stellar-blend",
+			"brand": "NOCCO",
+			"flavour": "Focus Stellar Blend"
+		},
+		{
+			"id": "nocco-peach",
+			"brand": "NOCCO",
+			"flavour": "Peach"
+		},
+		{
+			"id": "nocco-focus-raspberry-blast",
+			"brand": "NOCCO",
+			"flavour": "FOCUS 3 Raspberry Blast"
+		},
+		{
+			"id": "nocco-bcaa-apple",
+			"brand": "NOCCO",
+			"flavour": "BCAA+ Äpple"
+		},
+		{
+			"id": "nocco-blue-raspberry",
+			"brand": "NOCCO",
+			"flavour": "Blue Raspberry"
+		},
+		{
+			"id": "nocco-bcaa-berruba",
+			"brand": "NOCCO",
+			"flavour": "BCAA Berruba"
+		},
+		{
+			"id": "nocco-bcaa-ice-soda",
+			"brand": "NOCCO",
+			"flavour": "BCAA Ice Soda"
+		},
+		{
+			"id": "nocco-bcaa-summer-satsuma-lime",
+			"brand": "NOCCO",
+			"flavour": "BCAA Summer 2 Satsuma/Lime"
+		},
+		{
+			"id": "nocco-caribbean",
+			"brand": "NOCCO",
+			"flavour": "Caribbean"
+		},
+		{
+			"id": "nocco-bcaa-blood-orange",
+			"brand": "NOCCO",
+			"flavour": "BCAA Blood Orange"
+		},
+		{
+			"id": "nocco-mango",
+			"brand": "NOCCO",
+			"flavour": "Mango"
+		},
+		{
+			"id": "nocco-bcaa-caribbean-caffeine-free",
+			"brand": "NOCCO",
+			"flavour": "BCAA+ Caribbean Koffeinfri"
+		},
+		{
+			"id": "nocco-focus-cola",
+			"brand": "NOCCO",
+			"flavour": "Focus Cola"
+		},
+		{
+			"id": "nocco-bcaa-sunny-soda",
+			"brand": "NOCCO",
+			"flavour": "BCAA Sunny Soda"
+		},
+		{
+			"id": "nocco-summer-2023",
+			"brand": "NOCCO",
+			"flavour": "Sommar 2023"
+		},
+		{
+			"id": "nocco-juicy-breeze",
+			"brand": "NOCCO",
+			"flavour": "Juicy Breeze"
+		},
+		{
+			"id": "nocco-pear",
+			"brand": "NOCCO",
+			"flavour": "Päron"
+		},
+		{
+			"id": "nocco-bcaa-limon",
+			"brand": "NOCCO",
+			"flavour": "BCAA Limón"
+		},
+		{
+			"id": "nocco-focus-grand-sour",
+			"brand": "NOCCO",
+			"flavour": "Focus Grand Sour"
+		},
+		{
+			"id": "nocco-focus-ramonade",
+			"brand": "NOCCO",
+			"flavour": "Focus Ramonade"
+		},
+		{
+			"id": "nocco-juicy-melba",
+			"brand": "NOCCO",
+			"flavour": "Juicy Melba"
+		},
+		{
+			"id": "nocco-skumtomte",
+			"brand": "NOCCO",
+			"flavour": "Skumtomte"
+		},
+
+		// Joluca
+		{
+			"id": "joluca-rhubarb-strawberry",
+			"brand": "Joluca",
+			"flavour": "Rhubarb Strawberry"
+		},
+		{
+			"id": "joluca-raspberry",
+			"brand": "Joluca",
+			"flavour": "Raspberry"
+		},
+		{
+			"id": "joluca-mango-pineapple",
+			"brand": "Joluca",
+			"flavour": "Mango Pineapple"
+		},
+		{
+			"id": "joluca-lemon-lime",
+			"brand": "Joluca",
+			"flavour": "Lemon Lime"
+		},
+		{
+			"id": "joluca-pear-elderflower",
+			"brand": "Joluca",
+			"flavour": "Pear Elderflower"
+		},
+
+		// Clean/Vitamin Well
+		{
+			"id": "clean-watermelon",
+			"brand": "Clean",
+			"flavour": "Vattenmelon"
+		},
+		{
+			"id": "clean-passion",
+			"brand": "Clean",
+			"flavour": "Passion"
+		},
+		{
+			"id": "clean-pear",
+			"brand": "Clean",
+			"flavour": "Päron"
+		},
+		{
+			"id": "clean-strawberry-sunset",
+			"brand": "Clean",
+			"flavour": "Strawberry Sunset"
+		},
+		{
+			"id": "clean-tropical-summer",
+			"brand": "Clean",
+			"flavour": "Tropical Summer"
+		},
+		{
+			"id": "clean-pink-grape",
+			"brand": "Clean",
+			"flavour": "Pink Grape"
+		},
+		{
+			"id": "clean-apple-melon",
+			"brand": "Clean",
+			"flavour": "Äpple & Melon"
+		},
+		{
+			"id": "clean-blueberry",
+			"brand": "Clean",
+			"flavour": "Blueberry"
+		},
+		{
+			"id": "clean-cola-zero",
+			"brand": "Clean",
+			"flavour": "Clean Cola Zero"
+		},
+		{
+			"id": "clean-fresh-soda",
+			"brand": "Clean",
+			"flavour": "Fresh Soda"
+		},
+		{
+			"id": "clean-kiwi-strawberry",
+			"brand": "Clean",
+			"flavour": "Kiwi & Smultron"
+		},
+		{
+			"id": "clean-classic-strawberry",
+			"brand": "Clean",
+			"flavour": "Classic Strawberry"
+		},
+		{
+			"id": "clean-classic-pineapple",
+			"brand": "Clean",
+			"flavour": "Classic Pineapple"
+		},
+		{
+			"id": "clean-classic-raspberry",
+			"brand": "Clean",
+			"flavour": "Classic Raspberry"
+		},
+		{
+			"id": "clean-apple-pear",
+			"brand": "Clean",
+			"flavour": "Äpple & Päron"
+		},
+		{
+			"id": "clean-citrus-clementine",
+			"brand": "Clean",
+			"flavour": "Citrus & Clementin"
+		},
+		{
+			"id": "clean-berry-mix",
+			"brand": "Clean",
+			"flavour": "Friska Bär"
+		},
+		{
+			"id": "clean-blood-orange",
+			"brand": "Clean",
+			"flavour": "Blodapelsin"
+		},
+		{
+			"id": "clean-raspberry-strawberry",
+			"brand": "Clean",
+			"flavour": "Hallon & Smultron"
+		},
+		{
+			"id": "clean-pineapple-mango",
+			"brand": "Clean",
+			"flavour": "Ananas & Mango"
+		},
+		{
+			"id": "clean-lingonberry",
+			"brand": "Clean",
+			"flavour": "Lingon"
+		},
+		{
+			"id": "clean-blackcurrant-raspberry",
+			"brand": "Clean",
+			"flavour": "Svartvinbär & Hallon"
+		},
+		{
+			"id": "clean-exotic",
+			"brand": "Clean",
+			"flavour": "Exotic"
+		},
+		{
+			"id": "clean-kiwi-strawberry-caffeine-free",
+			"brand": "Clean",
+			"flavour": "Kiwi & Smultron Koffeinfri"
+		},
+		{
+			"id": "clean-passion-caffeine-free",
+			"brand": "Clean",
+			"flavour": "Passion Koffeinfri"
+		},
+		{
+			"id": "clean-pineapple-mango-caffeine-free",
+			"brand": "Clean",
+			"flavour": "Ananas & Mango Koffeinfri"
+		},
+		{
+			"id": "clean-savd-apple",
+			"brand": "Clean",
+			"flavour": "Sav:D Äpple"
+		},
+		{
+			"id": "clean-savd-blueberry",
+			"brand": "Clean",
+			"flavour": "Sav:D Blåbär"
+		},
+		{
+			"id": "clean-savd-summer-strawberry",
+			"brand": "Clean",
+			"flavour": "Sav:D Sommar Smultron"
+		},
+		{
+			"id": "clean-savd-forest-berry",
+			"brand": "Clean",
+			"flavour": "Sav:D Skogsbär"
+		},
+		{
+			"id": "clean-savd-raspberry",
+			"brand": "Clean",
+			"flavour": "Sav:D Hallon"
+		},
+		{
+			"id": "clean-savd-baked-apple-ginger",
+			"brand": "Clean",
+			"flavour": "Sav:D Baked Apple & Ginger"
+		},
+		{
+			"id": "clean-savd-strawberry-lime",
+			"brand": "Clean",
+			"flavour": "Sav:D Jordgubb/Lime"
+		},
+		{
+			"id": "clean-savd-peach",
+			"brand": "Clean",
+			"flavour": "Sav:D Persika"
+		},
+
+		// Reign
+		{
+			"id": "reign-white-haze",
+			"brand": "Reign",
+			"flavour": "White Haze"
+		},
+		{
+			"id": "reign-sour-gummy-worm",
+			"brand": "Reign",
+			"flavour": "Sour Gummy Worm"
+		},
+		{
+			"id": "reign-tropical-storm",
+			"brand": "Reign",
+			"flavour": "Tropical Storm"
+		},
+		{
+			"id": "reign-reignbow-sherbet",
+			"brand": "Reign",
+			"flavour": "REIGNbow Sherbet"
+		},
+		{
+			"id": "reign-white-gummy-bear",
+			"brand": "Reign",
+			"flavour": "White Gummy Bear"
+		},
+		{
+			"id": "reign-razzle-berry",
+			"brand": "Reign",
+			"flavour": "Razzle Berry"
+		},
+		{
+			"id": "reign-lilikoi-lychee",
+			"brand": "Reign",
+			"flavour": "Lilikoi Lychee"
+		},
+		{
+			"id": "reign-melon-mania",
+			"brand": "Reign",
+			"flavour": "Melon Mania"
+		},
+		{
+			"id": "reign-orange-dreamsicle",
+			"brand": "Reign",
+			"flavour": "Orange Dreamsicle"
+		},
+		{
+			"id": "reign-cherry-limeade",
+			"brand": "Reign",
+			"flavour": "Cherry Limeade"
+		},
+		{
+			"id": "reign-red-dragon",
+			"brand": "Reign",
+			"flavour": "Red Dragon"
+		},
+		{
+			"id": "reign-watermelon-warlord",
+			"brand": "Reign",
+			"flavour": "Watermelon Warlord"
+		},
+		{
+			"id": "reign-kiwi-blend",
+			"brand": "Reign",
+			"flavour": "Kiwi Blend"
+		},
+		{
+			"id": "reign-peach-nectarine",
+			"brand": "Reign",
+			"flavour": "Peach Nectarine"
+		},
+		{
+			"id": "reign-valencia-orange",
+			"brand": "Reign",
+			"flavour": "Valencia Orange"
+		},
+		{
+			"id": "reign-sour-apple",
+			"brand": "Reign",
+			"flavour": "Sour Apple"
+		}
+	],
+	"ratings": [
+		{
+			"author": "goulven",
+			"drink": "red-bull-original",
+			"rating": "A",
+			"inserted_at": "2024-01-01"
+		},
+		{
+			"author": "goulven",
+			"drink": "red-bull-sugarfree",
+			"rating": "S",
+			"inserted_at": "2024-01-01"
+		},
+		{
+			"author": "goulven",
+			"drink": "red-bull-blue",
+			"rating": "S",
+			"inserted_at": "2024-01-01"
+		},
+		{
+			"author": "goulven",
+			"drink": "red-bull-spring-2025",
+			"rating": "S",
+			"inserted_at": "2025-03-05"
+		},
+		{
+			"author": "goulven",
+			"drink": "red-bull-winter-2024",
+			"rating": "A",
+			"inserted_at": "2024-01-01"
+		},
+		{
+			"author": "goulven",
+			"drink": "red-bull-sea-blue",
+			"rating": "A",
+			"inserted_at": "2024-01-01"
+		},
+		{
+			"author": "goulven",
+			"drink": "red-bull-apple-muscat-grape",
+			"rating": "A",
+			"inserted_at": "2025-02-14"
+		},
+
+		// Erika
+		{
+			"author": "erika",
+			"drink": "red-bull-original",
+			"rating": "A",
+			"inserted_at": "2025-03-17"
+		},
+		{
+			"author": "erika",
+			"drink": "red-bull-sugarfree",
+			"rating": "S",
+			"inserted_at": "2025-03-17"
+		},
+		{
+			"author": "erika",
+			"drink": "red-bull-zero",
+			"rating": "A",
+			"inserted_at": "2025-03-17"
+		},
+		{
+			"author": "erika",
+			"drink": "red-bull-spring-2025",
+			"rating": "D",
+			"inserted_at": "2025-03-17"
+		},
+		{
+			"author": "erika",
+			"drink": "red-bull-winter-2024",
+			"rating": "A",
+			"inserted_at": "2025-03-17"
+		},
+		{
+			"author": "erika",
+			"drink": "red-bull-sea-blue",
+			"rating": "C",
+			"inserted_at": "2025-03-17"
+		},
+		{
+			"author": "erika",
+			"drink": "gaam-spicy",
+			"rating": "B",
+			"inserted_at": "2025-03-08"
+		},
+		{
+			"author": "erika",
+			"drink": "gaam-flavour-unknown",
+			"rating": "C",
+			"inserted_at": "2025-03-01"
+		},
+		{
+			"author": "erika",
+			"drink": "gaam-lemonade",
+			"rating": "B",
+			"inserted_at": "2025-03-01"
+		},
+		{
+			"author": "erika",
+			"drink": "gaam-havana-beach",
+			"rating": "B",
+			"inserted_at": "2025-03-01"
+		},
+		{
+			"author": "erika",
+			"drink": "gaam-pear",
+			"rating": "C",
+			"inserted_at": "2025-02-13"
+		},
+		{
+			"author": "erika",
+			"drink": "gaam-kiwi",
+			"rating": "C",
+			"inserted_at": "2025-02-03"
+		},
+		{
+			"author": "erika",
+			"drink": "celsius-sparkling-astro-vibe",
+			"rating": "S",
+			"inserted_at": "2025-03-17"
+		},
+		{
+			"author": "erika",
+			"drink": "nocco-caribbean",
+			"rating": "B",
+			"inserted_at": "2025-03-17"
+		},
+		{
+			"author": "erika",
+			"drink": "monster-lh44",
+			"rating": "B"
+		},
+		{
+			"author": "erika",
+			"drink": "red-bull-white",
+			"rating": "C"
+		},
+		{
+			"author": "erika",
+			"drink": "red-bull-green",
+			"rating": "C"
+		},
+		{
+			"author": "erika",
+			"drink": "red-bull-purple",
+			"rating": "D"
+		},
+		{
+			"author": "erika",
+			"drink": "nocco-skumtomte",
+			"rating": "C"
+		},
+		{
+			"author": "erika",
+			"drink": "red-bull-pink",
+			"rating": "C"
+		},
+		{
+			"author": "erika",
+			"drink": "nocco-blue-raspberry",
+			"rating": "D"
+		},
+		{
+			"author": "erika",
+			"drink": "celsius-sparkling-peach-vibe",
+			"rating": "D"
+		},
+		{
+			"author": "erika",
+			"drink": "monster-ultra-strawberry-dreams",
+			"rating": "C"
+		},
+		{
+			"author": "erika",
+			"drink": "clean-strawberry-sunset",
+			"rating": "C"
+		},
+		{
+			"author": "erika",
+			"drink": "clean-pink-grape",
+			"rating": "C"
+		},
+		{
+			"author": "erika",
+			"drink": "reign-valencia-orange",
+			"rating": "A"
+		},
+		{
+			"author": "erika",
+			"drink": "reign-melon-mania",
+			"rating": "B"
+		},
+		{
+			"author": "erika",
+			"drink": "reign-peach-nectarine",
+			"rating": "C"
+		},
+		{
+			"author": "erika",
+			"drink": "reign-sour-apple",
+			"rating": "C"
+		}
+	]
+}

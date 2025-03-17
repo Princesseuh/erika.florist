@@ -1,0 +1,41 @@
+{
+  "first_release_date": 1501286400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 2161,
+      "name": "Armor Project",
+      "role": "developer"
+    },
+    {
+      "id": 26,
+      "name": "Square Enix",
+      "role": "publisher"
+    },
+    {
+      "id": 53031,
+      "name": "Square Enix Business Division 6",
+      "role": "developer"
+    },
+    {
+      "id": 11740,
+      "name": "Bird Studio",
+      "role": "developer"
+    }
+  ]
+}

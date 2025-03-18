@@ -55,7 +55,8 @@
             "description": "Name of the person who rated the drink",
             "enum": [
               "goulven",
-              "erika"
+              "erika",
+              "aurélien"
             ]
           },
           "drink": {
@@ -76,6 +77,7 @@
               "red-bull-peach",
               "red-bull-sea-blue",
               "red-bull-white",
+              "red-bull-red",
               "red-bull-apple-muscat-grape",
               "monster-original",
               "monster-zero-sugar",

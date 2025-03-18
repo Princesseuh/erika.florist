@@ -73,6 +73,16 @@
 			"flavour": "White"
 		},
 		{
+			"id": "red-bull-red-2012",
+			"brand": "Red Bull",
+			"flavour": "Red (Cranberry)"
+		},
+		{
+			"id": "red-bull-red-2020",
+			"brand": "Red Bull",
+			"flavour": "Red (Watermelon)"
+		},
+		{
 			"id": "red-bull-apple-muscat-grape",
 			"brand": "Red Bull",
 			"flavour": "Apple & Muscat Grape"
@@ -959,6 +969,13 @@
 			"drink": "red-bull-apple-muscat-grape",
 			"rating": "A",
 			"inserted_at": "2025-02-14"
+		},
+
+		// Aurélien
+		{
+			"author": "aurélien",
+			"drink": "red-bull-red",
+			"rating": "S"
 		},
 
 		// Erika

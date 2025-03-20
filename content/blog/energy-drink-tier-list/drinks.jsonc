@@ -925,6 +925,18 @@
 			"id": "reign-sour-apple",
 			"brand": "Reign",
 			"flavour": "Sour Apple"
+		},
+
+		// I am fucked up
+		{
+			"id": "i-am-fucked-up-juicy-orange",
+			"brand": "I am fucked up",
+			"flavour": "Juicy Orange"
+		},
+		{
+			"id": "i-am-fucked-up-lemonade-lover",
+			"brand": "I am fucked up",
+			"flavour": "Lemonade Lover"
 		}
 	],
 	"ratings": [
@@ -1137,6 +1149,21 @@
 			"author": "erika",
 			"drink": "reign-sour-apple",
 			"rating": "C"
+		},
+		{
+			"author": "erika",
+			"drink": "nocco-bcaa-summer-satsuma-lime",
+			"rating": "D"
+		},
+		{
+			"author": "erika",
+			"drink": "i-am-fucked-up-lemonade-lover",
+			"rating": "A"
+		},
+		{
+			"author": "erika",
+			"drink": "i-am-fucked-up-juicy-orange",
+			"rating": "A"
 		}
 	]
 }

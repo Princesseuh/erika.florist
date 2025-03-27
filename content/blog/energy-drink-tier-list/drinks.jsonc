@@ -986,7 +986,7 @@
 		// Aurélien
 		{
 			"author": "aurélien",
-			"drink": "red-bull-red",
+			"drink": "red-bull-red-2020",
 			"rating": "S"
 		},
 
@@ -1164,6 +1164,11 @@
 			"author": "erika",
 			"drink": "i-am-fucked-up-juicy-orange",
 			"rating": "A"
+		},
+		{
+			"author": "erika",
+			"drink": "nocco-peach", // TODO: Check if the Nocco IIHF Persika is the same as this one
+			"rating": "C"
 		}
 	]
 }

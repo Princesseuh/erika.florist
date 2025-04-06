@@ -1,0 +1,70 @@
+{
+  "first_release_date": 1603756800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 445,
+      "name": "505 Games",
+      "role": "publisher"
+    },
+    {
+      "id": 24004,
+      "name": "Slipgate Ironworks",
+      "role": "developer"
+    },
+    {
+      "id": 19053,
+      "name": "All In! Games",
+      "role": "publisher"
+    },
+    {
+      "id": 224,
+      "name": "3D Realms",
+      "role": "developer"
+    },
+    {
+      "id": 8254,
+      "name": "One More Level",
+      "role": "developer"
+    }
+  ]
+}

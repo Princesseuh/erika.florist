@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1661299200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 27508,
+      "name": "Kyle Thompson",
+      "role": "developer"
+    },
+    {
+      "id": 13394,
+      "name": "Armor Games Studios",
+      "role": "publisher"
+    }
+  ]
+}

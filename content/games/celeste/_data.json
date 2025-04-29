@@ -1,0 +1,64 @@
+{
+  "first_release_date": 1516838400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 170,
+      "abbreviation": "Stadia"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 3,
+      "abbreviation": "Linux"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 33387,
+      "name": "Extremely OK Games",
+      "role": "developer"
+    },
+    {
+      "id": 5542,
+      "name": "Maddy Makes Games",
+      "role": "publisher"
+    },
+    {
+      "id": 4834,
+      "name": "Sickhead Games",
+      "role": "publisher"
+    }
+  ]
+}

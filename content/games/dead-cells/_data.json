@@ -1,0 +1,67 @@
+{
+  "first_release_date": 1533513600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 3,
+      "abbreviation": "Linux"
+    },
+    {
+      "id": 34,
+      "abbreviation": "Android"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 39,
+      "abbreviation": "iOS"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 11960,
+      "name": "Motion Twin",
+      "role": "developer"
+    },
+    {
+      "id": 39329,
+      "name": "Evil Empire",
+      "role": "developer"
+    }
+  ]
+}

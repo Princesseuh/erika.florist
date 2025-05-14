@@ -1,0 +1,16 @@
+{
+  "first_release_date": 1698883200,
+  "genres": [
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": []
+}

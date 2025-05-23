@@ -113,7 +113,7 @@ const booksCollection = defineCollection({
 			title: z.string(),
 			rating: ratingSchema,
 			platform: z.union([z.literal("ebook"), z.literal("physical"), z.literal("audiobook")]),
-			finishedDate: z.date(),
+			finishedDate: z.union([z.date(), z.literal("N/A")]),
 			cover: z.preprocess(() => "./cover.png", image()),
 			isbn: z.string(),
 			type: z.literal("book").default("book"),
@@ -151,7 +151,7 @@ const moviesCollection = defineCollection({
 		z.object({
 			title: z.string(),
 			rating: ratingSchema,
-			finishedDate: z.date(),
+			finishedDate: z.union([z.date(), z.literal("N/A")]),
 			cover: z.preprocess(() => "./cover.png", image()),
 			tmdb: z.string(),
 			type: z.literal("movie").default("movie"),
@@ -165,7 +165,7 @@ const showsCollection = defineCollection({
 		z.object({
 			title: z.string(),
 			rating: ratingSchema,
-			finishedDate: z.date(),
+			finishedDate: z.union([z.date(), z.literal("N/A")]),
 			cover: z.preprocess(() => "./cover.png", image()),
 			tmdb: z.string(),
 			type: z.literal("show").default("show"),

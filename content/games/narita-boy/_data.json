@@ -1,0 +1,67 @@
+{
+  "first_release_date": 1616976000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 3,
+      "abbreviation": "Linux"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 16437,
+      "name": "Team17",
+      "role": "publisher"
+    },
+    {
+      "id": 13928,
+      "name": "Studio Koba",
+      "role": "developer"
+    }
+  ]
+}

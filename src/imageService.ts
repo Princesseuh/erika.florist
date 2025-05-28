@@ -1,4 +1,3 @@
-import { getBaseSiteURL } from "$utils";
 import type { LocalImageService } from "astro";
 import sharpService from "astro/assets/services/sharp";
 import { shorthash } from "astro/runtime/server/shorthash.js";
@@ -33,7 +32,7 @@ function getBitmapDimensions(
 
 export interface LocalImageServiceWithPlaceholder extends LocalImageService {
 	generatePlaceholder: (
-		src: string,
+		src: ImageMetadata,
 		width: number,
 		height: number,
 		quality?: number,
@@ -53,9 +52,9 @@ const service: LocalImageServiceWithPlaceholder = {
 
 		return attributes;
 	},
-	generatePlaceholder: async (src: string, width: number, height: number, quality = 100) => {
+	generatePlaceholder: async (src: ImageMetadata, width: number, height: number, quality = 100) => {
 		const placeholderDimensions = getBitmapDimensions(width, height, quality);
-		const hash = shorthash(src + width + height + quality);
+		const hash = shorthash(src.src + width + height + quality);
 
 		if (import.meta.env.PROD) {
 			try {
@@ -66,11 +65,7 @@ const service: LocalImageServiceWithPlaceholder = {
 		}
 
 		// HACK: It'd be nice to be able to get a Buffer out from an ESM import or `getImage`, wonder how we could do that..
-		const originalFileBuffer = import.meta.env.PROD
-			? readFileSync(`./dist/${src}`)
-			: await fetch(new URL(src, getBaseSiteURL()))
-					.then((response) => response.arrayBuffer())
-					.then((buffer) => Buffer.from(buffer));
+		const originalFileBuffer = readFileSync(src.fsPath);
 
 		const placeholderBuffer = await sharp(originalFileBuffer)
 			.resize(placeholderDimensions.width, placeholderDimensions.height, { fit: "inside" })

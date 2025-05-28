@@ -4,8 +4,6 @@ import expressiveCode from "astro-expressive-code";
 import { defineConfig } from "astro/config";
 import { rename } from "node:fs/promises";
 
-import db from "@astrojs/db";
-
 // https://astro.build/config
 export default defineConfig({
 	publicDir: "./static",
@@ -42,7 +40,6 @@ export default defineConfig({
 				},
 			},
 		},
-		db(),
 	],
 	experimental: {
 		contentIntellisense: true,

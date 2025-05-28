@@ -14,20 +14,16 @@ const movies = await getCollection("movies");
 const shows = await getCollection("shows");
 const books = await getCollection("books");
 
-const catalogueContent = [...games, ...movies, ...shows, ...books];
+const catalogueContent = [...games, ...movies, ...shows, ...books].map((entry) => ({
+	id: entry.id,
+	data: entry.data,
+}));
 
-// wtf am i doing
-export const versionHash = Number(
-	BigInt(
-		`0x${(
-			await (
-				pkg as unknown as {
-					default: typeof pkg;
-				}
-			).default(catalogueContent)
-		).slice(0, 8)}`,
-	),
-);
+export const versionHash = await (
+	pkg as unknown as {
+		default: typeof pkg;
+	}
+).default(catalogueContent);
 
 async function getCoverAndPlaceholder(cover: ImageMetadata) {
 	return await Promise.all([
@@ -54,7 +50,7 @@ function getAuthorFromEntryMetadata(type: CatalogueType, metadata: any) {
 			return metadata.authors?.[0] ?? metadata.publishers[0] ?? "Unknown";
 		case "movie":
 		case "show":
-			return metadata?.companies[0] ?? "Unknown";
+			return metadata?.companies?.[0] ?? "Unknown";
 	}
 }
 
@@ -94,7 +90,6 @@ export const GET = (async () => {
 				finishedDate: entryData.finishedDate === "N/A" ? 0 : entryData.finishedDate.getTime(),
 				platform:
 					entry.data.type === "book" || entry.data.type === "game" ? entry.data.platform : null,
-				metadata,
 			};
 		}),
 	);

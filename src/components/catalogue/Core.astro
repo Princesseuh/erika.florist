@@ -1,9 +1,10 @@
 ---
+import { versionHash } from "../../pages/catalogue/content.json";
 import Skeleton from "./Skeleton.astro";
 const pageLenth = 30;
 ---
 
-<div id="catalogue-core">
+<div id="catalogue-core" data-latest={versionHash}>
 	<header class="flex flex-col justify-between gap-y-4 sm:flex-row sm:gap-y-0">
 		<div id="catalogue-filters" class="flex flex-grow flex-col gap-x-4 sm:flex-row">
 			<div>
@@ -45,7 +46,10 @@ const pageLenth = 30;
 			</div>
 		</div>
 		<div id="catalogue-entry-count" class="flex items-center justify-end sm:justify-start">
-			??? entries
+			<div
+				class="ml-2 inline-block h-4 w-20 animate-pulse bg-dark-subtle-text dark:bg-dark-skeleton"
+			>
+			</div>
 		</div>
 	</header>
 	<div id="catalogue-content" class="mt-4 flex flex-wrap gap-x-8 sm:gap-x-4">
@@ -65,6 +69,13 @@ const pageLenth = 30;
 <script>
 	import { QuickScore } from "quick-score";
 
+	const VERSION = 2;
+	const latestHash = document
+		.getElementById("catalogue-core")
+		?.getAttribute("data-latest") as string;
+
+	const dbOpenRequest = indexedDB.open("catalogue", VERSION);
+
 	const searchInput = document.getElementById("catalogue-search") as HTMLInputElement;
 	const ratingSelect = document.getElementById("catalogue-ratings") as HTMLSelectElement;
 	const sortSelect = document.getElementById("catalogue-sort") as HTMLSelectElement;
@@ -78,9 +89,24 @@ const pageLenth = 30;
 	const pageSize = 30;
 	let isLoading = false;
 
-	const version = await fetch("/catalogue/version").then((response) => response.text());
+	dbOpenRequest.onerror = (event) => {
+		console.error("Failed to open database", (event.target as IDBOpenDBRequest).error);
 
-	const dbOpenRequest = indexedDB.open("catalogue", Number(version));
+		const deleteRequest = indexedDB.deleteDatabase("catalogue");
+		deleteRequest.onsuccess = () => {
+			console.log("Database deleted successfully, creating a new one.");
+			// Don't create a new request with the same variable name
+			const newDbRequest = indexedDB.open("catalogue", VERSION);
+
+			newDbRequest.onupgradeneeded = (event) => {
+				db = (event.target as IDBOpenDBRequest).result;
+				resetAndCreateDB();
+			};
+		};
+		deleteRequest.onerror = (e) => {
+			console.error("Failed to delete database", (e.target as IDBRequest).error);
+		};
+	};
 
 	dbOpenRequest.onsuccess = () => {
 		db = dbOpenRequest.result;
@@ -88,17 +114,57 @@ const pageLenth = 30;
 		// Check if database has data before building UI
 		const transaction = db.transaction("content", "readonly");
 		const objectStore = transaction.objectStore("content");
-		const countRequest = objectStore.count();
 
+		// Check if database is empty first
+		const countRequest = objectStore.count();
 		countRequest.onsuccess = () => {
 			if (countRequest.result > 0) {
-				buildUI();
+				// Check version
+				const versionCheck = objectStore.get("version");
+				versionCheck.onsuccess = () => {
+					if (!versionCheck.result || versionCheck.result.hash !== latestHash) {
+						console.log("Database version mismatch or outdated data, clearing and reseeding.");
+						clearAndSeedDatabase();
+					} else {
+						console.log("Database is up-to-date, building UI.");
+						buildUI();
+					}
+				};
+				versionCheck.onerror = () => {
+					console.log("No version found, clearing and reseeding.");
+					clearAndSeedDatabase();
+				};
 			}
 		};
 	};
 
 	dbOpenRequest.onupgradeneeded = (event) => {
 		db = (event.target as IDBOpenDBRequest).result;
+
+		console.log("Database upgrade needed, resetting and creating new object store.");
+
+		resetAndCreateDB();
+	};
+
+	function clearAndSeedDatabase() {
+		const transaction = db.transaction("content", "readwrite");
+		const objectStore = transaction.objectStore("content");
+
+		const clearRequest = objectStore.clear();
+		clearRequest.onsuccess = () => {
+			console.log("Database cleared, reseeding...");
+			seedDatabase();
+		};
+		clearRequest.onerror = (e) => {
+			console.error("Failed to clear database", e);
+		};
+	}
+
+	function resetAndCreateDB() {
+		// Only delete/create object stores during upgrade transactions
+		if (db.objectStoreNames.contains("content")) {
+			db.deleteObjectStore("content");
+		}
 
 		const objectStore = db.createObjectStore("content", {
 			keyPath: "id",
@@ -111,11 +177,13 @@ const pageLenth = 30;
 		objectStore.createIndex("cover", "cover", { unique: false });
 		objectStore.createIndex("placeholder", "placeholder", { unique: false });
 		objectStore.createIndex("author", "author", { unique: false });
+		objectStore.createIndex("hash", "hash", { unique: false });
+		objectStore.createIndex("rating_date", ["rating", "finishedDate"], { unique: false });
 
 		objectStore.transaction.oncomplete = () => {
 			seedDatabase();
 		};
-	};
+	}
 
 	interface CatalogueData {
 		version: number;
@@ -156,6 +224,17 @@ const pageLenth = 30;
 		)) as CatalogueData;
 
 		const contentObjectStore = db.transaction("content", "readwrite").objectStore("content");
+
+		const versionRequest = contentObjectStore.add({
+			id: "version",
+			hash: latestHash,
+			timestamp: Date.now(),
+		});
+
+		versionRequest.onerror = (e) => {
+			console.error("Failed to add version", (e.target as IDBRequest).error);
+		};
+
 		data.content.forEach((item) => {
 			const addRequest = contentObjectStore.add({
 				id: item.id + "-" + item.type,
@@ -197,8 +276,8 @@ const pageLenth = 30;
 			const index = contentObjectStore.index("finishedDate");
 			request = index.openCursor(null, "prev");
 		} else if (filters.sort === "rating") {
-			const index = contentObjectStore.index("rating");
-			request = index.openCursor(null, "next");
+			const index = contentObjectStore.index("rating_date");
+			request = index.openCursor(null, "prev");
 		} else if (filters.sort === "alphabetical") {
 			const index = contentObjectStore.index("title");
 			request = index.openCursor(null, "next");
@@ -270,7 +349,8 @@ const pageLenth = 30;
                      loading="lazy"
                      style="background-size: cover;background-image: url(${item.placeholder});image-rendering:auto;"
                      onload="this.removeAttribute('style');this.removeAttribute('onload');"
-                     decoding="async">
+                     decoding="async"
+                     alt="${item.title} cover" />
                 <span class="absolute top-0 right-0 pr-[0.15rem] pl-[0.2rem] bg-black/5 rounded-bl-lg select-none">
                     ${getRatingEmoji(item.rating)}
                 </span>

@@ -6,16 +6,28 @@ const pageLenth = 30;
 
 <div id="catalogue-core" data-latest={versionHash}>
 	<header class="flex flex-col justify-between gap-y-4 sm:flex-row sm:gap-y-0">
-		<div id="catalogue-filters" class="flex flex-grow flex-col gap-x-4 sm:flex-row">
-			<div>
-				<label for="catalogue-search">Search</label>
-				<input id="catalogue-search" type={"search"} />
+		<div
+			id="catalogue-filters"
+			class="flex flex-grow flex-col gap-x-4 gap-y-3 sm:flex-row sm:gap-y-0"
+		>
+			<div class="flex basis-5/12 flex-col">
+				<label for="catalogue-search" class="mb-1">Search</label>
+				<input
+					id="catalogue-search"
+					type="search"
+					class="px-3 py-2 text-base sm:text-sm"
+					placeholder="Search (title, author, etc.)"
+				/>
 			</div>
 
-			<div>
-				<label for="catalogue-types">Type</label>
-				<select name="types" id="catalogue-types">
-					<option value="">Type</option>
+			<div class="flex flex-col">
+				<label for="catalogue-types" class="mb-1">Type</label>
+				<select
+					name="types"
+					id="catalogue-types"
+					class="px-3 py-2 text-base focus:outline-none sm:min-h-min sm:text-sm"
+				>
+					<option value="">All Types</option>
 					<option value="book">Book</option>
 					<option value="game">Game</option>
 					<option value="movie">Movie</option>
@@ -23,10 +35,10 @@ const pageLenth = 30;
 				</select>
 			</div>
 
-			<div>
-				<label for="catalogue-ratings">Rating</label>
-				<select name="ratings" id="catalogue-ratings">
-					<option value="">Rating</option>
+			<div class="flex flex-col">
+				<label for="catalogue-ratings" class="mb-1">Rating</label>
+				<select name="ratings" id="catalogue-ratings" class="px-3 py-2 text-base sm:text-sm">
+					<option value="">All Ratings</option>
 					<option value="5">Masterpiece</option>
 					<option value="4">Loved</option>
 					<option value="3">Liked</option>
@@ -36,9 +48,20 @@ const pageLenth = 30;
 				</select>
 			</div>
 
-			<div>
-				<label for="catalogue-sort">Sort</label>
-				<select name="sort" id="catalogue-sort">
+			<div class="flex flex-col">
+				<label for="catalogue-sort" class="mb-1 flex items-center justify-between gap-x-2">
+					Sort
+					<input
+						id="catalogue-sort-ord"
+						type="checkbox"
+						class="m-0 cursor-pointer appearance-none text-lg before:text-white before:content-['↑'] checked:before:content-['↓'] sm:text-base"
+					/>
+				</label>
+				<select
+					name="sort"
+					id="catalogue-sort"
+					class="min-h-min px-3 py-2 text-base focus:outline-none sm:text-sm"
+				>
 					<option value="date">Date</option>
 					<option value="rating">Rating</option>
 					<option value="alphabetical">Title</option>
@@ -59,18 +82,22 @@ const pageLenth = 30;
 
 <style>
 	label {
-		display: block;
-		font-size: 0.875rem;
+		display: flex;
+		font-size: 0.975rem;
 		line-height: 1.5rem;
 		font-weight: 550;
+	}
+
+	input[type="search"],
+	select {
+		height: 40px;
 	}
 </style>
 
 <script>
 	import { QuickScore } from "quick-score";
-	import { thumbHashToDataURL } from "thumbhash";
 
-	const VERSION = 2;
+	const VERSION = 3;
 	const latestHash = document
 		.getElementById("catalogue-core")
 		?.getAttribute("data-latest") as string;
@@ -80,6 +107,7 @@ const pageLenth = 30;
 	const searchInput = document.getElementById("catalogue-search") as HTMLInputElement;
 	const ratingSelect = document.getElementById("catalogue-ratings") as HTMLSelectElement;
 	const sortSelect = document.getElementById("catalogue-sort") as HTMLSelectElement;
+	const sortOrderCheckbox = document.getElementById("catalogue-sort-ord") as HTMLInputElement;
 	const typeSelect = document.getElementById("catalogue-types") as HTMLSelectElement;
 	const content = document.getElementById("catalogue-content") as HTMLDivElement;
 	const entriesCount = document.getElementById("catalogue-entry-count") as HTMLDivElement;
@@ -91,11 +119,13 @@ const pageLenth = 30;
 	let isLoading = false;
 
 	dbOpenRequest.onerror = (event) => {
-		console.error("Failed to open database", (event.target as IDBOpenDBRequest).error);
+		console.error(
+			"Failed to open database, resetting database..",
+			(event.target as IDBOpenDBRequest).error,
+		);
 
 		const deleteRequest = indexedDB.deleteDatabase("catalogue");
 		deleteRequest.onsuccess = () => {
-			console.log("Database deleted successfully, creating a new one.");
 			// Don't create a new request with the same variable name
 			const newDbRequest = indexedDB.open("catalogue", VERSION);
 
@@ -124,15 +154,12 @@ const pageLenth = 30;
 				const versionCheck = objectStore.get("version");
 				versionCheck.onsuccess = () => {
 					if (!versionCheck.result || versionCheck.result.hash !== latestHash) {
-						console.log("Database version mismatch or outdated data, clearing and reseeding.");
 						clearAndSeedDatabase();
 					} else {
-						console.log("Database is up-to-date, building UI.");
 						buildUI();
 					}
 				};
 				versionCheck.onerror = () => {
-					console.log("No version found, clearing and reseeding.");
 					clearAndSeedDatabase();
 				};
 			}
@@ -141,8 +168,6 @@ const pageLenth = 30;
 
 	dbOpenRequest.onupgradeneeded = (event) => {
 		db = (event.target as IDBOpenDBRequest).result;
-
-		console.log("Database upgrade needed, resetting and creating new object store.");
 
 		resetAndCreateDB();
 	};
@@ -153,7 +178,6 @@ const pageLenth = 30;
 
 		const clearRequest = objectStore.clear();
 		clearRequest.onsuccess = () => {
-			console.log("Database cleared, reseeding...");
 			seedDatabase();
 		};
 		clearRequest.onerror = (e) => {
@@ -171,15 +195,9 @@ const pageLenth = 30;
 			keyPath: "id",
 		});
 
-		objectStore.createIndex("type", "type", { unique: false });
-		objectStore.createIndex("rating", "rating", { unique: false });
-		objectStore.createIndex("finishedDate", "finishedDate", { unique: false });
-		objectStore.createIndex("title", "title", { unique: false });
-		objectStore.createIndex("cover", "cover", { unique: false });
-		objectStore.createIndex("placeholder", "placeholder", { unique: false });
-		objectStore.createIndex("author", "author", { unique: false });
-		objectStore.createIndex("hash", "hash", { unique: false });
-		objectStore.createIndex("rating_date", ["rating", "finishedDate"], { unique: false });
+		objectStore.createIndex("date", "date", { unique: false });
+		objectStore.createIndex("lower_case_title", "lower_case_title", { unique: false });
+		objectStore.createIndex("rating_date", ["rating", "date"], { unique: false });
 
 		objectStore.transaction.oncomplete = () => {
 			seedDatabase();
@@ -196,7 +214,7 @@ const pageLenth = 30;
 		string, // title
 		number, // rating
 		string, // author
-		number?, // finishedDate
+		number?, // date
 	];
 
 	interface CatalogueItemDB {
@@ -207,7 +225,7 @@ const pageLenth = 30;
 		title: string;
 		rating: number;
 		author: string;
-		finishedDate: number;
+		date: number;
 	}
 
 	function numberToType(type: number): string {
@@ -263,8 +281,7 @@ const pageLenth = 30;
 		};
 
 		data.forEach((item) => {
-			console.log(item);
-			const [id, cover, placeholder, type, title, rating, author, finishedDate] = item;
+			const [id, cover, placeholder, type, title, rating, author, date] = item;
 
 			const itemType = numberToType(type);
 
@@ -272,9 +289,10 @@ const pageLenth = 30;
 				id: id + "-" + itemType,
 				type: itemType,
 				title: title,
+				lower_case_title: title.toLowerCase(),
 				rating: rating,
-				finishedDate: finishedDate ?? 0,
-				placeholder: thumbHashToDataURL(base64ToArrayBuffer(placeholder)),
+				date: date ?? 0,
+				placeholder: placeholder,
 				cover: cover,
 				author: author,
 			});
@@ -287,15 +305,6 @@ const pageLenth = 30;
 		contentObjectStore.transaction.oncomplete = () => {
 			buildUI();
 		};
-	}
-
-	function base64ToArrayBuffer(base64: string) {
-		const binaryString = atob(base64);
-		const bytes = new Uint8Array(binaryString.length);
-		for (let i = 0; i < binaryString.length; i++) {
-			bytes[i] = binaryString.charCodeAt(i);
-		}
-		return bytes;
 	}
 
 	function buildUI() {
@@ -313,19 +322,21 @@ const pageLenth = 30;
 
 		let request: IDBRequest;
 
+		const cursorDirection = sortOrderCheckbox.checked ? "next" : "prev";
+
 		// Use appropriate index for sorting
 		if (filters.sort === "date") {
-			const index = contentObjectStore.index("finishedDate");
-			request = index.openCursor(null, "prev");
+			const index = contentObjectStore.index("date");
+			request = index.openCursor(null, cursorDirection);
 		} else if (filters.sort === "rating") {
 			const index = contentObjectStore.index("rating_date");
-			request = index.openCursor(null, "prev");
+			request = index.openCursor(null, cursorDirection);
 		} else if (filters.sort === "alphabetical") {
-			const index = contentObjectStore.index("title");
-			request = index.openCursor(null, "next");
+			const index = contentObjectStore.index("lower_case_title");
+			request = index.openCursor(null, cursorDirection);
 		} else {
-			const index = contentObjectStore.index("finishedDate");
-			request = index.openCursor(null, "prev");
+			const index = contentObjectStore.index("date");
+			request = index.openCursor(null, cursorDirection);
 		}
 
 		let items: CatalogueItemDB[] = [];
@@ -377,6 +388,14 @@ const pageLenth = 30;
 		const endIndex = startIndex + pageSize;
 		const pageItems = allItems.slice(startIndex, endIndex);
 
+		if (pageItems.length === 0) {
+			// No more items to render
+			isLoading = false;
+			content.innerHTML =
+				'<p class="w-full text-center my-6">Nothing found. <a href="mailto:contact@erika.florist">Want to recommend me something?</a> </p>';
+			return;
+		}
+
 		// Create a document fragment for better performance
 		const fragment = document.createDocumentFragment();
 
@@ -407,7 +426,6 @@ const pageLenth = 30;
 			fragment.appendChild(entry);
 		});
 
-		// Single DOM operation instead of multiple
 		content.appendChild(fragment);
 		currentPage++;
 	}
@@ -461,4 +479,5 @@ const pageLenth = 30;
 	ratingSelect.addEventListener("change", resetAndBuildUI);
 	sortSelect.addEventListener("change", resetAndBuildUI);
 	typeSelect.addEventListener("change", resetAndBuildUI);
+	sortOrderCheckbox.addEventListener("change", resetAndBuildUI);
 </script>

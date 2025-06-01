@@ -16,6 +16,9 @@ export default defineConfig({
 	prefetch: {
 		prefetchAll: true,
 	},
+	devToolbar: {
+		enabled: false,
+	},
 	integrations: [
 		tailwind({
 			applyBaseStyles: false,

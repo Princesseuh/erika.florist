@@ -32,7 +32,11 @@ async function getCoverAndPlaceholder(cover: ImageMetadata) {
 		getImage({ src: cover, width: 240 }),
 		(async () => {
 			const imageService = (await getConfiguredImageService()) as LocalImageServiceWithPlaceholder;
-			const placeholderURL = await imageService.generateThumbhash(cover, cover.width, cover.height);
+			const placeholderURL = await imageService.generatePlaceholder(
+				cover,
+				cover.width,
+				cover.height,
+			);
 			return placeholderURL;
 		})(),
 	]);

@@ -3,7 +3,6 @@ import sharpService from "astro/assets/services/sharp";
 import { shorthash } from "astro/runtime/server/shorthash.js";
 import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import sharp from "sharp";
-import * as Thumbhash from "thumbhash";
 
 const CACHE_PATH = "./node_modules/.astro/placeholders/";
 
@@ -42,7 +41,6 @@ export interface LocalImageServiceWithPlaceholder extends LocalImageService {
 		height: number,
 		quality?: number,
 	) => Promise<string>;
-	generateThumbhash: (src: ImageMetadata, width: number, height: number) => Promise<string>;
 }
 
 const service: LocalImageServiceWithPlaceholder = {
@@ -57,22 +55,6 @@ const service: LocalImageServiceWithPlaceholder = {
 		}
 
 		return attributes;
-	},
-	generateThumbhash: async (src: ImageMetadata, width: number, height: number) => {
-		const placeholderDimensions = getBitmapDimensions(width, height, 100);
-		const originalFileBuffer = sharp((src as ImageMetadataInternal).fsPath).resize(
-			placeholderDimensions.width,
-			placeholderDimensions.height,
-			{ fit: "inside" },
-		);
-
-		const { data, info } = await originalFileBuffer
-			.ensureAlpha()
-			.raw()
-			.toBuffer({ resolveWithObject: true });
-
-		const binaryThumbHash = Thumbhash.rgbaToThumbHash(info.width, info.height, data);
-		return Buffer.from(binaryThumbHash).toString("base64");
 	},
 	generatePlaceholder: async (src: ImageMetadata, width: number, height: number, quality = 100) => {
 		const placeholderDimensions = getBitmapDimensions(width, height, quality);

@@ -14,6 +14,8 @@ const movies = await getCollection("movies");
 const shows = await getCollection("shows");
 const books = await getCollection("books");
 
+const VERSION = 1;
+
 const catalogueContent = [...games, ...movies, ...shows, ...books].map((entry) => ({
 	id: entry.id,
 	data: entry.data,
@@ -23,18 +25,14 @@ export const versionHash = await (
 	pkg as unknown as {
 		default: typeof pkg;
 	}
-).default(catalogueContent);
+).default([VERSION, catalogueContent]);
 
 async function getCoverAndPlaceholder(cover: ImageMetadata) {
 	return await Promise.all([
 		getImage({ src: cover, width: 240 }),
 		(async () => {
 			const imageService = (await getConfiguredImageService()) as LocalImageServiceWithPlaceholder;
-			const placeholderURL = await imageService.generatePlaceholder(
-				cover,
-				cover.width,
-				cover.height,
-			);
+			const placeholderURL = await imageService.generateThumbhash(cover, cover.width, cover.height);
 			return placeholderURL;
 		})(),
 	]);
@@ -87,9 +85,11 @@ export const GET = (async () => {
 				title: entryData.title,
 				rating: ratingToNumber(entryData.rating),
 				author: author,
-				finishedDate: entryData.finishedDate === "N/A" ? 0 : entryData.finishedDate.getTime(),
-				platform:
-					entry.data.type === "book" || entry.data.type === "game" ? entry.data.platform : null,
+				...(entryData.finishedDate === "N/A"
+					? {}
+					: {
+							finishedDate: entryData.finishedDate.getTime(),
+						}),
 			};
 		}),
 	);

@@ -3,6 +3,7 @@ import sharpService from "astro/assets/services/sharp";
 import { shorthash } from "astro/runtime/server/shorthash.js";
 import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import sharp from "sharp";
+import * as Thumbhash from "thumbhash";
 
 const CACHE_PATH = "./node_modules/.astro/placeholders/";
 
@@ -30,6 +31,10 @@ function getBitmapDimensions(
 	return { width: Math.round(bitmapWidth), height: Math.round(bitmapHeight) };
 }
 
+type ImageMetadataInternal = ImageMetadata & {
+	fsPath: string;
+};
+
 export interface LocalImageServiceWithPlaceholder extends LocalImageService {
 	generatePlaceholder: (
 		src: ImageMetadata,
@@ -37,6 +42,7 @@ export interface LocalImageServiceWithPlaceholder extends LocalImageService {
 		height: number,
 		quality?: number,
 	) => Promise<string>;
+	generateThumbhash: (src: ImageMetadata, width: number, height: number) => Promise<string>;
 }
 
 const service: LocalImageServiceWithPlaceholder = {
@@ -52,6 +58,22 @@ const service: LocalImageServiceWithPlaceholder = {
 
 		return attributes;
 	},
+	generateThumbhash: async (src: ImageMetadata, width: number, height: number) => {
+		const placeholderDimensions = getBitmapDimensions(width, height, 100);
+		const originalFileBuffer = sharp((src as ImageMetadataInternal).fsPath).resize(
+			placeholderDimensions.width,
+			placeholderDimensions.height,
+			{ fit: "inside" },
+		);
+
+		const { data, info } = await originalFileBuffer
+			.ensureAlpha()
+			.raw()
+			.toBuffer({ resolveWithObject: true });
+
+		const binaryThumbHash = Thumbhash.rgbaToThumbHash(info.width, info.height, data);
+		return Buffer.from(binaryThumbHash).toString("base64");
+	},
 	generatePlaceholder: async (src: ImageMetadata, width: number, height: number, quality = 100) => {
 		const placeholderDimensions = getBitmapDimensions(width, height, quality);
 		const hash = shorthash(src.src + width + height + quality);
@@ -65,7 +87,7 @@ const service: LocalImageServiceWithPlaceholder = {
 		}
 
 		// HACK: It'd be nice to be able to get a Buffer out from an ESM import or `getImage`, wonder how we could do that..
-		const originalFileBuffer = readFileSync(src.fsPath);
+		const originalFileBuffer = readFileSync((src as ImageMetadataInternal).fsPath);
 
 		const placeholderBuffer = await sharp(originalFileBuffer)
 			.resize(placeholderDimensions.width, placeholderDimensions.height, { fit: "inside" })

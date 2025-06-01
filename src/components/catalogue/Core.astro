@@ -68,6 +68,7 @@ const pageLenth = 30;
 
 <script>
 	import { QuickScore } from "quick-score";
+	import { thumbHashToDataURL } from "thumbhash";
 
 	const VERSION = 2;
 	const latestHash = document
@@ -192,7 +193,7 @@ const pageLenth = 30;
 			type: string;
 			title: string;
 			rating: number;
-			finishedDate: string;
+			finishedDate?: number;
 			cover: string;
 			placeholder: string;
 			author: string;
@@ -241,9 +242,9 @@ const pageLenth = 30;
 				type: item.type,
 				title: item.title,
 				rating: item.rating,
-				finishedDate: item.finishedDate,
+				finishedDate: item.finishedDate ?? 0,
+				placeholder: thumbHashToDataURL(base64ToArrayBuffer(item.placeholder)),
 				cover: item.cover,
-				placeholder: item.placeholder,
 				author: item.author,
 			});
 			addRequest.onerror = (e) => {
@@ -254,6 +255,15 @@ const pageLenth = 30;
 		contentObjectStore.transaction.oncomplete = () => {
 			buildUI();
 		};
+	}
+
+	function base64ToArrayBuffer(base64: string) {
+		const binaryString = atob(base64);
+		const bytes = new Uint8Array(binaryString.length);
+		for (let i = 0; i < binaryString.length; i++) {
+			bytes[i] = binaryString.charCodeAt(i);
+		}
+		return bytes;
 	}
 
 	function buildUI() {

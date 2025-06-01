@@ -85,7 +85,7 @@ const pageLenth = 30;
 	const entriesCount = document.getElementById("catalogue-entry-count") as HTMLDivElement;
 
 	let db: IDBDatabase;
-	let allItems: CatalogueData["content"] = [];
+	let allItems: CatalogueItemDB[] = [];
 	let currentPage = 0;
 	const pageSize = 30;
 	let isLoading = false;
@@ -186,18 +186,43 @@ const pageLenth = 30;
 		};
 	}
 
-	interface CatalogueData {
-		version: number;
-		content: {
-			id: string;
-			type: string;
-			title: string;
-			rating: number;
-			finishedDate?: number;
-			cover: string;
-			placeholder: string;
-			author: string;
-		}[];
+	type CatalogueData = [number, CatalogueItem[]];
+
+	type CatalogueItem = [
+		string, // id
+		string, // cover
+		string, // placeholder
+		number, // type
+		string, // title
+		number, // rating
+		string, // author
+		number?, // finishedDate
+	];
+
+	interface CatalogueItemDB {
+		id: string;
+		cover: string;
+		placeholder: string;
+		type: "game" | "movie" | "show" | "book";
+		title: string;
+		rating: number;
+		author: string;
+		finishedDate: number;
+	}
+
+	function numberToType(type: number): string {
+		switch (type) {
+			case 0:
+				return "game";
+			case 1:
+				return "movie";
+			case 2:
+				return "show";
+			case 3:
+				return "book";
+			default:
+				throw new Error("Unknown type: " + type);
+		}
 	}
 
 	const getRatingEmoji = (rating: number) => {
@@ -220,15 +245,16 @@ const pageLenth = 30;
 	};
 
 	async function seedDatabase() {
-		const data = (await fetch("/catalogue/content.json").then((response) =>
+		const content = (await fetch("/catalogue/content.json").then((response) =>
 			response.json(),
 		)) as CatalogueData;
 
 		const contentObjectStore = db.transaction("content", "readwrite").objectStore("content");
+		const [version, data] = content;
 
 		const versionRequest = contentObjectStore.add({
 			id: "version",
-			hash: latestHash,
+			hash: version,
 			timestamp: Date.now(),
 		});
 
@@ -236,19 +262,25 @@ const pageLenth = 30;
 			console.error("Failed to add version", (e.target as IDBRequest).error);
 		};
 
-		data.content.forEach((item) => {
+		data.forEach((item) => {
+			console.log(item);
+			const [id, cover, placeholder, type, title, rating, author, finishedDate] = item;
+
+			const itemType = numberToType(type);
+
 			const addRequest = contentObjectStore.add({
-				id: item.id + "-" + item.type,
-				type: item.type,
-				title: item.title,
-				rating: item.rating,
-				finishedDate: item.finishedDate ?? 0,
-				placeholder: thumbHashToDataURL(base64ToArrayBuffer(item.placeholder)),
-				cover: item.cover,
-				author: item.author,
+				id: id + "-" + itemType,
+				type: itemType,
+				title: title,
+				rating: rating,
+				finishedDate: finishedDate ?? 0,
+				placeholder: thumbHashToDataURL(base64ToArrayBuffer(placeholder)),
+				cover: cover,
+				author: author,
 			});
+
 			addRequest.onerror = (e) => {
-				console.error("Failed to add item", item.id, (e.target as IDBRequest).error);
+				console.error("Failed to add item", id, (e.target as IDBRequest).error);
 			};
 		});
 
@@ -296,7 +328,7 @@ const pageLenth = 30;
 			request = index.openCursor(null, "prev");
 		}
 
-		let items: CatalogueData["content"] = [];
+		let items: CatalogueItemDB[] = [];
 
 		request.onsuccess = (event) => {
 			const cursor = (event.target as IDBRequest).result as IDBCursorWithValue;

@@ -14,7 +14,7 @@ const movies = await getCollection("movies");
 const shows = await getCollection("shows");
 const books = await getCollection("books");
 
-const VERSION = 1;
+const VERSION = 2;
 
 const catalogueContent = [...games, ...movies, ...shows, ...books].map((entry) => ({
 	id: entry.id,
@@ -69,6 +69,19 @@ function ratingToNumber(rating: CatalogueRating): number {
 	}
 }
 
+function typeToNumber(type: CatalogueType): number {
+	switch (type) {
+		case "game":
+			return 0;
+		case "movie":
+			return 1;
+		case "show":
+			return 2;
+		case "book":
+			return 3;
+	}
+}
+
 export const GET = (async () => {
 	const data = await Promise.all(
 		catalogueContent.map(async (entry) => {
@@ -77,33 +90,28 @@ export const GET = (async () => {
 
 			const author = getAuthorFromEntryMetadata(type, metadata);
 
-			return {
-				id: entry.id,
-				cover: processedCover.src,
-				placeholder: placeholderURL,
-				type,
-				title: entryData.title,
-				rating: ratingToNumber(entryData.rating),
-				author: author,
-				...(entryData.finishedDate === "N/A"
-					? {}
-					: {
-							finishedDate: entryData.finishedDate.getTime(),
-						}),
-			};
+			const arr = [
+				entry.id,
+				processedCover.src,
+				placeholderURL,
+				typeToNumber(type),
+				entryData.title,
+				ratingToNumber(entryData.rating),
+				author,
+			];
+
+			if (entryData.finishedDate !== "N/A") {
+				arr.push(entryData.finishedDate.getTime());
+			}
+
+			return arr;
 		}),
 	);
 
-	return new Response(
-		JSON.stringify({
-			version: versionHash,
-			content: data,
-		}),
-		{
-			headers: {
-				"Content-Type": "application/json",
-				"Cache-Control": "public, max-age=0, must-revalidate, stale-while-revalidate=3600",
-			},
+	return new Response(JSON.stringify([versionHash, data]), {
+		headers: {
+			"Content-Type": "application/json",
+			"Cache-Control": "public, max-age=0, must-revalidate, stale-while-revalidate=3600",
 		},
-	);
+	});
 }) satisfies APIRoute;

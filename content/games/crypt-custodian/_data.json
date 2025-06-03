@@ -1,0 +1,64 @@
+{
+  "first_release_date": 1724716800,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 8944,
+      "name": "H2 Interactive Co., Ltd.",
+      "role": "publisher"
+    },
+    {
+      "id": 27508,
+      "name": "Kyle Thompson",
+      "role": "developer"
+    },
+    {
+      "id": 38304,
+      "name": "Top Hat Studios",
+      "role": "publisher"
+    }
+  ]
+}

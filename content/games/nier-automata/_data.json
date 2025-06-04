@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1487808000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 852,
+      "name": "PlatinumGames",
+      "role": "developer"
+    },
+    {
+      "id": 26,
+      "name": "Square Enix",
+      "role": "publisher"
+    },
+    {
+      "id": 53031,
+      "name": "Square Enix Business Division 6",
+      "role": "developer"
+    }
+  ]
+}

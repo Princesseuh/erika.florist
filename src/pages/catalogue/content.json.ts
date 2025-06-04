@@ -16,7 +16,7 @@ const books = await getCollection("books");
 
 const VERSION = 2;
 
-const catalogueContent = [...games, ...movies, ...shows, ...books].map((entry) => ({
+export const catalogueContent = [...games, ...movies, ...shows, ...books].map((entry) => ({
 	id: entry.id,
 	data: entry.data,
 }));

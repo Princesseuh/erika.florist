@@ -17,25 +17,22 @@
 	"devDependencies": {
 		"@astrojs/tailwind": "6.0.2",
 		"@types/eslint": "^9.6.1",
-		"@types/node": "^22.15.23",
-		"@types/prettier": "^2.7.3",
-		"astro": "^5.8.0",
-		"eslint": "^9.27.0",
+		"@types/node": "^22.15.30",
+		"astro": "^5.9.0",
+		"eslint": "^9.28.0",
 		"eslint-plugin-astro": "^1.3.1",
 		"kleur": "^4.1.5",
 		"prettier": "^3.5.3",
 		"prettier-plugin-astro": "^0.14.1",
 		"typescript": "^5.8.3",
-		"typescript-eslint": "^8.33.0"
+		"typescript-eslint": "^8.33.1"
 	},
-	"packageManager": "pnpm@8.10.0",
+	"packageManager": "pnpm@10.11.1",
 	"dependencies": {
 		"@11ty/eleventy-fetch": "^5.1.0",
 		"@astrojs/check": "^0.9.4",
 		"@astrojs/markdoc": "0.15.0",
-		"@types/eslint__js": "^8.42.3",
-		"@types/igdb-api-node": "^5.0.3",
-		"@typescript-eslint/parser": "^8.33.0",
+		"@typescript-eslint/parser": "^8.33.1",
 		"astro-capo": "^0.0.1",
 		"astro-expressive-code": "^0.41.2",
 		"deterministic-object-hash": "^2.0.2",
@@ -44,14 +41,14 @@
 		"gray-matter": "^4.0.3",
 		"icojs": "^0.19.5",
 		"igdb-api-node": "^6.0.5",
-		"linkedom": "^0.18.10",
-		"prettier-plugin-tailwindcss": "^0.6.11",
+		"linkedom": "^0.18.11",
+		"prettier-plugin-tailwindcss": "^0.6.12",
 		"quick-score": "^0.2.0",
 		"sharp": "^0.34.2",
 		"tailwindcss": "^3.4.15",
 		"tiny-decode": "^0.1.3",
 		"tsx": "^4.19.4",
 		"ultrahtml": "^1.6.0",
-		"vercel": "^42.2.0"
+		"vercel": "^42.3.0"
 	}
 }

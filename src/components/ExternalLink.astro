@@ -22,8 +22,14 @@ if (href.startsWith("http")) {
 		html = await EleventyFetch(href, {
 			duration: "1y",
 			type: "text",
-			directory: "node_modules/.cache",
+			directory: "node_modules/.cache3",
 		});
+
+		if (typeof html !== "string") {
+			// @ts-ignore - There seems to be some bug in EleventyFetch and it doesn't return the text for some reason, weird.
+			html = html.toString();
+		}
+
 		const { document } = parseHTML(html);
 		const links = document.querySelectorAll("link");
 
@@ -69,7 +75,7 @@ if (href.startsWith("http")) {
 		faviconUrl = `data:${processedFavicon.info.format};base64,${processedFavicon.data.toString("base64")}`;
 	} catch (e) {
 		if (e instanceof Error && Object.prototype.hasOwnProperty.call(e, "message")) {
-			if (import.meta.env.DEV) console.log(e.message);
+			if (import.meta.env.DEV) console.log("favicon", e);
 		}
 	}
 }

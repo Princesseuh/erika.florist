@@ -1,0 +1,62 @@
+{
+  "first_release_date": 1614124800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 34,
+      "abbreviation": "Android"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 39,
+      "abbreviation": "iOS"
+    }
+  ],
+  "companies": [
+    {
+      "id": 20876,
+      "name": "DMM GAMES",
+      "role": "publisher"
+    },
+    {
+      "id": 13020,
+      "name": "Kakao Games",
+      "role": "publisher"
+    },
+    {
+      "id": 18141,
+      "name": "bilibili",
+      "role": "publisher"
+    },
+    {
+      "id": 28459,
+      "name": "KOMOE Game",
+      "role": "publisher"
+    },
+    {
+      "id": 6181,
+      "name": "Cygames",
+      "role": "developer"
+    }
+  ]
+}

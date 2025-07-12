@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1560988800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 26342,
+      "name": "Indefatigable",
+      "role": "developer"
+    },
+    {
+      "id": 9190,
+      "name": "New Blood Interactive",
+      "role": "publisher"
+    }
+  ]
+}

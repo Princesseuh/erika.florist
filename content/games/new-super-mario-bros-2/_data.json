@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1343433600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 37,
+      "abbreviation": "3DS"
+    }
+  ],
+  "companies": [
+    {
+      "id": 2935,
+      "name": "Nintendo SPD",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 421,
+      "name": "Nintendo EAD",
+      "role": "developer"
+    }
+  ]
+}

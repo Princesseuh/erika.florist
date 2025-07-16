@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1027036800,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 21,
+      "abbreviation": "NGC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 421,
+      "name": "Nintendo EAD",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 812,
+      "name": "Gradiente",
+      "role": "publisher"
+    }
+  ]
+}

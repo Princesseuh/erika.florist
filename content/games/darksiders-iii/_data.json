@@ -1,0 +1,51 @@
+{
+  "first_release_date": 1543276800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 170,
+      "abbreviation": "Stadia"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 10809,
+      "name": "Gunfire Games",
+      "role": "developer"
+    },
+    {
+      "id": 10075,
+      "name": "THQ Nordic",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1753315200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    }
+  ],
+  "companies": [
+    {
+      "id": 37575,
+      "name": "Leenzee Games",
+      "role": "developer"
+    },
+    {
+      "id": 445,
+      "name": "505 Games",
+      "role": "publisher"
+    }
+  ]
+}

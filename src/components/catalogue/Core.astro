@@ -95,10 +95,11 @@ const pageLenth = 30;
 </style>
 
 <script>
+	import GithubSlugger from "github-slugger";
 	import { QuickScore } from "quick-score";
 	import { thumbHashToDataURL } from "thumbhash";
 
-	const VERSION = 3;
+	const VERSION = 4;
 	const latestHash = document
 		.getElementById("catalogue-core")
 		?.getAttribute("data-latest") as string;
@@ -216,7 +217,6 @@ const pageLenth = 30;
 	type CatalogueData = [number, CatalogueItem[]];
 
 	type CatalogueItem = [
-		string, // id
 		string, // cover
 		string, // placeholder
 		number, // type
@@ -300,17 +300,20 @@ const pageLenth = 30;
 			return;
 		};
 
+		const slugger = new GithubSlugger();
+
 		data.forEach((item) => {
-			const [id, cover, placeholder, type, title, rating, author, date] = item;
+			const [cover, placeholder, type, title, rating, author, date] = item;
 
 			const itemType = numberToType(type);
+			const id = slugger.slug(title) + "-" + itemType;
 
 			const addRequest = contentObjectStore.add({
-				id: id + "-" + itemType,
+				id,
 				type: itemType,
-				title: title,
+				title,
 				lower_case_title: title.toLowerCase(),
-				rating: rating,
+				rating,
 				date: date ?? 0,
 				placeholder: thumbHashToDataURL(
 					new Uint8Array(
@@ -319,8 +322,8 @@ const pageLenth = 30;
 							.map((c) => c.charCodeAt(0)),
 					),
 				),
-				cover: cover,
-				author: author,
+				cover,
+				author,
 			});
 
 			addRequest.onerror = (e) => {

@@ -99,7 +99,6 @@ export const GET = (async () => {
 			const author = getAuthorFromEntryMetadata(type, metadata);
 
 			const arr = [
-				entry.id,
 				processedCover.src,
 				placeholderURL,
 				typeToNumber(type),

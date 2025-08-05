@@ -15,7 +15,7 @@ const uniqueMonthYears = new Set(monthYears);
 const groupedMonths: Record<string, Changelog> = {};
 
 for (const entry of uniqueMonthYears) {
-	const [month, year] = entry.split("|").map((date) => parseInt(date));
+	const [month, year] = entry.split("|").map((date) => Number.parseInt(date));
 	if (month === undefined || Number.isNaN(month) || year === undefined || Number.isNaN(year))
 		continue;
 

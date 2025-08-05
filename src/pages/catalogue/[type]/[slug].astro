@@ -3,16 +3,19 @@ import BaseLayout from "$layouts/BaseLayout.astro";
 import type { GetStaticPaths } from "astro";
 import { getImage } from "astro:assets";
 import { getCollection, render } from "astro:content";
+import GithubSlugger from "github-slugger";
 
 export const getStaticPaths = (async () => {
-	let catalogueContent = [];
+	const catalogueContent = [];
+
+	const slugger = new GithubSlugger();
 
 	for (const catalogueType of ["games", "movies", "shows", "books"] as const) {
 		catalogueContent.push(...(await getCollection(catalogueType)));
 	}
 
 	return catalogueContent.flatMap((entry) => ({
-		params: { type: entry.data.type + "s", slug: entry.id },
+		params: { type: `${entry.data.type}s`, slug: slugger.slug(entry.data.title) },
 		props: { entry: entry, metadata: entry.data.metadata },
 	}));
 }) satisfies GetStaticPaths;

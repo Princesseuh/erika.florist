@@ -1,7 +1,7 @@
 import type { LocalImageService } from "astro";
 import sharpService from "astro/assets/services/sharp";
 import { shorthash } from "astro/runtime/server/shorthash.js";
-import { mkdirSync, readFileSync, writeFileSync } from "fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import sharp from "sharp";
 
 const CACHE_PATH = "./node_modules/.astro/placeholders/";
@@ -30,7 +30,7 @@ function getBitmapDimensions(
 	return { width: Math.round(bitmapWidth), height: Math.round(bitmapHeight) };
 }
 
-type ImageMetadataInternal = ImageMetadata & {
+export type ImageMetadataInternal = ImageMetadata & {
 	fsPath: string;
 };
 

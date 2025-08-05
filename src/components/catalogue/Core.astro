@@ -96,6 +96,7 @@ const pageLenth = 30;
 
 <script>
 	import { QuickScore } from "quick-score";
+	import { thumbHashToDataURL } from "thumbhash";
 
 	const VERSION = 3;
 	const latestHash = document
@@ -311,7 +312,13 @@ const pageLenth = 30;
 				lower_case_title: title.toLowerCase(),
 				rating: rating,
 				date: date ?? 0,
-				placeholder: placeholder,
+				placeholder: thumbHashToDataURL(
+					new Uint8Array(
+						atob(placeholder)
+							.split("")
+							.map((c) => c.charCodeAt(0)),
+					),
+				),
 				cover: cover,
 				author: author,
 			});

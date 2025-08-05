@@ -3,11 +3,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import type { CatalogueType } from "$data/catalogue";
 import type { APIRoute } from "astro";
-import { getConfiguredImageService, getImage } from "astro:assets";
+import { getImage } from "astro:assets";
 import { getCollection } from "astro:content";
 import pkg from "deterministic-object-hash";
+import sharp from "sharp";
 import type { CatalogueRating } from "src/content/config";
-import type { LocalImageServiceWithPlaceholder } from "src/imageService";
+import type { ImageMetadataInternal } from "src/imageService";
+import * as ThumbHash from "thumbhash";
 
 const games = await getCollection("games");
 const movies = await getCollection("movies");
@@ -31,15 +33,17 @@ async function getCoverAndPlaceholder(cover: ImageMetadata) {
 	return await Promise.all([
 		getImage({ src: cover, width: 240 }),
 		(async () => {
-			const imageService = (await getConfiguredImageService()) as LocalImageServiceWithPlaceholder;
-			const placeholderURL = await imageService.generatePlaceholder(
-				cover,
-				cover.width,
-				cover.height,
-			);
-			return placeholderURL;
+			return await thumbhashPlaceholder(cover);
 		})(),
 	]);
+}
+
+async function thumbhashPlaceholder(cover: ImageMetadata) {
+	const image = sharp((cover as ImageMetadataInternal).fsPath).resize(100, 100, { fit: "inside" });
+	const { data, info } = await image.ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+	const binaryThumbHash = ThumbHash.rgbaToThumbHash(info.width, info.height, data);
+	const thumbHashToBase64 = Buffer.from(binaryThumbHash).toString("base64");
+	return thumbHashToBase64;
 }
 
 // TODO: Type this properly

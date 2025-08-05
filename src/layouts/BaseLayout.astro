@@ -29,20 +29,31 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 		<meta name="generator" content={Astro.generator} />
 		<title>{title ? `${title} - Erika` : "Erika"}</title>
 
+		{
+			preloadCatalogue && (
+				<link
+					rel="preload"
+					href="/catalogue/content.json"
+					as="fetch"
+					fetchpriority="high"
+					crossorigin
+				/>
+			)
+		}
+
 		<link
 			rel="preload"
 			href="/assets/fonts/anuphan.woff2"
 			as="font"
 			type="font/woff2"
+			fetchpriority="low"
 			crossorigin
 		/>
 
-		{preloadCatalogue && <link rel="preconnect" href="/api/catalogue" crossorigin />}
-
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="description" content={description ? description : "My personal website"} />
-		<meta property="og:title" content={title ? title : "Erika"} />
-		<meta property="og:description" content={description ? description : "My personal website"} />
+		<meta name="description" content={description ?? "My personal website"} />
+		<meta property="og:title" content={title ?? "Erika"} />
+		<meta property="og:description" content={description ?? "My personal website"} />
 
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="erika.florist" />

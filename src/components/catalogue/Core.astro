@@ -118,6 +118,8 @@ const pageLenth = 30;
 	const pageSize = 30;
 	let isLoading = false;
 
+	let wasUpgraded = false;
+
 	dbOpenRequest.onerror = (event) => {
 		console.error(
 			"Failed to open database, resetting database..",
@@ -136,39 +138,45 @@ const pageLenth = 30;
 		};
 		deleteRequest.onerror = (e) => {
 			console.error("Failed to delete database", (e.target as IDBRequest).error);
+			errorUI();
 		};
 	};
 
 	dbOpenRequest.onsuccess = () => {
 		db = dbOpenRequest.result;
 
+		// Skip version check if database was just upgraded
+		if (wasUpgraded) {
+			wasUpgraded = false;
+			return;
+		}
+
 		// Check if database has data before building UI
 		const transaction = db.transaction("content", "readonly");
 		const objectStore = transaction.objectStore("content");
 
 		// Check if database is empty first
-		const countRequest = objectStore.count();
-		countRequest.onsuccess = () => {
-			if (countRequest.result > 0) {
-				// Check version
-				const versionCheck = objectStore.get("version");
-				versionCheck.onsuccess = () => {
-					if (!versionCheck.result || versionCheck.result.hash !== latestHash) {
-						clearAndSeedDatabase();
-					} else {
-						buildUI();
-					}
-				};
-				versionCheck.onerror = () => {
-					clearAndSeedDatabase();
-				};
+		// Check version and completion status
+		const versionCheck = objectStore.get("version");
+		versionCheck.onsuccess = () => {
+			if (
+				!versionCheck.result ||
+				versionCheck.result.hash !== latestHash ||
+				!versionCheck.result.complete
+			) {
+				clearAndSeedDatabase();
+			} else {
+				buildUI();
 			}
+		};
+		versionCheck.onerror = () => {
+			clearAndSeedDatabase();
 		};
 	};
 
 	dbOpenRequest.onupgradeneeded = (event) => {
 		db = (event.target as IDBOpenDBRequest).result;
-
+		wasUpgraded = true; // Set flag to skip version check in onsuccess
 		resetAndCreateDB();
 	};
 
@@ -263,9 +271,17 @@ const pageLenth = 30;
 	};
 
 	async function seedDatabase() {
-		const content = (await fetch("/catalogue/content.json").then((response) =>
-			response.json(),
-		)) as CatalogueData;
+		let content: CatalogueData;
+		try {
+			// Fetch the content from the JSON file
+			content = (await fetch("/catalogue/content.json").then((response) =>
+				response.json(),
+			)) as CatalogueData;
+		} catch (error) {
+			console.error("Failed to fetch catalogue content", error);
+			errorUI();
+			return;
+		}
 
 		const contentObjectStore = db.transaction("content", "readwrite").objectStore("content");
 		const [version, data] = content;
@@ -274,10 +290,13 @@ const pageLenth = 30;
 			id: "version",
 			hash: version,
 			timestamp: Date.now(),
+			complete: false, // Mark as incomplete initially
 		});
 
 		versionRequest.onerror = (e) => {
 			console.error("Failed to add version", (e.target as IDBRequest).error);
+			errorUI();
+			return;
 		};
 
 		data.forEach((item) => {
@@ -299,11 +318,44 @@ const pageLenth = 30;
 
 			addRequest.onerror = (e) => {
 				console.error("Failed to add item", id, (e.target as IDBRequest).error);
+				errorUI();
+				return;
 			};
 		});
 
 		contentObjectStore.transaction.oncomplete = () => {
-			buildUI();
+			// Mark seeding as complete
+			const updateTransaction = db.transaction("content", "readwrite");
+			const updateObjectStore = updateTransaction.objectStore("content");
+
+			const getVersionRequest = updateObjectStore.get("version");
+			getVersionRequest.onsuccess = () => {
+				const versionRecord = getVersionRequest.result;
+				if (versionRecord) {
+					versionRecord.complete = true;
+					const updateRequest = updateObjectStore.put(versionRecord);
+					updateRequest.onsuccess = () => {
+						buildUI();
+					};
+					updateRequest.onerror = (e) => {
+						console.error("Failed to mark seeding as complete", (e.target as IDBRequest).error);
+						errorUI();
+						return;
+					};
+				} else {
+					console.error("Version record not found when trying to mark complete");
+					errorUI();
+					return;
+				}
+			};
+			getVersionRequest.onerror = (e) => {
+				console.error(
+					"Failed to get version record for completion update",
+					(e.target as IDBRequest).error,
+				);
+				errorUI();
+				return;
+			};
 		};
 	}
 
@@ -473,6 +525,12 @@ const pageLenth = 30;
 		currentPage = 0;
 		allItems = [];
 		buildUI();
+	}
+
+	function errorUI() {
+		content.innerHTML =
+			'<p class="w-full text-center my-6">Failed to load catalogue. If this happens even after refreshing the page, please contact me at <a href="mailto:contact@erika.florist">contact@erika.florist</a>.</p>';
+		isLoading = false;
 	}
 
 	searchInput.addEventListener("input", resetAndBuildUI);

@@ -466,6 +466,7 @@ const pageLenth = 30;
 			entry.className = "w-[calc(50%-1rem)] sm:w-[calc(20%-1rem)]";
 			entry.innerHTML = `
             <div class="relative">
+              <a href="/catalogue/${item.type}s/${item.id.replace(`-${item.type}`, "")}">
                 <img class="max-w-full h-auto aspect-[3/4.3] object-cover"
                      width="240" height="360"
                      src="${item.cover}"
@@ -477,6 +478,7 @@ const pageLenth = 30;
                 <span class="absolute top-0 right-0 pr-[0.15rem] pl-[0.2rem] bg-black/5 rounded-bl-lg select-none">
                     ${getRatingEmoji(item.rating)}
                 </span>
+                </a>
             </div>
             <h4 class="m-0 leading-tight">
                 ${item.title}

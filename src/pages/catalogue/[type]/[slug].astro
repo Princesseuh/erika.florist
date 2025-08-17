@@ -20,10 +20,24 @@ export const getStaticPaths = (async () => {
 	}));
 }) satisfies GetStaticPaths;
 
-const { entry, metadata } = Astro.props;
+const { entry } = Astro.props;
 const { Content } = await render(entry);
 
 const processedCover = await getImage({ src: entry.data.cover, width: 240 });
+
+function getVerbByType() {
+	switch (entry.data.type) {
+		case "game":
+			return "Played";
+		case "movie":
+		case "show":
+			return "Watched";
+		case "book":
+			return "Read";
+		default:
+			return "Unknown";
+	}
+}
 ---
 
 <BaseLayout>
@@ -40,12 +54,21 @@ const processedCover = await getImage({ src: entry.data.cover, width: 240 });
 			>
 			<section class="w-3/4">
 				<h2 class="m-0">{entry.data.title}</h2>
-				<span>{new Date(new Date(0).setUTCSeconds(1607472000)).getUTCFullYear()} - {}</span>
-				{JSON.stringify(entry.data)}
-				{JSON.stringify(metadata)}
+				{
+					entry.data.finishedDate !== "N/A" && (
+						<span>
+							{getVerbByType()} on{" "}
+							{new Date(entry.data.finishedDate).toLocaleDateString("en-US", {
+								year: "numeric",
+								month: "long",
+								day: "numeric",
+							})}
+						</span>
+					)
+				}
+				<h2>Thoughts</h2>
+				<Content />
 			</section>
 		</header>
-		<h2>Thoughts</h2>
-		<Content />
 	</article>
 </BaseLayout>

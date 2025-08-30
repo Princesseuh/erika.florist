@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1542326400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 1617,
+      "name": "Game Freak",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    }
+  ]
+}

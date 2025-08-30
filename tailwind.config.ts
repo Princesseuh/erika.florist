@@ -213,7 +213,7 @@ export default {
 						marginBottom: "1rem",
 						padding: "0.25rem",
 						paddingLeft: "1rem",
-						"@apply bg-accent-valencia bg-opacity-10": {},
+						"@apply bg-accent-valencia": {},
 
 						borderLeft: "5px solid",
 						borderColor: theme("colors.accent-valencia"),

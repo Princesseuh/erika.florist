@@ -1,6 +1,7 @@
 # build output
 dist
 target
+letterboxd-export.csv
 
 # dependencies
 node_modules

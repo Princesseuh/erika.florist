@@ -1,0 +1,27 @@
+{
+  "first_release_date": 750211200,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 117,
+      "abbreviation": "Philips CDI"
+    }
+  ],
+  "companies": [
+    {
+      "id": 4510,
+      "name": "Animation Magic",
+      "role": "developer"
+    },
+    {
+      "id": 1037,
+      "name": "Philips Interactive Media",
+      "role": "publisher"
+    }
+  ]
+}

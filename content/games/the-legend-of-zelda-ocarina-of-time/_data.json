@@ -1,52 +1,49 @@
 {
-  "first_release_date": 911606400,
-  "genres": [
-    {
-      "id": 9,
-      "name": "Puzzle"
-    },
-    {
-      "id": 31,
-      "name": "Adventure"
-    }
-  ],
-  "platforms": [
-    {
-      "id": 5,
-      "abbreviation": "Wii"
-    },
-    {
-      "id": 4,
-      "abbreviation": "N64"
-    },
-    {
-      "id": 416
-    },
-    {
-      "id": 41,
-      "abbreviation": "WiiU"
-    }
-  ],
-  "companies": [
-    {
-      "id": 421,
-      "name": "Nintendo EAD",
-      "role": "developer"
-    },
-    {
-      "id": 70,
-      "name": "Nintendo",
-      "role": "publisher"
-    },
-    {
-      "id": 812,
-      "name": "Gradiente",
-      "role": "publisher"
-    },
-    {
-      "id": 5163,
-      "name": "iQue",
-      "role": "publisher"
-    }
-  ]
+	"first_release_date": 911606400,
+	"genres": [
+		{
+			"id": 9,
+			"name": "Puzzle"
+		},
+		{
+			"id": 31,
+			"name": "Adventure"
+		}
+	],
+	"platforms": [
+		{
+			"id": 5,
+			"abbreviation": "Wii"
+		},
+		{
+			"id": 4,
+			"abbreviation": "N64"
+		},
+		{
+			"id": 41,
+			"abbreviation": "WiiU"
+		}
+	],
+	"companies": [
+		{
+			"id": 421,
+			"name": "Nintendo EAD",
+			"role": "developer"
+		},
+		{
+			"id": 70,
+			"name": "Nintendo",
+			"role": "publisher"
+		},
+		{
+			"id": 812,
+			"name": "Gradiente",
+			"role": "publisher"
+		},
+		{
+			"id": 5163,
+			"name": "iQue",
+			"role": "publisher"
+		}
+	]
 }

@@ -1,10 +1,15 @@
 {
 	"title": "Young Royals",
-	"id": "tt14664414",
+	"id": 125910,
 	"plot": "Prince Wilhelm adjusts to life at his prestigious new boarding school, Hillerska, but following his heart proves more challenging than anticipated.",
 	"releaseDate": "2021-07-01",
 	"runtimeStr": null,
 	"year": "2021",
-	"companies": ["Nexiko AB"],
-	"genres": ["Drama", "Romance"]
+	"companies": [
+		"Nexiko AB"
+	],
+	"genres": [
+		"Drama",
+		"Romance"
+	]
 }

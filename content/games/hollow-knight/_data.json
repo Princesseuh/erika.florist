@@ -1,0 +1,54 @@
+{
+  "first_release_date": 1487894400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 3,
+      "abbreviation": "Linux"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    },
+    {
+      "id": 41,
+      "abbreviation": "WiiU"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 7263,
+      "name": "Team Cherry",
+      "role": "developer"
+    }
+  ]
+}

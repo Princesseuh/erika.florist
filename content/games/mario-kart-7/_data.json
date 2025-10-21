@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1322784000,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 37,
+      "abbreviation": "3DS"
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "developer"
+    },
+    {
+      "id": 1103,
+      "name": "Nintendo EAD Software Development Group No.1",
+      "role": "developer"
+    },
+    {
+      "id": 5163,
+      "name": "iQue",
+      "role": "publisher"
+    }
+  ]
+}

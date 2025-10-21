@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1479168000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 170,
+      "abbreviation": "Stadia"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    }
+  ],
+  "companies": [
+    {
+      "id": 38,
+      "name": "Ubisoft Montreal",
+      "role": "developer"
+    },
+    {
+      "id": 104,
+      "name": "Ubisoft Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

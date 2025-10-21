@@ -1,0 +1,87 @@
+---
+title: "Is the 3DS good in 2025?"
+tagline: "Double the screen for double the complaints"
+date: 2025-08-01
+tags: ["gaming"]
+slug: "3ds-review"
+---
+
+Everywhere online, you'll see propaganda that the 3DS (and all of its other versions, XL or not, New or not, 3D or not) is this ultimate gaming handheld machine, offering you the absolutely tempting experience of playing games from the original Gameboy to the New 3DS in their (mostly) original glory in a small, accessible, portable, factor.
+
+And honestly, well, I got charmed by that and decided to acquire one. More precisely, I got a white lavender New 2DS XL.
+
+A few weeks later, how we feeling? Well, honestly, alright... but not that great.
+
+{{ image
+src="./3ds-lavender.jpg"
+alt="A New 2DS XL. The console is folded open, but the system is off. The buttons are lavender, the console itself is white."
+}}
+I got this guy
+{{ /image }}
+
+## The hardware kinda sucks
+
+The New 3DS boast a 804 MHz quad-core ARM CPU - an absolutely beast of a unit if you ask me, more than capable of running the catalogue of the 3DS itself and its predecessor.. except not really.
+
+On a vanilla New 3DS, you can't use this new improved CPU outside of the few New 3DS games. On a hacked 3DS albeit a bit cumbersome to enable every time, you can, however some games won't like it or are still laggy even with it (see: Pokémon games).
+
+DS games also don't benefit from this hardware improvement, resulting in certain titles being quite noticeably (again, the Pokémon games) laggy.
+
+### The screens are really bad
+
+While the CPU has certainly gotten a massive upgrade in the New 3DS, the screens are the same across all version of the 3DS and are still absolutely terrible. The top screen is 400x240, a frankly poor resolution, but at least an upgrade from the 256x192 of the initial Nintendo DS or Nintendo DSi.
+
+Additionally, 3DSes _randomly_ sometimes have double TN panels, unlike the DSi XL which always has two IPS screens. This results in the colors and viewing angles of the 3DS often being pretty bad and is either way a far cry from the 90hz OLED panel your phone might have nowadays.
+
+The worst crime of it all is while playing DS games, since the screen resolution isn't quite a 2x, the upscaling isn't perfect and you're left with two choices:
+
+- Play an absolutely blurry mess (with black borders on the side due to DS games not being widescreen)
+- Disable the upscaling and play with massive black borders (also with additional black borders on the side)
+
+On a hacked 3DS, you can install cheats and patches to get widescreen support on some games and you can mess around with some settings to somewhat improve the upscaling through filters, but it still honestly looks bad, especially for games in pixel art.
+
+### Everything else is not that great either honestly
+
+Grab bag of random complaints about the 3DS hardware:
+
+- The battery is subpar. Even on a New XL console (which does feature a slightly better battery than the base 3DS), you can generally expect only maximum 3-4 hours of playing before needing to charge. This of course gets worse if you also "overclock" using the New 3DS mode or are playing New 3DS games.
+- Wi-Fi is slow, and the browser is unusable for anything but the most basic of tasks. Everything related to the internet does not feel very good.
+- Loading times, installation speeds etc are all very slow. Not sure if it's the SD card reader being slow or something with the system itself, but installing games will often take a very long time.
+- The speakers are noticeably worse than the DSi XL - which didn't have that great of speakers either so them being worse is a feat.
+- The charging port is proprietary and official chargers are not sold anymore. Soldering a USB-C port and/or buying charging cables that can be plugged into common chargers are both possible fixes here, but both come at additional cost and are cumbersome to think about.
+
+## The outside isn't amazing either
+
+3DSes haven't been able to be acquired "the normal way" in a long time now, so they're generally rather pricy. Unless you're lucky, you might easily be spending upward to 300+ USD$ to acquire even a used one (depending on the specific model), without its box or even without a charger or stylus.
+
+The New 3DS XL, the most expensive model could be acquired for 200$ at release, sometimes even including a game with it, a much more reasonable price, even more so considering it's for a new shiny console in its prime.
+
+The console does not feel like 300+ USD$. I heard that this is better on the New 3DS XL compared to the New 2DS XL but overall the console feels fragile and cheap, especially the screen hinge.
+
+## The software is made by Nintendo
+
+I don't mind the main home screen that much on the 3DS, especially on a homebrewed console there's a lot of customization available (I installed this gorgeous Utena theme, amazing stuff) and it's workable. But, there's a few situations with the OS that are annoying:
+
+- The console takes a long time to start up, which isn't super convenient for something you want to play there and there on the go. There is a Sleep Mode available, but due to the poor battery, it's hard to justify using it.
+- In certain softwares or in DS games, it also takes a long time to shutdown!
+- Due to the slow loading speed, in general starting or switching between games takes a while. This is even worse for DS games which need to be started in this special DS mode, essentially causing you to suffer through long boot times twice before you can even suffer once from the slow game start up.
+- The eShop is dead. You can still download games you previously bought, but you can't buy new ones.
+- The console is region-locked (... but you can get over that with homebrew)
+
+## Okay, but, some things are good, right?
+
+Yes! The GB, GBC, GBA, DS and 3DS (on virtual console for the former three) combined or not have an amazing catalogue of games. Even if you ignore the Mario, Pokémon, etc classics, there's a lot of unique, very fun games you can play.
+
+Some of them have been ported (two notables DS ones being Ace Attorney and 999) or have modern remasters (ex: Ghost Trick), but some games remain on the platform, and sometimes are even actually best played on the console (such as the Wario Ware games or Hotel Dusk) over other options.
+
+The hacking community is also very active and there's a fair amount of stuff to explore. There's absolutely amazing mods for various games that can massively enhance the experience such as [CTGP-7](https://ctgp-7.github.io) for Mario Kart 7 or [Project Restoration](https://restoration.zora.re) for Majora's Mask 3D.
+
+{{ dinkus /}}
+
+... But it's really not much you can't get elsewhere. Nowadays, all the consoles you can play natively on the 3DS have emulators that are more than good enough to play all these games.
+
+And, you'll get better performance, better graphics, save states, and other emulators conveniences without necessarily losing on the portability either if playing on your phone or a Steamdeck (or similar). With a folding phone, you may even emulate the double screen feeling, ha.
+
+Some people will mention to you that the 3DS can also do things like watch movies and videos or listen to music, but not only can you do all of that on your phone, it'll also always be a much better experience than on the 3DS. No one is really into watching movies on a 400x240 screen, surely.
+
+My final verdict is: I still think getting a 3DS nowadays is neat, but I'd only really suggest it if you can get one cheap.

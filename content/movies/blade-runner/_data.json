@@ -1,0 +1,18 @@
+{
+  "title": "Blade Runner",
+  "tagline": "Man has made his match... now it's his problem.",
+  "id": 78,
+  "overview": "In the smog-choked dystopian Los Angeles of 2019, blade runner Rick Deckard is called out of retirement to terminate a quartet of replicants who have escaped to Earth seeking their creator for a way to extend their short life spans.",
+  "releaseDate": "1982-06-25",
+  "runtime": 118,
+  "companies": [
+    "Shaw Brothers",
+    "The Ladd Company",
+    "Warner Bros. Pictures"
+  ],
+  "genres": [
+    "Science Fiction",
+    "Drama",
+    "Thriller"
+  ]
+}

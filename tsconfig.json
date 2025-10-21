@@ -1,15 +1,27 @@
 {
-	"extends": "astro/tsconfigs/strictest",
 	"compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
 		"allowJs": true,
-		"baseUrl": ".",
-		"paths": {
-			"$components/*": ["src/components/*"],
-			"$data/*": ["src/data/*"],
-			"$layouts/*": ["src/layouts/*"],
-			"$utils": ["src/utils/index.ts"]
-		}
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false
 	},
-	"include": [".astro/types.d.ts", "**/*", "**/*.astro"],
 	"exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist", "target"]
 }

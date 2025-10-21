@@ -1,0 +1,55 @@
+{
+  "first_release_date": 1705536000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 104,
+      "name": "Ubisoft Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 702,
+      "name": "Ubisoft Montpellier",
+      "role": "developer"
+    }
+  ]
+}

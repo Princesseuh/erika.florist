@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1750032000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 21879,
+      "name": "Aggro Crab Games",
+      "role": "developer"
+    },
+    {
+      "id": 9453,
+      "name": "Landfall Games",
+      "role": "developer"
+    }
+  ]
+}

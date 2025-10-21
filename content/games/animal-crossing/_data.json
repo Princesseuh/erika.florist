@@ -1,0 +1,27 @@
+{
+  "first_release_date": 1032134400,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 21,
+      "abbreviation": "NGC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 421,
+      "name": "Nintendo EAD",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    }
+  ]
+}

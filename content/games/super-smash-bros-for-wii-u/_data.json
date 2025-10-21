@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1416528000,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 41,
+      "abbreviation": "WiiU"
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 876,
+      "name": "Sora",
+      "role": "developer"
+    },
+    {
+      "id": 22721,
+      "name": "Bandai Namco Studios",
+      "role": "developer"
+    }
+  ]
+}

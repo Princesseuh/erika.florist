@@ -1,0 +1,44 @@
+{
+  "first_release_date": 1486425600,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 9,
+      "abbreviation": "PS3"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    }
+  ],
+  "companies": [
+    {
+      "id": 858,
+      "name": "Koei Tecmo Games",
+      "role": "publisher"
+    },
+    {
+      "id": 769,
+      "name": "Team NINJA",
+      "role": "developer"
+    },
+    {
+      "id": 10100,
+      "name": "Sony Interactive Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

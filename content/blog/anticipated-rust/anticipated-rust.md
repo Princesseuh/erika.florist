@@ -1,0 +1,106 @@
+---
+title: "Features I'm looking forward to in Rust"
+tagline: "Something about waiting for godot, look I don't know man"
+tags: ["rust", "programming"]
+date: 2025-09-23
+---
+
+BigRustFan23 here: I genuinely enjoy my time programming in Rust. For every reason that has already been said: Incredibly empowering, great docs, great tooling etc.
+
+But, as my projects and ambitions grow bigger, I keep hitting a few unstable / currently not implemented features. In this article, I'll list which ones and why I'd like to see them.
+
+> Latest release was 1.89.0 when this was written.
+
+## In Rust itself
+
+### Permit Impl Trait in type aliases
+
+Tracking issue: [rust#63063](https://github.com/rust-lang/rust/issues/63063)
+
+You currently can't do something like this:
+
+```rust
+type PageResult = impl Into<RenderResult>
+```
+
+which would be useful to provide more concise signatures in traits especially, where users have to retype the signature from your trait. In a similar vein, [trait aliases](https://github.com/rust-lang/rust/issues/41517) would also help with similar goals in certain contexts.
+
+### Bounds on generic parameters in type aliases are not enforced
+
+Tracking issue: [rust#112792](https://github.com/rust-lang/rust/issues/112792)
+
+The following example compiles and runs just fine, even though &str does not implement `Into<i32>` (or `i32` does not implement `From<&str>`)
+
+```rust
+type PositiveNumber<T: Into<i32>> = T;
+
+fn main() {
+    let something: PositiveNumber<&str> = "Hello";
+}
+```
+
+In general this ends up not being a big problem because the expected bound will end up getting enforced elsewhere and there are plenty of workarounds (such as using a newtype instead of just a type alias), but would still be neat.
+
+### Associated type defaults
+
+Tracking issue: [rust#29661](https://github.com/rust-lang/rust/issues/29661)
+
+[Associated types](https://doc.rust-lang.org/rust-by-example/generics/assoc_items/types.html) cannot be provided defaults, as such adding them to a trait currently requires users to always specify them, even if they wanted some sort of default value.
+
+For example, in the following trait:
+
+```rust
+trait Greeter {
+    type Message: Into<String>;
+
+    fn greet(&self) -> Self::Message;
+}
+```
+
+Users always needs to specify the type of `Message` when implementing the trait:
+
+```rust
+struct Hello;
+
+impl Greeter for Hello {
+    type Message = &'static str;
+
+    fn greet(&self) -> Self::Message {
+        "Hello, world!"
+    }
+}
+```
+
+But, realistically, a fair percent of the users of the trait will probably want the same thing and so having to specify the type every time is cumbersome and verbose, especially if there are multiple types or generics are involved and stuff.
+
+### Entry APIs for HashSet
+
+Tracking issue: [rust#60896](https://github.com/rust-lang/rust/issues/60896)
+
+The Entry API on HashMap allows for quite ergonomic handling of already existing values, in addition to avoiding sometimes needing double or triple lookups to return stuff.
+
+Perhaps I'm architecting my code wrong, but I feel like notably `get_or_insert` for HashSet would make a huge difference on my code.
+
+## In rustfmt
+
+### Format Rust code inside Markdown
+
+Tracking issue: [rustfmt#2036](https://github.com/rust-lang/rustfmt/issues/2036)
+
+Would be very useful to ensure Rust code blocks (such as the one in this article) are properly formatted.
+
+## In rust-analyzer
+
+### Organize Imports
+
+Tracking issue: [rust-analyzer#5131](https://github.com/rust-lang/rust-analyzer/issues/5131)
+
+While [rustfmt does have the ability to reorder imports](https://rust-lang.github.io/rustfmt/?version=v1.8.0&search=#reorder_imports), rust-analyzer, typically extremely useful and surprisingly complete and meticulous at times lacks support for the [organizeImports code action](https://code.visualstudio.com/docs/typescript/typescript-refactoring#_organize-imports).
+
+With this, triggering the action through the command palette (or on save if configured to do so), rust-analyzer would automatically remove unused imports. I'll note that it is somewhat possible to do this already, by selecting all the imports, pressing `CTRL+.` and manually clicking a "Remove all unused imports" option, but it's a bit cumbersome.
+
+{{ dinkus /}}
+
+Rust is often criticised for its complex syntax, and asking for more features might make it seems like it'd make things even worse. However, I actually believe that giving library authors the features that allow them to create APIs with less boilerplate would help a lot with this perception.
+
+Until then, I'm using nightly (I'm not)

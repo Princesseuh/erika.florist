@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1250294400,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 14268,
+      "name": "Twilight Frontier",
+      "role": "developer"
+    },
+    {
+      "id": 9378,
+      "name": "Team Shanghai Alice",
+      "role": "developer"
+    }
+  ]
+}

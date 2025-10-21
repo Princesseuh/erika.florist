@@ -1,0 +1,69 @@
+{
+  "first_release_date": 1560816000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 170,
+      "abbreviation": "Stadia"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 39,
+      "abbreviation": "iOS"
+    },
+    {
+      "id": 41,
+      "abbreviation": "WiiU"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 3226,
+      "name": "Armature Studio",
+      "role": "publisher"
+    },
+    {
+      "id": 445,
+      "name": "505 Games",
+      "role": "publisher"
+    },
+    {
+      "id": 14304,
+      "name": "ArtPlay",
+      "role": "developer"
+    },
+    {
+      "id": 9791,
+      "name": "DICO Co., Ltd.",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1745452800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    }
+  ],
+  "companies": [
+    {
+      "id": 55283,
+      "name": "Sandfall Interactive",
+      "role": "developer"
+    },
+    {
+      "id": 37893,
+      "name": "Kepler Interactive",
+      "role": "publisher"
+    }
+  ]
+}

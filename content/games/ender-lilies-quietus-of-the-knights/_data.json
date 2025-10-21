@@ -1,0 +1,60 @@
+{
+  "first_release_date": 1624233600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 31125,
+      "name": "Live Wire",
+      "role": "developer"
+    },
+    {
+      "id": 31126,
+      "name": "adglobe",
+      "role": "developer"
+    },
+    {
+      "id": 31127,
+      "name": "Binary Haze Interactive",
+      "role": "publisher"
+    }
+  ]
+}

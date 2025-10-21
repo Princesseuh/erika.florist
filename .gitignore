@@ -1,6 +1,7 @@
 # build output
 dist
 target
+letterboxd-export.csv
 
 # dependencies
 node_modules
@@ -17,20 +18,11 @@ yarn-error.log*
 # macOS-specific files
 .DS_Store
 
-# Generated images (we'll cache those on Netlify)
-static/assets/socials/*
-static/assets/images/*
-src/assets/placeholders/*
-
-apps/erika.florist/src/pages/test.astro
-
 # Local Netlify folder
 .netlify
 
-.astro
 .env
 .vercel
-api/cataloguedb.db
 
 .cargo/config.toml
 .cargo/_config.toml

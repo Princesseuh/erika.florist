@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1201737600,
+  "genres": [
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 9,
+      "abbreviation": "PS3"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 12,
+      "abbreviation": "X360"
+    }
+  ],
+  "companies": [
+    {
+      "id": 660,
+      "name": "Capcom Production Studio 1",
+      "role": "developer"
+    },
+    {
+      "id": 37,
+      "name": "Capcom",
+      "role": "publisher"
+    }
+  ]
+}

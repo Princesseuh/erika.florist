@@ -1,0 +1,22 @@
+{
+  "first_release_date": 1574985600,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 37,
+      "abbreviation": "3DS"
+    }
+  ],
+  "companies": [
+    {
+      "id": 42276,
+      "name": "PabloMK7",
+      "role": "developer"
+    }
+  ]
+}

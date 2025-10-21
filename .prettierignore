@@ -3,5 +3,4 @@ dist
 pnpm-lock.yaml
 target
 .vercel
-.astro
 **/_data.json

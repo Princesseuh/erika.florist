@@ -1,0 +1,70 @@
+{
+  "first_release_date": 1453939200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 46,
+      "abbreviation": "Vita"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 5325,
+      "name": "Sekai Project",
+      "role": "publisher"
+    },
+    {
+      "id": 6379,
+      "name": "CIRCLE Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 13768,
+      "name": "CreSpirit",
+      "role": "developer"
+    },
+    {
+      "id": 4091,
+      "name": "PQube",
+      "role": "publisher"
+    },
+    {
+      "id": 11255,
+      "name": "Mediascape",
+      "role": "publisher"
+    }
+  ]
+}

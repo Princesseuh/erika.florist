@@ -1,0 +1,16 @@
+{
+  "title": "Star Wars: Episode I - The Phantom Menace",
+  "tagline": "Every saga has a beginning.",
+  "id": 1893,
+  "overview": "Anakin Skywalker, a young slave strong with the Force, is discovered on Tatooine. Meanwhile, the evil Sith have returned, enacting their plot for revenge against the Jedi.",
+  "releaseDate": "1999-05-19",
+  "runtime": 136,
+  "companies": [
+    "Lucasfilm Ltd."
+  ],
+  "genres": [
+    "Adventure",
+    "Action",
+    "Science Fiction"
+  ]
+}

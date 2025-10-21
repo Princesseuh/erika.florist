@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1713225600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 38884,
+      "name": "Dapper Dog Digital",
+      "role": "developer"
+    },
+    {
+      "id": 39157,
+      "name": "Ravenage Games",
+      "role": "publisher"
+    }
+  ]
+}

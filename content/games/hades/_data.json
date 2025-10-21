@@ -1,0 +1,72 @@
+{
+  "first_release_date": 1600300800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 39,
+      "abbreviation": "iOS"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 928,
+      "name": "Supergiant Games",
+      "role": "developer"
+    },
+    {
+      "id": 27224,
+      "name": "Netflix",
+      "role": "publisher"
+    },
+    {
+      "id": 9691,
+      "name": "Secret 6",
+      "role": "publisher"
+    }
+  ]
+}

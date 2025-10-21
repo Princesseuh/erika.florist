@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1743033600,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    }
+  ],
+  "companies": [
+    {
+      "id": 23313,
+      "name": "CE-Asia",
+      "role": "publisher"
+    },
+    {
+      "id": 18447,
+      "name": "Sense Games",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1745280000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    }
+  ],
+  "companies": [
+    {
+      "id": 16565,
+      "name": "Bethesda Softworks",
+      "role": "publisher"
+    },
+    {
+      "id": 794,
+      "name": "Virtuos",
+      "role": "developer"
+    }
+  ]
+}

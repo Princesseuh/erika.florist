@@ -1,0 +1,52 @@
+{
+  "first_release_date": 1437609600,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 52,
+      "abbreviation": "Arcade"
+    },
+    {
+      "id": 9,
+      "abbreviation": "PS3"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 46,
+      "abbreviation": "Vita"
+    }
+  ],
+  "companies": [
+    {
+      "id": 1218,
+      "name": "Arc System Works",
+      "role": "developer"
+    },
+    {
+      "id": 6059,
+      "name": "French Bread",
+      "role": "developer"
+    },
+    {
+      "id": 2103,
+      "name": "Aksys Games",
+      "role": "publisher"
+    }
+  ]
+}

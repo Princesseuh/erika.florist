@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1410566400,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 37,
+      "abbreviation": "3DS"
+    }
+  ],
+  "companies": [
+    {
+      "id": 3958,
+      "name": "Bandai Namco Games",
+      "role": "developer"
+    },
+    {
+      "id": 876,
+      "name": "Sora",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    }
+  ]
+}

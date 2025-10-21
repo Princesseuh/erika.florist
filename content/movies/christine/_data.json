@@ -1,10 +1,17 @@
 {
 	"title": "Christine",
-	"id": "tt4666726",
+	"id": 339405,
 	"plot": "The story of Christine Chubbuck, a 1970s TV reporter struggling with depression and professional frustrations as she tries to advance her career.",
 	"releaseDate": "2016-10-14",
 	"runtimeStr": "1h 59min",
 	"year": "2016",
-	"companies": ["BorderLine Films", "Fresh Jade", "The Wonder Club"],
-	"genres": ["Biography", "Drama"]
+	"companies": [
+		"BorderLine Films",
+		"Fresh Jade",
+		"The Wonder Club"
+	],
+	"genres": [
+		"Biography",
+		"Drama"
+	]
 }

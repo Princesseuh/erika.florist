@@ -1,0 +1,20 @@
+{
+  "first_release_date": 1743984000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": []
+}

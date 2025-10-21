@@ -1,0 +1,45 @@
+{
+  "first_release_date": 916876800,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 5,
+      "abbreviation": "Wii"
+    },
+    {
+      "id": 4,
+      "abbreviation": "N64"
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 762,
+      "name": "HAL Laboratory",
+      "role": "developer"
+    },
+    {
+      "id": 812,
+      "name": "Gradiente",
+      "role": "publisher"
+    },
+    {
+      "id": 5163,
+      "name": "iQue",
+      "role": "publisher"
+    }
+  ]
+}

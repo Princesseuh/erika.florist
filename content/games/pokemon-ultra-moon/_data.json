@@ -1,0 +1,46 @@
+{
+  "first_release_date": 1510876800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 37,
+      "abbreviation": "3DS"
+    }
+  ],
+  "companies": [
+    {
+      "id": 2850,
+      "name": "Nintendo of America",
+      "role": "publisher"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 4034,
+      "name": "Nintendo of Europe",
+      "role": "publisher"
+    },
+    {
+      "id": 1074,
+      "name": "The Pokémon Company",
+      "role": "publisher"
+    },
+    {
+      "id": 1617,
+      "name": "Game Freak",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1631577600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    }
+  ],
+  "companies": [
+    {
+      "id": 19,
+      "name": "Arkane Studios",
+      "role": "developer"
+    },
+    {
+      "id": 16565,
+      "name": "Bethesda Softworks",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
 	"title": "Kim's Convenience",
-	"id": "tt5912064",
+	"id": 68106,
 	"plot": "The misadventures of a Korean-Canadian family running a convenience store.",
 	"releaseDate": "2016-10-11",
 	"runtimeStr": null,
@@ -10,5 +10,7 @@
 		"Soulpepper Theatre Company",
 		"Strada Films"
 	],
-	"genres": ["Comedy"]
+	"genres": [
+		"Comedy"
+	]
 }

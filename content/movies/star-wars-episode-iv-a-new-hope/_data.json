@@ -1,0 +1,17 @@
+{
+  "title": "Star Wars",
+  "tagline": "A long time ago in a galaxy far, far away...",
+  "id": 11,
+  "overview": "Princess Leia is captured and held hostage by the evil Imperial forces in their effort to take over the galactic Empire. Venturesome Luke Skywalker and dashing captain Han Solo team together with the loveable robot duo R2-D2 and C-3PO to rescue the beautiful princess and restore peace and justice in the Empire.",
+  "releaseDate": "1977-05-25",
+  "runtime": 121,
+  "companies": [
+    "Lucasfilm Ltd.",
+    "20th Century Fox"
+  ],
+  "genres": [
+    "Adventure",
+    "Action",
+    "Science Fiction"
+  ]
+}

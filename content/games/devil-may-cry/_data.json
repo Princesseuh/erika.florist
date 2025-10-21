@@ -1,0 +1,31 @@
+{
+  "first_release_date": 998524800,
+  "genres": [
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 8,
+      "abbreviation": "PS2"
+    }
+  ],
+  "companies": [
+    {
+      "id": 663,
+      "name": "Capcom Production Studio 4",
+      "role": "developer"
+    },
+    {
+      "id": 37,
+      "name": "Capcom",
+      "role": "publisher"
+    }
+  ]
+}

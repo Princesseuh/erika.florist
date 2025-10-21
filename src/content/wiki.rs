@@ -48,11 +48,6 @@ pub struct GitInfo {
 }
 
 pub fn get_git_info() -> Result<HashMap<String, GitInfo>, Box<dyn Error>> {
-    // This is slow, so skipping it in dev, perhaps there's something wrong
-    if is_dev() {
-        return Ok(HashMap::new());
-    }
-
     let output = Command::new("bash")
         .arg("./scripts/getLastModified.sh")
         .output()?;

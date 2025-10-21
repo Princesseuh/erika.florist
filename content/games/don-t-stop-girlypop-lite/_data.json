@@ -1,0 +1,34 @@
+{
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 60353,
+      "name": "Funny Fintan Softworks",
+      "role": "developer"
+    },
+    {
+      "id": 18643,
+      "name": "Kwalee",
+      "role": "publisher"
+    }
+  ]
+}

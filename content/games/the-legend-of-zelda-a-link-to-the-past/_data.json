@@ -1,0 +1,67 @@
+{
+  "first_release_date": 690681600,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 19,
+      "abbreviation": "SNES"
+    },
+    {
+      "id": 5,
+      "abbreviation": "Wii"
+    },
+    {
+      "id": 41,
+      "abbreviation": "WiiU"
+    },
+    {
+      "id": 137,
+      "abbreviation": "New 3DS"
+    },
+    {
+      "id": 58,
+      "abbreviation": "SFAM"
+    }
+  ],
+  "companies": [
+    {
+      "id": 25230,
+      "name": "St. GIGA",
+      "role": "publisher"
+    },
+    {
+      "id": 421,
+      "name": "Nintendo EAD",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 33804,
+      "name": "Playtronic",
+      "role": "publisher"
+    },
+    {
+      "id": 812,
+      "name": "Gradiente",
+      "role": "publisher"
+    },
+    {
+      "id": 32350,
+      "name": "Hyundai",
+      "role": "publisher"
+    }
+  ]
+}

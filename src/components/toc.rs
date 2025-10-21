@@ -1,4 +1,4 @@
-use maud::{html, Markup};
+use maud::{Markup, html};
 use maudit::content::MarkdownHeading;
 
 pub fn table_of_content(headings: &[MarkdownHeading], max_depth: Option<u32>) -> Markup {

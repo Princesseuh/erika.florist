@@ -3,8 +3,8 @@ use maudit::content::markdown_entry;
 use serde::Deserialize;
 
 use crate::content::{
-    catalogue::{deserialize_optional_date, Rating},
     CatalogueMetadata,
+    catalogue::{Rating, deserialize_optional_date},
 };
 
 #[derive(Debug)]
@@ -26,7 +26,7 @@ pub struct CatalogueGame {
 
 #[derive(Debug, Deserialize)]
 pub struct GameData {
-    pub first_release_date: u64, // Unix timestamp
+    pub first_release_date: Option<u64>, // Unix timestamp
     pub genres: Vec<GameGenre>,
     pub platforms: Vec<GamePlatform>,
     pub companies: Vec<GameCompany>,

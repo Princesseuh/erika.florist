@@ -68,7 +68,7 @@ export default {
 
 Astro ships with typechecked config files in all of its starters, and similar to Vite, also has a helper method to make it even easier to use
 
-```ts
+```js
 import { defineConfig } from "astro/config";
 
 export default defineConfig({

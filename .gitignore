@@ -18,13 +18,6 @@ yarn-error.log*
 # macOS-specific files
 .DS_Store
 
-# Generated images (we'll cache those on Netlify)
-static/assets/socials/*
-static/assets/images/*
-src/assets/placeholders/*
-
-apps/erika.florist/src/pages/test.astro
-
 # Local Netlify folder
 .netlify
 

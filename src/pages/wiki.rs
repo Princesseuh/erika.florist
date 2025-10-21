@@ -35,7 +35,7 @@ fn wiki_navigation(ctx: &mut PageContext) -> maud::Markup {
             nav."text-base md:text-[0.95rem]" {
                 @for (category, entries) in sorted_categories {
                     div."mb-3 md:mb-4" {
-                        h4."mb-2 text-base md:text-sm mt-0 font-semibold" {
+                        h4."text-base md:text-sm m-0 font-semibold" {
                             (category.replace('-', " ").split_whitespace().map(|word| {
                                 let mut chars = word.chars();
                                 match chars.next() {
@@ -50,7 +50,7 @@ fn wiki_navigation(ctx: &mut PageContext) -> maud::Markup {
                                 @let page_url = WikiEntryPage.url(WikiParams { category: entry_category.to_string(), slug: slug.to_string() });
                                 @let is_current = current_path == &page_url;
                                 li."m-0 p-0 my-1" {
-                                    a class=@if is_current { "text-white-sugar-cane bg-violet-ultra block px-3 py-2 md:px-2 md:py-1 text-lg md:text-base" } @else { "text-violet-ultra hover:bg-violet-ultra/10 block px-3 py-2 md:px-2 md:py-1 text-md md:text-base" }
+                                    a class=@if is_current { "text-white-sugar-cane bg-violet-ultra block text-lg px-3 py-2 md:p-0 md:text-base" } @else { "text-violet-ultra px-3 py-2 hover:bg-violet-ultra/10 block text-md md:p-0 md:text-base" }
                                       href=(page_url) {
                                         (label)
                                     }
@@ -102,7 +102,7 @@ fn wiki_layout(
         Some(&data.title),
         data.tagline.as_deref(),
         html!(
-            header.sticky.top-0.z-40.bg-white-sugar-cane.border-b.border-borders."sm:hidden".bg-linear-to-b."from-darker-white" {
+            header.sticky."top-0"."z-40"."py-1".bg-violet-ultra.border-b.border-t.border-white-sugar-cane.text-white-sugar-cane."sm:hidden".bg-linear-to-b."from-darker-white" {
                 div.flex.items-center.justify-between {
                     button id="left-sidebar-toggle" .px-4.py-3.flex.items-center.gap-x-2.text-base.font-medium.text-our-black aria-label="Toggle navigation menu" {
                         (PreEscaped(include_str!("../assets/side-menu.svg")))

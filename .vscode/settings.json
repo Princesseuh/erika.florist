@@ -12,14 +12,6 @@
 	"[markdown]": {
 		"editor.wordWrap": "on"
 	},
-	"prettier.documentSelectors": ["**/*.astro"],
-	"eslint.validate": [
-		"javascript",
-		"javascriptreact",
-		"typescript",
-		"typescriptreact",
-		"astro"
-	],
 	"editor.codeActionsOnSave": {
 		"source.organizeImports": "always",
 		"source.organizeImports.biome": "never"

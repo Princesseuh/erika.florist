@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { getContentDirs, Logger } from "./catalogueUtils";
 
-export async function getLetterboxdCSV(): Promise<string> {
+export function getLetterboxdCSV(): string {
 	const movieDirs = getContentDirs("movies");
 	const tmdbIds: string[] = [];
 
@@ -18,7 +18,7 @@ export async function getLetterboxdCSV(): Promise<string> {
 			const markdownContent = fs
 				.readFileSync(new URL(`${dirBasename}.mdoc`, movieDir))
 				.toString();
-			
+
 			const frontmatter = matter(markdownContent).data;
 			const tmdbId = frontmatter.tmdb;
 
@@ -35,7 +35,7 @@ export async function getLetterboxdCSV(): Promise<string> {
 
 	// Create CSV content
 	const csvContent = ["tmdbID", ...tmdbIds].join("\n");
-	
+
 	Logger.success(`Generated CSV with ${tmdbIds.length} movie IDs`);
 	return csvContent;
 }
@@ -43,12 +43,12 @@ export async function getLetterboxdCSV(): Promise<string> {
 // If running this script directly
 if (process.argv[1] === new URL(import.meta.url).pathname) {
 	try {
-		const csv = await getLetterboxdCSV();
-		
+		const csv = getLetterboxdCSV();
+
 		// Write to file
 		const outputPath = path.join(process.cwd(), "letterboxd-export.csv");
 		fs.writeFileSync(outputPath, csv);
-		
+
 		Logger.success(`CSV exported to: ${outputPath}`);
 		console.log("\nPreview:");
 		console.log(csv.split("\n").slice(0, 10).join("\n"));

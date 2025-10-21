@@ -6,7 +6,7 @@ This website contains [articles I wrote](https://erika.florist/articles), a [lis
 
 ## Tech stack
 
-Made using [Astro](https://astro.build), styled using [Tailwind](https://tailwindcss.com/) and the interactive parts are written in [Typescript](https://www.typescriptlang.org/). A small CMS-like system is used to manage the catalogue, which is written in [Rust](https://www.rust-lang.org/).
+Made using [Maudit](https://maudit.org), styled using [Tailwind](https://tailwindcss.com/) and the interactive parts are written in [Typescript](https://www.typescriptlang.org/). A small CMS-like system is used to manage the catalogue, which is written in [Rust](https://www.rust-lang.org/).
 
 ## License
 

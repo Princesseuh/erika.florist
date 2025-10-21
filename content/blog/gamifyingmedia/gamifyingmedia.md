@@ -1,0 +1,40 @@
+---
+title: On gamifying art
+tagline: Keeping tabs has been great, but it's not without its downsides
+date: 2024-03-16
+slug: gamifying-art
+tags:
+  - website
+---
+
+Multiple years ago now, I added a [Catalogue](/catalogue) section to this website. Essentially a more personal [Letterboxd](https://letterboxd.com), or [Goodreads](https://goodreads.com), but for all kinds of stuff. All the video games I've played, the movies I've watched, the books I've read, etc, in one place. It's pretty cool, though it does mean you all get to see my dubious at times taste in things.
+
+The technical aspect of it is also pretty neat, being powered by [a Rust serverless function](https://github.com/Princesseuh/erika.florist/blob/main/api/catalogue.rs) made with [one of my favorite libraries](https://maud.lambda.xyz/) (totally overengineered, as it should be for a personal website with no visitors).
+
+More interestingly, I have noticed that it has motivated me to consume more art. This is great, right, doing more things, you learn more stuff and you have more (other) things to talk about with people, etc. Additionally, it's just fun, it feels like collecting.
+
+However, there are three main worries I've had about this over the years:
+
+## It's public
+
+Not only have I always been a bit wary of sharing too much about myself online in general, but also the fact that it's public and more importantly next to my actual work means that I live with a constant paralyzing fear (it's not that serious) of being judged on random things I've watched or played.
+
+Whenever I add something to the catalogue, there's always this little thought in the back of my head that goes "What if someone sees this and thinks I'm a weirdo for liking this". I'll be the first to admit it's a bit silly, and it hasn't quite stopped me from adding things yet... but it is there.
+
+## I force myself to finish things
+
+When I started the catalogue, I made a strict rule for myself: I would only add stuff to it if I finished it (or for games with no end, played a significant amount of time). That way, I would only add things I had a full opinion on, and it would motivate me to finish things I started.
+
+Alas, this has led to me finishing some things I didn't like, just to be able to add them to the catalogue because otherwise, it would feel like no value was gained.
+
+## The catalogue is my light
+
+In line with the previous point, gamification had the unforeseen consequence here that things sometimes got reduced to the reward of the "game" being played, rather than the experience itself.
+
+This works both ways, sometimes while watching a movie (even the ones I do enjoy), I end up thinking more about the joy of adding it to the catalogue than the movie itself, and other times I will prevent myself from doing things I would enjoy because I can't add them to the catalogue, for instance rewatching a movie I've already added.
+
+{{ dinkus /}}
+
+Ultimately, I don't necessarily think any of these are major issues, nor that it is that serious anyway. I think it's interesting to see how gamifying something as simple as this can have these kinds of effects on me and my habits. I'm not sure if I'll change anything about it, but it's something to keep in mind.
+
+It does make for a neat page on the website though, so there's that.

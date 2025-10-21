@@ -1,6 +1,5 @@
 // @ts-check
 import eslint from "@eslint/js";
-import eslintPluginAstro from "eslint-plugin-astro";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
@@ -16,7 +15,6 @@ export default tseslint.config(
 			"**/node_modules",
 			"**/target",
 			"**/.vercel",
-			"**/.astro",
 			"**/.github",
 		],
 	},
@@ -53,13 +51,9 @@ export default tseslint.config(
 		},
 	},
 
-	// Astro
-	...eslintPluginAstro.configs.recommended,
-
 	// Remove some safety rules around any for various reasons
 	{
 		files: [
-			"**/*.astro", // Disabled because eslint-plugin-astro doesn't type Astro.props correctly in some contexts, so a bunch of things ends up being any
 			"api/add/script.js", // Script is in JSDoc and interact with an API, some things are any because I can't be bothered
 			"scripts/**/*.ts", // Interact with untyped APIs a bunch, can't be bothered
 		],
@@ -70,18 +64,6 @@ export default tseslint.config(
 			"@typescript-eslint/no-unsafe-assignment": "off",
 			"@typescript-eslint/no-unsafe-argument": "off",
 		},
-	},
-
-	// Disable typed rules for scripts inside Astro files
-	// https://github.com/ota-meshi/eslint-plugin-astro/issues/240
-	{
-		files: ["**/*.astro/*.ts"],
-		languageOptions: {
-			parserOptions: {
-				project: null,
-			},
-		},
-		...tseslint.configs.disableTypeChecked,
 	},
 
 	// Those files run in the browser and need the browser globals

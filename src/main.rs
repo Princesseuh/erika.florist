@@ -148,9 +148,11 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
 
             let (width, height) = image.dimensions();
 
+            let placeholder = image.placeholder();
+
             html!({
                 figure {
-                    img class=(class.unwrap_or_default()) src=(image.url()) alt=(alt.unwrap_or_default()) loading="lazy" decoding="async" width=(width) height=(height) {}
+                    img class=(class.unwrap_or_default()) src=(image.url()) alt=(alt.unwrap_or_default()) loading="lazy" decoding="async" width=(width) height=(height) style=(format!("background-image: url('{}');background-size: cover;image-rendering:auto;", placeholder.data_uri())) onload="this.style.backgroundSize = null; this.style.backgroundImage = null; this.style.imageRendering = null; this.removeAttribute('onload');" {}
                     @if let Some(caption) = body {
                         figcaption {
                             (caption)

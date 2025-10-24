@@ -1,0 +1,13 @@
+[package]
+name = "erikaflorist"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+maudit = { version = "0.6.4" }
+chrono = { version = "0.4.41", features = ["serde"] }
+maud = { workspace = true }
+rand = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }

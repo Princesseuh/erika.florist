@@ -22,7 +22,3 @@ yarn-error.log*
 .netlify
 
 .env
-.vercel
-
-.cargo/config.toml
-.cargo/_config.toml

@@ -1,8 +1,10 @@
 {
 	"private": true,
+	"type": "module",
 	"packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
 	"scripts": {
-		"lint": "oxlint --type-aware"
+		"lint": "oxlint --type-aware",
+		"update-data": "tsx ./scripts/update-catalogue-info.ts --silent"
 	},
 	"dependencies": {
 		"@tailwindcss/cli": "^4.1.15",
@@ -13,6 +15,7 @@
 	},
 	"devDependencies": {
 		"@types/node": "^24.9.1",
+		"dotenv": "^17.2.3",
 		"gray-matter": "^4.0.3",
 		"igdb-api-node": "^6.0.5",
 		"kleur": "^4.1.5",
@@ -20,6 +23,7 @@
 		"oxlint-tsgolint": "^0.2.0",
 		"prettier": "^3.6.2",
 		"sharp": "^0.34.4",
-		"typescript": "^5.9.3"
+		"typescript": "^5.9.3",
+		"tsx": "^4.19.4"
 	}
 }

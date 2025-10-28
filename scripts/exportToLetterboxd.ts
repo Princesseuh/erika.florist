@@ -15,7 +15,7 @@ export async function getLetterboxdCSV(): Promise<string> {
 
 		try {
 			Logger.info(`Getting tmdb id for movies/${bold(dirBasename)}...`);
-			const markdownContent = fs.readFileSync(new URL(`${dirBasename}.mdoc`, movieDir)).toString();
+			const markdownContent = fs.readFileSync(new URL(`${dirBasename}.md`, movieDir)).toString();
 
 			const frontmatter = matter(markdownContent).data;
 			const tmdbId = frontmatter.tmdb;

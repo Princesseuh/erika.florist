@@ -49,7 +49,7 @@ pub struct GitInfo {
 
 pub fn get_git_info() -> Result<HashMap<String, GitInfo>, Box<dyn Error>> {
     let output = Command::new("bash")
-        .arg("./scripts/getLastModified.sh")
+        .arg("../../scripts/getLastModified.sh")
         .output()?;
 
     let stdout = String::from_utf8(output.stdout)?;

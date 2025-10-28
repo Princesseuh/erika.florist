@@ -19,7 +19,7 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
         content_sources(".".to_owned()),
         BuildOptions {
             assets: AssetsOptions {
-                tailwind_binary_path: "./node_modules/.bin/tailwindcss".into(),
+                tailwind_binary_path: "../../node_modules/.bin/tailwindcss".into(),
                 ..Default::default()
             },
             ..Default::default()

@@ -15,9 +15,7 @@ export function getLetterboxdCSV(): string {
 
 		try {
 			Logger.info(`Getting tmdb id for movies/${bold(dirBasename)}...`);
-			const markdownContent = fs
-				.readFileSync(new URL(`${dirBasename}.mdoc`, movieDir))
-				.toString();
+			const markdownContent = fs.readFileSync(new URL(`${dirBasename}.md`, movieDir)).toString();
 
 			const frontmatter = matter(markdownContent).data;
 			const tmdbId = frontmatter.tmdb;
@@ -29,7 +27,9 @@ export function getLetterboxdCSV(): string {
 				Logger.warn(`No TMDB ID found for ${dirBasename}`);
 			}
 		} catch (error) {
-			Logger.error(`Failed to process ${dirBasename}: ${error instanceof Error ? error.message : String(error)}`);
+			Logger.error(
+				`Failed to process ${dirBasename}: ${error instanceof Error ? error.message : String(error)}`,
+			);
 		}
 	}
 

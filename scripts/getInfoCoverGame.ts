@@ -55,7 +55,7 @@ export async function getDataForGames() {
 		}
 
 		const markdownContent = fs
-			.readFileSync(new URL(`${path.basename(gameDir.pathname)}.mdoc`, gameDir))
+			.readFileSync(new URL(`${path.basename(gameDir.pathname)}.md`, gameDir))
 			.toString();
 		const gameID = matter(markdownContent).data.igdb;
 		const response = await client

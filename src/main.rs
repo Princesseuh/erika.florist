@@ -24,11 +24,13 @@ mod pages {
     mod catalogue;
     mod index;
     mod projects;
+    mod rss;
     mod wiki;
     pub use blog::{BlogIndex, BlogPostPage, BlogTagIndex, BlogYearIndex};
     pub use catalogue::{Catalogue, CatalogueContent};
     pub use index::Index;
     pub use projects::{ProjectIndex, ProjectPage};
+    pub use rss::BlogRSS;
     pub use wiki::{WikiEntryPage, WikiIndex};
 }
 
@@ -180,7 +182,8 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
             pages::WikiIndex,
             pages::WikiEntryPage,
             pages::ProjectIndex,
-            pages::ProjectPage
+            pages::ProjectPage,
+            pages::BlogRSS
         ],
         content_sources![
             "blog" => glob_markdown_with_options::<BlogPost>("content/blog/**/*.md", create_markdown_options()),

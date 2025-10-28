@@ -1,5 +1,5 @@
-use axum::{Router, response::Html, routing::get, extract::State};
-use erikaflorist::content::{content_sources, BlogPost, RouteContent};
+use axum::{Router, extract::State, response::Html, routing::get};
+use erikaflorist::content::{BlogPost, RouteContent, content_sources};
 use std::sync::Arc;
 
 #[tokio::main]
@@ -20,9 +20,9 @@ async fn main() {
         .with_state(shared_content);
 
     // run it
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
-        .await
-        .unwrap();
+    let port = std::env::var("PORT").unwrap_or_else(|_| "10000".to_string());
+    let addr = format!("0.0.0.0:{}", port);
+    let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
     println!("listening on {}", listener.local_addr().unwrap());
     axum::serve(listener, app).await.unwrap();
 }

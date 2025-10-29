@@ -34,7 +34,7 @@ export async function getDataForBooks() {
 			continue;
 		}
 
-		const markdownContent = fs.readFileSync(new URL(`${dirBasename}.mdoc`, bookDir)).toString();
+		const markdownContent = fs.readFileSync(new URL(`${dirBasename}.md`, bookDir)).toString();
 		const isbn = matter(markdownContent).data.isbn;
 		const response = await fetch(
 			`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=details&format=json`,

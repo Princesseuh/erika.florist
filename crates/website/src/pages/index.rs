@@ -33,6 +33,7 @@ impl Route for Index {
             .get_source::<crate::content::WikiEntry>("wiki")
             .entries
             .iter()
+            .filter(|e| e.id != "index")
             .collect::<Vec<_>>();
 
         let mut merged: Vec<IndexEntry> = articles.into_iter().map(IndexEntry::Blog).collect();

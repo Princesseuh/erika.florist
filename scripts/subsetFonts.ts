@@ -12,7 +12,7 @@ const contentStringsToInclude = new Set([
 const contentLetters = new Set([...contentStringsToInclude]);
 const titleLetters = new Set([..."erika".split("")]);
 
-for await (const entry of glob("**/*.mdoc")) {
+for await (const entry of glob("**/*.md")) {
 	const { data, content } = matter.read(entry);
 
 	for (const letter of data.title) {

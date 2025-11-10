@@ -7,10 +7,10 @@ pub use catalogue::{
     CatalogueMetadata, books::CatalogueBook, catalogue_add_metadata, games::CatalogueGame,
     movies::CatalogueMovie, shows::CatalogueShow,
 };
-use maud::html;
+use maud::{PreEscaped, html};
 pub use maudit::{
     assets::{Asset, ImageFormat, ImageOptions},
-    content::{ContentSources, markdown::*, shortcodes::MarkdownShortcodes, RouteContent},
+    content::{ContentSources, RouteContent, markdown::*, shortcodes::MarkdownShortcodes},
     content_sources,
 };
 pub use project::{Project, ProjectType};
@@ -101,7 +101,7 @@ pub fn content_sources(root: String) -> ContentSources {
                   img class=(class.unwrap_or_default()) src=(image.url()) alt=(alt.unwrap_or_default()) loading="lazy" decoding="async" width=(width) height=(height) style=(format!("background-image: url('{}');background-size: cover;image-rendering:auto;", placeholder.data_uri())) onload="this.style.backgroundSize = null; this.style.backgroundImage = null; this.style.imageRendering = null; this.removeAttribute('onload');" {}
                   @if let Some(caption) = body {
                       figcaption {
-                          (caption)
+                          (PreEscaped(caption))
                       }
                   }
               }

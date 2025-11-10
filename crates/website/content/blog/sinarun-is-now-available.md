@@ -1,7 +1,7 @@
 ---
 title: SinaRun is now available!
 date: 2014-08-22
-tags: ["SinaRun", "release", "games"]
+tags: ["SinaRun", "release", "gamedev"]
 ---
 
 After all those months of hardwork, SinaRun is finally ready for release! Yes, finally! For the occasion, my friend FoxFiesta made a super cool trailer:

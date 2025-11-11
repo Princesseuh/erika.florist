@@ -235,6 +235,13 @@
 	.prose iframe {
 		display: block;
 		margin: 1rem auto;
+		max-width: 100%;
+	}
+
+	@media (max-width: 640px) {
+		.prose iframe {
+			height: auto;
+		}
 	}
 
 	.prose > h1,

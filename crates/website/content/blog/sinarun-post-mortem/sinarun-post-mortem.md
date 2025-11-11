@@ -1,5 +1,5 @@
 ---
-title: "SinaRun Post-Mortem"
+title: "SinaRun Postmortem"
 tagline: "All the synapses we've ran through"
 date: 2025-11-09
 tags: ["SinaRun", "gamedev"]

@@ -10,7 +10,7 @@ pub use catalogue::{
 use maud::{PreEscaped, html};
 pub use maudit::{
     assets::{Asset, ImageFormat, ImageOptions},
-    content::{ContentSources, RouteContent, markdown::*, shortcodes::MarkdownShortcodes},
+    content::{ContentSources, markdown::*, shortcodes::MarkdownShortcodes},
     content_sources,
 };
 pub use project::{Project, ProjectType};

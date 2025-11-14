@@ -20,6 +20,7 @@ struct EntryDisplay {
     title: String,
     description: Option<String>,
     date: Option<String>,
+    draft: Option<bool>,
 }
 
 #[tokio::main]
@@ -117,6 +118,43 @@ fn get_entries_for_source(content: &ContentSources, source: &str) -> Vec<EntryDi
                         title: data.title.clone(),
                         description: data.tagline.clone(),
                         date: Some(data.date.format("%B %d, %Y").to_string()),
+                        draft: data.draft,
+                    }
+                })
+                .collect()
+        }
+        "wiki" => {
+            let wiki_source = content.get_source::<WikiEntry>("wiki");
+
+            wiki_source
+                .entries
+                .iter()
+                .map(|entry| {
+                    let data = entry.data(&mut ctx);
+                    EntryDisplay {
+                        id: entry.id.clone(),
+                        title: data.title.clone(),
+                        description: data.tagline.clone(),
+                        date: None,
+                        draft: None,
+                    }
+                })
+                .collect()
+        }
+        "projects" => {
+            let projects_source = content.get_source::<Project>("projects");
+
+            projects_source
+                .entries
+                .iter()
+                .map(|entry| {
+                    let data = entry.data(&mut ctx);
+                    EntryDisplay {
+                        id: entry.id.clone(),
+                        title: data.title.clone(),
+                        description: data.tagline.clone(),
+                        date: None,
+                        draft: None,
                     }
                 })
                 .collect()
@@ -134,11 +172,15 @@ fn render_entries_list(entries: &[EntryDisplay], source: &str) -> Markup {
                 }
             } @else {
                 @for entry in entries {
-                    a.block.px-4.py-3.border-b.border-gray-200.hover:bg-gray-50.transition-colors.duration-150.cursor-pointer.text-decoration-none href=(format!("/{}/{}", source, entry.id)) {
+                    @let draft = entry.draft.unwrap_or(false);
+                    a.block.px-4.py-3.border-b.border-gray-200.hover:bg-gray-50.transition-colors.duration-150.cursor-pointer.text-decoration-none.(if draft {"bg-yellow-200/10"} else {""}) href=(format!("/{}/{}", source, entry.id)) {
                         div.flex.items-center.justify-between {
                             div.flex-1.min-w-0 {
                                 h3.text-sm.font-medium.text-gray-900.truncate {
                                     (entry.title)
+                                    @if draft {
+                                        span.text-xs.text-red-500.ml-2 { "(Draft)" }
+                                    }
                                 }
                                 @if let Some(description) = &entry.description {
                                     p.text-xs.text-gray-500.mt-1.truncate {

@@ -93,9 +93,14 @@ where
 
                     entry.set_metadata(metadata);
 
-                    let cover_path = file_path.with_file_name("cover.png");
+                    let cover_path = file_path
+                        .with_file_name("cover.png")
+                        .canonicalize()
+                        .unwrap()
+                        .to_string_lossy()
+                        .to_string();
                     let cover = ctx.assets().add_image_with_options(
-                        &cover_path,
+                        cover_path,
                         ImageOptions {
                             width: Some(240),
                             format: Some(ImageFormat::Avif),

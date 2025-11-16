@@ -1,5 +1,5 @@
 ---
-title: Kajillionaire
+title: Juror 2
 finishedDate: 2025-10-25
 rating: "liked"
 tmdb: "1106739"

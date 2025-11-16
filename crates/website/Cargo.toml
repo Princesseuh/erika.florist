@@ -5,7 +5,7 @@ edition = "2024"
 publish = false
 
 [dependencies]
-maudit = { version = "0.6.5" }
+maudit = { workspace = true }
 chrono = { version = "0.4.41", features = ["serde"] }
 maud = { workspace = true }
 rand = { workspace = true }

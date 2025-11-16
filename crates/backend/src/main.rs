@@ -3,7 +3,9 @@ use axum::{
     extract::{Path, State},
     routing::get,
 };
-use erikaflorist::content::{BlogPost, ContentSources, Project, WikiEntry, content_sources};
+use erikaflorist::content::{
+    BlogPost, CatalogueMovie, ContentSources, Project, WikiEntry, content_sources,
+};
 use maud::{Markup, PreEscaped, html};
 use maudit::{
     assets::{RouteAssets, RouteAssetsOptions},
@@ -24,10 +26,20 @@ struct EntryDisplay {
     date: Option<String>,
     draft: Option<bool>,
     category: Option<String>,
+    cover: Option<(String, String)>,
+}
+
+fn is_dev() -> bool {
+    dotenvy::var("IS_DEV")
+        .unwrap_or_else(|_| "true".to_string())
+        .to_lowercase()
+        == "true"
 }
 
 #[tokio::main]
 async fn main() {
+    let _ = dotenvy::from_filename(".env.dev");
+
     let mut content = content_sources("../website".to_owned());
 
     content.init_all();
@@ -94,7 +106,17 @@ macro_rules! dummy_context {
             current_path: &String::new(),
             params: &(),
             props: &(),
-            assets: &mut RouteAssets::new(&RouteAssetsOptions::default(), None),
+            assets: &mut RouteAssets::new(
+                &RouteAssetsOptions {
+                    hashing_strategy: if is_dev() {
+                        maudit::AssetHashingStrategy::FastImprecise
+                    } else {
+                        maudit::AssetHashingStrategy::Precise
+                    },
+                    ..Default::default()
+                },
+                None,
+            ),
             base_url: &None,
         }
     }};
@@ -120,6 +142,7 @@ fn get_entries_for_source(content: &ContentSources, source: &str) -> Vec<EntryDi
                         date: Some(data.date.format("%B %d, %Y").to_string()),
                         draft: data.draft,
                         category: None,
+                        cover: None,
                     }
                 })
                 .collect()
@@ -139,6 +162,7 @@ fn get_entries_for_source(content: &ContentSources, source: &str) -> Vec<EntryDi
                         date: None,
                         draft: None,
                         category: Some(data.navigation.category.clone()),
+                        cover: None,
                     }
                 })
                 .collect()
@@ -158,6 +182,29 @@ fn get_entries_for_source(content: &ContentSources, source: &str) -> Vec<EntryDi
                         date: None,
                         draft: None,
                         category: None,
+                        cover: None,
+                    }
+                })
+                .collect()
+        }
+        "movies" => {
+            let movies_source = content.get_source::<CatalogueMovie>("movies");
+
+            movies_source
+                .entries
+                .iter()
+                .map(|entry| {
+                    let data = entry.data(&mut ctx);
+                    EntryDisplay {
+                        id: entry.id.clone(),
+                        title: data.title.clone(),
+                        description: None,
+                        date: data
+                            .finished_date
+                            .map(|release_year| release_year.to_string()),
+                        draft: None,
+                        category: None,
+                        cover: Some(data.cover.clone()),
                     }
                 })
                 .collect()
@@ -390,15 +437,79 @@ async fn entry_handler(
     )
 }
 
+fn render_catalogue_grid(entries: &[EntryDisplay], source: &str) -> Markup {
+    html! {
+        @if entries.is_empty() {
+            div.flex.items-center.justify-center.h-64 {
+                p.text-gray-500 { "No entries found." }
+            }
+        } @else {
+            div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" {
+                @for entry in entries {
+                    (render_catalogue_card(entry, source))
+                }
+            }
+        }
+    }
+}
+
+fn render_catalogue_card(entry: &EntryDisplay, source: &str) -> Markup {
+    let draft = entry.draft.unwrap_or(false);
+    let cover_origin = if is_dev() {
+        "http://localhost:1864"
+    } else {
+        "https://erika.florist"
+    };
+    html! {
+        a.block.bg-white.rounded-lg.shadow-md.hover:shadow-lg.transition-shadow.duration-200.overflow-hidden.text-decoration-none.(if draft {"opacity-75"} else {""}) href=(format!("/{}/{}", source, entry.id)) {
+            @if let Some((cover_url, placeholder)) = &entry.cover {
+                div.relative.w-full.h-48.bg-gray-200.rounded-t-lg.overflow-hidden {
+                  img.w-full.h-full.object-cover src=(format!("{}{}", cover_origin, cover_url)) alt=(format!("{} cover", entry.title)) loading="lazy" style=(format!("background-image: url(data:image/jpeg;base64,{}); background-size: cover; background-position: center;", placeholder)) {
+                    }
+                }
+            }
+            div.p-6 {
+                h3.text-lg.font-semibold.text-gray-900.mb-2.line-clamp-2 {
+                    (entry.title)
+                    @if draft {
+                        span.text-xs.text-red-500.ml-2 { "(Draft)" }
+                    }
+                }
+                @if let Some(description) = &entry.description {
+                    p.text-sm.text-gray-600.mb-4.line-clamp-3 {
+                        (description)
+                    }
+                }
+                div.flex.items-center.justify-between.text-xs.text-gray-500 {
+                    @if let Some(category) = &entry.category {
+                        span.px-2.py-1.bg-gray-100.rounded-full {
+                            (format_category_name(category))
+                        }
+                    }
+                    @if let Some(date) = &entry.date {
+                        span {
+                            (date)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 async fn catalogue_handler(
     State(content): State<Arc<ContentSources>>,
     source: &'static str,
 ) -> Markup {
+    let entries = get_entries_for_source(&content, source);
+
     templates::base_template(
         content.as_ref(),
         html! {
-            h1 { "Catalogue: " (source) }
-            p { "This is a placeholder for the " (source) " catalogue." }
+            div {
+                h1.text-3xl.font-bold.text-gray-900.mb-6.capitalize { "Catalogue: " (source) }
+                (render_catalogue_grid(&entries, source))
+            }
         },
     )
 }

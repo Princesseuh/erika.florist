@@ -10,3 +10,5 @@ erikaflorist = { path = "../website" }
 maud.workspace = true
 tower-http = { version = "0.6.6", features = ["fs"] }
 maudit = "0.6.5"
+schemars = {workspace = true}
+serde_json.workspace = true

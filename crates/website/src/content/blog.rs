@@ -1,7 +1,9 @@
 use chrono::NaiveDate;
 use maudit::content::markdown_entry;
+use schemars::JsonSchema;
+use serde::Serialize;
 
-#[derive(Debug)]
+#[derive(Debug, JsonSchema, Serialize)]
 #[markdown_entry]
 pub struct BlogPost {
     pub title: String,

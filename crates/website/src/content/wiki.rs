@@ -9,15 +9,17 @@ use maudit::{
     is_dev,
     route::PageContext,
 };
-use serde::Deserialize;
+use schemars::JsonSchema;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug)]
+#[derive(Debug, JsonSchema, Serialize)]
 #[markdown_entry]
 pub struct WikiEntry {
     pub title: String,
     pub tagline: Option<String>,
     pub max_depth_toc: Option<u32>,
     pub navigation: WikiNavigation,
+    #[serde(skip)]
     pub last_modified: Option<WikiLastModified>,
 }
 
@@ -27,13 +29,13 @@ impl WikiEntry {
     }
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, JsonSchema, Serialize)]
 pub struct WikiLastModified {
     pub date: NaiveDate, // YYYY-MM-DD
     pub commit_url: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, JsonSchema, Serialize)]
 pub struct WikiNavigation {
     pub label: Option<String>,
     pub category: String,

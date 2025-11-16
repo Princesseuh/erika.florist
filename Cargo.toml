@@ -7,6 +7,7 @@ maud = { version = "0.27.0", features = ["axum"] }
 serde = { version = "1.0.216" }
 serde_json = {version = "1.0.143" }
 rand = "0.9.2"
+schemars = {version = "1.1.0", features = ["chrono04"] }
 
 [profile.profiling]
 inherits = "release"

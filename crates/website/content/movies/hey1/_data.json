@@ -1,0 +1,18 @@
+{
+  "title": "The Lord of the Rings",
+  "tagline": "Fantasy...beyond your imagination",
+  "id": 123,
+  "overview": "The Fellowship of the Ring embark on a journey to destroy the One Ring and end Sauron's reign over Middle-earth.",
+  "releaseDate": "1978-11-15",
+  "runtime": 132,
+  "companies": [
+    "Fantasy Films",
+    "Bakshi Productions",
+    "Saul Zaentz Film Productions"
+  ],
+  "genres": [
+    "Adventure",
+    "Animation",
+    "Fantasy"
+  ]
+}

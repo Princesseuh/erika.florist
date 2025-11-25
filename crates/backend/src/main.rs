@@ -701,9 +701,7 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
 
         // Get content on form submit
         document.querySelector('form').addEventListener('submit', (e) => {
-                    e.preventDefault();
             document.getElementById('comment').value = editor.getDoc() || document.getElementById('comment-mobile').value;
-                        console.log(document.getElementById('comment').value);
         });
     "#,
     );

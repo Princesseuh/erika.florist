@@ -44,7 +44,12 @@ fn sidebar(sources: &ContentSources) -> Markup {
 
                     @if !catalogue_sources.is_empty() {
                         li.mt-6 {
-                            h3.px-3.py-1.text-sm.font-medium.text-gray-500.uppercase.tracking-wide { "Catalogue" }
+                            div.flex.items-center.justify-between.px-3.py-1 {
+                                h3.text-sm.font-medium.text-gray-500.uppercase.tracking-wide { "Catalogue" }
+                                a.w-6.h-6.flex.items-center.justify-center.text-lg.font-bold.text-gray-600.hover:text-gray-900.hover:bg-gray-200.rounded.transition-colors href="/catalogue/add" title="Add catalogue item" {
+                                    "+"
+                                }
+                            }
                         }
                         @for name in &catalogue_sources {
                             li {

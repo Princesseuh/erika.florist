@@ -13,3 +13,8 @@ maudit = { workspace = true }
 schemars = { workspace = true }
 serde_json = { workspace = true }
 dotenvy = "0.15.7"
+serde = { version = "1.0", features = ["derive"] }
+slug = "0.1"
+chrono = "0.4"
+reqwest = { version = "0.12", features = ["json"] }
+base64 = "0.22"

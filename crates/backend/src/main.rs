@@ -1013,7 +1013,7 @@ async fn post_to_github(
     let b64_content = general_purpose::STANDARD.encode(content);
 
     let body = GitHubRequest {
-        message: format!("content(catalogue): Add {} [auto]", title),
+        message: format!("content(catalogue): Add {} [cd skip]", title),
         content: b64_content,
         committer: GitHubCommitter {
             name: "Princesseuh".to_string(),

@@ -2,7 +2,7 @@
 title: "Sniper Elite 4"
 platform: "pc"
 rating: "liked"
-finishedDate: 2025-11-25
+finishedDate: 2025-11-08
 igdb: "18366"
 ---
 

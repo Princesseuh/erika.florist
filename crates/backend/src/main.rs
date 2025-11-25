@@ -543,6 +543,8 @@ struct CatalogueForm {
     platform_select: String,
     comment: String,
     form_password: String,
+    #[serde(rename = "skip-ci", default)]
+    skip_ci: String,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -629,6 +631,7 @@ async fn catalogue_add_post_handler(
 
     // Post to GitHub
     let file_path = format!("{}/{}/{}.md", path_type, slug, slug);
+    let skip_ci = form.skip_ci == "skip-ci";
     let github_response = post_to_github(
         &client,
         &github_token,
@@ -636,6 +639,7 @@ async fn catalogue_add_post_handler(
         &file_path,
         &markdown_content,
         &form.name,
+        skip_ci,
     )
     .await;
 
@@ -769,26 +773,23 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
 
                     // Sidebar right
                     aside."md:w-1/4".space-y-6 {
-                        // Type
+                        // Type and Name (merged vertically)
                         div.space-y-2 {
-                            label.block.text-sm.font-medium.text-gray-700 for="type" { "Type" }
-                            select.w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500
-                                required name="type" id="type" {
-                                option value="movie" { "Movie" }
-                                option value="tv" { "Show" }
-                                option value="game" { "Game" }
-                                option value="book" { "Book" }
-                            }
-                        }
-
-                        // Name
-                        div.space-y-2 {
-                            label.block.text-sm.font-medium.text-gray-700 for="name" { "Name" }
-                            div.relative {
-                                input.w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500
-                                    type="text" id="name" name="name" list="name-list" placeholder="Search..." required;
-                                span.loader.absolute.right-3.top-3 {}
-                                datalist id="name-list" {}
+                            label.block.text-sm.font-medium.text-gray-700 { "Type & Name" }
+                            div.border.border-gray-300.rounded-md.overflow-hidden.focus-within:ring-2.focus-within:ring-blue-500 {
+                                select.w-full.px-3.py-2.border-0.border-b.border-gray-300.focus:outline-none.bg-gray-50
+                                    required name="type" id="type" {
+                                    option value="movie" { "Movie" }
+                                    option value="tv" { "Show" }
+                                    option value="game" { "Game" }
+                                    option value="book" { "Book" }
+                                }
+                                div.relative {
+                                    input.w-full.px-3.py-2.border-0.focus:outline-none
+                                        type="text" id="name" name="name" list="name-list" placeholder="Search..." required;
+                                    span.loader.absolute.right-3.top-3 {}
+                                    datalist id="name-list" {}
+                                }
                             }
                         }
 
@@ -814,8 +815,8 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
                         div.space-y-2 {
                             div.flex.items-center.justify-between {
                                 label.text-sm.font-medium.text-gray-700 for="date" { "Finished Date" }
-                                label.flex.items-center.gap-2.text-xs.text-gray-600 {
-                                    input.rounded type="checkbox" id="no-date" checked;
+                                label.flex.items-center.gap-2.text-md.text-gray-600 {
+                                    input.rounded.w-4.h-4 type="checkbox" id="no-date" checked;
                                     span { "Set" }
                                 }
                             }
@@ -845,8 +846,17 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
                         }
 
                         // Submit
-                        button.w-full.bg-blue-600.hover:bg-blue-700.text-white.font-medium.py-2.px-4.rounded-md.transition-colors
+                        button.w-full.bg-blue-600.hover:bg-blue-700.text-white.font-medium.py-2.px-4.rounded-md.transition-colors.mb-1
                             type="submit" { "Submit" }
+
+                        div {
+                            label.flex.items-center.gap-2.text-lg.text-gray-700 {
+                                input.rounded.w-4.h-4 type="checkbox" id="skip-ci" name="skip-ci" value="skip-ci";
+                                span title="If this is enabled, the commit created by this entry won't cause a deploy. Use when adding multiple entries." {
+                                    "Skip CI?"
+                                }
+                            }
+                        }
 
                         // Cover preview
                         div #cover-preview.space-y-2.hidden.md:block {
@@ -1009,11 +1019,16 @@ async fn post_to_github(
     path: &str,
     content: &str,
     title: &str,
+    skip_ci: bool,
 ) -> Result<String, String> {
     let b64_content = general_purpose::STANDARD.encode(content);
 
+    let skip_marker = if skip_ci { "[skip ci]" } else { "" };
     let body = GitHubRequest {
-        message: format!("content(catalogue): Add {} [cd skip]", title),
+        message: format!(
+            "content(catalogue): Add {} [skip cd] {}",
+            title, skip_marker
+        ),
         content: b64_content,
         committer: GitHubCommitter {
             name: "Princesseuh".to_string(),

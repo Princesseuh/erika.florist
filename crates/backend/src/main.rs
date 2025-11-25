@@ -1,11 +1,15 @@
 use axum::{
     Router,
     extract::{Form, Path, Query, State},
-    http::{HeaderMap, StatusCode},
-    response::{IntoResponse, Response},
+    http::{HeaderMap, StatusCode, header},
+    response::{IntoResponse, Redirect, Response},
     routing::get,
 };
 use base64::{Engine as _, engine::general_purpose};
+use cookie::{
+    Cookie,
+    time::{Duration, OffsetDateTime},
+};
 use erikaflorist::content::{
     BlogPost, CatalogueMovie, ContentSources, Project, WikiEntry, content_sources,
 };
@@ -15,8 +19,10 @@ use maudit::{
     content::Entry,
     route::PageContext,
 };
+
 use schemars::schema_for;
 use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
 use std::collections::HashMap;
 use std::sync::Arc;
 use tower_http::services::ServeDir;
@@ -55,6 +61,9 @@ async fn main() {
     // build our application with a route
     let app = Router::new()
         .route("/", get(index))
+        .route("/login", get(login_handler))
+        .route("/login", axum::routing::post(login_post_handler))
+        .route("/logout", get(logout_handler))
         .route("/catalogue/add", get(catalogue_add_handler))
         .route(
             "/catalogue/add",
@@ -63,19 +72,19 @@ async fn main() {
         .route("/catalogue/proxy", get(catalogue_proxy_handler))
         .route(
             "/catalogue/books",
-            get(|state| catalogue_handler(state, "books")),
+            get(|state, headers| catalogue_handler(state, "books", headers)),
         )
         .route(
             "/catalogue/movies",
-            get(|state| catalogue_handler(state, "movies")),
+            get(|state, headers| catalogue_handler(state, "movies", headers)),
         )
         .route(
             "/catalogue/shows",
-            get(|state| catalogue_handler(state, "shows")),
+            get(|state, headers| catalogue_handler(state, "shows", headers)),
         )
         .route(
             "/catalogue/games",
-            get(|state| catalogue_handler(state, "games")),
+            get(|state, headers| catalogue_handler(state, "games", headers)),
         )
         .route("/{source}", get(content_source_handler))
         .route("/{source}/{entry}", get(entry_handler))
@@ -90,13 +99,136 @@ async fn main() {
     axum::serve(listener, app).await.unwrap();
 }
 
-async fn index(State(content): State<Arc<ContentSources>>) -> Markup {
-    templates::base_template(content.as_ref(), html! {})
+async fn index(State(content): State<Arc<ContentSources>>, headers: HeaderMap) -> Markup {
+    templates::base_template(content.as_ref(), html! {}, check_auth(&headers))
+}
+
+// Check if the user is authenticated via cookie
+fn check_auth(headers: &HeaderMap) -> bool {
+    let hashed_password = match std::env::var("HASHED_PASSWORD") {
+        Ok(pwd) => pwd,
+        Err(_) => return false,
+    };
+
+    if let Some(cookie_header) = headers.get(header::COOKIE)
+        && let Ok(cookie_str) = cookie_header.to_str()
+    {
+        for cookie_pair in cookie_str.split(';') {
+            if let Ok(cookie) = Cookie::parse(cookie_pair.trim())
+                && cookie.name() == "password"
+                && cookie.value() == hashed_password
+            {
+                return true;
+            }
+        }
+    }
+
+    false
+}
+
+async fn login_handler(State(content): State<Arc<ContentSources>>) -> Markup {
+    login_form(content.as_ref(), None)
+}
+
+#[derive(Deserialize)]
+struct LoginForm {
+    password: String,
+}
+
+async fn login_post_handler(
+    State(content): State<Arc<ContentSources>>,
+    Form(form): Form<LoginForm>,
+) -> Response {
+    let hashed_password = match std::env::var("HASHED_PASSWORD") {
+        Ok(pwd) => pwd,
+        Err(_) => {
+            return login_form(content.as_ref(), Some("Server configuration error"))
+                .into_response();
+        }
+    };
+
+    // Hash the submitted password
+    let mut hasher = Sha256::new();
+    hasher.update(form.password.as_bytes());
+    let hashed_input = format!("{:x}", hasher.finalize());
+
+    if hashed_input == hashed_password {
+        // Create cookie
+        let cookie = Cookie::build(("password", hashed_password))
+            .path("/")
+            .secure(true)
+            .same_site(cookie::SameSite::Strict)
+            .http_only(true)
+            .expires(OffsetDateTime::now_utc().checked_add(Duration::days(30)))
+            .build();
+
+        Response::builder()
+            .status(StatusCode::SEE_OTHER)
+            .header(header::SET_COOKIE, cookie.to_string())
+            .header(header::LOCATION, "/catalogue/add")
+            .body(axum::body::Body::empty())
+            .unwrap()
+    } else {
+        login_form(content.as_ref(), Some("Invalid password")).into_response()
+    }
+}
+
+async fn logout_handler() -> Response {
+    // Create an expired cookie to clear the authentication
+    let cookie = Cookie::build(("password", ""))
+        .path("/")
+        .secure(true)
+        .same_site(cookie::SameSite::Strict)
+        .http_only(true)
+        .expires(OffsetDateTime::now_utc())
+        .build();
+
+    Response::builder()
+        .status(StatusCode::SEE_OTHER)
+        .header(header::SET_COOKIE, cookie.to_string())
+        .header(header::LOCATION, "/")
+        .body(axum::body::Body::empty())
+        .unwrap()
+}
+
+fn login_form(content: &ContentSources, error: Option<&str>) -> Markup {
+    templates::base_template(
+        content,
+        html! {
+            div.max-w-md.mx-auto.mt-16 {
+                div.bg-white.p-8 {
+                    h1.text-2xl.font-bold.text-gray-900.mb-6 { "Login" }
+
+                    @if let Some(err) = error {
+                        div.bg-red-100.border.border-red-400.text-red-700.px-4.py-3.rounded.mb-4 {
+                            (err)
+                        }
+                    }
+
+                    form method="post" {
+                        div.space-y-4 {
+                            div {
+                                label.block.text-sm.font-medium.text-gray-700.mb-2 for="password" {
+                                    "Password"
+                                }
+                                input.w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500
+                                    type="password" name="password" id="password" placeholder="Enter password" required;
+                            }
+                            button.w-full.bg-blue-600.hover:bg-blue-700.text-white.font-medium.py-2.px-4.rounded-md.transition-colors
+                                type="submit" { "Login" }
+                        }
+                    }
+                }
+            }
+        },
+        false,
+    )
 }
 
 async fn content_source_handler(
     State(content): State<Arc<ContentSources>>,
     Path(source): Path<String>,
+    headers: HeaderMap,
 ) -> Markup {
     let entries = get_entries_for_source(&content, &source);
 
@@ -108,6 +240,7 @@ async fn content_source_handler(
                 (render_entries_list(&entries, &source))
             }
         },
+        check_auth(&headers),
     )
 }
 
@@ -364,6 +497,7 @@ impl<'a> ContentEntryType<'a> {
 async fn entry_handler(
     State(content): State<Arc<ContentSources>>,
     Path((source, entry_id)): Path<(String, String)>,
+    headers: HeaderMap,
 ) -> Markup {
     let mut ctx = dummy_context!(&content);
     let (json_schema, entry) = match source.as_str() {
@@ -447,6 +581,7 @@ async fn entry_handler(
               }
             }
         },
+        check_auth(&headers),
     )
 }
 
@@ -513,6 +648,7 @@ fn render_catalogue_card(entry: &EntryDisplay, source: &str) -> Markup {
 async fn catalogue_handler(
     State(content): State<Arc<ContentSources>>,
     source: &'static str,
+    headers: HeaderMap,
 ) -> Markup {
     let entries = get_entries_for_source(&content, source);
 
@@ -524,11 +660,18 @@ async fn catalogue_handler(
                 (render_catalogue_grid(&entries, source))
             }
         },
+        check_auth(&headers),
     )
 }
 
-async fn catalogue_add_handler(State(content): State<Arc<ContentSources>>) -> Markup {
-    catalogue_add_form(content.as_ref(), None)
+async fn catalogue_add_handler(
+    State(content): State<Arc<ContentSources>>,
+    headers: HeaderMap,
+) -> Response {
+    if !check_auth(&headers) {
+        return Redirect::to("/login").into_response();
+    }
+    catalogue_add_form(content.as_ref(), None, true).into_response()
 }
 
 #[derive(Debug, Deserialize)]
@@ -562,15 +705,28 @@ struct GitHubCommitter {
 
 async fn catalogue_add_post_handler(
     State(content): State<Arc<ContentSources>>,
+    headers: HeaderMap,
     Form(form): Form<CatalogueForm>,
 ) -> Response {
+    if !check_auth(&headers) {
+        return Redirect::to("/login").into_response();
+    }
     // Check password
-    let form_password = std::env::var("FORM_PASSWORD").unwrap_or_else(|_| "password".to_string());
+    let form_password = match std::env::var("FORM_PASSWORD") {
+        Ok(pwd) => pwd,
+        Err(_) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                catalogue_add_form(content.as_ref(), Some("Server configuration error"), true),
+            )
+                .into_response();
+        }
+    };
 
     if form.form_password != form_password {
         return (
             StatusCode::UNAUTHORIZED,
-            catalogue_add_form(content.as_ref(), Some("Invalid password")),
+            catalogue_add_form(content.as_ref(), Some("Invalid password"), true),
         )
             .into_response();
     }
@@ -584,7 +740,7 @@ async fn catalogue_add_post_handler(
         _ => {
             return (
                 StatusCode::BAD_REQUEST,
-                catalogue_add_form(content.as_ref(), Some("Invalid type")),
+                catalogue_add_form(content.as_ref(), Some("Invalid type"), true),
             )
                 .into_response();
         }
@@ -594,8 +750,7 @@ async fn catalogue_add_post_handler(
     let mut slug = slug::slugify(&form.name);
     let client = reqwest::Client::new();
     let github_token = std::env::var("GITHUB_KEY").unwrap_or_default();
-    let github_repo =
-        std::env::var("GITHUB_REPO").unwrap_or_else(|_| "Princesseuh/erika.florist".to_string());
+    let github_repo = std::env::var("GITHUB_REPO").unwrap_or_default();
 
     // Check if file exists on GitHub and increment if needed
     let file_exists =
@@ -668,16 +823,18 @@ async fn catalogue_add_post_handler(
                             }
                         }
                     },
+                    true,
                 ),
             )
                 .into_response()
-        }
+            }
         Err(e) => {
             (
                 StatusCode::INTERNAL_SERVER_ERROR,
                 catalogue_add_form(
                     content.as_ref(),
                     Some(&format!("Failed to create GitHub commit: {}", e)),
+                    true,
                 ),
             )
                 .into_response()
@@ -685,7 +842,11 @@ async fn catalogue_add_post_handler(
     }
 }
 
-fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
+fn catalogue_add_form(
+    content: &ContentSources,
+    error: Option<&str>,
+    is_authenticated: bool,
+) -> Markup {
     let ratings = ["Hated", "Disliked", "Okay", "Liked", "Loved", "Masterpiece"];
     let ratings_emoji = ["🙁", "😕", "😐", "🙂", "😍", "❤️"];
 
@@ -872,6 +1033,7 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
                 (script_content)
             }
         },
+        is_authenticated,
     )
 }
 
@@ -885,6 +1047,10 @@ async fn catalogue_proxy_handler(
     Query(params): Query<ProxyQuery>,
     headers: HeaderMap,
 ) -> Result<Response, StatusCode> {
+    if !check_auth(&headers) {
+        return Err(StatusCode::UNAUTHORIZED);
+    }
+
     let source = headers
         .get("x-proxy-source")
         .and_then(|v| v.to_str().ok())

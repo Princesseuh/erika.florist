@@ -1,7 +1,7 @@
 use erikaflorist::content::ContentSources;
 use maud::{Markup, PreEscaped, html};
 
-pub fn base_template(sources: &ContentSources, content: Markup) -> Markup {
+pub fn base_template(sources: &ContentSources, content: Markup, is_authenticated: bool) -> Markup {
     html! {
         head {
             meta charset="utf-8";
@@ -50,7 +50,7 @@ pub fn base_template(sources: &ContentSources, content: Markup) -> Markup {
             div #mobile-overlay.mobile-overlay {}
 
             div.flex.min-h-screen {
-              (sidebar(sources))
+              (sidebar(sources, is_authenticated))
               main.flex-1.p-6.md:p-6.pt-16.md:pt-6.max-w-full.overflow-x-hidden {
                 (content)
               }
@@ -81,7 +81,7 @@ pub fn base_template(sources: &ContentSources, content: Markup) -> Markup {
     }
 }
 
-fn sidebar(sources: &ContentSources) -> Markup {
+fn sidebar(sources: &ContentSources, is_authenticated: bool) -> Markup {
     let all_sources: Vec<String> = sources
         .sources()
         .iter()
@@ -116,6 +116,17 @@ fn sidebar(sources: &ContentSources) -> Markup {
                             li {
                                 a.block.px-3.py-2.rounded-md.text-gray-700.hover:bg-gray-100.hover:text-gray-900.transition-colors href=(format!("/catalogue/{}", name)) { (capitalize_first(name)) }
                             }
+                        }
+                    }
+
+                    li.mt-6.pt-4.border-t.border-gray-200 {
+                        @if is_authenticated {
+                            div.space-y-2 {
+                                span.block.px-3.py-2.text-sm.text-gray-500 { "Logged in" }
+                                a.block.px-3.py-2.rounded-md.text-red-600.hover:bg-red-50.hover:text-red-700.transition-colors href="/logout" { "Sign out" }
+                            }
+                        } @else {
+                            a.block.px-3.py-2.rounded-md.text-gray-700.hover:bg-gray-100.hover:text-gray-900.transition-colors href="/login" { "Login" }
                         }
                     }
                 }

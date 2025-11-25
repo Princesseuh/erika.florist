@@ -745,6 +745,14 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
                 #cover-preview {
                     display: none;
                 }
+                @media (min-width: 768px) {
+                    #cover-preview.show {
+                        display: block;
+                    }
+                }
+                input, select, textarea {
+                    background-color: white !important;
+                }
                 "#
             }
 
@@ -755,17 +763,17 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
             }
 
             form method="post" {
-                div.flex.flex-col.md:flex-row.md:space-x-6 {
-                    // Left - Editor
-                    article."md:w-2/3"."lg:w-3/4".h-full {
+                div.flex.flex-col.md:flex-row.md:space-x-6.gap-6.md:gap-0 {
+                    // Center - Editor (shown after rating on mobile)
+                    article."order-2"."md:order-1"."md:w-2/3 lg:w-3/4".h-full.min-h-0 {
                         div.h-full #editor {}
                         textarea.hidden name="comment" id="comment" {""}
                     }
 
                     // Right sidebar - Metadata & Info
-                    aside."lg:w-1/4".mb-6.md:mb-0.space-y-6 {
-                        // Cover preview
-                        div #cover-preview.space-y-2 {
+                    aside."order-1"."md:order-2"."lg:w-1/4".space-y-6 {
+                        // Cover preview (hidden on mobile, shown as background instead)
+                        div #cover-preview.space-y-2.hidden.md:block {
                             label.block.text-sm.font-medium.text-gray-700 { "Cover" }
                             img #cover-image.w-full.rounded.shadow-sm src="" alt="Cover";
                         }
@@ -796,7 +804,7 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
                         // Rating
                         div.space-y-2 {
                             label.block.text-sm.font-medium.text-gray-700 { "Rating" }
-                            div #rating-list.flex.flex-wrap.justify-center.gap-2.text-3xl {
+                            div #rating-list.flex.flex-wrap.justify-center.gap-3.text-4xl.md:text-3xl {
                                 @for (i, rating) in ratings.iter().enumerate() {
                                     input.rating-radio type="radio" required name="rating" id=(format!("rating{}", i)) value=(rating.to_lowercase());
                                     label.cursor-pointer.grayscale.hover:grayscale-0.transition-all.duration-200
@@ -805,6 +813,47 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
                             }
                         }
 
+                        // Date (hidden on mobile)
+                        div.space-y-2.hidden.md:block {
+                            div.flex.items-center.justify-between {
+                                label.text-sm.font-medium.text-gray-700 for="date-desktop" { "Finished Date" }
+                                label.flex.items-center.gap-2.text-xs.text-gray-600 {
+                                    input.rounded type="checkbox" id="no-date-desktop" name="no-date" checked;
+                                    span { "Set" }
+                                }
+                            }
+                            input.w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500
+                                type="date" name="date" id="date-desktop" required value=(chrono::Local::now().format("%Y-%m-%d"));
+                        }
+
+                        // Source ID (hidden on mobile)
+                        div.space-y-2.hidden.md:block {
+                            label.block.text-sm.font-medium.text-gray-700 for="source-id" { "Source ID" }
+                            input.w-full.px-3.py-2.border.border-gray-300.rounded-md.bg-gray-50.focus:outline-none.focus:ring-2.focus:ring-blue-500
+                                type="text" id="source-id" name="source-id" placeholder="Auto-filled" required;
+                        }
+
+                        // Platform (hidden on mobile)
+                        div #platform.hidden.space-y-2 {
+                            label.block.text-sm.font-medium.text-gray-700 for="platform-select" { "Platform" }
+                            select.w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500
+                                name="platform-select" id="platform-select" {}
+                        }
+
+                        // Password (hidden on mobile)
+                        div.space-y-2.hidden.md:block {
+                            label.block.text-sm.font-medium.text-gray-700 for="form_password-desktop" { "Password" }
+                            input.w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500
+                                type="password" name="form_password" placeholder="Confirm" required;
+                        }
+
+                        // Submit (hidden on mobile)
+                        button.w-full.bg-blue-600.hover:bg-blue-700.text-white.font-medium.py-2.px-4.rounded-md.transition-colors.hidden.md:block
+                            type="submit" { "Submit" }
+                    }
+
+                    // Bottom fields on mobile only (after editor)
+                    aside.order-3.md:hidden.space-y-6 {
                         // Date
                         div.space-y-2 {
                             div.flex.items-center.justify-between {
@@ -820,16 +869,16 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
 
                         // Source ID
                         div.space-y-2 {
-                            label.block.text-sm.font-medium.text-gray-700 for="source-id" { "Source ID" }
+                            label.block.text-sm.font-medium.text-gray-700 for="source-id-mobile" { "Source ID" }
                             input.w-full.px-3.py-2.border.border-gray-300.rounded-md.bg-gray-50.focus:outline-none.focus:ring-2.focus:ring-blue-500
-                                type="text" id="source-id" name="source-id" placeholder="Auto-filled" required;
+                                type="text" id="source-id-mobile" name="source-id" placeholder="Auto-filled" required;
                         }
 
                         // Platform
-                        div #platform.hidden.space-y-2 {
-                            label.block.text-sm.font-medium.text-gray-700 for="platform-select" { "Platform" }
+                        div #platform-mobile.hidden.space-y-2 {
+                            label.block.text-sm.font-medium.text-gray-700 for="platform-select-mobile" { "Platform" }
                             select.w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500
-                                name="platform-select" id="platform-select" {}
+                                name="platform-select" id="platform-select-mobile" {}
                         }
 
                         // Password

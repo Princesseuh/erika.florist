@@ -3,7 +3,7 @@ import { bold, gray } from "kleur/colors";
 import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
-import { Logger, getContentDirs } from "./catalogueUtils";
+import { Logger, getContentDirs } from "./catalogueUtils.ts";
 
 interface OpenLibraryData {
 	bib_key: string;

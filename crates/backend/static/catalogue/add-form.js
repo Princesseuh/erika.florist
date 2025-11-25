@@ -43,11 +43,13 @@ document.addEventListener("DOMContentLoaded", () => {
 	 * @type {HTMLInputElement | null}
 	 */
 	const nodateCheckbox = document.querySelector("#no-date");
+	const nodateCheckboxDesktop = document.querySelector("#no-date-desktop");
 
 	/**
 	 * @type {HTMLInputElement | null}
 	 * */
 	const dateInput = document.querySelector("#date");
+	const dateInputDesktop = document.querySelector("#date-desktop");
 
 	if (
 		!nameInput ||
@@ -57,7 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		!platform ||
 		!platformSelect ||
 		!nodateCheckbox ||
-		!dateInput
+		!dateInput ||
+		!nodateCheckboxDesktop ||
+		!dateInputDesktop
 	) {
 		console.error("Missing required elements:");
 		console.error("nameInput", nameInput);
@@ -119,11 +123,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			// Update cover preview
 			if (selectedSuggestion.poster_path) {
-				const coverPreview = document.querySelector("#cover-preview");
-				const coverImage = document.querySelector("#cover-image");
+				const coverPreview = /** @type {HTMLElement | null} */ (
+					document.querySelector("#cover-preview")
+				);
+				const coverImage = /** @type {HTMLImageElement | null} */ (
+					document.querySelector("#cover-image")
+				);
 				if (coverPreview && coverImage) {
 					coverImage.src = selectedSuggestion.poster_path;
-					coverPreview.style.display = "block";
+					coverPreview.classList.add("show");
+				}
+
+				// Set background image on body for mobile
+				const body = document.querySelector("body");
+				if (body) {
+					body.setAttribute(
+						"style",
+						`background: linear-gradient(#ffffffe6, #ffffffe6), url(${selectedSuggestion.poster_path}); background-size: contain; background-repeat: round repeat;`,
+					);
 				}
 			}
 
@@ -155,17 +172,31 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 
+	const syncDateInputs = (checked) => {
+		const dateValue = new Date().toISOString().split("T")[0];
+		[dateInput, dateInputDesktop].forEach((input) => {
+			if (input) {
+				if (checked) {
+					input.removeAttribute("disabled");
+					input.type = "date";
+					input.value = dateValue;
+				} else {
+					input.setAttribute("disabled", "true");
+					input.type = "text";
+					input.value = "N/A";
+				}
+			}
+		});
+	};
+
 	nodateCheckbox.addEventListener("change", () => {
-		if (nodateCheckbox.checked) {
-			dateInput.removeAttribute("disabled");
-			dateInput.type = "date";
-			// @ts-expect-error - zzz
-			dateInput.value = new Date().toISOString().split("T")[0];
-		} else {
-			dateInput.setAttribute("disabled", "true");
-			dateInput.type = "text";
-			dateInput.value = "N/A";
-		}
+		if (nodateCheckboxDesktop) nodateCheckboxDesktop.checked = nodateCheckbox.checked;
+		syncDateInputs(nodateCheckbox.checked);
+	});
+
+	nodateCheckboxDesktop.addEventListener("change", () => {
+		nodateCheckbox.checked = nodateCheckboxDesktop.checked;
+		syncDateInputs(nodateCheckboxDesktop.checked);
 	});
 });
 

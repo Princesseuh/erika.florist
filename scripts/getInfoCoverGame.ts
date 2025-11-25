@@ -4,7 +4,7 @@ import igdb from "igdb-api-node";
 import { bold, gray } from "kleur/colors";
 import fs from "node:fs";
 import path from "node:path";
-import { Logger, getContentDirs } from "./catalogueUtils";
+import { Logger, getContentDirs } from "./catalogueUtils.ts";
 
 async function getAccessToken() {
 	const response = await (

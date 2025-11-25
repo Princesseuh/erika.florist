@@ -1,8 +1,8 @@
 import { bold } from "kleur/colors";
-import { Logger } from "./catalogueUtils";
-import { getDataForBooks } from "./getInfoCoverBook";
-import { getDataForGames } from "./getInfoCoverGame";
-import { getDataForMoviesAndShows } from "./getInfoCoverMovieShow";
+import { Logger } from "./catalogueUtils.ts";
+import { getDataForBooks } from "./getInfoCoverBook.ts";
+import { getDataForGames } from "./getInfoCoverGame.ts";
+import { getDataForMoviesAndShows } from "./getInfoCoverMovieShow.ts";
 
 const [gameCount, bookCount, moviesCount, showsCount] = await Promise.all([
 	getDataForGames(),

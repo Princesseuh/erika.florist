@@ -2,7 +2,7 @@ import matter from "gray-matter";
 import { bold } from "kleur/colors";
 import fs from "node:fs";
 import path from "node:path";
-import { getContentDirs, Logger } from "./catalogueUtils";
+import { getContentDirs, Logger } from "./catalogueUtils.ts";
 
 export async function getLetterboxdCSV(): Promise<string> {
 	const movieDirs = getContentDirs("movies");

@@ -43,13 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
 	 * @type {HTMLInputElement | null}
 	 */
 	const nodateCheckbox = document.querySelector("#no-date");
-	const nodateCheckboxDesktop = document.querySelector("#no-date-desktop");
 
 	/**
 	 * @type {HTMLInputElement | null}
 	 * */
 	const dateInput = document.querySelector("#date");
-	const dateInputDesktop = document.querySelector("#date-desktop");
 
 	if (
 		!nameInput ||
@@ -59,9 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		!platform ||
 		!platformSelect ||
 		!nodateCheckbox ||
-		!dateInput ||
-		!nodateCheckboxDesktop ||
-		!dateInputDesktop
+		!dateInput
 	) {
 		console.error("Missing required elements:");
 		console.error("nameInput", nameInput);
@@ -136,7 +132,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 				// Set background image on body for mobile
 				const body = document.querySelector("body");
-				if (body) {
+				const isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+				if (body && isMobile) {
 					body.setAttribute(
 						"style",
 						`background: linear-gradient(#ffffffe6, #ffffffe6), url(${selectedSuggestion.poster_path}); background-size: contain; background-repeat: round repeat;`,
@@ -172,31 +169,17 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 
-	const syncDateInputs = (checked) => {
-		const dateValue = new Date().toISOString().split("T")[0];
-		[dateInput, dateInputDesktop].forEach((input) => {
-			if (input) {
-				if (checked) {
-					input.removeAttribute("disabled");
-					input.type = "date";
-					input.value = dateValue;
-				} else {
-					input.setAttribute("disabled", "true");
-					input.type = "text";
-					input.value = "N/A";
-				}
-			}
-		});
-	};
-
 	nodateCheckbox.addEventListener("change", () => {
-		if (nodateCheckboxDesktop) nodateCheckboxDesktop.checked = nodateCheckbox.checked;
-		syncDateInputs(nodateCheckbox.checked);
-	});
-
-	nodateCheckboxDesktop.addEventListener("change", () => {
-		nodateCheckbox.checked = nodateCheckboxDesktop.checked;
-		syncDateInputs(nodateCheckboxDesktop.checked);
+		if (nodateCheckbox.checked) {
+			dateInput.removeAttribute("disabled");
+			dateInput.type = "date";
+			// @ts-expect-error - zzz
+			dateInput.value = new Date().toISOString().split("T")[0];
+		} else {
+			dateInput.setAttribute("disabled", "true");
+			dateInput.type = "text";
+			dateInput.value = "N/A";
+		}
 	});
 });
 

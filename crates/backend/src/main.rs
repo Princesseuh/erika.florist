@@ -685,29 +685,28 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
     let ratings = ["Hated", "Disliked", "Okay", "Liked", "Loved", "Masterpiece"];
     let ratings_emoji = ["🙁", "😕", "😐", "🙂", "😍", "❤️"];
 
-    let script_content = PreEscaped(format!(
+    let script_content = PreEscaped(
         r#"
-        import {{ ink, defineOptions }} from 'https://esm.sh/ink-mde@0.22.0';
+        import { ink, defineOptions } from 'https://esm.sh/ink-mde@0.22.0';
 
-        {}
-
-        const options = defineOptions({{
+        const options = defineOptions({
             doc: '',
-            interface: {{
+            interface: {
                 toolbar: true,
                 appearance: 'light',
-            }}
-        }});
+            }
+        });
 
         const editor = ink(document.getElementById('editor'), options);
 
         // Get content on form submit
-        document.querySelector('form').addEventListener('submit', (e) => {{
-            document.getElementById('comment').value = editor.getDoc();
-        }});
+        document.querySelector('form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+            document.getElementById('comment').value = editor.getDoc() || document.getElementById('comment-mobile').value;
+                        console.log(document.getElementById('comment').value);
+        });
     "#,
-        include_str!("./schema-to-form.js"),
-    ));
+    );
 
     templates::base_template(
         content,
@@ -764,20 +763,14 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
 
             form method="post" {
                 div.flex.flex-col.md:flex-row.md:space-x-6.gap-6.md:gap-0 {
-                    // Center - Editor (shown after rating on mobile)
-                    article."order-2"."md:order-1"."md:w-2/3 lg:w-3/4".h-full.min-h-0 {
+                    // Editor left
+                    article.hidden."md:block md:w-2/3"."lg:w-3/4".h-full.min-h-0 {
                         div.h-full #editor {}
                         textarea.hidden name="comment" id="comment" {""}
                     }
 
-                    // Right sidebar - Metadata & Info
-                    aside."order-1"."md:order-2"."lg:w-1/4".space-y-6 {
-                        // Cover preview (hidden on mobile, shown as background instead)
-                        div #cover-preview.space-y-2.hidden.md:block {
-                            label.block.text-sm.font-medium.text-gray-700 { "Cover" }
-                            img #cover-image.w-full.rounded.shadow-sm src="" alt="Cover";
-                        }
-
+                    // Sidebar right
+                    aside."md:w-1/4".space-y-6 {
                         // Type
                         div.space-y-2 {
                             label.block.text-sm.font-medium.text-gray-700 for="type" { "Type" }
@@ -813,53 +806,18 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
                             }
                         }
 
-                        // Date (hidden on mobile)
-                        div.space-y-2.hidden.md:block {
-                            div.flex.items-center.justify-between {
-                                label.text-sm.font-medium.text-gray-700 for="date-desktop" { "Finished Date" }
-                                label.flex.items-center.gap-2.text-xs.text-gray-600 {
-                                    input.rounded type="checkbox" id="no-date-desktop" name="no-date" checked;
-                                    span { "Set" }
-                                }
-                            }
-                            input.w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500
-                                type="date" name="date" id="date-desktop" required value=(chrono::Local::now().format("%Y-%m-%d"));
+                        // Editor (mobile)
+                        div.md:hidden.space-y-2 {
+                            label.block.text-sm.font-medium.text-gray-700 for="comment-mobile" { "Comment" }
+                            textarea #comment-mobile ."md:hidden".w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500 name="comment" form="" {""}
                         }
 
-                        // Source ID (hidden on mobile)
-                        div.space-y-2.hidden.md:block {
-                            label.block.text-sm.font-medium.text-gray-700 for="source-id" { "Source ID" }
-                            input.w-full.px-3.py-2.border.border-gray-300.rounded-md.bg-gray-50.focus:outline-none.focus:ring-2.focus:ring-blue-500
-                                type="text" id="source-id" name="source-id" placeholder="Auto-filled" required;
-                        }
-
-                        // Platform (hidden on mobile)
-                        div #platform.hidden.space-y-2 {
-                            label.block.text-sm.font-medium.text-gray-700 for="platform-select" { "Platform" }
-                            select.w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500
-                                name="platform-select" id="platform-select" {}
-                        }
-
-                        // Password (hidden on mobile)
-                        div.space-y-2.hidden.md:block {
-                            label.block.text-sm.font-medium.text-gray-700 for="form_password-desktop" { "Password" }
-                            input.w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500
-                                type="password" name="form_password" placeholder="Confirm" required;
-                        }
-
-                        // Submit (hidden on mobile)
-                        button.w-full.bg-blue-600.hover:bg-blue-700.text-white.font-medium.py-2.px-4.rounded-md.transition-colors.hidden.md:block
-                            type="submit" { "Submit" }
-                    }
-
-                    // Bottom fields on mobile only (after editor)
-                    aside.order-3.md:hidden.space-y-6 {
                         // Date
                         div.space-y-2 {
                             div.flex.items-center.justify-between {
                                 label.text-sm.font-medium.text-gray-700 for="date" { "Finished Date" }
                                 label.flex.items-center.gap-2.text-xs.text-gray-600 {
-                                    input.rounded type="checkbox" id="no-date" name="no-date" checked;
+                                    input.rounded type="checkbox" id="no-date" checked;
                                     span { "Set" }
                                 }
                             }
@@ -869,16 +827,16 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
 
                         // Source ID
                         div.space-y-2 {
-                            label.block.text-sm.font-medium.text-gray-700 for="source-id-mobile" { "Source ID" }
+                            label.block.text-sm.font-medium.text-gray-700 for="source-id" { "Source ID" }
                             input.w-full.px-3.py-2.border.border-gray-300.rounded-md.bg-gray-50.focus:outline-none.focus:ring-2.focus:ring-blue-500
-                                type="text" id="source-id-mobile" name="source-id" placeholder="Auto-filled" required;
+                                type="text" id="source-id" name="source-id" placeholder="Auto-filled" required;
                         }
 
                         // Platform
-                        div #platform-mobile.hidden.space-y-2 {
-                            label.block.text-sm.font-medium.text-gray-700 for="platform-select-mobile" { "Platform" }
+                        div #platform.hidden.space-y-2 {
+                            label.block.text-sm.font-medium.text-gray-700 for="platform-select" { "Platform" }
                             select.w-full.px-3.py-2.border.border-gray-300.rounded-md.focus:outline-none.focus:ring-2.focus:ring-blue-500
-                                name="platform-select" id="platform-select-mobile" {}
+                                name="platform-select" id="platform-select" {}
                         }
 
                         // Password
@@ -891,6 +849,12 @@ fn catalogue_add_form(content: &ContentSources, error: Option<&str>) -> Markup {
                         // Submit
                         button.w-full.bg-blue-600.hover:bg-blue-700.text-white.font-medium.py-2.px-4.rounded-md.transition-colors
                             type="submit" { "Submit" }
+
+                        // Cover preview
+                        div #cover-preview.space-y-2.hidden.md:block {
+                            label.block.text-sm.font-medium.text-gray-700 { "Cover" }
+                            img #cover-image.w-full.rounded.shadow-sm src="" alt="Cover";
+                        }
                     }
                 }
             }

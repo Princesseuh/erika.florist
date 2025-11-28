@@ -49,7 +49,6 @@ fn is_dev() -> bool {
 
 #[tokio::main]
 async fn main() {
-    let _ = dotenvy::from_filename(".env.dev");
     let _ = dotenvy::from_filename(".env");
 
     let mut content = content_sources("../website".to_owned());

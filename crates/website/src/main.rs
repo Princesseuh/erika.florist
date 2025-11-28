@@ -14,7 +14,9 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
             pages::WikiIndex,
             pages::WikiEntryPage,
             pages::ProjectIndex,
-            pages::ProjectPage
+            pages::ProjectPage,
+            pages::BlogRSS,
+            pages::CatalogueRSS
         ],
         content_sources(".".to_owned()),
         BuildOptions {

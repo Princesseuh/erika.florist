@@ -42,7 +42,7 @@ struct EntryDisplay {
 
 fn is_dev() -> bool {
     dotenvy::var("IS_DEV")
-        .unwrap_or_else(|_| "true".to_string())
+        .unwrap_or_else(|_| "false".to_string())
         .to_lowercase()
         == "true"
 }
@@ -1166,7 +1166,7 @@ async fn check_if_file_exists(
             repo, path_type, slug, slug
         ))
         .header("Accept", "application/vnd.github+json")
-        .header("User-Agent", "erika-florist-backend")
+        .header("User-Agent", "Princesseuh")
         .header("Authorization", format!("Bearer {}", token))
         .header("X-GitHub-Api-Version", "2022-11-28")
         .send()
@@ -1208,7 +1208,7 @@ async fn post_to_github(
             repo, path
         ))
         .header("Accept", "application/vnd.github+json")
-        .header("User-Agent", "erika-florist-backend")
+        .header("User-Agent", "Princesseuh")
         .header("Authorization", format!("Bearer {}", token))
         .header("X-GitHub-Api-Version", "2022-11-28")
         .json(&body)

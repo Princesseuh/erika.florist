@@ -98,17 +98,17 @@ fn get_sorted_tags_and_years(ctx: &mut PageContext) -> TagsAndYears {
 pub struct BlogPostPage;
 
 #[derive(Params, Clone)]
-struct Params {
-    slug: String,
+pub struct BlogPostPageParams {
+    pub slug: String,
 }
 
-impl Route<Params> for BlogPostPage {
-    fn pages(&self, context: &mut DynamicRouteContext) -> Pages<Params> {
+impl Route<BlogPostPageParams> for BlogPostPage {
+    fn pages(&self, context: &mut DynamicRouteContext) -> Pages<BlogPostPageParams> {
         context
             .content
             .get_source::<BlogPost>("blog")
             .into_pages(|entry| Page {
-                params: Params {
+                params: BlogPostPageParams {
                     slug: entry.id.clone(),
                 },
                 props: (),
@@ -116,7 +116,7 @@ impl Route<Params> for BlogPostPage {
     }
 
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
-        let params = ctx.params::<Params>();
+        let params = ctx.params::<BlogPostPageParams>();
 
         let article = ctx
             .content

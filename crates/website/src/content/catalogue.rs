@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::{fmt::Display, sync::Arc};
 
 use chrono::NaiveDate;
 use maudit::{
@@ -10,6 +10,12 @@ use maudit::{
     route::PageContext,
 };
 use serde::{Deserialize, Deserializer, de::DeserializeOwned};
+use xml_builder::XMLElement;
+
+use crate::{
+    content::{CatalogueBook, CatalogueGame, CatalogueMovie, CatalogueShow},
+    rss::{AsXMLError, rewrite_rss_content},
+};
 
 pub mod books;
 pub mod games;
@@ -25,6 +31,20 @@ pub enum Rating {
     Okay,
     Disliked,
     Hated,
+}
+
+impl Display for Rating {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let rating_str = match self {
+            Rating::Masterpiece => "Masterpiece",
+            Rating::Loved => "Loved",
+            Rating::Liked => "Liked",
+            Rating::Okay => "Okay",
+            Rating::Disliked => "Disliked",
+            Rating::Hated => "Hated",
+        };
+        write!(f, "{}", rating_str)
+    }
 }
 
 impl Rating {
@@ -149,5 +169,128 @@ where
         NaiveDate::parse_from_str(&s, "%Y-%m-%d")
             .map(Some)
             .map_err(serde::de::Error::custom)
+    }
+}
+
+fn catalogue_entry_to_xml(
+    id: &str,
+    title: String,
+    rating: &Rating,
+    finished_date: Option<NaiveDate>,
+    rendered_content: &str,
+    catalogue_type: &str,
+) -> Result<XMLElement, crate::rss::AsXMLError> {
+    // TODO: When actual pages for catalogue entries exist, we can do this typesafe
+    let entry_url = format!("https://erika.florist/catalogue/{}/{}", catalogue_type, id);
+
+    let mut item = XMLElement::new("item");
+
+    let mut item_title = XMLElement::new("title");
+    item_title.add_text(title)?;
+    item.add_child(item_title)?;
+
+    let mut item_link = XMLElement::new("link");
+    item_link.add_text(entry_url.clone())?;
+    item.add_child(item_link)?;
+
+    let mut guid = XMLElement::new("guid");
+    guid.add_attribute("isPermaLink", "true");
+    guid.add_text(entry_url)?;
+    item.add_child(guid)?;
+
+    let mut pub_date = XMLElement::new("pubDate");
+
+    if let Some(finished_date) = finished_date {
+        let formatted_date = finished_date
+            .format("%a, %d %b %Y 00:00:00 +0000")
+            .to_string();
+        pub_date.add_text(formatted_date)?;
+    } else {
+        pub_date.add_text("Thu, 01 Jan 1970 00:00:00 +0000".to_string())?;
+    }
+    item.add_child(pub_date)?;
+
+    let mut item_description = XMLElement::new("description");
+    let description_text = format!("{}", rating);
+    item_description.add_text(description_text)?;
+    item.add_child(item_description)?;
+
+    let content = rewrite_rss_content(rendered_content)?;
+
+    let mut content_encoded = XMLElement::new("content:encoded");
+    content_encoded.add_text(format!("<![CDATA[{}]]>", content))?;
+    item.add_child(content_encoded)?;
+
+    Ok(item)
+}
+
+pub enum CatalogueEntry {
+    Game(Entry<CatalogueGame>),
+    Movie(Entry<CatalogueMovie>),
+    Book(Entry<CatalogueBook>),
+    Show(Entry<CatalogueShow>),
+}
+
+impl CatalogueEntry {
+    pub fn as_xml_element(&self, ctx: &mut PageContext) -> Result<XMLElement, AsXMLError> {
+        match self {
+            CatalogueEntry::Game(g) => {
+                let data = g.data(ctx);
+                let rendered_content = g.render(ctx);
+                catalogue_entry_to_xml(
+                    &g.id,
+                    data.title.clone(),
+                    &data.rating,
+                    data.finished_date,
+                    &rendered_content,
+                    "games",
+                )
+            }
+            CatalogueEntry::Movie(m) => {
+                let data = m.data(ctx);
+                let rendered_content = m.render(ctx);
+                catalogue_entry_to_xml(
+                    &m.id,
+                    data.title.clone(),
+                    &data.rating,
+                    data.finished_date,
+                    &rendered_content,
+                    "movies",
+                )
+            }
+            CatalogueEntry::Book(b) => {
+                let data = b.data(ctx);
+                let rendered_content = b.render(ctx);
+                catalogue_entry_to_xml(
+                    &b.id,
+                    data.title.clone(),
+                    &data.rating,
+                    data.finished_date,
+                    &rendered_content,
+                    "books",
+                )
+            }
+            CatalogueEntry::Show(s) => {
+                let data = s.data(ctx);
+                let rendered_content = s.render(ctx);
+                catalogue_entry_to_xml(
+                    &s.id,
+                    data.title.clone(),
+                    &data.rating,
+                    data.finished_date,
+                    &rendered_content,
+                    "shows",
+                )
+            }
+        }
+    }
+
+    pub fn finished_date(&self, ctx: &mut PageContext) -> Option<NaiveDate> {
+        match self {
+            CatalogueEntry::Game(g) => g.data(ctx).finished_date,
+            CatalogueEntry::Movie(m) => m.data(ctx).finished_date,
+            CatalogueEntry::Book(b) => b.data(ctx).finished_date,
+            CatalogueEntry::Show(s) => s.data(ctx).finished_date,
+        }
     }
 }

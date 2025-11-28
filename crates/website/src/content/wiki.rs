@@ -109,7 +109,12 @@ pub fn wiki_add_modified_info(
 
                 Box::new(move |_: &mut dyn ContentContext| {
                     let mut entry = parse_markdown_with_frontmatter::<WikiEntry>(&content);
-                    if let Some(ref info) = git_info_for_file {
+                    if is_dev() {
+                        entry.add_last_modified_info(WikiLastModified {
+                            date: NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(),
+                            commit_url: "#".to_string(),
+                        });
+                    } else if let Some(ref info) = git_info_for_file {
                         let parsed_date = NaiveDate::parse_from_str(&info.date, "%Y-%m-%d")
                             .unwrap_or_else(|e| {
                                 eprintln!("Failed to parse date: {}, {}", info.date, e);
@@ -122,11 +127,6 @@ pub fn wiki_add_modified_info(
                                 "https://github.com/Princesseuh/erika.florist/commit/{}",
                                 info.r#ref
                             ),
-                        });
-                    } else if is_dev() {
-                        entry.add_last_modified_info(WikiLastModified {
-                            date: NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(),
-                            commit_url: "#".to_string(),
                         });
                     } else {
                         eprintln!(

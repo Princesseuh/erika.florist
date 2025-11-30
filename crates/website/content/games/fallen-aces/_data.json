@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1718323200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 35096,
+      "name": "Trey Powell",
+      "role": "developer"
+    },
+    {
+      "id": 9190,
+      "name": "New Blood Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 35097,
+      "name": "Jason Bond",
+      "role": "developer"
+    }
+  ]
+}

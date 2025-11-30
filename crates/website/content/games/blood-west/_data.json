@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1701734400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    }
+  ],
+  "companies": [
+    {
+      "id": 16709,
+      "name": "Hyperstrange",
+      "role": "developer"
+    },
+    {
+      "id": 9190,
+      "name": "New Blood Interactive",
+      "role": "publisher"
+    }
+  ]
+}

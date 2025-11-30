@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1534118400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 7397,
+      "name": "White Rabbit",
+      "role": "developer"
+    },
+    {
+      "id": 6352,
+      "name": "Serenity Forge",
+      "role": "publisher"
+    }
+  ]
+}

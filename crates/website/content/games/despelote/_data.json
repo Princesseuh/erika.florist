@@ -1,0 +1,56 @@
+{
+  "first_release_date": 1746057600,
+  "genres": [
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    },
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 5213,
+      "name": "Panic",
+      "role": "publisher"
+    },
+    {
+      "id": 49283,
+      "name": "Julián Cordero",
+      "role": "developer"
+    },
+    {
+      "id": 49284,
+      "name": "Sebastian Valbuena",
+      "role": "developer"
+    }
+  ]
+}

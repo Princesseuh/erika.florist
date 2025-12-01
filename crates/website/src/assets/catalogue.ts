@@ -3,31 +3,17 @@ import { QuickScore } from "quick-score";
 import { thumbHashToDataURL } from "thumbhash";
 
 const VERSION = 4;
-const latestHash = document
-	.getElementById("catalogue-core")
-	?.getAttribute("data-latest") as string;
+const latestHash = document.getElementById("catalogue-core")?.getAttribute("data-latest") as string;
 
 const dbOpenRequest = indexedDB.open("catalogue", VERSION);
 
-const searchInput = document.getElementById(
-	"catalogue-search"
-) as HTMLInputElement;
-const ratingSelect = document.getElementById(
-	"catalogue-ratings"
-) as HTMLSelectElement;
-const sortSelect = document.getElementById(
-	"catalogue-sort"
-) as HTMLSelectElement;
-const sortOrderCheckbox = document.getElementById(
-	"catalogue-sort-ord"
-) as HTMLInputElement;
-const typeSelect = document.getElementById(
-	"catalogue-types"
-) as HTMLSelectElement;
+const searchInput = document.getElementById("catalogue-search") as HTMLInputElement;
+const ratingSelect = document.getElementById("catalogue-ratings") as HTMLSelectElement;
+const sortSelect = document.getElementById("catalogue-sort") as HTMLSelectElement;
+const sortOrderCheckbox = document.getElementById("catalogue-sort-ord") as HTMLInputElement;
+const typeSelect = document.getElementById("catalogue-types") as HTMLSelectElement;
 const content = document.getElementById("catalogue-content") as HTMLDivElement;
-const entriesCount = document.getElementById(
-	"catalogue-entry-count"
-) as HTMLDivElement;
+const entriesCount = document.getElementById("catalogue-entry-count") as HTMLDivElement;
 
 let db: IDBDatabase;
 let allItems: CatalogueItemDB[] = [];
@@ -40,7 +26,7 @@ let wasUpgraded = false;
 dbOpenRequest.onerror = (event) => {
 	console.error(
 		"Failed to open database, resetting database..",
-		(event.target as IDBOpenDBRequest).error
+		(event.target as IDBOpenDBRequest).error,
 	);
 
 	const deleteRequest = indexedDB.deleteDatabase("catalogue");
@@ -140,7 +126,7 @@ type CatalogueItem = [
 	string, // title
 	number, // rating
 	string, // author
-	number? // date
+	number?, // date
 ];
 
 interface CatalogueItemDB {
@@ -193,7 +179,7 @@ async function seedDatabase() {
 	try {
 		// Fetch the content from the JSON file
 		content = (await fetch("/catalogue/content.json").then((response) =>
-			response.json()
+			response.json(),
 		)) as CatalogueData;
 	} catch (error) {
 		console.error("Failed to fetch catalogue content", error);
@@ -201,9 +187,7 @@ async function seedDatabase() {
 		return;
 	}
 
-	const contentObjectStore = db
-		.transaction("content", "readwrite")
-		.objectStore("content");
+	const contentObjectStore = db.transaction("content", "readwrite").objectStore("content");
 	const [version, data] = content;
 
 	const versionRequest = contentObjectStore.add({
@@ -238,8 +222,8 @@ async function seedDatabase() {
 				new Uint8Array(
 					atob(placeholder)
 						.split("")
-						.map((c) => c.charCodeAt(0))
-				)
+						.map((c) => c.charCodeAt(0)),
+				),
 			),
 			cover,
 			author,
@@ -267,10 +251,7 @@ async function seedDatabase() {
 					buildUI();
 				};
 				updateRequest.onerror = (e) => {
-					console.error(
-						"Failed to mark seeding as complete",
-						(e.target as IDBRequest).error
-					);
+					console.error("Failed to mark seeding as complete", (e.target as IDBRequest).error);
 					errorUI();
 					return;
 				};
@@ -283,7 +264,7 @@ async function seedDatabase() {
 		getVersionRequest.onerror = (e) => {
 			console.error(
 				"Failed to get version record for completion update",
-				(e.target as IDBRequest).error
+				(e.target as IDBRequest).error,
 			);
 			errorUI();
 			return;
@@ -302,9 +283,7 @@ function buildUI() {
 		sort: sortSelect.value,
 	};
 
-	const contentObjectStore = db
-		.transaction("content", "readonly")
-		.objectStore("content");
+	const contentObjectStore = db.transaction("content", "readonly").objectStore("content");
 
 	let request: IDBRequest;
 
@@ -335,8 +314,7 @@ function buildUI() {
 
 			// Apply filters
 			const matchesType = filters.type === "" || item.type === filters.type;
-			const matchesRating =
-				filters.rating === "" || item.rating === filters.rating;
+			const matchesRating = filters.rating === "" || item.rating === filters.rating;
 
 			if (matchesType && matchesRating) {
 				items.push(item);
@@ -391,10 +369,7 @@ function renderPage() {
 		entry.className = "w-[180px]";
 		entry.innerHTML = `
             <div class="relative group">
-              <a href="/catalogue/${item.type}s/${item.id.replace(
-			`-${item.type}`,
-			""
-		)}">
+              <a href="/catalogue/${item.type}s/${item.id.replace(`-${item.type}`, "")}">
                 <img class="max-w-full h-auto aspect-[3/4.3] object-cover block"
                      width="180" height="270"
                      src="${item.cover}"
@@ -461,7 +436,7 @@ document.addEventListener(
 			ticking = true;
 		}
 	},
-	{ passive: true }
+	{ passive: true },
 );
 
 // Reset pagination when filters change

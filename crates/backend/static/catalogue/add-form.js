@@ -119,12 +119,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			// Update cover preview
 			if (selectedSuggestion.poster_path) {
-				const coverPreview = /** @type {HTMLElement | null} */ (
-					document.querySelector("#cover-preview")
-				);
-				const coverImage = /** @type {HTMLImageElement | null} */ (
-					document.querySelector("#cover-image")
-				);
+				const coverPreview =
+					/** @type {HTMLElement | null} */ (document.querySelector("#cover-preview"));
+				const coverImage =
+					/** @type {HTMLImageElement | null} */ (document.querySelector("#cover-image"));
 				if (coverPreview && coverImage) {
 					coverImage.src = selectedSuggestion.poster_path;
 					coverPreview.classList.add("show");

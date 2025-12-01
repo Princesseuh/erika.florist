@@ -19,5 +19,5 @@ document.addEventListener(
 	{
 		capture: false,
 		passive: true,
-	}
+	},
 );

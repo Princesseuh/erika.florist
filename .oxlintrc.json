@@ -1,8 +1,6 @@
 {
   "$schema": "node_modules/oxlint/configuration_schema.json",
-  "plugins": [
-    "typescript"
-  ],
+  "plugins": ["typescript"],
   "categories": {
     "correctness": "off"
   },
@@ -139,12 +137,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "**/*.ts",
-        "**/*.tsx",
-        "**/*.mts",
-        "**/*.cts"
-      ],
+      "files": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
       "rules": {
         "no-class-assign": "off",
         "no-const-assign": "off",
@@ -165,10 +158,7 @@
       }
     },
     {
-      "files": [
-        "api/add/script.js",
-        "scripts/**/*.ts"
-      ],
+      "files": ["crates/backend/**/*.js", "scripts/**/*.ts"],
       "rules": {
         "@typescript-eslint/no-unsafe-member-access": "off",
         "@typescript-eslint/no-unsafe-call": "off",

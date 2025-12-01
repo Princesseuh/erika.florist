@@ -559,7 +559,7 @@ function convertValue(value, definition) {
 			if (typeof value === "string" && (value.startsWith("{") || value.startsWith("["))) {
 				try {
 					return JSON.parse(value);
-				} catch (e) {
+				} catch {
 					return value;
 				}
 			}

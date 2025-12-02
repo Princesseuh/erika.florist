@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1569196800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    }
+  ],
+  "companies": [
+    {
+      "id": 110,
+      "name": "Focus Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 2172,
+      "name": "Deck13 Interactive",
+      "role": "developer"
+    }
+  ]
+}

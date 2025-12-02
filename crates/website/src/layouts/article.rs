@@ -33,7 +33,7 @@ pub fn article_layout(
             }
         }
 
-        section.(if has_sidenotes {"md:grid-cols-(--grid-cols-layout-tablet-sidenote)"} else {"md:grid-cols-(--grid-cols-layout-tablet)"})."grid gap-x-4 lg:gap-x-0 xl:grid-cols-(--grid-cols-layout)" {
+        section.(if has_sidenotes {"md:grid-cols-(--grid-cols-layout-tablet-sidenote)"} else {"md:grid-cols-(--grid-cols-layout-tablet)"})."md:grid gap-x-4 lg:gap-x-0 xl:grid-cols-(--grid-cols-layout)" {
             aside."hidden px-4 transition-opacity duration-100 ease-linear hover:opacity-100 xl:mr-0 xl:block" {
                 @if !article_data.get_headings().is_empty() {
                     (table_of_content(article_data.get_headings(), Some(3)))

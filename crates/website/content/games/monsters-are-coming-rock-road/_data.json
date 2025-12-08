@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1763596800,
+  "genres": [
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    }
+  ],
+  "companies": [
+    {
+      "id": 19006,
+      "name": "Raw Fury",
+      "role": "publisher"
+    },
+    {
+      "id": 45422,
+      "name": "Ludogram",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1644451200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 169,
+      "abbreviation": "Series X|S"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 56875,
+      "name": "Medallion Games",
+      "role": "developer"
+    },
+    {
+      "id": 40207,
+      "name": "Super Rare Originals",
+      "role": "publisher"
+    }
+  ]
+}

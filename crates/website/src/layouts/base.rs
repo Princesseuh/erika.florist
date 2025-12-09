@@ -1,22 +1,22 @@
 use maud::{DOCTYPE, Markup, html};
-use maudit::{assets::StyleOptions, maud::generator};
+use maudit::{assets::StyleOptions, maud::generator, route::RenderResult};
 
 use crate::components::{dinkus, header, socials, spritesheet};
 
 pub fn base_layout(
-    title: Option<&str>,
-    description: Option<&str>,
+    title: Option<String>,
+    description: Option<String>,
     content: Markup,
     include_about: bool,
     ctx: &mut maudit::route::PageContext,
-) -> Markup {
-    let title = title.unwrap_or("Erika");
-    let description = description.unwrap_or("My personal website");
+) -> impl Into<RenderResult> {
+    let title = title.unwrap_or("Erika".into());
+    let description = description.unwrap_or("My personal website".into());
 
     ctx.assets
-        .include_style_with_options("src/prin.css", StyleOptions { tailwind: true });
+        .include_style_with_options("src/prin.css", StyleOptions { tailwind: true })?;
 
-    ctx.assets.include_script("src/assets/main.ts");
+    ctx.assets.include_script("src/assets/main.ts")?;
 
     let purple = ctx.current_path.starts_with("/wiki");
 
@@ -26,7 +26,7 @@ pub fn base_layout(
         "button-style-bg-accent"
     };
 
-    html! {
+    Ok(html! {
         (DOCTYPE)
         html lang="en" {
             head {
@@ -50,7 +50,7 @@ pub fn base_layout(
             }
             body.bg-black-charcoal {
                 div.bg-white-sugar-cane id="app" {
-                    (header(include_about, purple, ctx))
+                    (header(include_about, purple, ctx)?)
 
                     main {
                         (content)
@@ -75,5 +75,5 @@ pub fn base_layout(
                 }
             }
         }
-    }
+    })
 }

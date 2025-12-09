@@ -678,6 +678,7 @@ struct CatalogueForm {
     r#type: String,
     name: String,
     rating: String,
+    #[serde(default = "default_date")]
     date: String,
     #[serde(rename = "source-id")]
     source_id: String,
@@ -687,6 +688,10 @@ struct CatalogueForm {
     form_password: String,
     #[serde(rename = "skip-ci", default)]
     skip_ci: String,
+}
+
+fn default_date() -> String {
+    "N/A".to_string()
 }
 
 #[derive(Serialize, Deserialize)]

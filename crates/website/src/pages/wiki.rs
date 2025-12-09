@@ -1,4 +1,4 @@
-use maud::{Markup, PreEscaped, html};
+use maud::{PreEscaped, html};
 use maudit::route::prelude::*;
 use std::collections::HashMap;
 
@@ -69,8 +69,8 @@ fn wiki_layout(
     ctx: &mut PageContext,
     entry: Entry<WikiEntry>,
     right_sidebar: Option<maud::Markup>,
-) -> Markup {
-    ctx.assets.include_script("src/assets/wiki-sidebar.ts");
+) -> impl Into<RenderResult> {
+    ctx.assets.include_script("src/assets/wiki-sidebar.ts")?;
 
     let data = entry.data(ctx);
 
@@ -98,9 +98,9 @@ fn wiki_layout(
         }
     );
 
-    base_layout(
-        Some(&data.title),
-        data.tagline.as_deref(),
+    Ok(base_layout(
+        Some(data.title.clone()),
+        data.tagline.clone(),
         html!(
             header.sticky."top-0"."z-40"."py-1".bg-violet-ultra.border-b.border-t.border-white-sugar-cane.text-white-sugar-cane."sm:hidden".bg-linear-to-b."from-darker-white" {
                 div.flex.items-center.justify-between {
@@ -157,8 +157,9 @@ fn wiki_layout(
         ),
         true,
         ctx,
-    )
+    ))
 }
+
 #[route("/wiki/")]
 pub struct WikiIndex;
 

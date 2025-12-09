@@ -1,5 +1,8 @@
-use maud::{Markup, PreEscaped, html};
-use maudit::content::{Entry, MarkdownContent};
+use maud::{PreEscaped, html};
+use maudit::{
+    content::{Entry, MarkdownContent},
+    route::RenderResult,
+};
 
 use crate::{
     components::{table_of_content, tags},
@@ -11,8 +14,8 @@ pub fn article_layout(
     article: &Entry<BlogPost>,
     include_about: bool,
     ctx: &mut maudit::route::PageContext,
-) -> Markup {
-    ctx.assets.include_script("src/assets/article.ts");
+) -> impl Into<RenderResult> {
+    ctx.assets.include_script("src/assets/article.ts")?;
     let article_data = article.data(ctx);
 
     let has_sidenotes = false;
@@ -47,11 +50,11 @@ pub fn article_layout(
         }
     );
 
-    base_layout(
-        Some(&article_data.title),
-        article_data.tagline.as_deref(),
+    Ok(base_layout(
+        Some(article_data.title.clone()),
+        article_data.tagline.clone(),
         content,
         include_about,
         ctx,
-    )
+    ))
 }

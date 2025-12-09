@@ -1,10 +1,14 @@
 use maud::{Markup, PreEscaped, html};
-use maudit::route::PageContext;
+use maudit::{errors::AssetError, route::PageContext};
 
 use crate::components::logo::logo;
 
-pub fn header(include_about: bool, purple: bool, ctx: &mut PageContext) -> Markup {
-    ctx.assets.include_script("src/assets/mobile-menu.ts");
+pub fn header(
+    include_about: bool,
+    purple: bool,
+    ctx: &mut PageContext,
+) -> Result<Markup, AssetError> {
+    ctx.assets.include_script("src/assets/mobile-menu.ts")?;
 
     let menu = ["articles", "projects", "wiki", "catalogue"];
 
@@ -14,7 +18,7 @@ pub fn header(include_about: bool, purple: bool, ctx: &mut PageContext) -> Marku
         "button-style-bg-accent"
     };
 
-    html! {
+    Ok(html! {
         header."relative sm:min-h-[125px] p-2 px-3 sm:p-4 sm:flex xl:grid xl:grid-cols-(--grid-cols-header-xl) text-white-sugar-cane".(if purple { "bg-violet-ultra" } else { "bg-accent-valencia" }) {
             // Mobile header with hamburger
             div."flex justify-between items-center sm:hidden w-full" {
@@ -74,5 +78,5 @@ pub fn header(include_about: bool, purple: bool, ctx: &mut PageContext) -> Marku
                 }
             }
         }
-    }
+    })
 }

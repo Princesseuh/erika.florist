@@ -119,14 +119,17 @@ where
                         .unwrap()
                         .to_string_lossy()
                         .to_string();
-                    let cover = ctx.assets().add_image_with_options(
-                        cover_path,
-                        ImageOptions {
-                            width: Some(240),
-                            format: Some(ImageFormat::Avif),
-                            ..Default::default()
-                        },
-                    );
+                    let cover = ctx
+                        .assets()
+                        .add_image_with_options(
+                            cover_path,
+                            ImageOptions {
+                                width: Some(240),
+                                format: Some(ImageFormat::Avif),
+                                ..Default::default()
+                            },
+                        )
+                        .expect("Failed to load cover image");
 
                     let placeholder = cover.placeholder();
 

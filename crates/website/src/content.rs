@@ -86,7 +86,7 @@ pub fn content_sources(root: String) -> ContentSources {
           let image = ctx.assets.add_image_with_options(image_path, ImageOptions {
               format: Some(ImageFormat::WebP),
               ..Default::default()
-          });
+          }).unwrap();
 
           let body = body
               .filter(|b| !b.trim().is_empty())

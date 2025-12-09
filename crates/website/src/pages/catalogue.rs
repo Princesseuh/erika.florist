@@ -10,13 +10,13 @@ pub struct Catalogue;
 
 impl Route for Catalogue {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
-        ctx.assets.include_script("src/assets/catalogue.ts");
+        ctx.assets.include_script("src/assets/catalogue.ts")?;
         let page_length = 32;
 
         let catalogue_hash = state::get_catalogue_hash().unwrap();
 
-        base_layout(
-            Some("Catalogue"),
+        Ok(base_layout(
+            Some("Catalogue".into()),
             None,
             html!(
                 article.mx-4.my-4 {
@@ -80,7 +80,7 @@ impl Route for Catalogue {
             ),
             true,
             ctx,
-        )
+        ))
     }
 }
 

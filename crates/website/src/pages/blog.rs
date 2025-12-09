@@ -142,10 +142,10 @@ impl Route for BlogIndex {
 
         articles.sort_by(|a, b| b.data(ctx).date.cmp(&a.data(ctx).date));
 
-        let masonry_script = ctx.assets.add_script("src/assets/masonry.ts");
+        let masonry_script = ctx.assets.add_script("src/assets/masonry.ts").unwrap();
 
         base_layout(
-            Some("Articles"),
+            Some("Articles".into()),
             None,
             html!(
                 article."flex flex-col gap-x-4 sm:flex-row" {
@@ -227,10 +227,10 @@ impl Route<TagParams, PaginationPage<Entry<BlogPost>>> for BlogTagIndex {
         let params = ctx.params::<TagParams>();
         let props = ctx.props::<PaginationPage<Entry<BlogPost>>>();
 
-        let masonry_script = ctx.assets.add_script("src/assets/masonry.ts");
+        let masonry_script = ctx.assets.add_script("src/assets/masonry.ts")?;
 
-        base_layout(
-            Some(&format!("Articles tagged with {}", params.tag)),
+        Ok(base_layout(
+            Some(format!("Articles tagged with {}", params.tag)),
             None,
             html!(
                 article."flex flex-col gap-x-4 sm:flex-row" {
@@ -247,7 +247,7 @@ impl Route<TagParams, PaginationPage<Entry<BlogPost>>> for BlogTagIndex {
             ),
             true,
             ctx,
-        )
+        ))
     }
 }
 
@@ -307,10 +307,10 @@ impl Route<YearParams, PaginationPage<Entry<BlogPost>>> for BlogYearIndex {
         let params = ctx.params::<YearParams>();
         let props = ctx.props::<PaginationPage<Entry<BlogPost>>>();
 
-        let masonry_script = ctx.assets.add_script("src/assets/masonry.ts");
+        let masonry_script = ctx.assets.add_script("src/assets/masonry.ts")?;
 
-        base_layout(
-            Some(&format!("Articles from {}", params.year)),
+        Ok(base_layout(
+            Some(format!("Articles from {}", params.year)),
             None,
             html!(
                 article."flex flex-col gap-x-4 sm:flex-row" {
@@ -327,6 +327,6 @@ impl Route<YearParams, PaginationPage<Entry<BlogPost>>> for BlogYearIndex {
             ),
             true,
             ctx,
-        )
+        ))
     }
 }

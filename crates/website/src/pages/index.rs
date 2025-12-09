@@ -18,7 +18,7 @@ enum IndexEntry<'a> {
 
 impl Route for Index {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
-        let masonry_script = ctx.assets.add_script("src/assets/masonry.ts");
+        let masonry_script = ctx.assets.add_script("src/assets/masonry.ts").unwrap();
 
         let articles = ctx
             .content

@@ -58,8 +58,8 @@ impl Route for ProjectIndex {
             .collect::<std::collections::BTreeMap<_, _>>();
 
         base_layout(
-            Some("Projects"),
-            Some("A list of my projects"),
+            Some("Projects".into()),
+            Some("A list of my projects".into()),
             html!(
                 div."container mx-auto my-8 px-4" {
                     @for (project_type, projects) in &project_per_types {

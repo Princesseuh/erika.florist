@@ -6,7 +6,7 @@ publish = false
 
 [dependencies]
 maudit = { workspace = true }
-chrono = { version = "0.4.41", features = ["serde"] }
+chrono = { version = "0.4.42", features = ["serde"] }
 maud = { workspace = true }
 rand = { workspace = true }
 serde = { workspace = true }

@@ -1,0 +1,74 @@
+{
+  "first_release_date": 1650585600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 16,
+      "name": "Turn-based strategy (TBS)"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    },
+    {
+      "id": 35,
+      "name": "Card & Board Game"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 34,
+      "abbreviation": "Android"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 39,
+      "abbreviation": "iOS"
+    },
+    {
+      "id": 167,
+      "abbreviation": "PS5"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 36206,
+      "name": "PUNKCAKE Délicieux",
+      "role": "developer"
+    }
+  ]
+}

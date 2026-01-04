@@ -262,6 +262,7 @@ macro_rules! dummy_context {
                 None,
             ),
             base_url: &None,
+            variant: None,
         }
     }};
 }

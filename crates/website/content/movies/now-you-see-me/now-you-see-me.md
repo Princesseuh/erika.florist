@@ -1,6 +1,6 @@
 ---
 title: "Now You See Me"
-rating: "liked"
+rating: "okay"
 finishedDate: 2025-12-25
 tmdb: "75656"
 ---

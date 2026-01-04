@@ -2380,9 +2380,9 @@ dependencies = [
 
 [[package]]
 name = "maudit"
-version = "0.6.7"
+version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a1637ea439bd79cc14ec849f430361d9e483a3cde1819e8ecf1a72fff5e0bea0"
+checksum = "2242340930bea683ecc89bf25eb0b06c00b14fc25fca704bb404d0f62b2df095"
 dependencies = [
  "base64",
  "brk_rolldown",
@@ -2399,6 +2399,7 @@ dependencies = [
  "oxipng",
  "pathdiff",
  "pulldown-cmark",
+ "rapidhash",
  "rayon",
  "rustc-hash",
  "serde",
@@ -2409,14 +2410,13 @@ dependencies = [
  "thumbhash",
  "tokio",
  "webp",
- "xxhash-rust",
 ]
 
 [[package]]
 name = "maudit-macros"
-version = "0.5.0"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9c67bf880b4da16338adc20813f62bc342a3d16a5e9e2aaa0396015f3c7adf02"
+checksum = "c045dc4c67d15713b20f2a20fa456c08557b31c3332f568e168d4a8972eb5dfb"
 dependencies = [
  "quote",
  "syn",
@@ -3649,6 +3649,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "99d9a13982dcf210057a8a78572b2217b667c3beacbf3a0d8b454f6f82837d38"
 dependencies = [
  "getrandom 0.3.4",
+]
+
+[[package]]
+name = "rapidhash"
+version = "4.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2988730ee014541157f48ce4dcc603940e00915edc3c7f9a8d78092256bb2493"
+dependencies = [
+ "rustversion",
 ]
 
 [[package]]

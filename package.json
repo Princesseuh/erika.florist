@@ -1,30 +1,30 @@
 {
-  "private": true,
-  "type": "module",
-  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
-  "scripts": {
-    "lint": "oxlint --type-aware",
-    "format": "oxfmt",
-    "update-data": "tsx ./scripts/update-catalogue-info.ts --silent"
-  },
-  "dependencies": {
-    "@tailwindcss/cli": "^4.1.17",
-    "github-slugger": "^2.0.0",
-    "quick-score": "^0.2.0",
-    "tailwindcss": "^4.1.17",
-    "thumbhash": "^0.1.1"
-  },
-  "devDependencies": {
-    "@types/node": "^24.10.1",
-    "dotenv": "^17.2.3",
-    "gray-matter": "^4.0.3",
-    "igdb-api-node": "^6.0.5",
-    "kleur": "^4.1.5",
-    "oxfmt": "^0.16.0",
-    "oxlint": "^1.31.0",
-    "oxlint-tsgolint": "^0.8.3",
-    "sharp": "^0.34.5",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
-  }
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"lint": "oxlint --type-aware",
+		"format": "oxfmt",
+		"update-data": "tsx ./scripts/update-catalogue-info.ts --silent"
+	},
+	"dependencies": {
+		"@tailwindcss/cli": "^4.1.18",
+		"github-slugger": "^2.0.0",
+		"quick-score": "^0.2.0",
+		"tailwindcss": "^4.1.18",
+		"thumbhash": "^0.1.1"
+	},
+	"devDependencies": {
+		"@types/node": "^25.0.3",
+		"dotenv": "^17.2.3",
+		"gray-matter": "^4.0.3",
+		"igdb-api-node": "^6.0.5",
+		"kleur": "^4.1.5",
+		"oxfmt": "^0.21.0",
+		"oxlint": "^1.36.0",
+		"oxlint-tsgolint": "^0.10.1",
+		"sharp": "^0.34.5",
+		"tsx": "^4.21.0",
+		"typescript": "^5.9.3"
+	},
+	"packageManager": "pnpm@10.27.0"
 }

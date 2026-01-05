@@ -3,7 +3,7 @@ import { QuickScore } from "quick-score";
 import { thumbHashToDataURL } from "thumbhash";
 
 const VERSION = 4;
-const latestHash = document.getElementById("catalogue-core")?.getAttribute("data-latest") as string;
+const latestHash = document.getElementById("catalogue-core")?.getAttribute("data-latest")!;
 
 const dbOpenRequest = indexedDB.open("catalogue", VERSION);
 

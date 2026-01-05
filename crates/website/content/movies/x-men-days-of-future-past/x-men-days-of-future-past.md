@@ -4,5 +4,3 @@ rating: "okay"
 finishedDate: 2024-08-18
 tmdb: "127585"
 ---
-
-

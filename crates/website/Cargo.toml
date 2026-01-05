@@ -11,6 +11,6 @@ maud = { workspace = true }
 rand = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
-schemars = {workspace = true}
+schemars = { workspace = true }
 xml-builder = "0.5.4"
 lol_html = "2.7.0"

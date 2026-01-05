@@ -8,7 +8,7 @@ featured: true
 
 [SinaRun is now out](/articles/sinarun-full-release/#title)! After all this time, it's finally done.
 
-I started working on SinaRun (then called SinaRun 2) in early 2014. After the "success" of SinaRun 1 (hey, it amassed 10k+ plays in 2012-2013 without any real marketing, we out here), I wanted to make a *real thing*, a real product, a commercial game.
+I started working on SinaRun (then called SinaRun 2) in early 2014. After the "success" of SinaRun 1 (hey, it amassed 10k+ plays in 2012-2013 without any real marketing, we out here), I wanted to make a _real thing_, a real product, a commercial game.
 
 ## A little history first
 

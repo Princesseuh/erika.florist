@@ -159,6 +159,7 @@ But, I felt really bad about removing it, because I know that over the years som
 More concretely however, it was unplayable both for technical and gameplay reasons. There were a lot of bugs, the server list and facilitator for connections were a pain to keep online (both now and in 2014) and didn't really work most of the time, the gameplay was very bad, pretty much impossible to play unless all players had the exact same skill level and the host quick to press buttons.
 
 There was three choices:
+
 1. Spend a very long time re-doing the multiplayer from scratch, killing my motivation forever
 2. Accept that it sucked a lot
 3. Remove the multiplayer

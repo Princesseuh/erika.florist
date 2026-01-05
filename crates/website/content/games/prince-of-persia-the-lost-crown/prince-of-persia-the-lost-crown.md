@@ -6,4 +6,4 @@ finishedDate: 2025-06-03
 igdb: "252476"
 ---
 
-I liked it overall, but I felt like it didn't have much *soul* and also felt like the later areas were more tedious than fun.
+I liked it overall, but I felt like it didn't have much _soul_ and also felt like the later areas were more tedious than fun.

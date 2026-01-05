@@ -4,5 +4,3 @@ rating: "loved"
 finishedDate: 2025-08-04
 tmdb: "891933"
 ---
-
-

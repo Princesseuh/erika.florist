@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { getContentDirs, Logger } from "./catalogueUtils.ts";
 
-export async function getLetterboxdCSV(): Promise<string> {
+export function getLetterboxdCSV(): string {
 	const movieDirs = getContentDirs("movies");
 	const tmdbIds: string[] = [];
 
@@ -43,7 +43,7 @@ export async function getLetterboxdCSV(): Promise<string> {
 // If running this script directly
 if (process.argv[1] === new URL(import.meta.url).pathname) {
 	try {
-		const csv = await getLetterboxdCSV();
+		const csv = getLetterboxdCSV();
 
 		// Write to file
 		const outputPath = path.join(process.cwd(), "letterboxd-export.csv");

@@ -31,7 +31,7 @@ Maudit includes [a built-in entry point](https://maudit.org/docs/entrypoint/) fo
 
 ### Benefits of that thought
 
-My biggest hope is that this ultimately allow for more flexiblity and freedom without needing for plugins or dedicated APIs. If you want to do something before the build, or after the build, no need for hooks, just call the function wherever you need. 
+My biggest hope is that this ultimately allow for more flexiblity and freedom without needing for plugins or dedicated APIs. If you want to do something before the build, or after the build, no need for hooks, just call the function wherever you need.
 
 If you want to render some random Markdown string, just call.. [`render_markdown`](https://docs.rs/maudit/latest/maudit/content/markdown/fn.render_markdown.html). You shouldn't feel like everything needs to fit how the framework works.
 

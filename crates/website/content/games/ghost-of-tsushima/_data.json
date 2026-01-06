@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1594944000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    }
+  ],
+  "companies": [
+    {
+      "id": 10100,
+      "name": "Sony Interactive Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 403,
+      "name": "Sucker Punch Productions",
+      "role": "developer"
+    }
+  ]
+}

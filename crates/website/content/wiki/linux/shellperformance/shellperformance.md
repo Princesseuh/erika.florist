@@ -3,7 +3,13 @@
   navigation:
     label: Fish Shell Performance
     category: linux
+    hidden: true
 ---
+
+{{ blockquote title="Outdated article" }}
+
+This page is fairly low quality and the tips are generally outdated. If you're looking for ways to improve your prompt's performance my main suggestion is to use a Fish-native prompt instead of a separate process, even something like Starship is significantly slower than [Hydro](https://github.com/jorgebucaran/hydro) (what I use) or [Tide](https://github.com/IlanCosman/tide).
+{{ /blockquote }}
 
 When customizing a Linux setup, it's really easy to fall into the trap of thinking that, since your base programs are so efficient, adding plugins or tweaks won't slow them down much but that's often not the case
 

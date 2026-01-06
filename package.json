@@ -19,12 +19,12 @@
 		"gray-matter": "^4.0.3",
 		"igdb-api-node": "^6.0.5",
 		"kleur": "^4.1.5",
-		"oxfmt": "^0.21.0",
-		"oxlint": "^1.36.0",
+		"oxfmt": "^0.23.0",
+		"oxlint": "^1.38.0",
 		"oxlint-tsgolint": "^0.10.1",
 		"sharp": "^0.34.5",
 		"tsx": "^4.21.0",
 		"typescript": "^5.9.3"
 	},
-	"packageManager": "pnpm@10.27.0"
+	"packageManager": "pnpm@10.27.0+sha512.72d699da16b1179c14ba9e64dc71c9a40988cbdc65c264cb0e489db7de917f20dcf4d64d8723625f2969ba52d4b7e2a1170682d9ac2a5dcaeaab732b7e16f04a"
 }

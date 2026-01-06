@@ -6,11 +6,32 @@
     category: linux
 ---
 
-I've been using Wayland [since May 2020](https://github.com/Princesseuh/dotfiles/commit/42d18db2db41e4de08396d367d90612d2ec98f30) through [Sway](https://swaywm.org/), an i3 compatible windows manager
+I've been using Wayland [since May 2020](https://github.com/Princesseuh/dotfiles/commit/42d18db2db41e4de08396d367d90612d2ec98f30) initially through [Sway](https://swaywm.org/), an i3 compatible windows manager and then through [Niri](https://github.com/YaLTeR/niri).
 
 I started using Wayland because I got tired of dealing with vsync issues, Picom and other stuff on Xorg. So I tried out Wayland, not expecting much after all the stories I've heard but in the end, well, everything works 🤷‍♀️
 
-## Disclaimer about NVIDIA
+## 2025
+
+[I've started using Linux again](/articles/back-to-linux-2025/#title), this time around with Niri and even more importantly, with an AMD GPU.
+
+I currently have the following env variables set, but truth be told I'm not sure they're still absolutely necessary.
+
+```
+XDG_SESSION_TYPE "wayland"
+ELECTRON_OZONE_PLATFORM_HINT "auto"
+QT_QPA_PLATFORM "wayland"
+QT_QPA_PLATFORMTHEME "gtk3"
+QT_QPA_PLATFORMTHEME_QT6 "gtk3"
+```
+
+I do not have any other specific settings or tweaks on my system. Everything works as expected: Electron apps, browsers, Spotify, video games, Steam, etc. It.. all just works.
+
+Apparently there's still a lot of issues related to NVIDIA, however: I can't relate.
+
+
+## 2023
+
+### Disclaimer about NVIDIA
 
 If you've been using Linux for a long time now, you're probably aware that Linux's biggest problem is very often somehow related to NVIDIA
 
@@ -23,17 +44,17 @@ alt="The Wayland logo, a white W written on a yellow-ish circle using a graffiti
 Wayland's logo
 {{ /image }}
 
-## The overall status of things
+### The overall status of things
 
 These days? All the GUI libraries supports Wayland. [Sometimes you need to set flags or install a package to enable it](https://wiki.archlinux.org/title/Wayland#GUI_libraries) but still, it works fine after that
 
 This mean that unless you're using an old version of a program, or the program hasn't been updated to newer versions of its GUI library, there's a very good chance that it's running under Wayland!
 
-## Troublemakers
+### Troublemakers
 
 Here's a few programs where this is however not the case yet as they don't depend on GUI libraries for their Wayland support
 
-### Browsers
+#### Browsers
 
 Neither Chrome or Firefox will run using Wayland without flags at the time of writing. Chrome (and other Chromium-based browsers) needs the following flags:
 
@@ -45,13 +66,13 @@ and for Firefox, run using
 
 For both of them, Wayland is still a work in progress but it's getting along really nicely, I don't notice any particular issues on my setup that wouldn't happen on Xorg with Nouveau
 
-### Electron
+#### Electron
 
 Electron support Wayland since its version 12, however [it also needs the same flags Chrome does](https://wiki.archlinux.org/title/Wayland#Electron). It has certain limitations, namely [it doesn't support client side decorations](https://github.com/electron/electron/issues/27522) yet if you need those (this isn't really a requirement on Sway as it will render its own title bars)
 
 Unfortunately Electron apps tend to be slow at updating their Electron versions sometimes so for some applications it might take just a little bit more time before everything works, luckily projects like [discord_arch_electron](https://aur.archlinux.org/packages/discord_arch_electron/) exists to use your system's Electron instead of the bundled one
 
-### Spotify
+#### Spotify
 
 Much like NVIDIA, Spotify tend to be a common name that pops up whenever someone has issues on their Linux setup. Spotify is a CEF app, which mean that you can make it run under Wayland using the flags for Chrome however...
 
@@ -68,6 +89,6 @@ The bottom window is running completely under Wayland and works perfectly, the t
 
 Your best bet as the moment for running it natively under Wayland is probably to hide the black window somehow and just use it normally, forgetting that window ever existed
 
-## For the rest
+### For the rest
 
 I recommend checking out [Are we Wayland yet?](https://arewewaylandyet.com/) for more information on the state of various projects

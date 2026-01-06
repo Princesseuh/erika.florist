@@ -17,7 +17,7 @@ Entries that are checked off are features that have been added since I wrote thi
 - [x] ~~Support for custom languages~~
 - [x] ~~[Diff view](https://github.com/zed-industries/zed/issues/4523)~~
 - [x] ~~[Source Control Panel](https://github.com/zed-industries/zed/issues/4367)~~
-- [ ] [Rainbow brackets](https://github.com/zed-industries/zed/issues/5259)
+- [x] ~~[Rainbow brackets](https://github.com/zed-industries/zed/issues/5259)~~
 - [x] ~~[Indentation guides](https://github.com/zed-industries/zed/issues/5373)~~
   - [x] ~~Indentation guides in the explorer panel, too (especially, actually)~~
 - [x] ~~[EditorConfig support](https://github.com/zed-industries/zed/issues/8534)~~

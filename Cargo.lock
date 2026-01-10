@@ -2380,9 +2380,9 @@ dependencies = [
 
 [[package]]
 name = "maudit"
-version = "0.8.0"
+version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2242340930bea683ecc89bf25eb0b06c00b14fc25fca704bb404d0f62b2df095"
+checksum = "ee63f373653e6385dba0e1432eddf64a84842adfaf65a9620f39d5ebecc9425b"
 dependencies = [
  "base64",
  "brk_rolldown",
@@ -2414,9 +2414,9 @@ dependencies = [
 
 [[package]]
 name = "maudit-macros"
-version = "0.6.0"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c045dc4c67d15713b20f2a20fa456c08557b31c3332f568e168d4a8972eb5dfb"
+checksum = "68d96407cacfe5a8b1fda3520b1edb3094ff6c9551fad179b1951426685acb1d"
 dependencies = [
  "quote",
  "syn",

@@ -1,5 +1,5 @@
 use erikaflorist::{content::content_sources, pages};
-use maudit::{AssetsOptions, BuildOptions, BuildOutput, coronate, routes};
+use maudit::{AssetsOptions, BuildOptions, BuildOutput, SitemapOptions, coronate, routes};
 
 fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
     coronate(
@@ -20,9 +20,14 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
         ],
         content_sources(".".to_owned()),
         BuildOptions {
+            base_url: Some("https://erika.florist".into()),
             assets: AssetsOptions {
                 tailwind_binary_path: "../../node_modules/.bin/tailwindcss".into(),
                 image_cache_dir: "../../target/maudit_cache/images".into(),
+                ..Default::default()
+            },
+            sitemap: SitemapOptions {
+                enabled: true,
                 ..Default::default()
             },
             ..Default::default()

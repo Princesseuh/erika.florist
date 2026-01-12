@@ -1,12 +1,12 @@
 use std::fmt::Display;
 
-use maud::{html, Markup};
+use maud::{Markup, html};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Icon {
     Github,
     Mail,
-    Mastodon,
+    Bluesky,
     System,
     Menu,
     Moon,
@@ -19,7 +19,7 @@ impl Display for Icon {
         let name = match self {
             Icon::Github => "github",
             Icon::Mail => "mail",
-            Icon::Mastodon => "mastodon",
+            Icon::Bluesky => "bluesky",
             Icon::System => "system",
             Icon::Menu => "menu",
             Icon::Moon => "moon",

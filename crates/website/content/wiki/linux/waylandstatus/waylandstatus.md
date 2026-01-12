@@ -28,7 +28,6 @@ I do not have any other specific settings or tweaks on my system. Everything wor
 
 Apparently there's still a lot of issues related to NVIDIA, however: I can't relate.
 
-
 ## 2023
 
 ### Disclaimer about NVIDIA

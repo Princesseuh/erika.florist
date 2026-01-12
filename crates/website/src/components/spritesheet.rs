@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use maud::{html, Markup, PreEscaped};
+use maud::{Markup, PreEscaped, html};
 
 use crate::components::icon::Icon;
 
@@ -9,7 +9,7 @@ pub fn spritesheet() -> Markup {
     let icons = HashMap::from([
         (Icon::Github, include_str!("../icons/github.svg")),
         (Icon::Mail, include_str!("../icons/mail.svg")),
-        (Icon::Mastodon, include_str!("../icons/mastodon.svg")),
+        (Icon::Bluesky, include_str!("../icons/bluesky.svg")),
         (Icon::System, include_str!("../icons/system.svg")),
         (Icon::Menu, include_str!("../icons/menu.svg")),
         (Icon::Moon, include_str!("../icons/moon.svg")),

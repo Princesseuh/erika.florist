@@ -365,9 +365,9 @@
 		@apply dark:text-inherit;
 	}
 
-	.social-mastodon:hover,
-	.social-mastodon:focus {
-		color: #6364ff;
+	.social-bluesky:hover,
+	.social-bluesky:focus {
+		color: #0f73ff;
 	}
 
 	.social-github:hover,

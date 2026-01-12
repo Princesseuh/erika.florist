@@ -1,6 +1,6 @@
 use maud::html;
 
-use crate::components::icon::{icon, Icon};
+use crate::components::icon::{Icon, icon};
 
 pub fn socials(classes: Option<&str>, size: Option<usize>) -> maud::Markup {
     let classes = format!("flex items-center {}", classes.unwrap_or(""));
@@ -8,8 +8,8 @@ pub fn socials(classes: Option<&str>, size: Option<usize>) -> maud::Markup {
 
     html!(
         div class=(classes) {
-            a rel="me" href="https://mastodon.social/@erika" title="Link to my Mastodon profile" class="social-icon social-mastodon" {
-                (icon(Icon::Mastodon, size, "Mastodon"))
+            a rel="me" href="https://bsky.app/profile/erika.florist" title="Link to my Bluesky profile" class="social-icon social-bluesky" {
+                (icon(Icon::Bluesky, size, "Bluesky"))
             }
 
             a href="https://github.com/Princesseuh" title="Link to my GitHub profile" class="social-icon social-github" {

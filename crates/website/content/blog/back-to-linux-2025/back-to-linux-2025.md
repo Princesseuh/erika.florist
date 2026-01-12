@@ -17,14 +17,13 @@ After trying dubious setups with actual VMs running Linux and stuff, I just gave
 
 ## Valve and times are changing
 
-You can do the games on Linux nowadays! Thanks to Valve's efforts on Proton, it is now trivial* to run even AAA games on Linux. I have a full AMD setup, so drivers and Nvidia nonsense are all non-issues.
+You can do the games on Linux nowadays! Thanks to Valve's efforts on Proton, it is now trivial\* to run even AAA games on Linux. I have a full AMD setup, so drivers and Nvidia nonsense are all non-issues.
 
 I wouldn't call myself doubtful about the claims, but there was most definitely a wow factor when I double clicked Ghost of Tsushima and it started in 360fps HDR and what not without any issues.
 
 .... So I haven't actually needed the Windows dual boot since installing Linux a few weeks ago.
 
 But, asterisk, surely one day someone will ask me to play some {{ sidenote }}I have not set up secure boot, it still seems a bit annoying to do on Arch!{{ /sidenote }} that requires Secure Boot and kernel anticheats and so at least, the possibility to just boot on Windows is welcome.
-
 
 ## It's not just in the games
 
@@ -54,6 +53,6 @@ Something that also seems to have changed is how people build their desktop envi
 
 This second option is obviously still available, but I was surprised to see that following Niri's install guide installs `DankMaterialShell` which includes a bar, program launcher and lot of other features, but is not a DE.
 
-It's not as *cool* perhaps as setting up bunch of random programs and configuring them, but I was honestly pretty impressed at how quick I got a fully working desktop environment thanks to it. I worry a little bit about feeling locked to DMS, but at least in the Niri department I fully understand my config and could remove DMS whenever I want.
+It's not as _cool_ perhaps as setting up bunch of random programs and configuring them, but I was honestly pretty impressed at how quick I got a fully working desktop environment thanks to it. I worry a little bit about feeling locked to DMS, but at least in the Niri department I fully understand my config and could remove DMS whenever I want.
 
 After using Niri for close to a month now, I can confidently say the only bad thing about Niri is that it's not available on more of my computers.

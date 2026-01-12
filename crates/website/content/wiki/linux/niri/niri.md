@@ -1,4 +1,3 @@
-
 ---
 title: Niri tips, tricks and tweaks
 navigation:
@@ -59,6 +58,7 @@ With this bind, you can keep your focus on your editor, and press it whenever yo
 By default, pressing Mod+Number will focus the specific workspace, pressing it twice however will do nothing.
 
 By setting the following setting:
+
 ```
 input {
  workspace-auto-back-and-forth
@@ -128,6 +128,7 @@ spawn-sh-at-startup "sleep 3 && discord --start-minimized"
 ```
 
 I haven't investigated, but I would not be surprised that this happens because Discord starts before my system has successfully connected to the internet.
+
 ## Resources
 
 - [My Niri config](https://github.com/Princesseuh/dotfiles/tree/main/linux%2Fniri)

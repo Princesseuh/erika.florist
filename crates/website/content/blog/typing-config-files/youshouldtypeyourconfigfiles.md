@@ -31,7 +31,7 @@ First install the [DefinitelyTyped](https://github.com/DefinitelyTyped/Definitel
 ```js
 /** @type {import("@types/eslint").Linter.Config */
 module.exports = {
-  // ... your eslint config here
+	// ... your eslint config here
 };
 ```
 
@@ -46,7 +46,7 @@ Similarly to ESLint, first install the types definition for [Prettier](https://p
 ```js
 /** @type {import("@types/prettier").Options */
 module.exports = {
-  // ... your prettier config here
+	// ... your prettier config here
 };
 ```
 
@@ -72,6 +72,6 @@ Astro ships with typechecked config files in all of its starters, and similar to
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  // ...
+	// ...
 });
 ```

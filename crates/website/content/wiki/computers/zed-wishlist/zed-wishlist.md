@@ -24,6 +24,7 @@ Entries that are checked off are features that have been added since I wrote thi
 - [x] ~~Image viewer~~
 - [ ] [Semantic highlighting (e.g. different colors for variables, functions, types, etc)](https://github.com/zed-industries/zed/issues/7450)
 - [ ] Ability to add padding to the terminal
+- [ ] [Support for RemoteCommand in SSH](https://github.com/zed-industries/zed/discussions/45636)
 
 ## Annoyances
 
@@ -31,3 +32,4 @@ Entries that are checked off are features that have been added since I wrote thi
 - [x] ~~Quote auto-closing is sometimes annoying, notably, it tries to auto-close quotes in text contexts, for instance typing "Can't" will result in "Can''t".~~
 - [x] ~~CTRL+Click to go to definition doesn't work like in VS Code, in VS Code that shortcut does Go to Definition, Find All References, etc all at once, but it seems like Zed isn't quite as smart about it.~~
 - [ ] Quick fixes (code actions) are hard to use, you can't use them from diagnostics like you can in VS Code, and so sometimes you need to open the quick fix list at a specific location to get the right fix.
+- [ ] Since roughly early to late December 2026, I keep getting crashes in certain large repos / around large files on Linux

@@ -6,11 +6,11 @@ publish = false
 
 [dependencies]
 maudit = { workspace = true }
-chrono = { version = "0.4.42", features = ["serde"] }
+chrono = { version = "0.4.43", features = ["serde"] }
 maud = { workspace = true }
 rand = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 schemars = { workspace = true }
 xml-builder = "0.5.4"
-lol_html = "2.7.0"
+lol_html = "2.7.1"

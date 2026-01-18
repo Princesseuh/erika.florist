@@ -4,8 +4,8 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-axum = "0.8.7"
-tokio = { version = "1.48.0", features = ["rt-multi-thread"] }
+axum = "0.8.8"
+tokio = { version = "1.49.0", features = ["rt-multi-thread"] }
 erikaflorist = { path = "../website" }
 maud.workspace = true
 tower-http = { version = "0.6.8", features = ["fs"] }
@@ -16,7 +16,7 @@ dotenvy = "0.15.7"
 serde = { version = "1.0", features = ["derive"] }
 slug = "0.1"
 chrono = "0.4"
-reqwest = { version = "0.12", features = ["json"] }
+reqwest = { version = "0.13", features = ["json"] }
 base64 = "0.22"
 cookie = "0.18.1"
 sha2 = "0.10.9"

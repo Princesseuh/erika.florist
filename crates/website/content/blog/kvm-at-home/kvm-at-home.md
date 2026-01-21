@@ -38,7 +38,7 @@ On macOS... well, it turns out you can in fact do global shortcuts natively. Usi
 
 {{ image src="./automator.png" alt="A screenshot of Automator, showing a list of possible events on the left (such as \"Run a Shell Script\" or \"Add to Album\") and on the right, a \"pipeline\" with for only action \"Run Shell Script\" that has for content a two-line script to switch monitors" /}}
 
-Then, using macOS settings, you can bind any shortcuts to run an Automator pipeline. And this works! ... Not really. Similar to other macOS features, the keybinds won't work in like 90% of the app I use daily, including my code editor. I thought this could be because of conflicting binding, but no, it just doesn't work.
+Then, using macOS settings, you can bind any shortcuts to run an Automator pipeline. And this works! ... Not really. Similar to other macOS features, the keybinds won't work in like 90% of the apps I use daily, including my code editor. I thought this could be because of conflicting binding, but no, it just doesn't work.
 
 There's *a lot* of dubious global keyboard apps available on macOS, but in the open source world I found [skhd](https://github.com/asmvik/skhd) (or [its Zig port](https://github.com/jackielii/skhd.zig)) to be extremely suitable for this and working perfectly.
 

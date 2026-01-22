@@ -12,7 +12,7 @@ const contentStringsToInclude = new Set([
 const contentLetters = new Set([...contentStringsToInclude]);
 const titleLetters = new Set([..."erika".split("")]);
 
-for await (const entry of glob("**/*.md")) {
+for await (const entry of glob("crates/website/content/**/*.md")) {
 	const { data, content } = matter.read(entry);
 
 	for (const letter of data.title) {
@@ -30,7 +30,7 @@ for await (const entry of glob("**/*.md")) {
 	}
 }
 
-const fontFolder = path.resolve(process.cwd(), "static", "assets", "fonts");
+const fontFolder = path.resolve(process.cwd(), "crates", "website", "src", "assets", "fonts");
 if (argv.includes("--title")) {
 	execSync(
 		'fonttools varLib.instancer -q -o "InterResultTemp.woff2" InterOriginal.woff2 wght=600 opsz=32',
@@ -48,7 +48,17 @@ if (argv.includes("--title")) {
 		},
 	);
 
-	rmSync(path.resolve(process.cwd(), "static", "assets", "fonts", "InterResultTemp.woff2"));
+	rmSync(
+		path.resolve(
+			process.cwd(),
+			"crates",
+			"website",
+			"src",
+			"assets",
+			"fonts",
+			"InterResultTemp.woff2",
+		),
+	);
 }
 
 if (argv.includes("--content")) {

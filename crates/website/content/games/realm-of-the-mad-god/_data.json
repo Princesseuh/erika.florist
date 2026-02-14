@@ -1,0 +1,44 @@
+{
+  "first_release_date": 1308528000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 82,
+      "abbreviation": "browser"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 14,
+      "abbreviation": "Mac"
+    }
+  ],
+  "companies": [
+    {
+      "id": 33130,
+      "name": "Deca Games",
+      "role": "developer"
+    },
+    {
+      "id": 4109,
+      "name": "Kabam",
+      "role": "developer"
+    },
+    {
+      "id": 4108,
+      "name": "Wild Shadow Studios",
+      "role": "developer"
+    }
+  ]
+}

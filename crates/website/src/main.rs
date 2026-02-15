@@ -1,5 +1,5 @@
 use erikaflorist::{content::content_sources, pages};
-use maudit::{AssetsOptions, BuildOptions, BuildOutput, SitemapOptions, coronate, routes};
+use maudit::{coronate, routes, AssetsOptions, BuildOptions, BuildOutput, SitemapOptions};
 
 fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
     coronate(
@@ -11,6 +11,7 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
             pages::BlogYearIndex,
             pages::CatalogueContent,
             pages::Catalogue,
+            pages::ChangelogPage,
             pages::WikiIndex,
             pages::WikiEntryPage,
             pages::ProjectIndex,

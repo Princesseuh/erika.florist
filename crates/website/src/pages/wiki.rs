@@ -1,4 +1,4 @@
-use maud::{PreEscaped, html};
+use maud::{html, PreEscaped};
 use maudit::route::prelude::*;
 use std::collections::HashMap;
 
@@ -69,6 +69,7 @@ fn wiki_layout(
     ctx: &mut PageContext,
     entry: Entry<WikiEntry>,
     right_sidebar: Option<maud::Markup>,
+    has_headings: bool,
 ) -> impl Into<RenderResult> {
     ctx.assets.include_script("src/assets/wiki-sidebar.ts")?;
 
@@ -108,7 +109,7 @@ fn wiki_layout(
                         (PreEscaped(include_str!("../assets/side-menu.svg")))
                         span { "Menu" }
                     }
-                    button id="right-sidebar-toggle" .px-4.py-3.flex.items-center.gap-x-2.text-base.font-medium.text-our-black aria-label="Toggle table of contents" {
+                    button id="right-sidebar-toggle" .(if !has_headings { "hidden" } else { "" }).px-4.py-3.flex.items-center.gap-x-2.text-base.font-medium.text-our-black aria-label="Toggle table of contents" {
                         span { "On this page" }
                         (PreEscaped(include_str!("../assets/toc.svg")))
                     }
@@ -173,7 +174,8 @@ impl Route for WikiIndex {
         wiki_layout(
             ctx,
             index_entry.clone(),
-            None, // No right sidebar for index
+            None,  // No right sidebar for index
+            false, // No headings for index
         )
     }
 }
@@ -207,12 +209,21 @@ impl Route<WikiParams, Entry<WikiEntry>> for WikiEntryPage {
         let entry = ctx.props::<Entry<WikiEntry>>();
         let data = entry.data(ctx);
 
-        let right_sidebar = html!(
-            nav."p-4 pr-8 h-full p-2" {
-                (table_of_content(&data.get_headings(), data.max_depth_toc))
-            }
-        );
+        let headings = data.get_headings();
+        let has_headings = headings
+            .iter()
+            .any(|h| h.level > 1 && h.level <= data.max_depth_toc.unwrap_or(3) as u8);
 
-        wiki_layout(ctx, entry.clone(), Some(right_sidebar))
+        let right_sidebar = if has_headings {
+            Some(html!(
+                nav."p-4 pr-8 h-full p-2" {
+                    (table_of_content(&headings, data.max_depth_toc))
+                }
+            ))
+        } else {
+            None
+        };
+
+        wiki_layout(ctx, entry.clone(), right_sidebar, has_headings)
     }
 }

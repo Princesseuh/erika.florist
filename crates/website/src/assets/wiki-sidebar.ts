@@ -5,13 +5,20 @@ document.addEventListener("DOMContentLoaded", function () {
 	const rightSidebarElement = document.getElementById("mobile-right-sidebar");
 
 	// Early return if required elements are not found
-	if (
-		!leftSidebarToggleElement ||
-		!rightSidebarToggleElement ||
-		!leftSidebarElement ||
-		!rightSidebarElement
-	) {
-		throw new Error("Sidebar elements not found in the DOM");
+	if (!leftSidebarToggleElement || !leftSidebarElement) {
+		console.warn("Left sidebar elements not found in the DOM");
+		return;
+	}
+
+	// If right sidebar toggle doesn't exist, hide the button via CSS
+	if (!rightSidebarToggleElement) {
+		return;
+	}
+	
+	// If right sidebar doesn't exist, hide the toggle button
+	if (!rightSidebarElement) {
+		rightSidebarToggleElement.style.display = "none";
+		return;
 	}
 
 	// Now we can safely assign to non-nullable variables

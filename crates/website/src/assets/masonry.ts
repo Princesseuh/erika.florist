@@ -74,14 +74,16 @@ export class MiniMasonry {
 
 		this.#columns = Array<number>(this.#count).fill(0);
 		const children = this.#container.children as HTMLCollectionOf<HTMLElement>;
-		const childArray = Array.from(children);
-		for (const child of childArray) {
+		// Filter out hidden elements
+		const visibleChildren = Array.from(children).filter(child => child.style.display !== 'none');
+		
+		for (const child of visibleChildren) {
 			child.style.width = `${colWidth}px`;
 		}
-		this.#sizes = childArray.map((child) => child.clientHeight);
+		this.#sizes = visibleChildren.map((child) => child.clientHeight);
 
 		let index = 0;
-		for (const child of children) {
+		for (const child of visibleChildren) {
 			const nextColumn = index % this.#columns.length;
 			const childrenGutter = nextColumn !== this.#columns.length ? this.#currentGutterX : 0;
 			const x = (colWidth + childrenGutter) * nextColumn;
@@ -106,8 +108,28 @@ export class MiniMasonry {
 	}
 }
 
-new MiniMasonry({
-	gutter: 12,
-	baseWidth: () => Math.min(350, document.documentElement.clientWidth - 16), // 16px is the padding of the masonry container on mobile
-	container: document.querySelector(".masonry")!,
-});
+// Store masonry instances for external access
+const masonryInstances: MiniMasonry[] = [];
+
+// Initialize masonry for all containers
+const masonryContainers = document.querySelectorAll(".masonry");
+for (const container of masonryContainers) {
+	const instance = new MiniMasonry({
+		gutter: 12,
+		baseWidth: () => Math.min(350, document.documentElement.clientWidth - 16),
+		container: container as HTMLElement,
+	});
+	masonryInstances.push(instance);
+}
+
+// Global function to recalculate all masonry layouts
+declare global {
+	interface Window {
+		recalculateMasonry: () => void;
+	}
+}
+window.recalculateMasonry = () => {
+	for (const instance of masonryInstances) {
+		instance.layout();
+	}
+};

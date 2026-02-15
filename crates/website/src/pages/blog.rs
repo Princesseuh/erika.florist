@@ -1,12 +1,12 @@
 use std::collections::{HashMap, HashSet};
 
 use chrono::Datelike;
-use maud::html;
+use maud::{html, PreEscaped};
 use maudit::route::prelude::*;
 
 use crate::{components::article_preview, content::BlogPost, layouts::base_layout};
 
-fn blog_sidebar(
+fn blog_sidebar_content(
     ctx: &mut PageContext,
     current_tag: Option<&str>,
     current_year: Option<i32>,
@@ -14,12 +14,13 @@ fn blog_sidebar(
     let (tags, years) = get_sorted_tags_and_years(ctx);
 
     html! {
-        aside."mr-4 grow-0 basis-1/5 sm:my-8" {
-            div."top-4 mt-4 flex flex-col items-center gap-y-6 sm:sticky sm:mt-0 sm:items-start" {
-                @if current_tag.is_some() || current_year.is_some() {
-                    a."button-style-bg-accent inline" href="/articles" { "See all" }
-                }
-                ul."m-0 flex list-none flex-wrap justify-center gap-1 p-0 sm:justify-start" {
+        @if current_tag.is_some() || current_year.is_some() {
+            a."button-style-bg-accent inline mb-4" href="/articles" { "See all" }
+        }
+        div."flex flex-col gap-6" {
+            div."flex flex-col gap-2" {
+                span."font-bold text-sm" { "Tags" }
+                ul."m-0 flex list-none flex-wrap gap-1 p-0" {
                     @for (tag, _) in &tags {
                         @if Some(tag.as_str()) == current_tag {
                             span."button-style-bg-accent inline bg-white-sugar-cane text-accent-valencia" {
@@ -32,6 +33,9 @@ fn blog_sidebar(
                         }
                     }
                 }
+            }
+            div."flex flex-col gap-2" {
+                span."font-bold text-sm" { "Years" }
                 ul."m-0 flex list-none flex-wrap gap-1 p-0" {
                     @for (year, _) in &years {
                         @if Some(*year) == current_year {
@@ -45,6 +49,20 @@ fn blog_sidebar(
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+fn blog_sidebar(
+    ctx: &mut PageContext,
+    current_tag: Option<&str>,
+    current_year: Option<i32>,
+) -> maud::Markup {
+    html! {
+        aside."hidden sm:block mr-4 grow-0 basis-1/5 sm:my-8" {
+            div."top-4 mt-4 flex flex-col items-center gap-y-6 sm:sticky sm:mt-0 sm:items-start" {
+                (blog_sidebar_content(ctx, current_tag, current_year))
             }
         }
     }
@@ -148,6 +166,27 @@ impl Route for BlogIndex {
             Some("Articles".into()),
             None,
             html!(
+                // Floating filter button for mobile
+                button id="mobile-filter-toggle" ."sm:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-accent-valencia text-white-sugar-cane rounded-full p-0 flex items-center justify-center shadow-lg hover:bg-accent-valencia/90 focus:outline-none focus:ring-2 focus:ring-accent-valencia focus:ring-offset-2" aria-label="Toggle filters" {
+                    svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" {
+                        path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4";
+                    }
+                }
+
+                // Mobile sidebar overlay
+                div id="mobile-filter-sidebar" ."sm:hidden fixed inset-0 bg-black/50 z-50 opacity-0 pointer-events-none" {
+                    div."absolute right-0 top-0 h-full w-80 max-w-sm bg-white-sugar-cane overflow-y-auto transform translate-x-full transition-transform" {
+                        div."p-6 pt-12" {
+                            button id="mobile-filter-close" ."absolute top-4 right-4 text-black-charcoal hover:text-accent-valencia" aria-label="Close filters" {
+                                svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" {
+                                    path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12";
+                                }
+                            }
+                            (blog_sidebar_content(ctx, None, None))
+                        }
+                    }
+                }
+
                 article."flex flex-col gap-x-4 sm:flex-row" {
                     div."flex-1" {
                         div."masonry relative mx-2 my-4 sm:m-4" {
@@ -162,6 +201,51 @@ impl Route for BlogIndex {
                     (blog_sidebar(ctx, None, None))
                 }
                 (masonry_script)
+
+                (PreEscaped(r#"<script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        // Mobile filter sidebar toggle
+                        const filterToggle = document.getElementById('mobile-filter-toggle');
+                        const filterSidebar = document.getElementById('mobile-filter-sidebar');
+                        const filterClose = document.getElementById('mobile-filter-close');
+                        const filterContent = filterSidebar?.querySelector('div > div');
+                        let filterOpen = false;
+
+                        function toggleFilterSidebar() {
+                            filterOpen = !filterOpen;
+                            
+                            if (filterSidebar) {
+                                filterSidebar.classList.toggle('opacity-0', !filterOpen);
+                                filterSidebar.classList.toggle('opacity-100', filterOpen);
+                                filterSidebar.classList.toggle('pointer-events-none', !filterOpen);
+                            }
+                            
+                            if (filterContent) {
+                                filterContent.classList.toggle('translate-x-full', !filterOpen);
+                                filterContent.classList.toggle('translate-x-0', filterOpen);
+                            }
+                            
+                            document.body.style.overflow = filterOpen ? 'hidden' : '';
+                        }
+
+                        if (filterToggle) {
+                            filterToggle.addEventListener('click', toggleFilterSidebar);
+                        }
+                        
+                        if (filterClose) {
+                            filterClose.addEventListener('click', toggleFilterSidebar);
+                        }
+                        
+                        // Close when clicking overlay
+                        if (filterSidebar) {
+                            filterSidebar.addEventListener('click', (e) => {
+                                if (e.target === filterSidebar) {
+                                    toggleFilterSidebar();
+                                }
+                            });
+                        }
+                    });
+                </script>"#))
             ),
             true,
             ctx,
@@ -233,6 +317,27 @@ impl Route<TagParams, PaginationPage<Entry<BlogPost>>> for BlogTagIndex {
             Some(format!("Articles tagged with {}", params.tag)),
             None,
             html!(
+                // Floating filter button for mobile
+                button id="mobile-filter-toggle" ."sm:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-accent-valencia text-white-sugar-cane rounded-full p-0 flex items-center justify-center shadow-lg hover:bg-accent-valencia/90 focus:outline-none focus:ring-2 focus:ring-accent-valencia focus:ring-offset-2" aria-label="Toggle filters" {
+                    svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" {
+                        path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4";
+                    }
+                }
+
+                // Mobile sidebar overlay
+                div id="mobile-filter-sidebar" ."sm:hidden fixed inset-0 bg-black/50 z-50 opacity-0 pointer-events-none" {
+                    div."absolute right-0 top-0 h-full w-80 max-w-sm bg-white-sugar-cane overflow-y-auto transform translate-x-full transition-transform" {
+                        div."p-6 pt-12" {
+                            button id="mobile-filter-close" ."absolute top-4 right-4 text-black-charcoal hover:text-accent-valencia" aria-label="Close filters" {
+                                svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" {
+                                    path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12";
+                                }
+                            }
+                            (blog_sidebar_content(ctx, Some(&params.tag), None))
+                        }
+                    }
+                }
+
                 article."flex flex-col gap-x-4 sm:flex-row" {
                     div."flex-1" {
                         div."masonry relative mx-2 my-4 sm:m-4" {
@@ -244,6 +349,38 @@ impl Route<TagParams, PaginationPage<Entry<BlogPost>>> for BlogTagIndex {
                     (blog_sidebar(ctx, Some(&params.tag), None))
                 }
                 (masonry_script)
+
+                (PreEscaped(r#"<script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const filterToggle = document.getElementById('mobile-filter-toggle');
+                        const filterSidebar = document.getElementById('mobile-filter-sidebar');
+                        const filterClose = document.getElementById('mobile-filter-close');
+                        let filterOpen = false;
+
+                        function toggleFilterSidebar() {
+                            filterOpen = !filterOpen;
+                            if (filterSidebar) {
+                                filterSidebar.classList.toggle('opacity-0', !filterOpen);
+                                filterSidebar.classList.toggle('opacity-100', filterOpen);
+                                filterSidebar.classList.toggle('pointer-events-none', !filterOpen);
+                                const content = filterSidebar.querySelector('div > div');
+                                if (content) {
+                                    content.classList.toggle('translate-x-full', !filterOpen);
+                                    content.classList.toggle('translate-x-0', filterOpen);
+                                }
+                            }
+                            document.body.style.overflow = filterOpen ? 'hidden' : '';
+                        }
+
+                        if (filterToggle) filterToggle.addEventListener('click', toggleFilterSidebar);
+                        if (filterClose) filterClose.addEventListener('click', toggleFilterSidebar);
+                        if (filterSidebar) {
+                            filterSidebar.addEventListener('click', (e) => {
+                                if (e.target === filterSidebar) toggleFilterSidebar();
+                            });
+                        }
+                    });
+                </script>"#))
             ),
             true,
             ctx,
@@ -313,6 +450,27 @@ impl Route<YearParams, PaginationPage<Entry<BlogPost>>> for BlogYearIndex {
             Some(format!("Articles from {}", params.year)),
             None,
             html!(
+                // Floating filter button for mobile
+                button id="mobile-filter-toggle" ."sm:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-accent-valencia text-white-sugar-cane rounded-full p-0 flex items-center justify-center shadow-lg hover:bg-accent-valencia/90 focus:outline-none focus:ring-2 focus:ring-accent-valencia focus:ring-offset-2" aria-label="Toggle filters" {
+                    svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" {
+                        path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4";
+                    }
+                }
+
+                // Mobile sidebar overlay
+                div id="mobile-filter-sidebar" ."sm:hidden fixed inset-0 bg-black/50 z-50 opacity-0 pointer-events-none" {
+                    div."absolute right-0 top-0 h-full w-80 max-w-sm bg-white-sugar-cane overflow-y-auto transform translate-x-full transition-transform" {
+                        div."p-6 pt-12" {
+                            button id="mobile-filter-close" ."absolute top-4 right-4 text-black-charcoal hover:text-accent-valencia" aria-label="Close filters" {
+                                svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" {
+                                    path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12";
+                                }
+                            }
+                            (blog_sidebar_content(ctx, None, Some(params.year)))
+                        }
+                    }
+                }
+
                 article."flex flex-col gap-x-4 sm:flex-row" {
                     div."flex-1" {
                         div."masonry relative mx-2 my-4 sm:m-4" {
@@ -324,6 +482,38 @@ impl Route<YearParams, PaginationPage<Entry<BlogPost>>> for BlogYearIndex {
                     (blog_sidebar(ctx, None, Some(params.year)))
                 }
                 (masonry_script)
+
+                (PreEscaped(r#"<script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const filterToggle = document.getElementById('mobile-filter-toggle');
+                        const filterSidebar = document.getElementById('mobile-filter-sidebar');
+                        const filterClose = document.getElementById('mobile-filter-close');
+                        let filterOpen = false;
+
+                        function toggleFilterSidebar() {
+                            filterOpen = !filterOpen;
+                            if (filterSidebar) {
+                                filterSidebar.classList.toggle('opacity-0', !filterOpen);
+                                filterSidebar.classList.toggle('opacity-100', filterOpen);
+                                filterSidebar.classList.toggle('pointer-events-none', !filterOpen);
+                                const content = filterSidebar.querySelector('div > div');
+                                if (content) {
+                                    content.classList.toggle('translate-x-full', !filterOpen);
+                                    content.classList.toggle('translate-x-0', filterOpen);
+                                }
+                            }
+                            document.body.style.overflow = filterOpen ? 'hidden' : '';
+                        }
+
+                        if (filterToggle) filterToggle.addEventListener('click', toggleFilterSidebar);
+                        if (filterClose) filterClose.addEventListener('click', toggleFilterSidebar);
+                        if (filterSidebar) {
+                            filterSidebar.addEventListener('click', (e) => {
+                                if (e.target === filterSidebar) toggleFilterSidebar();
+                            });
+                        }
+                    });
+                </script>"#))
             ),
             true,
             ctx,

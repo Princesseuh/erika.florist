@@ -1,4 +1,4 @@
-use lol_html::{RewriteStrSettings, element, rewrite_str};
+use lol_html::{element, rewrite_str, RewriteStrSettings};
 use maudit::route::PageContext;
 use std::{error::Error, fmt::Display};
 use xml_builder::XMLElement;

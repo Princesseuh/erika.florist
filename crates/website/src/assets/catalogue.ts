@@ -3,17 +3,13 @@ import { QuickScore } from "quick-score";
 import { thumbHashToDataURL } from "thumbhash";
 
 const VERSION = 4;
-const latestHash = document.getElementById("catalogue-core")?.getAttribute("data-latest")!;
+const catalogueCore = document.getElementById("catalogue-core");
+const latestHash = catalogueCore?.getAttribute("data-latest") ?? "";
 
 const dbOpenRequest = indexedDB.open("catalogue", VERSION);
 
-const searchInput = document.getElementById("catalogue-search") as HTMLInputElement;
-const ratingSelect = document.getElementById("catalogue-ratings") as HTMLSelectElement;
-const sortSelect = document.getElementById("catalogue-sort") as HTMLSelectElement;
-const sortOrderCheckbox = document.getElementById("catalogue-sort-ord") as HTMLInputElement;
-const typeSelect = document.getElementById("catalogue-types") as HTMLSelectElement;
 const content = document.getElementById("catalogue-content") as HTMLDivElement;
-const entriesCount = document.getElementById("catalogue-entry-count") as HTMLDivElement;
+const entriesCountElements = document.querySelectorAll("#catalogue-entry-count") as NodeListOf<HTMLDivElement>;
 
 let db: IDBDatabase;
 let allItems: CatalogueItemDB[] = [];
@@ -276,18 +272,39 @@ function buildUI() {
 	if (isLoading) return;
 	isLoading = true;
 
+	// Get values from all inputs (desktop and mobile), use the one with a value
+	const getInputValue = (selectors: string[]) => {
+		for (const selector of selectors) {
+			const inputs = Array.from(document.querySelectorAll(selector)) as (HTMLInputElement | HTMLSelectElement)[];
+			for (const input of inputs) {
+				if (input.value) return input.value;
+			}
+		}
+		return "";
+	};
+
+	const getCheckboxValue = (selectors: string[]) => {
+		for (const selector of selectors) {
+			const checkboxes = Array.from(document.querySelectorAll(selector)) as HTMLInputElement[];
+			for (const cb of checkboxes) {
+				if (cb.checked) return true;
+			}
+		}
+		return false;
+	};
+
 	const filters = {
-		search: searchInput.value.toLowerCase(),
-		type: typeSelect.value,
-		rating: ratingSelect.value ? Number(ratingSelect.value) : "",
-		sort: sortSelect.value,
+		search: getInputValue(["#mobile-catalogue-search", "#catalogue-search"]).toLowerCase(),
+		type: getInputValue(["#mobile-catalogue-types", "#catalogue-types"]),
+		rating: getInputValue(["#mobile-catalogue-ratings", "#catalogue-ratings"]) ? Number(getInputValue(["#mobile-catalogue-ratings", "#catalogue-ratings"])) : "",
+		sort: getInputValue(["#mobile-catalogue-sort", "#catalogue-sort"]) || "date",
 	};
 
 	const contentObjectStore = db.transaction("content", "readonly").objectStore("content");
 
 	let request: IDBRequest;
 
-	const cursorDirection = sortOrderCheckbox.checked ? "next" : "prev";
+	const cursorDirection = getCheckboxValue(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"]) ? "next" : "prev";
 
 	// Use appropriate index for sorting
 	if (filters.sort === "date") {
@@ -402,7 +419,9 @@ function renderPage() {
 }
 
 function updateEntryCount() {
-	entriesCount.textContent = `${allItems.length} entries`;
+	for (const el of Array.from(entriesCountElements)) {
+		el.textContent = `${allItems.length} entries`;
+	}
 }
 
 function hasMorePages() {
@@ -453,8 +472,21 @@ function errorUI() {
 	isLoading = false;
 }
 
-searchInput.addEventListener("input", resetAndBuildUI);
-ratingSelect.addEventListener("change", resetAndBuildUI);
-sortSelect.addEventListener("change", resetAndBuildUI);
-typeSelect.addEventListener("change", resetAndBuildUI);
-sortOrderCheckbox.addEventListener("change", resetAndBuildUI);
+// Add event listeners to all filter inputs (both desktop and mobile)
+const addListener = (selectors: string[], type: "input" | "change", handler: () => void) => {
+	for (const selector of selectors) {
+		Array.from(document.querySelectorAll(selector)).forEach((el) => {
+			if (type === "input") {
+				(el as HTMLInputElement).addEventListener("input", handler);
+			} else {
+				(el as HTMLSelectElement).addEventListener("change", handler);
+			}
+		});
+	}
+};
+
+addListener(["#mobile-catalogue-search", "#catalogue-search"], "input", resetAndBuildUI);
+addListener(["#mobile-catalogue-ratings", "#catalogue-ratings"], "change", resetAndBuildUI);
+addListener(["#mobile-catalogue-sort", "#catalogue-sort"], "change", resetAndBuildUI);
+addListener(["#mobile-catalogue-types", "#catalogue-types"], "change", resetAndBuildUI);
+addListener(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"], "change", resetAndBuildUI);

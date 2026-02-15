@@ -1,11 +1,13 @@
 mod blog;
 mod catalogue;
+mod changelog;
 mod index;
 mod projects;
 pub mod rss;
 mod wiki;
 pub use blog::{BlogIndex, BlogPostPage, BlogPostPageParams, BlogTagIndex, BlogYearIndex};
 pub use catalogue::{Catalogue, CatalogueContent};
+pub use changelog::ChangelogPage;
 pub use index::Index;
 pub use projects::{ProjectIndex, ProjectPage};
 pub use rss::blog::BlogRSS;

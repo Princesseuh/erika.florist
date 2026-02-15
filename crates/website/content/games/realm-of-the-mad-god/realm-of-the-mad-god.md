@@ -2,7 +2,7 @@
 title: "Realm of the Mad God"
 platform: "pc"
 rating: "liked"
-finishedDate: 2026-02-14
+finishedDate: N/A
 igdb: "8188"
 ---
 

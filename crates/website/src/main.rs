@@ -1,5 +1,5 @@
 use erikaflorist::{content::content_sources, pages};
-use maudit::{coronate, routes, AssetsOptions, BuildOptions, BuildOutput, SitemapOptions};
+use maudit::{AssetsOptions, BuildOptions, BuildOutput, SitemapOptions, coronate, routes};
 
 fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
     coronate(

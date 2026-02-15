@@ -1,7 +1,8 @@
 use chrono::{DateTime, Datelike, Utc};
-use maud::{html, PreEscaped};
+use maud::{PreEscaped, html};
 use maudit::route::prelude::*;
 
+use crate::components::mobile_menu;
 use crate::layouts::base_layout;
 
 #[derive(Clone)]
@@ -81,9 +82,10 @@ fn get_changelog() -> Vec<ChangelogEntry> {
             let scope = clean_desc.split(':').next().and_then(|prefix| {
                 if let Some(start) = prefix.find('(')
                     && let Some(end) = prefix.find(')')
-                        && end > start {
-                            return Some(prefix[start + 1..end].to_string());
-                        }
+                    && end > start
+                {
+                    return Some(prefix[start + 1..end].to_string());
+                }
                 None
             });
 
@@ -107,10 +109,18 @@ fn get_changelog() -> Vec<ChangelogEntry> {
 
 fn get_entry_color_classes(scope: &Option<String>) -> &'static str {
     match scope.as_deref() {
-        Some("wiki") => "border-violet-ultra/15 text-violet-ultra hover:bg-violet-ultra hover:text-white-sugar-cane focus:bg-violet-ultra focus:text-white-sugar-cane",
-        Some("blog") => "border-accent-valencia/15 text-accent-valencia hover:bg-accent-valencia hover:text-white-sugar-cane focus:bg-accent-valencia focus:text-white-sugar-cane",
-        Some("catalogue") => "border-black-charcoal/10 text-black-charcoal/50 hover:bg-black-charcoal hover:text-white-sugar-cane focus:bg-black-charcoal focus:text-white-sugar-cane",
-        _ => "border-subtle-charcoal/15 text-subtle-charcoal hover:bg-subtle-charcoal hover:text-white-sugar-cane focus:bg-subtle-charcoal focus:text-white-sugar-cane",
+        Some("wiki") => {
+            "border-violet-ultra/15 text-violet-ultra hover:bg-violet-ultra hover:text-white-sugar-cane focus:bg-violet-ultra focus:text-white-sugar-cane"
+        }
+        Some("blog") => {
+            "border-accent-valencia/15 text-accent-valencia hover:bg-accent-valencia hover:text-white-sugar-cane focus:bg-accent-valencia focus:text-white-sugar-cane"
+        }
+        Some("catalogue") => {
+            "border-black-charcoal/10 text-black-charcoal/50 hover:bg-black-charcoal hover:text-white-sugar-cane focus:bg-black-charcoal focus:text-white-sugar-cane"
+        }
+        _ => {
+            "border-subtle-charcoal/15 text-subtle-charcoal hover:bg-subtle-charcoal hover:text-white-sugar-cane focus:bg-subtle-charcoal focus:text-white-sugar-cane"
+        }
     }
 }
 
@@ -155,7 +165,7 @@ impl Route for ChangelogPage {
                     div."flex flex-col gap-2" {
                         span."font-bold text-sm" { "Options" }
                         label."flex items-center gap-2 cursor-pointer" {
-                            input type="checkbox" id="toggle-catalogue-checkbox" class="cursor-pointer";
+                            input type="checkbox" class="toggle-catalogue-checkbox cursor-pointer";
                             span."text-sm" { "Show content changes" }
                         }
                     }
@@ -176,26 +186,7 @@ impl Route for ChangelogPage {
             Some("Changelog".into()),
             Some("Things change, and that's okay.".into()),
             html!(
-                // Floating filter button for mobile
-                button id="mobile-filter-toggle" ."sm:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-accent-valencia text-white-sugar-cane rounded-full p-0 flex items-center justify-center shadow-lg hover:bg-accent-valencia/90 focus:outline-none focus:ring-2 focus:ring-accent-valencia focus:ring-offset-2" aria-label="Toggle filters" {
-                    svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" {
-                        path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4";
-                    }
-                }
-
-                // Mobile sidebar overlay
-                div id="mobile-filter-sidebar" ."fixed inset-0 bg-black/50 z-50 opacity-0 pointer-events-none transition-opacity sm:hidden" {
-                    div."absolute right-0 top-0 h-full w-80 max-w-sm bg-white-sugar-cane overflow-y-auto transform translate-x-full transition-transform" {
-                        div."p-6 pt-12" {
-                            button id="mobile-filter-close" ."absolute top-4 right-4 text-black-charcoal hover:text-accent-valencia" aria-label="Close filters" {
-                                svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" {
-                                    path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12";
-                                }
-                            }
-                            (sidebar_content)
-                        }
-                    }
-                }
+                (mobile_menu("changelog", sidebar_content))
 
                 div."flex flex-col gap-x-4 sm:flex-row" {
                     div."flex-1 mb-8 mx-2 my-4 sm:m-4" {
@@ -283,84 +274,46 @@ impl Route for ChangelogPage {
                     }
                 </style>"##))
 
-                (PreEscaped(r##"<script>
-                    document.addEventListener('DOMContentLoaded', () => {
-                        // Mobile filter sidebar toggle
-                        const filterToggle = document.getElementById('mobile-filter-toggle');
-                        const filterSidebar = document.getElementById('mobile-filter-sidebar');
-                        const filterClose = document.getElementById('mobile-filter-close');
-                        const filterContent = filterSidebar?.querySelector('div');
-                        let filterOpen = false;
-
-                        function toggleFilterSidebar() {
-                            filterOpen = !filterOpen;
-                            
-                            if (filterSidebar) {
-                                filterSidebar.classList.toggle('opacity-0', !filterOpen);
-                                filterSidebar.classList.toggle('opacity-100', filterOpen);
-                                filterSidebar.classList.toggle('pointer-events-none', !filterOpen);
-                            }
-                            
-                            if (filterContent) {
-                                filterContent.classList.toggle('translate-x-full', !filterOpen);
-                                filterContent.classList.toggle('translate-x-0', filterOpen);
-                            }
-                            
-                            document.body.style.overflow = filterOpen ? 'hidden' : '';
-                        }
-
-                        if (filterToggle) {
-                            filterToggle.addEventListener('click', toggleFilterSidebar);
-                        }
-                        
-                        if (filterClose) {
-                            filterClose.addEventListener('click', toggleFilterSidebar);
-                        }
-                        
-                        // Close when clicking overlay
-                        if (filterSidebar) {
-                            filterSidebar.addEventListener('click', (e) => {
-                                if (e.target === filterSidebar) {
-                                    toggleFilterSidebar();
-                                }
-                            });
-                        }
-
-                        // Close when clicking year links in mobile sidebar
-                        if (filterSidebar) {
-                            filterSidebar.addEventListener('click', (e) => {
-                                const target = e.target;
-                                if (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#year-')) {
-                                    if (filterOpen) {
-                                        toggleFilterSidebar();
-                                    }
-                                }
-                            });
-                        }"##))
-
                 @if has_catalogue_entries {
-                    (PreEscaped(r##"
+                    (PreEscaped(r##"<script>
                         // Catalogue checkbox handling
-                        const checkbox = document.getElementById('toggle-catalogue-checkbox');
+                        const checkboxes = document.querySelectorAll('.toggle-catalogue-checkbox');
                         const catalogueEntries = document.querySelectorAll('.catalogue-entry');
 
-                        if (checkbox && catalogueEntries.length > 0) {
-                            checkbox.addEventListener('change', () => {
-                                const showCatalogue = checkbox.checked;
+                        if (checkboxes.length > 0 && catalogueEntries.length > 0) {
+                            function updateCatalogueVisibility(checked) {
                                 for (const entry of catalogueEntries) {
-                                    entry.style.display = showCatalogue ? '' : 'none';
+                                    entry.style.display = checked ? '' : 'none';
                                 }
                                 if (window.recalculateMasonry) {
                                     window.recalculateMasonry();
                                 }
-                            });
-                        }"##))
+                            }
+
+                            for (const checkbox of checkboxes) {
+                                checkbox.addEventListener('change', (e) => {
+                                    // Sync all checkboxes to the same state
+                                    for (const other of checkboxes) {
+                                        other.checked = e.target.checked;
+                                    }
+                                    updateCatalogueVisibility(e.target.checked);
+                                });
+                            }
+                        }
+                    </script>"##))
                 }
 
-                (PreEscaped(r##"
+                (PreEscaped(r##"<script>
                         // Handle year links - open the details element when clicked
                         document.querySelectorAll('a[href^="#year-"]').forEach(link => {
                             link.addEventListener('click', (e) => {
+                                // Close mobile menu if open
+                                const mobileMenuSidebar = document.getElementById('mobile-menu-sidebar-changelog');
+                                if (mobileMenuSidebar && !mobileMenuSidebar.classList.contains('pointer-events-none')) {
+                                    const closeBtn = document.getElementById('mobile-menu-close-changelog');
+                                    if (closeBtn) closeBtn.click();
+                                }
+
                                 const targetId = link.getAttribute('href').substring(1);
                                 const summary = document.getElementById(targetId);
                                 if (summary) {
@@ -376,8 +329,7 @@ impl Route for ChangelogPage {
                                 }
                             });
                         });
-                    });
-                </script>"##))
+                    </script>"##))
             ),
             true,
             ctx,

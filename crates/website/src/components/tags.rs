@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use maud::{html, Markup};
+use maud::{Markup, html};
 
 pub fn tags<S: AsRef<str> + Display>(tag_list: &[S], accent_background: Option<bool>) -> Markup {
     let accent_background = accent_background.unwrap_or(false);

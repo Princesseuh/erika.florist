@@ -1,6 +1,7 @@
 name: Deploy
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -8,6 +9,7 @@ on:
       - "Cargo.toml"
       - "rust-toolchain*"
       - "crates/**/*"
+      - ".github/workflows/deploy.yml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

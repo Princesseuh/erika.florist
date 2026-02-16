@@ -7,4 +7,4 @@ compatibility_date = "2025-02-16"
 routes = [{ pattern = "api.erika.florist/*", zone_name = "erika.florist" }]
 
 [build]
-command = "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && . $HOME/.cargo/env && cargo install -q worker-build@^0.7 && worker-build --release"
+command = "cargo install -q worker-build@^0.7 && worker-build --release"

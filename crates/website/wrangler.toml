@@ -5,4 +5,4 @@ compatibility_date = "2024-02-15"
 directory = "./dist"
 
 [build]
-command = "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && . $HOME/.cargo/env && cargo run --release"
+command = "cargo run --release"

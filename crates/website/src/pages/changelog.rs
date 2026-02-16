@@ -197,7 +197,7 @@ impl Route for ChangelogPage {
                                     details."w-full mb-4 changelog-year" open {
                                         summary."button-style-bg-accent w-full text-left px-4 py-3 font-bold text-lg cursor-pointer list-none flex items-center justify-between" id=(format!("year-{}", year)) {
                                             span { (year) }
-                                            span."year-arrow transition-transform" { "▶" }
+                                            span."year-arrow transition-transform select-none" { "▶" }
                                         }
                                         div."pt-6" {
                                             div."masonry relative mb-8" {

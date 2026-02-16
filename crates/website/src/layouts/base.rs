@@ -48,7 +48,7 @@ pub fn base_layout(
 
                 meta name="twitter:card" content="summary";
             }
-            body.bg-black-charcoal {
+            body.bg-black-charcoal.relative {
                 div.bg-white-sugar-cane id="app" {
                     (header(include_about, purple, ctx)?)
 
@@ -56,7 +56,7 @@ pub fn base_layout(
                         (content)
                     }
 
-                    footer."flex justify-center bg-black-charcoal px-5 py-6 pb-12 leading-tight text-white-sugar-cane sm:m-0 sm:px-0 sm:pb-6" {
+                    footer."flex justify-center bg-black-charcoal relative px-5 py-6 pb-12 leading-tight text-white-sugar-cane sm:m-0 sm:px-0 sm:pb-6" {
                         section."flex w-centered-width flex-wrap items-center justify-between gap-y-8" {
                             (socials(None, None))
 
@@ -69,8 +69,10 @@ pub fn base_layout(
                                 br;
                                 a.(button_class).py-0 href="/changelog/" { "Changelog" }
                             }
+
                         }
                     }
+                    a.absolute.bottom-0.right-0.px-4.py-2.text-black-charcoal.hover:bg-accent-valencia.hover:text-white.font-semibold href="/login/" { "Login" }
                     (spritesheet())
                 }
             }

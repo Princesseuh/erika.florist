@@ -1,4 +1,4 @@
-name = "erika-florist-backend"
+name = 'erika-florist-api'
 main = "build/index.js"
 compatibility_date = "2025-02-16"
 
@@ -7,4 +7,4 @@ compatibility_date = "2025-02-16"
 routes = [{ pattern = "api.erika.florist/*", zone_name = "erika.florist" }]
 
 [build]
-command = "cargo install -q worker-build@^0.7 && worker-build --release"
+command = "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh && rustup target add wasm32-unknown-unknown && cargo install -q worker-build@^0.7 && worker-build --release"

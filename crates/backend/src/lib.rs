@@ -266,7 +266,7 @@ async fn fetch(mut req: Request, env: Env, _ctx: Context) -> Result<Response> {
         };
 
         let markdown_content = format!(
-            "---\ntitle: \"{}\"\n{}rating: \"{}\"\nfinishedDate: {}\n{}: \"{}\"---\n\n{}\n",
+            "---\ntitle: \"{}\"\n{}rating: \"{}\"\nfinishedDate: {}\n{}: \"{}\"\n---\n\n{}\n",
             form.name,
             platform_line,
             form.rating,
@@ -276,7 +276,7 @@ async fn fetch(mut req: Request, env: Env, _ctx: Context) -> Result<Response> {
             form.comment
         );
 
-        let file_path = format!("{}/{}/{}.md", path_type, slug, slug);
+        let file_path = format!("crates/website/content/{}/{}/{}.md", path_type, slug, slug);
         let commit_url = post_to_github(
             &github_token.to_string(),
             &github_repo.to_string(),

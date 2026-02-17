@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1380153600,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 41,
+      "abbreviation": "WiiU"
+    }
+  ],
+  "companies": [
+    {
+      "id": 1366,
+      "name": "Nintendo EAD Software Development Group No.3",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    }
+  ]
+}

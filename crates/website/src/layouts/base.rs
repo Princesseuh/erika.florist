@@ -1,7 +1,14 @@
 use maud::{DOCTYPE, Markup, html};
-use maudit::{assets::StyleOptions, maud::generator, route::RenderResult};
+use maudit::{
+    assets::StyleOptions,
+    maud::generator,
+    route::{RenderResult, RouteExt},
+};
 
-use crate::components::{dinkus, header, socials, spritesheet};
+use crate::{
+    components::{dinkus, header, socials, spritesheet},
+    pages::LoginPage,
+};
 
 pub fn base_layout(
     title: Option<String>,
@@ -72,7 +79,7 @@ pub fn base_layout(
 
                         }
                     }
-                    a.absolute.bottom-0.right-0.px-4.py-2.text-black-charcoal.hover:bg-accent-valencia.hover:text-white.font-semibold href="/login/" { "Login" }
+                    a.absolute.bottom-0.right-0.px-4.py-2.text-black-charcoal.hover:bg-accent-valencia.hover:text-white.font-semibold href=(LoginPage.url(Default::default())) { "Login" }
                     (spritesheet())
                 }
             }

@@ -28,7 +28,7 @@ fn blog_sidebar_content(
                                 li { (tag) }
                             }
                         } @else {
-                            a."button-style-bg-accent inline" href=(format!("/articles/tags/{}", tag)) {
+                            a."button-style-bg-accent inline" href=(BlogTagIndex.url(TagParams { tag: tag.clone(), page: None })) {
                                 li { (tag) }
                             }
                         }
@@ -44,7 +44,7 @@ fn blog_sidebar_content(
                                 li { (year) }
                             }
                         } @else {
-                            a."button-style-bg-accent inline" href=(format!("/articles/years/{}", year)) {
+                            a."button-style-bg-accent inline" href=(BlogYearIndex.url(YearParams { year: *year, page: None })) {
                                 li { (year) }
                             }
                         }
@@ -194,9 +194,9 @@ impl Route for BlogIndex {
 pub struct BlogTagIndex;
 
 #[derive(Params, Clone)]
-struct TagParams {
-    tag: String,
-    page: Option<usize>,
+pub struct TagParams {
+    pub tag: String,
+    pub page: Option<usize>,
 }
 
 impl Route<TagParams, PaginationPage<Entry<BlogPost>>> for BlogTagIndex {
@@ -278,9 +278,9 @@ impl Route<TagParams, PaginationPage<Entry<BlogPost>>> for BlogTagIndex {
 pub struct BlogYearIndex;
 
 #[derive(Params, Clone)]
-struct YearParams {
-    year: i32,
-    page: Option<usize>,
+pub struct YearParams {
+    pub year: i32,
+    pub page: Option<usize>,
 }
 
 impl Route<YearParams, PaginationPage<Entry<BlogPost>>> for BlogYearIndex {

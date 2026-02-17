@@ -1,9 +1,9 @@
-use maud::html;
+use maud::{html, PreEscaped};
 use maudit::route::prelude::*;
 
 use crate::layouts::base_layout;
 
-#[route("/login")]
+#[route("/login/")]
 pub struct LoginPage;
 
 impl Route for LoginPage {
@@ -16,7 +16,7 @@ impl Route for LoginPage {
                     div class="p-8" {
                         div id="error" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" {}
 
-                        form id="login-form" class="space-y-4" {
+                        form id="login-form" method="POST" class="space-y-4" {
                             div {
                                 label class="block text-sm font-medium text-gray-700 mb-2" for="password" {
                                     "Password"
@@ -30,7 +30,7 @@ impl Route for LoginPage {
                 }
 
                 script {
-                    r#"
+                    (PreEscaped(r#"
                     const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
                         ? "http://localhost:8787"
                         : "https://api.erika.florist";
@@ -48,6 +48,7 @@ impl Route for LoginPage {
                             });
 
                             if (response.ok) {
+                                localStorage.setItem('isLoggedIn', 'true');
                                 window.location.href = '/catalogue';
                             } else {
                                 const errorDiv = document.getElementById('error');
@@ -60,7 +61,7 @@ impl Route for LoginPage {
                             errorDiv.classList.remove('hidden');
                         }
                     });
-                    "#
+                    "#))
                 }
             },
             true,

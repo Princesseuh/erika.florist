@@ -1,6 +1,6 @@
 use std::hash::{DefaultHasher, Hash, Hasher};
 
-use maud::html;
+use maud::{html, PreEscaped};
 use maudit::route::prelude::*;
 
 use crate::components::mobile_menu;
@@ -124,7 +124,303 @@ impl Route for Catalogue {
                                     }
                                 }
                             }
+
+                            button id="add-entry-btn" class="hidden fixed bottom-22 md:bottom-8 right-6 w-14 h-14 rounded-full bg-accent-valencia text-white text-2xl shadow-lg hover:bg-accent-valencia/80 transition-colors z-40" title="Add entry" {
+                                "+"
+                            }
                         }
+                    }
+
+                        div id="add-entry-modal" class="hidden fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" {
+                        div class="bg-[#f7f7f7] rounded-lg max-w-2xl w-full" {
+                            div class="bg-[#c73c2e] px-6 py-4 flex justify-between items-center rounded-t-lg" {
+                                h2 class="text-xl font-bold text-white" { "Add catalogue entry" }
+                                button id="close-modal" class="text-white hover:text-black text-2xl font-bold" { "×" }
+                            }
+
+                            div class="p-6" {
+                                form id="add-entry-form" class="space-y-4 text-black" {
+                                    div id="selected-result" class="flex justify-center items-center gap-2" {
+                                        img id="selected-cover" class="w-12 h-16 object-cover rounded hidden" src="" {};
+                                        div id="selected-cover-placeholder" class="w-12 h-16 bg-zinc-300 rounded" {}
+                                        span id="selected-title" class="font-medium" { "No selection" }
+                                        input type="hidden" id="entry-source-id" name="source-id";
+                                    }
+
+                                    div class="flex items-end" {
+                                        label class="w-1/4 md:w-[15%]" {
+                                            span class="block text-sm font-bold mb-1" { "Type" }
+                                            select id="entry-type" name="type" class="w-full px-3 py-2 bg-white border-y-2 border-l-2 border-black rounded-l rounded-r-none font-medium h-10" required {
+                                                option value="" { "Select" }
+                                                option value="game" { "Game" }
+                                                option value="movie" { "Movie" }
+                                                option value="tv" { "Show" }
+                                                option value="book" { "Book" }
+                                            }
+                                        }
+                                        label class="flex-1" {
+                                            span class="block text-sm font-bold mb-1" { "Title" }
+                                            div class="flex" {
+                                                input id="entry-name" name="name" class="flex-1 px-3 py-2 bg-white border-2 border-black rounded-r font-medium h-10 disabled:bg-zinc-400 disabled:cursor-not-allowed" placeholder="Select type first..." disabled;
+                                                button type="button" class="search-btn px-4 py-2 bg-black text-white hover:bg-zinc-700 rounded font-medium -ml-2 h-10 md:hidden" {
+                                                    svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" {
+                                                        path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z";
+                                                    }
+                                                }
+                                                button type="button" class="search-btn px-4 py-2 bg-black text-white hover:bg-zinc-700 rounded font-medium -ml-2 h-10 hidden md:block" { "Search" }
+                                            }
+                                        }
+                                    }
+
+                                    div class="relative" {
+                                        div id="search-results" class="mt-2 max-h-40 overflow-y-auto hidden border-2 border-black bg-white absolute z-10 left-0 right-0" {}
+                                    }
+
+                                    div class="block" {
+                                        span class="block text-sm font-bold mb-2 block" { "Rating" }
+                                        div id="rating-options" class="flex justify-center gap-4" {
+                                            label class="cursor-pointer flex flex-col items-center" {
+                                                input type="radio" name="rating" value="hated" class="peer sr-only";
+                                                span class="text-3xl peer-checked:scale-125 transition-transform" { "🙁" }
+                                            }
+                                            label class="cursor-pointer flex flex-col items-center" {
+                                                input type="radio" name="rating" value="disliked" class="peer sr-only";
+                                                span class="text-3xl peer-checked:scale-125 transition-transform" { "😕" }
+                                            }
+                                            label class="cursor-pointer flex flex-col items-center" {
+                                                input type="radio" name="rating" value="okay" class="peer sr-only";
+                                                span class="text-3xl peer-checked:scale-125 transition-transform" { "😐" }
+                                            }
+                                            label class="cursor-pointer flex flex-col items-center" {
+                                                input type="radio" name="rating" value="liked" class="peer sr-only";
+                                                span class="text-3xl peer-checked:scale-125 transition-transform" { "🙂" }
+                                            }
+                                            label class="cursor-pointer flex flex-col items-center" {
+                                                input type="radio" name="rating" value="loved" class="peer sr-only";
+                                                span class="text-3xl peer-checked:scale-125 transition-transform" { "🥰" }
+                                            }
+                                            label class="cursor-pointer flex flex-col items-center" {
+                                                input type="radio" name="rating" value="masterpiece" class="peer sr-only";
+                                                span class="text-3xl peer-checked:scale-125 transition-transform" { "❤️" }
+                                            }
+                                        }
+                                    }
+
+                                    div id="platform-field" class="hidden" {
+                                        label {
+                                            span class="block text-sm font-bold mb-1" { "Platform" }
+                                            input id="entry-platform" name="platform-select" class="w-full px-3 py-2 bg-white border-2 border-black rounded font-medium" placeholder="e.g., pc, ps5, switch";
+                                        }
+                                    }
+
+                                    div {
+                                        label {
+                                            span class="block text-sm font-bold mb-1" { "Date finished" }
+                                            input type="date" id="entry-date" name="date" class="w-full px-3 py-2 bg-white border-2 border-black rounded font-medium" required;
+                                        }
+                                    }
+
+                                    div {
+                                        label {
+                                            span class="block text-sm font-bold mb-1" { "Comment" }
+                                            textarea id="entry-comment" name="comment" class="w-full px-3 py-2 bg-white border-2 border-black rounded font-medium h-24" placeholder="Thoughts..." {}
+                                        }
+                                    }
+
+                                    div class="flex items-center justify-between" {
+                                        div class="flex items-center gap-2" {
+                                            input type="checkbox" id="skip-ci" name="skip-ci" value="skip-ci";
+                                            label for="skip-ci" class="text-sm font-bold" { "Skip CI/CD" }
+                                        }
+                                        input type="text" id="entry-source-id-display" class="px-2 py-1 border-2 border-black rounded font-medium text-sm w-32" placeholder="Source ID" {};
+                                    }
+
+                                    div id="form-error" class="hidden bg-red-100 border-2 border-red-600 text-red-600 px-4 py-3 rounded font-bold" {}
+
+                                    button type="submit" class="w-full bg-[#c73c2e] text-white py-3 rounded font-bold hover:bg-[#a63226]" { "Submit" }
+                                }
+                            }
+                        }
+                    }
+
+                    script {
+                        (PreEscaped(r#"
+                        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                            ? "http://localhost:8787"
+                            : "https://api.erika.florist";
+
+                        let isAuthenticated = false;
+
+                        function hasAuthCookie() {
+                            return localStorage.getItem('isLoggedIn') === 'true';
+                        }
+
+                        async function checkAuth() {
+                            if (!hasAuthCookie()) {
+                                console.log('Not logged in');
+                                return;
+                            }
+
+                            try {
+                                console.log('Checking auth...');
+                                const response = await fetch(API_URL + '/auth', {
+                                    credentials: 'include'
+                                });
+                                console.log('Auth response status:', response.status);
+                                if (!response.ok) {
+                                    localStorage.removeItem('isLoggedIn');
+                                    return;
+                                }
+                                const data = await response.json();
+                                console.log('Auth data:', data);
+                                isAuthenticated = data.authenticated;
+                                if (isAuthenticated) {
+                                    console.log('Showing add button');
+                                    document.getElementById('add-entry-btn').classList.remove('hidden');
+                                }
+                            } catch (e) {
+                                console.error('Auth check failed:', e);
+                            }
+                        }
+
+                        checkAuth();
+
+                        const modal = document.getElementById('add-entry-modal');
+                        const btn = document.getElementById('add-entry-btn');
+                        const close = document.getElementById('close-modal');
+                        const form = document.getElementById('add-entry-form');
+                        const typeSelect = document.getElementById('entry-type');
+                        const titleInput = document.getElementById('entry-name');
+                        const platformField = document.getElementById('platform-field');
+                        const searchBtn = document.querySelector('.search-btn');
+                        const searchResults = document.getElementById('search-results');
+                        const selectedResult = document.getElementById('selected-result');
+
+                        btn.onclick = () => modal.classList.remove('hidden');
+                        close.onclick = () => modal.classList.add('hidden');
+                        modal.onclick = (e) => { if (e.target === modal) modal.classList.add('hidden'); };
+
+                        typeSelect.onchange = () => {
+                            const hasType = typeSelect.value !== '';
+                            titleInput.disabled = !hasType;
+                            titleInput.placeholder = hasType ? 'Search by title...' : 'Select type first...';
+                            platformField.classList.toggle('hidden', typeSelect.value !== 'game');
+                        };
+
+                        async function search() {
+                            const query = document.getElementById('entry-name').value;
+                            const type = typeSelect.value;
+                            if (!query || !type) return;
+
+                            const sourceMap = { game: 'igdb', movie: 'tmdb', tv: 'tmdb', book: 'isbn' };
+                            const source = sourceMap[type];
+                            const tmdbType = type === 'tv' ? 'tv' : 'movie';
+
+                            try {
+                                const response = await fetch(API_URL + '/search?source=' + source + '&query=' + encodeURIComponent(query) + '&type=' + tmdbType, {
+                                    credentials: 'include'
+                                });
+                                const text = await response.text();
+                                console.log('Search response:', text);
+                                const data = JSON.parse(text);
+                                displayResults(data, type);
+                            } catch (e) {
+                                console.error('Search failed:', e);
+                            }
+                        }
+
+                        function displayResults(data, type) {
+                            searchResults.innerHTML = '';
+                            searchResults.classList.remove('hidden');
+
+                            let results = [];
+                            if (type === 'game') {
+                                results = data.map(g => ({ id: g.id, name: g.name, cover: g.cover?.url }));
+                            } else if (type === 'book') {
+                                results = data.docs?.map(b => ({ id: b.isbn?.[0] || b.key, name: b.title, cover: b.cover_i ? 'https://covers.openlibrary.org/b/id/' + b.cover_i + '-M.jpg' : null })) || [];
+                            } else {
+                                results = data.results?.map(m => ({ id: m.id, name: m.title, cover: m.poster_path ? 'https://image.tmdb.org/t/p/w92' + m.poster_path : null })) || [];
+                            }
+
+                            results.forEach(r => {
+                                const div = document.createElement('div');
+                                div.className = 'flex items-center gap-2 p-2 hover:bg-zinc-200 cursor-pointer text-black';
+                                if (r.cover) {
+                                    const coverUrl = r.cover.startsWith('//') ? 'https:' + r.cover : r.cover;
+                                    div.innerHTML = '<img src="' + coverUrl + '" class="w-8 h-12 object-cover flex-shrink-0"><span class="text-sm truncate">' + r.name + '</span>';
+                                } else {
+                                    div.innerHTML = '<div class="w-8 h-12 bg-gray-300 flex-shrink-0"></div><span class="text-sm truncate">' + r.name + '</span>';
+                                }
+                                div.onclick = () => selectResult(r);
+                                searchResults.appendChild(div);
+                            });
+                        }
+
+                        function selectResult(result) {
+                            document.getElementById('entry-name').value = result.name;
+                            document.getElementById('entry-source-id').value = result.id;
+                            document.getElementById('entry-source-id-display').value = result.id;
+                            document.getElementById('selected-title').textContent = result.name;
+                            const coverImg = document.getElementById('selected-cover');
+                            if (result.cover) {
+                                const coverUrl = result.cover.startsWith('//') ? 'https:' + result.cover : result.cover;
+                                coverImg.src = coverUrl;
+                                coverImg.classList.remove('hidden');
+                                document.getElementById('selected-cover-placeholder').classList.add('hidden');
+                            } else {
+                                coverImg.classList.add('hidden');
+                                document.getElementById('selected-cover-placeholder').classList.remove('hidden');
+                            }
+                            searchResults.classList.add('hidden');
+                        }
+
+                        searchBtn.onclick = search;
+                        document.getElementById('entry-name').onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); search(); } };
+
+                        form.onsubmit = async (e) => {
+                            e.preventDefault();
+                            const errorDiv = document.getElementById('form-error');
+                            errorDiv.classList.add('hidden');
+
+                            const formData = new FormData();
+                            formData.append('type', document.getElementById('entry-type').value);
+                            formData.append('name', document.getElementById('entry-name').value);
+                            const rating = document.querySelector('input[name="rating"]:checked')?.value;
+                            if (!rating) {
+                                errorDiv.textContent = 'Please select a rating';
+                                errorDiv.classList.remove('hidden');
+                                return;
+                            }
+                            formData.append('rating', rating);
+                            formData.append('date', document.getElementById('entry-date').value);
+                            formData.append('source-id', document.getElementById('entry-source-id-display').value || document.getElementById('entry-source-id').value);
+                            formData.append('platform-select', document.getElementById('entry-platform').value);
+                            formData.append('comment', document.getElementById('entry-comment').value);
+                            if (document.getElementById('skip-ci').checked) {
+                                formData.append('skip-ci', 'skip-ci');
+                            }
+
+                            try {
+                                const response = await fetch(API_URL + '/commit', {
+                                    method: 'POST',
+                                    body: formData,
+                                    credentials: 'include'
+                                });
+
+                                if (response.ok) {
+                                    window.location.reload();
+                                } else {
+                                    const data = await response.json();
+                                    errorDiv.textContent = data.message || 'Failed to submit';
+                                    errorDiv.classList.remove('hidden');
+                                }
+                            } catch (err) {
+                                errorDiv.textContent = 'An error occurred';
+                                errorDiv.classList.remove('hidden');
+                            }
+                        };
+                        "#
+                        ))
                     }
                 }
 

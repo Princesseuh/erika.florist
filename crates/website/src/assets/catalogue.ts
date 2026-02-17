@@ -9,7 +9,9 @@ const latestHash = catalogueCore?.getAttribute("data-latest") ?? "";
 const dbOpenRequest = indexedDB.open("catalogue", VERSION);
 
 const content = document.getElementById("catalogue-content") as HTMLDivElement;
-const entriesCountElements = document.querySelectorAll("#catalogue-entry-count") as NodeListOf<HTMLDivElement>;
+const entriesCountElements = document.querySelectorAll(
+	"#catalogue-entry-count",
+) as NodeListOf<HTMLDivElement>;
 
 let db: IDBDatabase;
 let allItems: CatalogueItemDB[] = [];
@@ -275,7 +277,10 @@ function buildUI() {
 	// Get values from all inputs (desktop and mobile), use the one with a value
 	const getInputValue = (selectors: string[]) => {
 		for (const selector of selectors) {
-			const inputs = Array.from(document.querySelectorAll(selector)) as (HTMLInputElement | HTMLSelectElement)[];
+			const inputs = Array.from(document.querySelectorAll(selector)) as (
+				| HTMLInputElement
+				| HTMLSelectElement
+			)[];
 			for (const input of inputs) {
 				if (input.value) return input.value;
 			}
@@ -296,7 +301,9 @@ function buildUI() {
 	const filters = {
 		search: getInputValue(["#mobile-catalogue-search", "#catalogue-search"]).toLowerCase(),
 		type: getInputValue(["#mobile-catalogue-types", "#catalogue-types"]),
-		rating: getInputValue(["#mobile-catalogue-ratings", "#catalogue-ratings"]) ? Number(getInputValue(["#mobile-catalogue-ratings", "#catalogue-ratings"])) : "",
+		rating: getInputValue(["#mobile-catalogue-ratings", "#catalogue-ratings"])
+			? Number(getInputValue(["#mobile-catalogue-ratings", "#catalogue-ratings"]))
+			: "",
 		sort: getInputValue(["#mobile-catalogue-sort", "#catalogue-sort"]) || "date",
 	};
 
@@ -304,7 +311,9 @@ function buildUI() {
 
 	let request: IDBRequest;
 
-	const cursorDirection = getCheckboxValue(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"]) ? "next" : "prev";
+	const cursorDirection = getCheckboxValue(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"])
+		? "next"
+		: "prev";
 
 	// Use appropriate index for sorting
 	if (filters.sort === "date") {

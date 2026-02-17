@@ -6,7 +6,9 @@ mod login;
 mod projects;
 pub mod rss;
 mod wiki;
-pub use blog::{BlogIndex, BlogPostPage, BlogPostPageParams, BlogTagIndex, BlogYearIndex};
+pub use blog::{
+    BlogIndex, BlogPostPage, BlogPostPageParams, BlogTagIndex, BlogYearIndex, TagParams, YearParams,
+};
 pub use catalogue::{Catalogue, CatalogueContent};
 pub use changelog::ChangelogPage;
 pub use index::Index;

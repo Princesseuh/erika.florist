@@ -7,7 +7,8 @@ on:
       - main
     paths:
       - "Cargo.toml"
-      - "rust-toolchain*"
+      - "Cargo.lock"
+      - "rust-toolchain.toml"
       - "crates/**/*"
       - ".github/workflows/deploy.yml"
 
@@ -16,11 +17,36 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      website: ${{ steps.filter.outputs.website }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - "Cargo.toml"
+              - "Cargo.lock"
+              - "rust-toolchain.toml"
+              - "crates/backend/**/*"
+            website:
+              - "Cargo.toml"
+              - "Cargo.lock"
+              - "rust-toolchain.toml"
+              - "crates/website/**/*"
+
   deploy:
+    needs: changes
+    if: needs.changes.outputs.backend == 'true' || needs.changes.outputs.website == 'true'
     runs-on: ubuntu-latest
     name: Deploy
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -54,12 +80,14 @@ jobs:
         run: cargo build --release
 
       - name: Deploy Website
+        if: needs.changes.outputs.website == 'true'
         uses: cloudflare/wrangler-action@v3
         with:
           workingDirectory: ./crates/website
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
       - name: Deploy Backend
+        if: needs.changes.outputs.backend == 'true'
         uses: cloudflare/wrangler-action@v3
         with:
           workingDirectory: ./crates/backend

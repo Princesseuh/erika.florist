@@ -1,8 +1,7 @@
 use maudit::content::markdown_entry;
-use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, JsonSchema, Serialize)]
+#[derive(Debug, Serialize)]
 #[markdown_entry]
 pub struct Project {
     pub title: String,
@@ -13,7 +12,7 @@ pub struct Project {
     pub external_url: Option<String>,
 }
 
-#[derive(Debug, Deserialize, PartialEq, PartialOrd, Eq, Ord, JsonSchema, Serialize)]
+#[derive(Debug, Deserialize, PartialEq, PartialOrd, Eq, Ord, Serialize)]
 #[serde(rename_all = "lowercase")]
 pub enum ProjectType {
     Software,

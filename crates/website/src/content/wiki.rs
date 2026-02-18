@@ -9,10 +9,9 @@ use maudit::{
     is_dev,
     route::PageContext,
 };
-use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, JsonSchema, Serialize)]
+#[derive(Debug, Serialize)]
 #[markdown_entry]
 pub struct WikiEntry {
     pub title: String,
@@ -29,13 +28,13 @@ impl WikiEntry {
     }
 }
 
-#[derive(Debug, Deserialize, Clone, JsonSchema, Serialize)]
+#[derive(Debug, Deserialize, Clone, Serialize)]
 pub struct WikiLastModified {
     pub date: NaiveDate, // YYYY-MM-DD
     pub commit_url: String,
 }
 
-#[derive(Debug, Deserialize, JsonSchema, Serialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct WikiNavigation {
     pub label: Option<String>,
     pub category: String,

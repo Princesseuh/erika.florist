@@ -1,6 +1,5 @@
 use chrono::NaiveDate;
 use maudit::{content::markdown_entry, route::prelude::*};
-use schemars::JsonSchema;
 use serde::Serialize;
 use xml_builder::XMLElement;
 
@@ -9,7 +8,7 @@ use crate::{
     rss::{AsXMLError, IntoXMLElement, rewrite_rss_content},
 };
 
-#[derive(Debug, JsonSchema, Serialize)]
+#[derive(Debug, Serialize)]
 #[markdown_entry]
 pub struct BlogPost {
     pub title: String,

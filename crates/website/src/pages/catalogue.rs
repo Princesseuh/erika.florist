@@ -1,6 +1,6 @@
 use std::hash::{DefaultHasher, Hash, Hasher};
 
-use maud::{html, PreEscaped};
+use maud::{PreEscaped, html};
 use maudit::route::prelude::*;
 
 use crate::components::mobile_menu;
@@ -257,25 +257,20 @@ impl Route for Catalogue {
 
                         async function checkAuth() {
                             if (!hasAuthCookie()) {
-                                console.log('Not logged in');
                                 return;
                             }
 
                             try {
-                                console.log('Checking auth...');
                                 const response = await fetch(API_URL + '/auth', {
                                     credentials: 'include'
                                 });
-                                console.log('Auth response status:', response.status);
                                 if (!response.ok) {
                                     localStorage.removeItem('isLoggedIn');
                                     return;
                                 }
                                 const data = await response.json();
-                                console.log('Auth data:', data);
                                 isAuthenticated = data.authenticated;
                                 if (isAuthenticated) {
-                                    console.log('Showing add button');
                                     document.getElementById('add-entry-btn').classList.remove('hidden');
                                 }
                             } catch (e) {
@@ -321,7 +316,6 @@ impl Route for Catalogue {
                                     credentials: 'include'
                                 });
                                 const text = await response.text();
-                                console.log('Search response:', text);
                                 const data = JSON.parse(text);
                                 displayResults(data, type);
                             } catch (e) {

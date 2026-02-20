@@ -237,6 +237,11 @@ impl Route for Catalogue {
 
                                     div id="form-error" class="hidden bg-red-100 border-2 border-red-600 text-red-600 px-4 py-3 rounded font-bold" {}
 
+                                    div {
+                                        label class="block text-sm font-bold mb-1" for="form-password" { "Password" }
+                                        input type="password" id="form-password" name="form-password" class="w-full px-3 py-2 bg-white border-2 border-black rounded font-medium" required;
+                                    }
+
                                     button type="submit" class="w-full bg-[#c73c2e] text-white py-3 rounded font-bold hover:bg-[#a63226]" { "Submit" }
                                 }
                             }
@@ -251,12 +256,8 @@ impl Route for Catalogue {
 
                         let isAuthenticated = false;
 
-                        function hasAuthCookie() {
-                            return localStorage.getItem('isLoggedIn') === 'true';
-                        }
-
                         async function checkAuth() {
-                            if (!hasAuthCookie()) {
+                            if (!document.cookie.split(';').some(c => c.trim().startsWith('logged_in='))) {
                                 return;
                             }
 
@@ -265,7 +266,6 @@ impl Route for Catalogue {
                                     credentials: 'include'
                                 });
                                 if (!response.ok) {
-                                    localStorage.removeItem('isLoggedIn');
                                     return;
                                 }
                                 const data = await response.json();
@@ -389,7 +389,8 @@ impl Route for Catalogue {
                             formData.append('date', document.getElementById('entry-date').value);
                             formData.append('source-id', document.getElementById('entry-source-id-display').value || document.getElementById('entry-source-id').value);
                             formData.append('platform-select', document.getElementById('entry-platform').value);
-                            formData.append('comment', document.getElementById('entry-comment').value);
+                                            formData.append('comment', document.getElementById('entry-comment').value);
+                                            formData.append('form-password', document.getElementById('form-password').value);
                             if (document.getElementById('skip-ci').checked) {
                                 formData.append('skip-ci', 'skip-ci');
                             }

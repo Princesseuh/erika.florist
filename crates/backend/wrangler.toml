@@ -6,7 +6,7 @@ compatibility_date = "2025-02-16"
 ALLOWED_ORIGINS = "erika.florist"
 
 [env.dev.vars]
-ALLOWED_ORIGINS = "localhost,127.0.0.1"
+ALLOWED_ORIGINS = "localhost,127.0.0.1,erika.florist"
 
 routes = [{ pattern = "api.erika.florist/*", zone_name = "erika.florist" }]
 

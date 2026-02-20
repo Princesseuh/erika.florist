@@ -58,14 +58,10 @@ fn add_cors_headers(response: &mut Response, origin: Option<String>, env: &Env) 
         .set("Access-Control-Allow-Credentials", "true");
 }
 
-#[event(fetch)]
-async fn fetch(mut req: Request, env: Env, _ctx: Context) -> Result<Response> {
+async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
     // Handle CORS preflight
     if req.method() == Method::Options {
-        let mut response = Response::empty()?;
-        let origin = req.headers().get("origin").ok().flatten();
-        add_cors_headers(&mut response, origin, &env);
-        return Ok(response);
+        return Response::empty();
     }
 
     // Auth endpoint - returns cookie
@@ -74,10 +70,7 @@ async fn fetch(mut req: Request, env: Env, _ctx: Context) -> Result<Response> {
         let password = form_data.get_field("password").unwrap_or_default();
 
         let Ok(hashed_password) = env.secret("HASHED_PASSWORD") else {
-            let mut response = Response::error("Server error", 500)?;
-            let origin = req.headers().get("origin").ok().flatten();
-            add_cors_headers(&mut response, origin, &env);
-            return Ok(response);
+            return Response::error("Server error", 500);
         };
 
         let mut hasher = Sha256::new();
@@ -85,7 +78,7 @@ async fn fetch(mut req: Request, env: Env, _ctx: Context) -> Result<Response> {
         let hashed_input = format!("{:x}", hasher.finalize());
 
         if hashed_input == hashed_password.to_string() {
-            let mut response = Response::from_json(&serde_json::json!({"success": true}))?;
+            let response = Response::from_json(&serde_json::json!({"success": true}))?;
             let allowed_origins = env
                 .var("ALLOWED_ORIGINS")
                 .map(|v| v.to_string())
@@ -93,52 +86,66 @@ async fn fetch(mut req: Request, env: Env, _ctx: Context) -> Result<Response> {
             let is_dev =
                 allowed_origins.contains("localhost") || allowed_origins.contains("127.0.0.1");
 
-            let cookie_header = if is_dev {
-                format!(
-                    "auth_token={}; Path=/; HttpOnly; Max-Age=2592000",
-                    hashed_input
+            let (auth_cookie, logged_in_cookie) = if is_dev {
+                (
+                    format!(
+                        "auth_token={}; Path=/; HttpOnly; Max-Age=2592000",
+                        hashed_input
+                    ),
+                    "logged_in=true; Path=/; Max-Age=2592000".to_string(),
                 )
             } else {
-                format!("auth_token={}; Path=/; HttpOnly; SameSite=Strict; Max-Age=2592000; Domain=erika.florist", hashed_input)
+                (
+                    format!("auth_token={}; Path=/; HttpOnly; SameSite=Strict; Max-Age=2592000; Domain=erika.florist", hashed_input),
+                    "logged_in=true; Path=/; SameSite=Strict; Max-Age=2592000; Domain=erika.florist".to_string(),
+                )
             };
 
-            response.headers().set("Set-Cookie", &cookie_header)?;
-            let origin = req.headers().get("origin").ok().flatten();
-            add_cors_headers(&mut response, origin, &env);
+            response.headers().append("Set-Cookie", &auth_cookie)?;
+            response.headers().append("Set-Cookie", &logged_in_cookie)?;
             return Ok(response);
         } else {
-            let mut response = Response::error("Unauthorized", 401)?;
-            let origin = req.headers().get("origin").ok().flatten();
-            add_cors_headers(&mut response, origin, &env);
-            return Ok(response);
+            return Response::error("Unauthorized", 401);
         }
     }
 
     // Check auth status endpoint (validates cookie value)
     if req.path() == "/auth" && req.method() == Method::Get {
-        let authenticated = check_auth_cookie(req.headers(), &env);
-        let mut response =
-            Response::from_json(&serde_json::json!({ "authenticated": authenticated }))?;
-        let origin = req.headers().get("origin").ok().flatten();
-        add_cors_headers(&mut response, origin, &env);
+        let authenticated = check_auth_cookie(req.headers(), env);
+        let response = Response::from_json(&serde_json::json!({ "authenticated": authenticated }))?;
+        if !authenticated {
+            let allowed_origins = env
+                .var("ALLOWED_ORIGINS")
+                .map(|v| v.to_string())
+                .unwrap_or_default();
+            let is_dev =
+                allowed_origins.contains("localhost") || allowed_origins.contains("127.0.0.1");
+            let (clear_auth, clear_logged_in) = if is_dev {
+                (
+                    "auth_token=; Path=/; HttpOnly; Max-Age=0".to_string(),
+                    "logged_in=; Path=/; Max-Age=0".to_string(),
+                )
+            } else {
+                (
+                    "auth_token=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0; Domain=erika.florist".to_string(),
+                    "logged_in=; Path=/; SameSite=Strict; Max-Age=0; Domain=erika.florist".to_string(),
+                )
+            };
+            response.headers().append("Set-Cookie", &clear_auth)?;
+            response.headers().append("Set-Cookie", &clear_logged_in)?;
+        }
         return Ok(response);
     }
 
     // Require auth for search and commit
-    if !check_auth_cookie(req.headers(), &env) {
-        let mut response = Response::error("Unauthorized", 401)?;
-        let origin = req.headers().get("origin").ok().flatten();
-        add_cors_headers(&mut response, origin, &env);
-        return Ok(response);
+    if !check_auth_cookie(req.headers(), env) {
+        return Response::error("Unauthorized", 401);
     }
 
     if req.path() == "/search" && req.method() == Method::Get {
         let url = req.url().unwrap();
         let Some(query_string) = url.query() else {
-            let mut response = Response::error("Missing query", 400)?;
-            let origin = req.headers().get("origin").ok().flatten();
-            add_cors_headers(&mut response, origin, &env);
-            return Ok(response);
+            return Response::error("Missing query", 400);
         };
 
         let mut source = None;
@@ -163,21 +170,11 @@ async fn fetch(mut req: Request, env: Env, _ctx: Context) -> Result<Response> {
 
         let source = match source {
             Some(s) => s,
-            None => {
-                let mut response = Response::error("Missing source param", 400)?;
-                let origin = req.headers().get("origin").ok().flatten();
-                add_cors_headers(&mut response, origin, &env);
-                return Ok(response);
-            }
+            None => return Response::error("Missing source param", 400),
         };
         let query = match query {
             Some(q) => q,
-            None => {
-                let mut response = Response::error("Missing query param", 400)?;
-                let origin = req.headers().get("origin").ok().flatten();
-                add_cors_headers(&mut response, origin, &env);
-                return Ok(response);
-            }
+            None => return Response::error("Missing query param", 400),
         };
 
         let mut type_param = "movie".to_string();
@@ -189,8 +186,8 @@ async fn fetch(mut req: Request, env: Env, _ctx: Context) -> Result<Response> {
         }
 
         let result = match source.as_str() {
-            "tmdb" => search_tmdb(&query, &type_param, &env).await,
-            "igdb" => search_igdb(&query, &env).await,
+            "tmdb" => search_tmdb(&query, &type_param, env).await,
+            "igdb" => search_igdb(&query, env).await,
             "isbn" => search_isbn(&query).await,
             _ => Err(Error::from("Invalid source")),
         };
@@ -198,10 +195,8 @@ async fn fetch(mut req: Request, env: Env, _ctx: Context) -> Result<Response> {
         return match result {
             Ok(body) => {
                 let bytes = body.into_bytes();
-                let mut response = Response::from_bytes(bytes)?;
+                let response = Response::from_bytes(bytes)?;
                 response.headers().set("Content-Type", "application/json")?;
-                let origin = req.headers().get("origin").ok().flatten();
-                add_cors_headers(&mut response, origin, &env);
                 Ok(response)
             }
             Err(e) => Response::error(e.to_string(), 502),
@@ -211,9 +206,18 @@ async fn fetch(mut req: Request, env: Env, _ctx: Context) -> Result<Response> {
     if req.path() == "/commit" && req.method() == Method::Post {
         let form: CommitForm = {
             let form_data = req.form_data().await?;
-
             CommitForm::from_formdata(&form_data)?
         };
+
+        let Ok(form_password) = env.secret("FORM_PASSWORD") else {
+            return Response::error("Server error", 500);
+        };
+        let mut hasher = Sha256::new();
+        hasher.update(form.form_password.as_bytes());
+        let hashed_input = format!("{:x}", hasher.finalize());
+        if hashed_input != form_password.to_string() {
+            return Response::error("Unauthorized", 401);
+        }
 
         let (source_key, path_type) = match form.r#type.as_str() {
             "movie" => ("tmdb", "movies"),
@@ -290,16 +294,19 @@ async fn fetch(mut req: Request, env: Env, _ctx: Context) -> Result<Response> {
         return Response::from_json(&serde_json::json!({
             "success": true,
             "commit_url": commit_url
-        }))
-        .map(|mut response| {
-            let origin = req.headers().get("origin").ok().flatten();
-            add_cors_headers(&mut response, origin, &env);
-            response
-        });
+        }));
     }
 
-    let mut response = Response::error("Not Found", 404)?;
+    Response::error("Not Found", 404)
+}
+
+#[event(fetch)]
+async fn fetch(mut req: Request, env: Env, _ctx: Context) -> Result<Response> {
     let origin = req.headers().get("origin").ok().flatten();
+    let mut response = match handle(&mut req, &env).await {
+        Ok(response) => response,
+        Err(e) => Response::error(e.to_string(), 500)?,
+    };
     add_cors_headers(&mut response, origin, &env);
     Ok(response)
 }

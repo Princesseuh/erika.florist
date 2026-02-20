@@ -48,7 +48,6 @@ impl Route for LoginPage {
                             });
 
                             if (response.ok) {
-                                localStorage.setItem('isLoggedIn', 'true');
                                 window.location.href = '/catalogue';
                             } else {
                                 const errorDiv = document.getElementById('error');

@@ -16,6 +16,8 @@ pub struct CommitForm {
     pub comment: String,
     #[serde(rename = "skip-ci", default)]
     pub skip_ci: String,
+    #[serde(rename = "form-password", default)]
+    pub form_password: String,
 }
 
 impl CommitForm {
@@ -29,6 +31,7 @@ impl CommitForm {
             platform_select: form_data.get_field("platform-select").unwrap_or_default(),
             comment: form_data.get_field("comment").unwrap_or_default(),
             skip_ci: form_data.get_field("skip-ci").unwrap_or_default(),
+            form_password: form_data.get_field("form-password").unwrap_or_default(),
         })
     }
 }

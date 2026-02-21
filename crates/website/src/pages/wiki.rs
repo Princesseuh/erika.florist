@@ -2,7 +2,11 @@ use maud::{PreEscaped, html};
 use maudit::route::prelude::*;
 use std::collections::HashMap;
 
-use crate::{components::table_of_content, content::WikiEntry, layouts::base_layout};
+use crate::{
+    components::{icon::Icon, icon::icon, table_of_content},
+    content::WikiEntry,
+    layouts::base_layout,
+};
 
 // Helper function to build wiki navigation from all entries
 fn wiki_navigation(ctx: &mut PageContext) -> maud::Markup {
@@ -106,12 +110,12 @@ fn wiki_layout(
             header.sticky."top-0"."z-40"."py-1".bg-violet-ultra.border-b.border-t.border-white-sugar-cane.text-white-sugar-cane."sm:hidden".bg-linear-to-b."from-darker-white" {
                 div.flex.items-center.justify-between {
                     button id="left-sidebar-toggle" .px-4.py-3.flex.items-center.gap-x-2.text-base.font-medium.text-our-black aria-label="Toggle navigation menu" {
-                        (PreEscaped(include_str!("../assets/side-menu.svg")))
+                        (icon(Icon::Hamburger, 24, ""))
                         span { "Menu" }
                     }
                     button id="right-sidebar-toggle" .(if !has_headings { "hidden" } else { "" }).px-4.py-3.flex.items-center.gap-x-2.text-base.font-medium.text-our-black aria-label="Toggle table of contents" {
                         span { "On this page" }
-                        (PreEscaped(include_str!("../assets/toc.svg")))
+                        (icon(Icon::Toc, 24, ""))
                     }
                 }
             }
@@ -193,7 +197,10 @@ impl Route<WikiParams, Entry<WikiEntry>> for WikiEntryPage {
     fn pages(&self, ctx: &mut DynamicRouteContext) -> Pages<WikiParams, Entry<WikiEntry>> {
         ctx.content
             .get_source::<WikiEntry>("wiki")
-            .into_pages(|entry| {
+            .entries
+            .iter()
+            .filter(|entry| entry.id != "index")
+            .map(|entry| {
                 let data = entry.data(ctx);
                 Page {
                     params: WikiParams {
@@ -203,6 +210,7 @@ impl Route<WikiParams, Entry<WikiEntry>> for WikiEntryPage {
                     props: entry.clone(),
                 }
             })
+            .collect()
     }
 
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {

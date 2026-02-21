@@ -7,11 +7,12 @@ pub enum Icon {
     Github,
     Mail,
     Bluesky,
-    System,
     Menu,
-    Moon,
-    Sun,
     ArrowUp,
+    Hamburger,
+    Close,
+    Toc,
+    Search,
 }
 
 impl Display for Icon {
@@ -20,11 +21,12 @@ impl Display for Icon {
             Icon::Github => "github",
             Icon::Mail => "mail",
             Icon::Bluesky => "bluesky",
-            Icon::System => "system",
             Icon::Menu => "menu",
-            Icon::Moon => "moon",
-            Icon::Sun => "sun",
             Icon::ArrowUp => "arrow-up",
+            Icon::Hamburger => "hamburger",
+            Icon::Close => "close",
+            Icon::Toc => "toc",
+            Icon::Search => "search",
         };
         write!(f, "{}", name)
     }

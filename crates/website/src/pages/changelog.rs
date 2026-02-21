@@ -2,6 +2,7 @@ use chrono::{DateTime, Datelike, Utc};
 use maud::{PreEscaped, html};
 use maudit::route::prelude::*;
 
+use crate::components::icon::Icon;
 use crate::components::mobile_menu;
 use crate::layouts::base_layout;
 
@@ -186,7 +187,7 @@ impl Route for ChangelogPage {
             Some("Changelog".into()),
             Some("Things change, and that's okay.".into()),
             html!(
-                (mobile_menu("changelog", sidebar_content))
+                (mobile_menu("changelog", sidebar_content, Icon::Menu))
 
                 div."flex flex-col gap-x-4 sm:flex-row" {
                     div."flex-1 mb-8 mx-2 my-4 sm:m-4" {

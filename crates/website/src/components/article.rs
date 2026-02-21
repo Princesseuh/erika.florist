@@ -15,7 +15,7 @@ pub fn article_preview(entry: &Entry<BlogPost>, ctx: &mut PageContext) -> Markup
 
     html! {
         @let featured = data.featured.unwrap_or(false);
-        section.(if featured {"bg-orange-carrot/8"} else {"border border-solid border-accent-valencia/10"})."group absolute w-full break-inside-avoid hyphens-auto p-6 focus-within:bg-accent-valencia focus-within:text-white-sugar-cane hover:bg-accent-valencia hover:text-white-sugar-cane sm:hyphens-none" {
+        section.(if featured {"bg-orange-carrot/8"} else {"border border-solid border-accent-valencia/10"})."group w-fit break-inside-avoid hyphens-auto p-6 focus-within:bg-accent-valencia focus-within:text-white-sugar-cane hover:bg-accent-valencia hover:text-white-sugar-cane sm:hyphens-none" {
             a."flex flex-col gap-y-1" href=(format!("{}#title", BlogPostPage.url(BlogPostPageParams { slug: entry.id.clone() }))) {
                 h2.(if featured {"text-4.5xl leading-none"} else {"text-3xl leading-somewhat-tight"})."m-0 break-words p-0 tracking-somewhat-tight text-accent-valencia group-focus-within:text-white-sugar-cane group-hover:text-white-sugar-cane sm:break-normal" {
                     (data.title)

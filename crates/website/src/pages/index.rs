@@ -25,7 +25,7 @@ impl Route for Index {
             .get_source::<crate::content::BlogPost>("blog")
             .entries
             .iter()
-            .filter(|e| !e.data(ctx).draft.unwrap_or(false))
+            .filter(|e| !e.id.starts_with('_'))
             .collect::<Vec<_>>();
 
         let wiki_entries = ctx

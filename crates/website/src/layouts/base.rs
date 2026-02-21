@@ -6,7 +6,7 @@ use maudit::{
 };
 
 use crate::{
-    components::{dinkus, header, socials, spritesheet},
+    components::{dinkus, go_back_up, header, socials, spritesheet},
     pages::LoginPage,
 };
 
@@ -79,8 +79,9 @@ pub fn base_layout(
 
                         }
                     }
-                    a.absolute.bottom-0.right-0.px-4.py-2.text-black-charcoal.hover:bg-accent-valencia.hover:text-white.font-semibold href=(LoginPage.url(Default::default())) { "Login" }
+                    a.absolute.bottom-0.left-0.px-4.py-2.text-black-charcoal.hover:bg-accent-valencia.hover:text-white.font-semibold href=(LoginPage.url(Default::default())) data-graphgarden-ignore="" { "Login" }
                     (spritesheet())
+                    (go_back_up(ctx)?)
                 }
             }
         }

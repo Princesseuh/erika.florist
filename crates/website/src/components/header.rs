@@ -1,6 +1,7 @@
-use maud::{Markup, PreEscaped, html};
+use maud::{Markup, html};
 use maudit::{errors::AssetError, route::PageContext};
 
+use crate::components::icon::{Icon, icon};
 use crate::components::logo::logo;
 
 pub fn header(
@@ -10,7 +11,14 @@ pub fn header(
 ) -> Result<Markup, AssetError> {
     ctx.assets.include_script("src/assets/mobile-menu.ts")?;
 
-    let menu = ["articles", "projects", "wiki", "catalogue"];
+    let menu = [
+        "articles",
+        "projects",
+        "wiki",
+        "catalogue",
+        "friends",
+        "about",
+    ];
 
     let button_class = if purple {
         "button-style-bg-violet"
@@ -25,13 +33,13 @@ pub fn header(
                 (logo())
                 div.md:hidden.flex.align-middle.justify-center.items-center {
                     button id="mobile-menu-button" aria-label="Toggle main menu" {
-                        span id="hamburger-icon" {
-                            (PreEscaped(include_str!("../assets/hamburger.svg")))
+                            span id="hamburger-icon" {
+                                (icon(Icon::Menu, 24, ""))
+                            }
+                            span id="close-icon" .hidden {
+                                (icon(Icon::Close, 24, ""))
+                            }
                         }
-                        span id="close-icon" .hidden {
-                            (PreEscaped(include_str!("../assets/close.svg")))
-                        }
-                    }
                 }
             }
 
@@ -49,7 +57,7 @@ pub fn header(
                 }
             }
             section."hidden sm:flex mx-auto w-centered-width items-center justify-end" {
-                section."grid h-min grid-cols-2 gap-x-10 justify-self-end text-xl font-[550]" {
+                section."grid h-min grid-cols-3 gap-x-10 justify-self-end text-xl font-[550]" {
                     @for item in menu.iter() {
                         a class="bg-transparent p-1 tracking-wider".(button_class).(if *item == "wiki" {"hover:text-violet-ultra"} else {""}) href=(format!("/{}/", item)) {
                             (item)

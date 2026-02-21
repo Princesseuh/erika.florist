@@ -14,7 +14,7 @@ impl Route for BlogRSS {
             .get_source::<BlogPost>("blog")
             .entries
             .iter()
-            .filter(|e| !e.data(ctx).draft.unwrap_or(false))
+            .filter(|e| !e.id.starts_with('_'))
             .collect::<Vec<_>>();
 
         articles.sort_by(|a, b| b.data(ctx).date.cmp(&a.data(ctx).date));

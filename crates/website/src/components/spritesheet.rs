@@ -10,11 +10,12 @@ pub fn spritesheet() -> Markup {
         (Icon::Github, include_str!("../icons/github.svg")),
         (Icon::Mail, include_str!("../icons/mail.svg")),
         (Icon::Bluesky, include_str!("../icons/bluesky.svg")),
-        (Icon::System, include_str!("../icons/system.svg")),
         (Icon::Menu, include_str!("../icons/menu.svg")),
-        (Icon::Moon, include_str!("../icons/moon.svg")),
-        (Icon::Sun, include_str!("../icons/sun.svg")),
         (Icon::ArrowUp, include_str!("../icons/arrow-up.svg")),
+        (Icon::Hamburger, include_str!("../icons/hamburger.svg")),
+        (Icon::Close, include_str!("../icons/close.svg")),
+        (Icon::Toc, include_str!("../icons/toc.svg")),
+        (Icon::Search, include_str!("../icons/search.svg")),
     ]);
 
     let icon_symbols: Vec<Markup> = icons.iter().map(|(icon, svg_content)| {

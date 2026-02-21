@@ -1,33 +1,40 @@
-use maud::{Markup, html};
+use maud::{Markup, PreEscaped, html};
 
-pub fn mobile_menu(id_suffix: &str, content: Markup) -> Markup {
+use crate::components::icon::{Icon, icon};
+
+pub fn mobile_menu_button(id: &str, extra_classes: &str, button_icon: Icon) -> Markup {
+    let classes = format!(
+        "w-14 h-14 bg-accent-valencia text-white-sugar-cane rounded-full p-0 flex items-center justify-center shadow-lg hover:bg-accent-valencia/90 focus:outline-none focus:ring-2 focus:ring-accent-valencia focus:ring-offset-2 {}",
+        extra_classes
+    );
+    html! {
+        button id=(id) class=(classes) aria-label="Toggle menu" {
+            (icon(button_icon, 24, ""))
+        }
+    }
+}
+
+pub fn mobile_menu(id_suffix: &str, content: Markup, button_icon: Icon) -> Markup {
     let toggle_id = format!("mobile-menu-toggle-{}", id_suffix);
     let sidebar_id = format!("mobile-menu-sidebar-{}", id_suffix);
     let close_id = format!("mobile-menu-close-{}", id_suffix);
 
     html! {
-        // Floating button for mobile
-        button id=(toggle_id) ."sm:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-accent-valencia text-white-sugar-cane rounded-full p-0 flex items-center justify-center shadow-lg hover:bg-accent-valencia/90 focus:outline-none focus:ring-2 focus:ring-accent-valencia focus:ring-offset-2" aria-label="Toggle menu" {
-            svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" {
-                path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4";
-            }
-        }
+        (mobile_menu_button(&toggle_id, "sm:hidden fixed bottom-6 right-6 z-40", button_icon))
 
         // Mobile sidebar overlay
         div id=(sidebar_id) ."sm:hidden fixed inset-0 bg-black/50 z-50 opacity-0 pointer-events-none" {
             div."absolute right-0 top-0 h-full w-80 max-w-sm bg-white-sugar-cane overflow-y-auto transform translate-x-full transition-transform" {
                 div."p-6 pt-12" {
                     button id=(close_id) ."absolute top-4 right-4 text-black-charcoal hover:text-accent-valencia" aria-label="Close menu" {
-                        svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" {
-                            path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12";
+                            (icon(Icon::Close, 24, "Close"))
                         }
-                    }
                     (content)
                 }
             }
         }
 
-        (maud::PreEscaped(format!(r#"
+        (PreEscaped(format!(r#"
             <script>
                 (function() {{
                     const toggle = document.getElementById('{}');

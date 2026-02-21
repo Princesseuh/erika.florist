@@ -3,6 +3,7 @@ use std::hash::{DefaultHasher, Hash, Hasher};
 use maud::{PreEscaped, html};
 use maudit::route::prelude::*;
 
+use crate::components::icon::{Icon, icon};
 use crate::components::mobile_menu;
 use crate::{content::CatalogueMetadata, layouts::base_layout, state};
 
@@ -51,7 +52,7 @@ fn catalogue_mobile_filters() -> maud::Markup {
     }
 }
 
-#[route("/catalogue")]
+#[route("/catalogue/")]
 pub struct Catalogue;
 
 impl Route for Catalogue {
@@ -65,7 +66,7 @@ impl Route for Catalogue {
             Some("Catalogue".into()),
             None,
             html!(
-                (mobile_menu("catalogue", catalogue_mobile_filters()))
+                (mobile_menu("catalogue", catalogue_mobile_filters(), Icon::Search))
 
                 article.mx-4.my-4 {
                     p class="sm:hidden text-sm mb-4" { "This page lists games, books, shows… stuff I've played, watched, read, or listened to."}
@@ -117,7 +118,7 @@ impl Route for Catalogue {
                         }
                     }
                         div.flex-1 {
-                            div.grid."grid-cols-[repeat(auto-fit,180px)]".gap-2 id="catalogue-content" {
+                            div.grid."grid-cols-[repeat(auto-fit,180px)]".justify-center.gap-2 id="catalogue-content" {
                                 @for _ in 0..page_length {
                                     div class="w-[180px]" {
                                         div class="aspect-[3/4.3] h-auto animate-pulse bg-neutral-900/30" {}
@@ -163,9 +164,7 @@ impl Route for Catalogue {
                                             div class="flex" {
                                                 input id="entry-name" name="name" class="flex-1 px-3 py-2 bg-white border-2 border-black rounded-r font-medium h-10 disabled:bg-zinc-400 disabled:cursor-not-allowed" placeholder="Select type first..." disabled;
                                                 button type="button" class="search-btn px-4 py-2 bg-black text-white hover:bg-zinc-700 rounded font-medium -ml-2 h-10 md:hidden" {
-                                                    svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" {
-                                                        path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z";
-                                                    }
+                                                    (icon(Icon::Search, 20, "Search"))
                                                 }
                                                 button type="button" class="search-btn px-4 py-2 bg-black text-white hover:bg-zinc-700 rounded font-medium -ml-2 h-10 hidden md:block" { "Search" }
                                             }

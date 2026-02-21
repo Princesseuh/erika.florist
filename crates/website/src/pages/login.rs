@@ -1,4 +1,4 @@
-use maud::{html, PreEscaped};
+use maud::{PreEscaped, html};
 use maudit::route::prelude::*;
 
 use crate::layouts::base_layout;
@@ -48,7 +48,7 @@ impl Route for LoginPage {
                             });
 
                             if (response.ok) {
-                                window.location.href = '/catalogue';
+                                window.location.href = '/catalogue/';
                             } else {
                                 const errorDiv = document.getElementById('error');
                                 errorDiv.textContent = 'Invalid password';

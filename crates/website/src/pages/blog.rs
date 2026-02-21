@@ -4,6 +4,7 @@ use chrono::Datelike;
 use maud::html;
 use maudit::route::prelude::*;
 
+use crate::components::icon::Icon;
 use crate::components::{article_preview, mobile_menu};
 use crate::{content::BlogPost, layouts::base_layout};
 
@@ -18,7 +19,7 @@ fn blog_sidebar_content(
         @if current_tag.is_some() || current_year.is_some() {
             a."button-style-bg-accent inline mb-4" href="/articles" { "See all" }
         }
-        div."flex flex-col gap-6" {
+        div."flex flex-col gap-6" data-graphgarden-ignore="" {
             div."flex flex-col gap-2" {
                 span."font-bold text-sm" { "Tags" }
                 ul."m-0 flex list-none flex-wrap gap-1 p-0" {
@@ -76,7 +77,7 @@ fn get_sorted_tags_and_years(ctx: &mut PageContext) -> TagsAndYears {
         .get_source::<crate::content::BlogPost>("blog")
         .entries
         .iter()
-        .filter(|e| !e.data(ctx).draft.unwrap_or(false))
+        .filter(|e| !e.id.starts_with('_'))
         .collect::<Vec<_>>();
 
     let mut tags = articles
@@ -156,8 +157,8 @@ impl Route for BlogIndex {
             .get_source::<crate::content::BlogPost>("blog")
             .entries
             .iter() // Convert to an iterator
-            .filter(|e| !e.data(ctx).draft.unwrap_or(false)) // Filter out drafts
-            .collect::<Vec<_>>(); // Collect into a Vec to allow sorting
+            .filter(|e| !e.id.starts_with('_'))
+            .collect::<Vec<_>>();
 
         articles.sort_by(|a, b| b.data(ctx).date.cmp(&a.data(ctx).date));
 
@@ -167,7 +168,7 @@ impl Route for BlogIndex {
             Some("Articles".into()),
             None,
             html!(
-                (mobile_menu("articles", blog_sidebar_content(ctx, None, None)))
+                (mobile_menu("articles", blog_sidebar_content(ctx, None, None), Icon::Menu))
 
                 article."flex flex-col gap-x-4 sm:flex-row" {
                     div."flex-1" {
@@ -211,7 +212,7 @@ impl Route<TagParams, PaginationPage<Entry<BlogPost>>> for BlogTagIndex {
         let unique_tags: HashSet<String> = articles
             .iter()
             .filter_map(|article| {
-                if !article.data(ctx).draft.unwrap_or(false) {
+                if !article.id.starts_with('_') {
                     Some(&article.data(ctx).tags)
                 } else {
                     None
@@ -254,7 +255,7 @@ impl Route<TagParams, PaginationPage<Entry<BlogPost>>> for BlogTagIndex {
             Some(format!("Articles tagged with {}", params.tag)),
             None,
             html!(
-                (mobile_menu("articles", blog_sidebar_content(ctx, Some(&params.tag), None)))
+                (mobile_menu("articles", blog_sidebar_content(ctx, Some(&params.tag), None), Icon::Menu))
 
                 article."flex flex-col gap-x-4 sm:flex-row" {
                     div."flex-1" {
@@ -295,7 +296,7 @@ impl Route<YearParams, PaginationPage<Entry<BlogPost>>> for BlogYearIndex {
         let unique_years: HashSet<i32> = articles
             .iter()
             .filter_map(|e| {
-                if !e.data(ctx).draft.unwrap_or(false) {
+                if !e.id.starts_with('_') {
                     Some(e.data(ctx).date.year())
                 } else {
                     None
@@ -336,7 +337,7 @@ impl Route<YearParams, PaginationPage<Entry<BlogPost>>> for BlogYearIndex {
             Some(format!("Articles from {}", params.year)),
             None,
             html!(
-                (mobile_menu("articles", blog_sidebar_content(ctx, None, Some(params.year))))
+                (mobile_menu("articles", blog_sidebar_content(ctx, None, Some(params.year)), Icon::Menu))
 
                 article."flex flex-col gap-x-4 sm:flex-row" {
                     div."flex-1" {

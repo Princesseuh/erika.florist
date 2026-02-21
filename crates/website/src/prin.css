@@ -174,12 +174,20 @@
   .toc a {
     color: var(--color-subtle-charcoal);
     font-weight: 500;
+    opacity: 0.45;
+    transition: opacity 0.15s ease;
   }
 
   .toc a:hover,
   .toc a:focus {
     color: var(--color-black-charcoal);
     text-decoration: underline;
+    opacity: 1;
+  }
+
+  .toc a.toc-active {
+    color: var(--color-black-charcoal);
+    opacity: 1;
   }
 
   .prose a {

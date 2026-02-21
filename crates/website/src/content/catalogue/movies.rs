@@ -2,7 +2,7 @@ use chrono::NaiveDate;
 use maudit::content::markdown_entry;
 use serde::Deserialize;
 
-use crate::content::{CatalogueMetadata, catalogue::Rating, catalogue::deserialize_optional_date};
+use crate::content::{catalogue::deserialize_optional_date, catalogue::Rating, CatalogueMetadata};
 
 #[derive(Debug)]
 #[markdown_entry]
@@ -49,5 +49,13 @@ impl CatalogueMetadata<MovieData> for CatalogueMovie {
 
     fn get_author(&self) -> Option<String> {
         self.get_metadata().companies.first().cloned()
+    }
+
+    fn get_release_year(&self) -> Option<i32> {
+        self.get_metadata()
+            .release_date
+            .split('-')
+            .next()
+            .and_then(|y| y.parse().ok())
     }
 }

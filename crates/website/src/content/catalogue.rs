@@ -4,17 +4,17 @@ use chrono::NaiveDate;
 use maudit::{
     assets::{Asset, ImageFormat, ImageOptions},
     content::{
-        ContentContext, ContentEntry, Entry, MarkdownOptions, parse_markdown_with_frontmatter,
-        render_markdown,
+        parse_markdown_with_frontmatter, render_markdown, ContentContext, ContentEntry, Entry,
+        MarkdownOptions,
     },
     route::PageContext,
 };
-use serde::{Deserialize, Deserializer, de::DeserializeOwned};
+use serde::{de::DeserializeOwned, Deserialize, Deserializer};
 use xml_builder::XMLElement;
 
 use crate::{
     content::{CatalogueBook, CatalogueGame, CatalogueMovie, CatalogueShow},
-    rss::{AsXMLError, rewrite_rss_content},
+    rss::{rewrite_rss_content, AsXMLError},
 };
 
 pub mod books;
@@ -70,6 +70,10 @@ pub trait CatalogueMetadata<T> {
     fn get_metadata(&self) -> &T;
 
     fn get_author(&self) -> Option<String> {
+        None
+    }
+
+    fn get_release_year(&self) -> Option<i32> {
         None
     }
 }

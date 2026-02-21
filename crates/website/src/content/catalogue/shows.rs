@@ -2,7 +2,7 @@ use chrono::NaiveDate;
 use maudit::content::markdown_entry;
 use serde::Deserialize;
 
-use crate::content::{CatalogueMetadata, catalogue::Rating, catalogue::deserialize_optional_date};
+use crate::content::{catalogue::deserialize_optional_date, catalogue::Rating, CatalogueMetadata};
 
 #[derive(Debug)]
 #[markdown_entry]

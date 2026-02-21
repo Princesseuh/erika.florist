@@ -1,9 +1,9 @@
 use std::hash::{DefaultHasher, Hash, Hasher};
 
-use maud::{PreEscaped, html};
+use maud::{html, PreEscaped};
 use maudit::route::prelude::*;
 
-use crate::components::icon::{Icon, icon};
+use crate::components::icon::{icon, Icon};
 use crate::components::mobile_menu;
 use crate::{content::CatalogueMetadata, layouts::base_layout, state};
 
@@ -131,6 +131,24 @@ impl Route for Catalogue {
                             }
                         }
                     }
+
+                        div id="review-modal" class="hidden fixed inset-0 bg-black/70 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" {
+                            div class="bg-[#f7f7f7] rounded-t-lg sm:rounded-lg max-w-2xl w-full max-h-[90vh] flex flex-col sm:max-h-[85vh]" {
+                                div id="review-modal-header" class="bg-[#c73c2e] px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center rounded-t-lg shrink-0" {
+                                    h2 id="review-modal-title" class="text-lg sm:text-xl font-bold text-white m-0" {
+                                        a id="review-modal-title-link" class="text-white underline-offset-2 hover:underline decoration-white" href="" {}
+                                    }
+                                    button id="close-review-modal" class="text-white hover:text-black text-2xl font-bold leading-none" { "×" }
+                                }
+                                div class="flex flex-col sm:flex-row gap-4 sm:gap-6 p-4 sm:p-6 overflow-y-auto" {
+                                    img id="review-modal-cover" class="hidden w-full sm:w-[120px] max-h-48 sm:max-h-none shrink-0 object-contain sm:object-cover rounded self-start" src="" alt="" {}
+                                    div class="flex flex-col gap-3 min-w-0" {
+                                        div id="review-modal-meta" class="flex flex-col gap-y-0.5 text-sm text-[#4d4d4d]" {}
+                                        div id="review-modal-content" class="prose text-black" {}
+                                    }
+                                }
+                            }
+                        }
 
                         div id="add-entry-modal" class="hidden fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" {
                         div class="bg-[#f7f7f7] rounded-lg max-w-2xl w-full" {
@@ -456,10 +474,11 @@ impl Route for CatalogueContent {
             ($entries:expr, $type_id:expr) => {
                 for item in $entries {
                     let data = item.data(ctx);
+                    let rendered_content = item.render(ctx);
                     let (cover_url, placeholder) = &data.cover;
 
-                    // Pre-allocate with known capacity (6-7 elements)
-                    let mut entry = Vec::with_capacity(7);
+                    // Pre-allocate with known capacity (9 elements)
+                    let mut entry = Vec::with_capacity(9);
                     entry.push(serde_json::Value::String(cover_url.clone()));
                     entry.push(serde_json::Value::String(placeholder.clone()));
                     entry.push(serde_json::Value::Number(serde_json::Number::from(
@@ -480,7 +499,18 @@ impl Route for CatalogueContent {
                                 .and_utc()
                                 .timestamp_millis(),
                         )));
+                    } else {
+                        entry.push(serde_json::Value::Null);
                     }
+
+                    match data.get_release_year() {
+                        Some(year) => {
+                            entry.push(serde_json::Value::Number(serde_json::Number::from(year)))
+                        }
+                        None => entry.push(serde_json::Value::Null),
+                    }
+
+                    entry.push(serde_json::Value::String(rendered_content));
                     entries_data.push(entry);
                 }
             };

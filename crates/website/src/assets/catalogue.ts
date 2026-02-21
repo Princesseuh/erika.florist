@@ -2,16 +2,14 @@ import GithubSlugger from "github-slugger";
 import { QuickScore } from "quick-score";
 import { thumbHashToDataURL } from "thumbhash";
 
-const VERSION = 4;
+const VERSION = 6;
 const catalogueCore = document.getElementById("catalogue-core");
 const latestHash = catalogueCore?.getAttribute("data-latest") ?? "";
 
 const dbOpenRequest = indexedDB.open("catalogue", VERSION);
 
 const content = document.getElementById("catalogue-content") as HTMLDivElement;
-const entriesCountElements = document.querySelectorAll(
-	"#catalogue-entry-count",
-) as NodeListOf<HTMLDivElement>;
+const entriesCountElements = document.querySelectorAll("#catalogue-entry-count");
 
 let db: IDBDatabase;
 let allItems: CatalogueItemDB[] = [];
@@ -124,7 +122,9 @@ type CatalogueItem = [
 	string, // title
 	number, // rating
 	string, // author
-	number?, // date
+	number | null, // finished date
+	number | null, // release year
+	string, // review content (rendered HTML)
 ];
 
 interface CatalogueItemDB {
@@ -136,6 +136,8 @@ interface CatalogueItemDB {
 	rating: number;
 	author: string;
 	date: number;
+	releaseYear: number | null;
+	review: string;
 }
 
 function numberToType(type: number): string {
@@ -172,11 +174,99 @@ const getRatingEmoji = (rating: number) => {
 	}
 };
 
+const getRatingLabel = (rating: number) => {
+	switch (rating) {
+		case 5:
+			return "Masterpiece";
+		case 4:
+			return "Loved";
+		case 3:
+			return "Liked";
+		case 2:
+			return "Okay";
+		case 1:
+			return "Disliked";
+		case 0:
+			return "Hated";
+		default:
+			return "";
+	}
+};
+
+// Review modal
+const reviewModal = document.getElementById("review-modal") as HTMLDivElement;
+const reviewModalTitleLink = document.getElementById("review-modal-title-link") as HTMLAnchorElement;
+const reviewModalCover = document.getElementById("review-modal-cover") as HTMLImageElement;
+const reviewModalMeta = document.getElementById("review-modal-meta") as HTMLDivElement;
+const reviewModalContent = document.getElementById("review-modal-content") as HTMLDivElement;
+const closeReviewModal = document.getElementById("close-review-modal") as HTMLButtonElement;
+
+function openReviewModal(item: CatalogueItemDB) {
+	const titleText = item.releaseYear ? `${item.title} (${item.releaseYear})` : item.title;
+	reviewModalTitleLink.textContent = titleText;
+	reviewModalTitleLink.href = `/catalogue/?entry=${item.id}`;
+
+	if (item.cover) {
+		reviewModalCover.src = item.cover;
+		reviewModalCover.alt = `${item.title} cover`;
+		reviewModalCover.classList.remove("hidden");
+	} else {
+		reviewModalCover.classList.add("hidden");
+	}
+
+	const ratingLabel = `${getRatingEmoji(item.rating)} ${getRatingLabel(item.rating)}`;
+	const dateLabel =
+		item.date > 0
+			? new Date(item.date).toLocaleDateString("en-US", {
+					year: "numeric",
+					month: "long",
+					day: "numeric",
+				})
+			: null;
+
+	const finishedVerb: Record<string, string> = {
+		game: "Played on",
+		movie: "Watched on",
+		show: "Watched on",
+		book: "Read on",
+	};
+
+	const firstLine = item.author
+		? `A ${item.type} by ${item.author} · ${ratingLabel}`
+		: `A ${item.type} · ${ratingLabel}`;
+	const secondLine = dateLabel ? `${finishedVerb[item.type] ?? "Finished on"} ${dateLabel}` : null;
+
+	reviewModalMeta.innerHTML = `<div>${firstLine}</div>${secondLine ? `<div>${secondLine}</div>` : ""}`;
+
+	reviewModalContent.innerHTML = item.review || "<p><em>No review written yet.</em></p>";
+
+	reviewModal.classList.remove("hidden");
+	document.body.style.overflow = "hidden";
+}
+
+function closeReviewModalFn() {
+	reviewModal.classList.add("hidden");
+	document.body.style.overflow = "";
+	const url = new URL(window.location.href);
+	if (url.searchParams.has("entry")) {
+		url.searchParams.delete("entry");
+		history.replaceState(null, "", url);
+	}
+}
+
+closeReviewModal.addEventListener("click", closeReviewModalFn);
+reviewModal.addEventListener("click", (e) => {
+	if (e.target === reviewModal) closeReviewModalFn();
+});
+document.addEventListener("keydown", (e) => {
+	if (e.key === "Escape" && !reviewModal.classList.contains("hidden")) closeReviewModalFn();
+});
+
 async function seedDatabase() {
-	let content: CatalogueData;
+	let catalogueData: CatalogueData;
 	try {
 		// Fetch the content from the JSON file
-		content = (await fetch("/catalogue/content.json").then((response) =>
+		catalogueData = (await fetch("/catalogue/content.json").then((response) =>
 			response.json(),
 		)) as CatalogueData;
 	} catch (error) {
@@ -186,7 +276,7 @@ async function seedDatabase() {
 	}
 
 	const contentObjectStore = db.transaction("content", "readwrite").objectStore("content");
-	const [version, data] = content;
+	const [version, data] = catalogueData;
 
 	const versionRequest = contentObjectStore.add({
 		id: "version",
@@ -204,7 +294,7 @@ async function seedDatabase() {
 	const slugger = new GithubSlugger();
 
 	data.forEach((item) => {
-		const [cover, placeholder, type, title, rating, author, date] = item;
+		const [cover, placeholder, type, title, rating, author, date, releaseYear, review] = item;
 
 		const itemType = numberToType(type);
 		const id = slugger.slug(title) + "-" + itemType;
@@ -225,6 +315,8 @@ async function seedDatabase() {
 			),
 			cover,
 			author,
+			releaseYear: releaseYear ?? null,
+			review: review ?? "",
 		});
 
 		addRequest.onerror = (e) => {
@@ -368,6 +460,16 @@ function buildUI() {
 			renderPage();
 			updateEntryCount();
 
+			// Open entry from URL param if present
+			const entryParam = new URLSearchParams(window.location.search).get("entry");
+			if (entryParam) {
+				const transaction = db.transaction("content", "readonly");
+				const req = transaction.objectStore("content").get(entryParam);
+				req.onsuccess = () => {
+					if (req.result && req.result.id !== "version") openReviewModal(req.result as CatalogueItemDB);
+				};
+			}
+
 			isLoading = false;
 			handleScroll(); // If the page is already scrolled down, render more items
 		}
@@ -395,7 +497,7 @@ function renderPage() {
 		entry.className = "w-[180px]";
 		entry.innerHTML = `
             <div class="relative group">
-              <a href="/catalogue/${item.type}s/${item.id.replace(`-${item.type}`, "")}">
+              <button type="button" class="block w-full text-left cursor-pointer">
                 <img class="max-w-full h-auto aspect-[3/4.3] object-cover block"
                      width="180" height="270"
                      src="${item.cover}"
@@ -417,9 +519,10 @@ function renderPage() {
                         ${item.author}
                     </p>
                 </div>
-                </a>
+              </button>
             </div>
         `;
+		entry.querySelector("button")!.addEventListener("click", () => openReviewModal(item));
 		fragment.appendChild(entry);
 	});
 

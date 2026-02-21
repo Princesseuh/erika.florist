@@ -1,10 +1,10 @@
-use chrono::NaiveDate;
+use chrono::{DateTime, Datelike, NaiveDate};
 use maudit::content::markdown_entry;
 use serde::Deserialize;
 
 use crate::content::{
+    catalogue::{deserialize_optional_date, Rating},
     CatalogueMetadata,
-    catalogue::{Rating, deserialize_optional_date},
 };
 
 #[derive(Debug)]
@@ -70,5 +70,12 @@ impl CatalogueMetadata<GameData> for CatalogueGame {
             .iter()
             .find(|company| company.role.to_lowercase() == "developer")
             .map(|company| company.name.clone())
+    }
+
+    fn get_release_year(&self) -> Option<i32> {
+        self.get_metadata()
+            .first_release_date
+            .and_then(|ts| DateTime::from_timestamp(ts as i64, 0))
+            .map(|dt| dt.year())
     }
 }

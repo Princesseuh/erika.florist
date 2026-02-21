@@ -1,8 +1,8 @@
-use chrono::NaiveDate;
+use chrono::{DateTime, Datelike, NaiveDate};
 use maudit::content::markdown_entry;
 use serde::Deserialize;
 
-use crate::content::{CatalogueMetadata, catalogue::Rating, catalogue::deserialize_optional_date};
+use crate::content::{catalogue::deserialize_optional_date, catalogue::Rating, CatalogueMetadata};
 
 #[derive(Debug)]
 #[markdown_entry]
@@ -59,5 +59,9 @@ impl CatalogueMetadata<BookData> for CatalogueBook {
             .first()
             .cloned()
             .or_else(|| self.get_metadata().publishers.first().cloned())
+    }
+
+    fn get_release_year(&self) -> Option<i32> {
+        DateTime::from_timestamp(self.get_metadata().publish_date as i64, 0).map(|dt| dt.year())
     }
 }

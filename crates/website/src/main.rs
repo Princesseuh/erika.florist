@@ -63,7 +63,6 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
                 "articles/years/**".into(),
                 "articles/_*/**".into(),
                 "login/index.html".into(),
-                "about/index.html".into(),
             ]),
             exclude_selectors: Some(vec![
                 "header".into(),

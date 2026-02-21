@@ -14,7 +14,7 @@ On both macOS and Linux, I use the terminal for a fair amount of things, oftenti
 
 ## Shell
 
-[Fish](https://fishshell.com/) is my favorite shell, the default are great and it's generally easy and intuitive to use. I used to use [zsh](https://www.zsh.org/), but really I found it to be a lesser fish often, so.. I'm interested in [Nushell](https://www.nushell.sh/), but I have not tried it extensively yet. (see [this post](/articles/shellsofthe20s) for more info on shells)
+[Fish](https://fishshell.com/) is my favorite shell, the default are great and it's generally easy and intuitive to use. I used to use [zsh](https://www.zsh.org/), but really I found it to be a lesser fish often, so.. I'm interested in [Nushell](https://www.nushell.sh/), but I have not tried it extensively yet.
 
 ### Plugins
 

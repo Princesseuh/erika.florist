@@ -79,7 +79,7 @@ To prevent this require also swapping the inputs before enabling PBP, which does
 
 ## Great, you made a V, where's the KM
 
-Well, I have two mice on my desk so the M(ouse) is taken care of. As for the K(eyboard), having a second keyboard would be annoying, especially as I have [a fancy keyboard](/articles/moonlander-review#title). So I bought a USB switch, which I anyway needed for my headphones, microphone, webcam, etc.
+Well, I have two mice on my desk so the M(ouse) is taken care of. As for the K(eyboard), having a second keyboard would be annoying, especially as I have [a fancy keyboard](/articles/moonlander-review/#title). So I bought a USB switch, which I anyway needed for my headphones, microphone, webcam, etc.
 
 For audio (both input and output) I first looked at sound mixers, but in general they look too nerdy for me, and, ok well, sure, but I don't know, I couldn't find a simple option, they always had a million buttons and knob and stuff that looked 2spooky4me.
 

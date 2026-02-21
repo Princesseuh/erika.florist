@@ -5,7 +5,7 @@
     category: 'linux'
 ---
 
-Being a nerd, I was always interested in trying out things on my computers and so, eventually that lead to me wanting to become a [florist](/wiki/floristry/intro) when I discovered that computers are well... computers
+Being a nerd, I was always interested in trying out things on my computers and so, eventually that lead to me wanting to become a [florist](/wiki/floristry/intro/) when I discovered that computers are well... computers
 
 But before that, I tried many Linux distributions and like most people, it started with: [Ubuntu](https://ubuntu.com/)
 

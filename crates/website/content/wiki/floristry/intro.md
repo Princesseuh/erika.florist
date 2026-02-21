@@ -11,7 +11,7 @@ Well, I unexpectedly got an interest in floristry back in 2018, it came to me.. 
 
 I started visiting florists around town to ask questions about the job etc. It was a really pleasant experience, most florists welcomed me happily and answered all my questions. One even gave me a free floral composition to bring back home, that was cute!
 
-I wanted to go to school for it but unfortunately, the school where the class took place was too far and the class was cancelled every year anyway due to low participation, so much like I did with programming, I started learning by myself thanks to the internet and [books](/wiki/flowerreadings)
+I wanted to go to school for it but unfortunately, the school where the class took place was too far and the class was cancelled every year anyway due to low participation, so much like I did with programming, I started learning by myself thanks to the internet and [books](/wiki/floristry/flowerreadings/)
 
 In April 2021, I ordered more than 500$ worth of fake flowers in order to practice making bouquets and started selling those around July in order to buy more flowers. It's good practice regarding structure, colors etc but of course it doesn't replace real flowers
 

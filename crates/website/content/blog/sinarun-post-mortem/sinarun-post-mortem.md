@@ -20,7 +20,7 @@ The movements were notably quite unintuitive. There was already part of today's 
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/mnuBhFq9rqU?si=wMX1DSO84545vpxQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-So, for SinaRun 2 there ended up being lot of emphasis on making it less frustrating to play, something [I.. well, some people would say I did not succeed at](https://erika.florist/articles/on-feedback). But the vision was much more clear and intentional, SinaRun was gonna be a momentum-based platformer where you go fast, you feel fast, you can reset instantly (SinaRun 1 had a small freeze every time you pressed R, very annoying) with pretty and intelligently designed levels.
+So, for SinaRun 2 there ended up being lot of emphasis on making it less frustrating to play, something [I.. well, some people would say I did not succeed at](https://erika.florist/articles/on-feedback/). But the vision was much more clear and intentional, SinaRun was gonna be a momentum-based platformer where you go fast, you feel fast, you can reset instantly (SinaRun 1 had a small freeze every time you pressed R, very annoying) with pretty and intelligently designed levels.
 
 Anyway, the elephant in the room.
 
@@ -76,7 +76,7 @@ It's incredibly heartwarming to see how much of an impact a niche game made by a
 
 ### I got better at everything
 
-Both at hard and soft skills, I've learned a lot while working on SinaRun. From learning how to use Unity and C# better, level design, 3d modelling, to understanding how to manage a long-term project, to [improving my communication skills through interacting with the community](/articles/on-feedback#title), it's been quite the journey.
+Both at hard and soft skills, I've learned a lot while working on SinaRun. From learning how to use Unity and C# better, level design, 3d modelling, to understanding how to manage a long-term project, to improving my communication skills by interacting with the community, it's been quite the journey.
 
 There's some things I did not get to touch on much, like marketing or sound design, but I did in fact learn a lot about those too, even if I can't say I did a particularly good job.
 

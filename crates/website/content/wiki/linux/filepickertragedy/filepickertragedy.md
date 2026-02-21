@@ -83,7 +83,7 @@ But outside of that, it works, it's really good. Probably among the best choices
 
 ### Arch Linux guide
 
-See [Installing the KDE file picker on Arch Linux](/wiki/linux/kdearchlinux) for a guide on how to install the KDE file picker on Arch
+See [Installing the KDE file picker on Arch Linux](/wiki/linux/kdearchlinux/) for a guide on how to install the KDE file picker on Arch
 
 ## The Deepin file Picker
 

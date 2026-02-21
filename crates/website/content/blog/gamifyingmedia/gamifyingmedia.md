@@ -7,9 +7,9 @@ tags:
   - website
 ---
 
-Multiple years ago now, I added a [Catalogue](/catalogue) section to this website. Essentially a more personal [Letterboxd](https://letterboxd.com), or [Goodreads](https://goodreads.com), but for all kinds of stuff. All the video games I've played, the movies I've watched, the books I've read, etc, in one place. It's pretty cool, though it does mean you all get to see my dubious at times taste in things.
+Multiple years ago now, I added a [Catalogue](/catalogue/) section to this website. Essentially a more personal [Letterboxd](https://letterboxd.com), or [Goodreads](https://goodreads.com), but for all kinds of stuff. All the video games I've played, the movies I've watched, the books I've read, etc, in one place. It's pretty cool, though it does mean you all get to see my dubious at times taste in things.
 
-The technical aspect of it is also pretty neat, being powered by [a Rust serverless function](https://github.com/Princesseuh/erika.florist/blob/main/api/catalogue.rs) made with [one of my favorite libraries](https://maud.lambda.xyz/) (totally overengineered, as it should be for a personal website with no visitors).
+The technical aspect of it is also pretty neat, being a local-first experience, which is, I'll admit, totally overengineered, but as it should be for a personal website with no visitors.
 
 More interestingly, I have noticed that it has motivated me to consume more art. This is great, right, doing more things, you learn more stuff and you have more (other) things to talk about with people, etc. Additionally, it's just fun, it feels like collecting.
 

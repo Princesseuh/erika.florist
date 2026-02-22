@@ -4,17 +4,17 @@ use chrono::NaiveDate;
 use maudit::{
     assets::{Asset, ImageFormat, ImageOptions},
     content::{
-        parse_markdown_with_frontmatter, render_markdown, ContentContext, ContentEntry, Entry,
-        MarkdownOptions,
+        ContentContext, ContentEntry, Entry, MarkdownOptions, parse_markdown_with_frontmatter,
+        render_markdown,
     },
     route::PageContext,
 };
-use serde::{de::DeserializeOwned, Deserialize, Deserializer};
+use serde::{Deserialize, Deserializer, de::DeserializeOwned};
 use xml_builder::XMLElement;
 
 use crate::{
     content::{CatalogueBook, CatalogueGame, CatalogueMovie, CatalogueShow},
-    rss::{rewrite_rss_content, AsXMLError},
+    rss::{AsXMLError, rewrite_rss_content},
 };
 
 pub mod books;
@@ -106,6 +106,7 @@ where
                     let mut entry = parse_markdown_with_frontmatter::<T>(&content);
 
                     let metadata_path = file_path.with_file_name("_data.json");
+                    println!("Loading metadata from: {}", metadata_path.display());
                     let metadata_data = std::fs::read_to_string(&metadata_path).unwrap();
                     let metadata: A = serde_json::from_str(&metadata_data).unwrap_or_else(|e| {
                         panic!(

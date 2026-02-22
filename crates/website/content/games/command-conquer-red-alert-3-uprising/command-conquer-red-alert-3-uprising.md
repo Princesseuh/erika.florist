@@ -1,6 +1,5 @@
 ---
 title: "Command & Conquer: Red Alert 3 - Uprising"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-02-18
 igdb: "759"

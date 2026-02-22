@@ -1,6 +1,5 @@
 ---
 title: "Umamusume: Pretty Derby"
-platform: "mobile"
 rating: "liked"
 finishedDate: N/A
 igdb: "97494"

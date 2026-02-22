@@ -1,6 +1,5 @@
 ---
 title: "New Super Mario Bros."
-platform: "ds"
 rating: "liked"
 finishedDate: 2024-06-10
 igdb: "1076"

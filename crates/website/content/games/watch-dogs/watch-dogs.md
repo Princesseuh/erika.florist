@@ -1,6 +1,5 @@
 ---
 title: "Watch Dogs"
-platform: "pc"
 rating: "liked"
 finishedDate: N/A
 igdb: "1121"

@@ -1,6 +1,5 @@
 ---
 title: The Messenger
-platform: "ebook"
 finishedDate: 2021-06-21
 rating: "liked"
 isbn: "0375830995"

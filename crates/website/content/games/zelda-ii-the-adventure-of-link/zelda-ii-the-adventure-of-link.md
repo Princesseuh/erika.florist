@@ -1,6 +1,5 @@
 ---
 title: "Zelda II: The Adventure of Link"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-09-15
 igdb: "1025"

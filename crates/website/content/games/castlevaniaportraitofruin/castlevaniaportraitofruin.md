@@ -1,6 +1,5 @@
 ---
 title: "Castlevania: Portrait of Ruin"
-platform: "ds"
 finishedDate: 2021-11-30
 rating: "okay"
 igdb: "1138"

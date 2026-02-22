@@ -1,6 +1,5 @@
 ---
 title: "Deathloop"
-platform: "pc"
 rating: "okay"
 finishedDate: N/A
 igdb: "113598"

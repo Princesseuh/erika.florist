@@ -1,6 +1,5 @@
 ---
 title: "Fallen Aces"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-11-30
 igdb: "152263"

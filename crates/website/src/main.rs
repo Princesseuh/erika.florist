@@ -51,8 +51,9 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
             language: Some("en".into()),
         },
         friends: vec![
-            "https://goulven-clech.dev".into(),
-            "https://aureliendossantos.com".into(),
+            "https://goulven-clech.dev/".into(),
+            "https://aureliendossantos.com/".into(),
+            "https://bruits.org/".into(),
         ],
         output: OutputConfig {
             dir: "./dist".into(),

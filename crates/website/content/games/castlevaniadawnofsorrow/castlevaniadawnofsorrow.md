@@ -1,6 +1,5 @@
 ---
 title: "Castlevania: Dawn of Sorrow"
-platform: "ds"
 rating: "liked"
 finishedDate: 2021-10-02
 igdb: "1136"

@@ -1,6 +1,5 @@
 ---
 title: "Unbeatable: White Label"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-02-02
 igdb: "146969"

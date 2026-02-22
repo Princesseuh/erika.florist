@@ -1,6 +1,5 @@
 ---
 title: "Nioh"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-04-06
 igdb: "12571"

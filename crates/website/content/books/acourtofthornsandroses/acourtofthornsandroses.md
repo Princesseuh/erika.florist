@@ -2,7 +2,6 @@
 title: "A Court of Thorns and Roses"
 finishedDate: 2023-08-25
 rating: "hated"
-platform: "audiobook"
 isbn: "9781635575569"
 ---
 

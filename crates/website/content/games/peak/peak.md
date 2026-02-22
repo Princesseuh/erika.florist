@@ -1,6 +1,5 @@
 ---
 title: "Peak"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-07-12
 igdb: "349524"

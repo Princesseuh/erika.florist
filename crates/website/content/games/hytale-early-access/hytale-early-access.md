@@ -1,6 +1,5 @@
 ---
 title: "Hytale Early Access"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2026-01-13
 igdb: "113360"

@@ -1,6 +1,5 @@
 ---
 title: "Mass Effect"
-platform: "pc"
 rating: "liked"
 finishedDate: 2024-01-20
 igdb: "243928"

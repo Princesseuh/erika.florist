@@ -1,6 +1,5 @@
 ---
 title: "Dark Souls II: Scholar of the First Sin"
-platform: "pc"
 rating: "liked"
 finishedDate: 2024-06-24
 igdb: "8222"

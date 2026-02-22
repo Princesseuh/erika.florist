@@ -1,6 +1,5 @@
 ---
 title: "Curse Crackers: For Whom the Belle Toils"
-platform: "pc"
 rating: "loved"
 finishedDate: 2025-12-31
 igdb: "172413"

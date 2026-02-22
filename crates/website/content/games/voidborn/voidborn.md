@@ -1,6 +1,5 @@
 ---
 title: "Voidborn"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-07-11
 igdb: "211924"

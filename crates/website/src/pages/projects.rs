@@ -67,6 +67,7 @@ impl Route for ProjectIndex {
                             h2."text-xl font-semibold mb-2" {
                                 (format!("{project_type:?}s"))
                             }
+                            a href="https://bruits.org" { "With Bruits"}
                             div."flex flex-wrap gap-4" {
                                 @for project in projects {
                                     @let project_data = project.data(ctx);

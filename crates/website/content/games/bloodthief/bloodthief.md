@@ -1,6 +1,5 @@
 ---
 title: "Bloodthief"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-10-14
 igdb: "260402"

@@ -1,6 +1,5 @@
 ---
 title: "En Garde!"
-platform: "pc"
 rating: "liked"
 finishedDate: 2024-01-08
 igdb: "104970"

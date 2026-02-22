@@ -1,6 +1,5 @@
 ---
 title: "Myst Online: URU Live"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-02-14
 igdb: "21540"

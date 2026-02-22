@@ -1,6 +1,5 @@
 ---
 title: "Astalon: Tears of the Earth"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-04-22
 igdb: "80885"

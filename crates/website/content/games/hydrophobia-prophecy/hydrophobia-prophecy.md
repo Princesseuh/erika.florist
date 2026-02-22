@@ -1,6 +1,5 @@
 ---
 title: "Hydrophobia: Prophecy"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-02-05
 igdb: "7690"

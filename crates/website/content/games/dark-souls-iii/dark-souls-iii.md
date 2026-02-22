@@ -1,6 +1,5 @@
 ---
 title: "Dark Souls III"
-platform: "pc"
 rating: "liked"
 finishedDate: 2024-04-30
 igdb: "11133"

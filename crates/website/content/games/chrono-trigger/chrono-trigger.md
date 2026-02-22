@@ -1,6 +1,5 @@
 ---
 title: "Chrono Trigger"
-platform: "pc"
 rating: "liked"
 finishedDate: 2024-01-06
 igdb: "206320"

@@ -1,6 +1,5 @@
 ---
 title: Melee is Broken
-platform: "physical"
 finishedDate: 2021-02-27
 rating: "liked"
 isbn: "9781716459306"

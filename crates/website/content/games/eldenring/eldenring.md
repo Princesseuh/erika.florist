@@ -1,7 +1,6 @@
 ---
 title: Elden Ring
 rating: "okay"
-platform: "pc"
 finishedDate: 2022-03-01
 igdb: "119133"
 ---

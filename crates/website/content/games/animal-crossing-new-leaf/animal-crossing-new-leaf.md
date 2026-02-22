@@ -1,6 +1,5 @@
 ---
 title: "Animal Crossing: New Leaf"
-platform: "pc"
 rating: "loved"
 finishedDate: N/A
 igdb: "2687"

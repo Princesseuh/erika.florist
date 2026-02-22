@@ -1,6 +1,5 @@
 ---
 title: "Dragon Quest XI: Echoes of an Elusive Age"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-03-17
 igdb: "11667"

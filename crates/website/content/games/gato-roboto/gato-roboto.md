@@ -1,6 +1,5 @@
 ---
 title: "Gato Roboto"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-04-18
 igdb: "107317"

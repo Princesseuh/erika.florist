@@ -1,6 +1,5 @@
 ---
 title: "Super Smash Bros. Brawl"
-platform: "pc"
 rating: "okay"
 finishedDate: N/A
 igdb: "1628"

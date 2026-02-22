@@ -1,6 +1,5 @@
 ---
 title: Ella Minnow Pea
-platform: "ebook"
 finishedDate: 2021-08-02
 rating: "loved"
 isbn: "9780967370163"

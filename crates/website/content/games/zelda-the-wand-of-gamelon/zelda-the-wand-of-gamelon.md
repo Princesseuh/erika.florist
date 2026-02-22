@@ -1,6 +1,5 @@
 ---
 title: "Zelda: The Wand of Gamelon"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-10-19
 igdb: "8533"

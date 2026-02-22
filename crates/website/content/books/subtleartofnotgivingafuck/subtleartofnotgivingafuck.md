@@ -1,7 +1,6 @@
 ---
 title: The Subtle Art of Not Giving a Fuck
 rating: "okay"
-platform: "audiobook"
 finishedDate: 2023-07-06
 isbn: "9781760558772"
 ---

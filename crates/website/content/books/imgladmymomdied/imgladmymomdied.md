@@ -1,6 +1,5 @@
 ---
 title: I'm Glad My Mom Died
-platform: "audiobook"
 finishedDate: 2023-06-28
 rating: "loved"
 isbn: "9781797147963"

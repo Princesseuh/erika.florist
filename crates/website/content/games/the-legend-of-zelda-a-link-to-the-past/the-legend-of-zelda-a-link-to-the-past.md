@@ -1,6 +1,5 @@
 ---
 title: "The Legend of Zelda: A Link to the Past"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-10-07
 igdb: "1026"

@@ -1,6 +1,5 @@
 ---
 title: "Lost in Random: The Eternal Die"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-07-04
 igdb: "314476"

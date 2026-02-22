@@ -1,6 +1,5 @@
 ---
 title: "AI Limit"
-platform: "pc"
 rating: "loved"
 finishedDate: 2025-04-17
 igdb: "115846"

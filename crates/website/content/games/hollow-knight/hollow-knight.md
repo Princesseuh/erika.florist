@@ -1,6 +1,5 @@
 ---
 title: "Hollow Knight"
-platform: "pc"
 rating: "okay"
 finishedDate: N/A
 igdb: "14593"

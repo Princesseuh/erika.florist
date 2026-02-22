@@ -1,6 +1,5 @@
 ---
 title: "Street Fighter 6"
-platform: ps5
 rating: "loved"
 finishedDate: 2023-12-07
 igdb: "191692"

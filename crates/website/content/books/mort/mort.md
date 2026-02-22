@@ -1,6 +1,5 @@
 ---
 title: "Mort"
-platform: "audiobook"
 rating: "liked"
 finishedDate: 2025-03-15
 isbn: "9781407034508"

@@ -1,6 +1,5 @@
 ---
 title: "Valorant"
-platform: "pc"
 rating: "disliked"
 finishedDate: N/A
 igdb: "126459"

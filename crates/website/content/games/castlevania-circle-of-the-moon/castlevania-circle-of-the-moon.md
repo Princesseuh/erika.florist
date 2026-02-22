@@ -1,6 +1,5 @@
 ---
 title: "Castlevania: Circle of the Moon"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-09-29
 igdb: "222410"

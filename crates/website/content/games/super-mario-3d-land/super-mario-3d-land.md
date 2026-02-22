@@ -1,6 +1,5 @@
 ---
 title: "Super Mario 3D Land"
-platform: "pc"
 rating: "loved"
 finishedDate: 2025-07-13
 igdb: "1079"

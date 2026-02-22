@@ -1,6 +1,5 @@
 ---
 title: "Shotgun King: the Final Checkmate"
-platform: "mobile"
 rating: "disliked"
 finishedDate: 2025-12-23
 igdb: "196030"

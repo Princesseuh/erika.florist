@@ -1,6 +1,5 @@
 ---
 title: "Super Mario Galaxy"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-07-16
 igdb: "1077"

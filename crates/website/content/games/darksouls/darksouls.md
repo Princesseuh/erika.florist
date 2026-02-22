@@ -2,7 +2,6 @@
 title: "Dark Souls"
 rating: "masterpiece"
 finishedDate: "N/A"
-platform: "pc"
 igdb: "2155"
 ---
 

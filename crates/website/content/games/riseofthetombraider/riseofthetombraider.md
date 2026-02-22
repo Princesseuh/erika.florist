@@ -1,7 +1,6 @@
 ---
 title: Rise of the Tomb Raider
 finishedDate: 2021-03-24
-platform: "pc"
 rating: "okay"
 igdb: "7323"
 ---

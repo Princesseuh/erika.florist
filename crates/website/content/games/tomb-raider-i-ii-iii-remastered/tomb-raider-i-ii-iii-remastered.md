@@ -1,6 +1,5 @@
 ---
 title: "Tomb Raider I•II•III Remastered"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-07-02
 igdb: "266683"

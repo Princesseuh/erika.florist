@@ -1,6 +1,5 @@
 ---
 title: "Blasphemous II"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-05-21
 igdb: "165390"

@@ -1,6 +1,5 @@
 ---
 title: "The Rust Programming Language"
-platform: "ebook"
 rating: "masterpiece"
 finishedDate: 2023-06-07
 isbn: "1593278284"

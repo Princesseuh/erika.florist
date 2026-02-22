@@ -1,7 +1,6 @@
 ---
 title: Shadow of the Tomb Raider
 finishedDate: 2021-03-28
-platform: "pc"
 coverAlt: Shadow of the Tomb Raider's Cover. Depict Lara Croft in a tree with a solar eclipse showing in the background
 rating: "disliked"
 igdb: "123051"

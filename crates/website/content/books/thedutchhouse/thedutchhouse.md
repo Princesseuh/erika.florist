@@ -2,7 +2,6 @@
 title: The Dutch House
 rating: "okay"
 finishedDate: 2023-07-13
-platform: "audiobook"
 isbn: "9780062963673"
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: "Ender Magnolia: Bloom in the Mist"
-platform: "pc"
 rating: "okay"
 finishedDate: 2026-02-01
 igdb: "287846"

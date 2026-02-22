@@ -1,6 +1,5 @@
 ---
 title: "Devil May Cry 4"
-platform: "pc"
 rating: "okay"
 finishedDate: N/A
 igdb: "112"

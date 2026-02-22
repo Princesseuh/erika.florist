@@ -1,6 +1,5 @@
 ---
 title: "Blood West"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-11-30
 igdb: "188555"

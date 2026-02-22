@@ -1,6 +1,5 @@
 ---
 title: "Pokémon: Let's Go, Pikachu!"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-08-30
 igdb: "25877"

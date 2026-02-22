@@ -1,6 +1,5 @@
 ---
 title: Code Vein
-platform: "pc"
 finishedDate: 2021-03-05
 igdb: "28168"
 rating: "liked"

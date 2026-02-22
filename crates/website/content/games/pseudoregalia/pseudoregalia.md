@@ -1,6 +1,5 @@
 ---
 title: "Pseudoregalia"
-platform: "pc"
 rating: "okay"
 finishedDate: 2024-01-09
 igdb: "242148"

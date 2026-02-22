@@ -1,7 +1,6 @@
 ---
 title: Genesis Noir
 finishedDate: 2021-03-31
-platform: "pc"
 rating: "disliked"
 coverAlt: The game cover shows the main character holding a planet while himself being in space
 igdb: "27413"

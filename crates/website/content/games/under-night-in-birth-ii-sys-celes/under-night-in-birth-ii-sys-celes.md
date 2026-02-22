@@ -1,6 +1,5 @@
 ---
 title: "Under Night In-Birth II Sys:Celes"
-platform: "pc"
 rating: "loved"
 finishedDate: 2025-07-01
 igdb: "260087"

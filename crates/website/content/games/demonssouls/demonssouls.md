@@ -1,7 +1,6 @@
 ---
 title: Demon's Souls
 rating: "masterpiece"
-platform: "ps3"
 finishedDate: 2021-07-22
 igdb: "5619"
 ---

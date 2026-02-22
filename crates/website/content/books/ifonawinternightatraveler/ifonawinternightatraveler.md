@@ -1,6 +1,5 @@
 ---
 title: If on a Winter's Night a Traveler
-platform: "physical"
 finishedDate: 2021-06-17
 rating: "liked"
 isbn: "9780544133402"

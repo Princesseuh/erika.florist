@@ -1,6 +1,5 @@
 ---
 title: "Devil May Cry 5"
-platform: "pc"
 rating: "loved"
 finishedDate: N/A
 igdb: "76253"

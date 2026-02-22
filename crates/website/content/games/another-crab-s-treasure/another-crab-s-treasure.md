@@ -1,6 +1,5 @@
 ---
 title: "Another Crab's Treasure"
-platform: "pc"
 rating: "okay"
 finishedDate: 2024-07-01
 igdb: "200903"

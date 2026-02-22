@@ -1,6 +1,5 @@
 ---
 title: "The Elder Scrolls IV: Oblivion Remastered"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-04-22
 igdb: "267306"

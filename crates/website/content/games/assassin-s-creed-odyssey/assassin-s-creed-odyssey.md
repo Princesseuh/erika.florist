@@ -1,6 +1,5 @@
 ---
 title: "Assassin's Creed Odyssey"
-platform: "pc"
 rating: "liked"
 finishedDate: 2023-12-15
 igdb: "103054"

@@ -1,6 +1,5 @@
 ---
 title: "Titan Quest Anniversary Edition"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-02-09
 igdb: "32614"

@@ -1,6 +1,5 @@
 ---
 title: "Bloodstained: Ritual of the Night"
-platform: "pc"
 rating: "loved"
 finishedDate: N/A
 igdb: "10760"

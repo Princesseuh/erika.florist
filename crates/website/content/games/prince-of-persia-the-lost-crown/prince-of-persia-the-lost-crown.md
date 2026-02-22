@@ -1,6 +1,5 @@
 ---
 title: "Prince of Persia: The Lost Crown"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-06-03
 igdb: "252476"

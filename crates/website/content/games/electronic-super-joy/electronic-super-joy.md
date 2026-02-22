@@ -1,6 +1,5 @@
 ---
 title: "Electronic Super Joy"
-platform: "pc"
 rating: "okay"
 finishedDate: N/A
 igdb: "3151"

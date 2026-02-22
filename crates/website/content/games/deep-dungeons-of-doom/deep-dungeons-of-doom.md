@@ -1,6 +1,5 @@
 ---
 title: "Deep Dungeons of Doom"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-02-05
 igdb: "17876"

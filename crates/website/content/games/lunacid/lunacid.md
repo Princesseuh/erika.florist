@@ -1,6 +1,5 @@
 ---
 title: "Lunacid"
-platform: "pc"
 rating: "okay"
 finishedDate: 2024-01-07
 igdb: "192291"

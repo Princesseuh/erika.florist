@@ -1,6 +1,5 @@
 ---
 title: "Gideon the Ninth"
-platform: "audiobook"
 rating: "loved"
 finishedDate: 2023-11-03
 isbn: "9781250313195"

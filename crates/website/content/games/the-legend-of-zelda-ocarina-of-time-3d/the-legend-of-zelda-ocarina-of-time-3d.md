@@ -1,6 +1,5 @@
 ---
 title: "The Legend of Zelda: Ocarina of Time 3D"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-07-13
 igdb: "1039"

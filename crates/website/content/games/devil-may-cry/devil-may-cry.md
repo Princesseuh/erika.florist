@@ -1,6 +1,5 @@
 ---
 title: "Devil May Cry"
-platform: "pc"
 rating: "liked"
 finishedDate: N/A
 igdb: "134"

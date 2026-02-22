@@ -1,6 +1,5 @@
 ---
 title: "Don't Stop, Girlypop! Lite"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-10-14
 igdb: "287870"

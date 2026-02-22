@@ -1,6 +1,5 @@
 ---
 title: "Escape Academy"
-platform: "pc"
 rating: "okay"
 finishedDate: 2024-01-01
 igdb: "194464"

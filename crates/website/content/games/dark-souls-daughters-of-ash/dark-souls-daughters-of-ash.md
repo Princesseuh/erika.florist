@@ -1,6 +1,5 @@
 ---
 title: "Dark Souls: Daughters of Ash"
-platform: "pc"
 rating: "okay"
 finishedDate: 2024-07-01
 igdb: "144500"

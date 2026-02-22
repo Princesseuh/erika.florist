@@ -1,6 +1,5 @@
 ---
 title: "despelote"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-11-30
 igdb: "145070"

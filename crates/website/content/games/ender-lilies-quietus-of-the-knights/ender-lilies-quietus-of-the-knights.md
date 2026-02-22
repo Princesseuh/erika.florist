@@ -1,6 +1,5 @@
 ---
 title: "Ender Lilies: Quietus of the Knights"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-05-02
 igdb: "138858"

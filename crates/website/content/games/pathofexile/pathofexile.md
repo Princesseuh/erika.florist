@@ -1,7 +1,6 @@
 ---
 title: "Path of Exile"
 rating: "loved"
-platform: "pc"
 finishedDate: "N/A"
 igdb: "1911"
 ---

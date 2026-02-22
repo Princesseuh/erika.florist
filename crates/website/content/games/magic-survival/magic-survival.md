@@ -1,6 +1,5 @@
 ---
 title: "Magic Survival"
-platform: "pc"
 rating: "liked"
 finishedDate: 2024-02-04
 igdb: "188606"

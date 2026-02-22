@@ -1,6 +1,5 @@
 ---
 title: "Super Mario Sunshine"
-platform: "pc"
 rating: "okay"
 finishedDate: N/A
 igdb: "1075"

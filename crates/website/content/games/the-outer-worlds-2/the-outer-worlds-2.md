@@ -1,6 +1,5 @@
 ---
 title: "The Outer Worlds 2"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-11-20
 igdb: "152246"

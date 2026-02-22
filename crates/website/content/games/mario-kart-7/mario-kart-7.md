@@ -1,6 +1,5 @@
 ---
 title: "Mario Kart 7"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-07-13
 igdb: "2349"

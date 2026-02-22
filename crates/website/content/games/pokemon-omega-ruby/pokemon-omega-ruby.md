@@ -1,6 +1,5 @@
 ---
 title: "Pokémon Omega Ruby"
-platform: "ds"
 rating: "disliked"
 finishedDate: 2025-08-21
 igdb: "6897"

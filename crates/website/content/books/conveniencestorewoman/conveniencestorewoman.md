@@ -1,7 +1,6 @@
 ---
 title: Convenience Store Woman
 rating: "loved"
-platform: "ebook"
 finishedDate: 2020-04-22
 isbn: "9780802129628"
 ---

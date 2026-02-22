@@ -1,6 +1,5 @@
 ---
 title: "The Rogue Prince of Persia"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-08-22
 igdb: "296843"

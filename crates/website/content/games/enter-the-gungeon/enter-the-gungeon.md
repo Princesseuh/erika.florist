@@ -1,6 +1,5 @@
 ---
 title: "Enter the Gungeon"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-04-06
 igdb: "11182"

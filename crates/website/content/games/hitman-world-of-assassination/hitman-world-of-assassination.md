@@ -1,6 +1,5 @@
 ---
 title: "Hitman World of Assassination"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-07-03
 igdb: "233571"

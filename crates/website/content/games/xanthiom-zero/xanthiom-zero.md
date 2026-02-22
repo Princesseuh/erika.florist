@@ -1,6 +1,5 @@
 ---
 title: "Xanthiom Zero"
-platform: "pc"
 rating: "okay"
 finishedDate: 2026-01-10
 igdb: "240815"

@@ -1,6 +1,5 @@
 ---
 title: "Zelda's Adventure"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-10-19
 igdb: "8534"

@@ -1,6 +1,5 @@
 ---
 title: "Roving in the Dark"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-02-18
 igdb: "106602"

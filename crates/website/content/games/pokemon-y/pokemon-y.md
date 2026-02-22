@@ -1,6 +1,5 @@
 ---
 title: "Pokémon Y"
-platform: "ds"
 rating: "disliked"
 finishedDate: 2025-07-28
 igdb: "2287"

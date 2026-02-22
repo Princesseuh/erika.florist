@@ -1,6 +1,5 @@
 ---
 title: "Cunk on Everything"
-platform: "audiobook"
 rating: "liked"
 finishedDate: 2026-01-11
 isbn: "9781529324563"

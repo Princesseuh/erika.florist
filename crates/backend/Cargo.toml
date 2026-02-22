@@ -9,6 +9,7 @@ serde = { workspace = true }
 serde_json = { workspace = true }
 base64 = "0.22"
 sha2 = "0.10"
+slug = "0.1.6"
 urlencoding = "2.1"
 
 [lib]

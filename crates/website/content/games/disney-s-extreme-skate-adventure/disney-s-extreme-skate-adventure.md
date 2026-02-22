@@ -1,6 +1,5 @@
 ---
 title: "Disney's Extreme Skate Adventure"
-platform: "pc"
 rating: "loved"
 finishedDate: 2025-10-20
 igdb: "3883"

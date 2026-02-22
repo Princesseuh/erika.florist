@@ -1,6 +1,5 @@
 ---
 title: "Bulletstorm"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-02-06
 igdb: "494"

@@ -1,6 +1,5 @@
 ---
 title: "Pokémon Ultra Moon"
-platform: "ds"
 rating: "okay"
 finishedDate: 2025-08-18
 igdb: "36793"

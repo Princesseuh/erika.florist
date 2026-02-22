@@ -11,8 +11,6 @@ pub struct CommitForm {
     pub date: String,
     #[serde(rename = "source-id")]
     pub source_id: String,
-    #[serde(rename = "platform-select", default)]
-    pub platform_select: String,
     pub comment: String,
     #[serde(rename = "skip-ci", default)]
     pub skip_ci: String,
@@ -28,7 +26,6 @@ impl CommitForm {
             rating: form_data.get_field("rating").unwrap_or_default(),
             date: form_data.get_field("date").unwrap_or_default(),
             source_id: form_data.get_field("source-id").unwrap_or_default(),
-            platform_select: form_data.get_field("platform-select").unwrap_or_default(),
             comment: form_data.get_field("comment").unwrap_or_default(),
             skip_ci: form_data.get_field("skip-ci").unwrap_or_default(),
             form_password: form_data.get_field("form-password").unwrap_or_default(),

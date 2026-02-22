@@ -1,6 +1,5 @@
 ---
 title: "Guild Wars 2"
-platform: "pc"
 rating: "loved"
 finishedDate: N/A
 igdb: "1183"

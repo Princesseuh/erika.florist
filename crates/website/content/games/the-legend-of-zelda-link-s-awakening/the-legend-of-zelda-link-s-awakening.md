@@ -1,6 +1,5 @@
 ---
 title: "The Legend of Zelda: Link's Awakening"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-10-17
 igdb: "115284"

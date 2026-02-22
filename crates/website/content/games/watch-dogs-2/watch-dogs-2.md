@@ -1,6 +1,5 @@
 ---
 title: "Watch Dogs 2"
-platform: "pc"
 rating: "okay"
 finishedDate: N/A
 igdb: "19441"

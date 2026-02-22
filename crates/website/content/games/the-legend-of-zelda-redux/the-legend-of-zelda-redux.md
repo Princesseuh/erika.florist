@@ -1,6 +1,5 @@
 ---
 title: "The Legend of Zelda Redux"
-platform: "pc"
 rating: "loved"
 finishedDate: 2025-09-16
 igdb: "199417"

@@ -1,6 +1,5 @@
 ---
 title: "Doom: The Dark Ages"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-05-15
 igdb: "302704"

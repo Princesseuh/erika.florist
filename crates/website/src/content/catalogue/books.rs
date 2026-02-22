@@ -8,8 +8,7 @@ use crate::content::{catalogue::deserialize_optional_date, catalogue::Rating, Ca
 #[markdown_entry]
 pub struct CatalogueBook {
     pub title: String,
-    pub rating: Rating, // Define Rating enum or struct elsewhere
-    pub platform: BookPlatform,
+    pub rating: Rating,
     #[serde(
         rename = "finishedDate",
         deserialize_with = "deserialize_optional_date"
@@ -20,14 +19,6 @@ pub struct CatalogueBook {
     __metadata: Option<BookData>,
     #[serde(skip)]
     pub cover: (String, String), // (URL, Placeholder)
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(rename_all = "lowercase")]
-pub enum BookPlatform {
-    Ebook,
-    Physical,
-    Audiobook,
 }
 
 #[derive(Debug, Deserialize)]

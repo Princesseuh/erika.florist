@@ -1,6 +1,5 @@
 ---
 title: "Monster Sanctuary"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-04-19
 igdb: "89594"

@@ -1,6 +1,5 @@
 ---
 title: "Atomic Heart"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-06-08
 igdb: "76747"

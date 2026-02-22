@@ -1,6 +1,5 @@
 ---
 title: "Super Mario 64"
-platform: "pc"
 rating: "loved"
 finishedDate: 2024-04-22
 igdb: "1074"

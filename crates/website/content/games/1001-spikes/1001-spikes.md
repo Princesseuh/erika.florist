@@ -1,6 +1,5 @@
 ---
 title: "1001 Spikes"
-platform: "pc"
 rating: "liked"
 finishedDate: 2026-01-14
 igdb: "8617"

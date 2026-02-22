@@ -2,7 +2,6 @@
 title: "Dota 2"
 rating: "masterpiece"
 finishedDate: "N/A"
-platform: "pc"
 igdb: "2963"
 ---
 

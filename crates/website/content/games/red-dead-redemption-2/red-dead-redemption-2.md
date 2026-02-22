@@ -1,6 +1,5 @@
 ---
 title: "Red Dead Redemption 2"
-platform: "pc"
 rating: "okay"
 finishedDate: 2024-01-23
 igdb: "25076"

@@ -1,6 +1,5 @@
 ---
 title: "Pokémon Shield"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-09-14
 igdb: "115653"

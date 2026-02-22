@@ -1,6 +1,5 @@
 ---
 title: "The Surge"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-12-02
 igdb: "11590"

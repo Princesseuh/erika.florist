@@ -1,6 +1,5 @@
 ---
 title: "Darksiders III"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-07-21
 igdb: "28380"

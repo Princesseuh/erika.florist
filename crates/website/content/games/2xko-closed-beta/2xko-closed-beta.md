@@ -1,6 +1,5 @@
 ---
 title: "2XKO Closed Beta"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-09-09
 igdb: "126460"

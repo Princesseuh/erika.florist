@@ -1,6 +1,5 @@
 ---
 title: "Bloodborne"
-platform: "ps4"
 rating: "disliked"
 finishedDate: 2025-03-31
 igdb: "7334"

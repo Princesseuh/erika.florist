@@ -1,6 +1,5 @@
 ---
 title: "Path of Exile 2"
-platform: "pc"
 rating: "loved"
 finishedDate: N/A
 igdb: "125642"

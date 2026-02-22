@@ -1,6 +1,5 @@
 ---
 title: "Street Fighter 30th Anniversary Collection"
-platform: "pc"
 rating: "liked"
 finishedDate: 2023-12-29
 igdb: "77175"

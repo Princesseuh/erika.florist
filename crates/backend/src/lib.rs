@@ -1,4 +1,5 @@
 use sha2::{Digest, Sha256};
+use slug::slugify;
 use worker::*;
 
 mod search;
@@ -227,7 +228,7 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
             _ => return Response::error("Invalid type", 400),
         };
 
-        let mut slug = form.name.to_lowercase().replace(' ', "-");
+        let mut slug = slugify(&form.name);
         let github_token = env
             .secret("GITHUB_KEY")
             .map_err(|_| Error::from("GITHUB_KEY not set"))?;
@@ -263,16 +264,9 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
             }
         }
 
-        let platform_line = if !form.platform_select.is_empty() {
-            format!("platform: \"{}\"\n", form.platform_select)
-        } else {
-            String::new()
-        };
-
         let markdown_content = format!(
-            "---\ntitle: \"{}\"\n{}rating: \"{}\"\nfinishedDate: {}\n{}: \"{}\"\n---\n\n{}\n",
+            "---\ntitle: \"{}\"\nrating: \"{}\"\nfinishedDate: {}\n{}: \"{}\"\n---\n\n{}\n",
             form.name,
-            platform_line,
             form.rating,
             form.date,
             source_key,

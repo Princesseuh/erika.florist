@@ -1,6 +1,5 @@
 ---
 title: "Final Fantasy XIV Online"
-platform: "pc"
 rating: "liked"
 finishedDate: N/A
 igdb: "386"

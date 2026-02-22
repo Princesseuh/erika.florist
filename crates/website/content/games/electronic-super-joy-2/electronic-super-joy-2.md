@@ -1,6 +1,5 @@
 ---
 title: "Electronic Super Joy 2"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-02-04
 igdb: "120745"

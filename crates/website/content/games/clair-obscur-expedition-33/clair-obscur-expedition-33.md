@@ -1,6 +1,5 @@
 ---
 title: "Clair Obscur: Expedition 33"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-04-25
 igdb: "305152"

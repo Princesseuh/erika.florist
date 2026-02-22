@@ -1,6 +1,5 @@
 ---
 title: "Kirby 64: The Crystal Shards"
-platform: "pc"
 rating: "okay"
 finishedDate: 2024-06-11
 igdb: "2713"

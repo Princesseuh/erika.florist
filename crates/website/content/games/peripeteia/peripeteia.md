@@ -1,6 +1,5 @@
 ---
 title: "Peripeteia"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-12-02
 igdb: "142186"

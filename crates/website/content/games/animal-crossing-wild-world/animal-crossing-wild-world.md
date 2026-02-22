@@ -1,6 +1,5 @@
 ---
 title: "Animal Crossing: Wild World"
-platform: "pc"
 rating: "loved"
 finishedDate: N/A
 igdb: "2645"

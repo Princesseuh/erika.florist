@@ -2,7 +2,6 @@
 title: League of Legends
 rating: "liked"
 finishedDate: "N/A"
-platform: "pc"
 igdb: "115"
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: "Record of Lodoss War"
-platform: "pc"
 rating: "liked"
 finishedDate: 2024-06-10
 igdb: "69656"

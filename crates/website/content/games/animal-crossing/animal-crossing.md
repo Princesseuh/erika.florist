@@ -1,6 +1,5 @@
 ---
 title: "Animal Crossing"
-platform: "pc"
 rating: "liked"
 finishedDate: N/A
 igdb: "2655"

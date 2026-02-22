@@ -1,9 +1,9 @@
 use std::hash::{DefaultHasher, Hash, Hasher};
 
-use maud::{html, PreEscaped};
+use maud::{PreEscaped, html};
 use maudit::route::prelude::*;
 
-use crate::components::icon::{icon, Icon};
+use crate::components::icon::Icon;
 use crate::components::mobile_menu;
 use crate::{content::CatalogueMetadata, layouts::base_layout, state};
 
@@ -179,12 +179,9 @@ impl Route for Catalogue {
                                         }
                                         label class="flex-1" {
                                             span class="block text-sm font-bold mb-1" { "Title" }
-                                            div class="flex" {
-                                                input id="entry-name" name="name" class="flex-1 px-3 py-2 bg-white border-2 border-black rounded-r font-medium h-10 disabled:bg-zinc-400 disabled:cursor-not-allowed" placeholder="Select type first..." disabled;
-                                                button type="button" class="search-btn px-4 py-2 bg-black text-white hover:bg-zinc-700 rounded font-medium -ml-2 h-10 md:hidden" {
-                                                    (icon(Icon::Search, 20, "Search"))
-                                                }
-                                                button type="button" class="search-btn px-4 py-2 bg-black text-white hover:bg-zinc-700 rounded font-medium -ml-2 h-10 hidden md:block" { "Search" }
+                                            div class="relative" {
+                                                input id="entry-name" name="name" class="w-full px-3 py-2 bg-white border-2 border-black rounded-r font-medium h-10 disabled:bg-zinc-400 disabled:cursor-not-allowed" placeholder="Select type first..." disabled;
+                                                div id="entry-search-spinner" class="hidden absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" {}
                                             }
                                         }
                                     }
@@ -220,13 +217,6 @@ impl Route for Catalogue {
                                                 input type="radio" name="rating" value="masterpiece" class="peer sr-only";
                                                 span class="text-3xl peer-checked:scale-125 transition-transform" { "❤️" }
                                             }
-                                        }
-                                    }
-
-                                    div id="platform-field" class="hidden" {
-                                        label {
-                                            span class="block text-sm font-bold mb-1" { "Platform" }
-                                            input id="entry-platform" name="platform-select" class="w-full px-3 py-2 bg-white border-2 border-black rounded font-medium" placeholder="e.g., pc, ps5, switch";
                                         }
                                     }
 
@@ -303,8 +293,7 @@ impl Route for Catalogue {
                         const form = document.getElementById('add-entry-form');
                         const typeSelect = document.getElementById('entry-type');
                         const titleInput = document.getElementById('entry-name');
-                        const platformField = document.getElementById('platform-field');
-                        const searchBtn = document.querySelector('.search-btn');
+                        const searchSpinner = document.getElementById('entry-search-spinner');
                         const searchResults = document.getElementById('search-results');
                         const selectedResult = document.getElementById('selected-result');
 
@@ -316,7 +305,6 @@ impl Route for Catalogue {
                             const hasType = typeSelect.value !== '';
                             titleInput.disabled = !hasType;
                             titleInput.placeholder = hasType ? 'Search by title...' : 'Select type first...';
-                            platformField.classList.toggle('hidden', typeSelect.value !== 'game');
                         };
 
                         async function search() {
@@ -328,6 +316,7 @@ impl Route for Catalogue {
                             const source = sourceMap[type];
                             const tmdbType = type === 'tv' ? 'tv' : 'movie';
 
+                            searchSpinner.classList.remove('hidden');
                             try {
                                 const response = await fetch(API_URL + '/search?source=' + source + '&query=' + encodeURIComponent(query) + '&type=' + tmdbType, {
                                     credentials: 'include'
@@ -337,8 +326,16 @@ impl Route for Catalogue {
                                 displayResults(data, type);
                             } catch (e) {
                                 console.error('Search failed:', e);
+                            } finally {
+                                searchSpinner.classList.add('hidden');
                             }
                         }
+
+                        let searchDebounce;
+                        titleInput.oninput = () => {
+                            clearTimeout(searchDebounce);
+                            searchDebounce = setTimeout(search, 400);
+                        };
 
                         function displayResults(data, type) {
                             searchResults.innerHTML = '';
@@ -385,9 +382,6 @@ impl Route for Catalogue {
                             searchResults.classList.add('hidden');
                         }
 
-                        searchBtn.onclick = search;
-                        document.getElementById('entry-name').onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); search(); } };
-
                         form.onsubmit = async (e) => {
                             e.preventDefault();
                             const errorDiv = document.getElementById('form-error');
@@ -405,8 +399,7 @@ impl Route for Catalogue {
                             formData.append('rating', rating);
                             formData.append('date', document.getElementById('entry-date').value);
                             formData.append('source-id', document.getElementById('entry-source-id-display').value || document.getElementById('entry-source-id').value);
-                            formData.append('platform-select', document.getElementById('entry-platform').value);
-                                            formData.append('comment', document.getElementById('entry-comment').value);
+                            formData.append('comment', document.getElementById('entry-comment').value);
                                             formData.append('form-password', document.getElementById('form-password').value);
                             if (document.getElementById('skip-ci').checked) {
                                 formData.append('skip-ci', 'skip-ci');

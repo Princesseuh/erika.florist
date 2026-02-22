@@ -1,6 +1,5 @@
 ---
 title: "Sekiro: Shadows Die Twice"
-platform: "pc"
 rating: "loved"
 finishedDate: 2019-04-11
 igdb: "76882"

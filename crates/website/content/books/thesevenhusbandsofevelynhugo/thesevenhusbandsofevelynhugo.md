@@ -2,7 +2,6 @@
 title: The Seven Husbands of Evelyn Hugo
 finishedDate: 2023-07-19
 rating: "liked"
-platform: "audiobook"
 isbn: "9781982147662"
 ---
 

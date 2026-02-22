@@ -1,6 +1,5 @@
 ---
 title: "Narita Boy"
-platform: "pc"
 rating: "disliked"
 finishedDate: N/A
 igdb: "27409"

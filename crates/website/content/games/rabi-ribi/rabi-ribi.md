@@ -1,6 +1,5 @@
 ---
 title: "Rabi-Ribi"
-platform: "pc"
 rating: "loved"
 finishedDate: 2025-07-12
 igdb: "28545"

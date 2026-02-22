@@ -1,6 +1,5 @@
 ---
 title: "Monument Valley II"
-platform: "mobile"
 rating: "okay"
 finishedDate: 2025-12-26
 igdb: "36749"

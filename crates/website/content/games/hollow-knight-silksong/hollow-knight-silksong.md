@@ -1,6 +1,5 @@
 ---
 title: "Hollow Knight: Silksong"
-platform: "pc"
 rating: "disliked"
 finishedDate: 2025-09-06
 igdb: "115289"

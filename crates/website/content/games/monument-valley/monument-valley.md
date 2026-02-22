@@ -1,6 +1,5 @@
 ---
 title: "Monument Valley"
-platform: "mobile"
 rating: "disliked"
 finishedDate: 2025-12-26
 igdb: "8900"

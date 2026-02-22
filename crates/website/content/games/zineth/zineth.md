@@ -1,6 +1,5 @@
 ---
 title: "Zineth"
-platform: "pc"
 rating: "masterpiece"
 finishedDate: N/A
 igdb: "64122"

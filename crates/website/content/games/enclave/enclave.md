@@ -1,6 +1,5 @@
 ---
 title: "Enclave"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-02-12
 igdb: "1345"

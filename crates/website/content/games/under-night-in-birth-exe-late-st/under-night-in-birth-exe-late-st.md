@@ -1,6 +1,5 @@
 ---
 title: "Under Night In-Birth Exe:Late[st]"
-platform: "pc"
 rating: "loved"
 finishedDate: N/A
 igdb: "41819"

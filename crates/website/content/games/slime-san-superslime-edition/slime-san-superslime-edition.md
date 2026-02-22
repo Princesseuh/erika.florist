@@ -1,6 +1,5 @@
 ---
 title: "Slime-san: Superslime Edition"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-12-02
 igdb: "96019"

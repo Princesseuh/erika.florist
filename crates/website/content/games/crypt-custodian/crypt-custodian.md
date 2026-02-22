@@ -1,6 +1,5 @@
 ---
 title: "Crypt Custodian"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-06-03
 igdb: "252362"

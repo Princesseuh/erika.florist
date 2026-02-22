@@ -1,6 +1,5 @@
 ---
 title: "The Legend of Zelda"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-09-14
 igdb: "1022"

@@ -1,6 +1,5 @@
 ---
 title: "Pokémon SoulSilver Version"
-platform: "ds"
 rating: "disliked"
 finishedDate: 2025-08-03
 igdb: "1520"

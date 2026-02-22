@@ -1,7 +1,6 @@
 ---
 title: "Record of Lodoss War: Deedlit in Wonder Labyrinth"
 finishedDate: 2021-03-28
-platform: "pc"
 rating: "liked"
 coverAlt: "Record of Lodoss War: Deedlit in Wonder Labyrinth's cover. Shows the main character of the game in an armor."
 igdb: "96394"

@@ -1,6 +1,5 @@
 ---
 title: "Super Smash Bros. for Nintendo 3DS"
-platform: "ds"
 rating: "okay"
 finishedDate: N/A
 igdb: "9621"

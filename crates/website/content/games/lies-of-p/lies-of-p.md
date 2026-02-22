@@ -1,6 +1,5 @@
 ---
 title: "Lies of P"
-platform: "pc"
 rating: "liked"
 finishedDate: 2024-06-30
 igdb: "148241"

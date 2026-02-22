@@ -1,6 +1,5 @@
 ---
 title: "Deadlock Beta"
-platform: "pc"
 rating: "loved"
 finishedDate: 2025-10-18
 igdb: "301298"

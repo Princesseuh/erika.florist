@@ -1,6 +1,5 @@
 ---
 title: "CTGP-7"
-platform: "pc"
 rating: "liked"
 finishedDate: 2025-07-13
 igdb: "209549"

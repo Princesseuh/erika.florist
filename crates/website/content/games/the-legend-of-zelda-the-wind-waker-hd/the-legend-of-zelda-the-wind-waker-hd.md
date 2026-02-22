@@ -1,6 +1,5 @@
 ---
 title: "The Legend of Zelda: The Wind Waker HD"
-platform: "Switch"
 rating: "okay"
 finishedDate: 2026-02-18
 igdb: "2276"

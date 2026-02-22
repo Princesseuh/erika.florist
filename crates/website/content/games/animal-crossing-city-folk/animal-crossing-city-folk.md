@@ -1,6 +1,5 @@
 ---
 title: "Animal Crossing: City Folk"
-platform: "pc"
 rating: "okay"
 finishedDate: N/A
 igdb: "2688"

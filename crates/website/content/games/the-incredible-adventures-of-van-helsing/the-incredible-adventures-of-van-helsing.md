@@ -1,6 +1,5 @@
 ---
 title: "The Incredible Adventures of Van Helsing"
-platform: "pc"
 rating: "okay"
 finishedDate: 2025-02-09
 igdb: "2638"

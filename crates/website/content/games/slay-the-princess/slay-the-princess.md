@@ -1,6 +1,5 @@
 ---
 title: "Slay the Princess"
-platform: "pc"
 rating: "liked"
 finishedDate: 2023-12-31
 igdb: "210395"

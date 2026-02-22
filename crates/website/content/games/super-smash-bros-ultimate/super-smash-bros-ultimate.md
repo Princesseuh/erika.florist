@@ -1,6 +1,5 @@
 ---
 title: "Super Smash Bros. Ultimate"
-platform: "pc"
 rating: "liked"
 finishedDate: N/A
 igdb: "90101"

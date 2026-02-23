@@ -1,11 +1,11 @@
-use maud::{html, Markup, PreEscaped};
+use maud::{Markup, PreEscaped, html};
 use maudit::{
-    content::{highlight_code, HighlightOptions},
+    content::{HighlightOptions, highlight_code},
     route::prelude::*,
 };
 
 use crate::{
-    components::icon::{icon, Icon},
+    components::icon::{Icon, icon},
     components::{article_preview, dinkus, mobile_menu_button},
     content::BlogPost,
     layouts::base_layout,

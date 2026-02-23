@@ -3,8 +3,8 @@ use maudit::content::markdown_entry;
 use serde::Deserialize;
 
 use crate::content::{
-    catalogue::{deserialize_optional_date, Rating},
     CatalogueMetadata,
+    catalogue::{Rating, deserialize_optional_date},
 };
 
 #[derive(Debug)]

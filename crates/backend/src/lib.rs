@@ -266,12 +266,7 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
 
         let markdown_content = format!(
             "---\ntitle: \"{}\"\nrating: \"{}\"\nfinishedDate: {}\n{}: \"{}\"\n---\n\n{}\n",
-            form.name,
-            form.rating,
-            form.date,
-            source_key,
-            form.source_id,
-            form.comment
+            form.name, form.rating, form.date, source_key, form.source_id, form.comment
         );
 
         let file_path = format!("crates/website/content/{}/{}/{}.md", path_type, slug, slug);

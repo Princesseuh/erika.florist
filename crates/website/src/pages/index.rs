@@ -5,7 +5,7 @@ use crate::{
     components::article_preview,
     content::{BlogPost, WikiEntry},
     layouts::base_layout,
-    pages::{wiki::WikiParams, WikiEntryPage},
+    pages::{WikiEntryPage, wiki::WikiParams},
 };
 
 #[route("/")]

@@ -1,4 +1,4 @@
-use maud::{html, PreEscaped};
+use maud::{PreEscaped, html};
 use maudit::{
     content::{Entry, MarkdownContent},
     route::RenderResult,

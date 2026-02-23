@@ -2,6 +2,10 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 
+@utility scrollbar-gutter-stable {
+  scrollbar-gutter: stable;
+}
+
 @theme {
   --text-4_5xl: 2.75rem;
 

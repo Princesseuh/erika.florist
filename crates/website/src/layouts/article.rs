@@ -1,4 +1,4 @@
-use maud::{PreEscaped, html};
+use maud::{html, PreEscaped};
 use maudit::{
     content::{Entry, MarkdownContent},
     route::RenderResult,
@@ -55,6 +55,7 @@ pub fn article_layout(
         article_data.tagline.clone(),
         content,
         include_about,
+        None,
         ctx,
     ))
 }

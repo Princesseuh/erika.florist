@@ -27,6 +27,7 @@ impl Route for FriendsPage {
                 }
             ),
             true,
+            None,
             ctx,
         )
     }

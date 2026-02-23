@@ -85,6 +85,7 @@ impl Route for ProjectIndex {
                 }
             ),
             true,
+            None,
             ctx,
         )
     }

@@ -1,4 +1,4 @@
-use maud::{PreEscaped, html};
+use maud::{html, PreEscaped};
 use maudit::route::prelude::*;
 
 use crate::layouts::base_layout;
@@ -64,6 +64,7 @@ impl Route for LoginPage {
                 }
             },
             true,
+            None,
             ctx,
         )
     }

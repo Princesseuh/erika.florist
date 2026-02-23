@@ -1,11 +1,11 @@
-use maud::{Markup, PreEscaped, html};
+use maud::{html, Markup, PreEscaped};
 use maudit::{
-    content::{HighlightOptions, highlight_code},
+    content::{highlight_code, HighlightOptions},
     route::prelude::*,
 };
 
 use crate::{
-    components::icon::{Icon, icon},
+    components::icon::{icon, Icon},
     components::{article_preview, dinkus, mobile_menu_button},
     content::BlogPost,
     layouts::base_layout,
@@ -222,6 +222,7 @@ impl Route for AboutPage {
                 }
             ),
             true,
+            None,
             ctx,
         )
     }

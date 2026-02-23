@@ -106,7 +106,6 @@ where
                     let mut entry = parse_markdown_with_frontmatter::<T>(&content);
 
                     let metadata_path = file_path.with_file_name("_data.json");
-                    println!("Loading metadata from: {}", metadata_path.display());
                     let metadata_data = std::fs::read_to_string(&metadata_path).unwrap();
                     let metadata: A = serde_json::from_str(&metadata_data).unwrap_or_else(|e| {
                         panic!(

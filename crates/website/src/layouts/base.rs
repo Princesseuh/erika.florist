@@ -1,4 +1,4 @@
-use maud::{DOCTYPE, Markup, html};
+use maud::{html, Markup, DOCTYPE};
 use maudit::{
     assets::StyleOptions,
     maud::generator,
@@ -15,6 +15,7 @@ pub fn base_layout(
     description: Option<String>,
     content: Markup,
     include_about: bool,
+    html_class: Option<&str>,
     ctx: &mut maudit::route::PageContext,
 ) -> impl Into<RenderResult> {
     let title = title.unwrap_or("Erika".into());
@@ -35,7 +36,7 @@ pub fn base_layout(
 
     Ok(html! {
         (DOCTYPE)
-        html lang="en" {
+        html lang="en" class=[html_class] {
             head {
                 meta charset="utf-8";
                 meta name="viewport" content="width=device-width, initial-scale=1";

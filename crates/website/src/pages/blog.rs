@@ -186,6 +186,7 @@ impl Route for BlogIndex {
                 (masonry_script)
             ),
             true,
+            None,
             ctx,
         )
     }
@@ -270,6 +271,7 @@ impl Route<TagParams, PaginationPage<Entry<BlogPost>>> for BlogTagIndex {
                 (masonry_script)
             ),
             true,
+            None,
             ctx,
         ))
     }
@@ -352,6 +354,7 @@ impl Route<YearParams, PaginationPage<Entry<BlogPost>>> for BlogYearIndex {
                 (masonry_script)
             ),
             true,
+            None,
             ctx,
         ))
     }

@@ -333,6 +333,7 @@ impl Route for ChangelogPage {
                     </script>"##))
             ),
             true,
+            None,
             ctx,
         )
     }

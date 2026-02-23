@@ -431,6 +431,7 @@ impl Route for Catalogue {
 
             ),
             true,
+            Some("scrollbar-gutter-stable"),
             ctx,
         ))
     }

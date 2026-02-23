@@ -1,9 +1,9 @@
-use maud::{PreEscaped, html};
+use maud::{html, PreEscaped};
 use maudit::route::prelude::*;
 use std::collections::HashMap;
 
 use crate::{
-    components::{icon::Icon, icon::icon, table_of_content},
+    components::{icon::icon, icon::Icon, table_of_content},
     content::WikiEntry,
     layouts::base_layout,
 };
@@ -161,6 +161,7 @@ fn wiki_layout(
             }
         ),
         true,
+        None,
         ctx,
     ))
 }

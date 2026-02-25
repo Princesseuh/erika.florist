@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1464048000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "id": 48,
+      "abbreviation": "PS4"
+    },
+    {
+      "id": 6,
+      "abbreviation": "PC"
+    },
+    {
+      "id": 49,
+      "abbreviation": "XONE"
+    },
+    {
+      "id": 130,
+      "abbreviation": "Switch"
+    }
+  ],
+  "companies": [
+    {
+      "id": 51,
+      "name": "Blizzard Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 26,
+      "name": "Square Enix",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 use std::hash::{DefaultHasher, Hash, Hasher};
 
-use maud::{PreEscaped, html};
+use maud::{html, PreEscaped};
 use maudit::route::prelude::*;
 
 use crate::components::icon::Icon;
@@ -223,7 +223,7 @@ impl Route for Catalogue {
                                     div {
                                         label {
                                             span class="block text-sm font-bold mb-1" { "Date finished" }
-                                            input type="date" id="entry-date" name="date" class="w-full px-3 py-2 bg-white border-2 border-black rounded font-medium" required;
+                                            input type="date" id="entry-date" name="date" class="w-full px-3 py-2 bg-white border-2 border-black rounded font-medium";
                                         }
                                     }
 
@@ -382,6 +382,17 @@ impl Route for Catalogue {
                             searchResults.classList.add('hidden');
                         }
 
+                        function showToast(commitUrl) {
+                            const toast = document.createElement('div');
+                            toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-3 bg-white-sugar-cane border-2 border-black rounded-lg px-4 py-3 shadow-lg text-black text-sm font-medium transition-opacity duration-500';
+                            toast.innerHTML = 'Entry added! <a href="' + commitUrl + '" target="_blank" rel="noopener" class="underline font-bold hover:text-accent-valencia">View commit</a>';
+                            document.body.appendChild(toast);
+                            setTimeout(() => {
+                                toast.style.opacity = '0';
+                                setTimeout(() => toast.remove(), 500);
+                            }, 6000);
+                        }
+
                         form.onsubmit = async (e) => {
                             e.preventDefault();
                             const errorDiv = document.getElementById('form-error');
@@ -413,7 +424,9 @@ impl Route for Catalogue {
                                 });
 
                                 if (response.ok) {
-                                    window.location.reload();
+                                    const data = await response.json();
+                                    modal.classList.add('hidden');
+                                    showToast(data.commit_url);
                                 } else {
                                     const data = await response.json();
                                     errorDiv.textContent = data.message || 'Failed to submit';

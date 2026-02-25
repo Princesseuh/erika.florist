@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	if (!rightSidebarToggleElement) {
 		return;
 	}
-	
+
 	// If right sidebar doesn't exist, hide the toggle button
 	if (!rightSidebarElement) {
 		rightSidebarToggleElement.style.display = "none";

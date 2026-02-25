@@ -75,8 +75,8 @@ export class MiniMasonry {
 		this.#columns = Array<number>(this.#count).fill(0);
 		const children = this.#container.children as HTMLCollectionOf<HTMLElement>;
 		// Filter out hidden elements
-		const visibleChildren = Array.from(children).filter(child => child.style.display !== 'none');
-		
+		const visibleChildren = Array.from(children).filter((child) => child.style.display !== "none");
+
 		for (const child of visibleChildren) {
 			child.style.width = `${colWidth}px`;
 		}

@@ -18,6 +18,7 @@ concurrency:
 
 jobs:
   changes:
+    if: "!contains(github.event.head_commit.message, '[skip cd]')"
     runs-on: ubuntu-latest
     outputs:
       backend: ${{ steps.filter.outputs.backend }}
@@ -42,7 +43,7 @@ jobs:
 
   deploy:
     needs: changes
-    if: (needs.changes.outputs.backend == 'true' || needs.changes.outputs.website == 'true') && !contains(github.event.head_commit.message, '[skip cd]')
+    if: needs.changes.outputs.backend == 'true' || needs.changes.outputs.website == 'true'
     runs-on: ubuntu-latest
     name: Deploy
     steps:

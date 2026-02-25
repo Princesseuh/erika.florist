@@ -40,7 +40,7 @@ On macOS... well, it turns out you can in fact do global shortcuts natively. Usi
 
 Then, using macOS settings, you can bind any shortcuts to run an Automator pipeline. And this works! ... Not really. Similar to other macOS features, the keybinds won't work in like 90% of the apps I use daily, including my code editor. I thought this could be because of conflicting binding, but no, it just doesn't work.
 
-There's *a lot* of dubious global keyboard apps available on macOS, but in the open source world I found [skhd](https://github.com/asmvik/skhd) (or [its Zig port](https://github.com/jackielii/skhd.zig)) to be extremely suitable for this and working perfectly.
+There's _a lot_ of dubious global keyboard apps available on macOS, but in the open source world I found [skhd](https://github.com/asmvik/skhd) (or [its Zig port](https://github.com/jackielii/skhd.zig)) to be extremely suitable for this and working perfectly.
 
 The final configuration for the keybinds is pretty straightforward and ends up looking like this, for macOS and Linux respectively.
 
@@ -74,7 +74,6 @@ Unfortunately, this is not a standard thing and as such there's no obvious `spli
 
 Hooked it up into my script, added a keybind for Mod+F6 and tada! It toggles split screen. One{{ sidenote }}I am aware that in the gist it says there's a "switch_video" command, but it does not in fact just swap the videos and as far as I can tell is equivalent to switching the inputs{{ /sidenote }} issue I did encounter is that I wanted the right side of the split to be the same input as my second screen, but Dell puts the "primary" input on the left side, with no way to change it.
 
-
 To prevent this require also swapping the inputs before enabling PBP, which does result in some slight issues and makes toggling slower (see [#Unanswered points](#unanswered-points)), but it does work now.
 
 ## Great, you made a V, where's the KM
@@ -91,13 +90,13 @@ I'll admit that it's not perfect:
 
 - On Linux, when I split my screen the resolution of my primary monitor does not match the logical height of my second monitor, unlike on macOS, but I don't know how to change this (apart from also changing the resolution in the script, which would make it even slower)!
 - On Linux, toggling split screen is slow and sometimes doesn't work, I suspect that it's because I send two ddc commands in a row and so sometimes the toggling the split screen off one get ignored
-    - In general, `ddcutil` is slower than `betterdisplaycli`, even with the sleep duration set to a minimum, not sure why.
+  - In general, `ddcutil` is slower than `betterdisplaycli`, even with the sleep duration set to a minimum, not sure why.
 - There does not seem to be a way for keybinds to work on macOS's lock screen
 - There's some sort of contrast / luminosity issue on macOS when in split screen, but it's minor
 - On both Linux and macOS, a downside is that screens that are on the opposite input are still considered to be connected (naturally) and so, in split screen a window can be stuck on the second monitor.
-    - On Linux this is less of a problem because with Niri it's easy to move my windows across the monitors anyway. You can mitigate that on macOS by not giving every input its own space, but then you lose some other features (ex: Dock is only on input 1)
+  - On Linux this is less of a problem because with Niri it's easy to move my windows across the monitors anyway. You can mitigate that on macOS by not giving every input its own space, but then you lose some other features (ex: Dock is only on input 1)
 
-*But*, it does work and overall is reliable enough. Probably that I'll eventually find solutions to all these problems, or get used to them.
+_But_, it does work and overall is reliable enough. Probably that I'll eventually find solutions to all these problems, or get used to them.
 
 {{ dinkus /}}
 

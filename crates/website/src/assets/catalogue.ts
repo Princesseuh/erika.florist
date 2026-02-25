@@ -195,7 +195,9 @@ const getRatingLabel = (rating: number) => {
 
 // Review modal
 const reviewModal = document.getElementById("review-modal") as HTMLDivElement;
-const reviewModalTitleLink = document.getElementById("review-modal-title-link") as HTMLAnchorElement;
+const reviewModalTitleLink = document.getElementById(
+	"review-modal-title-link",
+) as HTMLAnchorElement;
 const reviewModalCover = document.getElementById("review-modal-cover") as HTMLImageElement;
 const reviewModalMeta = document.getElementById("review-modal-meta") as HTMLDivElement;
 const reviewModalContent = document.getElementById("review-modal-content") as HTMLDivElement;
@@ -466,7 +468,8 @@ function buildUI() {
 				const transaction = db.transaction("content", "readonly");
 				const req = transaction.objectStore("content").get(entryParam);
 				req.onsuccess = () => {
-					if (req.result && req.result.id !== "version") openReviewModal(req.result as CatalogueItemDB);
+					if (req.result && req.result.id !== "version")
+						openReviewModal(req.result as CatalogueItemDB);
 				};
 			}
 

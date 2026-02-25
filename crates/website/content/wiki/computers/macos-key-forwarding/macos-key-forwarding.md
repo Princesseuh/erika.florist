@@ -16,7 +16,7 @@ A problem I've always had switching between macOS and another OS is that the Can
 
 Flashing a different layout every time I switch is obviously impractical, so I eventually gave up and just binded the keys for macOS elsewhere, as shown above. Until today!
 
-[skhd's Zig port](https://github.com/jackielii/skhd.zig) has [a feature to *forward* keys](https://github.com/jackielii/skhd.zig#key-forwardingremapping), so you tap a key and it instead triggers another one, nifty.
+[skhd's Zig port](https://github.com/jackielii/skhd.zig) has [a feature to _forward_ keys](https://github.com/jackielii/skhd.zig#key-forwardingremapping), so you tap a key and it instead triggers another one, nifty.
 
 The config is a bit wonky, and requires writing hex codes for the keys, which you can get using [Key Codes](https://manytricks.com/keycodes/). With the following config I was able to make it so pressing the Linux/Windows curly brackets works on macOS:
 

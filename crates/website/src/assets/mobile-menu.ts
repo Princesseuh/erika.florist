@@ -1,12 +1,14 @@
-document.addEventListener("DOMContentLoaded", function () {
-	const menuButton = document.getElementById("mobile-menu-button");
-	const panel = document.getElementById("mobile-menu-panel");
-	const hamburgerIcon = document.getElementById("hamburger-icon");
-	const closeIcon = document.getElementById("close-icon");
+document.addEventListener("DOMContentLoaded", function onDOMContentLoaded() {
+	const menuButton = document.querySelector("#mobile-menu-button");
+	const panel = document.querySelector("#mobile-menu-panel");
+	const hamburgerIcon = document.querySelector("#hamburger-icon");
+	const closeIcon = document.querySelector("#close-icon");
 	let isOpen = false;
 
 	function toggleMenu() {
-		if (!panel) return;
+		if (!panel) {
+			return;
+		}
 
 		isOpen = !isOpen;
 

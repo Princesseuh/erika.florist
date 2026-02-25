@@ -26,16 +26,15 @@ export class MiniMasonry {
 	#width = 0;
 	#currentGutterX: number;
 	#currentGutterY: number;
-	#resizeTimeout: number | null = null;
 	#firstRun = true;
 	#conf: Required<MasonryConfig>;
 
 	constructor(conf: MasonryConfig) {
 		this.#conf = {
 			baseWidth: () => 255,
+			gutter: 10,
 			gutterX: conf.gutterX ?? conf.gutter ?? 10,
 			gutterY: conf.gutterY ?? conf.gutter ?? 10,
-			gutter: 10,
 			ultimateGutter: 5,
 			...conf,
 		};
@@ -64,7 +63,9 @@ export class MiniMasonry {
 		}
 
 		this.#currentGutterX = this.getCount() === 1 ? this.#conf.ultimateGutter : this.#conf.gutterX;
-		if (this.#width < this.#conf.baseWidth() + 2 * this.#currentGutterX) this.#currentGutterX = 0;
+		if (this.#width < this.#conf.baseWidth() + 2 * this.#currentGutterX) {
+			this.#currentGutterX = 0;
+		}
 		this.#count = this.getCount();
 
 		const totalWidth = this.#width + this.#currentGutterX;
@@ -72,10 +73,10 @@ export class MiniMasonry {
 			(totalWidth / this.#count - this.#currentGutterX).toFixed(2),
 		);
 
-		this.#columns = Array<number>(this.#count).fill(0);
-		const children = this.#container.children as HTMLCollectionOf<HTMLElement>;
-		// Filter out hidden elements
-		const visibleChildren = Array.from(children).filter((child) => child.style.display !== "none");
+		this.#columns = Array.from<number>({ length: this.#count }).fill(0);
+		const visibleChildren = [...this.#container.querySelectorAll<HTMLElement>(":scope > *")].filter(
+			(child) => child.style.display !== "none",
+		);
 
 		for (const child of visibleChildren) {
 			child.style.width = `${colWidth}px`;
@@ -85,27 +86,33 @@ export class MiniMasonry {
 		let index = 0;
 		for (const child of visibleChildren) {
 			const nextColumn = index % this.#columns.length;
-			const childrenGutter = nextColumn !== this.#columns.length ? this.#currentGutterX : 0;
+			const childrenGutter = nextColumn === this.#columns.length ? 0 : this.#currentGutterX;
 			const x = (colWidth + childrenGutter) * nextColumn;
 			const y = this.#columns[nextColumn] ?? 0;
 
 			child.style.transform = `translate3d(${Math.round(x)}px,${Math.round(y)}px,0)`;
 			this.#columns[nextColumn] =
 				(this.#columns[nextColumn] ?? 0) + (this.#sizes[index] ?? 0) + this.#currentGutterY;
-			index++;
+			index += 1;
 		}
 
 		this.#container.style.height = `${Math.max(...this.#columns) - this.#currentGutterY}px`;
 	}
 
-	private resizeThrottler() {
-		if (!this.#resizeTimeout) {
-			this.#resizeTimeout = window.setTimeout(() => {
-				this.#resizeTimeout = null;
-				if (this.#container.clientWidth !== this.#width) this.layout();
+	private resizeThrottler = (() => {
+		let timeout: number | null = null;
+		return () => {
+			if (timeout !== null) {
+				return;
+			}
+			timeout = window.setTimeout(() => {
+				timeout = null;
+				if (this.#container.clientWidth !== this.#width) {
+					this.layout();
+				}
 			}, 33);
-		}
-	}
+		};
+	})();
 }
 
 // Store masonry instances for external access
@@ -114,10 +121,13 @@ const masonryInstances: MiniMasonry[] = [];
 // Initialize masonry for all containers
 const masonryContainers = document.querySelectorAll(".masonry");
 for (const container of masonryContainers) {
+	if (!(container instanceof HTMLElement)) {
+		continue;
+	}
 	const instance = new MiniMasonry({
-		gutter: 12,
 		baseWidth: () => Math.min(350, document.documentElement.clientWidth - 16),
-		container: container as HTMLElement,
+		container,
+		gutter: 12,
 	});
 	masonryInstances.push(instance);
 }

@@ -3,12 +3,21 @@ import { QuickScore } from "quick-score";
 import { thumbHashToDataURL } from "thumbhash";
 
 const VERSION = 6;
-const catalogueCore = document.getElementById("catalogue-core");
-const latestHash = catalogueCore?.getAttribute("data-latest") ?? "";
+
+function requireElement<T extends Element>(selector: string): T {
+	const el = document.querySelector<T>(selector);
+	if (el === null) {
+		throw new Error(`Required element not found: ${selector}`);
+	}
+	return el;
+}
+
+const catalogueCore = requireElement<HTMLElement>("#catalogue-core");
+const latestHash = catalogueCore.dataset.latest ?? "";
 
 const dbOpenRequest = indexedDB.open("catalogue", VERSION);
 
-const content = document.getElementById("catalogue-content") as HTMLDivElement;
+const content = requireElement<Element>("#catalogue-content");
 const entriesCountElements = document.querySelectorAll("#catalogue-entry-count");
 
 let db: IDBDatabase;
@@ -19,112 +28,27 @@ let isLoading = false;
 
 let wasUpgraded = false;
 
-dbOpenRequest.onerror = (event) => {
-	console.error(
-		"Failed to open database, resetting database..",
-		(event.target as IDBOpenDBRequest).error,
-	);
-
-	const deleteRequest = indexedDB.deleteDatabase("catalogue");
-	deleteRequest.onsuccess = () => {
-		// Don't create a new request with the same variable name
-		const newDbRequest = indexedDB.open("catalogue", VERSION);
-
-		newDbRequest.onupgradeneeded = (event) => {
-			db = (event.target as IDBOpenDBRequest).result;
-			resetAndCreateDB();
-		};
-	};
-	deleteRequest.onerror = (e) => {
-		console.error("Failed to delete database", (e.target as IDBRequest).error);
-		errorUI();
-	};
-};
-
-dbOpenRequest.onsuccess = () => {
-	db = dbOpenRequest.result;
-
-	// Skip version check if database was just upgraded
-	if (wasUpgraded) {
-		wasUpgraded = false;
-		return;
-	}
-
-	// Check if database has data before building UI
-	const transaction = db.transaction("content", "readonly");
-	const objectStore = transaction.objectStore("content");
-
-	// Check if database is empty first
-	// Check version and completion status
-	const versionCheck = objectStore.get("version");
-	versionCheck.onsuccess = () => {
-		if (
-			!versionCheck.result ||
-			versionCheck.result.hash !== latestHash ||
-			!versionCheck.result.complete
-		) {
-			clearAndSeedDatabase();
-		} else {
-			buildUI();
-		}
-	};
-	versionCheck.onerror = () => {
-		clearAndSeedDatabase();
-	};
-};
-
-dbOpenRequest.onupgradeneeded = (event) => {
-	db = (event.target as IDBOpenDBRequest).result;
-	wasUpgraded = true; // Set flag to skip version check in onsuccess
-	resetAndCreateDB();
-};
-
-function clearAndSeedDatabase() {
-	const transaction = db.transaction("content", "readwrite");
-	const objectStore = transaction.objectStore("content");
-
-	const clearRequest = objectStore.clear();
-	clearRequest.onsuccess = () => {
-		seedDatabase();
-	};
-	clearRequest.onerror = (e) => {
-		console.error("Failed to clear database", e);
-	};
-}
-
-function resetAndCreateDB() {
-	// Only delete/create object stores during upgrade transactions
-	if (db.objectStoreNames.contains("content")) {
-		db.deleteObjectStore("content");
-	}
-
-	const objectStore = db.createObjectStore("content", {
-		keyPath: "id",
-	});
-
-	objectStore.createIndex("date", "date", { unique: false });
-	objectStore.createIndex("lower_case_title", "lower_case_title", {
-		unique: false,
-	});
-	objectStore.createIndex("rating_date", ["rating", "date"], { unique: false });
-
-	objectStore.transaction.oncomplete = () => {
-		seedDatabase();
-	};
-}
-
-type CatalogueData = [number, CatalogueItem[]];
+type CatalogueData = [string, CatalogueItem[]];
 
 type CatalogueItem = [
-	string, // cover
-	string, // placeholder
-	number, // type
-	string, // title
-	number, // rating
-	string, // author
-	number | null, // finished date
-	number | null, // release year
-	string, // review content (rendered HTML)
+	// cover
+	string,
+	// placeholder
+	string,
+	// type
+	number,
+	// title
+	string,
+	// rating
+	number,
+	// author
+	string,
+	// finished date
+	number | null,
+	// release year
+	number | null,
+	// review content (rendered HTML)
+	string,
 ];
 
 interface CatalogueItemDB {
@@ -140,108 +64,223 @@ interface CatalogueItemDB {
 	review: string;
 }
 
+interface VersionRecord {
+	id: "version";
+	hash: string;
+	timestamp: number;
+	complete: boolean;
+}
+
+function typedResult<T>(request: IDBRequest<T>): T {
+	return request.result;
+}
+
+function isCatalogueItem(value: unknown): value is CatalogueItemDB {
+	return (
+		typeof value === "object" &&
+		value !== null &&
+		"id" in value &&
+		(value as { id: unknown }).id !== "version"
+	);
+}
+
+function isCatalogueItemDB(value: unknown): value is CatalogueItemDB {
+	return (
+		typeof value === "object" &&
+		value !== null &&
+		"id" in value &&
+		(value as { id: unknown }).id !== "version"
+	);
+}
+
+function isCatalogueData(value: unknown): value is CatalogueData {
+	return (
+		Array.isArray(value) &&
+		value.length === 2 &&
+		typeof value[0] === "string" &&
+		Array.isArray(value[1])
+	);
+}
+
 function numberToType(type: number): string {
 	switch (type) {
-		case 0:
+		case 0: {
 			return "game";
-		case 1:
+		}
+		case 1: {
 			return "movie";
-		case 2:
+		}
+		case 2: {
 			return "show";
-		case 3:
+		}
+		case 3: {
 			return "book";
-		default:
-			throw new Error("Unknown type: " + type);
+		}
+		default: {
+			throw new Error(`Unknown type: ${type}`);
+		}
 	}
 }
 
 const getRatingEmoji = (rating: number) => {
 	switch (rating) {
-		case 5:
+		case 5: {
 			return "❤️";
-		case 4:
+		}
+		case 4: {
 			return "🥰";
-		case 3:
+		}
+		case 3: {
 			return "🙂";
-		case 2:
+		}
+		case 2: {
 			return "😐";
-		case 1:
+		}
+		case 1: {
 			return "😕";
-		case 0:
+		}
+		case 0: {
 			return "🙁";
-		default:
+		}
+		default: {
 			return "";
+		}
 	}
 };
 
 const getRatingLabel = (rating: number) => {
 	switch (rating) {
-		case 5:
+		case 5: {
 			return "Masterpiece";
-		case 4:
+		}
+		case 4: {
 			return "Loved";
-		case 3:
+		}
+		case 3: {
 			return "Liked";
-		case 2:
+		}
+		case 2: {
 			return "Okay";
-		case 1:
+		}
+		case 1: {
 			return "Disliked";
-		case 0:
+		}
+		case 0: {
 			return "Hated";
-		default:
+		}
+		default: {
 			return "";
+		}
 	}
 };
 
-// Review modal
-const reviewModal = document.getElementById("review-modal") as HTMLDivElement;
-const reviewModalTitleLink = document.getElementById(
-	"review-modal-title-link",
-) as HTMLAnchorElement;
-const reviewModalCover = document.getElementById("review-modal-cover") as HTMLImageElement;
-const reviewModalMeta = document.getElementById("review-modal-meta") as HTMLDivElement;
-const reviewModalContent = document.getElementById("review-modal-content") as HTMLDivElement;
-const closeReviewModal = document.getElementById("close-review-modal") as HTMLButtonElement;
+function errorUI() {
+	content.innerHTML =
+		'<p class="w-full text-center my-6">Failed to load catalogue. If this happens even after refreshing the page, please contact me at <a href="mailto:contact@erika.florist">contact@erika.florist</a>.</p>';
+	isLoading = false;
+}
 
-function openReviewModal(item: CatalogueItemDB) {
-	const titleText = item.releaseYear ? `${item.title} (${item.releaseYear})` : item.title;
-	reviewModalTitleLink.textContent = titleText;
-	reviewModalTitleLink.href = `/catalogue/?entry=${item.id}`;
-
-	if (item.cover) {
-		reviewModalCover.src = item.cover;
-		reviewModalCover.alt = `${item.title} cover`;
-		reviewModalCover.classList.remove("hidden");
-	} else {
-		reviewModalCover.classList.add("hidden");
+function getInputValue(selectors: string[]): string {
+	for (const selector of selectors) {
+		const inputs = document.querySelectorAll<HTMLInputElement | HTMLSelectElement>(selector);
+		for (const input of inputs) {
+			if (input.value !== "") {
+				return input.value;
+			}
+		}
 	}
+	return "";
+}
 
+function getCheckboxValue(selectors: string[]): boolean {
+	for (const selector of selectors) {
+		const checkboxes = document.querySelectorAll<HTMLInputElement>(selector);
+		for (const cb of checkboxes) {
+			if (cb.checked) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+function readFilters(): { search: string; type: string; rating: number | ""; sort: string } {
+	const ratingRaw = getInputValue(["#mobile-catalogue-ratings", "#catalogue-ratings"]);
+	return {
+		rating: ratingRaw === "" ? "" : Number(ratingRaw),
+		search: getInputValue(["#mobile-catalogue-search", "#catalogue-search"]).toLowerCase(),
+		sort: getInputValue(["#mobile-catalogue-sort", "#catalogue-sort"]) || "date",
+		type: getInputValue(["#mobile-catalogue-types", "#catalogue-types"]),
+	};
+}
+
+function openCursorForSort(
+	store: IDBObjectStore,
+	sort: string,
+	direction: IDBCursorDirection,
+): IDBRequest<IDBCursorWithValue | null> {
+	if (sort === "rating") {
+		return store.index("rating_date").openCursor(null, direction);
+	}
+	if (sort === "alphabetical") {
+		return store.index("lower_case_title").openCursor(null, direction);
+	}
+	return store.index("date").openCursor(null, direction);
+}
+
+const reviewModal = requireElement<Element>("#review-modal");
+const reviewModalTitleLink = requireElement<HTMLAnchorElement>("#review-modal-title-link");
+const reviewModalCover = requireElement<HTMLImageElement>("#review-modal-cover");
+const reviewModalMeta = requireElement<Element>("#review-modal-meta");
+const reviewModalContent = requireElement<Element>("#review-modal-content");
+const closeReviewModalBtn = requireElement<Element>("#close-review-modal");
+
+function buildModalMeta(item: CatalogueItemDB): string {
 	const ratingLabel = `${getRatingEmoji(item.rating)} ${getRatingLabel(item.rating)}`;
 	const dateLabel =
 		item.date > 0
 			? new Date(item.date).toLocaleDateString("en-US", {
-					year: "numeric",
-					month: "long",
 					day: "numeric",
+					month: "long",
+					year: "numeric",
 				})
 			: null;
 
 	const finishedVerb: Record<string, string> = {
+		book: "Read on",
 		game: "Played on",
 		movie: "Watched on",
 		show: "Watched on",
-		book: "Read on",
 	};
 
-	const firstLine = item.author
-		? `A ${item.type} by ${item.author} · ${ratingLabel}`
-		: `A ${item.type} · ${ratingLabel}`;
-	const secondLine = dateLabel ? `${finishedVerb[item.type] ?? "Finished on"} ${dateLabel}` : null;
+	const firstLine =
+		item.author === ""
+			? `A ${item.type} · ${ratingLabel}`
+			: `A ${item.type} by ${item.author} · ${ratingLabel}`;
+	const secondLine =
+		dateLabel === null ? null : `${finishedVerb[item.type] ?? "Finished on"} ${dateLabel}`;
 
-	reviewModalMeta.innerHTML = `<div>${firstLine}</div>${secondLine ? `<div>${secondLine}</div>` : ""}`;
+	return `<div>${firstLine}</div>${secondLine === null ? "" : `<div>${secondLine}</div>`}`;
+}
 
-	reviewModalContent.innerHTML = item.review || "<p><em>No review written yet.</em></p>";
+function updateModalCover(item: CatalogueItemDB) {
+	if (item.cover === "") {
+		reviewModalCover.classList.add("hidden");
+	} else {
+		reviewModalCover.src = item.cover;
+		reviewModalCover.alt = `${item.title} cover`;
+		reviewModalCover.classList.remove("hidden");
+	}
+}
 
+function openReviewModal(item: CatalogueItemDB) {
+	const titleText = item.releaseYear === null ? item.title : `${item.title} (${item.releaseYear})`;
+	reviewModalTitleLink.textContent = titleText;
+	reviewModalTitleLink.href = `/catalogue/?entry=${item.id}`;
+	updateModalCover(item);
+	reviewModalMeta.innerHTML = buildModalMeta(item);
+	reviewModalContent.innerHTML =
+		item.review === "" ? "<p><em>No review written yet.</em></p>" : item.review;
 	reviewModal.classList.remove("hidden");
 	document.body.style.overflow = "hidden";
 }
@@ -256,249 +295,22 @@ function closeReviewModalFn() {
 	}
 }
 
-closeReviewModal.addEventListener("click", closeReviewModalFn);
+closeReviewModalBtn.addEventListener("click", closeReviewModalFn);
 reviewModal.addEventListener("click", (e) => {
-	if (e.target === reviewModal) closeReviewModalFn();
+	if (e.target === reviewModal) {
+		closeReviewModalFn();
+	}
 });
 document.addEventListener("keydown", (e) => {
-	if (e.key === "Escape" && !reviewModal.classList.contains("hidden")) closeReviewModalFn();
+	if (e.key === "Escape" && !reviewModal.classList.contains("hidden")) {
+		closeReviewModalFn();
+	}
 });
 
-async function seedDatabase() {
-	let catalogueData: CatalogueData;
-	try {
-		// Fetch the content from the JSON file
-		catalogueData = (await fetch("/catalogue/content.json").then((response) =>
-			response.json(),
-		)) as CatalogueData;
-	} catch (error) {
-		console.error("Failed to fetch catalogue content", error);
-		errorUI();
-		return;
-	}
-
-	const contentObjectStore = db.transaction("content", "readwrite").objectStore("content");
-	const [version, data] = catalogueData;
-
-	const versionRequest = contentObjectStore.add({
-		id: "version",
-		hash: version,
-		timestamp: Date.now(),
-		complete: false, // Mark as incomplete initially
-	});
-
-	versionRequest.onerror = (e) => {
-		console.error("Failed to add version", (e.target as IDBRequest).error);
-		errorUI();
-		return;
-	};
-
-	const slugger = new GithubSlugger();
-
-	data.forEach((item) => {
-		const [cover, placeholder, type, title, rating, author, date, releaseYear, review] = item;
-
-		const itemType = numberToType(type);
-		const id = slugger.slug(title) + "-" + itemType;
-
-		const addRequest = contentObjectStore.add({
-			id,
-			type: itemType,
-			title,
-			lower_case_title: title.toLowerCase(),
-			rating,
-			date: date ?? 0,
-			placeholder: thumbHashToDataURL(
-				new Uint8Array(
-					atob(placeholder)
-						.split("")
-						.map((c) => c.charCodeAt(0)),
-				),
-			),
-			cover,
-			author,
-			releaseYear: releaseYear ?? null,
-			review: review ?? "",
-		});
-
-		addRequest.onerror = (e) => {
-			console.error("Failed to add item", id, (e.target as IDBRequest).error);
-			errorUI();
-			return;
-		};
-	});
-
-	contentObjectStore.transaction.oncomplete = () => {
-		// Mark seeding as complete
-		const updateTransaction = db.transaction("content", "readwrite");
-		const updateObjectStore = updateTransaction.objectStore("content");
-
-		const getVersionRequest = updateObjectStore.get("version");
-		getVersionRequest.onsuccess = () => {
-			const versionRecord = getVersionRequest.result;
-			if (versionRecord) {
-				versionRecord.complete = true;
-				const updateRequest = updateObjectStore.put(versionRecord);
-				updateRequest.onsuccess = () => {
-					buildUI();
-				};
-				updateRequest.onerror = (e) => {
-					console.error("Failed to mark seeding as complete", (e.target as IDBRequest).error);
-					errorUI();
-					return;
-				};
-			} else {
-				console.error("Version record not found when trying to mark complete");
-				errorUI();
-				return;
-			}
-		};
-		getVersionRequest.onerror = (e) => {
-			console.error(
-				"Failed to get version record for completion update",
-				(e.target as IDBRequest).error,
-			);
-			errorUI();
-			return;
-		};
-	};
-}
-
-function buildUI() {
-	if (isLoading) return;
-	isLoading = true;
-
-	// Get values from all inputs (desktop and mobile), use the one with a value
-	const getInputValue = (selectors: string[]) => {
-		for (const selector of selectors) {
-			const inputs = Array.from(document.querySelectorAll(selector)) as (
-				| HTMLInputElement
-				| HTMLSelectElement
-			)[];
-			for (const input of inputs) {
-				if (input.value) return input.value;
-			}
-		}
-		return "";
-	};
-
-	const getCheckboxValue = (selectors: string[]) => {
-		for (const selector of selectors) {
-			const checkboxes = Array.from(document.querySelectorAll(selector)) as HTMLInputElement[];
-			for (const cb of checkboxes) {
-				if (cb.checked) return true;
-			}
-		}
-		return false;
-	};
-
-	const filters = {
-		search: getInputValue(["#mobile-catalogue-search", "#catalogue-search"]).toLowerCase(),
-		type: getInputValue(["#mobile-catalogue-types", "#catalogue-types"]),
-		rating: getInputValue(["#mobile-catalogue-ratings", "#catalogue-ratings"])
-			? Number(getInputValue(["#mobile-catalogue-ratings", "#catalogue-ratings"]))
-			: "",
-		sort: getInputValue(["#mobile-catalogue-sort", "#catalogue-sort"]) || "date",
-	};
-
-	const contentObjectStore = db.transaction("content", "readonly").objectStore("content");
-
-	let request: IDBRequest;
-
-	const cursorDirection = getCheckboxValue(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"])
-		? "next"
-		: "prev";
-
-	// Use appropriate index for sorting
-	if (filters.sort === "date") {
-		const index = contentObjectStore.index("date");
-		request = index.openCursor(null, cursorDirection);
-	} else if (filters.sort === "rating") {
-		const index = contentObjectStore.index("rating_date");
-		request = index.openCursor(null, cursorDirection);
-	} else if (filters.sort === "alphabetical") {
-		const index = contentObjectStore.index("lower_case_title");
-		request = index.openCursor(null, cursorDirection);
-	} else {
-		const index = contentObjectStore.index("date");
-		request = index.openCursor(null, cursorDirection);
-	}
-
-	let items: CatalogueItemDB[] = [];
-
-	request.onsuccess = (event) => {
-		const cursor = (event.target as IDBRequest).result as IDBCursorWithValue;
-
-		if (cursor) {
-			const item = cursor.value;
-
-			// Apply filters
-			const matchesType = filters.type === "" || item.type === filters.type;
-			const matchesRating = filters.rating === "" || item.rating === filters.rating;
-
-			if (matchesType && matchesRating) {
-				items.push(item);
-			}
-
-			cursor.continue();
-		} else {
-			// Apply search filter
-			if (filters.search) {
-				const qs = new QuickScore(items, {
-					keys: ["title", "author"],
-					minimumScore: 0.2,
-					sortKey: "title",
-				});
-				const results = qs.search(filters.search);
-				items = results.map((result) => result.item);
-			}
-
-			// Store filtered items for pagination
-			allItems = items;
-			currentPage = 0;
-
-			// Clear content and render first page
-			content.innerHTML = "";
-			renderPage();
-			updateEntryCount();
-
-			// Open entry from URL param if present
-			const entryParam = new URLSearchParams(window.location.search).get("entry");
-			if (entryParam) {
-				const transaction = db.transaction("content", "readonly");
-				const req = transaction.objectStore("content").get(entryParam);
-				req.onsuccess = () => {
-					if (req.result && req.result.id !== "version")
-						openReviewModal(req.result as CatalogueItemDB);
-				};
-			}
-
-			isLoading = false;
-			handleScroll(); // If the page is already scrolled down, render more items
-		}
-	};
-}
-
-function renderPage() {
-	const startIndex = currentPage * pageSize;
-	const endIndex = startIndex + pageSize;
-	const pageItems = allItems.slice(startIndex, endIndex);
-
-	if (pageItems.length === 0) {
-		// No more items to render
-		isLoading = false;
-		content.innerHTML =
-			'<p class="w-full text-center my-6">Nothing found. <a href="mailto:contact@erika.florist">Want to recommend me something?</a> </p>';
-		return;
-	}
-
-	// Create a document fragment for better performance
-	const fragment = document.createDocumentFragment();
-
-	pageItems.forEach((item) => {
-		const entry = document.createElement("div");
-		entry.className = "w-[180px]";
-		entry.innerHTML = `
+function buildEntryElement(item: CatalogueItemDB): HTMLDivElement {
+	const entry = document.createElement("div");
+	entry.className = "w-[180px]";
+	entry.innerHTML = `
             <div class="relative group">
               <button type="button" class="block w-full text-left cursor-pointer">
                 <img class="max-w-full h-auto aspect-[3/4.3] object-cover block"
@@ -525,16 +337,36 @@ function renderPage() {
               </button>
             </div>
         `;
-		entry.querySelector("button")!.addEventListener("click", () => openReviewModal(item));
-		fragment.appendChild(entry);
-	});
+	const btn = entry.querySelector("button");
+	if (btn !== null) {
+		btn.addEventListener("click", () => {
+			openReviewModal(item);
+		});
+	}
+	return entry;
+}
 
-	content.appendChild(fragment);
-	currentPage++;
+function renderPage() {
+	const startIndex = currentPage * pageSize;
+	const pageItems = allItems.slice(startIndex, startIndex + pageSize);
+
+	if (pageItems.length === 0) {
+		isLoading = false;
+		content.innerHTML =
+			'<p class="w-full text-center my-6">Nothing found. <a href="mailto:contact@erika.florist">Want to recommend me something?</a> </p>';
+		return;
+	}
+
+	const fragment = document.createDocumentFragment();
+	for (const item of pageItems) {
+		fragment.append(buildEntryElement(item));
+	}
+	content.append(fragment);
+	currentPage += 1;
 }
 
 function updateEntryCount() {
-	for (const el of Array.from(entriesCountElements)) {
+	for (const el of entriesCountElements) {
 		el.textContent = `${allItems.length} entries`;
 	}
 }
@@ -545,7 +377,9 @@ function hasMorePages() {
 
 // Infinite scroll implementation
 function handleScroll() {
-	if (isLoading || !hasMorePages()) return;
+	if (isLoading || !hasMorePages()) {
+		return;
+	}
 
 	const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 	const windowHeight = window.innerHeight;
@@ -556,6 +390,315 @@ function handleScroll() {
 		renderPage();
 	}
 }
+
+function openEntryFromParam() {
+	const entryParam = new URLSearchParams(window.location.search).get("entry");
+	if (entryParam === null) {
+		return;
+	}
+
+	const transaction = db.transaction("content", "readonly");
+	const req: IDBRequest<unknown> = transaction.objectStore("content").get(entryParam);
+	req.addEventListener("success", () => {
+		const result = typedResult(req);
+		if (isCatalogueItem(result)) {
+			openReviewModal(result);
+		}
+	});
+}
+
+function handleCursorComplete(items: CatalogueItemDB[]) {
+	allItems = items;
+	currentPage = 0;
+	content.innerHTML = "";
+	renderPage();
+	updateEntryCount();
+	openEntryFromParam();
+	isLoading = false;
+	// If the page is already scrolled down, render more items
+	handleScroll();
+}
+
+function applySearchFilter(items: CatalogueItemDB[], search: string): CatalogueItemDB[] {
+	if (search === "") {
+		return items;
+	}
+	const qs = new QuickScore(items, {
+		keys: ["title", "author"],
+		minimumScore: 0.2,
+		sortKey: "title",
+	});
+	return qs.search(search).map((result) => result.item);
+}
+
+function buildUI() {
+	if (isLoading) {
+		return;
+	}
+	isLoading = true;
+
+	const filters = readFilters();
+	const contentObjectStore = db.transaction("content", "readonly").objectStore("content");
+	const cursorDirection = getCheckboxValue(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"])
+		? "next"
+		: "prev";
+	const request = openCursorForSort(contentObjectStore, filters.sort, cursorDirection);
+
+	const items: CatalogueItemDB[] = [];
+
+	request.addEventListener("success", () => {
+		const cursor = typedResult(request);
+
+		if (cursor === null) {
+			handleCursorComplete(applySearchFilter(items, filters.search));
+		} else {
+			const rawValue: unknown = cursor.value;
+			if (isCatalogueItemDB(rawValue)) {
+				const matchesType = filters.type === "" || rawValue.type === filters.type;
+				const matchesRating = filters.rating === "" || rawValue.rating === filters.rating;
+
+				if (matchesType && matchesRating) {
+					items.push(rawValue);
+				}
+			}
+
+			cursor.continue();
+		}
+	});
+}
+
+function seedItems(store: IDBObjectStore, data: CatalogueItem[]): void {
+	const slugger = new GithubSlugger();
+
+	for (const item of data) {
+		const [cover, placeholder, type, title, rating, author, date, releaseYear, review] = item;
+
+		const itemType = numberToType(type);
+		const id = `${slugger.slug(title)}-${itemType}`;
+
+		const addRequest: IDBRequest<IDBValidKey> = store.add({
+			author,
+			cover,
+			date: date ?? 0,
+			id,
+			lower_case_title: title.toLowerCase(),
+			placeholder: thumbHashToDataURL(
+				Uint8Array.from(atob(placeholder), (c) => c.codePointAt(0) ?? 0),
+			),
+			rating,
+			releaseYear: releaseYear ?? null,
+			review: review ?? "",
+			title,
+			type: itemType,
+		});
+
+		addRequest.addEventListener("error", (e) => {
+			const { target } = e;
+			const err = target instanceof IDBRequest ? target.error : null;
+			console.error("Failed to add item", id, err);
+			errorUI();
+		});
+	}
+}
+
+function markSeedingComplete(updateStore: IDBObjectStore): void {
+	const getVersionRequest: IDBRequest<unknown> = updateStore.get("version");
+	getVersionRequest.addEventListener("success", () => {
+		const raw: unknown = typedResult(getVersionRequest);
+		if (
+			typeof raw !== "object" ||
+			raw === null ||
+			!("complete" in raw) ||
+			!("hash" in raw) ||
+			!("id" in raw) ||
+			!("timestamp" in raw)
+		) {
+			console.error("Version record not found when trying to mark complete");
+			errorUI();
+			return;
+		}
+		const rawWithFields = raw;
+		if (typeof rawWithFields.hash !== "string" || typeof rawWithFields.timestamp !== "number") {
+			console.error("Version record has invalid field types");
+			errorUI();
+			return;
+		}
+		const versionRecord: VersionRecord = {
+			complete: true,
+			hash: rawWithFields.hash,
+			id: "version",
+			timestamp: rawWithFields.timestamp,
+		};
+		const updateRequest: IDBRequest<IDBValidKey> = updateStore.put(versionRecord);
+		updateRequest.addEventListener("success", () => {
+			buildUI();
+		});
+		updateRequest.addEventListener("error", (e) => {
+			const { target } = e;
+			const err = target instanceof IDBRequest ? target.error : null;
+			console.error("Failed to mark seeding as complete", err);
+			errorUI();
+		});
+	});
+	getVersionRequest.addEventListener("error", (e) => {
+		const { target } = e;
+		const err = target instanceof IDBRequest ? target.error : null;
+		console.error("Failed to get version record for completion update", err);
+		errorUI();
+	});
+}
+
+async function fetchCatalogueData(): Promise<CatalogueData> {
+	const response = await fetch("/catalogue/content.json");
+	const json: unknown = await response.json();
+	if (!isCatalogueData(json)) {
+		throw new Error("Invalid catalogue data format");
+	}
+	return json;
+}
+
+async function seedDatabase() {
+	let catalogueData: CatalogueData;
+	try {
+		catalogueData = await fetchCatalogueData();
+	} catch (error) {
+		console.error("Failed to fetch catalogue content", error);
+		errorUI();
+		return;
+	}
+
+	const contentObjectStore = db.transaction("content", "readwrite").objectStore("content");
+	const [version, data] = catalogueData;
+
+	const versionRequest: IDBRequest<IDBValidKey> = contentObjectStore.add({
+		complete: false,
+		hash: version,
+		id: "version",
+		timestamp: Date.now(),
+	});
+
+	versionRequest.addEventListener("error", (e) => {
+		const { target } = e;
+		const err = target instanceof IDBRequest ? target.error : null;
+		console.error("Failed to add version", err);
+		errorUI();
+	});
+
+	seedItems(contentObjectStore, data);
+
+	contentObjectStore.transaction.addEventListener("complete", () => {
+		const updateTransaction = db.transaction("content", "readwrite");
+		markSeedingComplete(updateTransaction.objectStore("content"));
+	});
+}
+
+function resetAndCreateDB() {
+	// Only delete/create object stores during upgrade transactions
+	if (db.objectStoreNames.contains("content")) {
+		db.deleteObjectStore("content");
+	}
+
+	const objectStore = db.createObjectStore("content", {
+		keyPath: "id",
+	});
+
+	objectStore.createIndex("date", "date", { unique: false });
+	objectStore.createIndex("lower_case_title", "lower_case_title", {
+		unique: false,
+	});
+	objectStore.createIndex("rating_date", ["rating", "date"], { unique: false });
+
+	objectStore.transaction.addEventListener("complete", async () => {
+		try {
+			await seedDatabase();
+		} catch (error) {
+			errorUI();
+			console.error(error);
+		}
+	});
+}
+
+function clearAndSeedDatabase() {
+	const transaction = db.transaction("content", "readwrite");
+	const objectStore = transaction.objectStore("content");
+
+	const clearRequest = objectStore.clear();
+	clearRequest.addEventListener("success", async () => {
+		try {
+			await seedDatabase();
+		} catch (error) {
+			errorUI();
+			console.error(error);
+		}
+	});
+	clearRequest.addEventListener("error", (e) => {
+		console.error("Failed to clear database", e);
+	});
+}
+
+dbOpenRequest.addEventListener("error", () => {
+	console.error("Failed to open database, resetting database..", dbOpenRequest.error);
+
+	const deleteRequest = indexedDB.deleteDatabase("catalogue");
+	deleteRequest.addEventListener("success", () => {
+		// Don't create a new request with the same variable name
+		const newDbRequest = indexedDB.open("catalogue", VERSION);
+
+		newDbRequest.addEventListener("upgradeneeded", () => {
+			db = newDbRequest.result;
+			resetAndCreateDB();
+		});
+	});
+	deleteRequest.addEventListener("error", () => {
+		console.error("Failed to delete database", deleteRequest.error);
+		errorUI();
+	});
+});
+
+dbOpenRequest.addEventListener("success", () => {
+	db = dbOpenRequest.result;
+
+	// Skip version check if database was just upgraded
+	if (wasUpgraded) {
+		wasUpgraded = false;
+		return;
+	}
+
+	// Check if database has data before building UI
+	const transaction = db.transaction("content", "readonly");
+	const objectStore = transaction.objectStore("content");
+
+	// Check version and completion status
+	const versionCheck: IDBRequest<unknown> = objectStore.get("version");
+	versionCheck.addEventListener("success", () => {
+		const raw: unknown = typedResult(versionCheck);
+		if (typeof raw !== "object" || raw === null || !("complete" in raw) || !("hash" in raw)) {
+			clearAndSeedDatabase();
+			return;
+		}
+		const { hash, complete } = raw;
+		if (
+			typeof hash !== "string" ||
+			typeof complete !== "boolean" ||
+			hash !== latestHash ||
+			!complete
+		) {
+			clearAndSeedDatabase();
+		} else {
+			buildUI();
+		}
+	});
+	versionCheck.addEventListener("error", () => {
+		clearAndSeedDatabase();
+	});
+});
+
+dbOpenRequest.addEventListener("upgradeneeded", () => {
+	db = dbOpenRequest.result;
+	// Set flag to skip version check in onsuccess
+	wasUpgraded = true;
+	resetAndCreateDB();
+});
 
 let ticking = false;
 document.addEventListener(
@@ -575,28 +718,41 @@ document.addEventListener(
 
 // Reset pagination when filters change
 function resetAndBuildUI() {
-	window.scrollTo({ top: 0, behavior: "instant" });
+	window.scrollTo({ behavior: "instant", top: 0 });
 	currentPage = 0;
 	allItems = [];
 	buildUI();
 }
 
-function errorUI() {
-	content.innerHTML =
-		'<p class="w-full text-center my-6">Failed to load catalogue. If this happens even after refreshing the page, please contact me at <a href="mailto:contact@erika.florist">contact@erika.florist</a>.</p>';
-	isLoading = false;
+// Sync paired controls (mobile + desktop) so getInputValue always reads a consistent value
+function syncPairedInputs(selectors: string[], type: "input" | "change") {
+	const elements = selectors.flatMap((s) => [...document.querySelectorAll<HTMLInputElement | HTMLSelectElement>(s)]);
+	for (const el of elements) {
+		el.addEventListener(type, () => {
+			for (const other of elements) {
+				if (other === el) {continue;}
+				if (el instanceof HTMLInputElement && el.type === "checkbox" && other instanceof HTMLInputElement && other.type === "checkbox") {
+					other.checked = el.checked;
+				} else {
+					other.value = el.value;
+				}
+			}
+		});
+	}
 }
+
+syncPairedInputs(["#mobile-catalogue-search", "#catalogue-search"], "input");
+syncPairedInputs(["#mobile-catalogue-ratings", "#catalogue-ratings"], "change");
+syncPairedInputs(["#mobile-catalogue-sort", "#catalogue-sort"], "change");
+syncPairedInputs(["#mobile-catalogue-types", "#catalogue-types"], "change");
+syncPairedInputs(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"], "change");
 
 // Add event listeners to all filter inputs (both desktop and mobile)
 const addListener = (selectors: string[], type: "input" | "change", handler: () => void) => {
 	for (const selector of selectors) {
-		Array.from(document.querySelectorAll(selector)).forEach((el) => {
-			if (type === "input") {
-				(el as HTMLInputElement).addEventListener("input", handler);
-			} else {
-				(el as HTMLSelectElement).addEventListener("change", handler);
-			}
-		});
+		for (const el of document.querySelectorAll(selector)) {
+			el.addEventListener(type, handler);
+		}
 	}
 };
 

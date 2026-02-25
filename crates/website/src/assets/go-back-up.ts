@@ -1,8 +1,8 @@
-const goUp = document.getElementById("go-up");
+const goUp = document.querySelector<HTMLElement>("#go-up");
 
 if (goUp) {
 	goUp.addEventListener("click", () => {
-		window.scrollTo({ top: 0, behavior: "smooth" });
+		window.scrollTo({ behavior: "smooth", top: 0 });
 	});
 
 	window.addEventListener("scroll", () => {
@@ -15,3 +15,5 @@ if (goUp) {
 		}
 	});
 }
+
+export {};

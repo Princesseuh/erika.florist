@@ -13,4 +13,4 @@ serde = { workspace = true }
 serde_json = { workspace = true }
 xml-builder = "0.5.4"
 lol_html = "2.7.1"
-graphgarden-core = "0.1.0"
+graphgarden-core = "0.2.0"

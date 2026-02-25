@@ -1593,9 +1593,9 @@ dependencies = [
 
 [[package]]
 name = "graphgarden-core"
-version = "0.1.0"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "afb517ce197c1cde0876454d61c413fbf0fb62599434311896b84822cc6b5416"
+checksum = "db7d5066912a3a8ec83cd00d37e6e28f491b60c346f7b7a5e567e502d4e800f5"
 dependencies = [
  "globset",
  "graphgarden-protocol",
@@ -1611,9 +1611,9 @@ dependencies = [
 
 [[package]]
 name = "graphgarden-protocol"
-version = "0.1.0"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7bd8fa4eb9036f68103f03d9bb2ae923aee0d04740134ee63ad26b3b150776e9"
+checksum = "b905d69d62360a5f0ee97cd6f90f33265dd290dcf563d37e546f32111ed30f53"
 
 [[package]]
 name = "half"

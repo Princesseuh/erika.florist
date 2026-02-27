@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1055808000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "NGC",
+      "id": 21
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 395,
+      "name": "Sonic Team",
+      "role": "developer"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    }
+  ]
+}

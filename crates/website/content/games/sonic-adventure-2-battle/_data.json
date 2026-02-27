@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1008806400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "NGC",
+      "id": 21
+    }
+  ],
+  "companies": [
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 395,
+      "name": "Sonic Team",
+      "role": "developer"
+    }
+  ]
+}

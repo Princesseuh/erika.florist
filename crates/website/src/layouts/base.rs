@@ -71,7 +71,7 @@ pub fn base_layout(
                             (dinkus(Some("fill-white-sugar-cane hidden sm:block")))
 
                             div.leading-6 {
-                                "Powered by " a.(button_class).py-0 href="https://maudit.org" target="_blank" { "Maudit" }
+                                "Powered by " a.(button_class).py-0 href="https://maudit.org" target="_blank" data-graphgarden-ignore="" { "Maudit" }
                                 br;
                                 a.(button_class).py-0 target="_blank" href="https://github.com/Princesseuh/erika.florist" { "Source Code" }
                                 br;

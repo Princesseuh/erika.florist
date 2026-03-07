@@ -51,7 +51,7 @@ pub fn header(
                         "Often found in high-impact, yet overlooked areas, such as editor tooling or error handling. Currently working on "
                         a.(button_class).p-0 href="https://astro.build" { "Astro" }
                         " and "
-                        a.(button_class).p-0 href="https://maudit.org" { "Maudit" }
+                        a.(button_class).p-0 href="https://maudit.org" data-graphgarden-ignore="" { "Maudit" }
                         "."
                     }
                 }
@@ -80,7 +80,7 @@ pub fn header(
                         "Often found in high-impact, yet overlooked areas, such as editor tooling or error handling. Currently working on "
                         a.(button_class).p-0.sm:p-1 href="https://astro.build" { "Astro" }
                         " and "
-                        a.(button_class).p-0.sm:p-1 href="https://maudit.org" { "Maudit" }
+                        a.(button_class).p-0.sm:p-1 href="https://maudit.org" data-graphgarden-ignore="" { "Maudit" }
                         "."
                     }
                 }

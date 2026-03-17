@@ -4,8 +4,8 @@ use chrono::NaiveDate;
 use maudit::{
     assets::{Asset, ImageFormat, ImageOptions},
     content::{
-        ContentContext, ContentEntry, Entry, MarkdownOptions, parse_markdown_with_frontmatter,
-        render_markdown,
+        ContentContext, ContentEntry, Dependency, Entry, MarkdownOptions,
+        parse_markdown_with_frontmatter, render_markdown,
     },
     route::PageContext,
 };
@@ -94,7 +94,9 @@ where
         .iter()
         .map(|entry| {
             let id = entry.id.clone();
-            let file_path = entry.file_path.clone().unwrap();
+            let file_path = match &entry.dependencies[0] {
+                Dependency::File(path) => path.clone(),
+            };
             let raw_content = entry.raw_content.clone().unwrap_or_default();
             let opts = options.clone();
 
@@ -135,7 +137,7 @@ where
                         )
                         .expect("Failed to load cover image");
 
-                    let placeholder = cover.placeholder();
+                    let placeholder = cover.placeholder().expect("Failed to generate placeholder");
 
                     entry.set_cover((
                         cover.url().to_string(),
@@ -159,7 +161,7 @@ where
                 Some(renderer),
                 Some(raw_content),
                 data_loader,
-                Some(file_path),
+                vec![Dependency::File(file_path)],
             )
         })
         .collect()

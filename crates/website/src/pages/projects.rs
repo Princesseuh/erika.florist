@@ -11,10 +11,10 @@ pub struct ProjectIndex;
 
 impl Route for ProjectIndex {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
-        let projects = ctx.content.get_source::<Project>("projects");
+        let projects = ctx.content::<Project>("projects");
+        let project_entries: Vec<_> = projects.entries().collect();
 
-        let project_per_types = projects
-            .entries
+        let project_per_types = project_entries
             .iter()
             .fold(
                 std::collections::BTreeMap::<&ProjectType, Vec<&Entry<Project>>>::new(),

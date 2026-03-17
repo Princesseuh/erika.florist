@@ -9,7 +9,7 @@ Two things about me: I have been using static website generators for more than a
 
 So this was inevitable: I made my own static website generator.
 
-> This article is mostly about my own experience on building Maudit. For an actual introduction to the project, [check the corresponding article on Maudit's website.](https://maudit.org/news/maudit01)
+> This article is mostly about my own experience on building Maudit. For an actual introduction to the project, [check the corresponding article on Maudit's website.](https://maudit.org/news/maudit01/)
 
 ## Why?
 
@@ -45,4 +45,4 @@ Maudit also includes a dev server that rebuilds and refreshes automatically when
 
 ## Come join me
 
-It's still relatively early, but Maudit is most definitely already usable (proof, this website). I’m actively working on it and I'd love for you to check it out. If you’re interested, [check out the project's website](https://maudit.org), join the [Discord server](https://maudit.org/chat) or read the code and star on [GitHub](https://github.com/bruits/maudit).
+It's still relatively early, but Maudit is most definitely already usable (proof, this website). I’m actively working on it and I'd love for you to check it out. If you’re interested, [check out the project's website](https://maudit.org), join the [Discord server](https://maudit.org/chat/) or read the code and star on [GitHub](https://github.com/bruits/maudit).

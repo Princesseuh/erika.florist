@@ -20,21 +20,17 @@ impl Route for Index {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
         let masonry_script = ctx.assets.add_script("src/assets/masonry.ts").unwrap();
 
-        let articles = ctx
-            .content
-            .get_source::<crate::content::BlogPost>("blog")
-            .entries
-            .iter()
+        let articles: Vec<_> = ctx
+            .content::<crate::content::BlogPost>("blog")
+            .entries()
             .filter(|e| !e.id.starts_with('_'))
-            .collect::<Vec<_>>();
+            .collect();
 
-        let wiki_entries = ctx
-            .content
-            .get_source::<crate::content::WikiEntry>("wiki")
-            .entries
-            .iter()
+        let wiki_entries: Vec<_> = ctx
+            .content::<crate::content::WikiEntry>("wiki")
+            .entries()
             .filter(|e| e.id != "index")
-            .collect::<Vec<_>>();
+            .collect();
 
         let mut merged: Vec<IndexEntry> = articles.into_iter().map(IndexEntry::Blog).collect();
 

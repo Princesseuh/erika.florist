@@ -3,7 +3,7 @@ use std::{collections::HashMap, error::Error, process::Command, sync::Arc, time:
 use chrono::NaiveDate;
 use maudit::{
     content::{
-        ContentContext, ContentEntry, Entry, MarkdownOptions, markdown_entry,
+        ContentContext, ContentEntry, Dependency, Entry, MarkdownOptions, markdown_entry,
         parse_markdown_with_frontmatter, render_markdown,
     },
     is_dev,
@@ -95,7 +95,9 @@ pub fn wiki_add_modified_info(
         .iter()
         .map(|entry| {
             let id = entry.id.clone();
-            let file_path = entry.file_path.clone().unwrap();
+            let file_path = match &entry.dependencies[0] {
+                Dependency::File(path) => path.clone(),
+            };
             let raw_content = entry.raw_content.clone().unwrap_or_default();
             let opts = options.clone();
 
@@ -151,7 +153,7 @@ pub fn wiki_add_modified_info(
                 Some(renderer),
                 Some(raw_content),
                 data_loader,
-                Some(file_path),
+                vec![Dependency::File(file_path)],
             )
         })
         .collect()

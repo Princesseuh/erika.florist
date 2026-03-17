@@ -73,10 +73,8 @@ fn blog_sidebar(
 type TagsAndYears = (Vec<(String, i32)>, Vec<(i32, i32)>);
 fn get_sorted_tags_and_years(ctx: &mut PageContext) -> TagsAndYears {
     let articles = ctx
-        .content
-        .get_source::<crate::content::BlogPost>("blog")
-        .entries
-        .iter()
+        .content::<crate::content::BlogPost>("blog")
+        .entries()
         .filter(|e| !e.id.starts_with('_'))
         .collect::<Vec<_>>();
 
@@ -125,22 +123,17 @@ pub struct BlogPostPageParams {
 impl Route<BlogPostPageParams> for BlogPostPage {
     fn pages(&self, context: &mut DynamicRouteContext) -> Pages<BlogPostPageParams> {
         context
-            .content
-            .get_source::<BlogPost>("blog")
-            .into_pages(|entry| Page {
-                params: BlogPostPageParams {
-                    slug: entry.id.clone(),
-                },
-                props: (),
-            })
+            .content::<BlogPost>("blog")
+            .into_pages(|entry| Page::from_params(BlogPostPageParams {
+                slug: entry.id.clone(),
+            }))
     }
 
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
         let params = ctx.params::<BlogPostPageParams>();
 
         let article = ctx
-            .content
-            .get_source::<BlogPost>("blog")
+            .content::<BlogPost>("blog")
             .get_entry(&params.slug);
 
         crate::layouts::article_layout(article, false, ctx)
@@ -153,10 +146,8 @@ pub struct BlogIndex;
 impl Route for BlogIndex {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
         let mut articles = ctx
-            .content
-            .get_source::<crate::content::BlogPost>("blog")
-            .entries
-            .iter() // Convert to an iterator
+            .content::<crate::content::BlogPost>("blog")
+            .entries()
             .filter(|e| !e.id.starts_with('_'))
             .collect::<Vec<_>>();
 
@@ -207,7 +198,7 @@ impl Route<TagParams, PaginationPage<Entry<BlogPost>>> for BlogTagIndex {
         ctx: &mut DynamicRouteContext,
     ) -> Pages<TagParams, PaginationPage<Entry<BlogPost>>> {
         // Get all blog articles
-        let articles = &ctx.content.get_source::<BlogPost>("blog").entries;
+        let articles: Vec<_> = ctx.content::<BlogPost>("blog").entries().cloned().collect();
 
         // Collect all unique tags
         let unique_tags: HashSet<String> = articles
@@ -292,7 +283,7 @@ impl Route<YearParams, PaginationPage<Entry<BlogPost>>> for BlogYearIndex {
         ctx: &mut DynamicRouteContext,
     ) -> Pages<YearParams, PaginationPage<Entry<BlogPost>>> {
         // Get all blog articles
-        let articles = &ctx.content.get_source::<BlogPost>("blog").entries;
+        let articles: Vec<_> = ctx.content::<BlogPost>("blog").entries().cloned().collect();
 
         // Collect all unique years
         let unique_years: HashSet<i32> = articles

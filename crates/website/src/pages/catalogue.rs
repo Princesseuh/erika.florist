@@ -455,22 +455,22 @@ pub struct CatalogueContent;
 
 impl Route for CatalogueContent {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
-        let games = &ctx
-            .content
-            .get_source::<crate::content::CatalogueGame>("games")
-            .entries;
-        let movies = &ctx
-            .content
-            .get_source::<crate::content::CatalogueMovie>("movies")
-            .entries;
-        let books = &ctx
-            .content
-            .get_source::<crate::content::CatalogueBook>("books")
-            .entries;
-        let shows = &ctx
-            .content
-            .get_source::<crate::content::CatalogueShow>("shows")
-            .entries;
+        let games: Vec<_> = ctx
+            .content::<crate::content::CatalogueGame>("games")
+            .entries()
+            .collect();
+        let movies: Vec<_> = ctx
+            .content::<crate::content::CatalogueMovie>("movies")
+            .entries()
+            .collect();
+        let books: Vec<_> = ctx
+            .content::<crate::content::CatalogueBook>("books")
+            .entries()
+            .collect();
+        let shows: Vec<_> = ctx
+            .content::<crate::content::CatalogueShow>("shows")
+            .entries()
+            .collect();
 
         // Pre-calculate total capacity to avoid reallocations
         let total_capacity = games.len() + movies.len() + books.len() + shows.len();

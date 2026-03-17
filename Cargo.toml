@@ -3,7 +3,7 @@ members = ["crates/*", "xtask"]
 resolver = "3"
 
 [workspace.dependencies]
-maudit = { version = "0.10.0" }
+maudit = { version = "0.11.1" }
 maud = { version = "0.27.0" }
 serde = { version = "1.0.228" }
 serde_json = { version = "1.0.149" }

@@ -8,39 +8,23 @@ pub struct CatalogueRSS;
 
 impl Route for CatalogueRSS {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
-        let games = &ctx
-            .content
-            .get_source::<crate::content::CatalogueGame>("games");
-        let movies = &ctx
-            .content
-            .get_source::<crate::content::CatalogueMovie>("movies");
-        let books = &ctx
-            .content
-            .get_source::<crate::content::CatalogueBook>("books");
-        let shows = &ctx
-            .content
-            .get_source::<crate::content::CatalogueShow>("shows");
-
-        let combined_entries: Vec<CatalogueEntry> = games
-            .entries
-            .iter()
+        let combined_entries: Vec<CatalogueEntry> = ctx
+            .content::<crate::content::CatalogueGame>("games")
+            .entries()
             .map(|g| CatalogueEntry::Game(g.clone()))
             .chain(
-                movies
-                    .entries
-                    .iter()
+                ctx.content::<crate::content::CatalogueMovie>("movies")
+                    .entries()
                     .map(|m| CatalogueEntry::Movie(m.clone())),
             )
             .chain(
-                books
-                    .entries
-                    .iter()
+                ctx.content::<crate::content::CatalogueBook>("books")
+                    .entries()
                     .map(|b| CatalogueEntry::Book(b.clone())),
             )
             .chain(
-                shows
-                    .entries
-                    .iter()
+                ctx.content::<crate::content::CatalogueShow>("shows")
+                    .entries()
                     .map(|s| CatalogueEntry::Show(s.clone())),
             )
             .collect();

@@ -10,12 +10,12 @@ use crate::{
 
 // Helper function to build wiki navigation from all entries
 fn wiki_navigation(ctx: &mut PageContext) -> maud::Markup {
-    let wiki_source = ctx.content.get_source::<WikiEntry>("wiki");
+    let wiki_source = ctx.content::<WikiEntry>("wiki");
     let mut categories: HashMap<String, Vec<(&str, &str, &str)>> = HashMap::new();
     let current_path = ctx.current_path;
 
     // Group entries by category
-    for entry in &wiki_source.entries {
+    for entry in wiki_source.entries() {
         let data = entry.data(ctx);
         if !data.navigation.hidden.unwrap_or(false) {
             let label = data.navigation.label.as_deref().unwrap_or(&data.title);
@@ -172,8 +172,7 @@ pub struct WikiIndex;
 impl Route for WikiIndex {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
         let index_entry = ctx
-            .content
-            .get_source::<WikiEntry>("wiki")
+            .content::<WikiEntry>("wiki")
             .get_entry("index");
 
         wiki_layout(
@@ -196,20 +195,15 @@ pub struct WikiParams {
 
 impl Route<WikiParams, Entry<WikiEntry>> for WikiEntryPage {
     fn pages(&self, ctx: &mut DynamicRouteContext) -> Pages<WikiParams, Entry<WikiEntry>> {
-        ctx.content
-            .get_source::<WikiEntry>("wiki")
-            .entries
-            .iter()
+        ctx.content::<WikiEntry>("wiki")
+            .entries()
             .filter(|entry| entry.id != "index")
             .map(|entry| {
                 let data = entry.data(ctx);
-                Page {
-                    params: WikiParams {
-                        category: data.navigation.category.clone(),
-                        slug: entry.id.clone(),
-                    },
-                    props: entry.clone(),
-                }
+                Page::new(WikiParams {
+                    category: data.navigation.category.clone(),
+                    slug: entry.id.clone(),
+                }, entry.clone())
             })
             .collect()
     }

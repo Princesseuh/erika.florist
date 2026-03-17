@@ -10,10 +10,8 @@ pub struct BlogRSS;
 impl Route for BlogRSS {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
         let mut articles = ctx
-            .content
-            .get_source::<BlogPost>("blog")
-            .entries
-            .iter()
+            .content::<BlogPost>("blog")
+            .entries()
             .filter(|e| !e.id.starts_with('_'))
             .collect::<Vec<_>>();
 

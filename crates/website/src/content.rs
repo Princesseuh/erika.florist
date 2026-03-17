@@ -94,7 +94,7 @@ pub fn content_sources(root: String) -> ContentSources {
 
           let (width, height) = image.dimensions();
 
-          let placeholder = image.placeholder();
+          let placeholder = image.placeholder().unwrap();
 
           html!({
               figure {

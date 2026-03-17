@@ -32,13 +32,12 @@ impl Route for AboutPage {
         )
         .unwrap_or_default();
 
-        let articles = ctx.content.get_source::<BlogPost>("blog");
-        let featured = articles
-            .entries
+        let articles = ctx.content::<BlogPost>("blog");
+        let entries: Vec<_> = articles.entries().collect();
+        let featured = entries
             .iter()
             .find(|e| e.data(ctx).featured.unwrap_or(false));
-        let regular = articles
-            .entries
+        let regular = entries
             .iter()
             .find(|e| !e.data(ctx).featured.unwrap_or(false));
         base_layout(

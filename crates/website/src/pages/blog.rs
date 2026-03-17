@@ -122,19 +122,17 @@ pub struct BlogPostPageParams {
 
 impl Route<BlogPostPageParams> for BlogPostPage {
     fn pages(&self, context: &mut DynamicRouteContext) -> Pages<BlogPostPageParams> {
-        context
-            .content::<BlogPost>("blog")
-            .into_pages(|entry| Page::from_params(BlogPostPageParams {
+        context.content::<BlogPost>("blog").into_pages(|entry| {
+            Page::from_params(BlogPostPageParams {
                 slug: entry.id.clone(),
-            }))
+            })
+        })
     }
 
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
         let params = ctx.params::<BlogPostPageParams>();
 
-        let article = ctx
-            .content::<BlogPost>("blog")
-            .get_entry(&params.slug);
+        let article = ctx.content::<BlogPost>("blog").get_entry(&params.slug);
 
         crate::layouts::article_layout(article, false, ctx)
     }

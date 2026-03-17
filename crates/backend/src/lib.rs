@@ -264,7 +264,11 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
             }
         }
 
-        let finished_date = if form.date.is_empty() { "N/A".to_string() } else { form.date.clone() };
+        let finished_date = if form.date.is_empty() {
+            "N/A".to_string()
+        } else {
+            form.date.clone()
+        };
         let markdown_content = format!(
             "---\ntitle: \"{}\"\nrating: \"{}\"\nfinishedDate: {}\n{}: \"{}\"\n---\n\n{}\n",
             form.name, form.rating, finished_date, source_key, form.source_id, form.comment

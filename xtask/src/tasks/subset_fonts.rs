@@ -44,8 +44,8 @@ fn collect_characters(root: &std::path::Path) -> anyhow::Result<(BTreeSet<char>,
             fs::read_to_string(&path).with_context(|| format!("reading {}", path.display()))?;
 
         // Parse frontmatter manually using gray_matter
-        use gray_matter::engine::YAML;
         use gray_matter::Matter;
+        use gray_matter::engine::YAML;
         let matter = Matter::<YAML>::new();
         let parsed = matter.parse(&raw);
 

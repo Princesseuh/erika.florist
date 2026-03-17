@@ -726,12 +726,21 @@ function resetAndBuildUI() {
 
 // Sync paired controls (mobile + desktop) so getInputValue always reads a consistent value
 function syncPairedInputs(selectors: string[], type: "input" | "change") {
-	const elements = selectors.flatMap((s) => [...document.querySelectorAll<HTMLInputElement | HTMLSelectElement>(s)]);
+	const elements = selectors.flatMap((s) => [
+		...document.querySelectorAll<HTMLInputElement | HTMLSelectElement>(s),
+	]);
 	for (const el of elements) {
 		el.addEventListener(type, () => {
 			for (const other of elements) {
-				if (other === el) {continue;}
-				if (el instanceof HTMLInputElement && el.type === "checkbox" && other instanceof HTMLInputElement && other.type === "checkbox") {
+				if (other === el) {
+					continue;
+				}
+				if (
+					el instanceof HTMLInputElement &&
+					el.type === "checkbox" &&
+					other instanceof HTMLInputElement &&
+					other.type === "checkbox"
+				) {
 					other.checked = el.checked;
 				} else {
 					other.value = el.value;

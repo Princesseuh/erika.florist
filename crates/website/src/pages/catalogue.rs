@@ -1,6 +1,6 @@
 use std::hash::{DefaultHasher, Hash, Hasher};
 
-use maud::{html, PreEscaped};
+use maud::{PreEscaped, html};
 use maudit::route::prelude::*;
 
 use crate::components::icon::Icon;

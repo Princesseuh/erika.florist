@@ -53,8 +53,8 @@ pub fn log_info(msg: &str) {
 
 /// Reads YAML frontmatter from a markdown file and returns the parsed value as `serde_json::Value`.
 pub fn read_frontmatter(path: &Path) -> anyhow::Result<serde_json::Value> {
-    use gray_matter::engine::YAML;
     use gray_matter::Matter;
+    use gray_matter::engine::YAML;
 
     let content = fs::read_to_string(path)?;
     let matter = Matter::<YAML>::new();

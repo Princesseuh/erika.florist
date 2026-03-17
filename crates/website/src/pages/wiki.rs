@@ -171,9 +171,7 @@ pub struct WikiIndex;
 
 impl Route for WikiIndex {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
-        let index_entry = ctx
-            .content::<WikiEntry>("wiki")
-            .get_entry("index");
+        let index_entry = ctx.content::<WikiEntry>("wiki").get_entry("index");
 
         wiki_layout(
             ctx,
@@ -200,10 +198,13 @@ impl Route<WikiParams, Entry<WikiEntry>> for WikiEntryPage {
             .filter(|entry| entry.id != "index")
             .map(|entry| {
                 let data = entry.data(ctx);
-                Page::new(WikiParams {
-                    category: data.navigation.category.clone(),
-                    slug: entry.id.clone(),
-                }, entry.clone())
+                Page::new(
+                    WikiParams {
+                        category: data.navigation.category.clone(),
+                        slug: entry.id.clone(),
+                    },
+                    entry.clone(),
+                )
             })
             .collect()
     }

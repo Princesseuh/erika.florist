@@ -1,0 +1,30 @@
+{
+  "first_release_date": 1332374400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 9943,
+      "name": "Touch Foo",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "first_release_date": 871603200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 149
+    }
+  ],
+  "companies": [
+    {
+      "id": 9378,
+      "name": "Team Shanghai Alice",
+      "role": "developer"
+    }
+  ]
+}

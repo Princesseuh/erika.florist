@@ -347,7 +347,7 @@ impl Route for Catalogue {
                             } else if (type === 'book') {
                                 results = data.docs?.map(b => ({ id: b.isbn?.[0] || b.key, name: b.title, cover: b.cover_i ? 'https://covers.openlibrary.org/b/id/' + b.cover_i + '-M.jpg' : null })) || [];
                             } else {
-                                results = data.results?.map(m => ({ id: m.id, name: m.title, cover: m.poster_path ? 'https://image.tmdb.org/t/p/w92' + m.poster_path : null })) || [];
+                                results = data.results?.map(m => ({ id: m.id, name: m.title || m.name, cover: m.poster_path ? 'https://image.tmdb.org/t/p/w92' + m.poster_path : null })) || [];
                             }
 
                             results.forEach(r => {

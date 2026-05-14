@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1778112000,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "Switch 2",
+      "id": 508
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    }
+  ],
+  "companies": [
+    {
+      "id": 11662,
+      "name": "Annapurna Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 27256,
+      "name": "Beethoven & Dinosaur",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "first_release_date": 1104451200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Mobile",
+      "id": 55
+    }
+  ],
+  "companies": [
+    {
+      "id": 61,
+      "name": "Gameloft",
+      "role": "developer"
+    }
+  ]
+}

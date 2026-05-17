@@ -1,0 +1,52 @@
+{
+  "first_release_date": 1596672000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 6561,
+      "name": "YCJY Games",
+      "role": "developer"
+    },
+    {
+      "id": 6561,
+      "name": "YCJY Games",
+      "role": "publisher"
+    },
+    {
+      "id": 40207,
+      "name": "Super Rare Originals",
+      "role": "publisher"
+    }
+  ]
+}

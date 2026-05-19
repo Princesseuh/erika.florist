@@ -1,14 +1,11 @@
 use sha2::{Digest, Sha256};
-use slug::slugify;
 use worker::*;
 
 mod search;
 use search::{search_igdb, search_isbn, search_tmdb};
 
 mod github;
-use github::{check_if_file_exists, post_to_github};
-
-use crate::github::CommitForm;
+use github::{batch_commit, BatchForm};
 
 fn check_auth_cookie(headers: &Headers, env: &Env) -> bool {
     if let Ok(Some(cookie_str)) = headers.get("cookie") {
@@ -204,10 +201,11 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
         };
     }
 
-    if req.path() == "/commit" && req.method() == Method::Post {
-        let form: CommitForm = {
-            let form_data = req.form_data().await?;
-            CommitForm::from_formdata(&form_data)?
+    if req.path() == "/commit-batch" && req.method() == Method::Post {
+        let body_text = req.text().await?;
+        let form: BatchForm = match serde_json::from_str(&body_text) {
+            Ok(f) => f,
+            Err(e) => return Response::error(format!("Invalid request body: {}", e), 400),
         };
 
         let Ok(form_password) = env.secret("FORM_PASSWORD") else {
@@ -220,15 +218,10 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
             return Response::error("Unauthorized", 401);
         }
 
-        let (source_key, path_type) = match form.r#type.as_str() {
-            "movie" => ("tmdb", "movies"),
-            "tv" => ("tmdb", "shows"),
-            "game" => ("igdb", "games"),
-            "book" => ("isbn", "books"),
-            _ => return Response::error("Invalid type", 400),
-        };
+        if form.items.is_empty() {
+            return Response::error("No items to commit", 400);
+        }
 
-        let mut slug = slugify(&form.name);
         let github_token = env
             .secret("GITHUB_KEY")
             .map_err(|_| Error::from("GITHUB_KEY not set"))?;
@@ -236,58 +229,13 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
             .secret("GITHUB_REPO")
             .map_err(|_| Error::from("GITHUB_REPO not set"))?;
 
-        let file_exists = check_if_file_exists(
-            &github_token.to_string(),
-            &github_repo.to_string(),
-            path_type,
-            &slug,
-        )
-        .await?;
-
-        if file_exists {
-            let mut i = 1;
-            loop {
-                let test_slug = format!("{}-{}", slug, i);
-                let file_exists = check_if_file_exists(
-                    &github_token.to_string(),
-                    &github_repo.to_string(),
-                    path_type,
-                    &test_slug,
-                )
-                .await?;
-
-                if !file_exists {
-                    slug = test_slug;
-                    break;
-                }
-                i += 1;
-            }
-        }
-
-        let finished_date = if form.date.is_empty() {
-            "N/A".to_string()
-        } else {
-            form.date.clone()
-        };
-        let markdown_content = format!(
-            "---\ntitle: \"{}\"\nrating: \"{}\"\nfinishedDate: {}\n{}: \"{}\"\n---\n\n{}\n",
-            form.name, form.rating, finished_date, source_key, form.source_id, form.comment
-        );
-
-        let file_path = format!("crates/website/content/{}/{}/{}.md", path_type, slug, slug);
-        let commit_url = post_to_github(
-            &github_token.to_string(),
-            &github_repo.to_string(),
-            &file_path,
-            &markdown_content,
-            &form.name,
-            form.skip_ci == "skip-ci",
-        )
-        .await?;
+        let commit_url =
+            batch_commit(&github_token.to_string(), &github_repo.to_string(), &form).await?;
 
         return Response::from_json(&serde_json::json!({
             "success": true,
-            "commit_url": commit_url
+            "commit_url": commit_url,
+            "count": form.items.len(),
         }));
     }
 

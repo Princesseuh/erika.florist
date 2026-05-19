@@ -1,10 +1,11 @@
 use std::hash::{DefaultHasher, Hash, Hasher};
 
-use maud::{PreEscaped, html};
+use maud::html;
 use maudit::route::prelude::*;
 
 use crate::components::icon::Icon;
 use crate::components::mobile_menu;
+use crate::content::Status;
 use crate::{content::CatalogueMetadata, layouts::base_layout, state};
 
 fn catalogue_mobile_filters() -> maud::Markup {
@@ -23,6 +24,15 @@ fn catalogue_mobile_filters() -> maud::Markup {
                     option value="game" { "Game" }
                     option value="movie" { "Movie" }
                     option value="show" { "Show" }
+                }
+            }
+
+            div class="flex flex-col gap-2" {
+                label for="mobile-catalogue-status" class="font-bold text-sm" { "Status" }
+                select name="status" id="mobile-catalogue-status" {
+                    option value="finished" selected { "Finished" }
+                    option value="planned" { "Planned" }
+                    option value="all" { "All" }
                 }
             }
 
@@ -58,6 +68,7 @@ pub struct Catalogue;
 impl Route for Catalogue {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
         ctx.assets.include_script("src/assets/catalogue.ts")?;
+        ctx.assets.include_script("src/assets/catalogue-add.ts")?;
         let page_length = 32;
 
         let catalogue_hash = state::get_catalogue_hash().unwrap();
@@ -89,6 +100,15 @@ impl Route for Catalogue {
                                         option value="game" { "Game" }
                                         option value="movie" { "Movie" }
                                         option value="show" { "Show" }
+                                    }
+                                }
+
+                                div {
+                                    label for="catalogue-status" { "Status" }
+                                    select name="status" id="catalogue-status" {
+                                        option value="finished" selected { "Finished" }
+                                        option value="planned" { "Planned" }
+                                        option value="all" { "All" }
                                     }
                                 }
 
@@ -150,26 +170,37 @@ impl Route for Catalogue {
                             }
                         }
 
-                        div id="add-entry-modal" class="hidden fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" {
-                        div class="bg-white-sugar-cane rounded-lg max-w-2xl w-full" {
-                            div class="bg-accent-valencia px-6 py-4 flex justify-between items-center rounded-t-lg" {
-                                h2 class="text-xl font-bold text-white" { "Add catalogue entry" }
+                        div id="add-entry-modal" class="hidden fixed inset-0 bg-black/70 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" {
+                        div class="bg-white-sugar-cane rounded-t-lg sm:rounded-lg max-w-2xl w-full max-h-[95vh] flex flex-col" {
+                            div class="bg-accent-valencia px-6 py-4 flex justify-between items-center rounded-t-lg shrink-0" {
+                                h2 id="add-modal-title" class="text-xl font-bold text-white" { "Add catalogue entry" }
                                 button id="close-modal" class="text-white hover:text-black text-2xl font-bold" { "×" }
                             }
 
-                            div class="p-6" {
+                            div id="modal-mode-toggle" class="flex bg-zinc-200 text-black border-b-2 border-black shrink-0" {
+                                button type="button" data-mode="finished" class="modal-mode-btn flex-1 py-2 font-bold bg-white-sugar-cane" { "Finished" }
+                                button type="button" data-mode="planned" class="modal-mode-btn flex-1 py-2 font-bold" { "Planned" }
+                            }
+
+                            div id="queue-section" class="hidden p-4 border-b-2 border-black shrink-0 text-black" {
+                                div class="font-bold text-sm mb-2" { "Queue (" span id="queue-count" { "0" } ")" }
+                                ul id="queue-items" class="space-y-1 text-sm max-h-32 overflow-y-auto" {}
+                            }
+
+                            div class="p-6 overflow-y-auto" {
                                 form id="add-entry-form" class="space-y-4 text-black" {
                                     div id="selected-result" class="flex justify-center items-center gap-2" {
                                         img id="selected-cover" class="w-12 h-16 object-cover rounded hidden" src="" {};
                                         div id="selected-cover-placeholder" class="w-12 h-16 bg-zinc-300 rounded" {}
                                         span id="selected-title" class="font-medium" { "No selection" }
                                         input type="hidden" id="entry-source-id" name="source-id";
+                                        input type="hidden" id="entry-promote-slug" name="promote-slug";
                                     }
 
-                                    div class="flex items-end" {
+                                    div id="type-title-row" class="flex items-end" {
                                         label class="w-1/4 md:w-[15%]" {
                                             span class="block text-sm font-bold mb-1" { "Type" }
-                                            select id="entry-type" name="type" class="w-full px-3 py-2 bg-white border-y-2 border-l-2 border-black rounded-l rounded-r-none font-medium h-10" required {
+                                            select id="entry-type" name="type" class="w-full px-3 py-2 bg-white border-y-2 border-l-2 border-black rounded-l rounded-r-none font-medium h-10 disabled:bg-zinc-400" required {
                                                 option value="" { "Select" }
                                                 option value="game" { "Game" }
                                                 option value="movie" { "Movie" }
@@ -190,7 +221,7 @@ impl Route for Catalogue {
                                         div id="search-results" class="mt-2 max-h-40 overflow-y-auto hidden border-2 border-black bg-white absolute z-10 left-0 right-0" {}
                                     }
 
-                                    div class="block" {
+                                    div id="rating-row" class="block" {
                                         span class="block text-sm font-bold mb-2 block" { "Rating" }
                                         div id="rating-options" class="flex justify-center gap-4" {
                                             label class="cursor-pointer flex flex-col items-center" {
@@ -220,14 +251,14 @@ impl Route for Catalogue {
                                         }
                                     }
 
-                                    div {
+                                    div id="date-row" {
                                         label {
                                             span class="block text-sm font-bold mb-1" { "Date finished" }
                                             input type="date" id="entry-date" name="date" class="w-full px-3 py-2 bg-white border-2 border-black rounded font-medium";
                                         }
                                     }
 
-                                    div {
+                                    div id="comment-row" {
                                         label {
                                             span class="block text-sm font-bold mb-1" { "Comment" }
                                             textarea id="entry-comment" name="comment" class="w-full px-3 py-2 bg-white border-2 border-black rounded font-medium h-24" placeholder="Thoughts..." {}
@@ -249,196 +280,13 @@ impl Route for Catalogue {
                                         input type="password" id="form-password" name="form-password" class="w-full px-3 py-2 bg-white border-2 border-black rounded font-medium" required;
                                     }
 
-                                    button type="submit" class="w-full bg-accent-valencia text-white py-3 rounded font-bold hover:bg-accent-valencia/80" { "Submit" }
+                                    div class="flex gap-2" {
+                                        button type="button" id="add-to-queue-btn" class="flex-1 bg-zinc-300 text-black py-3 rounded font-bold hover:bg-zinc-400" { "+ Add to queue" }
+                                        button type="submit" id="submit-btn" class="flex-1 bg-accent-valencia text-white py-3 rounded font-bold hover:bg-accent-valencia/80" { "Submit" }
+                                    }
                                 }
                             }
                         }
-                    }
-
-                    script {
-                        (PreEscaped(r#"
-                        const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-                            ? "http://localhost:8787"
-                            : "https://api.erika.florist";
-
-                        let isAuthenticated = false;
-
-                        async function checkAuth() {
-                            if (!document.cookie.split(';').some(c => c.trim().startsWith('logged_in='))) {
-                                return;
-                            }
-
-                            try {
-                                const response = await fetch(API_URL + '/auth', {
-                                    credentials: 'include'
-                                });
-                                if (!response.ok) {
-                                    return;
-                                }
-                                const data = await response.json();
-                                isAuthenticated = data.authenticated;
-                                if (isAuthenticated) {
-                                    document.getElementById('add-entry-btn').classList.remove('hidden');
-                                }
-                            } catch (e) {
-                                console.error('Auth check failed:', e);
-                            }
-                        }
-
-                        checkAuth();
-
-                        const modal = document.getElementById('add-entry-modal');
-                        const btn = document.getElementById('add-entry-btn');
-                        const close = document.getElementById('close-modal');
-                        const form = document.getElementById('add-entry-form');
-                        const typeSelect = document.getElementById('entry-type');
-                        const titleInput = document.getElementById('entry-name');
-                        const searchSpinner = document.getElementById('entry-search-spinner');
-                        const searchResults = document.getElementById('search-results');
-                        const selectedResult = document.getElementById('selected-result');
-
-                        btn.onclick = () => modal.classList.remove('hidden');
-                        close.onclick = () => modal.classList.add('hidden');
-                        modal.onclick = (e) => { if (e.target === modal) modal.classList.add('hidden'); };
-
-                        typeSelect.onchange = () => {
-                            const hasType = typeSelect.value !== '';
-                            titleInput.disabled = !hasType;
-                            titleInput.placeholder = hasType ? 'Search by title...' : 'Select type first...';
-                        };
-
-                        async function search() {
-                            const query = document.getElementById('entry-name').value;
-                            const type = typeSelect.value;
-                            if (!query || !type) return;
-
-                            const sourceMap = { game: 'igdb', movie: 'tmdb', tv: 'tmdb', book: 'isbn' };
-                            const source = sourceMap[type];
-                            const tmdbType = type === 'tv' ? 'tv' : 'movie';
-
-                            searchSpinner.classList.remove('hidden');
-                            try {
-                                const response = await fetch(API_URL + '/search?source=' + source + '&query=' + encodeURIComponent(query) + '&type=' + tmdbType, {
-                                    credentials: 'include'
-                                });
-                                const text = await response.text();
-                                const data = JSON.parse(text);
-                                displayResults(data, type);
-                            } catch (e) {
-                                console.error('Search failed:', e);
-                            } finally {
-                                searchSpinner.classList.add('hidden');
-                            }
-                        }
-
-                        let searchDebounce;
-                        titleInput.oninput = () => {
-                            clearTimeout(searchDebounce);
-                            searchDebounce = setTimeout(search, 400);
-                        };
-
-                        function displayResults(data, type) {
-                            searchResults.innerHTML = '';
-                            searchResults.classList.remove('hidden');
-
-                            let results = [];
-                            if (type === 'game') {
-                                results = data.map(g => ({ id: g.id, name: g.name, cover: g.cover?.url }));
-                            } else if (type === 'book') {
-                                results = data.docs?.map(b => ({ id: b.isbn?.[0] || b.key, name: b.title, cover: b.cover_i ? 'https://covers.openlibrary.org/b/id/' + b.cover_i + '-M.jpg' : null })) || [];
-                            } else {
-                                results = data.results?.map(m => ({ id: m.id, name: m.title || m.name, cover: m.poster_path ? 'https://image.tmdb.org/t/p/w92' + m.poster_path : null })) || [];
-                            }
-
-                            results.forEach(r => {
-                                const div = document.createElement('div');
-                                div.className = 'flex items-center gap-2 p-2 hover:bg-zinc-200 cursor-pointer text-black';
-                                if (r.cover) {
-                                    const coverUrl = r.cover.startsWith('//') ? 'https:' + r.cover : r.cover;
-                                    div.innerHTML = '<img src="' + coverUrl + '" class="w-8 h-12 object-cover flex-shrink-0"><span class="text-sm truncate">' + r.name + '</span>';
-                                } else {
-                                    div.innerHTML = '<div class="w-8 h-12 bg-gray-300 flex-shrink-0"></div><span class="text-sm truncate">' + r.name + '</span>';
-                                }
-                                div.onclick = () => selectResult(r);
-                                searchResults.appendChild(div);
-                            });
-                        }
-
-                        function selectResult(result) {
-                            document.getElementById('entry-name').value = result.name;
-                            document.getElementById('entry-source-id').value = result.id;
-                            document.getElementById('entry-source-id-display').value = result.id;
-                            document.getElementById('selected-title').textContent = result.name;
-                            const coverImg = document.getElementById('selected-cover');
-                            if (result.cover) {
-                                const coverUrl = result.cover.startsWith('//') ? 'https:' + result.cover : result.cover;
-                                coverImg.src = coverUrl;
-                                coverImg.classList.remove('hidden');
-                                document.getElementById('selected-cover-placeholder').classList.add('hidden');
-                            } else {
-                                coverImg.classList.add('hidden');
-                                document.getElementById('selected-cover-placeholder').classList.remove('hidden');
-                            }
-                            searchResults.classList.add('hidden');
-                        }
-
-                        function showToast(commitUrl) {
-                            const toast = document.createElement('div');
-                            toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-3 bg-white-sugar-cane border-2 border-black rounded-lg px-4 py-3 shadow-lg text-black text-sm font-medium transition-opacity duration-500';
-                            toast.innerHTML = 'Entry added! <a href="' + commitUrl + '" target="_blank" rel="noopener" class="underline font-bold hover:text-accent-valencia">View commit</a>';
-                            document.body.appendChild(toast);
-                            setTimeout(() => {
-                                toast.style.opacity = '0';
-                                setTimeout(() => toast.remove(), 500);
-                            }, 6000);
-                        }
-
-                        form.onsubmit = async (e) => {
-                            e.preventDefault();
-                            const errorDiv = document.getElementById('form-error');
-                            errorDiv.classList.add('hidden');
-
-                            const formData = new FormData();
-                            formData.append('type', document.getElementById('entry-type').value);
-                            formData.append('name', document.getElementById('entry-name').value);
-                            const rating = document.querySelector('input[name="rating"]:checked')?.value;
-                            if (!rating) {
-                                errorDiv.textContent = 'Please select a rating';
-                                errorDiv.classList.remove('hidden');
-                                return;
-                            }
-                            formData.append('rating', rating);
-                            formData.append('date', document.getElementById('entry-date').value);
-                            formData.append('source-id', document.getElementById('entry-source-id-display').value || document.getElementById('entry-source-id').value);
-                            formData.append('comment', document.getElementById('entry-comment').value);
-                                            formData.append('form-password', document.getElementById('form-password').value);
-                            if (document.getElementById('skip-ci').checked) {
-                                formData.append('skip-ci', 'skip-ci');
-                            }
-
-                            try {
-                                const response = await fetch(API_URL + '/commit', {
-                                    method: 'POST',
-                                    body: formData,
-                                    credentials: 'include'
-                                });
-
-                                if (response.ok) {
-                                    const data = await response.json();
-                                    modal.classList.add('hidden');
-                                    showToast(data.commit_url);
-                                } else {
-                                    const data = await response.json();
-                                    errorDiv.textContent = data.message || 'Failed to submit';
-                                    errorDiv.classList.remove('hidden');
-                                }
-                            } catch (err) {
-                                errorDiv.textContent = 'An error occurred';
-                                errorDiv.classList.remove('hidden');
-                            }
-                        };
-                        "#
-                        ))
                     }
                 }
 
@@ -484,17 +332,20 @@ impl Route for CatalogueContent {
                     let rendered_content = item.render(ctx);
                     let (cover_url, placeholder) = &data.cover;
 
-                    // Pre-allocate with known capacity (9 elements)
-                    let mut entry = Vec::with_capacity(9);
+                    // Pre-allocate with known capacity (12 elements)
+                    let mut entry = Vec::with_capacity(12);
                     entry.push(serde_json::Value::String(cover_url.clone()));
                     entry.push(serde_json::Value::String(placeholder.clone()));
                     entry.push(serde_json::Value::Number(serde_json::Number::from(
                         $type_id,
                     )));
                     entry.push(serde_json::Value::String(data.title.clone()));
-                    entry.push(serde_json::Value::Number(serde_json::Number::from(
-                        data.rating.to_number(),
-                    )));
+                    match data.get_rating() {
+                        Some(r) => entry.push(serde_json::Value::Number(serde_json::Number::from(
+                            r.to_number(),
+                        ))),
+                        None => entry.push(serde_json::Value::Null),
+                    }
                     entry.push(serde_json::Value::String(
                         data.get_author().unwrap_or_default(),
                     ));
@@ -518,6 +369,19 @@ impl Route for CatalogueContent {
                     }
 
                     entry.push(serde_json::Value::String(rendered_content));
+
+                    let status_num = match data.get_status() {
+                        Status::Finished => 0,
+                        Status::Planned => 1,
+                    };
+                    entry.push(serde_json::Value::Number(serde_json::Number::from(
+                        status_num,
+                    )));
+
+                    entry.push(serde_json::Value::String(item.id.clone()));
+
+                    entry.push(serde_json::Value::String(data.get_source_id().to_string()));
+
                     entries_data.push(entry);
                 }
             };

@@ -4,7 +4,7 @@ mod project;
 mod wiki;
 pub use blog::BlogPost;
 pub use catalogue::{
-    CatalogueEntry, CatalogueMetadata, books::CatalogueBook, catalogue_add_metadata,
+    CatalogueEntry, CatalogueMetadata, Status, books::CatalogueBook, catalogue_add_metadata,
     games::CatalogueGame, movies::CatalogueMovie, shows::CatalogueShow,
 };
 use maud::{PreEscaped, html};

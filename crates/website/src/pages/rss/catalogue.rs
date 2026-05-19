@@ -1,33 +1,58 @@
 use maudit::route::prelude::*;
 use xml_builder::{XMLBuilder, XMLElement, XMLVersion};
 
-use crate::content::CatalogueEntry;
+use crate::content::{CatalogueEntry, CatalogueMetadata};
 
 #[route("/rss/catalogue/index.xml")]
 pub struct CatalogueRSS;
 
 impl Route for CatalogueRSS {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
-        let combined_entries: Vec<CatalogueEntry> = ctx
+        let mut combined_entries: Vec<CatalogueEntry> = Vec::new();
+
+        let games: Vec<_> = ctx
             .content::<crate::content::CatalogueGame>("games")
             .entries()
-            .map(|g| CatalogueEntry::Game(g.clone()))
-            .chain(
-                ctx.content::<crate::content::CatalogueMovie>("movies")
-                    .entries()
-                    .map(|m| CatalogueEntry::Movie(m.clone())),
-            )
-            .chain(
-                ctx.content::<crate::content::CatalogueBook>("books")
-                    .entries()
-                    .map(|b| CatalogueEntry::Book(b.clone())),
-            )
-            .chain(
-                ctx.content::<crate::content::CatalogueShow>("shows")
-                    .entries()
-                    .map(|s| CatalogueEntry::Show(s.clone())),
-            )
+            .cloned()
             .collect();
+        for g in games {
+            if matches!(g.data(ctx).get_status(), crate::content::Status::Finished) {
+                combined_entries.push(CatalogueEntry::Game(g));
+            }
+        }
+
+        let movies: Vec<_> = ctx
+            .content::<crate::content::CatalogueMovie>("movies")
+            .entries()
+            .cloned()
+            .collect();
+        for m in movies {
+            if matches!(m.data(ctx).get_status(), crate::content::Status::Finished) {
+                combined_entries.push(CatalogueEntry::Movie(m));
+            }
+        }
+
+        let books: Vec<_> = ctx
+            .content::<crate::content::CatalogueBook>("books")
+            .entries()
+            .cloned()
+            .collect();
+        for b in books {
+            if matches!(b.data(ctx).get_status(), crate::content::Status::Finished) {
+                combined_entries.push(CatalogueEntry::Book(b));
+            }
+        }
+
+        let shows: Vec<_> = ctx
+            .content::<crate::content::CatalogueShow>("shows")
+            .entries()
+            .cloned()
+            .collect();
+        for s in shows {
+            if matches!(s.data(ctx).get_status(), crate::content::Status::Finished) {
+                combined_entries.push(CatalogueEntry::Show(s));
+            }
+        }
 
         let mut sorted_entries = combined_entries;
         sorted_entries.sort_by(|a, b| {

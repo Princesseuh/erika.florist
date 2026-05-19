@@ -1,8 +1,7 @@
-import GithubSlugger from "github-slugger";
 import { QuickScore } from "quick-score";
 import { thumbHashToDataURL } from "thumbhash";
 
-const VERSION = 6;
+const VERSION = 7;
 
 function requireElement<T extends Element>(selector: string): T {
 	const el = document.querySelector<T>(selector);
@@ -39,8 +38,8 @@ type CatalogueItem = [
 	number,
 	// title
 	string,
-	// rating
-	number,
+	// rating (null for planned items)
+	number | null,
 	// author
 	string,
 	// finished date
@@ -49,10 +48,17 @@ type CatalogueItem = [
 	number | null,
 	// review content (rendered HTML)
 	string,
+	// status (0 = finished, 1 = planned)
+	number,
+	// file slug on disk
+	string,
+	// source id (igdb / tmdb / isbn)
+	string,
 ];
 
 interface CatalogueItemDB {
 	id: string;
+	slug: string;
 	cover: string;
 	placeholder: string;
 	type: "game" | "movie" | "show" | "book";
@@ -62,6 +68,8 @@ interface CatalogueItemDB {
 	date: number;
 	releaseYear: number | null;
 	review: string;
+	status: "finished" | "planned";
+	sourceId: string;
 }
 
 interface VersionRecord {
@@ -100,6 +108,16 @@ function isCatalogueData(value: unknown): value is CatalogueData {
 		typeof value[0] === "string" &&
 		Array.isArray(value[1])
 	);
+}
+
+function numberToStatus(value: number): "finished" | "planned" {
+	return value === 1 ? "planned" : "finished";
+}
+
+function typeToServerType(
+	type: "game" | "movie" | "show" | "book",
+): "game" | "movie" | "tv" | "book" {
+	return type === "show" ? "tv" : type;
 }
 
 function numberToType(type: number): string {
@@ -204,12 +222,20 @@ function getCheckboxValue(selectors: string[]): boolean {
 	return false;
 }
 
-function readFilters(): { search: string; type: string; rating: number | ""; sort: string } {
+function readFilters(): {
+	search: string;
+	type: string;
+	rating: number | "";
+	sort: string;
+	status: string;
+} {
 	const ratingRaw = getInputValue(["#mobile-catalogue-ratings", "#catalogue-ratings"]);
+	const statusRaw = getInputValue(["#mobile-catalogue-status", "#catalogue-status"]);
 	return {
 		rating: ratingRaw === "" ? "" : Number(ratingRaw),
 		search: getInputValue(["#mobile-catalogue-search", "#catalogue-search"]).toLowerCase(),
 		sort: getInputValue(["#mobile-catalogue-sort", "#catalogue-sort"]) || "date",
+		status: statusRaw === "" ? "finished" : statusRaw,
 		type: getInputValue(["#mobile-catalogue-types", "#catalogue-types"]),
 	};
 }
@@ -236,7 +262,10 @@ const reviewModalContent = requireElement<Element>("#review-modal-content");
 const closeReviewModalBtn = requireElement<Element>("#close-review-modal");
 
 function buildModalMeta(item: CatalogueItemDB): string {
-	const ratingLabel = `${getRatingEmoji(item.rating)} ${getRatingLabel(item.rating)}`;
+	const ratingLabel =
+		item.status === "planned"
+			? "📌 Planned"
+			: `${getRatingEmoji(item.rating)} ${getRatingLabel(item.rating)}`;
 	const dateLabel =
 		item.date > 0
 			? new Date(item.date).toLocaleDateString("en-US", {
@@ -310,10 +339,14 @@ document.addEventListener("keydown", (e) => {
 function buildEntryElement(item: CatalogueItemDB): HTMLDivElement {
 	const entry = document.createElement("div");
 	entry.className = "w-[180px]";
+	const isPlanned = item.status === "planned";
+	const badge = isPlanned ? "📌" : getRatingEmoji(item.rating);
+	const dimClass = isPlanned ? "opacity-80" : "";
+	const showPromote = isPlanned && document.documentElement.dataset.catalogueAuthed === "true";
 	entry.innerHTML = `
             <div class="relative group">
               <button type="button" class="block w-full text-left cursor-pointer">
-                <img class="max-w-full h-auto aspect-[3/4.3] object-cover block"
+                <img class="max-w-full h-auto aspect-[3/4.3] object-cover block ${dimClass}"
                      width="180" height="270"
                      src="${item.cover}"
                      loading="lazy"
@@ -324,7 +357,7 @@ function buildEntryElement(item: CatalogueItemDB): HTMLDivElement {
                      decoding="async"
                      alt="${item.title} cover" />
                 <span class="absolute top-0 right-0 pr-[0.15rem] pl-[0.2rem] bg-black/5 rounded-bl-lg select-none">
-                    ${getRatingEmoji(item.rating)}
+                    ${badge}
                 </span>
                 <div class="absolute bottom-0 left-0 right-0 bg-black/70 text-white p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     <h4 class="m-0 leading-tight text-sm font-medium">
@@ -335,12 +368,34 @@ function buildEntryElement(item: CatalogueItemDB): HTMLDivElement {
                     </p>
                 </div>
               </button>
+              ${
+								showPromote
+									? `<button type="button" data-promote class="absolute top-1 left-1 bg-accent-valencia text-white text-xs font-bold rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer hover:bg-accent-valencia/80">Mark finished</button>`
+									: ""
+							}
             </div>
         `;
-	const btn = entry.querySelector("button");
+	const btn = entry.querySelector<HTMLButtonElement>("button:not([data-promote])");
 	if (btn !== null) {
 		btn.addEventListener("click", () => {
 			openReviewModal(item);
+		});
+	}
+	const promoteBtn = entry.querySelector<HTMLButtonElement>("button[data-promote]");
+	if (promoteBtn !== null) {
+		promoteBtn.addEventListener("click", (e) => {
+			e.stopPropagation();
+			document.dispatchEvent(
+				new CustomEvent("catalogue:promote-request", {
+					detail: {
+						cover: item.cover,
+						slug: item.slug,
+						sourceId: item.sourceId,
+						title: item.title,
+						type: typeToServerType(item.type),
+					},
+				}),
+			);
 		});
 	}
 	return entry;
@@ -456,8 +511,9 @@ function buildUI() {
 			if (isCatalogueItemDB(rawValue)) {
 				const matchesType = filters.type === "" || rawValue.type === filters.type;
 				const matchesRating = filters.rating === "" || rawValue.rating === filters.rating;
+				const matchesStatus = filters.status === "all" || rawValue.status === filters.status;
 
-				if (matchesType && matchesRating) {
+				if (matchesType && matchesRating && matchesStatus) {
 					items.push(rawValue);
 				}
 			}
@@ -468,13 +524,25 @@ function buildUI() {
 }
 
 function seedItems(store: IDBObjectStore, data: CatalogueItem[]): void {
-	const slugger = new GithubSlugger();
-
 	for (const item of data) {
-		const [cover, placeholder, type, title, rating, author, date, releaseYear, review] = item;
+		const [
+			cover,
+			placeholder,
+			type,
+			title,
+			rating,
+			author,
+			date,
+			releaseYear,
+			review,
+			statusNum,
+			slug,
+			sourceId,
+		] = item;
 
 		const itemType = numberToType(type);
-		const id = `${slugger.slug(title)}-${itemType}`;
+		const id = `${slug}-${itemType}`;
+		const status = numberToStatus(statusNum);
 
 		const addRequest: IDBRequest<IDBValidKey> = store.add({
 			author,
@@ -485,9 +553,12 @@ function seedItems(store: IDBObjectStore, data: CatalogueItem[]): void {
 			placeholder: thumbHashToDataURL(
 				Uint8Array.from(atob(placeholder), (c) => c.codePointAt(0) ?? 0),
 			),
-			rating,
+			rating: rating ?? -1,
 			releaseYear: releaseYear ?? null,
 			review: review ?? "",
+			slug,
+			sourceId,
+			status,
 			title,
 			type: itemType,
 		});
@@ -607,6 +678,7 @@ function resetAndCreateDB() {
 		unique: false,
 	});
 	objectStore.createIndex("rating_date", ["rating", "date"], { unique: false });
+	objectStore.createIndex("status", "status", { unique: false });
 
 	objectStore.transaction.addEventListener("complete", async () => {
 		try {
@@ -755,6 +827,7 @@ syncPairedInputs(["#mobile-catalogue-ratings", "#catalogue-ratings"], "change");
 syncPairedInputs(["#mobile-catalogue-sort", "#catalogue-sort"], "change");
 syncPairedInputs(["#mobile-catalogue-types", "#catalogue-types"], "change");
 syncPairedInputs(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"], "change");
+syncPairedInputs(["#mobile-catalogue-status", "#catalogue-status"], "change");
 
 // Add event listeners to all filter inputs (both desktop and mobile)
 const addListener = (selectors: string[], type: "input" | "change", handler: () => void) => {
@@ -770,3 +843,4 @@ addListener(["#mobile-catalogue-ratings", "#catalogue-ratings"], "change", reset
 addListener(["#mobile-catalogue-sort", "#catalogue-sort"], "change", resetAndBuildUI);
 addListener(["#mobile-catalogue-types", "#catalogue-types"], "change", resetAndBuildUI);
 addListener(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"], "change", resetAndBuildUI);
+addListener(["#mobile-catalogue-status", "#catalogue-status"], "change", resetAndBuildUI);

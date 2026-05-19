@@ -76,10 +76,6 @@ impl CatalogueMetadata<GameData> for CatalogueGame {
         self.rating.as_ref()
     }
 
-    fn get_source_id(&self) -> &str {
-        &self.igdb
-    }
-
     fn get_author(&self) -> Option<String> {
         self.get_metadata()
             .companies

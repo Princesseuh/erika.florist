@@ -58,10 +58,6 @@ impl CatalogueMetadata<ShowData> for CatalogueShow {
         self.rating.as_ref()
     }
 
-    fn get_source_id(&self) -> &str {
-        &self.tmdb
-    }
-
     fn get_author(&self) -> Option<String> {
         self.get_metadata().companies.first().cloned()
     }

@@ -146,7 +146,7 @@ fn type_to_paths(item_type: &str) -> Result<(&'static str, &'static str), Error>
 }
 
 /// Build the markdown frontmatter + body. Planned items omit rating/finishedDate.
-fn build_markdown(item: &BatchItem, source_key: &str) -> String {
+fn build_markdown(item: &BatchItem, source_key: &str, source_id: &str) -> String {
     let planned = item.status == "planned";
 
     let mut fm = String::new();
@@ -163,13 +163,75 @@ fn build_markdown(item: &BatchItem, source_key: &str) -> String {
         };
         fm.push_str(&format!("finishedDate: {}\n", finished_date));
     }
-    fm.push_str(&format!("{}: \"{}\"\n", source_key, item.source_id));
+    fm.push_str(&format!("{}: \"{}\"\n", source_key, source_id));
     fm.push_str("---\n\n");
     fm.push_str(&item.comment);
     if !item.comment.ends_with('\n') {
         fm.push('\n');
     }
     fm
+}
+
+/// GETs the existing markdown file and returns the value of a frontmatter field
+/// (e.g. `tmdb`, `igdb`, `isbn`). Used when promoting a planned item — the
+/// existing file already has the source id, so the frontend doesn't need to
+/// know it.
+async fn fetch_existing_source_id(
+    token: &str,
+    repo: &str,
+    path: &str,
+    source_key: &str,
+) -> Result<String, Error> {
+    let url = format!("https://api.github.com/repos/{}/contents/{}", repo, path);
+    let req = Request::new_with_init(&url, RequestInit::new().with_method(Method::Get))?;
+    gh_headers(&req, token)?;
+    let mut resp = Fetch::Request(req).send().await?;
+    let status = resp.status_code();
+    if !(200..300).contains(&status) {
+        let text = resp.text().await.unwrap_or_default();
+        return Err(Error::from(format!(
+            "GitHub GET {} → {}: {}",
+            url, status, text
+        )));
+    }
+    let json: serde_json::Value = resp.json().await?;
+    let encoded = json["content"]
+        .as_str()
+        .ok_or_else(|| Error::from("Missing file content"))?;
+    // GitHub wraps the base64 content in newlines.
+    let cleaned: String = encoded.chars().filter(|c| !c.is_whitespace()).collect();
+    let bytes = general_purpose::STANDARD
+        .decode(&cleaned)
+        .map_err(|e| Error::from(format!("base64 decode failed: {}", e)))?;
+    let text = String::from_utf8(bytes).map_err(|e| Error::from(e.to_string()))?;
+    extract_frontmatter_field(&text, source_key)
+        .ok_or_else(|| Error::from(format!("Missing `{}` in existing frontmatter", source_key)))
+}
+
+/// Parses the frontmatter block (between `---` markers) and returns the
+/// trimmed/unquoted value for the given key. Returns None if not found.
+fn extract_frontmatter_field(content: &str, key: &str) -> Option<String> {
+    let mut in_frontmatter = false;
+    for line in content.lines() {
+        let trimmed = line.trim_end();
+        if trimmed == "---" {
+            if in_frontmatter {
+                return None;
+            }
+            in_frontmatter = true;
+            continue;
+        }
+        if !in_frontmatter {
+            continue;
+        }
+        if let Some((k, v)) = trimmed.split_once(':') {
+            if k.trim() == key {
+                let value = v.trim().trim_matches('"');
+                return Some(value.to_string());
+            }
+        }
+    }
+    None
 }
 
 /// Resolve a unique slug for a new entry by appending -1, -2, ... if needed.
@@ -213,20 +275,35 @@ pub async fn batch_commit(
     for item in &form.items {
         let (path_type, source_key) = type_to_paths(&item.r#type)?;
 
-        let slug = match &item.slug {
-            // Promotion: trust the provided slug (the file must already exist).
-            Some(s) if !s.is_empty() => s.clone(),
-            _ => {
-                let base = slug::slugify(&item.name);
-                if base.is_empty() {
-                    return Err(Error::from("Empty slug after slugify"));
-                }
-                resolve_new_slug(token, repo, path_type, &base).await?
+        let is_promote = item.slug.as_ref().is_some_and(|s| !s.is_empty());
+
+        let slug = if is_promote {
+            item.slug.clone().unwrap()
+        } else {
+            let base = slug::slugify(&item.name);
+            if base.is_empty() {
+                return Err(Error::from("Empty slug after slugify"));
             }
+            resolve_new_slug(token, repo, path_type, &base).await?
         };
 
-        let markdown = build_markdown(item, source_key);
         let path = format!("crates/website/content/{}/{}/{}.md", path_type, slug, slug);
+
+        // For promotions, the existing file holds the source id (igdb/tmdb/isbn);
+        // the frontend doesn't carry it. For new adds, the form provides it.
+        let source_id = if is_promote {
+            fetch_existing_source_id(token, repo, &path, source_key).await?
+        } else {
+            if item.source_id.is_empty() {
+                return Err(Error::from(format!(
+                    "Missing source-id for new {} entry",
+                    item.r#type
+                )));
+            }
+            item.source_id.clone()
+        };
+
+        let markdown = build_markdown(item, source_key, &source_id);
         resolved.push(ResolvedFile {
             path,
             content: markdown,

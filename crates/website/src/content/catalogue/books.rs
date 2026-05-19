@@ -59,10 +59,6 @@ impl CatalogueMetadata<BookData> for CatalogueBook {
         self.rating.as_ref()
     }
 
-    fn get_source_id(&self) -> &str {
-        &self.isbn
-    }
-
     fn get_author(&self) -> Option<String> {
         self.get_metadata()
             .authors

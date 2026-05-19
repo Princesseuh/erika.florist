@@ -81,8 +81,6 @@ pub trait CatalogueMetadata<T> {
 
     fn get_rating(&self) -> Option<&Rating>;
 
-    fn get_source_id(&self) -> &str;
-
     fn get_author(&self) -> Option<String> {
         None
     }

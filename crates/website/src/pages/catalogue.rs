@@ -332,8 +332,8 @@ impl Route for CatalogueContent {
                     let rendered_content = item.render(ctx);
                     let (cover_url, placeholder) = &data.cover;
 
-                    // Pre-allocate with known capacity (12 elements)
-                    let mut entry = Vec::with_capacity(12);
+                    // Pre-allocate with known capacity (11 elements)
+                    let mut entry = Vec::with_capacity(11);
                     entry.push(serde_json::Value::String(cover_url.clone()));
                     entry.push(serde_json::Value::String(placeholder.clone()));
                     entry.push(serde_json::Value::Number(serde_json::Number::from(
@@ -379,8 +379,6 @@ impl Route for CatalogueContent {
                     )));
 
                     entry.push(serde_json::Value::String(item.id.clone()));
-
-                    entry.push(serde_json::Value::String(data.get_source_id().to_string()));
 
                     entries_data.push(entry);
                 }

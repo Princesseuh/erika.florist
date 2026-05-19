@@ -562,7 +562,6 @@ interface PromoteRequestDetail {
 	slug: string;
 	type: EntryType;
 	title: string;
-	sourceId: string;
 	cover: string;
 }
 
@@ -587,14 +586,12 @@ function isPromoteRequestDetail(value: unknown): value is PromoteRequestDetail {
 	const slug = readString(value, "slug");
 	const type = readString(value, "type");
 	const title = readString(value, "title");
-	const sourceId = readString(value, "sourceId");
 	const cover = readString(value, "cover");
 	return (
 		slug !== null &&
 		type !== null &&
 		isEntryType(type) &&
 		title !== null &&
-		sourceId !== null &&
 		cover !== null
 	);
 }
@@ -686,8 +683,8 @@ document.addEventListener("catalogue:promote-request", (event) => {
 	openModal("promote");
 	typeSelect.value = detail.type;
 	titleInput.value = detail.title;
-	sourceIdHidden.value = detail.sourceId;
-	sourceIdDisplay.value = detail.sourceId;
+	sourceIdHidden.value = "";
+	sourceIdDisplay.value = "";
 	promoteSlugHidden.value = detail.slug;
 	selectedTitle.textContent = detail.title;
 	if (detail.cover === "") {

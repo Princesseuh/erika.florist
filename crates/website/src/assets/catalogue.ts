@@ -52,8 +52,6 @@ type CatalogueItem = [
 	number,
 	// file slug on disk
 	string,
-	// source id (igdb / tmdb / isbn)
-	string,
 ];
 
 interface CatalogueItemDB {
@@ -69,7 +67,6 @@ interface CatalogueItemDB {
 	releaseYear: number | null;
 	review: string;
 	status: "finished" | "planned";
-	sourceId: string;
 }
 
 interface VersionRecord {
@@ -390,7 +387,6 @@ function buildEntryElement(item: CatalogueItemDB): HTMLDivElement {
 					detail: {
 						cover: item.cover,
 						slug: item.slug,
-						sourceId: item.sourceId,
 						title: item.title,
 						type: typeToServerType(item.type),
 					},
@@ -537,7 +533,6 @@ function seedItems(store: IDBObjectStore, data: CatalogueItem[]): void {
 			review,
 			statusNum,
 			slug,
-			sourceId,
 		] = item;
 
 		const itemType = numberToType(type);
@@ -557,7 +552,6 @@ function seedItems(store: IDBObjectStore, data: CatalogueItem[]): void {
 			releaseYear: releaseYear ?? null,
 			review: review ?? "",
 			slug,
-			sourceId,
 			status,
 			title,
 			type: itemType,

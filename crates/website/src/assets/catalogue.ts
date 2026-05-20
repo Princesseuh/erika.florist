@@ -56,7 +56,6 @@ type CatalogueItem = [
 
 interface CatalogueItemDB {
 	id: string;
-	slug: string;
 	cover: string;
 	placeholder: string;
 	type: "game" | "movie" | "show" | "book";
@@ -115,6 +114,14 @@ function typeToServerType(
 	type: "game" | "movie" | "show" | "book",
 ): "game" | "movie" | "tv" | "book" {
 	return type === "show" ? "tv" : type;
+}
+
+// The IDB id is `${diskSlug}-${type}`; strip the trailing `-${type}` to recover
+// the on-disk slug. Safe even when the slug itself ends in a type word, since
+// the appended type is always the last segment.
+function slugFromId(id: string, type: "game" | "movie" | "show" | "book"): string {
+	const suffix = `-${type}`;
+	return id.endsWith(suffix) ? id.slice(0, -suffix.length) : id;
 }
 
 function numberToType(type: number): string {
@@ -386,7 +393,7 @@ function buildEntryElement(item: CatalogueItemDB): HTMLDivElement {
 				new CustomEvent("catalogue:promote-request", {
 					detail: {
 						cover: item.cover,
-						slug: item.slug,
+						slug: slugFromId(item.id, item.type),
 						title: item.title,
 						type: typeToServerType(item.type),
 					},
@@ -551,7 +558,6 @@ function seedItems(store: IDBObjectStore, data: CatalogueItem[]): void {
 			rating: rating ?? -1,
 			releaseYear: releaseYear ?? null,
 			review: review ?? "",
-			slug,
 			status,
 			title,
 			type: itemType,

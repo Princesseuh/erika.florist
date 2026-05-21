@@ -1,0 +1,61 @@
+{
+  "first_release_date": 1757894400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 47485,
+      "name": "VaMP He",
+      "role": "developer"
+    },
+    {
+      "id": 42648,
+      "name": "Gamersky Games",
+      "role": "publisher"
+    },
+    {
+      "id": 12028,
+      "name": "E-Home Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 28276,
+      "name": "2P Games",
+      "role": "publisher"
+    }
+  ]
+}

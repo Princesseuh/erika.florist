@@ -15,7 +15,7 @@ impl Route for BlogRSS {
             .filter(|e| !e.id.starts_with('_'))
             .collect::<Vec<_>>();
 
-        articles.sort_by(|a, b| b.data(ctx).date.cmp(&a.data(ctx).date));
+        articles.sort_by_key(|a| std::cmp::Reverse(a.data(ctx).date));
 
         let mut xml = XMLBuilder::new()
             .version(XMLVersion::XML1_0)

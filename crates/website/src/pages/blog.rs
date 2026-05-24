@@ -107,7 +107,7 @@ fn get_sorted_tags_and_years(ctx: &mut PageContext) -> TagsAndYears {
         })
         .into_iter()
         .collect::<Vec<(i32, i32)>>();
-    years.sort_by(|a, b| b.0.cmp(&a.0)); // Sort by year descending
+    years.sort_by_key(|y| std::cmp::Reverse(y.0));
 
     (tags, years)
 }
@@ -149,7 +149,7 @@ impl Route for BlogIndex {
             .filter(|e| !e.id.starts_with('_'))
             .collect::<Vec<_>>();
 
-        articles.sort_by(|a, b| b.data(ctx).date.cmp(&a.data(ctx).date));
+        articles.sort_by_key(|a| std::cmp::Reverse(a.data(ctx).date));
 
         let masonry_script = ctx.assets.add_script("src/assets/masonry.ts").unwrap();
 
@@ -221,7 +221,7 @@ impl Route<TagParams, PaginationPage<Entry<BlogPost>>> for BlogTagIndex {
                 .cloned()
                 .collect();
 
-            tag_articles.sort_by(|a, b| b.data(ctx).date.cmp(&a.data(ctx).date));
+            tag_articles.sort_by_key(|a| std::cmp::Reverse(a.data(ctx).date));
 
             // Paginate the articles for this tag
             let tag_pages = paginate(tag_articles, 20, |page| TagParams {
@@ -304,7 +304,7 @@ impl Route<YearParams, PaginationPage<Entry<BlogPost>>> for BlogYearIndex {
                 .cloned()
                 .collect();
 
-            year_articles.sort_by(|a, b| b.data(ctx).date.cmp(&a.data(ctx).date));
+            year_articles.sort_by_key(|a| std::cmp::Reverse(a.data(ctx).date));
 
             // Paginate the articles for this year
             let year_pages = paginate(year_articles, 20, |page| YearParams {

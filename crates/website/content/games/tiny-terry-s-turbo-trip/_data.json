@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1717027200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 40207,
+      "name": "Super Rare Originals",
+      "role": "publisher"
+    },
+    {
+      "id": 48042,
+      "name": "snekflat",
+      "role": "developer"
+    }
+  ]
+}

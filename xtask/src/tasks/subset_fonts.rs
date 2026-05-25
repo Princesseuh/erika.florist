@@ -44,10 +44,10 @@ fn collect_characters(root: &std::path::Path) -> anyhow::Result<(BTreeSet<char>,
             fs::read_to_string(&path).with_context(|| format!("reading {}", path.display()))?;
 
         // Parse frontmatter manually using gray_matter
-        use gray_matter::Matter;
         use gray_matter::engine::YAML;
+        use gray_matter::{Matter, ParsedEntity};
         let matter = Matter::<YAML>::new();
-        let parsed = matter.parse(&raw);
+        let parsed: ParsedEntity = matter.parse(&raw)?;
 
         // Title characters go into titleLetters
         if let Some(data) = &parsed.data {

@@ -14,6 +14,7 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
             pages::BlogTagIndex,
             pages::BlogYearIndex,
             pages::CatalogueContent,
+            pages::CatalogueMCP,
             pages::Catalogue,
             pages::ChangelogPage,
             pages::LoginPage,

@@ -12,7 +12,7 @@ pub use about::AboutPage;
 pub use blog::{
     BlogIndex, BlogPostPage, BlogPostPageParams, BlogTagIndex, BlogYearIndex, TagParams, YearParams,
 };
-pub use catalogue::{Catalogue, CatalogueContent};
+pub use catalogue::{Catalogue, CatalogueContent, CatalogueMCP};
 pub use changelog::ChangelogPage;
 pub use friends::FriendsPage;
 pub use index::Index;

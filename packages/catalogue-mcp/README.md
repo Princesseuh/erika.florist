@@ -33,7 +33,13 @@ That writes to `~/.claude.json` by default. Add `--scope project` to write to `.
 
 ### Codex
 
-Add to `~/.codex/config.toml`:
+Run:
+
+```sh
+codex mcp add erika-catalogue -- npx -y @princesseuh/catalogue-mcp
+```
+
+Or add to `~/.codex/config.toml` manually:
 
 ```toml
 [mcp_servers.erika-catalogue]

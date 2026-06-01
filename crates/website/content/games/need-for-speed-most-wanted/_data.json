@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1132012800,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 332,
+      "name": "EA Black Box",
+      "role": "developer"
+    },
+    {
+      "id": 11,
+      "name": "EA Redwood Shores",
+      "role": "developer"
+    },
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    }
+  ]
+}

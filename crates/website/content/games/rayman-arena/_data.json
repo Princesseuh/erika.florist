@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1007078400,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 10,
+      "name": "Racing"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 702,
+      "name": "Ubisoft Montpellier",
+      "role": "developer"
+    },
+    {
+      "id": 16845,
+      "name": "Ubi Soft Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

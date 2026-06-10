@@ -1,0 +1,53 @@
+{
+  "first_release_date": 1162252800,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 332,
+      "name": "EA Black Box",
+      "role": "developer"
+    },
+    {
+      "id": 277,
+      "name": "EA Canada",
+      "role": "developer"
+    },
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 1967,
+      "name": "TransGaming Inc.",
+      "role": "developer"
+    }
+  ]
+}

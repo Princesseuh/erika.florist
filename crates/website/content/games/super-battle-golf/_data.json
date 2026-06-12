@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1771459200,
+  "genres": [
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "Switch 2",
+      "id": 508
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    }
+  ],
+  "companies": [
+    {
+      "id": 54891,
+      "name": "Oro Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 74141,
+      "name": "Brimstone",
+      "role": "developer"
+    }
+  ]
+}

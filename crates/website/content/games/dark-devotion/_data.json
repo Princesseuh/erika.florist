@@ -1,0 +1,52 @@
+{
+  "first_release_date": 1556150400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 19866,
+      "name": "Maple Whispering Limited",
+      "role": "publisher"
+    },
+    {
+      "id": 15587,
+      "name": "Hibernian Workshop",
+      "role": "developer"
+    },
+    {
+      "id": 16141,
+      "name": "The Arcade Crew",
+      "role": "publisher"
+    }
+  ]
+}

@@ -33,6 +33,14 @@ pub enum Rating {
     Hated,
 }
 
+#[derive(Debug, Deserialize, Default, Clone, Copy, PartialEq, Eq)]
+#[serde(rename_all = "lowercase")]
+pub enum Status {
+    #[default]
+    Finished,
+    Planned,
+}
+
 impl Display for Rating {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let rating_str = match self {
@@ -69,12 +77,25 @@ pub trait CatalogueMetadata<T> {
 
     fn get_metadata(&self) -> &T;
 
+    fn get_status(&self) -> Status;
+
+    fn get_rating(&self) -> Option<&Rating>;
+
     fn get_author(&self) -> Option<String> {
         None
     }
 
     fn get_release_year(&self) -> Option<i32> {
         None
+    }
+
+    fn validate(&self, id: &str) {
+        if self.get_status() == Status::Finished && self.get_rating().is_none() {
+            panic!(
+                "Catalogue entry '{}' has status 'finished' (the absence of status implies finished) but no rating. Set a rating, or set status: planned.",
+                id
+            );
+        }
     }
 }
 
@@ -103,9 +124,11 @@ where
             let data_loader = {
                 let content = raw_content.clone();
                 let file_path = file_path.clone();
+                let entry_id = id.clone();
 
                 Box::new(move |ctx: &mut dyn ContentContext| {
                     let mut entry = parse_markdown_with_frontmatter::<T>(&content);
+                    entry.validate(&entry_id);
 
                     let metadata_path = file_path.with_file_name("_data.json");
                     let metadata_data = std::fs::read_to_string(&metadata_path).unwrap();
@@ -184,7 +207,7 @@ where
 fn catalogue_entry_to_xml(
     id: &str,
     title: String,
-    rating: &Rating,
+    rating: Option<&Rating>,
     finished_date: Option<NaiveDate>,
     rendered_content: &str,
     catalogue_type: &str,
@@ -220,7 +243,10 @@ fn catalogue_entry_to_xml(
     item.add_child(pub_date)?;
 
     let mut item_description = XMLElement::new("description");
-    let description_text = format!("{}", rating);
+    let description_text = match rating {
+        Some(r) => format!("{}", r),
+        None => "Planned".to_string(),
+    };
     item_description.add_text(description_text)?;
     item.add_child(item_description)?;
 
@@ -249,7 +275,7 @@ impl CatalogueEntry {
                 catalogue_entry_to_xml(
                     &g.id,
                     data.title.clone(),
-                    &data.rating,
+                    data.rating.as_ref(),
                     data.finished_date,
                     &rendered_content,
                     "games",
@@ -261,7 +287,7 @@ impl CatalogueEntry {
                 catalogue_entry_to_xml(
                     &m.id,
                     data.title.clone(),
-                    &data.rating,
+                    data.rating.as_ref(),
                     data.finished_date,
                     &rendered_content,
                     "movies",
@@ -273,7 +299,7 @@ impl CatalogueEntry {
                 catalogue_entry_to_xml(
                     &b.id,
                     data.title.clone(),
-                    &data.rating,
+                    data.rating.as_ref(),
                     data.finished_date,
                     &rendered_content,
                     "books",
@@ -285,7 +311,7 @@ impl CatalogueEntry {
                 catalogue_entry_to_xml(
                     &s.id,
                     data.title.clone(),
-                    &data.rating,
+                    data.rating.as_ref(),
                     data.finished_date,
                     &rendered_content,
                     "shows",

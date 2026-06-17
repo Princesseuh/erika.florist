@@ -2,15 +2,22 @@ use chrono::{DateTime, Datelike, NaiveDate};
 use maudit::content::markdown_entry;
 use serde::Deserialize;
 
-use crate::content::{CatalogueMetadata, catalogue::Rating, catalogue::deserialize_optional_date};
+use crate::content::{
+    CatalogueMetadata,
+    catalogue::{Rating, Status, deserialize_optional_date},
+};
 
 #[derive(Debug)]
 #[markdown_entry]
 pub struct CatalogueBook {
     pub title: String,
-    pub rating: Rating,
+    #[serde(default)]
+    pub rating: Option<Rating>,
+    #[serde(default)]
+    pub status: Status,
     #[serde(
         rename = "finishedDate",
+        default,
         deserialize_with = "deserialize_optional_date"
     )]
     pub finished_date: Option<NaiveDate>,
@@ -42,6 +49,14 @@ impl CatalogueMetadata<BookData> for CatalogueBook {
 
     fn get_metadata(&self) -> &BookData {
         self.__metadata.as_ref().unwrap()
+    }
+
+    fn get_status(&self) -> Status {
+        self.status
+    }
+
+    fn get_rating(&self) -> Option<&Rating> {
+        self.rating.as_ref()
     }
 
     fn get_author(&self) -> Option<String> {

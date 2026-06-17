@@ -1,0 +1,71 @@
+{
+  "first_release_date": 1711929600,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "Switch 2",
+      "id": 508
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 9453,
+      "name": "Landfall Games",
+      "role": "publisher"
+    },
+    {
+      "id": 62311,
+      "name": "Zorro",
+      "role": "developer"
+    },
+    {
+      "id": 62310,
+      "name": "Wilnyl",
+      "role": "developer"
+    },
+    {
+      "id": 62312,
+      "name": "Philip",
+      "role": "developer"
+    },
+    {
+      "id": 62313,
+      "name": "thePetHen",
+      "role": "developer"
+    },
+    {
+      "id": 62314,
+      "name": "Skog",
+      "role": "developer"
+    }
+  ]
+}

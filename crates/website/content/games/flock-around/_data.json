@@ -1,0 +1,30 @@
+{
+  "first_release_date": 1776988800,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 71640,
+      "name": "Secret Plan Games",
+      "role": "developer"
+    }
+  ]
+}

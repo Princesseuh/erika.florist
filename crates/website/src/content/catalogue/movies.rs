@@ -2,7 +2,10 @@ use chrono::NaiveDate;
 use maudit::content::markdown_entry;
 use serde::Deserialize;
 
-use crate::content::{CatalogueMetadata, catalogue::Rating, catalogue::deserialize_optional_date};
+use crate::content::{
+    CatalogueMetadata, catalogue::Rating, catalogue::deserialize_null_default,
+    catalogue::deserialize_optional_date,
+};
 
 #[derive(Debug)]
 #[markdown_entry]
@@ -30,7 +33,9 @@ pub struct MovieData {
     #[serde(rename = "releaseDate")]
     pub release_date: String, // Date in "YYYY-MM-DD" format
     pub runtime: Option<u32>, // Runtime in minutes
+    #[serde(deserialize_with = "deserialize_null_default")]
     pub companies: Vec<String>,
+    #[serde(deserialize_with = "deserialize_null_default")]
     pub genres: Vec<String>,
 }
 

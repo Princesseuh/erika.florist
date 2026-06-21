@@ -4,7 +4,7 @@ use serde::Deserialize;
 
 use crate::content::{
     CatalogueMetadata,
-    catalogue::{Rating, deserialize_optional_date},
+    catalogue::{Rating, deserialize_null_default, deserialize_optional_date},
 };
 
 #[derive(Debug)]
@@ -27,8 +27,11 @@ pub struct CatalogueGame {
 #[derive(Debug, Deserialize)]
 pub struct GameData {
     pub first_release_date: Option<u64>, // Unix timestamp
+    #[serde(deserialize_with = "deserialize_null_default")]
     pub genres: Vec<GameGenre>,
+    #[serde(deserialize_with = "deserialize_null_default")]
     pub platforms: Vec<GamePlatform>,
+    #[serde(deserialize_with = "deserialize_null_default")]
     pub companies: Vec<GameCompany>,
 }
 

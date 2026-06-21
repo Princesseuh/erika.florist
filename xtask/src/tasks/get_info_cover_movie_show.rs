@@ -38,8 +38,8 @@ struct MediaData {
     #[serde(rename = "releaseDate", skip_serializing_if = "Option::is_none")]
     release_date: Option<String>,
     runtime: Option<u32>,
-    companies: Option<Vec<String>>,
-    genres: Option<Vec<String>>,
+    companies: Vec<String>,
+    genres: Vec<String>,
 }
 
 pub fn run_get_data_movies_shows(content_type: &str) -> anyhow::Result<usize> {
@@ -99,10 +99,16 @@ pub fn run_get_data_movies_shows(content_type: &str) -> anyhow::Result<usize> {
             runtime,
             companies: response
                 .production_companies
-                .map(|cs| cs.into_iter().map(|c| c.name).collect()),
+                .unwrap_or_default()
+                .into_iter()
+                .map(|c| c.name)
+                .collect(),
             genres: response
                 .genres
-                .map(|gs| gs.into_iter().map(|g| g.name).collect()),
+                .unwrap_or_default()
+                .into_iter()
+                .map(|g| g.name)
+                .collect(),
         };
 
         fs::write(&data_path, serde_json::to_string_pretty(&result)?)?;

@@ -1,0 +1,53 @@
+{
+  "first_release_date": 1256774400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 2675,
+      "name": "Nex Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 852,
+      "name": "PlatinumGames",
+      "role": "developer"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 774,
+      "name": "QLOC",
+      "role": "publisher"
+    }
+  ]
+}

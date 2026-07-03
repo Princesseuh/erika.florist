@@ -4,7 +4,7 @@ use serde::Deserialize;
 
 use crate::content::{
     CatalogueMetadata,
-    catalogue::{Rating, Status, deserialize_optional_date},
+    catalogue::{Rating, Status, deserialize_null_default, deserialize_optional_date},
 };
 
 #[derive(Debug)]
@@ -33,7 +33,9 @@ pub struct ShowData {
     pub tagline: Option<String>,
     pub id: u32,
     pub overview: Option<String>,
+    #[serde(deserialize_with = "deserialize_null_default")]
     pub companies: Vec<String>,
+    #[serde(deserialize_with = "deserialize_null_default")]
     pub genres: Vec<String>,
 }
 

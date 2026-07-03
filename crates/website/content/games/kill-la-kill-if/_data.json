@@ -1,0 +1,48 @@
+{
+  "first_release_date": 1564012800,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 13112,
+      "name": "APLUS Co., Ltd.",
+      "role": "developer"
+    },
+    {
+      "id": 1218,
+      "name": "Arc System Works",
+      "role": "publisher"
+    },
+    {
+      "id": 4091,
+      "name": "PQube",
+      "role": "publisher"
+    }
+  ]
+}

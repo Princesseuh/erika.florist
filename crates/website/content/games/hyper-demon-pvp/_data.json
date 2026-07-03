@@ -1,0 +1,26 @@
+{
+  "first_release_date": 1762214400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 9277,
+      "name": "Sorath",
+      "role": "developer"
+    }
+  ]
+}

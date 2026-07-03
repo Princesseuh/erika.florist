@@ -1,0 +1,26 @@
+{
+  "first_release_date": 1710720000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 49851,
+      "name": "Jampacked Games",
+      "role": "developer"
+    }
+  ]
+}

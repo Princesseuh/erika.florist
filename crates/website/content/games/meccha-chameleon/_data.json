@@ -1,0 +1,26 @@
+{
+  "first_release_date": 1780963200,
+  "genres": [
+    {
+      "id": 24,
+      "name": "Tactical"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 66160,
+      "name": "LEMORION",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "first_release_date": 1776643200,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 76325,
+      "name": "Quad Head",
+      "role": "developer"
+    }
+  ]
+}

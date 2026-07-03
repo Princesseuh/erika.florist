@@ -4,7 +4,7 @@ use serde::Deserialize;
 
 use crate::content::{
     CatalogueMetadata,
-    catalogue::{Rating, Status, deserialize_optional_date},
+    catalogue::{Rating, Status, deserialize_null_default, deserialize_optional_date},
 };
 
 #[derive(Debug)]
@@ -37,7 +37,9 @@ pub struct MovieData {
     #[serde(rename = "releaseDate")]
     pub release_date: String, // Date in "YYYY-MM-DD" format
     pub runtime: Option<u32>, // Runtime in minutes
+    #[serde(deserialize_with = "deserialize_null_default")]
     pub companies: Vec<String>,
+    #[serde(deserialize_with = "deserialize_null_default")]
     pub genres: Vec<String>,
 }
 

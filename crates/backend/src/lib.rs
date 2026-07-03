@@ -73,7 +73,7 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
 
         let mut hasher = Sha256::new();
         hasher.update(password.as_bytes());
-        let hashed_input = format!("{:x}", hasher.finalize());
+        let hashed_input: String = hasher.finalize().iter().map(|b| format!("{:02x}", b)).collect();
 
         if hashed_input == hashed_password.to_string() {
             let response = Response::from_json(&serde_json::json!({"success": true}))?;
@@ -213,7 +213,7 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
         };
         let mut hasher = Sha256::new();
         hasher.update(form.form_password.as_bytes());
-        let hashed_input = format!("{:x}", hasher.finalize());
+        let hashed_input: String = hasher.finalize().iter().map(|b| format!("{:02x}", b)).collect();
         if hashed_input != form_password.to_string() {
             return Response::error("Unauthorized", 401);
         }

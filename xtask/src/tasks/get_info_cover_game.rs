@@ -65,8 +65,8 @@ struct CompanyData {
 struct GameData {
     #[serde(skip_serializing_if = "Option::is_none")]
     first_release_date: Option<i64>,
-    genres: Option<Vec<serde_json::Value>>,
-    platforms: Option<Vec<serde_json::Value>>,
+    genres: Vec<serde_json::Value>,
+    platforms: Vec<serde_json::Value>,
     companies: Vec<CompanyData>,
 }
 
@@ -138,19 +138,19 @@ pub fn run_get_data_games() -> anyhow::Result<usize> {
             })
             .collect();
 
-        let genres: Option<Vec<serde_json::Value>> =
-            game_data.genres.map(|gs: Vec<IgdbNamedField>| {
-                gs.into_iter()
-                    .map(|g| serde_json::json!({ "id": g.id, "name": g.name }))
-                    .collect()
-            });
+        let genres: Vec<serde_json::Value> = game_data
+            .genres
+            .unwrap_or_default()
+            .into_iter()
+            .map(|g| serde_json::json!({ "id": g.id, "name": g.name }))
+            .collect();
 
-        let platforms: Option<Vec<serde_json::Value>> =
-            game_data.platforms.map(|ps: Vec<IgdbPlatform>| {
-                ps.into_iter()
-                    .map(|p| serde_json::json!({ "id": p.id, "abbreviation": p.abbreviation }))
-                    .collect()
-            });
+        let platforms: Vec<serde_json::Value> = game_data
+            .platforms
+            .unwrap_or_default()
+            .into_iter()
+            .map(|p| serde_json::json!({ "id": p.id, "abbreviation": p.abbreviation }))
+            .collect();
 
         let result = GameData {
             first_release_date: game_data.first_release_date,

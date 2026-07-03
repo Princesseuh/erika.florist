@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1690156800,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 36919,
+      "name": "Pixelpogo",
+      "role": "developer"
+    },
+    {
+      "id": 12419,
+      "name": "Assemble Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

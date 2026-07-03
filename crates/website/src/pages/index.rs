@@ -56,7 +56,7 @@ impl Route for Index {
                     @for entry in merged {
                         @match entry {
                             IndexEntry::Blog(article) => {
-                                (article_preview(&article, ctx))
+                                (article_preview(article, ctx))
                             },
                             IndexEntry::Wiki(entry) => {
                                 @let entry_data = entry.data(ctx);

@@ -2,23 +2,24 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"lint": "oxlint --type-aware",
-		"format": "oxfmt",
+		"lint": "oxlint --type-aware && cargo clippy",
+		"lint:fix": "oxlint --type-aware --fix && cargo clippy --fix",
+		"format": "oxfmt && cargo fmt",
 		"update-data": "cargo xtask update-catalogue --silent"
 	},
 	"dependencies": {
-		"@tailwindcss/cli": "^4.2.1",
+		"@tailwindcss/cli": "^4.3.0",
 		"github-slugger": "^2.0.0",
 		"quick-score": "^0.2.0",
-		"tailwindcss": "^4.2.1",
+		"tailwindcss": "^4.3.0",
 		"thumbhash": "^0.1.1",
-		"wrangler": "^4.75.0"
+		"wrangler": "^4.94.0"
 	},
 	"devDependencies": {
-		"oxfmt": "^0.41.0",
-		"oxlint": "^1.56.0",
-		"oxlint-tsgolint": "^0.17.0",
-		"typescript": "^5.9.3"
+		"oxfmt": "^0.51.0",
+		"oxlint": "^1.66.0",
+		"oxlint-tsgolint": "^0.23.0",
+		"typescript": "^6.0.3"
 	},
-	"packageManager": "pnpm@10.32.1"
+	"packageManager": "pnpm@11.3.0"
 }

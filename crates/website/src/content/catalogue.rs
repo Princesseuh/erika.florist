@@ -204,6 +204,16 @@ where
     }
 }
 
+// The generated `_data.json` files emit `null` for fields the upstream API omits
+// (e.g. a game with no genres), so treat null the same as an absent field.
+pub fn deserialize_null_default<'de, D, T>(deserializer: D) -> Result<T, D::Error>
+where
+    D: Deserializer<'de>,
+    T: Default + Deserialize<'de>,
+{
+    Ok(Option::deserialize(deserializer)?.unwrap_or_default())
+}
+
 fn catalogue_entry_to_xml(
     id: &str,
     title: String,

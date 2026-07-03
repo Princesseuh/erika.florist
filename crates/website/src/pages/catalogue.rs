@@ -403,3 +403,133 @@ impl Route for CatalogueContent {
         result.to_string()
     }
 }
+
+#[route("/catalogue/mcp.json")]
+pub struct CatalogueMCP;
+
+fn strip_frontmatter(raw: &str) -> String {
+    let trimmed = raw.trim_start();
+    if let Some(rest) = trimmed.strip_prefix("---\n") {
+        if let Some(end) = rest.find("\n---\n") {
+            return rest[end + 5..].trim_start().to_string();
+        }
+        if let Some(end) = rest.find("\n---") {
+            return rest[end + 4..].trim_start().to_string();
+        }
+    }
+    trimmed.to_string()
+}
+
+impl Route for CatalogueMCP {
+    fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
+        use serde_json::json;
+
+        let mut entries: Vec<serde_json::Value> = Vec::new();
+
+        let games: Vec<_> = ctx
+            .content::<crate::content::CatalogueGame>("games")
+            .entries()
+            .collect();
+        for item in games {
+            let content = strip_frontmatter(&item.raw_content.clone().unwrap_or_default());
+            let data = item.data(ctx);
+            let meta = data.get_metadata();
+            entries.push(json!({
+                "id": item.id,
+                "type": "game",
+                "title": data.title,
+                "igdb_id": data.igdb.parse::<u64>().ok(),
+                "rating": data.rating.as_ref().map(|r| r.to_string()),
+                "rating_number": data.rating.as_ref().map(|r| r.to_number()),
+                "finished_date": data.finished_date.map(|d| d.format("%Y-%m-%d").to_string()),
+                "release_year": data.get_release_year(),
+                "author": data.get_author(),
+                "genres": meta.genres.iter().map(|g| g.name.clone()).collect::<Vec<_>>(),
+                "platforms": meta.platforms.iter().map(|p| p.abbreviation.clone()).collect::<Vec<_>>(),
+                "content": content,
+            }));
+        }
+
+        let movies: Vec<_> = ctx
+            .content::<crate::content::CatalogueMovie>("movies")
+            .entries()
+            .collect();
+        for item in movies {
+            let content = strip_frontmatter(&item.raw_content.clone().unwrap_or_default());
+            let data = item.data(ctx);
+            let meta = data.get_metadata();
+            entries.push(json!({
+                "id": item.id,
+                "type": "movie",
+                "title": data.title,
+                "tmdb_id": meta.id,
+                "rating": data.rating.as_ref().map(|r| r.to_string()),
+                "rating_number": data.rating.as_ref().map(|r| r.to_number()),
+                "finished_date": data.finished_date.map(|d| d.format("%Y-%m-%d").to_string()),
+                "release_year": data.get_release_year(),
+                "author": data.get_author(),
+                "genres": meta.genres,
+                "runtime_minutes": meta.runtime,
+                "overview": meta.overview,
+                "tagline": meta.tagline,
+                "content": content,
+            }));
+        }
+
+        let shows: Vec<_> = ctx
+            .content::<crate::content::CatalogueShow>("shows")
+            .entries()
+            .collect();
+        for item in shows {
+            let content = strip_frontmatter(&item.raw_content.clone().unwrap_or_default());
+            let data = item.data(ctx);
+            let meta = data.get_metadata();
+            entries.push(json!({
+                "id": item.id,
+                "type": "show",
+                "title": data.title,
+                "tmdb_id": meta.id,
+                "rating": data.rating.as_ref().map(|r| r.to_string()),
+                "rating_number": data.rating.as_ref().map(|r| r.to_number()),
+                "finished_date": data.finished_date.map(|d| d.format("%Y-%m-%d").to_string()),
+                "release_year": data.get_release_year(),
+                "author": data.get_author(),
+                "genres": meta.genres,
+                "overview": meta.overview,
+                "tagline": meta.tagline,
+                "content": content,
+            }));
+        }
+
+        let books: Vec<_> = ctx
+            .content::<crate::content::CatalogueBook>("books")
+            .entries()
+            .collect();
+        for item in books {
+            let content = strip_frontmatter(&item.raw_content.clone().unwrap_or_default());
+            let data = item.data(ctx);
+            let meta = data.get_metadata();
+            entries.push(json!({
+                "id": item.id,
+                "type": "book",
+                "title": data.title,
+                "isbn": data.isbn,
+                "rating": data.rating.as_ref().map(|r| r.to_string()),
+                "rating_number": data.rating.as_ref().map(|r| r.to_number()),
+                "finished_date": data.finished_date.map(|d| d.format("%Y-%m-%d").to_string()),
+                "release_year": data.get_release_year(),
+                "author": data.get_author(),
+                "authors": meta.authors,
+                "publishers": meta.publishers,
+                "pages": meta.pages,
+                "content": content,
+            }));
+        }
+
+        json!({
+            "version": 2,
+            "entries": serde_json::Value::Array(entries),
+        })
+        .to_string()
+    }
+}

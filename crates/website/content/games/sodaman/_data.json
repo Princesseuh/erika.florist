@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1739750400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 68761,
+      "name": "Tape Corps",
+      "role": "developer"
+    },
+    {
+      "id": 63202,
+      "name": "GameDev.ist",
+      "role": "publisher"
+    }
+  ]
+}

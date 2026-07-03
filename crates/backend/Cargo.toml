@@ -4,11 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-worker = "0.7.4"
+worker = "0.8.3"
 serde = { workspace = true }
 serde_json = { workspace = true }
 base64 = "0.22"
-sha2 = "0.10"
+sha2 = "0.11"
 slug = "0.1.6"
 urlencoding = "2.1"
 

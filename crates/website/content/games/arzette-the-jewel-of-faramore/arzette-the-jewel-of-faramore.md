@@ -5,7 +5,7 @@ finishedDate: 2026-03-25
 igdb: "256403"
 ---
 
-I'd love to say that the creator didn't understand the original games, but they clearly did considering the remakes they've worked on, and so I don't understand the result here. 
+I'd love to say that the creator didn't understand the original games, but they clearly did considering the remakes they've worked on, and so I don't understand the result here.
 
 The game tries way too hard to make the dialogues over the top funny to seemingly try to please the people who have actually never played the original games, but in turn just makes for overly long, annoying dialogues most of the game. Every dialogue feels like it's 10x longer than the dialogues did in the original games.
 

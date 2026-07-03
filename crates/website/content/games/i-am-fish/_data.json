@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1631750400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 5048,
+      "name": "Curve Digital",
+      "role": "publisher"
+    },
+    {
+      "id": 1389,
+      "name": "Bossa Studios",
+      "role": "developer"
+    }
+  ]
+}

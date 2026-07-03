@@ -1,0 +1,22 @@
+{
+  "first_release_date": 1741305600,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 63594,
+      "name": "JA Game Studio",
+      "role": "developer"
+    }
+  ]
+}

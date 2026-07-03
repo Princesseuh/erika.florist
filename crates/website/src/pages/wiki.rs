@@ -221,7 +221,7 @@ impl Route<WikiParams, Entry<WikiEntry>> for WikiEntryPage {
         let right_sidebar = if has_headings {
             Some(html!(
                 nav."p-4 pr-8 h-full p-2" {
-                    (table_of_content(&headings, data.max_depth_toc))
+                    (table_of_content(headings, data.max_depth_toc))
                 }
             ))
         } else {

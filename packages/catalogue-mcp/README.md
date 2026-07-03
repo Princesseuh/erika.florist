@@ -89,9 +89,13 @@ Filter the catalogue. All inputs are optional.
 | `genre`           | string                                  | case-insensitive substring match                             |
 | `query`           | string                                  | fuzzy match on title or author, ranked by relevance          |
 | `mentions`        | string                                  | substring match on the review body                           |
-| `limit`           | 1–200 (default 50)                      |                                                              |
+| `sort`            | `relevance \| finished_date \| rating \| release_year \| title` | defaults to `relevance` with a `query`, else `finished_date` |
+| `order`           | `asc \| desc`                           | defaults to `desc` (`asc` for `sort=title`)                  |
+| `fields`          | string[]                                | project results to only these fields (`id`, `type` always kept) — for cheap bulk pulls |
+| `limit`           | 1–1000 (default 50)                     |                                                              |
+| `offset`          | integer ≥ 0 (default 0)                 | pagination                                                   |
 
-Returns summaries (id, title, rating, dates, author). Call `get_entry` for the full review.
+Returns summaries (id, type, external ids, title, rating, dates, author). Call `get_entry` for the full review. To pull the whole catalogue cheaply, combine `fields` with a high `limit`, e.g. `{ type: "movie", fields: ["rating_number"], limit: 1000 }`.
 
 ### `get_entry`
 
@@ -99,6 +103,20 @@ Returns one full catalogue entry, with the written review as raw Markdown in `co
 
 - `type`: `"game" | "movie" | "show" | "book"`
 - `id`: entry slug, e.g. `hotline-miami`
+
+On a miss it suggests the nearest slugs (a `-YEAR`/`-N` suffix from another source is stripped before matching), so `casino-royale-2006` points you at `casino-royale`.
+
+### `check_catalogue`
+
+Batch existence check: cross-reference a list of candidates against the catalogue in one call. Given any mix of external IDs and slugs, it reports which items Erika has logged (with her rating) and which she hasn't — the `not_found` bucket is exactly the unseen set. Prefer external IDs over slugs, since slugs can differ between sources while IDs are exact.
+
+| field       | type       | notes                              |
+| ----------- | ---------- | ---------------------------------- |
+| `tmdb_ids`  | `number[]` | TMDb IDs; match movies and shows   |
+| `igdb_ids`  | `number[]` | IGDB IDs; match games              |
+| `ids`       | `string[]` | catalogue slugs                    |
+
+At least one array is required.
 
 ### `list_recent`
 
@@ -110,6 +128,18 @@ Recently-finished entries, newest first.
 ### `stats`
 
 Counts per type, average rating per type, and the latest finished date.
+
+### `rating_summary`
+
+Aggregate how Erika rates a slice defined by `genre` and/or `author`. Returns count, average rating, the full rating distribution, and her top-rated examples in that slice.
+
+| field    | type                                    | notes                                                     |
+| -------- | --------------------------------------- | --------------------------------------------------------- |
+| `type`   | `"game" \| "movie" \| "show" \| "book"` | restrict to one type                                      |
+| `genre`  | string                                  | case-insensitive match on a genre name                    |
+| `author` | string                                  | case-insensitive match on the author field               |
+
+`author` is the same field search exposes: production company for movies, developer for games, writer for books. Directors are not stored. At least one of `type`/`genre`/`author` is required.
 
 ### `refresh`
 
@@ -126,6 +156,15 @@ list_recent({ type: "movie", limit: 10 });
 
 // "What did I think of Hotline Miami?"
 get_entry({ type: "game", id: "hotline-miami" });
+
+// "Of these TMDb movies, which have I not seen yet?" -> read not_found
+check_catalogue({ tmdb_ids: [539, 62, 424, 769] });
+
+// "How do I rate horror movies?"
+rating_summary({ type: "movie", genre: "horror" });
+
+// "Grab every movie rating in one call for local analysis."
+search_catalogue({ type: "movie", fields: ["rating_number"], limit: 1000 });
 ```
 
 ## Development

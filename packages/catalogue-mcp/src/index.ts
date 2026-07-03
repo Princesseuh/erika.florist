@@ -19,6 +19,9 @@ interface Entry {
 	id: string;
 	type: EntryType;
 	title: string;
+	tmdb_id?: number;
+	igdb_id?: number;
+	isbn?: string;
 	rating: string;
 	rating_number: number;
 	finished_date: string | null;
@@ -72,11 +75,20 @@ async function loadData(forceRefresh: boolean): Promise<Doc> {
 	}
 }
 
+// QuickScore lowercases but doesn't fold diacritics, so an ASCII query like
+// "Amelie" can never match a stored "Amélie". Normalize both sides.
+function foldForSearch(s: string): string {
+	return s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase();
+}
+
 function summarize(e: Entry) {
 	return {
 		id: e.id,
 		type: e.type,
 		title: e.title,
+		tmdb_id: e.tmdb_id,
+		igdb_id: e.igdb_id,
+		isbn: e.isbn,
 		rating: e.rating,
 		rating_number: e.rating_number,
 		release_year: e.release_year,
@@ -158,7 +170,41 @@ async function main() {
 					.describe(
 						"Case-insensitive substring match against the body of the written review. Useful for finding entries that talk about a specific thing, e.g. 'camera' or 'pacing'.",
 					),
-				limit: z.number().int().min(1).max(200).default(50),
+				sort: z
+					.enum(["relevance", "finished_date", "rating", "release_year", "title"])
+					.optional()
+					.describe(
+						"Sort key. Defaults to 'relevance' when `query` is set, otherwise 'finished_date'.",
+					),
+				order: z
+					.enum(["asc", "desc"])
+					.optional()
+					.describe("Sort direction. Defaults to 'desc' (or 'asc' when sort='title')."),
+				fields: z
+					.array(
+						z.enum([
+							"title",
+							"tmdb_id",
+							"igdb_id",
+							"isbn",
+							"rating",
+							"rating_number",
+							"release_year",
+							"finished_date",
+							"author",
+						]),
+					)
+					.optional()
+					.describe(
+						"Project results down to only these fields (`id` and `type` are always included). Use for cheap bulk pulls, e.g. fields:['rating_number'] with a high limit to grab the whole catalogue in one call.",
+					),
+				limit: z.number().int().min(1).max(1000).default(50),
+				offset: z
+					.number()
+					.int()
+					.min(0)
+					.default(0)
+					.describe("Skip this many results before returning (pagination)."),
 			},
 		},
 		async (input) => {
@@ -213,22 +259,49 @@ async function main() {
 					keys: ["title", "author"],
 					minimumScore: 0.2,
 					sortKey: "title",
+					transformString: foldForSearch,
 				});
 				results = qs.search(input.query).map((r) => r.item.ref);
-			} else {
-				results.sort((a, b) => {
-					const af = a.finished_date ?? "";
-					const bf = b.finished_date ?? "";
-					if (af !== bf) return bf.localeCompare(af);
-					return b.rating_number - a.rating_number;
+			}
+
+			let sort = input.sort ?? (input.query ? "relevance" : "finished_date");
+			if (sort === "relevance" && !input.query) sort = "finished_date";
+			if (sort !== "relevance") {
+				const dir =
+					(input.order ?? (sort === "title" ? "asc" : "desc")) === "asc" ? 1 : -1;
+				const compare = {
+					finished_date: (a: Entry, b: Entry) =>
+						(a.finished_date ?? "").localeCompare(b.finished_date ?? ""),
+					rating: (a: Entry, b: Entry) => a.rating_number - b.rating_number,
+					release_year: (a: Entry, b: Entry) =>
+						(a.release_year ?? 0) - (b.release_year ?? 0),
+					title: (a: Entry, b: Entry) => a.title.localeCompare(b.title),
+				};
+				const cmp = compare[sort as keyof typeof compare];
+				results = [...results].sort((a, b) => {
+					const c = cmp(a, b);
+					if (c !== 0) return dir * c;
+					return (
+						b.rating_number - a.rating_number ||
+						(b.finished_date ?? "").localeCompare(a.finished_date ?? "")
+					);
 				});
 			}
 
-			const limited = results.slice(0, input.limit);
+			const sliced = results.slice(input.offset, input.offset + input.limit);
+			const project = (
+				s: ReturnType<typeof summarize>,
+			): Record<string, unknown> => {
+				if (!input.fields) return s;
+				const out: Record<string, unknown> = { id: s.id, type: s.type };
+				for (const f of input.fields) out[f] = (s as Record<string, unknown>)[f];
+				return out;
+			};
 			const payload = {
 				total_matches: results.length,
-				returned: limited.length,
-				results: limited.map(summarize),
+				offset: input.offset,
+				returned: sliced.length,
+				results: sliced.map(summarize).map(project),
 			};
 			return {
 				content: [{ type: "text", text: JSON.stringify(payload, null, 2) }],
@@ -249,15 +322,117 @@ async function main() {
 		async ({ type, id }) => {
 			const entry = entries.find((e) => e.type === type && e.id === id);
 			if (!entry) {
+				const pool = entries
+					.filter((e) => e.type === type)
+					.map((e) => ({ id: e.id, title: e.title, ref: e }));
+				const qs = new QuickScore(pool, {
+					keys: ["id", "title"],
+					minimumScore: 0.2,
+					sortKey: "id",
+					transformString: foldForSearch,
+				});
+				// Slugs from other sources often carry a disambiguating -YEAR/-N suffix
+				// (e.g. "casino-royale-2006") the catalogue slug lacks; drop it so the
+				// extra token doesn't sink the fuzzy score.
+				const probe = id.replace(/-\d+$/, "").replace(/-/g, " ");
+				const suggestions = qs
+					.search(probe)
+					.slice(0, 5)
+					.map((r) => `${r.item.ref.id} (${r.item.ref.title})`);
+				const text = suggestions.length
+					? `No ${type} found with id "${id}". Did you mean: ${suggestions.join(", ")}?`
+					: `No ${type} found with id "${id}".`;
 				return {
-					content: [
-						{ type: "text", text: `No ${type} found with id "${id}".` },
-					],
+					content: [{ type: "text", text }],
 					isError: true,
 				};
 			}
 			return {
 				content: [{ type: "text", text: JSON.stringify(entry, null, 2) }],
+			};
+		},
+	);
+
+	server.registerTool(
+		"check_catalogue",
+		{
+			description:
+				"Batch existence check. Given external IDs (TMDb for movies/shows, IGDB for games) and/or catalogue slugs, report which items Erika has already logged and how she rated them. Use this to cross-reference a candidate list against her catalogue in one call — the `not_found` bucket is exactly the set she hasn't logged. Prefer this over many get_entry calls, and prefer external IDs over slugs (slugs can differ from other sources; IDs are exact).",
+			inputSchema: {
+				tmdb_ids: z
+					.array(z.number().int())
+					.optional()
+					.describe("TMDb IDs; match against movies and shows"),
+				igdb_ids: z
+					.array(z.number().int())
+					.optional()
+					.describe("IGDB IDs; match against games"),
+				ids: z
+					.array(z.string())
+					.optional()
+					.describe("Catalogue slugs, e.g. 'hotline-miami'"),
+			},
+		},
+		async ({ tmdb_ids, igdb_ids, ids }) => {
+			if (!tmdb_ids?.length && !igdb_ids?.length && !ids?.length) {
+				return {
+					content: [
+						{
+							type: "text",
+							text: "Provide at least one of tmdb_ids, igdb_ids, or ids.",
+						},
+					],
+					isError: true,
+				};
+			}
+
+			const byTmdb = new Map<number, Entry>();
+			const byIgdb = new Map<number, Entry>();
+			const bySlug = new Map<string, Entry>();
+			for (const e of entries) {
+				if (e.tmdb_id != null) byTmdb.set(e.tmdb_id, e);
+				if (e.igdb_id != null) byIgdb.set(e.igdb_id, e);
+				bySlug.set(e.id, e);
+			}
+
+			const found: Array<
+				{ matched_by: string; query: string | number } & ReturnType<
+					typeof summarize
+				>
+			> = [];
+			const not_found = {
+				tmdb_ids: [] as number[],
+				igdb_ids: [] as number[],
+				ids: [] as string[],
+			};
+
+			for (const t of tmdb_ids ?? []) {
+				const e = byTmdb.get(t);
+				if (e) found.push({ matched_by: "tmdb_id", query: t, ...summarize(e) });
+				else not_found.tmdb_ids.push(t);
+			}
+			for (const g of igdb_ids ?? []) {
+				const e = byIgdb.get(g);
+				if (e) found.push({ matched_by: "igdb_id", query: g, ...summarize(e) });
+				else not_found.igdb_ids.push(g);
+			}
+			for (const s of ids ?? []) {
+				const e = bySlug.get(s);
+				if (e) found.push({ matched_by: "id", query: s, ...summarize(e) });
+				else not_found.ids.push(s);
+			}
+
+			const payload = {
+				found_count: found.length,
+				not_found_count:
+					not_found.tmdb_ids.length +
+					not_found.igdb_ids.length +
+					not_found.ids.length,
+				found,
+				not_found,
+			};
+			return {
+				content: [{ type: "text", text: JSON.stringify(payload, null, 2) }],
 			};
 		},
 	);
@@ -335,6 +510,83 @@ async function main() {
 						),
 					},
 				],
+			};
+		},
+	);
+
+	server.registerTool(
+		"rating_summary",
+		{
+			description:
+				"Aggregate how Erika rates a slice of the catalogue defined by genre and/or author. Returns count, average rating, the full rating distribution, and her top-rated examples in that slice. `author` matches the same field search exposes: production company for movies, developer for games, writer for books — directors are NOT stored. Answers questions like 'how does she rate horror?' or 'what's her average for FromSoftware?'.",
+			inputSchema: {
+				type: z
+					.enum(["game", "movie", "show", "book"])
+					.optional()
+					.describe("Restrict to one entry type"),
+				genre: z
+					.string()
+					.optional()
+					.describe("Case-insensitive match on a genre name"),
+				author: z
+					.string()
+					.optional()
+					.describe(
+						"Case-insensitive match on the author field (company/developer/writer)",
+					),
+			},
+		},
+		async ({ type, genre, author }) => {
+			if (!genre && !author && !type) {
+				return {
+					content: [
+						{
+							type: "text",
+							text: "Provide at least one of genre, author, or type.",
+						},
+					],
+					isError: true,
+				};
+			}
+			const g = genre ? foldForSearch(genre) : null;
+			const a = author ? foldForSearch(author) : null;
+			const matched = entries.filter((e) => {
+				if (type && e.type !== type) return false;
+				if (
+					g &&
+					!(e.genres ?? []).some((x) => foldForSearch(x).includes(g))
+				)
+					return false;
+				if (a && !foldForSearch(e.author ?? "").includes(a)) return false;
+				return true;
+			});
+			const distribution: Record<string, number> = {
+				Masterpiece: 0,
+				Loved: 0,
+				Liked: 0,
+				Okay: 0,
+				Disliked: 0,
+				Hated: 0,
+			};
+			let sum = 0;
+			for (const e of matched) {
+				sum += e.rating_number;
+				if (e.rating in distribution)
+					distribution[e.rating] = (distribution[e.rating] ?? 0) + 1;
+			}
+			const payload = {
+				count: matched.length,
+				average_rating: matched.length
+					? Number((sum / matched.length).toFixed(2))
+					: null,
+				distribution,
+				examples: [...matched]
+					.sort((x, y) => y.rating_number - x.rating_number)
+					.slice(0, 5)
+					.map(summarize),
+			};
+			return {
+				content: [{ type: "text", text: JSON.stringify(payload, null, 2) }],
 			};
 		},
 	);

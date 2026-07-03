@@ -576,6 +576,7 @@ impl Route for CatalogueMCP {
                 "id": item.id,
                 "type": "game",
                 "title": data.title,
+                "igdb_id": data.igdb.parse::<u64>().ok(),
                 "rating": data.rating.to_string(),
                 "rating_number": data.rating.to_number(),
                 "finished_date": data.finished_date.map(|d| d.format("%Y-%m-%d").to_string()),
@@ -599,6 +600,7 @@ impl Route for CatalogueMCP {
                 "id": item.id,
                 "type": "movie",
                 "title": data.title,
+                "tmdb_id": meta.id,
                 "rating": data.rating.to_string(),
                 "rating_number": data.rating.to_number(),
                 "finished_date": data.finished_date.map(|d| d.format("%Y-%m-%d").to_string()),
@@ -624,6 +626,7 @@ impl Route for CatalogueMCP {
                 "id": item.id,
                 "type": "show",
                 "title": data.title,
+                "tmdb_id": meta.id,
                 "rating": data.rating.to_string(),
                 "rating_number": data.rating.to_number(),
                 "finished_date": data.finished_date.map(|d| d.format("%Y-%m-%d").to_string()),
@@ -648,6 +651,7 @@ impl Route for CatalogueMCP {
                 "id": item.id,
                 "type": "book",
                 "title": data.title,
+                "isbn": data.isbn,
                 "rating": data.rating.to_string(),
                 "rating_number": data.rating.to_number(),
                 "finished_date": data.finished_date.map(|d| d.format("%Y-%m-%d").to_string()),
@@ -661,7 +665,7 @@ impl Route for CatalogueMCP {
         }
 
         json!({
-            "version": 1,
+            "version": 2,
             "entries": serde_json::Value::Array(entries),
         })
         .to_string()

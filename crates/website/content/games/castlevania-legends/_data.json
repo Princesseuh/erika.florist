@@ -1,0 +1,31 @@
+{
+  "first_release_date": 880588800,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Game Boy",
+      "id": 33
+    }
+  ],
+  "companies": [
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "publisher"
+    },
+    {
+      "id": 1822,
+      "name": "Konami Computer Entertainment Nagoya",
+      "role": "developer"
+    }
+  ]
+}

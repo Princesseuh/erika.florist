@@ -1,0 +1,75 @@
+{
+  "first_release_date": 1128038400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 1449,
+      "name": "MC2 France",
+      "role": "publisher"
+    },
+    {
+      "id": 318,
+      "name": "Rebellion Developments",
+      "role": "developer"
+    },
+    {
+      "id": 10070,
+      "name": "Namco Hometek",
+      "role": "publisher"
+    },
+    {
+      "id": 1901,
+      "name": "Reef Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 2356,
+      "name": "MC2-Microïds",
+      "role": "publisher"
+    },
+    {
+      "id": 318,
+      "name": "Rebellion Developments",
+      "role": "publisher"
+    }
+  ]
+}

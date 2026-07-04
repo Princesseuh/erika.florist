@@ -1,0 +1,35 @@
+{
+  "first_release_date": 625449600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    },
+    {
+      "abbreviation": "Game Boy",
+      "id": 33
+    }
+  ],
+  "companies": [
+    {
+      "id": 161,
+      "name": "Konami Digital Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "developer"
+    }
+  ]
+}

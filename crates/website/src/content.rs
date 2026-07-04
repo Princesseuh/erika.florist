@@ -1,5 +1,6 @@
 mod blog;
 mod catalogue;
+mod collection;
 mod project;
 mod wiki;
 pub use blog::BlogPost;
@@ -7,6 +8,7 @@ pub use catalogue::{
     CatalogueEntry, CatalogueMetadata, Status, books::CatalogueBook, catalogue_add_metadata,
     games::CatalogueGame, movies::CatalogueMovie, shows::CatalogueShow,
 };
+pub use collection::{Collection, CollectionMember, MediaType};
 use maud::{PreEscaped, html};
 pub use maudit::{
     assets::{Asset, ImageFormat, ImageOptions},
@@ -121,6 +123,7 @@ pub fn content_sources(root: String) -> ContentSources {
     let movies_path = format!("{}/content/movies/**/*.md", root);
     let shows_path = format!("{}/content/shows/**/*.md", root);
     let games_path = format!("{}/content/games/**/*.md", root);
+    let collections_path = format!("{}/content/collections/*.md", root);
 
     content_sources![
         "blog" => glob_markdown_with_options::<BlogPost>(&blog_path, create_markdown_options()),
@@ -131,6 +134,8 @@ pub fn content_sources(root: String) -> ContentSources {
         "books" => catalogue_add_metadata(&glob_markdown::<CatalogueBook>(&books_path), None),
         "movies" => catalogue_add_metadata(&glob_markdown::<CatalogueMovie>(&movies_path), None),
         "shows" => catalogue_add_metadata(&glob_markdown::<CatalogueShow>(&shows_path), None),
-        "games" => catalogue_add_metadata(&glob_markdown::<CatalogueGame>(&games_path), None)
+        "games" => catalogue_add_metadata(&glob_markdown::<CatalogueGame>(&games_path), None),
+
+        "collections" => glob_markdown::<Collection>(&collections_path)
     ]
 }

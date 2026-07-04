@@ -19,11 +19,12 @@ interface Entry {
 	id: string;
 	type: EntryType;
 	title: string;
+	status: "finished" | "planned";
 	tmdb_id?: number;
 	igdb_id?: number;
 	isbn?: string;
-	rating: string;
-	rating_number: number;
+	rating: string | null;
+	rating_number: number | null;
 	finished_date: string | null;
 	release_year: number | null;
 	author: string | null;
@@ -86,6 +87,7 @@ function summarize(e: Entry) {
 		id: e.id,
 		type: e.type,
 		title: e.title,
+		status: e.status,
 		tmdb_id: e.tmdb_id,
 		igdb_id: e.igdb_id,
 		isbn: e.isbn,
@@ -117,6 +119,12 @@ async function main() {
 					.enum(["game", "movie", "show", "book"])
 					.optional()
 					.describe("Restrict to one entry type"),
+				status: z
+					.enum(["finished", "planned"])
+					.optional()
+					.describe(
+						"Restrict to finished entries (rated, consumed) or planned ones (queued, not yet rated)",
+					),
 				rating_at_least: z
 					.number()
 					.int()
@@ -184,6 +192,7 @@ async function main() {
 					.array(
 						z.enum([
 							"title",
+							"status",
 							"tmdb_id",
 							"igdb_id",
 							"isbn",
@@ -212,9 +221,10 @@ async function main() {
 			const mentions = input.mentions?.toLowerCase();
 			let results = entries.filter((e) => {
 				if (input.type && e.type !== input.type) return false;
+				if (input.status && e.status !== input.status) return false;
 				if (
 					input.rating_at_least != null &&
-					e.rating_number < input.rating_at_least
+					(e.rating_number == null || e.rating_number < input.rating_at_least)
 				)
 					return false;
 				if (input.year != null && e.release_year !== input.year) return false;
@@ -272,7 +282,8 @@ async function main() {
 				const compare = {
 					finished_date: (a: Entry, b: Entry) =>
 						(a.finished_date ?? "").localeCompare(b.finished_date ?? ""),
-					rating: (a: Entry, b: Entry) => a.rating_number - b.rating_number,
+					rating: (a: Entry, b: Entry) =>
+						(a.rating_number ?? -1) - (b.rating_number ?? -1),
 					release_year: (a: Entry, b: Entry) =>
 						(a.release_year ?? 0) - (b.release_year ?? 0),
 					title: (a: Entry, b: Entry) => a.title.localeCompare(b.title),
@@ -282,7 +293,7 @@ async function main() {
 					const c = cmp(a, b);
 					if (c !== 0) return dir * c;
 					return (
-						b.rating_number - a.rating_number ||
+						(b.rating_number ?? -1) - (a.rating_number ?? -1) ||
 						(b.finished_date ?? "").localeCompare(a.finished_date ?? "")
 					);
 				});
@@ -466,7 +477,7 @@ async function main() {
 		"stats",
 		{
 			description:
-				"Overall catalogue stats: counts per type, average ratings, latest finished date.",
+				"Overall catalogue stats over finished entries (planned backlog excluded): counts per type, average ratings, latest finished date.",
 			inputSchema: {},
 		},
 		async () => {
@@ -474,13 +485,16 @@ async function main() {
 				string,
 				{ count: number; rating_sum: number; rating_n: number }
 			> = {};
+			const finished = entries.filter((e) => e.status !== "planned");
 			let latest: string | null = null;
-			for (const e of entries) {
+			for (const e of finished) {
 				byType[e.type] ??= { count: 0, rating_sum: 0, rating_n: 0 };
 				const b = byType[e.type]!;
 				b.count += 1;
-				b.rating_sum += e.rating_number;
-				b.rating_n += 1;
+				if (e.rating_number != null) {
+					b.rating_sum += e.rating_number;
+					b.rating_n += 1;
+				}
 				if (e.finished_date && (!latest || e.finished_date > latest))
 					latest = e.finished_date;
 			}
@@ -501,7 +515,7 @@ async function main() {
 						type: "text",
 						text: JSON.stringify(
 							{
-								total: entries.length,
+								total: finished.length,
 								by_type,
 								latest_finished_date: latest,
 							},
@@ -569,19 +583,20 @@ async function main() {
 				Hated: 0,
 			};
 			let sum = 0;
+			let rated = 0;
 			for (const e of matched) {
+				if (e.rating_number == null || e.rating == null) continue;
 				sum += e.rating_number;
+				rated += 1;
 				if (e.rating in distribution)
 					distribution[e.rating] = (distribution[e.rating] ?? 0) + 1;
 			}
 			const payload = {
 				count: matched.length,
-				average_rating: matched.length
-					? Number((sum / matched.length).toFixed(2))
-					: null,
+				average_rating: rated ? Number((sum / rated).toFixed(2)) : null,
 				distribution,
 				examples: [...matched]
-					.sort((x, y) => y.rating_number - x.rating_number)
+					.sort((x, y) => (y.rating_number ?? -1) - (x.rating_number ?? -1))
 					.slice(0, 5)
 					.map(summarize),
 			};

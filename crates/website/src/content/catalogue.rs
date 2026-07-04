@@ -9,7 +9,7 @@ use maudit::{
     },
     route::PageContext,
 };
-use serde::{Deserialize, Deserializer, de::DeserializeOwned};
+use serde::{Deserialize, Deserializer, Serialize, de::DeserializeOwned};
 use xml_builder::XMLElement;
 
 use crate::{
@@ -33,7 +33,7 @@ pub enum Rating {
     Hated,
 }
 
-#[derive(Debug, Deserialize, Default, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Deserialize, Serialize, Default, Clone, Copy, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum Status {
     #[default]
@@ -80,6 +80,12 @@ pub trait CatalogueMetadata<T> {
     fn get_status(&self) -> Status;
 
     fn get_rating(&self) -> Option<&Rating>;
+
+    fn get_title(&self) -> &str;
+
+    fn get_cover(&self) -> &(String, String);
+
+    fn get_finished_date(&self) -> Option<NaiveDate>;
 
     fn get_author(&self) -> Option<String> {
         None

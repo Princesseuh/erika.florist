@@ -1,0 +1,36 @@
+{
+  "first_release_date": 890784000,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    }
+  ],
+  "companies": [
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 350,
+      "name": "EA Seattle",
+      "role": "developer"
+    },
+    {
+      "id": 277,
+      "name": "EA Canada",
+      "role": "developer"
+    }
+  ]
+}

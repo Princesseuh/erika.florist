@@ -6,60 +6,31 @@ use maudit::route::prelude::*;
 use crate::components::icon::Icon;
 use crate::components::mobile_menu;
 use crate::content::Status;
+use crate::components::catalogue::{SidebarConfig, catalogue_filters};
 use crate::{content::CatalogueMetadata, layouts::base_layout, state};
 
+fn catalogue_sidebar(prefix: &str, mobile: bool) -> maud::Markup {
+    catalogue_filters(&SidebarConfig {
+        prefix,
+        mobile,
+        show_type: true,
+        show_status: true,
+        show_rating: true,
+        show_completion: false,
+        default_status: "finished",
+        sort_options: &[
+            ("date", "Date"),
+            ("release", "Release"),
+            ("rating", "Rating"),
+            ("alphabetical", "Title"),
+        ],
+        count_id: "catalogue-entry-count",
+        count_label: "... entries",
+    })
+}
+
 fn catalogue_mobile_filters() -> maud::Markup {
-    html! {
-        div id="catalogue-filters" class="flex flex-col gap-6" {
-            div class="flex flex-col gap-2" {
-                label for="mobile-catalogue-search" class="font-bold text-sm" { "Search" }
-                input id="mobile-catalogue-search" type="search";
-            }
-
-            div class="flex flex-col gap-2" {
-                label for="mobile-catalogue-types" class="font-bold text-sm" { "Type" }
-                select name="types" id="mobile-catalogue-types" {
-                    option value="" { "Type" }
-                    option value="book" { "Book" }
-                    option value="game" { "Game" }
-                    option value="movie" { "Movie" }
-                    option value="show" { "Show" }
-                }
-            }
-
-            div class="flex flex-col gap-2" {
-                label for="mobile-catalogue-status" class="font-bold text-sm" { "Status" }
-                select name="status" id="mobile-catalogue-status" {
-                    option value="finished" selected { "Finished" }
-                    option value="planned" { "Planned" }
-                    option value="all" { "All" }
-                }
-            }
-
-            div class="flex flex-col gap-2" {
-                label for="mobile-catalogue-ratings" class="font-bold text-sm" { "Rating" }
-                select name="ratings" id="mobile-catalogue-ratings" {
-                    option value="" { "Rating" }
-                    option value="5" { "Masterpiece" }
-                    option value="4" { "Loved" }
-                    option value="3" { "Liked" }
-                    option value="2" { "Okay" }
-                    option value="1" { "Disliked" }
-                    option value="0" { "Hated" }
-                }
-            }
-
-            div {
-                label for="mobile-catalogue-sort" class="mb-1 flex items-center justify-between gap-x-2 font-bold text-sm" { "Sort" input id="mobile-catalogue-sort-ord" type="checkbox" class="m-0 cursor-pointer appearance-none text-lg before:text-rose-ebony before:content-['↑'] checked:before:content-['↓'] sm:text-base h-full w-auto"; }
-                select name="sort" id="mobile-catalogue-sort" {
-                    option value="date" { "Date" }
-                    option value="rating" { "Rating" }
-                    option value="alphabetical" { "Title" }
-                }
-            }
-        }
-        div id="catalogue-entry-count" class="mt-4" { "... entries" }
-    }
+    catalogue_sidebar("mobile-catalogue", true)
 }
 
 #[route("/catalogue/")]
@@ -85,56 +56,9 @@ impl Route for Catalogue {
                     div.flex.relative id="catalogue-core" data-pagelength=(page_length) data-latest=(catalogue_hash) {
                         aside class="hidden sm:block grow-0 sm:my-4 px-4 pr-8 w-64" {
                             p class="text-sm mb-4" { "This page lists games, books, shows… stuff I've played, watched, read, or listened to."}
+                            a."button-style-bg-accent inline mb-4" href="/catalogue/collections/" { "Collections →" }
                             div class="sticky top-4" {
-                                div id="catalogue-filters" class="flex flex-col gap-y-2" {
-                                div {
-                                    label for="catalogue-search" { "Search" }
-                                    input id="catalogue-search" type="search";
-                                }
-
-                                div {
-                                    label for="catalogue-types" { "Type" }
-                                    select name="types" id="catalogue-types" {
-                                        option value="" { "Type" }
-                                        option value="book" { "Book" }
-                                        option value="game" { "Game" }
-                                        option value="movie" { "Movie" }
-                                        option value="show" { "Show" }
-                                    }
-                                }
-
-                                div {
-                                    label for="catalogue-status" { "Status" }
-                                    select name="status" id="catalogue-status" {
-                                        option value="finished" selected { "Finished" }
-                                        option value="planned" { "Planned" }
-                                        option value="all" { "All" }
-                                    }
-                                }
-
-                                div {
-                                    label for="catalogue-ratings" { "Rating" }
-                                    select name="ratings" id="catalogue-ratings" {
-                                        option value="" { "Rating" }
-                                        option value="5" { "Masterpiece" }
-                                        option value="4" { "Loved" }
-                                        option value="3" { "Liked" }
-                                        option value="2" { "Okay" }
-                                        option value="1" { "Disliked" }
-                                        option value="0" { "Hated" }
-                                    }
-                                }
-
-                                div {
-                                    label for="catalogue-sort" class="mb-1 flex items-center justify-between gap-x-2" { "Sort" input id="catalogue-sort-ord" type="checkbox" class="m-0 cursor-pointer appearance-none text-lg before:text-rose-ebony before:content-['↑'] checked:before:content-['↓'] sm:text-base h-full w-auto"; }
-                                    select name="sort" id="catalogue-sort" {
-                                        option value="date" { "Date" }
-                                        option value="rating" { "Rating" }
-                                        option value="alphabetical" { "Title" }
-                                    }
-                                }
-                            }
-                            div id="catalogue-entry-count" class="mt-4" { "... entries" }
+                                (catalogue_sidebar("catalogue", false))
                         }
                     }
                         div.flex-1 {
@@ -146,148 +70,13 @@ impl Route for Catalogue {
                                 }
                             }
 
-                            button id="add-entry-btn" class="hidden fixed bottom-22 md:bottom-8 right-6 w-14 h-14 rounded-full bg-accent-valencia text-white text-2xl shadow-lg hover:bg-accent-valencia/80 transition-colors z-40" title="Add entry" {
-                                "+"
-                            }
+                            (crate::components::catalogue::add_entry_button())
                         }
                     }
 
-                        div id="review-modal" class="hidden fixed inset-0 bg-black/70 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" {
-                            div class="bg-white-sugar-cane rounded-t-lg sm:rounded-lg max-w-2xl w-full max-h-[90vh] flex flex-col sm:max-h-[85vh]" {
-                                div id="review-modal-header" class="bg-accent-valencia px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center rounded-t-lg shrink-0" {
-                                    h2 id="review-modal-title" class="text-lg sm:text-xl font-bold text-white m-0" {
-                                        a id="review-modal-title-link" class="text-white underline-offset-2 hover:underline decoration-white" href="" {}
-                                    }
-                                    button id="close-review-modal" class="text-white hover:text-black text-2xl font-bold leading-none" { "×" }
-                                }
-                                div class="flex flex-col sm:flex-row gap-4 sm:gap-6 p-4 sm:p-6 overflow-y-auto" {
-                                    img id="review-modal-cover" class="hidden w-full sm:w-[120px] max-h-48 sm:max-h-none shrink-0 object-contain sm:object-cover rounded self-start" src="" alt="" {}
-                                    div class="flex flex-col gap-3 min-w-0" {
-                                        div id="review-modal-meta" class="flex flex-col gap-y-0.5 text-sm text-subtle-charcoal" {}
-                                        div id="review-modal-content" class="prose text-black" {}
-                                    }
-                                }
-                            }
-                        }
+                        (crate::components::catalogue::review_modal())
 
-                        div id="add-entry-modal" class="hidden fixed inset-0 bg-black/70 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" {
-                        div class="bg-white-sugar-cane rounded-t-lg sm:rounded-lg max-w-2xl w-full max-h-[95vh] flex flex-col" {
-                            div class="bg-accent-valencia px-6 py-4 flex justify-between items-center rounded-t-lg shrink-0" {
-                                h2 id="add-modal-title" class="text-xl font-bold text-white" { "Add catalogue entry" }
-                                button id="close-modal" class="text-white hover:text-black text-2xl font-bold" { "×" }
-                            }
-
-                            div id="modal-mode-toggle" class="flex bg-zinc-200 text-black border-b-2 border-black shrink-0" {
-                                button type="button" data-mode="finished" class="modal-mode-btn flex-1 py-2 font-bold bg-white-sugar-cane" { "Finished" }
-                                button type="button" data-mode="planned" class="modal-mode-btn flex-1 py-2 font-bold" { "Planned" }
-                            }
-
-                            div id="queue-section" class="hidden p-4 border-b-2 border-black shrink-0 text-black" {
-                                div class="font-bold text-sm mb-2" { "Queue (" span id="queue-count" { "0" } ")" }
-                                ul id="queue-items" class="space-y-1 text-sm max-h-32 overflow-y-auto" {}
-                            }
-
-                            div class="p-6 overflow-y-auto" {
-                                form id="add-entry-form" class="space-y-4 text-black" {
-                                    div id="selected-result" class="flex justify-center items-center gap-2" {
-                                        img id="selected-cover" class="w-12 h-16 object-cover rounded hidden" src="" {};
-                                        div id="selected-cover-placeholder" class="w-12 h-16 bg-zinc-300 rounded" {}
-                                        span id="selected-title" class="font-medium" { "No selection" }
-                                        input type="hidden" id="entry-source-id" name="source-id";
-                                        input type="hidden" id="entry-promote-slug" name="promote-slug";
-                                    }
-
-                                    div id="type-title-row" class="flex items-end" {
-                                        label class="w-1/4 md:w-[15%]" {
-                                            span class="block text-sm font-bold mb-1" { "Type" }
-                                            select id="entry-type" name="type" class="w-full px-3 py-2 bg-white border-y-2 border-l-2 border-black rounded-l rounded-r-none font-medium h-10 disabled:bg-zinc-400" required {
-                                                option value="" { "Select" }
-                                                option value="game" { "Game" }
-                                                option value="movie" { "Movie" }
-                                                option value="tv" { "Show" }
-                                                option value="book" { "Book" }
-                                            }
-                                        }
-                                        label class="flex-1" {
-                                            span class="block text-sm font-bold mb-1" { "Title" }
-                                            div class="relative" {
-                                                input id="entry-name" name="name" class="w-full px-3 py-2 bg-white border-2 border-black rounded-r font-medium h-10 disabled:bg-zinc-400 disabled:cursor-not-allowed" placeholder="Select type first..." disabled;
-                                                div id="entry-search-spinner" class="hidden absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" {}
-                                            }
-                                        }
-                                    }
-
-                                    div class="relative" {
-                                        div id="search-results" class="mt-2 max-h-40 overflow-y-auto hidden border-2 border-black bg-white absolute z-10 left-0 right-0" {}
-                                    }
-
-                                    div id="rating-row" class="block" {
-                                        span class="block text-sm font-bold mb-2 block" { "Rating" }
-                                        div id="rating-options" class="flex justify-center gap-4" {
-                                            label class="cursor-pointer flex flex-col items-center" {
-                                                input type="radio" name="rating" value="hated" class="peer sr-only";
-                                                span class="text-3xl peer-checked:scale-125 transition-transform" { "🙁" }
-                                            }
-                                            label class="cursor-pointer flex flex-col items-center" {
-                                                input type="radio" name="rating" value="disliked" class="peer sr-only";
-                                                span class="text-3xl peer-checked:scale-125 transition-transform" { "😕" }
-                                            }
-                                            label class="cursor-pointer flex flex-col items-center" {
-                                                input type="radio" name="rating" value="okay" class="peer sr-only";
-                                                span class="text-3xl peer-checked:scale-125 transition-transform" { "😐" }
-                                            }
-                                            label class="cursor-pointer flex flex-col items-center" {
-                                                input type="radio" name="rating" value="liked" class="peer sr-only";
-                                                span class="text-3xl peer-checked:scale-125 transition-transform" { "🙂" }
-                                            }
-                                            label class="cursor-pointer flex flex-col items-center" {
-                                                input type="radio" name="rating" value="loved" class="peer sr-only";
-                                                span class="text-3xl peer-checked:scale-125 transition-transform" { "🥰" }
-                                            }
-                                            label class="cursor-pointer flex flex-col items-center" {
-                                                input type="radio" name="rating" value="masterpiece" class="peer sr-only";
-                                                span class="text-3xl peer-checked:scale-125 transition-transform" { "❤️" }
-                                            }
-                                        }
-                                    }
-
-                                    div id="date-row" {
-                                        label {
-                                            span class="block text-sm font-bold mb-1" { "Date finished" }
-                                            input type="date" id="entry-date" name="date" class="w-full px-3 py-2 bg-white border-2 border-black rounded font-medium";
-                                        }
-                                    }
-
-                                    div id="comment-row" {
-                                        label {
-                                            span class="block text-sm font-bold mb-1" { "Comment" }
-                                            textarea id="entry-comment" name="comment" class="w-full px-3 py-2 bg-white border-2 border-black rounded font-medium h-24" placeholder="Thoughts..." {}
-                                        }
-                                    }
-
-                                    div class="flex items-center justify-between" {
-                                        div class="flex items-center gap-2" {
-                                            input type="checkbox" id="skip-ci" name="skip-ci" value="skip-ci";
-                                            label for="skip-ci" class="text-sm font-bold" { "Skip CI/CD" }
-                                        }
-                                        input type="text" id="entry-source-id-display" class="px-2 py-1 border-2 border-black rounded font-medium text-sm w-32" placeholder="Source ID" {};
-                                    }
-
-                                    div id="form-error" class="hidden bg-red-100 border-2 border-red-600 text-red-600 px-4 py-3 rounded font-bold" {}
-
-                                    div {
-                                        label class="block text-sm font-bold mb-1" for="form-password" { "Password" }
-                                        input type="password" id="form-password" name="form-password" class="w-full px-3 py-2 bg-white border-2 border-black rounded font-medium" required;
-                                    }
-
-                                    div class="flex gap-2" {
-                                        button type="button" id="add-to-queue-btn" class="flex-1 bg-zinc-300 text-black py-3 rounded font-bold hover:bg-zinc-400" { "+ Add to queue" }
-                                        button type="submit" id="submit-btn" class="flex-1 bg-accent-valencia text-white py-3 rounded font-bold hover:bg-accent-valencia/80" { "Submit" }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                        (crate::components::catalogue::add_entry_modal())
                 }
 
             ),
@@ -439,6 +228,7 @@ impl Route for CatalogueMCP {
                 "type": "game",
                 "title": data.title,
                 "igdb_id": data.igdb.parse::<u64>().ok(),
+                "status": data.get_status(),
                 "rating": data.rating.as_ref().map(|r| r.to_string()),
                 "rating_number": data.rating.as_ref().map(|r| r.to_number()),
                 "finished_date": data.finished_date.map(|d| d.format("%Y-%m-%d").to_string()),
@@ -463,6 +253,7 @@ impl Route for CatalogueMCP {
                 "type": "movie",
                 "title": data.title,
                 "tmdb_id": meta.id,
+                "status": data.get_status(),
                 "rating": data.rating.as_ref().map(|r| r.to_string()),
                 "rating_number": data.rating.as_ref().map(|r| r.to_number()),
                 "finished_date": data.finished_date.map(|d| d.format("%Y-%m-%d").to_string()),
@@ -489,6 +280,7 @@ impl Route for CatalogueMCP {
                 "type": "show",
                 "title": data.title,
                 "tmdb_id": meta.id,
+                "status": data.get_status(),
                 "rating": data.rating.as_ref().map(|r| r.to_string()),
                 "rating_number": data.rating.as_ref().map(|r| r.to_number()),
                 "finished_date": data.finished_date.map(|d| d.format("%Y-%m-%d").to_string()),
@@ -514,6 +306,7 @@ impl Route for CatalogueMCP {
                 "type": "book",
                 "title": data.title,
                 "isbn": data.isbn,
+                "status": data.get_status(),
                 "rating": data.rating.as_ref().map(|r| r.to_string()),
                 "rating_number": data.rating.as_ref().map(|r| r.to_number()),
                 "finished_date": data.finished_date.map(|d| d.format("%Y-%m-%d").to_string()),

@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1445472000,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    }
+  ],
+  "companies": [
+    {
+      "id": 739,
+      "name": "Grezzo",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 45209,
+      "name": "Nintendo EPD Production Group No. 3",
+      "role": "developer"
+    }
+  ]
+}

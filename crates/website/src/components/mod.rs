@@ -1,5 +1,6 @@
 mod article;
 pub use article::article_preview;
+pub mod catalogue;
 pub mod dinkus;
 mod go_back_up;
 mod header;

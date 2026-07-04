@@ -157,6 +157,9 @@ function applyMode(next: Mode) {
 	setHidden(commentRow, isPlanned);
 	setHidden(typeTitleRow, isPromote);
 	setHidden(addToQueueBtn, isPromote);
+	// Promote reuses the entry's existing source id from its file, so the
+	// manual override field is irrelevant here.
+	setHidden(sourceIdDisplay, isPromote);
 
 	typeSelect.disabled = isPromote;
 	titleInput.disabled = isPromote ? true : typeSelect.value === "";
@@ -180,7 +183,7 @@ function refreshQueueUI() {
 		li.className = "flex items-center justify-between gap-2 bg-zinc-100 rounded px-2 py-1";
 		const label = document.createElement("span");
 		label.className = "truncate";
-		const tag = item.status === "planned" ? "📌" : "✅";
+		const tag = item.status === "planned" ? "🕒" : "✅";
 		label.textContent = `${tag} ${item.name} (${item.type})`;
 		const removeBtn = document.createElement("button");
 		removeBtn.type = "button";
@@ -432,7 +435,12 @@ interface BatchPayload {
 	"form-password": string;
 	"skip-ci": boolean;
 	items: BatchPayloadItem[];
+	collection?: string;
 }
+
+// On a collection detail page, adds are also appended to this collection.
+const collectionSlug =
+	document.getElementById("catalogue-core")?.dataset.collectionSlug ?? "";
 
 function toPayloadItem(i: QueueItem): BatchPayloadItem {
 	return {
@@ -467,6 +475,7 @@ async function submitAll() {
 		"form-password": passwordInput.value,
 		items: items.map(toPayloadItem),
 		"skip-ci": skipCiCheckbox.checked,
+		...(collectionSlug === "" ? {} : { collection: collectionSlug }),
 	};
 
 	try {

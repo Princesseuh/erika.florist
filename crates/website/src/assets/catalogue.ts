@@ -1,7 +1,7 @@
 import { QuickScore } from "quick-score";
 import { thumbHashToDataURL } from "thumbhash";
 
-const VERSION = 7;
+const VERSION = 8;
 
 function requireElement<T extends Element>(selector: string): T {
 	const el = document.querySelector<T>(selector);
@@ -13,6 +13,13 @@ function requireElement<T extends Element>(selector: string): T {
 
 const catalogueCore = requireElement<HTMLElement>("#catalogue-core");
 const latestHash = catalogueCore.dataset.latest ?? "";
+
+// When present, restrict the grid to a collection's members (IDB ids). The main
+// catalogue leaves this unset and shows everything.
+const collectionIds =
+	catalogueCore.dataset.collection === undefined || catalogueCore.dataset.collection === ""
+		? null
+		: new Set(catalogueCore.dataset.collection.split(","));
 
 const dbOpenRequest = indexedDB.open("catalogue", VERSION);
 
@@ -252,6 +259,9 @@ function openCursorForSort(
 	if (sort === "rating") {
 		return store.index("rating_date").openCursor(null, direction);
 	}
+	if (sort === "release") {
+		return store.index("release_date").openCursor(null, direction);
+	}
 	if (sort === "alphabetical") {
 		return store.index("lower_case_title").openCursor(null, direction);
 	}
@@ -262,13 +272,62 @@ const reviewModal = requireElement<Element>("#review-modal");
 const reviewModalTitleLink = requireElement<HTMLAnchorElement>("#review-modal-title-link");
 const reviewModalCover = requireElement<HTMLImageElement>("#review-modal-cover");
 const reviewModalMeta = requireElement<Element>("#review-modal-meta");
+const reviewModalCollections = requireElement<HTMLElement>("#review-modal-collections");
 const reviewModalContent = requireElement<Element>("#review-modal-content");
+
+interface CollectionRef {
+	slug: string;
+	title: string;
+}
+
+// `${type}/${diskSlug}` -> collections that contain the entry. Loaded once, lazily.
+let collectionsIndex: Record<string, CollectionRef[]> | null = null;
+
+function isCollectionsIndex(value: unknown): value is Record<string, CollectionRef[]> {
+	return typeof value === "object" && value !== null;
+}
+
+async function loadCollectionsIndex(): Promise<Record<string, CollectionRef[]>> {
+	if (collectionsIndex !== null) {
+		return collectionsIndex;
+	}
+	try {
+		const response = await fetch("/catalogue/collections.json");
+		const data: unknown = await response.json();
+		collectionsIndex = isCollectionsIndex(data) ? data : {};
+	} catch (error) {
+		console.error("Failed to load collections index:", error);
+		collectionsIndex = {};
+	}
+	return collectionsIndex;
+}
+
+function renderModalCollections(item: CatalogueItemDB, index: Record<string, CollectionRef[]>) {
+	const key = `${item.type}/${slugFromId(item.id, item.type)}`;
+	const collections = index[key] ?? [];
+	reviewModalCollections.innerHTML = "";
+	if (collections.length === 0) {
+		return;
+	}
+	const label = document.createElement("span");
+	label.className = "text-subtle-charcoal";
+	label.textContent = "In collections:";
+	reviewModalCollections.append(label);
+	for (const collection of collections) {
+		const link = document.createElement("a");
+		link.href = `/catalogue/collections/${collection.slug}/`;
+		link.className =
+			"underline decoration-dotted underline-offset-2 hover:text-accent-valencia";
+		link.textContent = collection.title;
+		reviewModalCollections.append(link);
+	}
+}
 const closeReviewModalBtn = requireElement<Element>("#close-review-modal");
 
 function buildModalMeta(item: CatalogueItemDB): string {
 	const ratingLabel =
 		item.status === "planned"
-			? "📌 Planned"
+			? "🕒 Planned"
 			: `${getRatingEmoji(item.rating)} ${getRatingLabel(item.rating)}`;
 	const dateLabel =
 		item.date > 0
@@ -312,6 +371,14 @@ function openReviewModal(item: CatalogueItemDB) {
 	reviewModalTitleLink.href = `/catalogue/?entry=${item.id}`;
 	updateModalCover(item);
 	reviewModalMeta.innerHTML = buildModalMeta(item);
+	reviewModalCollections.innerHTML = "";
+	loadCollectionsIndex()
+		.then((index) => {
+			renderModalCollections(item, index);
+		})
+		.catch((error: unknown) => {
+			console.error(error);
+		});
 	reviewModalContent.innerHTML =
 		item.review === "" ? "<p><em>No review written yet.</em></p>" : item.review;
 	reviewModal.classList.remove("hidden");
@@ -344,8 +411,8 @@ function buildEntryElement(item: CatalogueItemDB): HTMLDivElement {
 	const entry = document.createElement("div");
 	entry.className = "w-[180px]";
 	const isPlanned = item.status === "planned";
-	const badge = isPlanned ? "📌" : getRatingEmoji(item.rating);
-	const dimClass = isPlanned ? "opacity-80" : "";
+	const badge = isPlanned ? "🕒" : getRatingEmoji(item.rating);
+	const dimClass = isPlanned ? "grayscale" : "";
 	const showPromote = isPlanned && document.documentElement.dataset.catalogueAuthed === "true";
 	entry.innerHTML = `
             <div class="relative group">
@@ -497,9 +564,11 @@ function buildUI() {
 
 	const filters = readFilters();
 	const contentObjectStore = db.transaction("content", "readonly").objectStore("content");
-	const cursorDirection = getCheckboxValue(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"])
-		? "next"
-		: "prev";
+	const descendingToggle = getCheckboxValue(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"]);
+	// Collections read best oldest-first, so their default direction is inverted
+	// relative to the catalogue's newest-first default.
+	const ascending = collectionIds === null ? descendingToggle : !descendingToggle;
+	const cursorDirection = ascending ? "next" : "prev";
 	const request = openCursorForSort(contentObjectStore, filters.sort, cursorDirection);
 
 	const items: CatalogueItemDB[] = [];
@@ -515,8 +584,9 @@ function buildUI() {
 				const matchesType = filters.type === "" || rawValue.type === filters.type;
 				const matchesRating = filters.rating === "" || rawValue.rating === filters.rating;
 				const matchesStatus = filters.status === "all" || rawValue.status === filters.status;
+				const matchesCollection = collectionIds === null || collectionIds.has(rawValue.id);
 
-				if (matchesType && matchesRating && matchesStatus) {
+				if (matchesType && matchesRating && matchesStatus && matchesCollection) {
 					items.push(rawValue);
 				}
 			}
@@ -557,6 +627,7 @@ function seedItems(store: IDBObjectStore, data: CatalogueItem[]): void {
 			),
 			rating: rating ?? -1,
 			releaseYear: releaseYear ?? null,
+			release_sort: releaseYear ?? 0,
 			review: review ?? "",
 			status,
 			title,
@@ -678,6 +749,7 @@ function resetAndCreateDB() {
 		unique: false,
 	});
 	objectStore.createIndex("rating_date", ["rating", "date"], { unique: false });
+	objectStore.createIndex("release_date", ["release_sort", "date"], { unique: false });
 	objectStore.createIndex("status", "status", { unique: false });
 
 	objectStore.transaction.addEventListener("complete", async () => {

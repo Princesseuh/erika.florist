@@ -1,0 +1,16 @@
+{
+  "title": "Django Unchained",
+  "tagline": "Life, liberty, and the pursuit of vengeance.",
+  "id": 68718,
+  "overview": "With the help of a German bounty hunter, a freed slave sets out to rescue his wife from a brutal Mississippi plantation owner.",
+  "releaseDate": "2012-12-25",
+  "runtime": 165,
+  "companies": [
+    "The Weinstein Company",
+    "Columbia Pictures"
+  ],
+  "genres": [
+    "Drama",
+    "Western"
+  ]
+}

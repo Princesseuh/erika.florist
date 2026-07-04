@@ -1,0 +1,16 @@
+{
+  "title": "The Wizard of Oz",
+  "tagline": "We're off to see the Wizard, the wonderful Wizard of Oz!",
+  "id": 630,
+  "overview": "Young Dorothy finds herself in a magical world where she makes friends with a lion, a scarecrow and a tin man as they make their way along the yellow brick road to talk with the Wizard and ask for the things they miss most in their lives. The Wicked Witch of the West is the only thing that could stop them.",
+  "releaseDate": "1939-08-15",
+  "runtime": 102,
+  "companies": [
+    "Metro-Goldwyn-Mayer"
+  ],
+  "genres": [
+    "Adventure",
+    "Fantasy",
+    "Family"
+  ]
+}

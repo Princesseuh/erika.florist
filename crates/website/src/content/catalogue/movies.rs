@@ -64,6 +64,18 @@ impl CatalogueMetadata<MovieData> for CatalogueMovie {
         self.rating.as_ref()
     }
 
+    fn get_title(&self) -> &str {
+        &self.title
+    }
+
+    fn get_cover(&self) -> &(String, String) {
+        &self.cover
+    }
+
+    fn get_finished_date(&self) -> Option<NaiveDate> {
+        self.finished_date
+    }
+
     fn get_author(&self) -> Option<String> {
         self.get_metadata().companies.first().cloned()
     }

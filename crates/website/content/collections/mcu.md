@@ -1,0 +1,40 @@
+---
+title: "Marvel Cinematic Universe"
+members:
+  - movie/iron-man
+  - movie/the-incredible-hulk
+  - movie/iron-man-2
+  - movie/thor
+  - movie/captain-america-the-first-avenger
+  - movie/the-avengers
+  - movie/iron-man-3
+  - movie/captain-america-the-winter-soldier
+  - movie/guardians-of-the-galaxy
+  - movie/avengers-age-of-ultron
+  - movie/ant-man
+  - movie/captain-america-civil-war
+  - movie/doctor-strange
+  - movie/guardians-of-the-galaxy-vol-2
+  - movie/spider-man-homecoming
+  - movie/thor-ragnarok
+  - movie/black-panther
+  - movie/avengers-infinity-war
+  - movie/ant-man-and-the-wasp
+  - movie/captain-marvel
+  - movie/avengers-endgame
+  - movie/spider-man-far-from-home
+  - movie/black-widow
+  - movie/shang-chi-and-the-legend-of-the-ten-rings
+  - movie/eternals
+  - movie/spider-man-no-way-home
+  - movie/doctor-strange-in-the-multiverse-of-madness
+  - movie/thor-love-and-thunder
+  - movie/black-panther-wakanda-forever
+  - movie/ant-man-and-the-wasp-quantumania
+  - movie/gotg3
+  - movie/the-marvels
+  - movie/deadpool-wolverine
+  - movie/captain-america-brave-new-world
+  - movie/thunderbolts
+  - movie/the-fantastic-4-first-steps
+---

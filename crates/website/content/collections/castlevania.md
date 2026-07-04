@@ -1,0 +1,31 @@
+---
+title: "Castlevania"
+members:
+  - game/castlevania-1986
+  - game/castlevania-ii-simon-s-quest
+  - game/castlevania-the-adventure
+  - game/castlevania-iii-dracula-s-curse
+  - game/castlevania-ii-belmont-s-revenge
+  - game/super-castlevania-iv
+  - game/castlevania-rondo-of-blood
+  - game/castlevania-bloodlines
+  - game/castlevania-symphony-of-the-night
+  - game/castlevania-legends
+  - game/castlevania
+  - game/castlevania-legacy-of-darkness
+  - game/castlevania-chronicles
+  - game/castlevania-harmony-of-dissonance
+  - game/castlevania-aria-of-sorrow
+  - game/castlevania-lament-of-innocence
+  - game/castlevaniadawnofsorrow
+  - game/castlevania-curse-of-darkness
+  - game/castlevaniaportraitofruin
+  - game/castlevania-order-of-ecclesia
+  - game/castlevania-harmony-of-despair
+  - game/castlevania-lords-of-shadow
+  - game/castlevania-lords-of-shadow-mirror-of-fate
+  - game/castlevania-lords-of-shadow-2
+  - show/castlevania
+  - game/castlevania-circle-of-the-moon
+  - show/castlevania-nocturne
+---

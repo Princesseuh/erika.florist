@@ -5,7 +5,7 @@ mod search;
 use search::{search_igdb, search_isbn, search_tmdb};
 
 mod github;
-use github::{batch_commit, BatchForm};
+use github::{batch_commit, commit_collection, BatchForm, CollectionForm};
 
 fn check_auth_cookie(headers: &Headers, env: &Env) -> bool {
     if let Ok(Some(cookie_str)) = headers.get("cookie") {
@@ -236,6 +236,39 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
             "success": true,
             "commit_url": commit_url,
             "count": form.items.len(),
+        }));
+    }
+
+    if req.path() == "/commit-collection" && req.method() == Method::Post {
+        let body_text = req.text().await?;
+        let form: CollectionForm = match serde_json::from_str(&body_text) {
+            Ok(f) => f,
+            Err(e) => return Response::error(format!("Invalid request body: {}", e), 400),
+        };
+
+        let Ok(form_password) = env.secret("FORM_PASSWORD") else {
+            return Response::error("Server error", 500);
+        };
+        let mut hasher = Sha256::new();
+        hasher.update(form.form_password.as_bytes());
+        let hashed_input: String = hasher.finalize().iter().map(|b| format!("{:02x}", b)).collect();
+        if hashed_input != form_password.to_string() {
+            return Response::error("Unauthorized", 401);
+        }
+
+        let github_token = env
+            .secret("GITHUB_KEY")
+            .map_err(|_| Error::from("GITHUB_KEY not set"))?;
+        let github_repo = env
+            .secret("GITHUB_REPO")
+            .map_err(|_| Error::from("GITHUB_REPO not set"))?;
+
+        let commit_url =
+            commit_collection(&github_token.to_string(), &github_repo.to_string(), &form).await?;
+
+        return Response::from_json(&serde_json::json!({
+            "success": true,
+            "commit_url": commit_url,
         }));
     }
 

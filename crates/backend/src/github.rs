@@ -34,6 +34,9 @@ pub struct BatchForm {
     #[serde(rename = "skip-ci", alias = "skip_ci", default)]
     pub skip_ci: bool,
     pub items: Vec<BatchItem>,
+    /// When set, the batch's entries are also appended to this collection.
+    #[serde(default)]
+    pub collection: Option<String>,
 }
 
 #[derive(Serialize)]
@@ -286,6 +289,7 @@ pub async fn batch_commit(
 
     // Resolve each item to a file path + markdown content.
     let mut resolved: Vec<ResolvedFile> = Vec::with_capacity(form.items.len());
+    let mut member_refs: Vec<String> = Vec::new();
     for item in &form.items {
         let (path_type, source_key) = type_to_paths(&item.r#type)?;
 
@@ -315,6 +319,7 @@ pub async fn batch_commit(
         };
 
         let path = format!("crates/website/content/{}/{}/{}.md", path_type, slug, slug);
+        member_refs.push(format!("{}/{}", canonical_collection_type(&item.r#type)?, slug));
         resolved.push(ResolvedFile {
             path,
             content,
@@ -322,6 +327,121 @@ pub async fn batch_commit(
         });
     }
 
+    // When submitted from a collection page, append the batch to that collection.
+    if let Some(collection_slug) = form.collection.as_deref().filter(|s| !s.is_empty()) {
+        let path = format!("crates/website/content/collections/{}.md", collection_slug);
+        let existing = fetch_existing_file(token, repo, &path).await?;
+        let updated = append_collection_members(&existing, &member_refs)?;
+        if updated != existing {
+            resolved.push(ResolvedFile {
+                path,
+                content: updated,
+                display_title: collection_slug.to_string(),
+            });
+        }
+    }
+
+    let message = compose_batch_message(form, &resolved);
+
+    commit_files(token, repo, &resolved, &message).await
+}
+
+/// Append `type/slug` refs to a collection's `members:` list, skipping any that
+/// are already present. Everything else in the file is preserved verbatim.
+fn append_collection_members(existing: &str, new_refs: &[String]) -> Result<String, Error> {
+    let rest = existing
+        .strip_prefix("---\n")
+        .ok_or_else(|| Error::from("Collection file has no frontmatter"))?;
+    let end = rest
+        .find("\n---")
+        .ok_or_else(|| Error::from("Collection frontmatter is not terminated"))?;
+    let frontmatter = &rest[..end];
+    let after = &rest[end..];
+
+    let existing_refs: std::collections::HashSet<&str> = frontmatter
+        .lines()
+        .filter_map(|line| line.trim().strip_prefix("- "))
+        .map(str::trim)
+        .collect();
+    let to_add: Vec<&String> = new_refs
+        .iter()
+        .filter(|r| !existing_refs.contains(r.as_str()))
+        .collect();
+    if to_add.is_empty() {
+        return Ok(existing.to_string());
+    }
+
+    let mut lines: Vec<String> = frontmatter.lines().map(String::from).collect();
+    let insert_after = lines
+        .iter()
+        .rposition(|line| line.starts_with("  ") && line.trim_start().starts_with("- "))
+        .or_else(|| lines.iter().position(|line| line.trim_start().starts_with("members:")))
+        .ok_or_else(|| Error::from("Collection has no members list"))?;
+
+    let additions: Vec<String> = to_add.iter().map(|r| format!("  - {}", r)).collect();
+    lines.splice(insert_after + 1..insert_after + 1, additions);
+
+    Ok(format!("---\n{}{}", lines.join("\n"), after))
+}
+
+/// Compose the human-readable commit message for a catalogue batch.
+fn compose_batch_message(form: &BatchForm, resolved: &[ResolvedFile]) -> String {
+    // [skip cd] is added when the follow-up metadata-fetch workflow will create
+    // a separate commit (the `[ci] update catalogue data` one) — that commit
+    // triggers the deploy, so we skip the deploy here to avoid two deploys.
+    // For batches with no new entries (only promotes), there is no follow-up,
+    // so we must NOT skip cd or the change never deploys.
+    let has_new_entries = form.items.iter().any(|i| i.slug.is_none());
+    let skip_marker_ci = if form.skip_ci { " [skip ci]" } else { "" };
+    let skip_marker_cd = if has_new_entries { " [skip cd]" } else { "" };
+    if resolved.len() == 1 {
+        let only = &resolved[0];
+        let planned = form.items[0].status == "planned";
+        let is_promote = form.items[0].slug.is_some();
+        let verb = if is_promote {
+            "Promote"
+        } else if planned {
+            "Plan"
+        } else {
+            "Add"
+        };
+        format!(
+            "content(catalogue): {} {}{}{}",
+            verb, only.display_title, skip_marker_cd, skip_marker_ci
+        )
+    } else {
+        let planned_count = form.items.iter().filter(|i| i.status == "planned").count();
+        let promote_count = form.items.iter().filter(|i| i.slug.is_some()).count();
+        let finished_count = resolved.len() - planned_count - promote_count;
+        let mut parts: Vec<String> = Vec::new();
+        if finished_count > 0 {
+            parts.push(format!("{} finished", finished_count));
+        }
+        if planned_count > 0 {
+            parts.push(format!("{} planned", planned_count));
+        }
+        if promote_count > 0 {
+            parts.push(format!("{} promoted", promote_count));
+        }
+        let summary = parts.join(", ");
+        format!(
+            "content(catalogue): Batch {} entries ({}){}{}",
+            resolved.len(),
+            summary,
+            skip_marker_cd,
+            skip_marker_ci
+        )
+    }
+}
+
+/// Commit a set of resolved files to `main` as a single commit and return the
+/// commit's HTML URL. Shared by the catalogue batch and collection flows.
+async fn commit_files(
+    token: &str,
+    repo: &str,
+    files: &[ResolvedFile],
+    message: &str,
+) -> Result<String, Error> {
     // 1. Get current HEAD of main.
     let ref_url = format!("https://api.github.com/repos/{}/git/refs/heads/main", repo);
     let ref_json = gh_get(&ref_url, token).await?;
@@ -340,8 +460,8 @@ pub async fn batch_commit(
 
     // 3. Create a blob for each file.
     let blobs_url = format!("https://api.github.com/repos/{}/git/blobs", repo);
-    let mut tree_entries: Vec<serde_json::Value> = Vec::with_capacity(resolved.len());
-    for file in &resolved {
+    let mut tree_entries: Vec<serde_json::Value> = Vec::with_capacity(files.len());
+    for file in files {
         let blob_body = serde_json::json!({
             "content": general_purpose::STANDARD.encode(&file.content),
             "encoding": "base64",
@@ -371,59 +491,7 @@ pub async fn batch_commit(
         .ok_or_else(|| Error::from("Missing new tree sha"))?
         .to_string();
 
-    // 5. Compose the commit message.
-    // [skip cd] is added when the follow-up metadata-fetch workflow will create
-    // a separate commit (the `[ci] update catalogue data` one) — that commit
-    // triggers the deploy, so we skip the deploy here to avoid two deploys.
-    // For batches with no new entries (only promotes), there is no follow-up,
-    // so we must NOT skip cd or the change never deploys.
-    let has_new_entries = form.items.iter().any(|i| i.slug.is_none());
-    let skip_marker_ci = if form.skip_ci { " [skip ci]" } else { "" };
-    let skip_marker_cd = if has_new_entries { " [skip cd]" } else { "" };
-    let message = if resolved.len() == 1 {
-        let only = &resolved[0];
-        let planned = form.items[0].status == "planned";
-        let is_promote = form.items[0].slug.is_some();
-        let verb = if is_promote {
-            "Promote"
-        } else if planned {
-            "Plan"
-        } else {
-            "Add"
-        };
-        format!(
-            "content(catalogue): {} {}{}{}",
-            verb, only.display_title, skip_marker_cd, skip_marker_ci
-        )
-    } else {
-        let planned_count = form
-            .items
-            .iter()
-            .filter(|i| i.status == "planned")
-            .count();
-        let promote_count = form.items.iter().filter(|i| i.slug.is_some()).count();
-        let finished_count = resolved.len() - planned_count - promote_count;
-        let mut parts: Vec<String> = Vec::new();
-        if finished_count > 0 {
-            parts.push(format!("{} finished", finished_count));
-        }
-        if planned_count > 0 {
-            parts.push(format!("{} planned", planned_count));
-        }
-        if promote_count > 0 {
-            parts.push(format!("{} promoted", promote_count));
-        }
-        let summary = parts.join(", ");
-        format!(
-            "content(catalogue): Batch {} entries ({}){}{}",
-            resolved.len(),
-            summary,
-            skip_marker_cd,
-            skip_marker_ci
-        )
-    };
-
-    // 6. Create the commit.
+    // 5. Create the commit.
     let commits_url = format!("https://api.github.com/repos/{}/git/commits", repo);
     let committer = committer();
     let commit_body = serde_json::json!({
@@ -443,9 +511,145 @@ pub async fn batch_commit(
         .map(|s| s.to_string())
         .unwrap_or_default();
 
-    // 7. Move main to the new commit.
+    // 6. Move main to the new commit.
     let patch_body = serde_json::json!({ "sha": new_commit_sha });
     gh_patch(&ref_url, token, &patch_body).await?;
 
     Ok(html_url)
+}
+
+/// A collection created from the website: metadata plus a mix of existing
+/// entries (referenced by slug) and brand-new ones (created on submit).
+#[derive(Debug, Deserialize)]
+pub struct CollectionForm {
+    #[serde(rename = "form-password", alias = "form_password", default)]
+    pub form_password: String,
+    #[serde(rename = "skip-ci", alias = "skip_ci", default)]
+    pub skip_ci: bool,
+    pub title: String,
+    #[serde(default)]
+    pub description: String,
+    /// Each member reuses the BatchItem shape: an existing member carries a
+    /// `slug` and no `source-id`; a new member carries a `source-id` (and gets
+    /// a content file created).
+    pub members: Vec<BatchItem>,
+}
+
+/// Canonical `type` segment used in a collection's `members` refs.
+fn canonical_collection_type(item_type: &str) -> Result<&'static str, Error> {
+    Ok(match item_type {
+        "game" => "game",
+        "movie" => "movie",
+        "tv" | "show" => "show",
+        "book" => "book",
+        _ => return Err(Error::from(format!("Invalid type: {}", item_type))),
+    })
+}
+
+/// Collections are single flat files (`content/collections/<slug>.md`), so they
+/// need their own existence check rather than the nested-entry one.
+async fn collection_file_exists(token: &str, repo: &str, slug: &str) -> Result<bool, Error> {
+    let url = format!(
+        "https://api.github.com/repos/{}/contents/crates/website/content/collections/{}.md",
+        repo, slug
+    );
+    let req = Request::new_with_init(&url, RequestInit::new().with_method(Method::Get))?;
+    gh_headers(&req, token)?;
+    let response = Fetch::Request(req).send().await?;
+    Ok((200..300).contains(&response.status_code()))
+}
+
+async fn resolve_new_collection_slug(token: &str, repo: &str, base: &str) -> Result<String, Error> {
+    if !collection_file_exists(token, repo, base).await? {
+        return Ok(base.to_string());
+    }
+    let mut i = 1;
+    loop {
+        let candidate = format!("{}-{}", base, i);
+        if !collection_file_exists(token, repo, &candidate).await? {
+            return Ok(candidate);
+        }
+        i += 1;
+    }
+}
+
+/// Build the markdown for a new collection file.
+fn build_collection_markdown(title: &str, description: &str, members: &[String]) -> String {
+    let mut out = String::from("---\n");
+    out.push_str(&format!("title: \"{}\"\n", title));
+    out.push_str("members:\n");
+    for member in members {
+        out.push_str(&format!("  - {}\n", member));
+    }
+    out.push_str("---\n\n");
+    out.push_str(description.trim_end());
+    out.push('\n');
+    out
+}
+
+pub async fn commit_collection(token: &str, repo: &str, form: &CollectionForm) -> Result<String, Error> {
+    if form.title.trim().is_empty() {
+        return Err(Error::from("Collection title is required"));
+    }
+    if form.members.is_empty() {
+        return Err(Error::from("A collection needs at least one member"));
+    }
+
+    let mut files: Vec<ResolvedFile> = Vec::new();
+    let mut member_refs: Vec<String> = Vec::with_capacity(form.members.len());
+    let mut has_new = false;
+
+    for member in &form.members {
+        let (path_type, source_key) = type_to_paths(&member.r#type)?;
+        let canonical = canonical_collection_type(&member.r#type)?;
+        let is_existing = member.slug.as_ref().is_some_and(|s| !s.is_empty());
+
+        let slug = if is_existing {
+            member.slug.clone().unwrap()
+        } else {
+            if member.source_id.is_empty() {
+                return Err(Error::from(format!(
+                    "Missing source-id for new {} member",
+                    member.r#type
+                )));
+            }
+            let base = slug::slugify(&member.name);
+            if base.is_empty() {
+                return Err(Error::from("Empty slug after slugify"));
+            }
+            let slug = resolve_new_slug(token, repo, path_type, &base).await?;
+            let path = format!("crates/website/content/{}/{}/{}.md", path_type, slug, slug);
+            files.push(ResolvedFile {
+                path,
+                content: build_markdown(member, source_key),
+                display_title: member.name.clone(),
+            });
+            has_new = true;
+            slug
+        };
+
+        member_refs.push(format!("{}/{}", canonical, slug));
+    }
+
+    // The collection file itself.
+    let base_slug = slug::slugify(&form.title);
+    if base_slug.is_empty() {
+        return Err(Error::from("Empty collection slug after slugify"));
+    }
+    let collection_slug = resolve_new_collection_slug(token, repo, &base_slug).await?;
+    let path = format!("crates/website/content/collections/{}.md", collection_slug);
+    files.push(ResolvedFile {
+        path,
+        content: build_collection_markdown(&form.title, &form.description, &member_refs),
+        display_title: form.title.clone(),
+    });
+
+    let skip_marker_ci = if form.skip_ci { " [skip ci]" } else { "" };
+    let skip_marker_cd = if has_new { " [skip cd]" } else { "" };
+    let message = format!(
+        "content(collections): Add {}{}{}",
+        form.title, skip_marker_cd, skip_marker_ci
+    );
+
+    commit_files(token, repo, &files, &message).await
 }

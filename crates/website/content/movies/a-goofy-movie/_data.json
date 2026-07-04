@@ -1,0 +1,23 @@
+{
+  "title": "A Goofy Movie",
+  "tagline": "It's hard to be cool when your Dad is Goofy.",
+  "id": 15789,
+  "overview": "Goofy’s teenage son Max is desperate to impress his crush and fit in at school. After well-meaning but ignorant Goofy suddenly whisks him away on a cross-country road trip—messing up Max’s first date plans in the process—Goofy’s old-school parenting and Max’s desire for independence lead to a vacation of hilarious mishaps, as they both learn to see eye to eye and listen to each other.",
+  "releaseDate": "1995-04-05",
+  "runtime": 78,
+  "companies": [
+    "Walt Disney Pictures",
+    "Walt Disney Animation",
+    "Phoenix Animation Studios",
+    "Pixibox",
+    "Walt Disney Animation",
+    "Walt Disney Feature Animation"
+  ],
+  "genres": [
+    "Adventure",
+    "Comedy",
+    "Romance",
+    "Animation",
+    "Family"
+  ]
+}

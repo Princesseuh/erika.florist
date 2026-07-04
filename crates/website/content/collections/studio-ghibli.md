@@ -1,0 +1,28 @@
+---
+title: "Studio Ghibli"
+members:
+  - movie/castle-in-the-sky
+  - movie/grave-of-the-fireflies
+  - movie/my-neighbor-totoro
+  - movie/kiki-s-delivery-service
+  - movie/only-yesterday
+  - movie/porco-rosso
+  - movie/ocean-waves
+  - movie/pom-poko
+  - movie/whisper-of-the-heart
+  - movie/princess-mononoke
+  - movie/my-neighbors-the-yamadas
+  - movie/spirited-away
+  - movie/the-cat-returns
+  - movie/howl-s-moving-castle
+  - movie/tales-from-earthsea
+  - movie/ponyo
+  - movie/the-secret-world-of-arrietty
+  - movie/from-up-on-poppy-hill
+  - movie/the-wind-rises
+  - movie/the-tale-of-the-princess-kaguya
+  - movie/when-marnie-was-there
+  - movie/the-red-turtle
+  - movie/earwig-and-the-witch
+  - movie/the-boy-and-the-heron
+---

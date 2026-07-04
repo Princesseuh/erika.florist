@@ -1,0 +1,44 @@
+{
+  "first_release_date": 990662400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    }
+  ],
+  "companies": [
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "publisher"
+    },
+    {
+      "id": 159,
+      "name": "Konami Computer Entertainment Tokyo",
+      "role": "developer"
+    },
+    {
+      "id": 161,
+      "name": "Konami Digital Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

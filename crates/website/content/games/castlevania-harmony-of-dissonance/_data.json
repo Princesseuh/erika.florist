@@ -1,0 +1,44 @@
+{
+  "first_release_date": 1023321600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    },
+    {
+      "abbreviation": "GBA",
+      "id": 24
+    }
+  ],
+  "companies": [
+    {
+      "id": 159,
+      "name": "Konami Computer Entertainment Tokyo",
+      "role": "developer"
+    },
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "developer"
+    },
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "publisher"
+    }
+  ]
+}

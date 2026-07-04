@@ -1,0 +1,17 @@
+{
+  "title": "2001: A Space Odyssey",
+  "tagline": "An epic drama of adventure and exploration.",
+  "id": 62,
+  "overview": "Humanity finds a mysterious object buried beneath the lunar surface and sets off to find its origins with the help of HAL 9000, the world's most advanced super computer.",
+  "releaseDate": "1968-04-02",
+  "runtime": 149,
+  "companies": [
+    "Stanley Kubrick Productions",
+    "Metro-Goldwyn-Mayer"
+  ],
+  "genres": [
+    "Science Fiction",
+    "Mystery",
+    "Adventure"
+  ]
+}

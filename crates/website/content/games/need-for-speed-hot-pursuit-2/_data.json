@@ -1,0 +1,44 @@
+{
+  "first_release_date": 1033344000,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "NGC",
+      "id": 21
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 349,
+      "name": "Black Box Games",
+      "role": "developer"
+    },
+    {
+      "id": 350,
+      "name": "EA Seattle",
+      "role": "developer"
+    }
+  ]
+}

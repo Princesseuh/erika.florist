@@ -1,0 +1,16 @@
+{
+  "title": "Some Like It Hot",
+  "tagline": "The movie too HOT for words!",
+  "id": 239,
+  "overview": "In Prohibition-era Chicago, musicians Joe and Jerry witness a mob hit, and flee the state in an all-female band disguised as Josephine and Daphne, but further complications set in.",
+  "releaseDate": "1959-03-19",
+  "runtime": 123,
+  "companies": [
+    "The Mirisch Company"
+  ],
+  "genres": [
+    "Comedy",
+    "Romance",
+    "Crime"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1362441600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    }
+  ],
+  "companies": [
+    {
+      "id": 169,
+      "name": "MercurySteam",
+      "role": "developer"
+    },
+    {
+      "id": 161,
+      "name": "Konami Digital Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

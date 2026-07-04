@@ -4,16 +4,20 @@ use serde::Deserialize;
 
 use crate::content::{
     CatalogueMetadata,
-    catalogue::{Rating, deserialize_null_default, deserialize_optional_date},
+    catalogue::{Rating, Status, deserialize_null_default, deserialize_optional_date},
 };
 
 #[derive(Debug)]
 #[markdown_entry]
 pub struct CatalogueGame {
     pub title: String,
-    pub rating: Rating,
+    #[serde(default)]
+    pub rating: Option<Rating>,
+    #[serde(default)]
+    pub status: Status,
     #[serde(
         rename = "finishedDate",
+        default,
         deserialize_with = "deserialize_optional_date"
     )]
     pub finished_date: Option<NaiveDate>,
@@ -44,6 +48,8 @@ pub struct GameGenre {
 #[derive(Debug, Deserialize)]
 pub struct GamePlatform {
     pub id: u32,
+    // IGDB leaves some platforms (e.g. PC-98) without an abbreviation.
+    #[serde(deserialize_with = "deserialize_null_default")]
     pub abbreviation: String,
 }
 
@@ -65,6 +71,26 @@ impl CatalogueMetadata<GameData> for CatalogueGame {
 
     fn get_metadata(&self) -> &GameData {
         self.__metadata.as_ref().unwrap()
+    }
+
+    fn get_status(&self) -> Status {
+        self.status
+    }
+
+    fn get_rating(&self) -> Option<&Rating> {
+        self.rating.as_ref()
+    }
+
+    fn get_title(&self) -> &str {
+        &self.title
+    }
+
+    fn get_cover(&self) -> &(String, String) {
+        &self.cover
+    }
+
+    fn get_finished_date(&self) -> Option<NaiveDate> {
+        self.finished_date
     }
 
     fn get_author(&self) -> Option<String> {

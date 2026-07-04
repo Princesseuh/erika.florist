@@ -465,7 +465,7 @@
 		border-radius: 9999px;
 	}
 
-	#catalogue-filters label {
+	.catalogue-filters label {
 		display: flex;
 		font-size: 0.975rem;
 		line-height: 1.5rem;
@@ -473,13 +473,13 @@
 		margin-bottom: 0.2rem;
 	}
 
-	#catalogue-filters input,
-	#catalogue-filters select {
+	.catalogue-filters input,
+	.catalogue-filters select {
 		height: 40px;
 		width: 100%;
 	}
 
-	#catalogue-filters input:not([type="button"]):not([type="checkbox"]),
+	.catalogue-filters input:not([type="button"]):not([type="checkbox"]),
 	select {
 		border: 1px solid black;
 	}

@@ -1,0 +1,24 @@
+---
+title: "Need for Speed"
+members:
+  - game/need-for-speed-underground-2
+  - game/need-for-speed-most-wanted
+  - game/need-for-speed-carbon
+  - game/the-need-for-speed
+  - game/need-for-speed-ii
+  - game/need-for-speed-iii-hot-pursuit
+  - game/need-for-speed-high-stakes
+  - game/need-for-speed-porsche-unleashed
+  - game/need-for-speed-hot-pursuit-2
+  - game/need-for-speed-underground
+  - game/need-for-speed-prostreet
+  - game/need-for-speed-undercover
+  - game/need-for-speed-hot-pursuit
+  - game/need-for-speed-the-run
+  - game/need-for-speed-most-wanted-2012
+  - game/need-for-speed-rivals
+  - game/need-for-speed
+  - game/need-for-speed-payback
+  - game/need-for-speed-heat
+  - game/need-for-speed-unbound
+---

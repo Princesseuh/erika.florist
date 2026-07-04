@@ -1,0 +1,44 @@
+{
+  "first_release_date": 1286236800,
+  "genres": [
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 163,
+      "name": "Climax Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 169,
+      "name": "MercurySteam",
+      "role": "developer"
+    },
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "publisher"
+    }
+  ]
+}

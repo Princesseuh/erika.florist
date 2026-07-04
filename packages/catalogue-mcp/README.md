@@ -79,6 +79,7 @@ Filter the catalogue. All inputs are optional.
 | field             | type                                    | notes                                                        |
 | ----------------- | --------------------------------------- | ------------------------------------------------------------ |
 | `type`            | `"game" \| "movie" \| "show" \| "book"` | restrict to one type                                         |
+| `status`          | `"finished" \| "planned"`               | finished = rated and consumed; planned = queued, not yet rated |
 | `rating_at_least` | `0..5`                                  | 0=Hated, 1=Disliked, 2=Okay, 3=Liked, 4=Loved, 5=Masterpiece |
 | `year`            | integer                                 | exact original release year                                  |
 | `year_after`      | integer                                 | released in or after this year (inclusive)                   |
@@ -95,7 +96,7 @@ Filter the catalogue. All inputs are optional.
 | `limit`           | 1–1000 (default 50)                     |                                                              |
 | `offset`          | integer ≥ 0 (default 0)                 | pagination                                                   |
 
-Returns summaries (id, type, external ids, title, rating, dates, author). Call `get_entry` for the full review. To pull the whole catalogue cheaply, combine `fields` with a high `limit`, e.g. `{ type: "movie", fields: ["rating_number"], limit: 1000 }`.
+Returns summaries (id, type, status, external ids, title, rating, dates, author). Planned entries have `rating`/`rating_number`/`finished_date` set to `null`. Call `get_entry` for the full review. To pull the whole catalogue cheaply, combine `fields` with a high `limit`, e.g. `{ type: "movie", fields: ["rating_number"], limit: 1000 }`.
 
 ### `get_entry`
 
@@ -127,7 +128,7 @@ Recently-finished entries, newest first.
 
 ### `stats`
 
-Counts per type, average rating per type, and the latest finished date.
+Counts per type, average rating per type, and the latest finished date. Covers finished entries only; the planned backlog is excluded.
 
 ### `rating_summary`
 
@@ -162,6 +163,9 @@ check_catalogue({ tmdb_ids: [539, 62, 424, 769] });
 
 // "How do I rate horror movies?"
 rating_summary({ type: "movie", genre: "horror" });
+
+// "What's on my backlog to play?"
+search_catalogue({ type: "game", status: "planned" });
 
 // "Grab every movie rating in one call for local analysis."
 search_catalogue({ type: "movie", fields: ["rating_number"], limit: 1000 });

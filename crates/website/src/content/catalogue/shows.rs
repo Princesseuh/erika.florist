@@ -3,17 +3,21 @@ use maudit::content::markdown_entry;
 use serde::Deserialize;
 
 use crate::content::{
-    CatalogueMetadata, catalogue::Rating, catalogue::deserialize_null_default,
-    catalogue::deserialize_optional_date,
+    CatalogueMetadata,
+    catalogue::{Rating, Status, deserialize_null_default, deserialize_optional_date},
 };
 
 #[derive(Debug)]
 #[markdown_entry]
 pub struct CatalogueShow {
     pub title: String,
-    pub rating: Rating,
+    #[serde(default)]
+    pub rating: Option<Rating>,
+    #[serde(default)]
+    pub status: Status,
     #[serde(
         rename = "finishedDate",
+        default,
         deserialize_with = "deserialize_optional_date"
     )]
     pub finished_date: Option<NaiveDate>,
@@ -29,6 +33,8 @@ pub struct ShowData {
     pub tagline: Option<String>,
     pub id: u32,
     pub overview: Option<String>,
+    #[serde(rename = "releaseDate", default)]
+    pub release_date: Option<String>, // "YYYY-MM-DD" first air date, when known
     #[serde(deserialize_with = "deserialize_null_default")]
     pub companies: Vec<String>,
     #[serde(deserialize_with = "deserialize_null_default")]
@@ -48,7 +54,35 @@ impl CatalogueMetadata<ShowData> for CatalogueShow {
         self.__metadata.as_ref().unwrap()
     }
 
+    fn get_status(&self) -> Status {
+        self.status
+    }
+
+    fn get_rating(&self) -> Option<&Rating> {
+        self.rating.as_ref()
+    }
+
+    fn get_title(&self) -> &str {
+        &self.title
+    }
+
+    fn get_cover(&self) -> &(String, String) {
+        &self.cover
+    }
+
+    fn get_finished_date(&self) -> Option<NaiveDate> {
+        self.finished_date
+    }
+
     fn get_author(&self) -> Option<String> {
         self.get_metadata().companies.first().cloned()
+    }
+
+    fn get_release_year(&self) -> Option<i32> {
+        self.get_metadata()
+            .release_date
+            .as_deref()
+            .and_then(|date| date.split('-').next())
+            .and_then(|year| year.parse().ok())
     }
 }

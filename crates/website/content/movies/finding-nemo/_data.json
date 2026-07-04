@@ -1,0 +1,16 @@
+{
+  "title": "Finding Nemo",
+  "tagline": "There are 3.7 trillion fish in the ocean. They're looking for one.",
+  "id": 12,
+  "overview": "Nemo, an adventurous young clownfish, is unexpectedly taken from his Great Barrier Reef home to a dentist's office aquarium. It's up to his worrisome father Marlin and a friendly but forgetful fish Dory to bring Nemo home -- meeting vegetarian sharks, surfer dude turtles, hypnotic jellyfish, hungry seagulls, and more along the way.",
+  "releaseDate": "2003-05-30",
+  "runtime": 100,
+  "companies": [
+    "Pixar"
+  ],
+  "genres": [
+    "Animation",
+    "Family",
+    "Adventure"
+  ]
+}

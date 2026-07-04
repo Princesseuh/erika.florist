@@ -1,0 +1,30 @@
+---
+title: "The Legend of Zelda"
+members:
+  - game/the-legend-of-zelda
+  - game/zelda-ii-the-adventure-of-link
+  - game/the-legend-of-zelda-a-link-to-the-past
+  - game/link-the-faces-of-evil
+  - game/zelda-the-wand-of-gamelon
+  - game/zelda-s-adventure
+  - game/the-legend-of-zelda-ocarina-of-time
+  - game/the-legend-of-zelda-oracle-of-ages
+  - game/the-legend-of-zelda-oracle-of-seasons
+  - game/the-legend-of-zelda-four-swords
+  - game/the-legend-of-zelda-four-swords-adventures
+  - game/the-legend-of-zelda-the-minish-cap
+  - game/the-legend-of-zelda-twilight-princess
+  - game/the-legend-of-zelda-phantom-hourglass
+  - game/the-legend-of-zelda-spirit-tracks
+  - game/the-legend-of-zelda-ocarina-of-time-3d
+  - game/the-legend-of-zelda-skyward-sword
+  - game/the-legend-of-zelda-the-wind-waker-hd
+  - game/the-legend-of-zelda-a-link-between-worlds
+  - game/the-legend-of-zelda-majora-s-mask-3d
+  - game/the-legend-of-zelda-tri-force-heroes
+  - game/the-legend-of-zelda-breath-of-the-wild
+  - game/the-legend-of-zelda-link-s-awakening
+  - game/the-legend-of-zelda-redux
+  - game/the-legend-of-zelda-tears-of-the-kingdom
+  - game/the-legend-of-zelda-echoes-of-wisdom
+---

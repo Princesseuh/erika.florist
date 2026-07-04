@@ -1,0 +1,35 @@
+---
+title: "Touhou"
+members:
+  - game/touhou-rei-iden-the-highly-responsive-to-prayers
+  - game/touhou-fuumaroku-the-story-of-eastern-wonderland
+  - game/touhou-yumejikuu-phantasmagoria-of-dim-dream
+  - game/touhou-gensoukyou-lotus-land-story
+  - game/touhou-kaikidan-mystic-square
+  - game/touhou-koumakyou-the-embodiment-of-scarlet-devil
+  - game/touhou-youyoumu-perfect-cherry-blossom
+  - game/touhou-eiyashou-imperishable-night
+  - game/touhou-suimusou-immaterial-and-missing-power
+  - game/touhou-kaeizuka-phantasmagoria-of-flower-view
+  - game/touhou-bunkachou-shoot-the-bullet
+  - game/touhou-fuujinroku-mountain-of-faith
+  - game/touhou-hisouten-scarlet-weather-rhapsody
+  - game/touhou-chireiden-subterranean-animism
+  - game/touhou-hisoutensoku-choudokyuu-ginyoru-no-nazo-wo-oe
+  - game/touhou-seirensen-undefined-fantastic-object
+  - game/double-spoiler-touhou-bunkachou
+  - game/yousei-daisensou-touhou-sangetsusei
+  - game/touhou-shinreibyou-ten-desires
+  - game/touhou-shinkirou-hopeless-masquerade
+  - game/touhou-kishinjou-double-dealing-character
+  - game/danmaku-amanojaku-impossible-spell-card
+  - game/touhou-shinpiroku-urban-legend-in-limbo
+  - game/touhou-kanjuden-legacy-of-lunatic-kingdom
+  - game/touhou-tenkuushou-hidden-star-in-four-seasons
+  - game/touhou-hyouibana-antinomy-of-common-flowers
+  - game/hifuu-nightmare-diary-violet-detector
+  - game/touhou-kikeijuu-wily-beast-and-weakest-creature
+  - game/touhou-kouryuudou-unconnected-marketeers
+  - game/touhou-juuouen-unfinished-dream-of-all-living-ghost
+  - game/touhou-kinjoukyou-fossilized-wonders
+---

@@ -1,0 +1,45 @@
+{
+  "first_release_date": 1727308800,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Switch 2",
+      "id": 508
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 739,
+      "name": "Grezzo",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 7902,
+      "name": "Nintendo Entertainment Planning & Development",
+      "role": "developer"
+    },
+    {
+      "id": 45209,
+      "name": "Nintendo EPD Production Group No. 3",
+      "role": "developer"
+    }
+  ]
+}

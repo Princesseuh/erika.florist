@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1221523200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 9378,
+      "name": "Team Shanghai Alice",
+      "role": "developer"
+    },
+    {
+      "id": 11255,
+      "name": "Mediascape",
+      "role": "publisher"
+    }
+  ]
+}

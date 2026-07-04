@@ -193,7 +193,7 @@ pub fn collection_card(card: &CollectionCard) -> Markup {
             data-title=(card.title)
             title=(card.title)
         {
-            div class="relative group" {
+            div class="relative group ring-accent-valencia hover:ring-2 transition-shadow" {
                 (montage_cover(&card.covers))
                 span class=(format!("absolute top-0 left-0 px-1.5 py-0.5 rounded-br-lg select-none font-bold text-xs text-white {}", progress_bg)) {
                     (card.finished) "/" (card.count)
@@ -203,7 +203,7 @@ pub fn collection_card(card: &CollectionCard) -> Markup {
                         (avg)
                     }
                 }
-                div class="absolute bottom-0 left-0 right-0 bg-black/70 text-white p-2" {
+                div class="absolute bottom-0 left-0 right-0 bg-black/70 group-hover:bg-accent-valencia transition-colors duration-200 text-white p-2" {
                     h4 class="m-0 leading-tight text-sm font-medium" { (card.title) }
                     p class="text-xs m-0" { (items_label) }
                 }

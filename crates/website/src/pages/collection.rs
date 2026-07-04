@@ -205,10 +205,8 @@ impl Route for Collections {
                 article class="mx-4 my-4" {
                     div class="flex relative" {
                         aside class="hidden sm:block grow-0 sm:my-4 px-4 pr-8 w-64" {
-                            a href="/catalogue/" class="text-sm text-subtle-charcoal hover:text-accent-valencia" {
-                                "← Catalogue"
-                            }
-                            p class="text-sm mb-4 mt-1" { "Marathons, series, and themed runs. Planned entries are grayscaled." }
+                            a."button-style-bg-accent block w-full text-center mb-4" href="/catalogue/" { "Catalogue" }
+                            p class="text-sm mb-4" { "Marathons, series, and themed runs. Planned entries are grayscaled." }
                             div class="sticky top-4" {
                                 (list_sidebar("collections", false))
                             }
@@ -311,8 +309,8 @@ impl Route<CollectionParams, Entry<Collection>> for CollectionPage {
 
         let heading = |extra: &str| {
             html!(
-                a href="/catalogue/collections/" class=(format!("text-sm text-subtle-charcoal hover:text-accent-valencia {}", extra)) {
-                    "← All collections"
+                a href="/catalogue/collections/" class=(format!("button-style-bg-accent block w-full text-center mb-4 {}", extra)) {
+                    "All collections"
                 }
                 h1 class="text-xl font-bold m-0 mt-1" { (title) }
                 @if !description.trim().is_empty() {

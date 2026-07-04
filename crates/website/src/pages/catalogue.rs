@@ -56,7 +56,7 @@ impl Route for Catalogue {
                     div.flex.relative id="catalogue-core" data-pagelength=(page_length) data-latest=(catalogue_hash) {
                         aside class="hidden sm:block grow-0 sm:my-4 px-4 pr-8 w-64" {
                             p class="text-sm mb-4" { "This page lists games, books, shows… stuff I've played, watched, read, or listened to."}
-                            a."button-style-bg-accent inline mb-4" href="/catalogue/collections/" { "Collections →" }
+                            a."button-style-bg-accent block w-full text-center mb-4" href="/catalogue/collections/" { "Collections" }
                             div class="sticky top-4" {
                                 (catalogue_sidebar("catalogue", false))
                         }

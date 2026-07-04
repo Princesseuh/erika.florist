@@ -106,8 +106,8 @@ pub fn catalogue_filters(cfg: &SidebarConfig) -> Markup {
 }
 
 /// A cover image styled exactly like the catalogue's entry covers.
-pub fn cover_image(cover_url: &str, alt: &str, grayscale: bool, extra: &str) -> Markup {
-    let dim = if grayscale { "grayscale" } else { "" };
+pub fn cover_image(cover_url: &str, alt: &str, dimmed: bool, extra: &str) -> Markup {
+    let dim = if dimmed { "grayscale" } else { "" };
     html! {
         img class=(format!("{} {}", extra, dim))
             width="180" height="270"
@@ -145,7 +145,7 @@ pub fn review_modal() -> Markup {
 
 pub struct CoverThumb {
     pub url: String,
-    pub grayscale: bool,
+    pub dimmed: bool,
 }
 
 /// A 2×2 montage in the same 3/4.3 frame as an entry cover. This grid is the
@@ -155,7 +155,12 @@ pub fn montage_cover(covers: &[CoverThumb]) -> Markup {
         div class="grid grid-cols-2 grid-rows-2 aspect-[3/4.3] w-full overflow-hidden bg-neutral-900/20" {
             @for slot in 0..4 {
                 @if let Some(thumb) = covers.get(slot) {
-                    (cover_image(&thumb.url, "", thumb.grayscale, "w-full h-full object-cover block"))
+                    div class="relative w-full h-full" {
+                        (cover_image(&thumb.url, "", thumb.dimmed, "w-full h-full object-cover block"))
+                        @if thumb.dimmed {
+                            div class="absolute inset-0 bg-white-sugar-cane/45" {}
+                        }
+                    }
                 } @else {
                     div class="w-full h-full bg-neutral-900/10" {}
                 }

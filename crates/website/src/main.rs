@@ -3,7 +3,10 @@ use graphgarden_core::{
     build::build,
     config::{Config, OutputConfig, ParseConfig, SiteConfig},
 };
-use maudit::{AssetsOptions, BuildOptions, BuildOutput, SitemapOptions, coronate, routes};
+use maudit::{
+    AssetHashingStrategy, AssetsOptions, BuildOptions, BuildOutput, SitemapOptions, coronate,
+    routes,
+};
 
 fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
     let output = coronate(
@@ -35,6 +38,7 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
             base_url: Some("https://erika.florist".into()),
             assets: AssetsOptions {
                 tailwind_binary_path: "../../node_modules/.bin/tailwindcss".into(),
+                hashing_strategy: AssetHashingStrategy::Precise,
                 ..Default::default()
             },
             sitemap: SitemapOptions {

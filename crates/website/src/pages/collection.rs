@@ -205,8 +205,8 @@ impl Route for Collections {
                 article class="mx-4 my-4" {
                     div class="flex relative" {
                         aside class="hidden sm:block grow-0 sm:my-4 px-4 pr-8 w-64" {
+                            p class="text-sm mb-4" { "Marathons, series, and themed runs. Planned entries are dimmed." }
                             a."button-style-bg-accent block w-full text-center mb-4" href="/catalogue/" { "Catalogue" }
-                            p class="text-sm mb-4" { "Marathons, series, and themed runs. Planned entries are grayscaled." }
                             div class="sticky top-4" {
                                 (list_sidebar("collections", false))
                             }
@@ -222,7 +222,7 @@ impl Route for Collections {
                                         avg_badge: view.avg_rating.map(|r| rating_emoji(r).to_string()),
                                         covers: view.members.iter().take(4).map(|card| CoverThumb {
                                             url: card.cover_url.clone(),
-                                            grayscale: card.planned,
+                                            dimmed: card.planned,
                                         }).collect(),
                                         search: view.search_data.clone(),
                                         sort_activity: view.last_activity

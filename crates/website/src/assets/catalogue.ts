@@ -413,6 +413,9 @@ function buildEntryElement(item: CatalogueItemDB): HTMLDivElement {
 	const isPlanned = item.status === "planned";
 	const badge = isPlanned ? "🕒" : getRatingEmoji(item.rating);
 	const dimClass = isPlanned ? "grayscale" : "";
+	const scrim = isPlanned
+		? `<div class="absolute inset-0 bg-white-sugar-cane/45 pointer-events-none"></div>`
+		: "";
 	const showPromote = isPlanned && document.documentElement.dataset.catalogueAuthed === "true";
 	entry.innerHTML = `
             <div class="relative group">
@@ -427,6 +430,7 @@ function buildEntryElement(item: CatalogueItemDB): HTMLDivElement {
                      onload="this.removeAttribute('style');this.removeAttribute('onload');"
                      decoding="async"
                      alt="${item.title} cover" />
+                ${scrim}
                 <span class="absolute top-0 right-0 pr-[0.15rem] pl-[0.2rem] bg-black/5 rounded-bl-lg select-none">
                     ${badge}
                 </span>

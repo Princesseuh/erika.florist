@@ -30,6 +30,12 @@ Tasks:
                             Subset variable fonts using fonttools/pyftsubset.
                             Requires Python, fonttools and pyftsubset to be installed.
 
+  optimize-covers [type] [--dry-run] [--level N]
+                            Losslessly shrink cover.png files with oxipng, in place.
+                            Optional type limits scope (books, games, movies, shows,
+                            projects); default is all. --dry-run only reports savings.
+                            --level 0-6 sets the oxipng preset (default 4).
+
 Options:
   --silent                  Suppress INFO-level log output.
   --help, -h                Print this help message.
@@ -71,6 +77,14 @@ fn main() -> anyhow::Result<()> {
             let title = args.iter().any(|a| a == "--title");
             let content = args.iter().any(|a| a == "--content");
             tasks::subset_fonts::run_subset_fonts(title, content)
+        }
+        "optimize-covers" => {
+            let dry_run = args.iter().any(|a| a == "--dry-run");
+            let content_type = args
+                .get(2)
+                .map(|s| s.as_str())
+                .filter(|s| !s.starts_with('-'));
+            tasks::optimize_covers::run_optimize_covers(content_type, dry_run)
         }
         unknown => {
             eprintln!("Unknown task: {unknown}");

@@ -5581,6 +5581,7 @@ dependencies = [
  "glob",
  "gray_matter",
  "image",
+ "oxipng",
  "rayon",
  "serde",
  "serde_json",

@@ -21,7 +21,6 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
             pages::Catalogue,
             pages::Collections,
             pages::CollectionPage,
-            pages::CatalogueCollectionsIndex,
             pages::ChangelogPage,
             pages::LoginPage,
             pages::WikiIndex,

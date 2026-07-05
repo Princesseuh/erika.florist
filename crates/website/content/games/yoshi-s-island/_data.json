@@ -1,0 +1,50 @@
+{
+  "first_release_date": 807580800,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 306
+    },
+    {
+      "abbreviation": "SNES",
+      "id": 19
+    },
+    {
+      "abbreviation": "SFAM",
+      "id": 58
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 32350,
+      "name": "Hyundai",
+      "role": "publisher"
+    },
+    {
+      "id": 25230,
+      "name": "St. GIGA",
+      "role": "publisher"
+    },
+    {
+      "id": 421,
+      "name": "Nintendo Entertainment Analysis & Development",
+      "role": "developer"
+    },
+    {
+      "id": 33804,
+      "name": "Playtronic",
+      "role": "publisher"
+    }
+  ]
+}

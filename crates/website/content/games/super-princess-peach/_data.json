@@ -1,0 +1,32 @@
+{
+  "first_release_date": 1129766400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "NDS",
+      "id": 20
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 321,
+      "name": "Tose",
+      "role": "developer"
+    },
+    {
+      "id": 866,
+      "name": "Nintendo SPD Production Group No. 2",
+      "role": "developer"
+    }
+  ]
+}

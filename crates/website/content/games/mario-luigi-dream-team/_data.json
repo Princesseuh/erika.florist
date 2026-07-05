@@ -1,0 +1,44 @@
+{
+  "first_release_date": 1373587200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 1760,
+      "name": "AlphaDream",
+      "role": "developer"
+    },
+    {
+      "id": 1025,
+      "name": "Good-Feel",
+      "role": "developer"
+    }
+  ]
+}

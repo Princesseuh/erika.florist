@@ -1,0 +1,52 @@
+{
+  "first_release_date": 593568000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    },
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "famicom",
+      "id": 99
+    },
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    },
+    {
+      "abbreviation": "NES",
+      "id": 18
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 32471,
+      "name": "Nintendo R&D4",
+      "role": "developer"
+    },
+    {
+      "id": 33804,
+      "name": "Playtronic",
+      "role": "publisher"
+    }
+  ]
+}

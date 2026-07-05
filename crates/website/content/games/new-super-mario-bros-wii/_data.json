@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1257984000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 421,
+      "name": "Nintendo Entertainment Analysis & Development",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1363737600,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 1054,
+      "name": "Next Level Games",
+      "role": "developer"
+    },
+    {
+      "id": 2935,
+      "name": "Nintendo SPD",
+      "role": "developer"
+    }
+  ]
+}

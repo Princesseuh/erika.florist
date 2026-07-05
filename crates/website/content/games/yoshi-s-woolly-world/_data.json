@@ -1,0 +1,27 @@
+{
+  "first_release_date": 1435276800,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 1025,
+      "name": "Good-Feel",
+      "role": "developer"
+    }
+  ]
+}

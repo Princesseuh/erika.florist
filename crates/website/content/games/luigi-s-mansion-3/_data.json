@@ -1,0 +1,32 @@
+{
+  "first_release_date": 1572480000,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 1054,
+      "name": "Next Level Games",
+      "role": "developer"
+    },
+    {
+      "id": 65520,
+      "name": "Nintendo EPD Production Group No. 6",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "first_release_date": 1697760000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 45215,
+      "name": "Nintendo EPD Production Group No. 10",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    }
+  ]
+}

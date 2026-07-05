@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1216857600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    }
+  ],
+  "companies": [
+    {
+      "id": 1025,
+      "name": "Good-Feel",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    }
+  ]
+}

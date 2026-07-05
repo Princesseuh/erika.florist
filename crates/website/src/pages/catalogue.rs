@@ -179,15 +179,16 @@ impl Route for CatalogueContent {
         add_entries!(shows, 2);
         add_entries!(books, 3);
 
+        let collections_index = crate::pages::collection::build_collections_index(ctx);
+
         let mut hasher = DefaultHasher::new();
         entries_data.hash(&mut hasher);
+        collections_index.hash(&mut hasher);
         let hash = format!("{:x}", hasher.finish());
 
-        // Store the hash in global state (ignore errors if already set)
         let _ = state::set_catalogue_hash(hash.clone());
 
-        // Use serde_json::json! macro for cleaner syntax
-        let result = serde_json::json!([hash, entries_data]);
+        let result = serde_json::json!([hash, entries_data, collections_index]);
 
         result.to_string()
     }

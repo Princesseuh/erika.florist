@@ -1,0 +1,44 @@
+{
+  "first_release_date": 1133136000,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    },
+    {
+      "abbreviation": "NDS",
+      "id": 20
+    }
+  ],
+  "companies": [
+    {
+      "id": 1760,
+      "name": "AlphaDream",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 1977,
+      "name": "Nintendo SPD Production Group No. 4",
+      "role": "developer"
+    }
+  ]
+}

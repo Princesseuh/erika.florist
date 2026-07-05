@@ -264,17 +264,14 @@ pub struct CollectionParams {
 
 impl Route<CollectionParams, Entry<Collection>> for CollectionPage {
     fn pages(&self, ctx: &mut DynamicRouteContext) -> Pages<CollectionParams, Entry<Collection>> {
-        ctx.content::<Collection>("collections")
-            .entries()
-            .map(|entry| {
-                Page::new(
-                    CollectionParams {
-                        slug: entry.id.clone(),
-                    },
-                    entry.clone(),
-                )
-            })
-            .collect()
+        ctx.content::<Collection>("collections").into_pages(|entry| {
+            Page::new(
+                CollectionParams {
+                    slug: entry.id.clone(),
+                },
+                entry.clone(),
+            )
+        })
     }
 
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
@@ -446,26 +443,22 @@ fn create_collection_modal() -> maud::Markup {
     }
 }
 
-#[route("/catalogue/collections.json")]
-pub struct CatalogueCollectionsIndex;
+/// `"{type}/{slug}" -> [{slug, title}]`: every entry mapped to the collections containing it.
+pub fn build_collections_index(ctx: &mut PageContext) -> BTreeMap<String, Vec<serde_json::Value>> {
+    let collections: Vec<_> = ctx.content::<Collection>("collections").entries().collect();
 
-impl Route for CatalogueCollectionsIndex {
-    fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
-        let collections: Vec<_> = ctx.content::<Collection>("collections").entries().collect();
-
-        let mut map: BTreeMap<String, Vec<serde_json::Value>> = BTreeMap::new();
-        for entry in collections {
-            let slug = entry.id.clone();
-            let data = entry.data(ctx);
-            let title = data.title.clone();
-            for member in &data.members {
-                map.entry(member_key(member)).or_default().push(serde_json::json!({
-                    "slug": slug,
-                    "title": title,
-                }));
-            }
+    let mut map: BTreeMap<String, Vec<serde_json::Value>> = BTreeMap::new();
+    for entry in collections {
+        let slug = entry.id.clone();
+        let data = entry.data(ctx);
+        let title = data.title.clone();
+        for member in &data.members {
+            map.entry(member_key(member)).or_default().push(serde_json::json!({
+                "slug": slug,
+                "title": title,
+            }));
         }
-
-        serde_json::to_string(&map).unwrap_or_else(|_| "{}".to_string())
     }
+
+    map
 }

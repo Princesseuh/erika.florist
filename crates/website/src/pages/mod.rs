@@ -15,7 +15,7 @@ pub use blog::{
 };
 pub use catalogue::{Catalogue, CatalogueContent, CatalogueMCP};
 pub use changelog::ChangelogPage;
-pub use collection::{CatalogueCollectionsIndex, CollectionPage, Collections};
+pub use collection::{CollectionPage, Collections};
 pub use friends::FriendsPage;
 pub use index::Index;
 pub use login::LoginPage;

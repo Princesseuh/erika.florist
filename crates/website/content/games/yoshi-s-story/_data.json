@@ -1,0 +1,54 @@
+{
+  "first_release_date": 882662400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "N64",
+      "id": 4
+    },
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    }
+  ],
+  "companies": [
+    {
+      "id": 421,
+      "name": "Nintendo Entertainment Analysis & Development",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "developer"
+    },
+    {
+      "id": 812,
+      "name": "Gradiente",
+      "role": "publisher"
+    },
+    {
+      "id": 5163,
+      "name": "iQue",
+      "role": "publisher"
+    }
+  ]
+}

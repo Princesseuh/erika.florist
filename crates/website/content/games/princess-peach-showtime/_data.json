@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1711065600,
+  "genres": [
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 1025,
+      "name": "Good-Feel",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    }
+  ]
+}

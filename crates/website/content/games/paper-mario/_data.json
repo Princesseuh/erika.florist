@@ -1,0 +1,49 @@
+{
+  "first_release_date": 965952000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "N64",
+      "id": 4
+    },
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 812,
+      "name": "Gradiente",
+      "role": "publisher"
+    },
+    {
+      "id": 5163,
+      "name": "iQue",
+      "role": "publisher"
+    },
+    {
+      "id": 25077,
+      "name": "Intelligent Systems",
+      "role": "developer"
+    }
+  ]
+}

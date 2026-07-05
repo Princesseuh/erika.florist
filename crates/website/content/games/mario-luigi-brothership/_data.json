@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1730937600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 1383,
+      "name": "ACQUIRE Corp.",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    }
+  ]
+}

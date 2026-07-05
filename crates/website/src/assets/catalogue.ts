@@ -1,7 +1,7 @@
 import { QuickScore } from "quick-score";
 import { thumbHashToDataURL } from "thumbhash";
 
-const VERSION = 8;
+const VERSION = 9;
 
 function requireElement<T extends Element>(selector: string): T {
 	const el = document.querySelector<T>(selector);
@@ -27,14 +27,14 @@ const content = requireElement<Element>("#catalogue-content");
 const entriesCountElements = document.querySelectorAll("#catalogue-entry-count");
 
 let db: IDBDatabase;
+// Full dataset held in memory; IndexedDB is a read-once cache, not queried per interaction.
+let allRecords: CatalogueItemDB[] = [];
 let allItems: CatalogueItemDB[] = [];
 let currentPage = 0;
 const pageSize = 32;
 let isLoading = false;
 
-let wasUpgraded = false;
-
-type CatalogueData = [string, CatalogueItem[]];
+type CatalogueData = [string, CatalogueItem[], Record<string, CollectionRef[]>];
 
 type CatalogueItem = [
 	// cover
@@ -75,39 +75,14 @@ interface CatalogueItemDB {
 	status: "finished" | "planned";
 }
 
-interface VersionRecord {
-	id: "version";
-	hash: string;
-	timestamp: number;
-	complete: boolean;
-}
-
 function typedResult<T>(request: IDBRequest<T>): T {
 	return request.result;
-}
-
-function isCatalogueItem(value: unknown): value is CatalogueItemDB {
-	return (
-		typeof value === "object" &&
-		value !== null &&
-		"id" in value &&
-		(value as { id: unknown }).id !== "version"
-	);
-}
-
-function isCatalogueItemDB(value: unknown): value is CatalogueItemDB {
-	return (
-		typeof value === "object" &&
-		value !== null &&
-		"id" in value &&
-		(value as { id: unknown }).id !== "version"
-	);
 }
 
 function isCatalogueData(value: unknown): value is CatalogueData {
 	return (
 		Array.isArray(value) &&
-		value.length === 2 &&
+		value.length >= 2 &&
 		typeof value[0] === "string" &&
 		Array.isArray(value[1])
 	);
@@ -251,21 +226,22 @@ function readFilters(): {
 	};
 }
 
-function openCursorForSort(
-	store: IDBObjectStore,
-	sort: string,
-	direction: IDBCursorDirection,
-): IDBRequest<IDBCursorWithValue | null> {
-	if (sort === "rating") {
-		return store.index("rating_date").openCursor(null, direction);
-	}
-	if (sort === "release") {
-		return store.index("release_date").openCursor(null, direction);
-	}
-	if (sort === "alphabetical") {
-		return store.index("lower_case_title").openCursor(null, direction);
-	}
-	return store.index("date").openCursor(null, direction);
+// rating and release tie-break by date; `ascending` flips the whole ordering.
+function sortItems(items: CatalogueItemDB[], sort: string, ascending: boolean): CatalogueItemDB[] {
+	const direction = ascending ? 1 : -1;
+	return [...items].sort((a, b) => {
+		let ordering: number;
+		if (sort === "rating") {
+			ordering = a.rating - b.rating || a.date - b.date;
+		} else if (sort === "release") {
+			ordering = (a.releaseYear ?? 0) - (b.releaseYear ?? 0) || a.date - b.date;
+		} else if (sort === "alphabetical") {
+			ordering = a.title.localeCompare(b.title, undefined, { sensitivity: "base" });
+		} else {
+			ordering = a.date - b.date;
+		}
+		return ordering * direction;
+	});
 }
 
 const reviewModal = requireElement<Element>("#review-modal");
@@ -280,26 +256,11 @@ interface CollectionRef {
 	title: string;
 }
 
-// `${type}/${diskSlug}` -> collections that contain the entry. Loaded once, lazily.
-let collectionsIndex: Record<string, CollectionRef[]> | null = null;
+// `${type}/${diskSlug}` -> collections containing the entry.
+let collectionsIndex: Record<string, CollectionRef[]> = {};
 
 function isCollectionsIndex(value: unknown): value is Record<string, CollectionRef[]> {
 	return typeof value === "object" && value !== null;
-}
-
-async function loadCollectionsIndex(): Promise<Record<string, CollectionRef[]>> {
-	if (collectionsIndex !== null) {
-		return collectionsIndex;
-	}
-	try {
-		const response = await fetch("/catalogue/collections.json");
-		const data: unknown = await response.json();
-		collectionsIndex = isCollectionsIndex(data) ? data : {};
-	} catch (error) {
-		console.error("Failed to load collections index:", error);
-		collectionsIndex = {};
-	}
-	return collectionsIndex;
 }
 
 function renderModalCollections(item: CatalogueItemDB, index: Record<string, CollectionRef[]>) {
@@ -371,14 +332,7 @@ function openReviewModal(item: CatalogueItemDB) {
 	reviewModalTitleLink.href = `/catalogue/?entry=${item.id}`;
 	updateModalCover(item);
 	reviewModalMeta.innerHTML = buildModalMeta(item);
-	reviewModalCollections.innerHTML = "";
-	loadCollectionsIndex()
-		.then((index) => {
-			renderModalCollections(item, index);
-		})
-		.catch((error: unknown) => {
-			console.error(error);
-		});
+	renderModalCollections(item, collectionsIndex);
 	reviewModalContent.innerHTML =
 		item.review === "" ? "<p><em>No review written yet.</em></p>" : item.review;
 	reviewModal.classList.remove("hidden");
@@ -407,6 +361,17 @@ document.addEventListener("keydown", (e) => {
 	}
 });
 
+const placeholderCache = new Map<string, string>();
+// Decode the thumbhash to a data URL lazily at render, only for shown cards: decoding all up front costs ~170ms on seed.
+function placeholderDataUrl(base64: string): string {
+	let url = placeholderCache.get(base64);
+	if (url === undefined) {
+		url = thumbHashToDataURL(Uint8Array.from(atob(base64), (c) => c.codePointAt(0) ?? 0));
+		placeholderCache.set(base64, url);
+	}
+	return url;
+}
+
 function buildEntryElement(item: CatalogueItemDB): HTMLDivElement {
 	const entry = document.createElement("div");
 	entry.className = "w-[180px]";
@@ -424,9 +389,7 @@ function buildEntryElement(item: CatalogueItemDB): HTMLDivElement {
                      width="180" height="270"
                      src="${item.cover}"
                      loading="lazy"
-                     style="background-size: cover;background-image: url(${
-												item.placeholder
-											});image-rendering:auto;"
+                     style="background-size: cover;background-image: url(${placeholderDataUrl(item.placeholder)});image-rendering:auto;"
                      onload="this.removeAttribute('style');this.removeAttribute('onload');"
                      decoding="async"
                      alt="${item.title} cover" />
@@ -504,7 +467,6 @@ function hasMorePages() {
 	return currentPage * pageSize < allItems.length;
 }
 
-// Infinite scroll implementation
 function handleScroll() {
 	if (isLoading || !hasMorePages()) {
 		return;
@@ -514,7 +476,6 @@ function handleScroll() {
 	const windowHeight = window.innerHeight;
 	const documentHeight = document.documentElement.scrollHeight;
 
-	// Trigger when user is 200px from bottom
 	if (scrollTop + windowHeight >= documentHeight - 250) {
 		renderPage();
 	}
@@ -525,27 +486,10 @@ function openEntryFromParam() {
 	if (entryParam === null) {
 		return;
 	}
-
-	const transaction = db.transaction("content", "readonly");
-	const req: IDBRequest<unknown> = transaction.objectStore("content").get(entryParam);
-	req.addEventListener("success", () => {
-		const result = typedResult(req);
-		if (isCatalogueItem(result)) {
-			openReviewModal(result);
-		}
-	});
-}
-
-function handleCursorComplete(items: CatalogueItemDB[]) {
-	allItems = items;
-	currentPage = 0;
-	content.innerHTML = "";
-	renderPage();
-	updateEntryCount();
-	openEntryFromParam();
-	isLoading = false;
-	// If the page is already scrolled down, render more items
-	handleScroll();
+	const item = allRecords.find((record) => record.id === entryParam);
+	if (item !== undefined) {
+		openReviewModal(item);
+	}
 }
 
 function applySearchFilter(items: CatalogueItemDB[], search: string): CatalogueItemDB[] {
@@ -561,137 +505,52 @@ function applySearchFilter(items: CatalogueItemDB[], search: string): CatalogueI
 }
 
 function buildUI() {
-	if (isLoading) {
-		return;
-	}
-	isLoading = true;
-
 	const filters = readFilters();
-	const contentObjectStore = db.transaction("content", "readonly").objectStore("content");
 	const descendingToggle = getCheckboxValue(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"]);
 	// Collections read best oldest-first, so their default direction is inverted
 	// relative to the catalogue's newest-first default.
 	const ascending = collectionIds === null ? descendingToggle : !descendingToggle;
-	const cursorDirection = ascending ? "next" : "prev";
-	const request = openCursorForSort(contentObjectStore, filters.sort, cursorDirection);
 
-	const items: CatalogueItemDB[] = [];
+	const filtered = allRecords.filter(
+		(item) =>
+			(filters.type === "" || item.type === filters.type) &&
+			(filters.rating === "" || item.rating === filters.rating) &&
+			(filters.status === "all" || item.status === filters.status) &&
+			(collectionIds === null || collectionIds.has(item.id)),
+	);
 
-	request.addEventListener("success", () => {
-		const cursor = typedResult(request);
+	allItems =
+		filters.search === ""
+			? sortItems(filtered, filters.sort, ascending)
+			: applySearchFilter(filtered, filters.search);
 
-		if (cursor === null) {
-			handleCursorComplete(applySearchFilter(items, filters.search));
-		} else {
-			const rawValue: unknown = cursor.value;
-			if (isCatalogueItemDB(rawValue)) {
-				const matchesType = filters.type === "" || rawValue.type === filters.type;
-				const matchesRating = filters.rating === "" || rawValue.rating === filters.rating;
-				const matchesStatus = filters.status === "all" || rawValue.status === filters.status;
-				const matchesCollection = collectionIds === null || collectionIds.has(rawValue.id);
-
-				if (matchesType && matchesRating && matchesStatus && matchesCollection) {
-					items.push(rawValue);
-				}
-			}
-
-			cursor.continue();
-		}
-	});
+	currentPage = 0;
+	content.innerHTML = "";
+	renderPage();
+	updateEntryCount();
+	openEntryFromParam();
+	isLoading = false;
+	// If the page is already scrolled down, render more items.
+	handleScroll();
 }
 
-function seedItems(store: IDBObjectStore, data: CatalogueItem[]): void {
-	for (const item of data) {
-		const [
-			cover,
-			placeholder,
-			type,
-			title,
-			rating,
-			author,
-			date,
-			releaseYear,
-			review,
-			statusNum,
-			slug,
-		] = item;
-
-		const itemType = numberToType(type);
-		const id = `${slug}-${itemType}`;
-		const status = numberToStatus(statusNum);
-
-		const addRequest: IDBRequest<IDBValidKey> = store.add({
-			author,
-			cover,
-			date: date ?? 0,
-			id,
-			lower_case_title: title.toLowerCase(),
-			placeholder: thumbHashToDataURL(
-				Uint8Array.from(atob(placeholder), (c) => c.codePointAt(0) ?? 0),
-			),
-			rating: rating ?? -1,
-			releaseYear: releaseYear ?? null,
-			release_sort: releaseYear ?? 0,
-			review: review ?? "",
-			status,
-			title,
-			type: itemType,
-		});
-
-		addRequest.addEventListener("error", (e) => {
-			const { target } = e;
-			const err = target instanceof IDBRequest ? target.error : null;
-			console.error("Failed to add item", id, err);
-			errorUI();
-		});
-	}
-}
-
-function markSeedingComplete(updateStore: IDBObjectStore): void {
-	const getVersionRequest: IDBRequest<unknown> = updateStore.get("version");
-	getVersionRequest.addEventListener("success", () => {
-		const raw: unknown = typedResult(getVersionRequest);
-		if (
-			typeof raw !== "object" ||
-			raw === null ||
-			!("complete" in raw) ||
-			!("hash" in raw) ||
-			!("id" in raw) ||
-			!("timestamp" in raw)
-		) {
-			console.error("Version record not found when trying to mark complete");
-			errorUI();
-			return;
-		}
-		const rawWithFields = raw;
-		if (typeof rawWithFields.hash !== "string" || typeof rawWithFields.timestamp !== "number") {
-			console.error("Version record has invalid field types");
-			errorUI();
-			return;
-		}
-		const versionRecord: VersionRecord = {
-			complete: true,
-			hash: rawWithFields.hash,
-			id: "version",
-			timestamp: rawWithFields.timestamp,
-		};
-		const updateRequest: IDBRequest<IDBValidKey> = updateStore.put(versionRecord);
-		updateRequest.addEventListener("success", () => {
-			buildUI();
-		});
-		updateRequest.addEventListener("error", (e) => {
-			const { target } = e;
-			const err = target instanceof IDBRequest ? target.error : null;
-			console.error("Failed to mark seeding as complete", err);
-			errorUI();
-		});
-	});
-	getVersionRequest.addEventListener("error", (e) => {
-		const { target } = e;
-		const err = target instanceof IDBRequest ? target.error : null;
-		console.error("Failed to get version record for completion update", err);
-		errorUI();
-	});
+function toRecord(entry: CatalogueItem): CatalogueItemDB {
+	const [cover, placeholder, typeNum, title, rating, author, date, releaseYear, review, statusNum, slug] =
+		entry;
+	const type = numberToType(typeNum) as CatalogueItemDB["type"];
+	return {
+		author,
+		cover,
+		date: date ?? 0,
+		id: `${slug}-${type}`,
+		placeholder,
+		rating: rating ?? -1,
+		releaseYear: releaseYear ?? null,
+		review: review ?? "",
+		status: numberToStatus(statusNum),
+		title,
+		type,
+	};
 }
 
 async function fetchCatalogueData(): Promise<CatalogueData> {
@@ -703,85 +562,67 @@ async function fetchCatalogueData(): Promise<CatalogueData> {
 	return json;
 }
 
-async function seedDatabase() {
-	let catalogueData: CatalogueData;
+// One atomic transaction: an abort commits nothing, so the cache is never left marked-complete but half-seeded.
+function seedCache(hash: string, records: CatalogueItemDB[], collections: Record<string, CollectionRef[]>) {
+	const tx = db.transaction(["content", "meta"], "readwrite");
+	const contentStore = tx.objectStore("content");
+	const metaStore = tx.objectStore("meta");
+	contentStore.clear();
+	for (const record of records) {
+		contentStore.put(record);
+	}
+	metaStore.put({ data: collections, id: "collections" });
+	metaStore.put({ complete: true, hash, id: "version", timestamp: Date.now() });
+	tx.addEventListener("error", () => {
+		console.error("Failed to seed catalogue cache", tx.error);
+	});
+}
+
+async function fetchAndSeed() {
+	let data: CatalogueData;
 	try {
-		catalogueData = await fetchCatalogueData();
+		data = await fetchCatalogueData();
 	} catch (error) {
 		console.error("Failed to fetch catalogue content", error);
 		errorUI();
 		return;
 	}
+	const [hash, entries, collections] = data;
+	allRecords = entries.map(toRecord);
+	collectionsIndex = collections ?? {};
+	// Render straight from memory; seeding the cache is background work for next visit.
+	buildUI();
+	seedCache(hash, allRecords, collectionsIndex);
+}
 
-	const contentObjectStore = db.transaction("content", "readwrite").objectStore("content");
-	const [version, data] = catalogueData;
-
-	const versionRequest: IDBRequest<IDBValidKey> = contentObjectStore.add({
-		complete: false,
-		hash: version,
-		id: "version",
-		timestamp: Date.now(),
+function loadFromCache() {
+	const tx = db.transaction(["content", "meta"], "readonly");
+	const itemsRequest = tx.objectStore("content").getAll() as IDBRequest<CatalogueItemDB[]>;
+	const collectionsRequest: IDBRequest<unknown> = tx.objectStore("meta").get("collections");
+	tx.addEventListener("complete", () => {
+		allRecords = itemsRequest.result;
+		const raw: unknown = collectionsRequest.result;
+		collectionsIndex =
+			typeof raw === "object" &&
+			raw !== null &&
+			"data" in raw &&
+			isCollectionsIndex((raw as { data: unknown }).data)
+				? (raw as { data: Record<string, CollectionRef[]> }).data
+				: {};
+		buildUI();
 	});
-
-	versionRequest.addEventListener("error", (e) => {
-		const { target } = e;
-		const err = target instanceof IDBRequest ? target.error : null;
-		console.error("Failed to add version", err);
-		errorUI();
-	});
-
-	seedItems(contentObjectStore, data);
-
-	contentObjectStore.transaction.addEventListener("complete", () => {
-		const updateTransaction = db.transaction("content", "readwrite");
-		markSeedingComplete(updateTransaction.objectStore("content"));
+	tx.addEventListener("error", () => {
+		console.error("Failed to read catalogue cache, refetching", tx.error);
+		void fetchAndSeed();
 	});
 }
 
-function resetAndCreateDB() {
-	// Only delete/create object stores during upgrade transactions
-	if (db.objectStoreNames.contains("content")) {
-		db.deleteObjectStore("content");
+function resetSchema() {
+	for (const name of Array.from(db.objectStoreNames)) {
+		db.deleteObjectStore(name);
 	}
-
-	const objectStore = db.createObjectStore("content", {
-		keyPath: "id",
-	});
-
-	objectStore.createIndex("date", "date", { unique: false });
-	objectStore.createIndex("lower_case_title", "lower_case_title", {
-		unique: false,
-	});
-	objectStore.createIndex("rating_date", ["rating", "date"], { unique: false });
-	objectStore.createIndex("release_date", ["release_sort", "date"], { unique: false });
-	objectStore.createIndex("status", "status", { unique: false });
-
-	objectStore.transaction.addEventListener("complete", async () => {
-		try {
-			await seedDatabase();
-		} catch (error) {
-			errorUI();
-			console.error(error);
-		}
-	});
-}
-
-function clearAndSeedDatabase() {
-	const transaction = db.transaction("content", "readwrite");
-	const objectStore = transaction.objectStore("content");
-
-	const clearRequest = objectStore.clear();
-	clearRequest.addEventListener("success", async () => {
-		try {
-			await seedDatabase();
-		} catch (error) {
-			errorUI();
-			console.error(error);
-		}
-	});
-	clearRequest.addEventListener("error", (e) => {
-		console.error("Failed to clear database", e);
-	});
+	db.createObjectStore("content", { keyPath: "id" });
+	db.createObjectStore("meta", { keyPath: "id" });
 }
 
 dbOpenRequest.addEventListener("error", () => {
@@ -789,12 +630,14 @@ dbOpenRequest.addEventListener("error", () => {
 
 	const deleteRequest = indexedDB.deleteDatabase("catalogue");
 	deleteRequest.addEventListener("success", () => {
-		// Don't create a new request with the same variable name
-		const newDbRequest = indexedDB.open("catalogue", VERSION);
-
-		newDbRequest.addEventListener("upgradeneeded", () => {
-			db = newDbRequest.result;
-			resetAndCreateDB();
+		const retry = indexedDB.open("catalogue", VERSION);
+		retry.addEventListener("upgradeneeded", () => {
+			db = retry.result;
+			resetSchema();
+		});
+		retry.addEventListener("success", () => {
+			db = retry.result;
+			void fetchAndSeed();
 		});
 	});
 	deleteRequest.addEventListener("error", () => {
@@ -806,46 +649,33 @@ dbOpenRequest.addEventListener("error", () => {
 dbOpenRequest.addEventListener("success", () => {
 	db = dbOpenRequest.result;
 
-	// Skip version check if database was just upgraded
-	if (wasUpgraded) {
-		wasUpgraded = false;
-		return;
-	}
-
-	// Check if database has data before building UI
-	const transaction = db.transaction("content", "readonly");
-	const objectStore = transaction.objectStore("content");
-
-	// Check version and completion status
-	const versionCheck: IDBRequest<unknown> = objectStore.get("version");
-	versionCheck.addEventListener("success", () => {
-		const raw: unknown = typedResult(versionCheck);
-		if (typeof raw !== "object" || raw === null || !("complete" in raw) || !("hash" in raw)) {
-			clearAndSeedDatabase();
-			return;
-		}
-		const { hash, complete } = raw;
-		if (
-			typeof hash !== "string" ||
-			typeof complete !== "boolean" ||
-			hash !== latestHash ||
-			!complete
-		) {
-			clearAndSeedDatabase();
+	const versionRequest: IDBRequest<unknown> = db
+		.transaction("meta", "readonly")
+		.objectStore("meta")
+		.get("version");
+	versionRequest.addEventListener("success", () => {
+		const raw: unknown = typedResult(versionRequest);
+		const fresh =
+			typeof raw === "object" &&
+			raw !== null &&
+			"hash" in raw &&
+			"complete" in raw &&
+			(raw as { hash: unknown }).hash === latestHash &&
+			(raw as { complete: unknown }).complete === true;
+		if (fresh) {
+			loadFromCache();
 		} else {
-			buildUI();
+			void fetchAndSeed();
 		}
 	});
-	versionCheck.addEventListener("error", () => {
-		clearAndSeedDatabase();
+	versionRequest.addEventListener("error", () => {
+		void fetchAndSeed();
 	});
 });
 
 dbOpenRequest.addEventListener("upgradeneeded", () => {
 	db = dbOpenRequest.result;
-	// Set flag to skip version check in onsuccess
-	wasUpgraded = true;
-	resetAndCreateDB();
+	resetSchema();
 });
 
 let ticking = false;
@@ -864,7 +694,6 @@ document.addEventListener(
 	{ passive: true },
 );
 
-// Reset pagination when filters change
 function resetAndBuildUI() {
 	window.scrollTo({ behavior: "instant", top: 0 });
 	currentPage = 0;
@@ -905,7 +734,6 @@ syncPairedInputs(["#mobile-catalogue-types", "#catalogue-types"], "change");
 syncPairedInputs(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"], "change");
 syncPairedInputs(["#mobile-catalogue-status", "#catalogue-status"], "change");
 
-// Add event listeners to all filter inputs (both desktop and mobile)
 const addListener = (selectors: string[], type: "input" | "change", handler: () => void) => {
 	for (const selector of selectors) {
 		for (const el of document.querySelectorAll(selector)) {

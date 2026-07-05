@@ -1,0 +1,26 @@
+{
+  "first_release_date": 694137600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Handheld",
+      "id": 411
+    }
+  ],
+  "companies": [
+    {
+      "id": 37824,
+      "name": "Nelsonic Industries",
+      "role": "developer"
+    }
+  ]
+}

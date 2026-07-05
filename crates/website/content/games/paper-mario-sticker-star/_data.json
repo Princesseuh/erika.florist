@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1352505600,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    }
+  ],
+  "companies": [
+    {
+      "id": 1759,
+      "name": "Vanpool",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "developer"
+    },
+    {
+      "id": 25077,
+      "name": "Intelligent Systems",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+---
+title: "Mario Marathon"
+members:
+  - game/donkey-kong
+  - game/super-mario-bros
+  - game/super-mario-bros-the-lost-levels
+  - game/super-mario-bros-2
+  - game/super-mario-bros-3
+  - game/super-mario-land
+  - game/super-mario-world
+  - game/super-mario-land-2
+  - game/wario-land-super-mario-land-3
+  - game/yoshi-s-island
+  - game/super-mario-rpg
+  - game/super-mario-64
+  - game/yoshi-s-story
+  - game/wario-land-ii
+  - game/wario-land-3
+  - game/wario-land-4
+  - game/paper-mario
+  - game/luigi-s-mansion
+  - game/super-mario-sunshine
+  - game/mario-luigi-superstar-saga
+  - game/paper-mario-the-thousand-year-door
+  - game/yoshi-touch-go
+  - game/mario-luigi-partners-in-time
+  - game/super-princess-peach
+  - game/new-super-mario-bros
+  - game/yoshi-s-island-ds
+  - game/super-mario-galaxy
+  - game/super-paper-mario
+  - game/wario-land-shake-it
+  - game/mario-luigi-bowser-s-inside-story
+  - game/new-super-mario-bros-wii
+  - game/super-mario-galaxy-2
+  - game/super-mario-3d-land
+  - game/new-super-mario-bros-2
+  - game/new-super-mario-bros-u
+  - game/paper-mario-sticker-star
+  - game/new-super-luigi-u
+  - game/luigi-s-mansion-dark-moon
+  - game/mario-luigi-dream-team
+  - game/captain-toad-treasure-tracker
+  - game/yoshi-s-new-island
+  - game/yoshi-s-woolly-world
+  - game/mario-luigi-paper-jam
+  - game/paper-mario-color-splash
+  - game/super-mario-odyssey
+  - game/yoshi-s-crafted-world
+  - game/luigi-s-mansion-3
+  - game/paper-mario-the-origami-king
+  - game/super-mario-3d-world-bowser-s-fury
+  - game/super-mario-bros-wonder
+  - game/princess-peach-showtime
+  - game/mario-luigi-brothership
+---
+
+A marathon of the Mario games (and some side quests) with my friend Goulven. His side of this [is available on his website](https://goulven-clech.dev/catalogue/todo/?list=mario-marathon)

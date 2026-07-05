@@ -1,0 +1,58 @@
+{
+  "first_release_date": 826329600,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "SNES",
+      "id": 19
+    },
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    },
+    {
+      "abbreviation": "SFAM",
+      "id": 58
+    }
+  ],
+  "companies": [
+    {
+      "id": 250,
+      "name": "Square",
+      "role": "developer"
+    },
+    {
+      "id": 26,
+      "name": "Square Enix",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 33804,
+      "name": "Playtronic",
+      "role": "publisher"
+    },
+    {
+      "id": 32350,
+      "name": "Hyundai",
+      "role": "publisher"
+    }
+  ]
+}

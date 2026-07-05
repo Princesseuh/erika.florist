@@ -1,0 +1,36 @@
+{
+  "first_release_date": 953596800,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "GBC",
+      "id": 22
+    },
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 1809,
+      "name": "Nintendo R&D1",
+      "role": "developer"
+    },
+    {
+      "id": 812,
+      "name": "Gradiente",
+      "role": "publisher"
+    }
+  ]
+}

@@ -67,8 +67,17 @@ jobs:
         with:
           targets: wasm32-unknown-unknown
 
-      - name: Cache cargo
-        uses: Swatinem/rust-cache@v2
+      - name: Cache cargo + Maudit
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            target
+          key: build-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}-${{ github.sha }}
+          restore-keys: |
+            build-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}-
 
       - name: Build
         run: cargo build --release

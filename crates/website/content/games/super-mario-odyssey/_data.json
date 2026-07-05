@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1509062400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Switch 2",
+      "id": 508
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 45213,
+      "name": "Nintendo EPD Production Group No. 8",
+      "role": "developer"
+    },
+    {
+      "id": 2095,
+      "name": "Panic Button Games",
+      "role": "publisher"
+    }
+  ]
+}

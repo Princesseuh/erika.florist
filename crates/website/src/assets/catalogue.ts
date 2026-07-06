@@ -381,7 +381,6 @@ function buildEntryElement(item: CatalogueItemDB): HTMLDivElement {
 	const scrim = isPlanned
 		? `<div class="absolute inset-0 bg-white-sugar-cane/45 pointer-events-none"></div>`
 		: "";
-	const showPromote = isPlanned && document.documentElement.dataset.catalogueAuthed === "true";
 	entry.innerHTML = `
             <div class="relative group">
               <button type="button" class="block w-full text-left cursor-pointer">
@@ -407,7 +406,7 @@ function buildEntryElement(item: CatalogueItemDB): HTMLDivElement {
                 </div>
               </button>
               ${
-								showPromote
+								isPlanned
 									? `<button type="button" data-promote class="absolute top-1 left-1 bg-accent-valencia text-white text-xs font-bold rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer hover:bg-accent-valencia/80">Mark finished</button>`
 									: ""
 							}

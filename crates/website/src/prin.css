@@ -483,4 +483,13 @@
 	select {
 		border: 1px solid black;
 	}
+
+	/* Auth resolves after the grid renders; reveal the promote button only once it lands. */
+	[data-promote] {
+		display: none;
+	}
+
+	:root[data-catalogue-authed="true"] [data-promote] {
+		display: block;
+	}
 }

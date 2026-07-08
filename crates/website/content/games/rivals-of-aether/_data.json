@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1490659200,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 48466,
+      "name": "Aether Studios",
+      "role": "developer"
+    },
+    {
+      "id": 12406,
+      "name": "Dan Fornace",
+      "role": "developer"
+    }
+  ]
+}

@@ -3,10 +3,10 @@ use std::hash::{DefaultHasher, Hash, Hasher};
 use maud::html;
 use maudit::route::prelude::*;
 
+use crate::components::catalogue::{SidebarConfig, catalogue_filters};
 use crate::components::icon::Icon;
 use crate::components::mobile_menu;
 use crate::content::Status;
-use crate::components::catalogue::{SidebarConfig, catalogue_filters};
 use crate::{content::CatalogueMetadata, layouts::base_layout, state};
 
 fn catalogue_sidebar(prefix: &str, mobile: bool) -> maud::Markup {
@@ -17,6 +17,8 @@ fn catalogue_sidebar(prefix: &str, mobile: bool) -> maud::Markup {
         show_status: true,
         show_rating: true,
         show_completion: false,
+        show_date_range: true,
+        show_collection: false,
         default_status: "finished",
         sort_options: &[
             ("date", "Date"),
@@ -42,7 +44,9 @@ impl Route for Catalogue {
         ctx.assets.include_script("src/assets/catalogue-add.ts")?;
         let page_length = 32;
 
-        let catalogue_hash = state::get_catalogue_hash().unwrap();
+        // Empty on incremental rebuilds where CatalogueContent stayed cached (hash unset);
+        // catalogue.ts then just refetches content.json instead of panicking here.
+        let catalogue_hash = state::get_catalogue_hash().unwrap_or_default();
 
         Ok(base_layout(
             Some("Catalogue".into()),
@@ -56,7 +60,10 @@ impl Route for Catalogue {
                     div.flex.relative id="catalogue-core" data-pagelength=(page_length) data-latest=(catalogue_hash) {
                         aside class="hidden sm:block grow-0 sm:my-4 px-4 pr-8 w-64" {
                             p class="text-sm mb-4" { "This page lists games, books, shows… stuff I've played, watched, read, or listened to."}
-                            a."button-style-bg-accent block w-full text-center mb-4" href="/catalogue/collections/" { "Collections" }
+                            div class="flex gap-x-2 mb-4" {
+                                a."button-style-bg-accent block w-full text-center" href="/catalogue/collections/" { "Collections" }
+                                a."button-style-bg-accent block w-full text-center" href="/catalogue/stats/" { "Stats" }
+                            }
                             div class="sticky top-4" {
                                 (catalogue_sidebar("catalogue", false))
                         }
@@ -121,8 +128,7 @@ impl Route for CatalogueContent {
                     let rendered_content = item.render(ctx);
                     let (cover_url, placeholder) = &data.cover;
 
-                    // Pre-allocate with known capacity (11 elements)
-                    let mut entry = Vec::with_capacity(11);
+                    let mut entry = Vec::with_capacity(13);
                     entry.push(serde_json::Value::String(cover_url.clone()));
                     entry.push(serde_json::Value::String(placeholder.clone()));
                     entry.push(serde_json::Value::Number(serde_json::Number::from(
@@ -168,6 +174,20 @@ impl Route for CatalogueContent {
                     )));
 
                     entry.push(serde_json::Value::String(item.id.clone()));
+
+                    entry.push(serde_json::Value::Array(
+                        data.get_genres()
+                            .into_iter()
+                            .map(serde_json::Value::String)
+                            .collect(),
+                    ));
+
+                    match data.get_runtime() {
+                        Some(runtime) => {
+                            entry.push(serde_json::Value::Number(serde_json::Number::from(runtime)))
+                        }
+                        None => entry.push(serde_json::Value::Null),
+                    }
 
                     entries_data.push(entry);
                 }

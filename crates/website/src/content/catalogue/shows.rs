@@ -85,4 +85,8 @@ impl CatalogueMetadata<ShowData> for CatalogueShow {
             .and_then(|date| date.split('-').next())
             .and_then(|year| year.parse().ok())
     }
+
+    fn get_genres(&self) -> Vec<String> {
+        self.get_metadata().genres.clone()
+    }
 }

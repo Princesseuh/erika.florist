@@ -107,4 +107,12 @@ impl CatalogueMetadata<GameData> for CatalogueGame {
             .and_then(|ts| DateTime::from_timestamp(ts as i64, 0))
             .map(|dt| dt.year())
     }
+
+    fn get_genres(&self) -> Vec<String> {
+        self.get_metadata()
+            .genres
+            .iter()
+            .map(|genre| genre.name.clone())
+            .collect()
+    }
 }

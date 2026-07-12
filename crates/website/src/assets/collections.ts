@@ -33,8 +33,17 @@ interface FilterSpec {
 	countNoun: string;
 	hasTypeStatusRating: boolean;
 	completion: boolean;
+	dateRange: boolean;
 	sortKeys: Record<string, (card: HTMLElement) => number | string>;
 	defaultSort: string;
+}
+
+function parseDate(value: string): number | null {
+	if (value === "") {
+		return null;
+	}
+	const ms = Date.parse(value);
+	return Number.isNaN(ms) ? null : ms;
 }
 
 function readControl(id: string): string {
@@ -68,6 +77,10 @@ function applyFilters(spec: FilterSpec) {
 	const status = spec.hasTypeStatusRating ? firstValue(spec.prefixes, "status") : "";
 	const rating = spec.hasTypeStatusRating ? firstValue(spec.prefixes, "ratings") : "";
 	const completion = spec.completion ? firstValue(spec.prefixes, "completion") : "";
+	const dateFrom = spec.dateRange ? parseDate(firstValue(spec.prefixes, "date-from")) : null;
+	const dateToRaw = spec.dateRange ? parseDate(firstValue(spec.prefixes, "date-to")) : null;
+	const dateTo = dateToRaw === null ? null : dateToRaw + 86_400_000 - 1;
+	const dateActive = dateFrom !== null || dateTo !== null;
 	const sortRaw = firstValue(spec.prefixes, "sort");
 	const sort = sortRaw === "" ? spec.defaultSort : sortRaw;
 	const descending = firstValue(spec.prefixes, "sort-ord") !== "1";
@@ -96,6 +109,16 @@ function applyFilters(spec: FilterSpec) {
 		}
 		if (completion === "progress" && card.dataset.completed !== "false") {
 			show = false;
+		}
+		if (dateActive) {
+			const activity = Number(card.dataset.activity ?? "0");
+			if (
+				activity <= 0 ||
+				(dateFrom !== null && activity < dateFrom) ||
+				(dateTo !== null && activity > dateTo)
+			) {
+				show = false;
+			}
 		}
 		card.classList.toggle("hidden", !show);
 		if (show) {
@@ -136,6 +159,9 @@ function wireFilters(spec: FilterSpec) {
 	if (spec.completion) {
 		keys.push("completion");
 	}
+	if (spec.dateRange) {
+		keys.push("date-from", "date-to");
+	}
 	const run = () => {
 		applyFilters(spec);
 	};
@@ -145,7 +171,10 @@ function wireFilters(spec: FilterSpec) {
 			if (el === null) {
 				continue;
 			}
-			const event = el instanceof HTMLInputElement && el.type === "search" ? "input" : "change";
+			const event =
+				el instanceof HTMLInputElement && (el.type === "search" || el.type === "date")
+					? "input"
+					: "change";
 			el.addEventListener(event, () => {
 				// Mirror to the sibling (desktop <-> mobile) so both stay in sync.
 				const other = spec.prefixes.find((p) => p !== prefix);
@@ -182,6 +211,7 @@ function initFilters() {
 			countNoun: "collection",
 			hasTypeStatusRating: false,
 			completion: true,
+			dateRange: true,
 			defaultSort: "activity",
 			sortKeys: {
 				activity: (card) => num(card, "activity"),
@@ -292,18 +322,31 @@ interface RawHit {
 function parseNewResults(data: unknown, type: MemberType): RawHit[] {
 	if (type === "game" && Array.isArray(data)) {
 		return data
-			.filter((g): g is { id: number; name: string; cover?: { url?: string } } => typeof g === "object" && g !== null)
-			.map((g) => ({ id: String(g.id), name: g.name, cover: g.cover?.url ? normalizeCover(g.cover.url) : null }));
+			.filter(
+				(g): g is { id: number; name: string; cover?: { url?: string } } =>
+					typeof g === "object" && g !== null,
+			)
+			.map((g) => ({
+				id: String(g.id),
+				name: g.name,
+				cover: g.cover?.url ? normalizeCover(g.cover.url) : null,
+			}));
 	}
 	if (type === "book" && typeof data === "object" && data !== null && "docs" in data) {
 		const docs = (data as { docs: unknown }).docs;
 		if (Array.isArray(docs)) {
 			return docs
-				.filter((b): b is { isbn?: string[]; key: string; title: string; cover_i?: number } => typeof b === "object" && b !== null)
+				.filter(
+					(b): b is { isbn?: string[]; key: string; title: string; cover_i?: number } =>
+						typeof b === "object" && b !== null,
+				)
 				.map((b) => ({
 					id: b.isbn?.[0] ?? b.key,
 					name: b.title,
-					cover: b.cover_i === undefined ? null : `https://covers.openlibrary.org/b/id/${b.cover_i}-M.jpg`,
+					cover:
+						b.cover_i === undefined
+							? null
+							: `https://covers.openlibrary.org/b/id/${b.cover_i}-M.jpg`,
 				}));
 		}
 	}
@@ -311,7 +354,10 @@ function parseNewResults(data: unknown, type: MemberType): RawHit[] {
 		const results = (data as { results: unknown }).results;
 		if (Array.isArray(results)) {
 			return results
-				.filter((m): m is { id: number; title?: string; name?: string; poster_path?: string | null } => typeof m === "object" && m !== null)
+				.filter(
+					(m): m is { id: number; title?: string; name?: string; poster_path?: string | null } =>
+						typeof m === "object" && m !== null,
+				)
 				.map((m) => ({
 					id: String(m.id),
 					name: m.title ?? m.name ?? "",
@@ -415,7 +461,8 @@ function initCreateModal() {
 		for (const hit of hits) {
 			const row = document.createElement("button");
 			row.type = "button";
-			row.className = "flex items-center gap-2 w-full text-left px-3 py-2 hover:bg-zinc-200 text-sm";
+			row.className =
+				"flex items-center gap-2 w-full text-left px-3 py-2 hover:bg-zinc-200 text-sm";
 			if (hit.cover === null) {
 				const placeholder = document.createElement("div");
 				placeholder.className = "w-8 h-12 bg-zinc-300 shrink-0";

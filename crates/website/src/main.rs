@@ -19,6 +19,7 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
             pages::CatalogueContent,
             pages::CatalogueMCP,
             pages::Catalogue,
+            pages::Stats,
             pages::Collections,
             pages::CollectionPage,
             pages::ChangelogPage,

@@ -25,7 +25,13 @@ fn stats_sidebar(prefix: &str, mobile: bool) -> maud::Markup {
 }
 
 fn stats_mobile_filters() -> maud::Markup {
-    stats_sidebar("mobile-catalogue", true)
+    html!(
+        div class="flex gap-x-2 mb-4" {
+            a."button-style-bg-accent block w-full text-center" href="/catalogue/" { "Catalogue" }
+            a."button-style-bg-accent block w-full text-center" href="/catalogue/collections/" { "Collections" }
+        }
+        (stats_sidebar("mobile-catalogue", true))
+    )
 }
 
 #[route("/catalogue/stats/")]

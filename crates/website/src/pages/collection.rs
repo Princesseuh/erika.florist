@@ -202,7 +202,13 @@ impl Route for Collections {
             Some("Collections".into()),
             Some("Groupings of things I've played, watched, and read together.".into()),
             html!(
-                (mobile_menu("collections", list_sidebar("mobile-collections", true), Icon::Search))
+                (mobile_menu("collections", html!(
+                    div class="flex gap-x-2 mb-4" {
+                        a."button-style-bg-accent block w-full text-center" href="/catalogue/" { "Catalogue" }
+                        a."button-style-bg-accent block w-full text-center" href="/catalogue/stats/" { "Stats" }
+                    }
+                    (list_sidebar("mobile-collections", true))
+                ), Icon::Search))
 
                 article class="mx-4 my-4" {
                     div class="flex relative" {

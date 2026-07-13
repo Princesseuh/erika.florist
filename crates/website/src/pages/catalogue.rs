@@ -32,7 +32,13 @@ fn catalogue_sidebar(prefix: &str, mobile: bool) -> maud::Markup {
 }
 
 fn catalogue_mobile_filters() -> maud::Markup {
-    catalogue_sidebar("mobile-catalogue", true)
+    html!(
+        div class="flex gap-x-2 mb-4" {
+            a."button-style-bg-accent block w-full text-center" href="/catalogue/collections/" { "Collections" }
+            a."button-style-bg-accent block w-full text-center" href="/catalogue/stats/" { "Stats" }
+        }
+        (catalogue_sidebar("mobile-catalogue", true))
+    )
 }
 
 #[route("/catalogue/")]

@@ -95,6 +95,14 @@ pub trait CatalogueMetadata<T> {
         None
     }
 
+    fn get_genres(&self) -> Vec<String> {
+        Vec::new()
+    }
+
+    fn get_runtime(&self) -> Option<u32> {
+        None
+    }
+
     fn validate(&self, id: &str) {
         if self.get_status() == Status::Finished && self.get_rating().is_none() {
             panic!(

@@ -28,7 +28,7 @@ pub fn run_subset_fonts(title: bool, content: bool) -> anyhow::Result<()> {
 
 fn collect_characters(root: &std::path::Path) -> anyhow::Result<(BTreeSet<char>, BTreeSet<char>)> {
     // Pre-seed content letters (mirrors the TS script)
-    let pre_seed = ["erika", "articles", "projects", "catalogue"];
+    let pre_seed = ["erika", "articles", "projects", "catalogue", "1234567890"];
     let mut content_letters: BTreeSet<char> = pre_seed.iter().flat_map(|s| s.chars()).collect();
     let mut title_letters: BTreeSet<char> = "erika".chars().collect();
 

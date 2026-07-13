@@ -140,6 +140,8 @@ fn list_sidebar(prefix: &str, mobile: bool) -> maud::Markup {
         show_status: false,
         show_rating: false,
         show_completion: true,
+        show_date_range: true,
+        show_collection: false,
         default_status: "all",
         sort_options: &[("activity", "Activity"), ("alphabetical", "Title")],
         count_id: "collections-entry-count",
@@ -200,13 +202,22 @@ impl Route for Collections {
             Some("Collections".into()),
             Some("Groupings of things I've played, watched, and read together.".into()),
             html!(
-                (mobile_menu("collections", list_sidebar("mobile-collections", true), Icon::Search))
+                (mobile_menu("collections", html!(
+                    div class="flex gap-x-2 mb-4" {
+                        a."button-style-bg-accent block w-full text-center" href="/catalogue/" { "Catalogue" }
+                        a."button-style-bg-accent block w-full text-center" href="/catalogue/stats/" { "Stats" }
+                    }
+                    (list_sidebar("mobile-collections", true))
+                ), Icon::Search))
 
                 article class="mx-4 my-4" {
                     div class="flex relative" {
                         aside class="hidden sm:block grow-0 sm:my-4 px-4 pr-8 w-64" {
                             p class="text-sm mb-4" { "Marathons, series, and themed runs. Planned entries are dimmed." }
-                            a."button-style-bg-accent block w-full text-center mb-4" href="/catalogue/" { "Catalogue" }
+                            div class="flex gap-x-2 mb-4" {
+                                a."button-style-bg-accent block w-full text-center" href="/catalogue/" { "Catalogue" }
+                                a."button-style-bg-accent block w-full text-center" href="/catalogue/stats/" { "Stats" }
+                            }
                             div class="sticky top-4" {
                                 (list_sidebar("collections", false))
                             }
@@ -264,14 +275,15 @@ pub struct CollectionParams {
 
 impl Route<CollectionParams, Entry<Collection>> for CollectionPage {
     fn pages(&self, ctx: &mut DynamicRouteContext) -> Pages<CollectionParams, Entry<Collection>> {
-        ctx.content::<Collection>("collections").into_pages(|entry| {
-            Page::new(
-                CollectionParams {
-                    slug: entry.id.clone(),
-                },
-                entry.clone(),
-            )
-        })
+        ctx.content::<Collection>("collections")
+            .into_pages(|entry| {
+                Page::new(
+                    CollectionParams {
+                        slug: entry.id.clone(),
+                    },
+                    entry.clone(),
+                )
+            })
     }
 
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
@@ -376,6 +388,8 @@ fn collection_filters(prefix: &str, mobile: bool) -> maud::Markup {
         show_status: true,
         show_rating: true,
         show_completion: false,
+        show_date_range: true,
+        show_collection: false,
         default_status: "all",
         sort_options: &[
             ("release", "Release"),
@@ -453,10 +467,12 @@ pub fn build_collections_index(ctx: &mut PageContext) -> BTreeMap<String, Vec<se
         let data = entry.data(ctx);
         let title = data.title.clone();
         for member in &data.members {
-            map.entry(member_key(member)).or_default().push(serde_json::json!({
-                "slug": slug,
-                "title": title,
-            }));
+            map.entry(member_key(member))
+                .or_default()
+                .push(serde_json::json!({
+                    "slug": slug,
+                    "title": title,
+                }));
         }
     }
 

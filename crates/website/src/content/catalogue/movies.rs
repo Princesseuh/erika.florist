@@ -87,4 +87,12 @@ impl CatalogueMetadata<MovieData> for CatalogueMovie {
             .next()
             .and_then(|y| y.parse().ok())
     }
+
+    fn get_genres(&self) -> Vec<String> {
+        self.get_metadata().genres.clone()
+    }
+
+    fn get_runtime(&self) -> Option<u32> {
+        self.get_metadata().runtime
+    }
 }

@@ -9,6 +9,8 @@ pub struct SidebarConfig<'a> {
     pub show_status: bool,
     pub show_rating: bool,
     pub show_completion: bool,
+    pub show_date_range: bool,
+    pub show_collection: bool,
     pub default_status: &'a str,
     pub sort_options: &'a [(&'a str, &'a str)],
     pub count_id: &'a str,
@@ -23,7 +25,11 @@ pub fn catalogue_filters(cfg: &SidebarConfig) -> Markup {
     } else {
         "flex flex-col gap-y-2"
     };
-    let field_class = if cfg.mobile { "flex flex-col gap-2" } else { "" };
+    let field_class = if cfg.mobile {
+        "flex flex-col gap-2"
+    } else {
+        ""
+    };
     let label_class = if cfg.mobile { "font-bold text-sm" } else { "" };
     let sort_label_class = if cfg.mobile {
         "mb-1 flex items-center justify-between gap-x-2 font-bold text-sm"
@@ -78,6 +84,16 @@ pub fn catalogue_filters(cfg: &SidebarConfig) -> Markup {
                 }
             }
 
+            @if cfg.show_collection {
+                div class=(field_class) {
+                    label class=(label_class) for=(id("collection")) { "Collection" }
+                    // Options are filled in client-side from the fetched collection list.
+                    select name="collection" id=(id("collection")) {
+                        option value="" { "Collection" }
+                    }
+                }
+            }
+
             @if cfg.show_completion {
                 div class=(field_class) {
                     label class=(label_class) for=(id("completion")) { "Completion" }
@@ -89,14 +105,27 @@ pub fn catalogue_filters(cfg: &SidebarConfig) -> Markup {
                 }
             }
 
-            div class=(field_class) {
-                label for=(id("sort")) class=(sort_label_class) {
-                    "Sort"
-                    input id=(id("sort-ord")) type="checkbox" class=(SORT_ORD_CLASS);
+            @if cfg.show_date_range {
+                div class=(field_class) {
+                    label class=(label_class) for=(id("date-from")) { "Date range" }
+                    // Stacked, not side by side: two date inputs don't fit the narrow sidebar.
+                    div class="flex flex-col gap-y-2" {
+                        input id=(id("date-from")) type="date" aria-label="From (start date)";
+                        input id=(id("date-to")) type="date" aria-label="To (end date)";
+                    }
                 }
-                select name="sort" id=(id("sort")) {
-                    @for (value, label) in cfg.sort_options {
-                        option value=(value) { (label) }
+            }
+
+            @if !cfg.sort_options.is_empty() {
+                div class=(field_class) {
+                    label for=(id("sort")) class=(sort_label_class) {
+                        "Sort"
+                        input id=(id("sort-ord")) type="checkbox" class=(SORT_ORD_CLASS);
+                    }
+                    select name="sort" id=(id("sort")) {
+                        @for (value, label) in cfg.sort_options {
+                            option value=(value) { (label) }
+                        }
                     }
                 }
             }
@@ -184,9 +213,17 @@ pub struct CollectionCard {
 /// A collection presented in the exact catalogue-card frame, with a montage
 /// cover, a progress badge (top-left) and an average-feeling badge (top-right).
 pub fn collection_card(card: &CollectionCard) -> Markup {
-    let items_label = format!("{} {}", card.count, if card.count == 1 { "item" } else { "items" });
+    let items_label = format!(
+        "{} {}",
+        card.count,
+        if card.count == 1 { "item" } else { "items" }
+    );
     let completed = card.count > 0 && card.finished == card.count;
-    let progress_bg = if completed { "bg-emerald-600" } else { "bg-black/75" };
+    let progress_bg = if completed {
+        "bg-emerald-600"
+    } else {
+        "bg-black/75"
+    };
     html! {
         a href=(card.href) class="w-[180px] block"
             data-collection-card

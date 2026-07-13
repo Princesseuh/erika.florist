@@ -1,7 +1,7 @@
 import { QuickScore } from "quick-score";
 import { thumbHashToDataURL } from "thumbhash";
 
-const VERSION = 9;
+import { type CatalogueRecord, type CollectionRef, loadCatalogueCache } from "./catalogue-db";
 
 function requireElement<T extends Element>(selector: string): T {
 	const el = document.querySelector<T>(selector);
@@ -21,76 +21,15 @@ const collectionIds =
 		? null
 		: new Set(catalogueCore.dataset.collection.split(","));
 
-const dbOpenRequest = indexedDB.open("catalogue", VERSION);
-
 const content = requireElement<Element>("#catalogue-content");
 const entriesCountElements = document.querySelectorAll("#catalogue-entry-count");
 
-let db: IDBDatabase;
 // Full dataset held in memory; IndexedDB is a read-once cache, not queried per interaction.
-let allRecords: CatalogueItemDB[] = [];
-let allItems: CatalogueItemDB[] = [];
+let allRecords: CatalogueRecord[] = [];
+let allItems: CatalogueRecord[] = [];
 let currentPage = 0;
 const pageSize = 32;
 let isLoading = false;
-
-type CatalogueData = [string, CatalogueItem[], Record<string, CollectionRef[]>];
-
-type CatalogueItem = [
-	// cover
-	string,
-	// placeholder
-	string,
-	// type
-	number,
-	// title
-	string,
-	// rating (null for planned items)
-	number | null,
-	// author
-	string,
-	// finished date
-	number | null,
-	// release year
-	number | null,
-	// review content (rendered HTML)
-	string,
-	// status (0 = finished, 1 = planned)
-	number,
-	// file slug on disk
-	string,
-];
-
-interface CatalogueItemDB {
-	id: string;
-	cover: string;
-	placeholder: string;
-	type: "game" | "movie" | "show" | "book";
-	title: string;
-	rating: number;
-	author: string;
-	date: number;
-	releaseYear: number | null;
-	review: string;
-	status: "finished" | "planned";
-}
-
-function typedResult<T>(request: IDBRequest<T>): T {
-	return request.result;
-}
-
-function isCatalogueData(value: unknown): value is CatalogueData {
-	return (
-		Array.isArray(value) &&
-		value.length >= 2 &&
-		typeof value[0] === "string" &&
-		Array.isArray(value[1])
-	);
-}
-
-function numberToStatus(value: number): "finished" | "planned" {
-	return value === 1 ? "planned" : "finished";
-}
 
 function typeToServerType(
 	type: "game" | "movie" | "show" | "book",
@@ -104,26 +43,6 @@ function typeToServerType(
 function slugFromId(id: string, type: "game" | "movie" | "show" | "book"): string {
 	const suffix = `-${type}`;
 	return id.endsWith(suffix) ? id.slice(0, -suffix.length) : id;
-}
-
-function numberToType(type: number): string {
-	switch (type) {
-		case 0: {
-			return "game";
-		}
-		case 1: {
-			return "movie";
-		}
-		case 2: {
-			return "show";
-		}
-		case 3: {
-			return "book";
-		}
-		default: {
-			throw new Error(`Unknown type: ${type}`);
-		}
-	}
 }
 
 const getRatingEmoji = (rating: number) => {
@@ -208,26 +127,40 @@ function getCheckboxValue(selectors: string[]): boolean {
 	return false;
 }
 
+function parseDate(value: string): number | null {
+	if (value === "") {
+		return null;
+	}
+	const ms = Date.parse(value);
+	return Number.isNaN(ms) ? null : ms;
+}
+
 function readFilters(): {
 	search: string;
 	type: string;
 	rating: number | "";
 	sort: string;
 	status: string;
+	dateFrom: number | null;
+	dateTo: number | null;
 } {
 	const ratingRaw = getInputValue(["#mobile-catalogue-ratings", "#catalogue-ratings"]);
 	const statusRaw = getInputValue(["#mobile-catalogue-status", "#catalogue-status"]);
+	const from = parseDate(getInputValue(["#mobile-catalogue-date-from", "#catalogue-date-from"]));
+	const to = parseDate(getInputValue(["#mobile-catalogue-date-to", "#catalogue-date-to"]));
 	return {
 		rating: ratingRaw === "" ? "" : Number(ratingRaw),
 		search: getInputValue(["#mobile-catalogue-search", "#catalogue-search"]).toLowerCase(),
 		sort: getInputValue(["#mobile-catalogue-sort", "#catalogue-sort"]) || "date",
 		status: statusRaw === "" ? "finished" : statusRaw,
 		type: getInputValue(["#mobile-catalogue-types", "#catalogue-types"]),
+		dateFrom: from,
+		dateTo: to === null ? null : to + 86_400_000 - 1,
 	};
 }
 
 // rating and release tie-break by date; `ascending` flips the whole ordering.
-function sortItems(items: CatalogueItemDB[], sort: string, ascending: boolean): CatalogueItemDB[] {
+function sortItems(items: CatalogueRecord[], sort: string, ascending: boolean): CatalogueRecord[] {
 	const direction = ascending ? 1 : -1;
 	return [...items].sort((a, b) => {
 		let ordering: number;
@@ -251,19 +184,10 @@ const reviewModalMeta = requireElement<Element>("#review-modal-meta");
 const reviewModalCollections = requireElement<HTMLElement>("#review-modal-collections");
 const reviewModalContent = requireElement<Element>("#review-modal-content");
 
-interface CollectionRef {
-	slug: string;
-	title: string;
-}
-
 // `${type}/${diskSlug}` -> collections containing the entry.
 let collectionsIndex: Record<string, CollectionRef[]> = {};
 
-function isCollectionsIndex(value: unknown): value is Record<string, CollectionRef[]> {
-	return typeof value === "object" && value !== null;
-}
-
-function renderModalCollections(item: CatalogueItemDB, index: Record<string, CollectionRef[]>) {
+function renderModalCollections(item: CatalogueRecord, index: Record<string, CollectionRef[]>) {
 	const key = `${item.type}/${slugFromId(item.id, item.type)}`;
 	const collections = index[key] ?? [];
 	reviewModalCollections.innerHTML = "";
@@ -277,15 +201,14 @@ function renderModalCollections(item: CatalogueItemDB, index: Record<string, Col
 	for (const collection of collections) {
 		const link = document.createElement("a");
 		link.href = `/catalogue/collections/${collection.slug}/`;
-		link.className =
-			"underline decoration-dotted underline-offset-2 hover:text-accent-valencia";
+		link.className = "underline decoration-dotted underline-offset-2 hover:text-accent-valencia";
 		link.textContent = collection.title;
 		reviewModalCollections.append(link);
 	}
 }
 const closeReviewModalBtn = requireElement<Element>("#close-review-modal");
 
-function buildModalMeta(item: CatalogueItemDB): string {
+function buildModalMeta(item: CatalogueRecord): string {
 	const ratingLabel =
 		item.status === "planned"
 			? "🕒 Planned"
@@ -310,13 +233,24 @@ function buildModalMeta(item: CatalogueItemDB): string {
 		item.author === ""
 			? `A ${item.type} · ${ratingLabel}`
 			: `A ${item.type} by ${item.author} · ${ratingLabel}`;
-	const secondLine =
+	const genresLine = item.genres.length === 0 ? null : item.genres.join(" · ");
+	const runtimeLine = item.runtime === null ? null : `${formatRuntime(item.runtime)} runtime`;
+	const dateLine =
 		dateLabel === null ? null : `${finishedVerb[item.type] ?? "Finished on"} ${dateLabel}`;
 
-	return `<div>${firstLine}</div>${secondLine === null ? "" : `<div>${secondLine}</div>`}`;
+	return [firstLine, genresLine, runtimeLine, dateLine]
+		.filter((line): line is string => line !== null)
+		.map((line) => `<div>${line}</div>`)
+		.join("");
 }
 
-function updateModalCover(item: CatalogueItemDB) {
+function formatRuntime(minutes: number): string {
+	const hours = Math.floor(minutes / 60);
+	const mins = minutes % 60;
+	return hours === 0 ? `${mins}m` : `${hours}h ${mins}m`;
+}
+
+function updateModalCover(item: CatalogueRecord) {
 	if (item.cover === "") {
 		reviewModalCover.classList.add("hidden");
 	} else {
@@ -326,7 +260,7 @@ function updateModalCover(item: CatalogueItemDB) {
 	}
 }
 
-function openReviewModal(item: CatalogueItemDB) {
+function openReviewModal(item: CatalogueRecord) {
 	const titleText = item.releaseYear === null ? item.title : `${item.title} (${item.releaseYear})`;
 	reviewModalTitleLink.textContent = titleText;
 	reviewModalTitleLink.href = `/catalogue/?entry=${item.id}`;
@@ -372,7 +306,7 @@ function placeholderDataUrl(base64: string): string {
 	return url;
 }
 
-function buildEntryElement(item: CatalogueItemDB): HTMLDivElement {
+function buildEntryElement(item: CatalogueRecord): HTMLDivElement {
 	const entry = document.createElement("div");
 	entry.className = "w-[180px]";
 	const isPlanned = item.status === "planned";
@@ -491,7 +425,7 @@ function openEntryFromParam() {
 	}
 }
 
-function applySearchFilter(items: CatalogueItemDB[], search: string): CatalogueItemDB[] {
+function applySearchFilter(items: CatalogueRecord[], search: string): CatalogueRecord[] {
 	if (search === "") {
 		return items;
 	}
@@ -510,12 +444,17 @@ function buildUI() {
 	// relative to the catalogue's newest-first default.
 	const ascending = collectionIds === null ? descendingToggle : !descendingToggle;
 
+	const dateActive = filters.dateFrom !== null || filters.dateTo !== null;
 	const filtered = allRecords.filter(
 		(item) =>
 			(filters.type === "" || item.type === filters.type) &&
 			(filters.rating === "" || item.rating === filters.rating) &&
 			(filters.status === "all" || item.status === filters.status) &&
-			(collectionIds === null || collectionIds.has(item.id)),
+			(collectionIds === null || collectionIds.has(item.id)) &&
+			(!dateActive ||
+				(item.date > 0 &&
+					(filters.dateFrom === null || item.date >= filters.dateFrom) &&
+					(filters.dateTo === null || item.date <= filters.dateTo))),
 	);
 
 	allItems =
@@ -533,149 +472,15 @@ function buildUI() {
 	handleScroll();
 }
 
-function toRecord(entry: CatalogueItem): CatalogueItemDB {
-	const [cover, placeholder, typeNum, title, rating, author, date, releaseYear, review, statusNum, slug] =
-		entry;
-	const type = numberToType(typeNum) as CatalogueItemDB["type"];
-	return {
-		author,
-		cover,
-		date: date ?? 0,
-		id: `${slug}-${type}`,
-		placeholder,
-		rating: rating ?? -1,
-		releaseYear: releaseYear ?? null,
-		review: review ?? "",
-		status: numberToStatus(statusNum),
-		title,
-		type,
-	};
-}
-
-async function fetchCatalogueData(): Promise<CatalogueData> {
-	const response = await fetch("/catalogue/content.json");
-	const json: unknown = await response.json();
-	if (!isCatalogueData(json)) {
-		throw new Error("Invalid catalogue data format");
-	}
-	return json;
-}
-
-// One atomic transaction: an abort commits nothing, so the cache is never left marked-complete but half-seeded.
-function seedCache(hash: string, records: CatalogueItemDB[], collections: Record<string, CollectionRef[]>) {
-	const tx = db.transaction(["content", "meta"], "readwrite");
-	const contentStore = tx.objectStore("content");
-	const metaStore = tx.objectStore("meta");
-	contentStore.clear();
-	for (const record of records) {
-		contentStore.put(record);
-	}
-	metaStore.put({ data: collections, id: "collections" });
-	metaStore.put({ complete: true, hash, id: "version", timestamp: Date.now() });
-	tx.addEventListener("error", () => {
-		console.error("Failed to seed catalogue cache", tx.error);
-	});
-}
-
-async function fetchAndSeed() {
-	let data: CatalogueData;
-	try {
-		data = await fetchCatalogueData();
-	} catch (error) {
-		console.error("Failed to fetch catalogue content", error);
-		errorUI();
-		return;
-	}
-	const [hash, entries, collections] = data;
-	allRecords = entries.map(toRecord);
-	collectionsIndex = collections ?? {};
-	// Render straight from memory; seeding the cache is background work for next visit.
-	buildUI();
-	seedCache(hash, allRecords, collectionsIndex);
-}
-
-function loadFromCache() {
-	const tx = db.transaction(["content", "meta"], "readonly");
-	const itemsRequest = tx.objectStore("content").getAll() as IDBRequest<CatalogueItemDB[]>;
-	const collectionsRequest: IDBRequest<unknown> = tx.objectStore("meta").get("collections");
-	tx.addEventListener("complete", () => {
-		allRecords = itemsRequest.result;
-		const raw: unknown = collectionsRequest.result;
-		collectionsIndex =
-			typeof raw === "object" &&
-			raw !== null &&
-			"data" in raw &&
-			isCollectionsIndex((raw as { data: unknown }).data)
-				? (raw as { data: Record<string, CollectionRef[]> }).data
-				: {};
+loadCatalogueCache(
+	latestHash,
+	({ records, collections }) => {
+		allRecords = records;
+		collectionsIndex = collections;
 		buildUI();
-	});
-	tx.addEventListener("error", () => {
-		console.error("Failed to read catalogue cache, refetching", tx.error);
-		void fetchAndSeed();
-	});
-}
-
-function resetSchema() {
-	for (const name of Array.from(db.objectStoreNames)) {
-		db.deleteObjectStore(name);
-	}
-	db.createObjectStore("content", { keyPath: "id" });
-	db.createObjectStore("meta", { keyPath: "id" });
-}
-
-dbOpenRequest.addEventListener("error", () => {
-	console.error("Failed to open database, resetting database..", dbOpenRequest.error);
-
-	const deleteRequest = indexedDB.deleteDatabase("catalogue");
-	deleteRequest.addEventListener("success", () => {
-		const retry = indexedDB.open("catalogue", VERSION);
-		retry.addEventListener("upgradeneeded", () => {
-			db = retry.result;
-			resetSchema();
-		});
-		retry.addEventListener("success", () => {
-			db = retry.result;
-			void fetchAndSeed();
-		});
-	});
-	deleteRequest.addEventListener("error", () => {
-		console.error("Failed to delete database", deleteRequest.error);
-		errorUI();
-	});
-});
-
-dbOpenRequest.addEventListener("success", () => {
-	db = dbOpenRequest.result;
-
-	const versionRequest: IDBRequest<unknown> = db
-		.transaction("meta", "readonly")
-		.objectStore("meta")
-		.get("version");
-	versionRequest.addEventListener("success", () => {
-		const raw: unknown = typedResult(versionRequest);
-		const fresh =
-			typeof raw === "object" &&
-			raw !== null &&
-			"hash" in raw &&
-			"complete" in raw &&
-			(raw as { hash: unknown }).hash === latestHash &&
-			(raw as { complete: unknown }).complete === true;
-		if (fresh) {
-			loadFromCache();
-		} else {
-			void fetchAndSeed();
-		}
-	});
-	versionRequest.addEventListener("error", () => {
-		void fetchAndSeed();
-	});
-});
-
-dbOpenRequest.addEventListener("upgradeneeded", () => {
-	db = dbOpenRequest.result;
-	resetSchema();
-});
+	},
+	errorUI,
+);
 
 let ticking = false;
 document.addEventListener(
@@ -732,6 +537,8 @@ syncPairedInputs(["#mobile-catalogue-sort", "#catalogue-sort"], "change");
 syncPairedInputs(["#mobile-catalogue-types", "#catalogue-types"], "change");
 syncPairedInputs(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"], "change");
 syncPairedInputs(["#mobile-catalogue-status", "#catalogue-status"], "change");
+syncPairedInputs(["#mobile-catalogue-date-from", "#catalogue-date-from"], "input");
+syncPairedInputs(["#mobile-catalogue-date-to", "#catalogue-date-to"], "input");
 
 const addListener = (selectors: string[], type: "input" | "change", handler: () => void) => {
 	for (const selector of selectors) {
@@ -747,3 +554,5 @@ addListener(["#mobile-catalogue-sort", "#catalogue-sort"], "change", resetAndBui
 addListener(["#mobile-catalogue-types", "#catalogue-types"], "change", resetAndBuildUI);
 addListener(["#mobile-catalogue-sort-ord", "#catalogue-sort-ord"], "change", resetAndBuildUI);
 addListener(["#mobile-catalogue-status", "#catalogue-status"], "change", resetAndBuildUI);
+addListener(["#mobile-catalogue-date-from", "#catalogue-date-from"], "input", resetAndBuildUI);
+addListener(["#mobile-catalogue-date-to", "#catalogue-date-to"], "input", resetAndBuildUI);

@@ -8,6 +8,7 @@ mod index;
 mod login;
 mod projects;
 pub mod rss;
+mod stats;
 mod wiki;
 pub use about::AboutPage;
 pub use blog::{
@@ -22,4 +23,5 @@ pub use login::LoginPage;
 pub use projects::{ProjectIndex, ProjectPage};
 pub use rss::blog::BlogRSS;
 pub use rss::catalogue::CatalogueRSS;
+pub use stats::Stats;
 pub use wiki::{WikiEntryPage, WikiIndex};

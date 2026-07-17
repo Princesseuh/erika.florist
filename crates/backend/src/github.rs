@@ -647,7 +647,7 @@ pub async fn commit_collection(token: &str, repo: &str, form: &CollectionForm) -
     let skip_marker_ci = if form.skip_ci { " [skip ci]" } else { "" };
     let skip_marker_cd = if has_new { " [skip cd]" } else { "" };
     let message = format!(
-        "content(collections): Add {}{}{}",
+        "content(catalogue): Add collection {}{}{}",
         form.title, skip_marker_cd, skip_marker_ci
     );
 

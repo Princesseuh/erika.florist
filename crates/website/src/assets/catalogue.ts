@@ -183,6 +183,7 @@ const reviewModalCover = requireElement<HTMLImageElement>("#review-modal-cover")
 const reviewModalMeta = requireElement<Element>("#review-modal-meta");
 const reviewModalCollections = requireElement<HTMLElement>("#review-modal-collections");
 const reviewModalContent = requireElement<Element>("#review-modal-content");
+const reviewModalPromote = requireElement<HTMLButtonElement>("#review-modal-promote");
 
 // `${type}/${diskSlug}` -> collections containing the entry.
 let collectionsIndex: Record<string, CollectionRef[]> = {};
@@ -260,6 +261,21 @@ function updateModalCover(item: CatalogueRecord) {
 	}
 }
 
+function requestPromote(item: CatalogueRecord) {
+	document.dispatchEvent(
+		new CustomEvent("catalogue:promote-request", {
+			detail: {
+				cover: item.cover,
+				slug: slugFromId(item.id, item.type),
+				title: item.title,
+				type: typeToServerType(item.type),
+			},
+		}),
+	);
+}
+
+let modalPromoteHandler: (() => void) | null = null;
+
 function openReviewModal(item: CatalogueRecord) {
 	const titleText = item.releaseYear === null ? item.title : `${item.title} (${item.releaseYear})`;
 	reviewModalTitleLink.textContent = titleText;
@@ -269,6 +285,24 @@ function openReviewModal(item: CatalogueRecord) {
 	renderModalCollections(item, collectionsIndex);
 	reviewModalContent.innerHTML =
 		item.review === "" ? "<p><em>No review written yet.</em></p>" : item.review;
+
+	// The hover promote button on the card is unreachable on touch devices, so
+	// planned entries also get a promote button inside the modal.
+	if (modalPromoteHandler !== null) {
+		reviewModalPromote.removeEventListener("click", modalPromoteHandler);
+		modalPromoteHandler = null;
+	}
+	if (item.status === "planned") {
+		modalPromoteHandler = () => {
+			closeReviewModalFn();
+			requestPromote(item);
+		};
+		reviewModalPromote.addEventListener("click", modalPromoteHandler);
+		reviewModalPromote.classList.remove("hidden");
+	} else {
+		reviewModalPromote.classList.add("hidden");
+	}
+
 	reviewModal.classList.remove("hidden");
 	document.body.style.overflow = "hidden";
 }
@@ -356,16 +390,7 @@ function buildEntryElement(item: CatalogueRecord): HTMLDivElement {
 	if (promoteBtn !== null) {
 		promoteBtn.addEventListener("click", (e) => {
 			e.stopPropagation();
-			document.dispatchEvent(
-				new CustomEvent("catalogue:promote-request", {
-					detail: {
-						cover: item.cover,
-						slug: slugFromId(item.id, item.type),
-						title: item.title,
-						type: typeToServerType(item.type),
-					},
-				}),
-			);
+			requestPromote(item);
 		});
 	}
 	return entry;

@@ -164,6 +164,7 @@ pub fn review_modal() -> Markup {
                     div class="flex flex-col gap-3 min-w-0" {
                         div id="review-modal-meta" class="flex flex-col gap-y-0.5 text-sm text-subtle-charcoal" {}
                         div id="review-modal-collections" class="empty:hidden flex flex-wrap gap-1 items-center text-sm" {}
+                        button id="review-modal-promote" type="button" class="hidden self-start bg-accent-valencia text-white text-sm font-bold rounded px-3 py-1.5 cursor-pointer hover:bg-accent-valencia/80" { "Mark finished" }
                         div id="review-modal-content" class="prose text-black" {}
                     }
                 }

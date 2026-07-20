@@ -2,6 +2,7 @@ import { QuickScore } from "quick-score";
 import { thumbHashToDataURL } from "thumbhash";
 
 import { type CatalogueRecord, type CollectionRef, loadCatalogueCache } from "./catalogue-db";
+import { applyUrlToFilters, writeFiltersToUrl } from "./catalogue-url";
 
 function requireElement<T extends Element>(selector: string): T {
 	const el = document.querySelector<T>(selector);
@@ -497,6 +498,10 @@ function buildUI() {
 	handleScroll();
 }
 
+// Seed the sidebar from the URL before the first render so a linked/reloaded
+// filtered view comes up already applied.
+applyUrlToFilters();
+
 loadCatalogueCache(
 	latestHash,
 	({ records, collections }) => {
@@ -524,6 +529,7 @@ document.addEventListener(
 );
 
 function resetAndBuildUI() {
+	writeFiltersToUrl();
 	window.scrollTo({ behavior: "instant", top: 0 });
 	currentPage = 0;
 	allItems = [];

@@ -4,6 +4,7 @@ import {
 	type CollectionRef,
 	loadCatalogueCache,
 } from "./catalogue-db";
+import { applyUrlToFilters, writeFiltersToUrl } from "./catalogue-url";
 
 function requireElement<T extends Element>(selector: string): T {
 	const el = document.querySelector<T>(selector);
@@ -17,6 +18,11 @@ const statsCore = requireElement<HTMLElement>("#stats-core");
 const statsContent = requireElement<HTMLElement>("#stats-content");
 const countElements = document.querySelectorAll("#stats-entry-count");
 const latestHash = statsCore.dataset.latest ?? "";
+
+// Seed the sidebar from the URL up front. The collection <select> is populated
+// asynchronously, so its value is restored again in populateCollectionSelect once
+// its options exist (e.g. a "Stats" link carrying ?collection=<slug>).
+applyUrlToFilters();
 
 interface Entry {
 	title: string;
@@ -1007,6 +1013,12 @@ function populateCollectionSelect(refs: CollectionRef[]): void {
 	const selects = document.querySelectorAll<HTMLSelectElement>(
 		"#catalogue-collection, #mobile-catalogue-collection",
 	);
+	// A ?collection=<slug> in the URL is the intended value but couldn't stick before
+	// the options existed. Only honor it when it's a non-empty slug that actually exists;
+	// an unknown/renamed slug or a bare `?collection=` would otherwise silently unfilter or
+	// blank the select while the URL still claims a filter. Otherwise keep what it held.
+	const desired = new URLSearchParams(window.location.search).get("collection");
+	const validDesired = desired && refs.some((ref) => ref.slug === desired) ? desired : null;
 	for (const select of selects) {
 		const current = select.value;
 		while (select.options.length > 1) {
@@ -1018,7 +1030,7 @@ function populateCollectionSelect(refs: CollectionRef[]): void {
 			option.textContent = ref.title;
 			select.append(option);
 		}
-		select.value = current;
+		select.value = validDesired ?? current;
 	}
 }
 
@@ -1064,7 +1076,12 @@ function syncPairedInputs(selectors: string[]): void {
 	]);
 	for (const el of elements) {
 		el.addEventListener(
-			el instanceof HTMLInputElement && el.type === "search" ? "input" : "change",
+			// Match the event used to wire onFilterChange below (see CONTROL_KEYS loop) so the
+			// pair is mirrored before writeFiltersToUrl reads controls[0]; date/search fire on
+			// "input", everything else on "change".
+			el instanceof HTMLInputElement && (el.type === "search" || el.type === "date")
+				? "input"
+				: "change",
 			() => {
 				for (const other of elements) {
 					if (other !== el) {
@@ -1081,6 +1098,11 @@ for (const key of CONTROL_KEYS) {
 	syncPairedInputs([`#mobile-catalogue-${key}`, `#catalogue-${key}`]);
 }
 
+function onFilterChange(): void {
+	writeFiltersToUrl();
+	rebuild();
+}
+
 for (const key of CONTROL_KEYS) {
 	for (const selector of [`#mobile-catalogue-${key}`, `#catalogue-${key}`]) {
 		for (const el of document.querySelectorAll(selector)) {
@@ -1088,7 +1110,7 @@ for (const key of CONTROL_KEYS) {
 				el instanceof HTMLInputElement && (el.type === "search" || el.type === "date")
 					? "input"
 					: "change";
-			el.addEventListener(eventName, rebuild);
+			el.addEventListener(eventName, onFilterChange);
 		}
 	}
 }

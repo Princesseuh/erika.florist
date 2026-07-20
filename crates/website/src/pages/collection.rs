@@ -318,8 +318,14 @@ impl Route<CollectionParams, Entry<Collection>> for CollectionPage {
 
         let heading = |extra: &str| {
             html!(
-                a href="/catalogue/collections/" class=(format!("button-style-bg-accent block w-full text-center mb-4 {}", extra)) {
-                    "All collections"
+                div class=(format!("flex gap-x-2 mb-4 {}", extra)) {
+                    a."button-style-bg-accent block w-full text-center" href="/catalogue/collections/" {
+                        "All collections"
+                    }
+                    // Deep-link into the stats page pre-filtered to this collection.
+                    a."button-style-bg-accent block w-full text-center" href=(format!("/catalogue/stats/?collection={}", collection_slug)) {
+                        "Stats"
+                    }
                 }
                 h1 class="text-xl font-bold m-0 mt-1" { (title) }
                 @if !description.trim().is_empty() {

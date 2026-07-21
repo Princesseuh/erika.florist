@@ -115,31 +115,47 @@ export class MiniMasonry {
 	})();
 }
 
-// Store masonry instances for external access
-const masonryInstances: MiniMasonry[] = [];
-
-// Initialize masonry for all containers
-const masonryContainers = document.querySelectorAll(".masonry");
-for (const container of masonryContainers) {
-	if (!(container instanceof HTMLElement)) {
-		continue;
-	}
-	const instance = new MiniMasonry({
-		baseWidth: () => Math.min(350, document.documentElement.clientWidth - 16),
-		container,
-		gutter: 12,
-	});
-	masonryInstances.push(instance);
-}
-
 // Global function to recalculate all masonry layouts
 declare global {
 	interface Window {
 		recalculateMasonry: () => void;
 	}
 }
-window.recalculateMasonry = () => {
-	for (const instance of masonryInstances) {
-		instance.layout();
+
+// Prefer the native `grid-template-rows: masonry` grid lane when the browser has
+// it (see prin.css) and only fall back to the JS layout otherwise.
+const supportsNativeMasonry =
+	typeof CSS !== "undefined" &&
+	typeof CSS.supports === "function" &&
+	CSS.supports("grid-template-rows", "masonry");
+
+if (supportsNativeMasonry) {
+	// The browser lays everything out and reflows on its own, so there's nothing
+	// to recalculate. Keep the hook as a no-op so callers (stats, changelog)
+	// don't need to know which path is active.
+	console.log("Using native CSS masonry (grid-template-rows: masonry)");
+	window.recalculateMasonry = () => {};
+} else {
+	// Store masonry instances for external access
+	const masonryInstances: MiniMasonry[] = [];
+
+	// Initialize masonry for all containers
+	const masonryContainers = document.querySelectorAll(".masonry");
+	for (const container of masonryContainers) {
+		if (!(container instanceof HTMLElement)) {
+			continue;
+		}
+		const instance = new MiniMasonry({
+			baseWidth: () => Math.min(350, document.documentElement.clientWidth - 16),
+			container,
+			gutter: 12,
+		});
+		masonryInstances.push(instance);
 	}
-};
+
+	window.recalculateMasonry = () => {
+		for (const instance of masonryInstances) {
+			instance.layout();
+		}
+	};
+}

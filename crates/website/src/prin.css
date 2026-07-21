@@ -384,8 +384,12 @@
 }
 
 @layer components {
-	.masonry > * {
-		position: absolute;
+	/* Fallback masonry: the JS in masonry.ts absolutely positions each child.
+	   Only used when the browser lacks native `grid-template-rows: masonry`. */
+	@supports not (grid-template-rows: masonry) {
+		.masonry > * {
+			position: absolute;
+		}
 	}
 
 	.pixelated {
@@ -491,5 +495,24 @@
 
 	:root[data-catalogue-authed="true"] [data-promote] {
 		display: block;
+	}
+}
+
+/* Native CSS masonry. When the browser supports the `grid-template-rows: masonry`
+   grid lane, we let it lay everything out and masonry.ts skips its JS fallback.
+   Kept unlayered on purpose so it wins over the Tailwind utilities (`absolute`,
+   `w-fit`, `m-0`, …) the children carry for the JS path. */
+@supports (grid-template-rows: masonry) {
+	.masonry {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
+		grid-template-rows: masonry;
+		gap: 12px;
+	}
+
+	.masonry > * {
+		position: static;
+		width: auto;
+		margin: 0;
 	}
 }

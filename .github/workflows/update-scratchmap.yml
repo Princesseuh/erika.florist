@@ -28,6 +28,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+
       - name: Pull visited cells from the Worker
         env:
           SCRATCHMAP_TOKEN: ${{ secrets.SCRATCHMAP_TOKEN }}

@@ -51,6 +51,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Maudit's placeholder cache is validated by mtime+size; checkout resets
+      # mtimes, so restore them from git history to get cache hits across runs.
+      - name: Restore file mtimes
+        uses: chetan/git-restore-mtime-action@v2
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 
@@ -67,20 +72,22 @@ jobs:
         with:
           targets: wasm32-unknown-unknown
 
-      - name: Cache cargo + Maudit
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+
+      # Processed images + image_cache.bin. Kept out of the cargo cache so a
+      # Cargo.lock change doesn't throw away already-processed images.
+      - name: Cache Maudit images
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.cargo/registry/index
-            ~/.cargo/registry/cache
-            ~/.cargo/git/db
-            target
-          key: build-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}-${{ github.sha }}
+          path: target/maudit
+          key: maudit-${{ runner.os }}-${{ hashFiles('crates/website/content/**/*.png', 'crates/website/content/**/*.jpg', 'crates/website/content/**/*.jpeg', 'crates/website/content/**/*.webp', 'crates/website/static/**') }}
           restore-keys: |
-            build-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}-
+            maudit-${{ runner.os }}-
 
       - name: Build
-        run: cargo build --release
+        if: needs.changes.outputs.website == 'true'
+        run: cargo build --release --package erikaflorist
 
       - name: Deploy Website
         if: needs.changes.outputs.website == 'true'

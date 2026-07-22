@@ -4,7 +4,7 @@ use std::thread::sleep;
 use std::time::Duration;
 
 use anyhow::{Context, Result};
-use geo::{GeodesicArea, MultiPolygon};
+use geo::{Area, GeodesicArea, MultiPolygon, Simplify};
 use h3o::{CellIndex, LatLng, Resolution};
 use serde::{Deserialize, Serialize};
 
@@ -40,6 +40,8 @@ struct Region {
     lon: f64,
     percent: f64,
     explored: usize,
+    /// Simplified boundary as a GeoJSON MultiPolygon, for drawing the outline.
+    geometry: serde_json::Value,
 }
 
 /// A geocoded region, cached by the sample cell that produced it. A cache value of
@@ -53,6 +55,50 @@ struct CachedRegion {
     area: f64,
     lat: f64,
     lon: f64,
+    #[serde(default)]
+    geometry: serde_json::Value,
+}
+
+/// Douglas-Peucker tolerance (degrees) per level — coarser for bigger regions so a
+/// country outline doesn't ship thousands of points.
+fn simplify_tolerance(level: &str) -> f64 {
+    match level {
+        // Districts are small; keep them full-detail (0 = no simplify) so adjacent
+        // districts' shared borders stay coincident instead of diverging into slivers.
+        "district" => 0.0,
+        "city" => 0.002,
+        // Countries are viewed from far away and have huge, complex borders — simplify
+        // hard so the outline stays a few hundred points, not thousands.
+        _ => 0.08,
+    }
+}
+
+/// Keep only the largest polygon — drops far-flung territories/islands that bloat a
+/// country outline you're only ever viewing over its mainland.
+fn primary_landmass(mp: MultiPolygon<f64>) -> MultiPolygon<f64> {
+    match mp
+        .into_iter()
+        .max_by(|a, b| a.unsigned_area().partial_cmp(&b.unsigned_area()).unwrap())
+    {
+        Some(biggest) => MultiPolygon(vec![biggest]),
+        None => MultiPolygon(vec![]),
+    }
+}
+
+/// A simplified `geo` MultiPolygon → a compact GeoJSON MultiPolygon value ([lng,lat],
+/// coordinates rounded to ~1 m).
+fn to_geojson(mp: &MultiPolygon<f64>) -> serde_json::Value {
+    let round = |v: f64| (v * 100_000.0).round() / 100_000.0;
+    let coords: Vec<Vec<Vec<[f64; 2]>>> = mp
+        .iter()
+        .map(|poly| {
+            std::iter::once(poly.exterior())
+                .chain(poly.interiors())
+                .map(|ring| ring.coords().map(|c| [round(c.x), round(c.y)]).collect())
+                .collect()
+        })
+        .collect();
+    serde_json::json!({ "type": "MultiPolygon", "coordinates": coords })
 }
 
 #[derive(Deserialize)]
@@ -108,6 +154,19 @@ fn reverse(lat: f64, lon: f64, zoom: u8, level: &str) -> Result<Option<CachedReg
         .osm_id
         .unwrap_or_else(|| (plat * 1000.0) as i64 * 1_000_000 + (plon * 1000.0) as i64);
 
+    let tolerance = simplify_tolerance(level);
+    let simplified = if tolerance > 0.0 {
+        poly.simplify(&tolerance)
+    } else {
+        poly
+    };
+    let outline = if level == "country" {
+        primary_landmass(simplified)
+    } else {
+        simplified
+    };
+    let geometry = to_geojson(&outline);
+
     Ok(Some(CachedRegion {
         osm_id,
         name,
@@ -115,6 +174,7 @@ fn reverse(lat: f64, lon: f64, zoom: u8, level: &str) -> Result<Option<CachedReg
         area,
         lat: plat,
         lon: plon,
+        geometry,
     }))
 }
 
@@ -241,6 +301,7 @@ pub fn run_update_regions() -> Result<()> {
                 lon: region.lon,
                 percent,
                 explored: count,
+                geometry: region.geometry,
             }
         })
         .collect();

@@ -13,7 +13,7 @@ ALLOWED_ORIGINS = "erika.florist"
 [[d1_databases]]
 binding = "SCRATCHMAP_DB"
 database_name = "scratchmap"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "02d83bfb-faa2-4384-a64f-c7b293347a9c"
 
 [env.dev.vars]
 ALLOWED_ORIGINS = "localhost,127.0.0.1,erika.florist"

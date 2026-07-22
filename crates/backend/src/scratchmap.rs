@@ -93,18 +93,29 @@ pub async fn ingest_location(req: &mut Request, env: &Env) -> Result<Response> {
         .unwrap_or_else(|| (Date::now().as_millis() / 1000) as i64);
     let store = env.kv(KV_BINDING)?;
 
+    let last = match store.get(LAST_KEY).text().await {
+        Ok(Some(raw)) => parse_last(&raw),
+        _ => None,
+    };
+
+    // Still in the same 50 m cell as the previous fix → already recorded, so write
+    // nothing. This is the common case for frequent pings (stationary or slow), and
+    // skipping it keeps KV *writes* — the scarce free-tier quota — down to roughly one
+    // per cell you actually move into.
+    if last.map(|(last_cell, _)| last_cell) == Some(cell) {
+        return Response::from_json(&serde_json::json!([]));
+    }
+
     // Bridge the gap from the previous fix — but only if it looks like one continuous
     // stretch (close enough, recent enough), never across a drive/flight/app restart.
-    if let Ok(Some(last_raw)) = store.get(LAST_KEY).text().await {
-        if let Some((last_cell, last_tst)) = parse_last(&last_raw) {
-            let dt = now - last_tst;
-            if (0..=MAX_TIME_GAP).contains(&dt) {
-                if let Ok(distance) = last_cell.grid_distance(cell) {
-                    if distance > 1 && distance <= MAX_HEX_GAP {
-                        if let Ok(path) = last_cell.grid_path_cells(cell) {
-                            for step in path.flatten() {
-                                store_cell(&store, step).await?;
-                            }
+    if let Some((last_cell, last_tst)) = last {
+        let dt = now - last_tst;
+        if (0..=MAX_TIME_GAP).contains(&dt) {
+            if let Ok(distance) = last_cell.grid_distance(cell) {
+                if distance > 1 && distance <= MAX_HEX_GAP {
+                    if let Ok(path) = last_cell.grid_path_cells(cell) {
+                        for step in path.flatten() {
+                            store_cell(&store, step).await?;
                         }
                     }
                 }

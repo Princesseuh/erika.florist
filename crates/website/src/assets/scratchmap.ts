@@ -181,6 +181,7 @@ if (el && dataEl) {
 		lat: number;
 		lon: number;
 		percent: number;
+		geometry?: GeoJSON.MultiPolygon;
 	}
 	const regionsEl = document.getElementById("scratchmap-regions");
 	const regions: Region[] = regionsEl ? JSON.parse(regionsEl.textContent || "[]") : [];
@@ -205,6 +206,15 @@ if (el && dataEl) {
 	for (const region of regions) {
 		const group = badgeLayers[region.level];
 		if (!group) continue;
+
+		// The region's boundary outline (same group, so it toggles with the badge).
+		if (region.geometry?.coordinates?.length) {
+			L.geoJSON(region.geometry, {
+				interactive: false,
+				style: { color: "#2e2852", weight: 1.5, opacity: 0.85, fill: false },
+			}).addTo(group);
+		}
+
 		const icon = L.divIcon({
 			className: "",
 			iconSize: [0, 0],

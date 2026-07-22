@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Toulouse",
+    "level": "city",
+    "lat": 43.6044638,
+    "lon": 1.4442433,
+    "percent": 0.005458169880391939,
+    "explored": 3
+  },
+  {
+    "name": "France",
+    "level": "country",
+    "lat": 46.603354,
+    "lon": 1.8883335,
+    "percent": 5.340670395379926e-7,
+    "explored": 3
+  },
+  {
+    "name": "Minimes / Barrière de Paris",
+    "level": "district",
+    "lat": 43.6306577,
+    "lon": 1.4317601,
+    "percent": 0.10807638924678727,
+    "explored": 3
+  }
+]

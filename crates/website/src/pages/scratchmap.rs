@@ -9,6 +9,9 @@ use crate::layouts::base_layout;
 // `include_str!` (compile-time) ensures cargo rebuilds — and Maudit re-renders — when it changes.
 const CELLS_JSON: &str = include_str!("../../content/scratchmap/cells.json");
 
+// Neighbourhood/city/country completion, computed in CI by `xtask update-regions`.
+const REGIONS_JSON: &str = include_str!("../../content/scratchmap/regions.json");
+
 // Average area of an H3 resolution-11 cell, in m².
 const RES11_HEX_AREA_M2: f64 = 2150.6;
 
@@ -42,6 +45,11 @@ impl Route for ScratchMap {
                     // Visited cell IDs for the client to reveal (punch holes in the fog).
                     script type="application/json" id="scratchmap-cells" {
                         (PreEscaped(CELLS_JSON.trim()))
+                    }
+
+                    // Per-region completion badges, shown by zoom level.
+                    script type="application/json" id="scratchmap-regions" {
+                        (PreEscaped(REGIONS_JSON.trim()))
                     }
 
                     // Caption overlay, above the map (Leaflet panes/controls sit below z-[1000]).

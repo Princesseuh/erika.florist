@@ -1,0 +1,26 @@
+{
+  "833960fffffffff": {
+    "osm_id": 2202162,
+    "name": "France",
+    "level": "country",
+    "area": 1207513012894.1865,
+    "lat": 46.603354,
+    "lon": 1.8883335
+  },
+  "8539601bfffffff": {
+    "osm_id": 35738,
+    "name": "Toulouse",
+    "level": "city",
+    "area": 118151855.6827498,
+    "lat": 43.6044638,
+    "lon": 1.4442433
+  },
+  "8739601a1ffffff": {
+    "osm_id": 2344059,
+    "name": "Minimes / Barrière de Paris",
+    "level": "district",
+    "area": 5967010.042567372,
+    "lat": 43.6306577,
+    "lon": 1.4317601
+  }
+}

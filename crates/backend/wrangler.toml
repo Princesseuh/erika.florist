@@ -5,6 +5,13 @@ compatibility_date = "2025-02-16"
 [vars]
 ALLOWED_ORIGINS = "erika.florist"
 
+# Accumulates visited H3 res-11 cell IDs for the scratch map. Only cell IDs are
+# stored here — raw coordinates are reduced to a hex on ingest and discarded.
+# Create with: wrangler kv namespace create SCRATCHMAP
+[[kv_namespaces]]
+binding = "SCRATCHMAP"
+id = "ac7ae6f30a974421b0e4dfe138154f23"
+
 [env.dev.vars]
 ALLOWED_ORIGINS = "localhost,127.0.0.1,erika.florist"
 

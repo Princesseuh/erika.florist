@@ -1,0 +1,41 @@
+name: Update scratch map
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every Monday at 04:00 UTC
+    - cron: "0 4 * * 1"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "latest"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Pull visited cells from the Worker
+        env:
+          SCRATCHMAP_TOKEN: ${{ secrets.SCRATCHMAP_TOKEN }}
+        run: cargo xtask update-scratchmap --silent
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "[ci] update scratchmap"
+          file_pattern: crates/website/content/scratchmap/cells.json
+          branch: ${{ github.head_ref }}

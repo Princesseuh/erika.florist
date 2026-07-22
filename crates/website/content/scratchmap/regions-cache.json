@@ -15,7 +15,7 @@
     "lat": 43.6044638,
     "lon": 1.4442433
   },
-  "8739601a1ffffff": {
+  "8839601a17fffff": {
     "osm_id": 2344059,
     "name": "Minimes / Barrière de Paris",
     "level": "district",
@@ -23,7 +23,7 @@
     "lat": 43.6306577,
     "lon": 1.4317601
   },
-  "8739601aaffffff": {
+  "8839601aa1fffff": {
     "osm_id": 1684034,
     "name": "Les Chalets / Bayard",
     "level": "district",
@@ -31,12 +31,52 @@
     "lat": 43.6055183,
     "lon": 1.4527833
   },
-  "8739601aeffffff": {
+  "8839601aa9fffff": {
     "osm_id": 1684025,
     "name": "Capitole / Arnaud Bernard",
     "level": "district",
     "area": 2046819.8224312067,
     "lat": 43.6019895,
     "lon": 1.4436653
+  },
+  "8839601aadfffff": {
+    "osm_id": 1903926,
+    "name": "Saint-Michel / Saint-Agne",
+    "level": "district",
+    "area": 4186497.9349916093,
+    "lat": 43.5832139,
+    "lon": 1.4415339
+  },
+  "8839601ae1fffff": {
+    "osm_id": 1684025,
+    "name": "Capitole / Arnaud Bernard",
+    "level": "district",
+    "area": 2046819.8224312067,
+    "lat": 43.6019895,
+    "lon": 1.4436653
+  },
+  "8839601ae3fffff": {
+    "osm_id": 1684034,
+    "name": "Les Chalets / Bayard",
+    "level": "district",
+    "area": 1404243.7687199414,
+    "lat": 43.6055183,
+    "lon": 1.4527833
+  },
+  "8839601ae7fffff": {
+    "osm_id": 1684025,
+    "name": "Capitole / Arnaud Bernard",
+    "level": "district",
+    "area": 2046819.8224312067,
+    "lat": 43.6019895,
+    "lon": 1.4436653
+  },
+  "8839601ae9fffff": {
+    "osm_id": 2344059,
+    "name": "Minimes / Barrière de Paris",
+    "level": "district",
+    "area": 5967010.042567372,
+    "lat": 43.6306577,
+    "lon": 1.4317601
   }
 }

@@ -27,7 +27,9 @@ const RATE_LIMIT: Duration = Duration::from_millis(1100);
 // (level name, Nominatim reverse `zoom`, H3 resolution to dedupe sample points at).
 // Coarser levels need fewer samples, so we dedupe them harder to save requests.
 const LEVELS: &[(&str, u8, Resolution)] = &[
-    ("district", 14, Resolution::Seven),
+    // Sample districts every ~530 m (res 8) so neighbouring quartiers are picked up
+    // separately rather than a coarser sample lumping them together.
+    ("district", 14, Resolution::Eight),
     ("city", 10, Resolution::Five),
     ("country", 3, Resolution::Three),
 ];

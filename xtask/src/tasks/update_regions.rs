@@ -34,19 +34,23 @@ const LEVELS: &[(&str, u8, Resolution)] = &[
 
 #[derive(Serialize)]
 struct Region {
+    osm_id: i64,
     name: String,
     level: String,
     lat: f64,
     lon: f64,
     percent: f64,
     explored: usize,
-    /// Simplified boundary as a GeoJSON MultiPolygon, for drawing the outline.
+    /// Simplified boundary as a GeoJSON MultiPolygon, for drawing the outline. This is
+    /// the only place the geometry lives — the cache keeps just the lookup metadata,
+    /// and a run reuses the previous regions.json's geometry for cached regions.
     geometry: serde_json::Value,
 }
 
-/// A geocoded region, cached by the sample cell that produced it. A cache value of
-/// `null` means "looked up, no usable polygon" — so point-only places (common at the
-/// district level) aren't re-queried every week.
+/// A geocoded region's lookup metadata, cached by the sample cell that produced it. A
+/// cache value of `null` means "looked up, no usable polygon" — so point-only places
+/// (common at the district level) aren't re-queried every week. Deliberately holds no
+/// geometry, to keep the cache file tiny.
 #[derive(Serialize, Deserialize, Clone)]
 struct CachedRegion {
     osm_id: i64,
@@ -55,8 +59,6 @@ struct CachedRegion {
     area: f64,
     lat: f64,
     lon: f64,
-    #[serde(default)]
-    geometry: serde_json::Value,
 }
 
 /// Douglas-Peucker tolerance (degrees) per level — coarser for bigger regions so a
@@ -68,8 +70,8 @@ fn simplify_tolerance(level: &str) -> f64 {
         "district" => 0.0,
         "city" => 0.002,
         // Countries are viewed from far away and have huge, complex borders — simplify
-        // hard so the outline stays a few hundred points, not thousands.
-        _ => 0.08,
+        // hard so the outline stays roughly a hundred points, not thousands.
+        _ => 0.15,
     }
 }
 
@@ -112,9 +114,14 @@ struct ReverseResponse {
     geojson: Option<serde_json::Value>,
 }
 
-/// Reverse-geocode a point at a given zoom, returning the region (with area) it lands
-/// in, or `None` if there's no polygon to measure.
-fn reverse(lat: f64, lon: f64, zoom: u8, level: &str) -> Result<Option<CachedRegion>> {
+/// Reverse-geocode a point at a given zoom, returning the region's metadata and its
+/// (simplified) outline geometry, or `None` if there's no polygon to measure.
+fn reverse(
+    lat: f64,
+    lon: f64,
+    zoom: u8,
+    level: &str,
+) -> Result<Option<(CachedRegion, serde_json::Value)>> {
     let url = format!(
         "{NOMINATIM}?format=jsonv2&lat={lat}&lon={lon}&zoom={zoom}&polygon_geojson=1&addressdetails=1&accept-language=en"
     );
@@ -167,15 +174,15 @@ fn reverse(lat: f64, lon: f64, zoom: u8, level: &str) -> Result<Option<CachedReg
     };
     let geometry = to_geojson(&outline);
 
-    Ok(Some(CachedRegion {
+    let region = CachedRegion {
         osm_id,
         name,
         level: level.to_string(),
         area,
         lat: plat,
         lon: plon,
-        geometry,
-    }))
+    };
+    Ok(Some((region, geometry)))
 }
 
 /// Pick the best display name for a level from Nominatim's address components.
@@ -239,12 +246,23 @@ pub fn run_update_regions() -> Result<()> {
         return Ok(());
     }
 
-    // Cache maps a sample cell id → its region (or null when there's no polygon).
+    // Cache maps a sample cell id → its region metadata (or null when there's no polygon).
     let mut cache: BTreeMap<String, Option<CachedRegion>> = fs::read_to_string(&cache_path)
         .ok()
         .and_then(|s| serde_json::from_str(&s).ok())
         .unwrap_or_default();
     let mut cache_dirty = false;
+
+    // Geometry lives only in regions.json. Reuse the previous run's for cached regions
+    // (keyed by OSM id) so we don't re-geocode just to redraw an unchanged outline.
+    let prior_geometry: BTreeMap<i64, serde_json::Value> = fs::read_to_string(&regions_path)
+        .ok()
+        .and_then(|s| serde_json::from_str::<Vec<serde_json::Value>>(&s).ok())
+        .unwrap_or_default()
+        .into_iter()
+        .filter_map(|r| Some((r.get("osm_id")?.as_i64()?, r.get("geometry")?.clone())))
+        .collect();
+    let mut fresh_geometry: BTreeMap<i64, serde_json::Value> = BTreeMap::new();
 
     // Tally visited cells per distinct region, keyed by (level, OSM id).
     let mut tally: BTreeMap<(String, i64), (CachedRegion, usize)> = BTreeMap::new();
@@ -272,8 +290,13 @@ pub fn run_update_regions() -> Result<()> {
             if !cache.contains_key(&key) {
                 let ll = LatLng::from(*sample);
                 match reverse(ll.lat(), ll.lng(), *zoom, level) {
-                    Ok(region) => {
-                        cache.insert(key.clone(), region);
+                    Ok(Some((region, geometry))) => {
+                        fresh_geometry.insert(region.osm_id, geometry);
+                        cache.insert(key.clone(), Some(region));
+                        cache_dirty = true;
+                    }
+                    Ok(None) => {
+                        cache.insert(key.clone(), None);
                         cache_dirty = true;
                     }
                     // Leave uncached on transient errors so it's retried next run.
@@ -294,14 +317,20 @@ pub fn run_update_regions() -> Result<()> {
         .into_values()
         .map(|(region, count)| {
             let percent = (count as f64 * RES11_AREA_M2 / region.area * 100.0).min(100.0);
+            let geometry = fresh_geometry
+                .get(&region.osm_id)
+                .or_else(|| prior_geometry.get(&region.osm_id))
+                .cloned()
+                .unwrap_or(serde_json::Value::Null);
             Region {
+                osm_id: region.osm_id,
                 name: region.name,
                 level: region.level,
                 lat: region.lat,
                 lon: region.lon,
                 percent,
                 explored: count,
-                geometry: region.geometry,
+                geometry,
             }
         })
         .collect();

@@ -5,4 +5,5 @@ pub mod get_info_cover_movie_show;
 pub mod optimize_covers;
 pub mod subset_fonts;
 pub mod update_catalogue;
+pub mod update_regions;
 pub mod update_scratchmap;

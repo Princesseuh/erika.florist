@@ -38,9 +38,12 @@ jobs:
           SCRATCHMAP_TOKEN: ${{ secrets.SCRATCHMAP_TOKEN }}
         run: cargo xtask update-scratchmap --silent
 
+      - name: Compute region completion
+        run: cargo xtask update-regions --silent
+
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "[ci] update scratchmap"
-          file_pattern: crates/website/content/scratchmap/cells.json
+          file_pattern: crates/website/content/scratchmap/*.json
           branch: ${{ github.head_ref }}

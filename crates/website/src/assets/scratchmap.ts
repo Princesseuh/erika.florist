@@ -174,6 +174,58 @@ if (el && dataEl) {
 	map.on("zoomend moveend viewreset", draw);
 	map.on("resize", resize);
 
+	// --- Completion badges: district / city / country, shown by zoom level ---
+	interface Region {
+		name: string;
+		level: string;
+		lat: number;
+		lon: number;
+		percent: number;
+	}
+	const regionsEl = document.getElementById("scratchmap-regions");
+	const regions: Region[] = regionsEl ? JSON.parse(regionsEl.textContent || "[]") : [];
+
+	// City/country percentages are naturally tiny — show enough decimals to be honest
+	// (this is the "% of the earth you've explored" number) without going scientific.
+	const formatPercent = (p: number): string => {
+		if (p <= 0) return "0%";
+		if (p >= 10) return `${Math.round(p)}%`;
+		if (p >= 1) return `${p.toFixed(1)}%`;
+		const decimals = Math.min(9, Math.max(2, 1 - Math.floor(Math.log10(p))));
+		return `${p.toFixed(decimals)}%`;
+	};
+
+	const levelForZoom = (z: number): string => (z >= 13 ? "district" : z >= 10 ? "city" : "country");
+
+	const badgeLayers: Record<string, L.LayerGroup> = {
+		district: L.layerGroup(),
+		city: L.layerGroup(),
+		country: L.layerGroup(),
+	};
+	for (const region of regions) {
+		const group = badgeLayers[region.level];
+		if (!group) continue;
+		const icon = L.divIcon({
+			className: "",
+			iconSize: [0, 0],
+			iconAnchor: [0, 0],
+			html: `<span style="display:inline-block;transform:translate(-50%,-50%);white-space:nowrap;background:rgba(247,247,247,0.92);border:1px solid rgba(10,9,8,0.12);border-radius:3px;padding:2px 6px;font:600 12px/1.1 system-ui,sans-serif;color:#0a0908;box-shadow:0 1px 2px rgba(0,0,0,0.15)">${region.name} · ${formatPercent(region.percent)}</span>`,
+		});
+		L.marker([region.lat, region.lon], { icon, interactive: false, keyboard: false }).addTo(group);
+	}
+
+	let activeLevel = "";
+	const updateBadges = () => {
+		const level = levelForZoom(map.getZoom());
+		if (level === activeLevel) return;
+		activeLevel = level;
+		for (const [lvl, group] of Object.entries(badgeLayers)) {
+			if (lvl === level) group.addTo(map);
+			else group.remove();
+		}
+	};
+	map.on("zoomend", updateBadges);
+
 	if (visited.length > 0) {
 		const points = visited.map((cell) => cellToLatLng(cell) as [number, number]);
 		map.fitBounds(L.latLngBounds(points), { padding: [40, 40], maxZoom: 15 });
@@ -182,6 +234,7 @@ if (el && dataEl) {
 	}
 
 	resize();
+	updateBadges();
 }
 
 export {};

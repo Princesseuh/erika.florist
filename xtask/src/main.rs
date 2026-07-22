@@ -16,6 +16,10 @@ Tasks:
                             merge them into content/scratchmap/cells.json.
                             Requires SCRATCHMAP_TOKEN (and optionally SCRATCHMAP_API).
 
+  update-regions            Reverse-geocode visited cells (via Nominatim) and compute
+                            neighbourhood/city/country completion into
+                            content/scratchmap/regions.json.
+
   export-letterboxd         Generate a Letterboxd-compatible CSV from movie entries.
                             Writes to ./letterboxd-export.csv
 
@@ -58,6 +62,7 @@ fn main() -> anyhow::Result<()> {
         }
         "update-catalogue" => tasks::update_catalogue::run_update_catalogue(),
         "update-scratchmap" => tasks::update_scratchmap::run_update_scratchmap(),
+        "update-regions" => tasks::update_regions::run_update_regions(),
         "export-letterboxd" => {
             let _ = dotenvy::dotenv();
             tasks::export_letterboxd::run_export_letterboxd()

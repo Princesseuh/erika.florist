@@ -45,6 +45,49 @@ if (el && dataEl) {
 	});
 	L.control.zoom({ position: "topright" }).addTo(map);
 
+	// Fullscreen toggle, styled to sit right under the zoom control.
+	// L.Control.extend is dynamically typed, hence the `any`.
+	const FullscreenControl = (L.Control as any).extend({
+		onAdd() {
+			const bar = L.DomUtil.create("div", "leaflet-bar leaflet-control");
+			const button = L.DomUtil.create("a", "", bar) as HTMLAnchorElement;
+			button.href = "#";
+			button.title = "Toggle fullscreen";
+			button.setAttribute("role", "button");
+			button.innerHTML =
+				'<svg viewBox="0 0 24 24" width="16" height="16" style="display:block;margin:6px auto" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4H4v4M16 4h4v4M8 20H4v-4M16 20h4v-4"/></svg>';
+			L.DomEvent.on(button, "click", (event) => {
+				L.DomEvent.stop(event);
+				const frame = document.getElementById("scratchmap-frame");
+				if (document.fullscreenElement) document.exitFullscreen();
+				else frame?.requestFullscreen?.();
+			});
+			return bar;
+		},
+	});
+	map.addControl(new FullscreenControl({ position: "topright" }));
+
+	// In fullscreen the frame must fill the screen (its normal height is viewport-minus-header).
+	document.addEventListener("fullscreenchange", () => {
+		const frame = document.getElementById("scratchmap-frame");
+		if (frame) frame.style.height = document.fullscreenElement === frame ? "100%" : "";
+		map.invalidateSize();
+	});
+
+	// Stat overlay — subtle grey text over the map, no card (like the friends-page note).
+	const groupDigits = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+	const formatArea = (m2: number) =>
+		m2 >= 1_000_000 ? `${groupDigits(Math.round(m2 / 1_000_000))} km²` : `${groupDigits(m2)} m²`;
+	const stat = document.createElement("div");
+	stat.style.cssText =
+		"position:absolute;left:12px;bottom:10px;z-index:1000;pointer-events:none;font-size:12px;font-variant-numeric:tabular-nums;color:#4d4d4d;text-shadow:0 1px 3px rgba(247,247,247,0.9)";
+	const hexCount = visited.length;
+	stat.textContent =
+		hexCount === 0
+			? "Nothing discovered yet"
+			: `${hexCount} hexagon${hexCount === 1 ? "" : "s"} · ~${formatArea(Math.round(hexCount * 2150.6))}`;
+	el.parentElement?.appendChild(stat);
+
 	// Panes so labels can render above the fog.
 	map.createPane("fogPane");
 	map.getPane("fogPane")!.style.zIndex = "350";

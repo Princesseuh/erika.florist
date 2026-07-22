@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-worker = "0.8.3"
+worker = { version = "0.8.3", features = ["d1"] }
 serde = { workspace = true }
 serde_json = { workspace = true }
 base64 = "0.22"

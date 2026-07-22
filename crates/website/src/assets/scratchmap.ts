@@ -13,14 +13,7 @@
 // Leaflet + h3-js are bundled from npm.
 
 import * as L from "leaflet";
-import {
-	cellToBoundary,
-	cellToLatLng,
-	cellToParent,
-	getHexagonEdgeLengthAvg,
-	isValidCell,
-	UNITS,
-} from "h3-js";
+import { cellToBoundary, cellToLatLng, isValidCell } from "h3-js";
 
 const el = document.getElementById("scratchmap-map");
 const dataEl = document.getElementById("scratchmap-cells");
@@ -29,31 +22,16 @@ if (el && dataEl) {
 	// Filter to valid H3 indices so a corrupted or tampered cells.json can never
 	// break rendering (h3-js throws on invalid input).
 	const visited = (JSON.parse(dataEl.textContent || "[]") as string[]).filter(isValidCell);
-	const visitedSet = new Set(visited);
-
-	const DATA_RES = 11; // resolution the hexes are stored at
-	const REVEAL_MIN_RES = 7; // coarsest a clearing may get (~1.4 km) when zoomed out
-	const TARGET_HEX_PX = 22; // desired on-screen size of a revealed cell
 
 	const FOG_FILL = "rgba(82, 72, 156, 0.6)"; // violet-ultra
 
-	// Revealed cells at a given resolution (a coarse cell counts as revealed if you
-	// visited any res-11 cell inside it), with their centers cached for cheap
-	// in-viewport filtering.
-	const revealedPtsCache = new Map<number, { cell: string; lat: number; lng: number }[]>();
-	const revealedPtsAt = (res: number) => {
-		let pts = revealedPtsCache.get(res);
-		if (!pts) {
-			const cells =
-				res >= DATA_RES ? visitedSet : new Set(visited.map((c) => cellToParent(c, res)));
-			pts = [...cells].map((cell) => {
-				const [lat, lng] = cellToLatLng(cell);
-				return { cell, lat, lng };
-			});
-			revealedPtsCache.set(res, pts);
-		}
-		return pts;
-	};
+	// Precompute each visited cell's center once, for cheap in-viewport filtering.
+	// Cells are always drawn at their true (stored) resolution — the clearing reflects
+	// the real ~50 m coverage rather than ballooning when zoomed out.
+	const visitedPts = visited.map((cell) => {
+		const [lat, lng] = cellToLatLng(cell);
+		return { cell, lat, lng };
+	});
 
 	// Zoom animation is disabled on purpose: the fog canvas is drawn in current
 	// container coordinates, which don't track Leaflet's mid-zoom CSS transform.
@@ -88,25 +66,6 @@ if (el && dataEl) {
 		maxZoom: 19,
 	}).addTo(map);
 
-	// Pick the reveal resolution: closest to TARGET_HEX_PX at this zoom, floored so a
-	// clearing never balloons, capped at the stored resolution.
-	const revealResForZoom = (): number => {
-		const lat = map.getCenter().lat;
-		const metersPerPixel =
-			(40075016.686 * Math.cos((lat * Math.PI) / 180)) / 2 ** (map.getZoom() + 8);
-		const targetMeters = TARGET_HEX_PX * metersPerPixel;
-		let best = DATA_RES;
-		let bestDiff = Number.POSITIVE_INFINITY;
-		for (let cand = REVEAL_MIN_RES; cand <= DATA_RES; cand++) {
-			const diff = Math.abs(getHexagonEdgeLengthAvg(cand, UNITS.m) - targetMeters);
-			if (diff < bestDiff) {
-				bestDiff = diff;
-				best = cand;
-			}
-		}
-		return best;
-	};
-
 	// Fog canvas in its own pane (below labels). Drawn in container coordinates, so
 	// each draw first cancels the map pane's pan offset to re-anchor to the viewport.
 	const canvas = document.createElement("canvas");
@@ -128,11 +87,10 @@ if (el && dataEl) {
 		ctx.fillStyle = FOG_FILL;
 		ctx.fillRect(0, 0, size.x, size.y);
 
-		// 2. Cut out the revealed cells (their jagged union is the only hex shape seen).
-		const res = revealResForZoom();
+		// 2. Cut out your visited cells (their jagged union is the only hex shape seen).
 		const bounds = map.getBounds().pad(0.15);
 		ctx.globalCompositeOperation = "destination-out";
-		for (const pt of revealedPtsAt(res)) {
+		for (const pt of visitedPts) {
 			if (!bounds.contains([pt.lat, pt.lng])) continue;
 			const boundary = cellToBoundary(pt.cell);
 			ctx.beginPath();

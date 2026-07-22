@@ -1048,7 +1048,6 @@ version = "0.1.0"
 dependencies = [
  "chrono",
  "graphgarden-core",
- "h3o",
  "lol_html",
  "maud",
  "maudit",

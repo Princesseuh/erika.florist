@@ -7,6 +7,8 @@ use search::{search_igdb, search_isbn, search_tmdb};
 mod github;
 use github::{batch_commit, commit_collection, BatchForm, CollectionForm};
 
+mod scratchmap;
+
 fn check_auth_cookie(headers: &Headers, env: &Env) -> bool {
     if let Ok(Some(cookie_str)) = headers.get("cookie") {
         if let Some(token) = cookie_str.split("auth_token=").nth(1) {
@@ -133,6 +135,15 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
             response.headers().append("Set-Cookie", &clear_logged_in)?;
         }
         return Ok(response);
+    }
+
+    // Scratch map: phone ingest + CI read. Token-authed (not cookie), so handled
+    // before the cookie gate below.
+    if req.path() == "/scratchmap" && req.method() == Method::Post {
+        return scratchmap::ingest_location(req, env).await;
+    }
+    if req.path() == "/scratchmap/cells" && req.method() == Method::Get {
+        return scratchmap::list_cells(req, env).await;
     }
 
     // Require auth for search and commit

@@ -20,6 +20,7 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
             pages::CatalogueMCP,
             pages::Catalogue,
             pages::Stats,
+            pages::ScratchMap,
             pages::Collections,
             pages::CollectionPage,
             pages::ChangelogPage,

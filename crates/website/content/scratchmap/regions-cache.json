@@ -3,7 +3,7 @@
     "osm_id": 2202162,
     "name": "France",
     "level": "country",
-    "area": 1207513012894.1865,
+    "area": 1207513012894.1863,
     "lat": 46.603354,
     "lon": 1.8883335
   },
@@ -20,6 +20,14 @@
     "name": "Minimes / Barrière de Paris",
     "level": "district",
     "area": 5967010.042567372,
+    "lat": 43.6306577,
+    "lon": 1.4317601
+  },
+  "8839601a3bfffff": {
+    "osm_id": 2344059,
+    "name": "Minimes / Barrière de Paris",
+    "level": "district",
+    "area": 5967010.0426158905,
     "lat": 43.6306577,
     "lon": 1.4317601
   },
@@ -43,7 +51,7 @@
     "osm_id": 1903926,
     "name": "Saint-Michel / Saint-Agne",
     "level": "district",
-    "area": 4186497.9349916093,
+    "area": 4186497.93499161,
     "lat": 43.5832139,
     "lon": 1.4415339
   },
@@ -76,6 +84,14 @@
     "name": "Minimes / Barrière de Paris",
     "level": "district",
     "area": 5967010.042567372,
+    "lat": 43.6306577,
+    "lon": 1.4317601
+  },
+  "8839601aedfffff": {
+    "osm_id": 2344059,
+    "name": "Minimes / Barrière de Paris",
+    "level": "district",
+    "area": 5967010.0426158905,
     "lat": 43.6306577,
     "lon": 1.4317601
   }

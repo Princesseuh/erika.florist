@@ -293,15 +293,33 @@ if (el && dataEl) {
 
 	// --- Completion badges: district / city / country, shown by zoom level ---
 	interface Region {
+		osm_id: number;
 		name: string;
 		level: string;
 		lat: number;
 		lon: number;
 		percent: number;
+		explored: number;
 		geometry?: GeoJSON.MultiPolygon;
 	}
 	const regionsEl = document.getElementById("scratchmap-regions");
 	const regions: Region[] = regionsEl ? JSON.parse(regionsEl.textContent || "[]") : [];
+
+	// CI's attribution cache (sample parent cell → region metadata, or null). Shipped so
+	// live mode can bump a region's % with the exact algorithm CI uses — no Nominatim.
+	interface CacheEntry {
+		osm_id: number;
+		level: string;
+		area: number;
+	}
+	const cacheEl = document.getElementById("scratchmap-regions-cache");
+	const regionCache: Record<string, CacheEntry | null> = cacheEl
+		? JSON.parse(cacheEl.textContent || "{}")
+		: {};
+	// Average res-11 hex area in CI's percent formula — keep in sync with xtask.
+	const RES11_AREA_M2 = 2149.643;
+	// Resolutions CI samples district/city/country at, for the parent → region lookup.
+	const REGION_RES = [8, 5, 3];
 
 	// City/country percentages are naturally tiny — show enough decimals to be honest
 	// (this is the "% of the earth you've explored" number) without going scientific.
@@ -320,6 +338,24 @@ if (el && dataEl) {
 		city: L.layerGroup(),
 		country: L.layerGroup(),
 	};
+
+	const makeBadgeIcon = (name: string, percent: number) =>
+		L.divIcon({
+			className: "",
+			iconSize: [0, 0],
+			iconAnchor: [0, 0],
+			html: `<span style="display:inline-block;transform:translate(-50%,-50%);white-space:nowrap;background:rgba(247,247,247,0.92);border:1px solid rgba(10,9,8,0.12);border-radius:3px;padding:2px 6px;font:600 12px/1.1 system-ui,sans-serif;color:#0a0908;box-shadow:0 1px 2px rgba(0,0,0,0.15)">${name} · ${formatPercent(percent)}</span>`,
+		});
+
+	// Live-updatable state per region (keyed level:osm_id), so live mode can bump labels.
+	interface RegionState {
+		name: string;
+		explored: number;
+		area: number;
+		marker: L.Marker;
+	}
+	const regionStates = new Map<string, RegionState>();
+
 	for (const region of regions) {
 		const group = badgeLayers[region.level];
 		if (!group) continue;
@@ -332,14 +368,42 @@ if (el && dataEl) {
 			}).addTo(group);
 		}
 
-		const icon = L.divIcon({
-			className: "",
-			iconSize: [0, 0],
-			iconAnchor: [0, 0],
-			html: `<span style="display:inline-block;transform:translate(-50%,-50%);white-space:nowrap;background:rgba(247,247,247,0.92);border:1px solid rgba(10,9,8,0.12);border-radius:3px;padding:2px 6px;font:600 12px/1.1 system-ui,sans-serif;color:#0a0908;box-shadow:0 1px 2px rgba(0,0,0,0.15)">${region.name} · ${formatPercent(region.percent)}</span>`,
+		const marker = L.marker([region.lat, region.lon], {
+			icon: makeBadgeIcon(region.name, region.percent),
+			interactive: false,
+			keyboard: false,
+		}).addTo(group);
+		regionStates.set(`${region.level}:${region.osm_id}`, {
+			name: region.name,
+			explored: region.explored,
+			area: 0,
+			marker,
 		});
-		L.marker([region.lat, region.lon], { icon, interactive: false, keyboard: false }).addTo(group);
 	}
+
+	// Attribute freshly-walked cells to regions the way CI does: each cell's res-8/5/3
+	// parent → the cached region → +1, then recompute % and refresh the badge label.
+	// A cell whose parent isn't cached yet (a brand-new block) waits for the next sync.
+	const attributeToRegions = (cells: string[]) => {
+		const dirty = new Set<string>();
+		for (const cell of cells) {
+			for (const res of REGION_RES) {
+				const entry = regionCache[cellToParent(cell, res)];
+				if (!entry) continue;
+				const key = `${entry.level}:${entry.osm_id}`;
+				const state = regionStates.get(key);
+				if (!state) continue;
+				state.explored += 1;
+				state.area = entry.area;
+				dirty.add(key);
+			}
+		}
+		for (const key of dirty) {
+			const state = regionStates.get(key)!;
+			const percent = Math.min(100, ((state.explored * RES11_AREA_M2) / state.area) * 100);
+			state.marker.setIcon(makeBadgeIcon(state.name, percent));
+		}
+	};
 
 	let activeLevel = "";
 	const updateBadges = () => {
@@ -379,17 +443,18 @@ if (el && dataEl) {
 	// Merge freshly-fetched cells; redraw only if something is actually new. `recenter`
 	// re-centres on the last-walked hex (used when live mode first starts).
 	const applyLive = (cells: string[], last: string | null, recenter: boolean) => {
-		let added = 0;
+		const fresh: string[] = [];
 		for (const cell of cells) {
 			if (isValidCell(cell) && !visitedSet.has(cell)) {
 				visitedSet.add(cell);
-				added++;
+				fresh.push(cell);
 			}
 		}
-		if (added > 0) {
+		if (fresh.length > 0) {
 			visited = [...visitedSet];
 			rebuildReveal();
 			updateStat();
+			attributeToRegions(fresh);
 			draw();
 		}
 		if (recenter && last && isValidCell(last)) {

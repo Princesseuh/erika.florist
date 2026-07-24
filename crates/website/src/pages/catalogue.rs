@@ -75,9 +75,9 @@ impl Route for Catalogue {
                         }
                     }
                         div.flex-1 {
-                            div.grid."grid-cols-[repeat(auto-fit,180px)]".justify-center.gap-2 id="catalogue-content" {
+                            div class="grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] md:grid-cols-[repeat(auto-fit,180px)] justify-center gap-2" id="catalogue-content" {
                                 @for _ in 0..page_length {
-                                    div class="w-[180px]" {
+                                    div class="w-full" {
                                         div class="aspect-[3/4.3] h-auto animate-pulse bg-neutral-900/30" {}
                                     }
                                 }

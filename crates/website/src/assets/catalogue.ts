@@ -343,7 +343,7 @@ function placeholderDataUrl(base64: string): string {
 
 function buildEntryElement(item: CatalogueRecord): HTMLDivElement {
 	const entry = document.createElement("div");
-	entry.className = "w-[180px]";
+	entry.className = "w-full";
 	const isPlanned = item.status === "planned";
 	const badge = isPlanned ? "🕒" : getRatingEmoji(item.rating);
 	const dimClass = isPlanned ? "grayscale" : "";

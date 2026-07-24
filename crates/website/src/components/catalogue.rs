@@ -226,7 +226,7 @@ pub fn collection_card(card: &CollectionCard) -> Markup {
         "bg-black/75"
     };
     html! {
-        a href=(card.href) class="w-[180px] block"
+        a href=(card.href) class="w-full block"
             data-collection-card
             data-search=(card.search)
             data-count=(card.count)

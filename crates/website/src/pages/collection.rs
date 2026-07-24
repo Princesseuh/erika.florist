@@ -223,7 +223,7 @@ impl Route for Collections {
                             }
                         }
                         div class="flex-1" {
-                            div class="grid grid-cols-[repeat(auto-fit,180px)] justify-center gap-2" id="collections-content" {
+                            div class="grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] md:grid-cols-[repeat(auto-fit,180px)] justify-center gap-2" id="collections-content" {
                                 @for view in &views {
                                     (collection_card(&CollectionCard {
                                         href: format!("/catalogue/collections/{}/", view.slug),
@@ -360,9 +360,9 @@ impl Route<CollectionParams, Entry<Collection>> for CollectionPage {
                             }
                         }
                         div.flex-1 {
-                            div.grid."grid-cols-[repeat(auto-fit,180px)]".justify-center.gap-2 id="catalogue-content" {
+                            div class="grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] md:grid-cols-[repeat(auto-fit,180px)] justify-center gap-2" id="catalogue-content" {
                                 @for _ in 0..page_length {
-                                    div class="w-[180px]" {
+                                    div class="w-full" {
                                         div class="aspect-[3/4.3] h-auto animate-pulse bg-neutral-900/30" {}
                                     }
                                 }

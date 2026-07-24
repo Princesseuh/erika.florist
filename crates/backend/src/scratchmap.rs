@@ -150,3 +150,28 @@ pub async fn list_cells(req: &Request, env: &Env) -> Result<Response> {
 
     Response::from_json(&names)
 }
+
+/// GET /scratchmap/live — the full cell list plus the last-recorded hex, for the
+/// logged-in live view. Cookie-gated in the router (no `?token=` needed here), so the
+/// browser never has to hold the shared read/write token. `last` lets the page centre
+/// on wherever the phone last pinged.
+pub async fn live_cells(env: &Env) -> Result<Response> {
+    let db = env.d1(D1_BINDING)?;
+    let result = db.prepare("SELECT id FROM cells ORDER BY id").all().await?;
+    let cells: Vec<String> = result
+        .results::<CellRow>()?
+        .into_iter()
+        .map(|row| row.id)
+        .collect();
+
+    let last_raw: Option<String> = db
+        .prepare("SELECT value FROM meta WHERE key = 'last'")
+        .first(Some("value"))
+        .await?;
+    let last = last_raw
+        .as_deref()
+        .and_then(parse_last)
+        .map(|(cell, _)| cell.to_string());
+
+    Response::from_json(&serde_json::json!({ "cells": cells, "last": last }))
+}

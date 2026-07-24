@@ -8,12 +8,14 @@
 // and street names stay readable on top of the fog. The fog is a single canvas held
 // in its own pane, re-anchored to the viewport each frame so panning stays smooth.
 //
-// The reveal resolution scales with zoom (refining to the stored res 11 up close)
-// but is floored so a clearing stays visible without ballooning when zoomed out.
-// Leaflet + h3-js are bundled from npm.
+// Cells are stored at H3 res-11 (~50 m). The map can *draw* the cleared area either
+// at that true resolution ("precise") or coarsened up to res-10 parents ("filled",
+// the default), so a walk reads as an area instead of a thin dotted trail. This is
+// purely a render choice — the stored data is untouched, so the top-right toggle is
+// lossless and reversible. Leaflet + h3-js are bundled from npm.
 
 import * as L from "leaflet";
-import { cellToBoundary, cellToLatLng, isValidCell } from "h3-js";
+import { cellToBoundary, cellToLatLng, cellToParent, cellsToMultiPolygon, isValidCell } from "h3-js";
 
 const el = document.getElementById("scratchmap-map");
 const dataEl = document.getElementById("scratchmap-cells");
@@ -24,14 +26,54 @@ if (el && dataEl) {
 	const visited = (JSON.parse(dataEl.textContent || "[]") as string[]).filter(isValidCell);
 
 	const FOG_FILL = "rgba(82, 72, 156, 0.6)"; // violet-ultra
+	const FOG_OUTLINE = "rgba(46, 40, 82, 0.65)"; // dark violet edge around the cleared area
 
-	// Precompute each visited cell's center once, for cheap in-viewport filtering.
-	// Cells are always drawn at their true (stored) resolution — the clearing reflects
-	// the real ~50 m coverage rather than ballooning when zoomed out.
-	const visitedPts = visited.map((cell) => {
-		const [lat, lng] = cellToLatLng(cell);
-		return { cell, lat, lng };
-	});
+	// Reveal resolution. Cells are stored at res-11; "filled" coarsens each to its
+	// res-10 parent so sparse walks read as areas, "precise" draws the true res-11
+	// hexes. Purely cosmetic — the stored data never changes. Precompute the drawn
+	// cells (deduped) and their centres per mode once, for cheap in-viewport filtering.
+	const REVEAL = { precise: 11, filled: 10 } as const;
+	type RevealMode = keyof typeof REVEAL;
+
+	const pointsForRes = (res: number) => {
+		const seen = new Set<string>();
+		const points: { cell: string; lat: number; lng: number }[] = [];
+		for (const cell of visited) {
+			const drawn = res === 11 ? cell : cellToParent(cell, res);
+			if (seen.has(drawn)) continue;
+			seen.add(drawn);
+			const [lat, lng] = cellToLatLng(drawn);
+			points.push({ cell: drawn, lat, lng });
+		}
+		return points;
+	};
+	const revealPoints: Record<RevealMode, ReturnType<typeof pointsForRes>> = {
+		precise: pointsForRes(REVEAL.precise),
+		filled: pointsForRes(REVEAL.filled),
+	};
+
+	// Precompute the union outline of the cleared cells per mode — dissolving shared
+	// hex edges so only the outer silhouette (and any interior holes) gets stroked,
+	// not a honeycomb of every internal border.
+	const unionLoops = (mode: RevealMode): [number, number][][] => {
+		const cells = revealPoints[mode].map((p) => p.cell);
+		const loops: [number, number][][] = [];
+		if (cells.length) {
+			for (const polygon of cellsToMultiPolygon(cells, false)) {
+				for (const loop of polygon) loops.push(loop as [number, number][]);
+			}
+		}
+		return loops;
+	};
+	const outlineLoops: Record<RevealMode, [number, number][][]> = {
+		precise: unionLoops("precise"),
+		filled: unionLoops("filled"),
+	};
+
+	// Default to "filled": res-11 alone reads as a thin dotted trail. Choice persisted.
+	const storedReveal = localStorage.getItem("scratchmap-reveal");
+	let revealMode: RevealMode =
+		storedReveal === "precise" || storedReveal === "filled" ? storedReveal : "filled";
 
 	// Zoom animation is disabled on purpose: the fog canvas is drawn in current
 	// container coordinates, which don't track Leaflet's mid-zoom CSS transform.
@@ -66,6 +108,40 @@ if (el && dataEl) {
 		},
 	});
 	map.addControl(new FullscreenControl({ position: "topright" }));
+
+	// Reveal-resolution toggle (top-right, under fullscreen): switch the drawn hexes
+	// between filled (res-10) and precise (res-11). Render-only; redraws in place.
+	const hexIcon = (filled: boolean) =>
+		`<svg viewBox="0 0 24 24" width="16" height="16" style="display:block;margin:6px auto" fill="${filled ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/></svg>`;
+	const RevealControl = (L.Control as any).extend({
+		onAdd() {
+			const bar = L.DomUtil.create("div", "leaflet-bar leaflet-control");
+			const button = L.DomUtil.create("a", "", bar) as HTMLAnchorElement;
+			button.href = "#";
+			button.setAttribute("role", "button");
+			const sync = () => {
+				const filled = revealMode === "filled";
+				button.innerHTML = hexIcon(filled);
+				button.title = filled
+					? "Reveal: filled — click for precise"
+					: "Reveal: precise — click for filled";
+			};
+			sync();
+			L.DomEvent.on(button, "click", (event) => {
+				L.DomEvent.stop(event);
+				revealMode = revealMode === "filled" ? "precise" : "filled";
+				try {
+					localStorage.setItem("scratchmap-reveal", revealMode);
+				} catch {
+					// Storage disabled (private mode): the toggle still works this session.
+				}
+				sync();
+				draw();
+			});
+			return bar;
+		},
+	});
+	map.addControl(new RevealControl({ position: "topright" }));
 
 	// In fullscreen the frame must fill the screen (its normal height is viewport-minus-header).
 	document.addEventListener("fullscreenchange", () => {
@@ -133,7 +209,7 @@ if (el && dataEl) {
 		// 2. Cut out your visited cells (their jagged union is the only hex shape seen).
 		const bounds = map.getBounds().pad(0.15);
 		ctx.globalCompositeOperation = "destination-out";
-		for (const pt of visitedPts) {
+		for (const pt of revealPoints[revealMode]) {
 			if (!bounds.contains([pt.lat, pt.lng])) continue;
 			const boundary = cellToBoundary(pt.cell);
 			ctx.beginPath();
@@ -145,7 +221,23 @@ if (el && dataEl) {
 			ctx.closePath();
 			ctx.fill();
 		}
+
+		// 3. Trace a faint outline around the cleared silhouette (union loops, so shared
+		// hex edges are dissolved — only the outer border and any holes are drawn).
 		ctx.globalCompositeOperation = "source-over";
+		ctx.strokeStyle = FOG_OUTLINE;
+		ctx.lineWidth = 1.5;
+		ctx.lineJoin = "round";
+		for (const loop of outlineLoops[revealMode]) {
+			ctx.beginPath();
+			for (let i = 0; i < loop.length; i++) {
+				const point = map.latLngToContainerPoint([loop[i][0], loop[i][1]]);
+				if (i === 0) ctx.moveTo(point.x, point.y);
+				else ctx.lineTo(point.x, point.y);
+			}
+			ctx.closePath();
+			ctx.stroke();
+		}
 	};
 
 	const resize = () => {

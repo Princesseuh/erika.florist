@@ -22,8 +22,12 @@ const dataEl = document.getElementById("scratchmap-cells");
 
 if (el && dataEl) {
 	// Filter to valid H3 indices so a corrupted or tampered cells.json can never
-	// break rendering (h3-js throws on invalid input).
-	const visited = (JSON.parse(dataEl.textContent || "[]") as string[]).filter(isValidCell);
+	// break rendering (h3-js throws on invalid input). Held in a Set so live mode can
+	// merge freshly-walked cells without duplicating; `visited` is the array view.
+	const visitedSet = new Set(
+		(JSON.parse(dataEl.textContent || "[]") as string[]).filter(isValidCell),
+	);
+	let visited = [...visitedSet];
 
 	const FOG_FILL = "rgba(82, 72, 156, 0.6)"; // violet-ultra
 	const FOG_OUTLINE = "rgba(46, 40, 82, 0.65)"; // dark violet edge around the cleared area
@@ -47,28 +51,35 @@ if (el && dataEl) {
 		}
 		return points;
 	};
-	const revealPoints: Record<RevealMode, ReturnType<typeof pointsForRes>> = {
-		precise: pointsForRes(REVEAL.precise),
-		filled: pointsForRes(REVEAL.filled),
-	};
-
-	// Precompute the union outline of the cleared cells per mode — dissolving shared
-	// hex edges so only the outer silhouette (and any interior holes) gets stroked,
-	// not a honeycomb of every internal border.
-	const unionLoops = (mode: RevealMode): [number, number][][] => {
-		const cells = revealPoints[mode].map((p) => p.cell);
+	// Union outline of a set of drawn cells — dissolving shared hex edges so only the
+	// outer silhouette (and any interior holes) gets stroked, not a honeycomb.
+	const unionLoops = (points: { cell: string }[]): [number, number][][] => {
 		const loops: [number, number][][] = [];
-		if (cells.length) {
-			for (const polygon of cellsToMultiPolygon(cells, false)) {
+		if (points.length) {
+			for (const polygon of cellsToMultiPolygon(
+				points.map((p) => p.cell),
+				false,
+			)) {
 				for (const loop of polygon) loops.push(loop as [number, number][]);
 			}
 		}
 		return loops;
 	};
-	const outlineLoops: Record<RevealMode, [number, number][][]> = {
-		precise: unionLoops("precise"),
-		filled: unionLoops("filled"),
+
+	// Precomputed drawn cells + outline per mode. Rebuilt whenever live mode adds cells.
+	let revealPoints!: Record<RevealMode, ReturnType<typeof pointsForRes>>;
+	let outlineLoops!: Record<RevealMode, [number, number][][]>;
+	const rebuildReveal = () => {
+		revealPoints = {
+			precise: pointsForRes(REVEAL.precise),
+			filled: pointsForRes(REVEAL.filled),
+		};
+		outlineLoops = {
+			precise: unionLoops(revealPoints.precise),
+			filled: unionLoops(revealPoints.filled),
+		};
 	};
+	rebuildReveal();
 
 	// Default to "filled": res-11 alone reads as a thin dotted trail. Choice persisted.
 	const storedReveal = localStorage.getItem("scratchmap-reveal");
@@ -87,6 +98,14 @@ if (el && dataEl) {
 	});
 	L.control.zoom({ position: "topright" }).addTo(map);
 
+	// Flex-centre an icon in a Leaflet bar button so it sits right whether the button
+	// is 26px (desktop) or 30px (touch). A fixed margin overflows the 26px ones.
+	const centerIcon = (button: HTMLElement) => {
+		button.style.display = "flex";
+		button.style.alignItems = "center";
+		button.style.justifyContent = "center";
+	};
+
 	// Fullscreen toggle, styled to sit right under the zoom control.
 	// L.Control.extend is dynamically typed, hence the `any`.
 	const FullscreenControl = (L.Control as any).extend({
@@ -96,8 +115,9 @@ if (el && dataEl) {
 			button.href = "#";
 			button.title = "Toggle fullscreen";
 			button.setAttribute("role", "button");
+			centerIcon(button);
 			button.innerHTML =
-				'<svg viewBox="0 0 24 24" width="16" height="16" style="display:block;margin:6px auto" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4H4v4M16 4h4v4M8 20H4v-4M16 20h4v-4"/></svg>';
+				'<svg viewBox="0 0 24 24" width="16" height="16" style="display:block" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4H4v4M16 4h4v4M8 20H4v-4M16 20h4v-4"/></svg>';
 			L.DomEvent.on(button, "click", (event) => {
 				L.DomEvent.stop(event);
 				const frame = document.getElementById("scratchmap-frame");
@@ -112,13 +132,14 @@ if (el && dataEl) {
 	// Reveal-resolution toggle (top-right, under fullscreen): switch the drawn hexes
 	// between filled (res-10) and precise (res-11). Render-only; redraws in place.
 	const hexIcon = (filled: boolean) =>
-		`<svg viewBox="0 0 24 24" width="16" height="16" style="display:block;margin:6px auto" fill="${filled ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/></svg>`;
+		`<svg viewBox="0 0 24 24" width="16" height="16" style="display:block" fill="${filled ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/></svg>`;
 	const RevealControl = (L.Control as any).extend({
 		onAdd() {
 			const bar = L.DomUtil.create("div", "leaflet-bar leaflet-control");
 			const button = L.DomUtil.create("a", "", bar) as HTMLAnchorElement;
 			button.href = "#";
 			button.setAttribute("role", "button");
+			centerIcon(button);
 			const sync = () => {
 				const filled = revealMode === "filled";
 				button.innerHTML = hexIcon(filled);
@@ -157,11 +178,14 @@ if (el && dataEl) {
 	const stat = document.createElement("div");
 	stat.style.cssText =
 		"position:absolute;left:12px;bottom:10px;z-index:1000;pointer-events:none;font-size:12px;font-variant-numeric:tabular-nums;color:#4d4d4d;text-shadow:0 1px 3px rgba(247,247,247,0.9)";
-	const hexCount = visited.length;
-	stat.textContent =
-		hexCount === 0
-			? "Nothing discovered yet"
-			: `${hexCount} hexagon${hexCount === 1 ? "" : "s"} · ~${formatArea(Math.round(hexCount * 2150.6))}`;
+	const updateStat = () => {
+		const hexCount = visited.length;
+		stat.textContent =
+			hexCount === 0
+				? "Nothing discovered yet"
+				: `${hexCount} hexagon${hexCount === 1 ? "" : "s"} · ~${formatArea(Math.round(hexCount * 2150.6))}`;
+	};
+	updateStat();
 	el.parentElement?.appendChild(stat);
 
 	// Panes so labels can render above the fog.
@@ -338,6 +362,126 @@ if (el && dataEl) {
 
 	resize();
 	updateBadges();
+
+	// --- Live mode (logged-in only): poll the Worker for cells as you walk ---
+	// Reuses the site's password cookie (same as the catalogue). The read endpoint is
+	// cookie-gated server-side, so the browser never holds the read/write token.
+	const API_URL =
+		window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+			? "http://localhost:8787"
+			: "https://api.erika.florist";
+	const POLL_MS = 10000;
+
+	let livePoll: number | undefined;
+	let liveOn = false;
+	let syncLiveButton: (() => void) | undefined;
+
+	// Merge freshly-fetched cells; redraw only if something is actually new. `recenter`
+	// re-centres on the last-walked hex (used when live mode first starts).
+	const applyLive = (cells: string[], last: string | null, recenter: boolean) => {
+		let added = 0;
+		for (const cell of cells) {
+			if (isValidCell(cell) && !visitedSet.has(cell)) {
+				visitedSet.add(cell);
+				added++;
+			}
+		}
+		if (added > 0) {
+			visited = [...visitedSet];
+			rebuildReveal();
+			updateStat();
+			draw();
+		}
+		if (recenter && last && isValidCell(last)) {
+			const [lat, lng] = cellToLatLng(last);
+			map.setView([lat, lng], Math.max(map.getZoom(), 16));
+		}
+	};
+
+	const fetchLive = async (recenter: boolean) => {
+		try {
+			const res = await fetch(`${API_URL}/scratchmap/live`, { credentials: "include" });
+			if (!res.ok) return;
+			const data = (await res.json()) as { cells?: string[]; last?: string | null };
+			applyLive(data.cells ?? [], data.last ?? null, recenter);
+		} catch {
+			// Network hiccup while walking — keep the current view and retry next tick.
+		}
+	};
+
+	const startPolling = () => {
+		if (livePoll === undefined) livePoll = window.setInterval(() => void fetchLive(false), POLL_MS);
+	};
+	const stopPolling = () => {
+		if (livePoll !== undefined) {
+			clearInterval(livePoll);
+			livePoll = undefined;
+		}
+	};
+
+	const setLive = (on: boolean) => {
+		if (on === liveOn) return;
+		liveOn = on;
+		if (on) {
+			void fetchLive(true); // immediate refresh, centred on the last-walked hex
+			startPolling();
+		} else {
+			stopPolling();
+		}
+		syncLiveButton?.();
+	};
+
+	// Pause polling while the tab is hidden (saves battery/data on a walk); resume on return.
+	document.addEventListener("visibilitychange", () => {
+		if (!liveOn) return;
+		if (document.hidden) stopPolling();
+		else {
+			void fetchLive(false);
+			startPolling();
+		}
+	});
+
+	const addLiveControl = () => {
+		const LiveControl = (L.Control as any).extend({
+			onAdd() {
+				const bar = L.DomUtil.create("div", "leaflet-bar leaflet-control");
+				const button = L.DomUtil.create("a", "", bar) as HTMLAnchorElement;
+				button.href = "#";
+				button.setAttribute("role", "button");
+				centerIcon(button);
+				syncLiveButton = () => {
+					button.style.color = liveOn ? "#c0392b" : "";
+					button.title = liveOn
+						? "Live: following new cells — click to stop"
+						: "Live: off — click to follow cells as you walk";
+					button.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" style="display:block" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/><path d="M16.24 7.76a6 6 0 0 1 0 8.48M7.76 16.24a6 6 0 0 1 0-8.48"/></svg>`;
+				};
+				syncLiveButton();
+				L.DomEvent.on(button, "click", (event) => {
+					L.DomEvent.stop(event);
+					setLive(!liveOn);
+				});
+				return bar;
+			},
+		});
+		map.addControl(new LiveControl({ position: "topright" }));
+	};
+
+	// Reveal the Live control only for a logged-in visitor (same check the catalogue uses).
+	// `#live` in the URL auto-starts it, so the live view can be bookmarked on a phone.
+	void (async () => {
+		if (!document.cookie.split(";").some((c) => c.trim().startsWith("logged_in="))) return;
+		try {
+			const res = await fetch(`${API_URL}/auth`, { credentials: "include" });
+			if (!res.ok) return;
+			const data = (await res.json()) as { authenticated?: boolean };
+			if (data.authenticated !== true) return;
+			addLiveControl();
+			if (location.hash === "#live") setLive(true);
+		} catch {
+			// Auth check failed — stay in static mode.
+		}
+	})();
 }
 
 export {};

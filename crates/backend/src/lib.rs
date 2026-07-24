@@ -146,9 +146,15 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
         return scratchmap::list_cells(req, env).await;
     }
 
-    // Require auth for search and commit
+    // Require auth for search, commit, and the scratch-map live view
     if !check_auth_cookie(req.headers(), env) {
         return Response::error("Unauthorized", 401);
+    }
+
+    // Scratch-map live view: cells + last hex for the logged-in map. Cookie-gated by
+    // the check above, so the browser never holds the token OwnTracks writes with.
+    if req.path() == "/scratchmap/live" && req.method() == Method::Get {
+        return scratchmap::live_cells(env).await;
     }
 
     if req.path() == "/search" && req.method() == Method::Get {

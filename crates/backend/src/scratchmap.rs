@@ -5,7 +5,7 @@ use worker::*;
 const D1_BINDING: &str = "SCRATCHMAP_DB";
 
 // Line-fill guards: connect two fixes only if they're plausibly one continuous walk.
-const MAX_HEX_GAP: i32 = 80; // ~3.5 km — bridge walks/short drives, skip teleports
+const MAX_HEX_GAP: i32 = 15; // ~650 m — bridge sparse fixes on one walk, never fabricate a long path
 const MAX_TIME_GAP: i64 = 600; // seconds — skip gaps where tracking was paused/closed
 
 /// A location report. OwnTracks location messages use `lat`/`lon` (+ `tst`, a unix

@@ -7,6 +7,54 @@
     "lat": 46.603354,
     "lon": 1.8883335
   },
+  "833961fffffffff": {
+    "osm_id": 2202162,
+    "name": "France",
+    "level": "country",
+    "area": 1207513015258.6233,
+    "lat": 46.603354,
+    "lon": 1.8883335
+  },
+  "833963fffffffff": {
+    "osm_id": 2202162,
+    "name": "France",
+    "level": "country",
+    "area": 1207513015258.6233,
+    "lat": 46.603354,
+    "lon": 1.8883335
+  },
+  "83396cfffffffff": {
+    "osm_id": 2202162,
+    "name": "France",
+    "level": "country",
+    "area": 1207513015258.6233,
+    "lat": 46.603354,
+    "lon": 1.8883335
+  },
+  "83396efffffffff": {
+    "osm_id": 2202162,
+    "name": "France",
+    "level": "country",
+    "area": 1207513015258.6233,
+    "lat": 46.603354,
+    "lon": 1.8883335
+  },
+  "8539600bfffffff": {
+    "osm_id": 1216850,
+    "name": "Toulouse",
+    "level": "city",
+    "area": 24676663.364613384,
+    "lat": 43.4171,
+    "lon": 1.62834
+  },
+  "8539600ffffffff": {
+    "osm_id": 126281,
+    "name": "Toulouse",
+    "level": "city",
+    "area": 16260397.92237867,
+    "lat": 43.3914701,
+    "lon": 1.6827695
+  },
   "8539601bfffffff": {
     "osm_id": 35738,
     "name": "Toulouse",
@@ -14,6 +62,301 @@
     "area": 118151855.6827498,
     "lat": 43.6044638,
     "lon": 1.4442433
+  },
+  "85396067fffffff": {
+    "osm_id": 54719,
+    "name": "Carcassonne",
+    "level": "city",
+    "area": 13696166.240927964,
+    "lat": 43.2680994,
+    "lon": 2.036062
+  },
+  "85396073fffffff": {
+    "osm_id": 1224458,
+    "name": "Toulouse",
+    "level": "city",
+    "area": 8403936.041144107,
+    "lat": 43.3811,
+    "lon": 1.7240346
+  },
+  "85396077fffffff": {
+    "osm_id": 2079600,
+    "name": "Carcassonne",
+    "level": "city",
+    "area": 28919478.223992616,
+    "lat": 43.3132747,
+    "lon": 1.8761147
+  },
+  "8539616bfffffff": {
+    "osm_id": 254612,
+    "name": "Béziers",
+    "level": "city",
+    "area": 37891201.974311054,
+    "lat": 43.2686109,
+    "lon": 3.2237054
+  },
+  "8539616ffffffff": {
+    "osm_id": 164080,
+    "name": "Béziers",
+    "level": "city",
+    "area": 7959023.567162722,
+    "lat": 43.3232846,
+    "lon": 3.3057088
+  },
+  "85396383fffffff": {
+    "osm_id": 37774,
+    "name": "Carcassonne",
+    "level": "city",
+    "area": 65036205.41842359,
+    "lat": 43.2130358,
+    "lon": 2.3491069
+  },
+  "85396387fffffff": {
+    "osm_id": 2415296,
+    "name": "Carcassonne",
+    "level": "city",
+    "area": 9492992.557952404,
+    "lat": 43.1857905,
+    "lon": 2.5111028
+  },
+  "85396393fffffff": {
+    "osm_id": 1993944,
+    "name": "Carcassonne",
+    "level": "city",
+    "area": 56303169.073836446,
+    "lat": 43.200501,
+    "lon": 2.1431262
+  },
+  "8539639bfffffff": {
+    "osm_id": 1993944,
+    "name": "Carcassonne",
+    "level": "city",
+    "area": 56303169.073836446,
+    "lat": 43.200501,
+    "lon": 2.1431262
+  },
+  "853963a3fffffff": {
+    "osm_id": 2226932,
+    "name": "Narbonne",
+    "level": "city",
+    "area": 23090764.750888415,
+    "lat": 43.1475938,
+    "lon": 2.7919654
+  },
+  "853963a7fffffff": {
+    "osm_id": 54737,
+    "name": "Narbonne",
+    "level": "city",
+    "area": 174348336.36368242,
+    "lat": 43.1837757,
+    "lon": 3.0041906
+  },
+  "853963b3fffffff": {
+    "osm_id": 2422005,
+    "name": "Narbonne",
+    "level": "city",
+    "area": 16190047.784520864,
+    "lat": 43.1818,
+    "lon": 2.64968
+  },
+  "853963bbfffffff": {
+    "osm_id": 2420167,
+    "name": "Carcassonne",
+    "level": "city",
+    "area": 14861023.255410835,
+    "lat": 43.185,
+    "lon": 2.59547
+  },
+  "85396c43fffffff": {
+    "osm_id": 276558,
+    "name": "Montpellier",
+    "level": "city",
+    "area": 6002289.950714856,
+    "lat": 43.7223794,
+    "lon": 4.1131937
+  },
+  "85396c4bfffffff": {
+    "osm_id": 28752,
+    "name": "Montpellier",
+    "level": "city",
+    "area": 12543242.688859724,
+    "lat": 43.6394182,
+    "lon": 3.9637108
+  },
+  "85396c5bfffffff": {
+    "osm_id": 163843,
+    "name": "Montpellier",
+    "level": "city",
+    "area": 24072368.89223039,
+    "lat": 43.6779101,
+    "lon": 3.9868904
+  },
+  "85396e93fffffff": {
+    "osm_id": 255479,
+    "name": "Montpellier",
+    "level": "city",
+    "area": 29972593.166269906,
+    "lat": 43.4886565,
+    "lon": 3.670466
+  },
+  "85396e97fffffff": {
+    "osm_id": 28953,
+    "name": "Montpellier",
+    "level": "city",
+    "area": 31975144.349769875,
+    "lat": 43.550677,
+    "lon": 3.7776283
+  },
+  "85396e9bfffffff": {
+    "osm_id": 255441,
+    "name": "Béziers",
+    "level": "city",
+    "area": 8943514.2405098,
+    "lat": 43.4068,
+    "lon": 3.5072
+  },
+  "8839600881fffff": null,
+  "8839600883fffff": null,
+  "8839600889fffff": null,
+  "883960088bfffff": null,
+  "8839600895fffff": null,
+  "88396008b9fffff": null,
+  "88396008bbfffff": null,
+  "88396008c1fffff": null,
+  "88396008c3fffff": null,
+  "88396008c9fffff": null,
+  "8839600a15fffff": {
+    "osm_id": 155481,
+    "name": "Deyme",
+    "level": "district",
+    "area": 7053908.8578124195,
+    "lat": 43.478179,
+    "lon": 1.5264609
+  },
+  "8839600a17fffff": {
+    "osm_id": 155481,
+    "name": "Deyme",
+    "level": "district",
+    "area": 7053908.8578124195,
+    "lat": 43.478179,
+    "lon": 1.5264609
+  },
+  "8839600a1dfffff": {
+    "osm_id": 157302,
+    "name": "Pompertuzat",
+    "level": "district",
+    "area": 5508260.023245588,
+    "lat": 43.4892515,
+    "lon": 1.5144103
+  },
+  "8839600a51fffff": null,
+  "8839600a57fffff": null,
+  "8839600a59fffff": {
+    "osm_id": 36996,
+    "name": "Labège",
+    "level": "district",
+    "area": 7720425.935154319,
+    "lat": 43.5292828,
+    "lon": 1.5299721
+  },
+  "8839600aa1fffff": null,
+  "8839600aa7fffff": null,
+  "8839600aadfffff": null,
+  "8839600ae5fffff": null,
+  "8839600ae7fffff": {
+    "osm_id": 160900,
+    "name": "Montgiscard",
+    "level": "district",
+    "area": 13215783.071507476,
+    "lat": 43.4580362,
+    "lon": 1.5744528
+  },
+  "8839600aedfffff": {
+    "osm_id": 155481,
+    "name": "Deyme",
+    "level": "district",
+    "area": 7053908.8578124195,
+    "lat": 43.478179,
+    "lon": 1.5264609
+  },
+  "8839600d21fffff": null,
+  "8839600d27fffff": null,
+  "8839600d2dfffff": null,
+  "8839600d65fffff": null,
+  "8839600d67fffff": null,
+  "8839600d6dfffff": null,
+  "8839601881fffff": {
+    "osm_id": 1903930,
+    "name": "Pont des Demoiselles / Ormeau",
+    "level": "district",
+    "area": 11794138.21126575,
+    "lat": 43.5725028,
+    "lon": 1.4917393
+  },
+  "8839601883fffff": {
+    "osm_id": 158896,
+    "name": "Ramonville-Saint-Agne",
+    "level": "district",
+    "area": 6507981.751863688,
+    "lat": 43.5460533,
+    "lon": 1.4749101
+  },
+  "8839601887fffff": {
+    "osm_id": 158896,
+    "name": "Ramonville-Saint-Agne",
+    "level": "district",
+    "area": 6507981.751863688,
+    "lat": 43.5460533,
+    "lon": 1.4749101
+  },
+  "883960188bfffff": {
+    "osm_id": 1903930,
+    "name": "Pont des Demoiselles / Ormeau",
+    "level": "district",
+    "area": 11794138.21126575,
+    "lat": 43.5725028,
+    "lon": 1.4917393
+  },
+  "88396018b1fffff": null,
+  "88396018b7fffff": {
+    "osm_id": 36996,
+    "name": "Labège",
+    "level": "district",
+    "area": 7720425.935154319,
+    "lat": 43.5292828,
+    "lon": 1.5299721
+  },
+  "88396018b9fffff": {
+    "osm_id": 36996,
+    "name": "Labège",
+    "level": "district",
+    "area": 7720425.935154319,
+    "lat": 43.5292828,
+    "lon": 1.5299721
+  },
+  "88396018d1fffff": {
+    "osm_id": 1903930,
+    "name": "Pont des Demoiselles / Ormeau",
+    "level": "district",
+    "area": 11794138.21126575,
+    "lat": 43.5725028,
+    "lon": 1.4917393
+  },
+  "88396018d5fffff": {
+    "osm_id": 1903930,
+    "name": "Pont des Demoiselles / Ormeau",
+    "level": "district",
+    "area": 11794138.21126575,
+    "lat": 43.5725028,
+    "lon": 1.4917393
+  },
+  "88396018d9fffff": {
+    "osm_id": 1903930,
+    "name": "Pont des Demoiselles / Ormeau",
+    "level": "district",
+    "area": 11794138.21126575,
+    "lat": 43.5725028,
+    "lon": 1.4917393
   },
   "8839601a17fffff": {
     "osm_id": 2344059,
@@ -30,6 +373,46 @@
     "area": 5967010.0426158905,
     "lat": 43.6306577,
     "lon": 1.4317601
+  },
+  "8839601a81fffff": {
+    "osm_id": 18800887,
+    "name": "Lapujade / Bonnefoy",
+    "level": "district",
+    "area": 2933579.274852544,
+    "lat": 43.6161117,
+    "lon": 1.4570589
+  },
+  "8839601a89fffff": {
+    "osm_id": 18800886,
+    "name": "Jolimont / Soupetard",
+    "level": "district",
+    "area": 6182780.579808712,
+    "lat": 43.6259185,
+    "lon": 1.4719188
+  },
+  "8839601a8bfffff": {
+    "osm_id": 18800886,
+    "name": "Jolimont / Soupetard",
+    "level": "district",
+    "area": 6182780.579808712,
+    "lat": 43.6259185,
+    "lon": 1.4719188
+  },
+  "8839601a95fffff": {
+    "osm_id": 1903951,
+    "name": "Bonhoure / Guilheméry",
+    "level": "district",
+    "area": 5357669.331532262,
+    "lat": 43.5961273,
+    "lon": 1.4742447
+  },
+  "8839601a9dfffff": {
+    "osm_id": 18800886,
+    "name": "Jolimont / Soupetard",
+    "level": "district",
+    "area": 6182780.579808712,
+    "lat": 43.6259185,
+    "lon": 1.4719188
   },
   "8839601aa1fffff": {
     "osm_id": 1684034,
@@ -54,6 +437,46 @@
     "area": 4186497.93499161,
     "lat": 43.5832139,
     "lon": 1.4415339
+  },
+  "8839601ab3fffff": {
+    "osm_id": 1903951,
+    "name": "Bonhoure / Guilheméry",
+    "level": "district",
+    "area": 5357669.331532262,
+    "lat": 43.5961273,
+    "lon": 1.4742447
+  },
+  "8839601abbfffff": {
+    "osm_id": 1903951,
+    "name": "Bonhoure / Guilheméry",
+    "level": "district",
+    "area": 5357669.331532262,
+    "lat": 43.5961273,
+    "lon": 1.4742447
+  },
+  "8839601ad1fffff": {
+    "osm_id": 18800886,
+    "name": "Jolimont / Soupetard",
+    "level": "district",
+    "area": 6182780.579808712,
+    "lat": 43.6259185,
+    "lon": 1.4719188
+  },
+  "8839601ad3fffff": {
+    "osm_id": 18800886,
+    "name": "Jolimont / Soupetard",
+    "level": "district",
+    "area": 6182780.579808712,
+    "lat": 43.6259185,
+    "lon": 1.4719188
+  },
+  "8839601ad7fffff": {
+    "osm_id": 18800886,
+    "name": "Jolimont / Soupetard",
+    "level": "district",
+    "area": 6182780.579808712,
+    "lat": 43.6259185,
+    "lon": 1.4719188
   },
   "8839601ae1fffff": {
     "osm_id": 1684025,
@@ -102,5 +525,1122 @@
     "area": 5967010.0426158905,
     "lat": 43.6306577,
     "lon": 1.4317601
-  }
+  },
+  "8839606413fffff": null,
+  "8839606419fffff": null,
+  "883960641bfffff": null,
+  "8839606451fffff": null,
+  "8839606453fffff": null,
+  "8839606459fffff": null,
+  "883960645dfffff": null,
+  "8839606481fffff": null,
+  "8839606483fffff": null,
+  "8839606487fffff": null,
+  "8839606489fffff": null,
+  "883960648bfffff": null,
+  "8839606495fffff": {
+    "osm_id": 52031,
+    "name": "Bram",
+    "level": "district",
+    "area": 17840575.157955885,
+    "lat": 43.243622,
+    "lon": 2.1149613
+  },
+  "8839606497fffff": null,
+  "88396064b9fffff": {
+    "osm_id": 52031,
+    "name": "Bram",
+    "level": "district",
+    "area": 17840575.157955885,
+    "lat": 43.243622,
+    "lon": 2.1149613
+  },
+  "88396064bbfffff": null,
+  "88396064c1fffff": null,
+  "88396064c5fffff": null,
+  "88396064c7fffff": null,
+  "88396064c9fffff": null,
+  "88396064cdfffff": null,
+  "8839606621fffff": {
+    "osm_id": 78127,
+    "name": "Castelnaudary",
+    "level": "district",
+    "area": 47829348.18983811,
+    "lat": 43.3192021,
+    "lon": 1.9533495
+  },
+  "8839606623fffff": {
+    "osm_id": 78127,
+    "name": "Castelnaudary",
+    "level": "district",
+    "area": 47829348.18983811,
+    "lat": 43.3192021,
+    "lon": 1.9533495
+  },
+  "8839606629fffff": {
+    "osm_id": 78127,
+    "name": "Castelnaudary",
+    "level": "district",
+    "area": 47829348.18983811,
+    "lat": 43.3192021,
+    "lon": 1.9533495
+  },
+  "883960662bfffff": {
+    "osm_id": 78127,
+    "name": "Castelnaudary",
+    "level": "district",
+    "area": 47829348.18983811,
+    "lat": 43.3192021,
+    "lon": 1.9533495
+  },
+  "8839606635fffff": null,
+  "8839606637fffff": null,
+  "883960663dfffff": {
+    "osm_id": 78127,
+    "name": "Castelnaudary",
+    "level": "district",
+    "area": 47829348.18983811,
+    "lat": 43.3192021,
+    "lon": 1.9533495
+  },
+  "8839606661fffff": null,
+  "8839606665fffff": null,
+  "8839606667fffff": null,
+  "883960666dfffff": null,
+  "88396066a7fffff": null,
+  "8839607291fffff": null,
+  "8839607297fffff": null,
+  "883960729dfffff": null,
+  "88396072c1fffff": null,
+  "88396072c3fffff": null,
+  "88396072c9fffff": null,
+  "88396072cbfffff": null,
+  "88396072d5fffff": null,
+  "88396072d7fffff": null,
+  "8839607425fffff": null,
+  "883960751bfffff": null,
+  "8839607553fffff": null,
+  "8839607559fffff": null,
+  "883960755bfffff": null,
+  "8839607581fffff": null,
+  "8839607583fffff": null,
+  "8839607589fffff": null,
+  "883960758bfffff": null,
+  "8839607595fffff": null,
+  "8839607597fffff": null,
+  "88396075bbfffff": null,
+  "88396075c5fffff": null,
+  "88396075c7fffff": null,
+  "88396075cdfffff": null,
+  "8839607705fffff": null,
+  "8839607707fffff": null,
+  "883960772bfffff": null,
+  "8839607731fffff": null,
+  "8839607733fffff": null,
+  "8839607739fffff": null,
+  "883960773dfffff": null,
+  "8839607761fffff": null,
+  "8839607763fffff": null,
+  "8839607769fffff": null,
+  "883960776bfffff": null,
+  "8839616889fffff": null,
+  "883961688bfffff": null,
+  "883961688dfffff": null,
+  "8839616899fffff": null,
+  "88396168a9fffff": null,
+  "88396168adfffff": null,
+  "88396168d5fffff": null,
+  "88396168d7fffff": null,
+  "88396168e3fffff": null,
+  "8839616937fffff": {
+    "osm_id": 2012327,
+    "name": "Salles-d'Aude",
+    "level": "district",
+    "area": 18296379.995167106,
+    "lat": 43.2390042,
+    "lon": 3.1155056
+  },
+  "8839616981fffff": {
+    "osm_id": 78630,
+    "name": "Fleury",
+    "level": "district",
+    "area": 51700632.64205116,
+    "lat": 43.2298524,
+    "lon": 3.13415
+  },
+  "8839616985fffff": {
+    "osm_id": 78630,
+    "name": "Fleury",
+    "level": "district",
+    "area": 51700632.64205116,
+    "lat": 43.2298524,
+    "lon": 3.13415
+  },
+  "883961698bfffff": {
+    "osm_id": 167406,
+    "name": "Lespignan",
+    "level": "district",
+    "area": 22976163.43923521,
+    "lat": 43.2743,
+    "lon": 3.16982
+  },
+  "88396169a9fffff": {
+    "osm_id": 78630,
+    "name": "Fleury",
+    "level": "district",
+    "area": 51700632.64205116,
+    "lat": 43.2298524,
+    "lon": 3.13415
+  },
+  "88396169d3fffff": {
+    "osm_id": 167406,
+    "name": "Lespignan",
+    "level": "district",
+    "area": 22976163.43923521,
+    "lat": 43.2743,
+    "lon": 3.16982
+  },
+  "88396169d7fffff": {
+    "osm_id": 167406,
+    "name": "Lespignan",
+    "level": "district",
+    "area": 22976163.43923521,
+    "lat": 43.2743,
+    "lon": 3.16982
+  },
+  "88396169e3fffff": {
+    "osm_id": 78630,
+    "name": "Fleury",
+    "level": "district",
+    "area": 51700632.64205116,
+    "lat": 43.2298524,
+    "lon": 3.13415
+  },
+  "88396169e5fffff": {
+    "osm_id": 2012327,
+    "name": "Salles-d'Aude",
+    "level": "district",
+    "area": 18296379.995167106,
+    "lat": 43.2390042,
+    "lon": 3.1155056
+  },
+  "88396169e7fffff": {
+    "osm_id": 2012327,
+    "name": "Salles-d'Aude",
+    "level": "district",
+    "area": 18296379.995167106,
+    "lat": 43.2390042,
+    "lon": 3.1155056
+  },
+  "8839616c41fffff": null,
+  "8839616c43fffff": null,
+  "8839616c45fffff": {
+    "osm_id": 75234,
+    "name": "Villeneuve-lès-Béziers",
+    "level": "district",
+    "area": 17354504.088271916,
+    "lat": 43.3162817,
+    "lon": 3.2797511
+  },
+  "8839616c4dfffff": {
+    "osm_id": 75234,
+    "name": "Villeneuve-lès-Béziers",
+    "level": "district",
+    "area": 17354504.088271916,
+    "lat": 43.3162817,
+    "lon": 3.2797511
+  },
+  "8839616c59fffff": null,
+  "8839616c5dfffff": null,
+  "8839616e83fffff": null,
+  "8839616e85fffff": {
+    "osm_id": 254777,
+    "name": "Montblanc",
+    "level": "district",
+    "area": 27247128.219065588,
+    "lat": 43.3958648,
+    "lon": 3.3672892
+  },
+  "8839616e87fffff": null,
+  "8839616e91fffff": null,
+  "8839616e93fffff": null,
+  "8839616e95fffff": null,
+  "8839616ea9fffff": {
+    "osm_id": 254777,
+    "name": "Montblanc",
+    "level": "district",
+    "area": 27247128.219065588,
+    "lat": 43.3958648,
+    "lon": 3.3672892
+  },
+  "8839616eabfffff": null,
+  "8839616eb9fffff": null,
+  "8839616ee5fffff": null,
+  "8839616ee7fffff": null,
+  "8839616f13fffff": {
+    "osm_id": 75234,
+    "name": "Villeneuve-lès-Béziers",
+    "level": "district",
+    "area": 17354504.088271916,
+    "lat": 43.3162817,
+    "lon": 3.2797511
+  },
+  "8839616f15fffff": null,
+  "8839616f17fffff": {
+    "osm_id": 75234,
+    "name": "Villeneuve-lès-Béziers",
+    "level": "district",
+    "area": 17354504.088271916,
+    "lat": 43.3162817,
+    "lon": 3.2797511
+  },
+  "8839616f23fffff": {
+    "osm_id": 75234,
+    "name": "Villeneuve-lès-Béziers",
+    "level": "district",
+    "area": 17354504.088271916,
+    "lat": 43.3162817,
+    "lon": 3.2797511
+  },
+  "8839616f25fffff": null,
+  "8839616f27fffff": null,
+  "8839616f31fffff": null,
+  "8839616f39fffff": null,
+  "8839616f3bfffff": null,
+  "8839616f3dfffff": null,
+  "8839638049fffff": null,
+  "883963804bfffff": null,
+  "8839638051fffff": null,
+  "8839638053fffff": null,
+  "883963805bfffff": null,
+  "883963805dfffff": null,
+  "88396380cbfffff": null,
+  "88396380d1fffff": null,
+  "88396380dbfffff": null,
+  "88396380ddfffff": null,
+  "8839638221fffff": null,
+  "8839638223fffff": null,
+  "8839638225fffff": null,
+  "8839638227fffff": null,
+  "883963822dfffff": null,
+  "8839638235fffff": null,
+  "88396382a1fffff": null,
+  "88396382a3fffff": null,
+  "88396382a5fffff": null,
+  "88396382a7fffff": null,
+  "88396382adfffff": null,
+  "88396382b5fffff": null,
+  "883963830bfffff": null,
+  "8839638353fffff": null,
+  "8839638355fffff": null,
+  "8839638357fffff": null,
+  "8839638359fffff": null,
+  "883963835bfffff": null,
+  "8839638421fffff": null,
+  "8839638423fffff": null,
+  "8839638425fffff": null,
+  "8839638435fffff": null,
+  "8839638437fffff": null,
+  "88396384a1fffff": {
+    "osm_id": 2424287,
+    "name": "Comigne",
+    "level": "district",
+    "area": 9562806.159872413,
+    "lat": 43.1707,
+    "lon": 2.58122
+  },
+  "88396384a3fffff": null,
+  "88396384a9fffff": {
+    "osm_id": 2424287,
+    "name": "Comigne",
+    "level": "district",
+    "area": 9562806.159872413,
+    "lat": 43.1707,
+    "lon": 2.58122
+  },
+  "88396384abfffff": null,
+  "88396384adfffff": null,
+  "88396384b5fffff": null,
+  "88396384b7fffff": null,
+  "88396384bdfffff": null,
+  "88396384e5fffff": null,
+  "88396384e7fffff": null,
+  "8839638551fffff": {
+    "osm_id": 2144737,
+    "name": "Floure",
+    "level": "district",
+    "area": 4612957.527190328,
+    "lat": 43.184,
+    "lon": 2.48911
+  },
+  "8839638553fffff": {
+    "osm_id": 2144737,
+    "name": "Floure",
+    "level": "district",
+    "area": 4612957.527190328,
+    "lat": 43.184,
+    "lon": 2.48911
+  },
+  "8839638559fffff": {
+    "osm_id": 2144737,
+    "name": "Floure",
+    "level": "district",
+    "area": 4612957.527190328,
+    "lat": 43.184,
+    "lon": 2.48911
+  },
+  "883963855bfffff": {
+    "osm_id": 2144737,
+    "name": "Floure",
+    "level": "district",
+    "area": 4612957.527190328,
+    "lat": 43.184,
+    "lon": 2.48911
+  },
+  "88396385d9fffff": null,
+  "88396385dbfffff": null,
+  "8839638729fffff": null,
+  "883963872bfffff": null,
+  "883963872dfffff": null,
+  "8839638731fffff": null,
+  "8839638737fffff": null,
+  "883963873dfffff": null,
+  "8839638767fffff": null,
+  "8839639105fffff": null,
+  "8839639107fffff": null,
+  "8839639113fffff": null,
+  "8839639131fffff": null,
+  "8839639133fffff": null,
+  "8839639139fffff": null,
+  "883963913bfffff": null,
+  "8839639161fffff": null,
+  "8839639163fffff": null,
+  "8839639167fffff": null,
+  "8839639169fffff": null,
+  "883963916dfffff": null,
+  "8839639185fffff": null,
+  "8839639187fffff": null,
+  "88396391a9fffff": null,
+  "88396391abfffff": null,
+  "88396391b1fffff": null,
+  "88396391b7fffff": null,
+  "88396391bdfffff": null,
+  "88396391e1fffff": null,
+  "88396391e3fffff": null,
+  "88396391e5fffff": null,
+  "88396391e7fffff": null,
+  "88396391edfffff": null,
+  "8839639ac1fffff": null,
+  "883963a205fffff": null,
+  "883963a207fffff": null,
+  "883963a20dfffff": {
+    "osm_id": 2225391,
+    "name": "Luc-sur-Orbieu",
+    "level": "district",
+    "area": 9937501.417651594,
+    "lat": 43.1772,
+    "lon": 2.78629
+  },
+  "883963a233fffff": null,
+  "883963a239fffff": null,
+  "883963a23bfffff": null,
+  "883963a261fffff": {
+    "osm_id": 2225391,
+    "name": "Luc-sur-Orbieu",
+    "level": "district",
+    "area": 9937501.417651594,
+    "lat": 43.1772,
+    "lon": 2.78629
+  },
+  "883963a263fffff": {
+    "osm_id": 2225391,
+    "name": "Luc-sur-Orbieu",
+    "level": "district",
+    "area": 9937501.417651594,
+    "lat": 43.1772,
+    "lon": 2.78629
+  },
+  "883963a26dfffff": {
+    "osm_id": 2225391,
+    "name": "Luc-sur-Orbieu",
+    "level": "district",
+    "area": 9937501.417651594,
+    "lat": 43.1772,
+    "lon": 2.78629
+  },
+  "883963a285fffff": null,
+  "883963a287fffff": null,
+  "883963a297fffff": null,
+  "883963a2a9fffff": null,
+  "883963a2abfffff": null,
+  "883963a2b9fffff": null,
+  "883963a2bbfffff": null,
+  "883963a2e5fffff": null,
+  "883963a2e7fffff": null,
+  "883963a2edfffff": null,
+  "883963a449fffff": null,
+  "883963a44bfffff": null,
+  "883963a44dfffff": null,
+  "883963a459fffff": null,
+  "883963a633fffff": null,
+  "883963a637fffff": null,
+  "883963a6c3fffff": {
+    "osm_id": 302229,
+    "name": "Vinassan",
+    "level": "district",
+    "area": 8897877.55590427,
+    "lat": 43.2051,
+    "lon": 3.07427
+  },
+  "883963a6c7fffff": {
+    "osm_id": 302229,
+    "name": "Vinassan",
+    "level": "district",
+    "area": 8897877.55590427,
+    "lat": 43.2051,
+    "lon": 3.07427
+  },
+  "883963a6cbfffff": {
+    "osm_id": 2012327,
+    "name": "Salles-d'Aude",
+    "level": "district",
+    "area": 18296379.995167106,
+    "lat": 43.2390042,
+    "lon": 3.1155056
+  },
+  "883963a6d9fffff": {
+    "osm_id": 2012327,
+    "name": "Salles-d'Aude",
+    "level": "district",
+    "area": 18296379.995167106,
+    "lat": 43.2390042,
+    "lon": 3.1155056
+  },
+  "883963a6ddfffff": {
+    "osm_id": 2012327,
+    "name": "Salles-d'Aude",
+    "level": "district",
+    "area": 18296379.995167106,
+    "lat": 43.2390042,
+    "lon": 3.1155056
+  },
+  "883963a6e1fffff": null,
+  "883963a6e5fffff": null,
+  "883963a6ebfffff": {
+    "osm_id": 302229,
+    "name": "Vinassan",
+    "level": "district",
+    "area": 8897877.55590427,
+    "lat": 43.2051,
+    "lon": 3.07427
+  },
+  "883963a703fffff": null,
+  "883963a705fffff": null,
+  "883963a707fffff": null,
+  "883963a711fffff": null,
+  "883963a715fffff": null,
+  "883963a71bfffff": null,
+  "883963a71dfffff": null,
+  "883963a739fffff": null,
+  "883963a763fffff": null,
+  "883963a769fffff": {
+    "osm_id": 54737,
+    "name": "Narbonne",
+    "level": "district",
+    "area": 174348336.36368242,
+    "lat": 43.1837757,
+    "lon": 3.0041906
+  },
+  "883963a76bfffff": null,
+  "883963a76dfffff": null,
+  "883963b129fffff": null,
+  "883963b12bfffff": null,
+  "883963b131fffff": null,
+  "883963b133fffff": null,
+  "883963b13dfffff": null,
+  "883963b165fffff": null,
+  "883963b167fffff": null,
+  "883963b187fffff": null,
+  "883963b1a9fffff": {
+    "osm_id": 2246057,
+    "name": "Conilhac-Corbières",
+    "level": "district",
+    "area": 12272585.219113111,
+    "lat": 43.1875,
+    "lon": 2.71799
+  },
+  "883963b1abfffff": null,
+  "883963b1b9fffff": null,
+  "883963b1bbfffff": {
+    "osm_id": 2225391,
+    "name": "Luc-sur-Orbieu",
+    "level": "district",
+    "area": 9937501.417651594,
+    "lat": 43.1772,
+    "lon": 2.78629
+  },
+  "883963b1bdfffff": null,
+  "883963b1e5fffff": null,
+  "883963b1e7fffff": {
+    "osm_id": 2246057,
+    "name": "Conilhac-Corbières",
+    "level": "district",
+    "area": 12272585.219113111,
+    "lat": 43.1875,
+    "lon": 2.71799
+  },
+  "883963ba59fffff": null,
+  "88396c4003fffff": null,
+  "88396c400bfffff": null,
+  "88396c4011fffff": {
+    "osm_id": 276560,
+    "name": "Villetelle",
+    "level": "district",
+    "area": 5471666.915921807,
+    "lat": 43.7338488,
+    "lon": 4.1397139
+  },
+  "88396c4015fffff": null,
+  "88396c4017fffff": null,
+  "88396c401bfffff": {
+    "osm_id": 276560,
+    "name": "Villetelle",
+    "level": "district",
+    "area": 5471666.915921807,
+    "lat": 43.7338488,
+    "lon": 4.1397139
+  },
+  "88396c4033fffff": {
+    "osm_id": 277425,
+    "name": "Lunel",
+    "level": "district",
+    "area": 24165931.159145355,
+    "lat": 43.6745265,
+    "lon": 4.1348062
+  },
+  "88396c403bfffff": null,
+  "88396c4043fffff": {
+    "osm_id": 276558,
+    "name": "Saturargues",
+    "level": "district",
+    "area": 6002289.950714856,
+    "lat": 43.7223794,
+    "lon": 4.1131937
+  },
+  "88396c404bfffff": null,
+  "88396c4055fffff": null,
+  "88396c405dfffff": null,
+  "88396c4067fffff": null,
+  "88396c40cdfffff": {
+    "osm_id": 276560,
+    "name": "Villetelle",
+    "level": "district",
+    "area": 5471666.915921807,
+    "lat": 43.7338488,
+    "lon": 4.1397139
+  },
+  "88396c4141fffff": {
+    "osm_id": 276564,
+    "name": "Saint-Brès",
+    "level": "district",
+    "area": 4786691.582695007,
+    "lat": 43.6634159,
+    "lon": 4.030312
+  },
+  "88396c4145fffff": {
+    "osm_id": 276564,
+    "name": "Saint-Brès",
+    "level": "district",
+    "area": 4786691.582695007,
+    "lat": 43.6634159,
+    "lon": 4.030312
+  },
+  "88396c414bfffff": {
+    "osm_id": 276551,
+    "name": "Saint-Geniès-des-Mourgues",
+    "level": "district",
+    "area": 10972801.589866448,
+    "lat": 43.6976,
+    "lon": 4.03334
+  },
+  "88396c414dfffff": null,
+  "88396c4159fffff": null,
+  "88396c415bfffff": null,
+  "88396c415dfffff": {
+    "osm_id": 276551,
+    "name": "Saint-Geniès-des-Mourgues",
+    "level": "district",
+    "area": 10972801.589866448,
+    "lat": 43.6976,
+    "lon": 4.03334
+  },
+  "88396c41d1fffff": null,
+  "88396c41d9fffff": null,
+  "88396c41ddfffff": null,
+  "88396c4201fffff": null,
+  "88396c4203fffff": {
+    "osm_id": 76238,
+    "name": "Boisseron",
+    "level": "district",
+    "area": 7505985.099461883,
+    "lat": 43.7603779,
+    "lon": 4.0816127
+  },
+  "88396c4205fffff": null,
+  "88396c4207fffff": {
+    "osm_id": 76238,
+    "name": "Boisseron",
+    "level": "district",
+    "area": 7505985.099461883,
+    "lat": 43.7603779,
+    "lon": 4.0816127
+  },
+  "88396c420bfffff": {
+    "osm_id": 76238,
+    "name": "Boisseron",
+    "level": "district",
+    "area": 7505985.099461883,
+    "lat": 43.7603779,
+    "lon": 4.0816127
+  },
+  "88396c4229fffff": null,
+  "88396c4231fffff": null,
+  "88396c4237fffff": null,
+  "88396c4239fffff": {
+    "osm_id": 76238,
+    "name": "Boisseron",
+    "level": "district",
+    "area": 7505985.099461883,
+    "lat": 43.7603779,
+    "lon": 4.0816127
+  },
+  "88396c423dfffff": null,
+  "88396c4267fffff": {
+    "osm_id": 76239,
+    "name": "Saussines",
+    "level": "district",
+    "area": 6270010.2779887915,
+    "lat": 43.762659,
+    "lon": 4.056727
+  },
+  "88396c42a5fffff": {
+    "osm_id": 276560,
+    "name": "Villetelle",
+    "level": "district",
+    "area": 5471666.915921807,
+    "lat": 43.7338488,
+    "lon": 4.1397139
+  },
+  "88396c42a7fffff": {
+    "osm_id": 276560,
+    "name": "Villetelle",
+    "level": "district",
+    "area": 5471666.915921807,
+    "lat": 43.7338488,
+    "lon": 4.1397139
+  },
+  "88396c4301fffff": {
+    "osm_id": 276547,
+    "name": "Restinclières",
+    "level": "district",
+    "area": 6270826.597486556,
+    "lat": 43.7238,
+    "lon": 4.03747
+  },
+  "88396c4307fffff": {
+    "osm_id": 276547,
+    "name": "Restinclières",
+    "level": "district",
+    "area": 6270826.597486556,
+    "lat": 43.7238,
+    "lon": 4.03747
+  },
+  "88396c4309fffff": {
+    "osm_id": 276547,
+    "name": "Restinclières",
+    "level": "district",
+    "area": 6270826.597486556,
+    "lat": 43.7238,
+    "lon": 4.03747
+  },
+  "88396c430bfffff": {
+    "osm_id": 276547,
+    "name": "Restinclières",
+    "level": "district",
+    "area": 6270826.597486556,
+    "lat": 43.7238,
+    "lon": 4.03747
+  },
+  "88396c431dfffff": {
+    "osm_id": 276547,
+    "name": "Restinclières",
+    "level": "district",
+    "area": 6270826.597486556,
+    "lat": 43.7238,
+    "lon": 4.03747
+  },
+  "88396c4321fffff": {
+    "osm_id": 276551,
+    "name": "Saint-Geniès-des-Mourgues",
+    "level": "district",
+    "area": 10972801.589866448,
+    "lat": 43.6976,
+    "lon": 4.03334
+  },
+  "88396c4325fffff": null,
+  "88396c432bfffff": {
+    "osm_id": 276551,
+    "name": "Saint-Geniès-des-Mourgues",
+    "level": "district",
+    "area": 10972801.589866448,
+    "lat": 43.6976,
+    "lon": 4.03334
+  },
+  "88396c432dfffff": null,
+  "88396c4343fffff": null,
+  "88396c4353fffff": {
+    "osm_id": 276547,
+    "name": "Restinclières",
+    "level": "district",
+    "area": 6270826.597486556,
+    "lat": 43.7238,
+    "lon": 4.03747
+  },
+  "88396c4355fffff": null,
+  "88396c4357fffff": {
+    "osm_id": 276547,
+    "name": "Restinclières",
+    "level": "district",
+    "area": 6270826.597486556,
+    "lat": 43.7238,
+    "lon": 4.03747
+  },
+  "88396c435bfffff": null,
+  "88396c4a49fffff": null,
+  "88396c4a4dfffff": null,
+  "88396c4b4dfffff": {
+    "osm_id": 1977760,
+    "name": "Port Marianne",
+    "level": "district",
+    "area": 5808148.763731977,
+    "lat": 43.6007936,
+    "lon": 3.9161506
+  },
+  "88396c5881fffff": {
+    "osm_id": 163843,
+    "name": "Castries",
+    "level": "district",
+    "area": 24072368.89223039,
+    "lat": 43.6779101,
+    "lon": 3.9868904
+  },
+  "88396c5883fffff": {
+    "osm_id": 163843,
+    "name": "Castries",
+    "level": "district",
+    "area": 24072368.89223039,
+    "lat": 43.6779101,
+    "lon": 3.9868904
+  },
+  "88396c5887fffff": null,
+  "88396c5891fffff": null,
+  "88396c5893fffff": null,
+  "88396c5895fffff": {
+    "osm_id": 163843,
+    "name": "Castries",
+    "level": "district",
+    "area": 24072368.89223039,
+    "lat": 43.6779101,
+    "lon": 3.9868904
+  },
+  "88396c5897fffff": null,
+  "88396c5899fffff": null,
+  "88396c589dfffff": {
+    "osm_id": 163843,
+    "name": "Castries",
+    "level": "district",
+    "area": 24072368.89223039,
+    "lat": 43.6779101,
+    "lon": 3.9868904
+  },
+  "88396c58a3fffff": null,
+  "88396c58b1fffff": null,
+  "88396c58b5fffff": null,
+  "88396c58bbfffff": null,
+  "88396c58bdfffff": null,
+  "88396c58d3fffff": null,
+  "88396c5993fffff": null,
+  "88396c5997fffff": null,
+  "88396c59a3fffff": {
+    "osm_id": 1977760,
+    "name": "Port Marianne",
+    "level": "district",
+    "area": 5808148.763731977,
+    "lat": 43.6007936,
+    "lon": 3.9161506
+  },
+  "88396c59a5fffff": {
+    "osm_id": 1977723,
+    "name": "Prés d'Arènes",
+    "level": "district",
+    "area": 1608455.4838187248,
+    "lat": 43.5952405,
+    "lon": 3.8950768
+  },
+  "88396c59a7fffff": {
+    "osm_id": 1977760,
+    "name": "Port Marianne",
+    "level": "district",
+    "area": 5808148.763731977,
+    "lat": 43.6007936,
+    "lon": 3.9161506
+  },
+  "88396c59b1fffff": null,
+  "88396c59b3fffff": null,
+  "88396c59b5fffff": {
+    "osm_id": 1977760,
+    "name": "Port Marianne",
+    "level": "district",
+    "area": 5808148.763731977,
+    "lat": 43.6007936,
+    "lon": 3.9161506
+  },
+  "88396c59bbfffff": null,
+  "88396c59bdfffff": {
+    "osm_id": 1977760,
+    "name": "Port Marianne",
+    "level": "district",
+    "area": 5808148.763731977,
+    "lat": 43.6007936,
+    "lon": 3.9161506
+  },
+  "88396e9087fffff": null,
+  "88396e9091fffff": null,
+  "88396e9093fffff": null,
+  "88396e9095fffff": null,
+  "88396e9097fffff": null,
+  "88396e909bfffff": null,
+  "88396e90a9fffff": null,
+  "88396e90abfffff": null,
+  "88396e90adfffff": null,
+  "88396e90b9fffff": {
+    "osm_id": 164266,
+    "name": "Gigean",
+    "level": "district",
+    "area": 16293404.168226525,
+    "lat": 43.5008343,
+    "lon": 3.7108476
+  },
+  "88396e90bbfffff": {
+    "osm_id": 164266,
+    "name": "Gigean",
+    "level": "district",
+    "area": 16293404.168226525,
+    "lat": 43.5008343,
+    "lon": 3.7108476
+  },
+  "88396e90bdfffff": null,
+  "88396e90e7fffff": null,
+  "88396e9117fffff": null,
+  "88396e9123fffff": null,
+  "88396e9127fffff": null,
+  "88396e9131fffff": null,
+  "88396e9135fffff": null,
+  "88396e9139fffff": null,
+  "88396e913bfffff": null,
+  "88396e913dfffff": null,
+  "88396e91c3fffff": null,
+  "88396e91c5fffff": null,
+  "88396e91c7fffff": null,
+  "88396e91d1fffff": null,
+  "88396e91d9fffff": null,
+  "88396e91dbfffff": null,
+  "88396e91ddfffff": null,
+  "88396e91e9fffff": null,
+  "88396e9441fffff": null,
+  "88396e9443fffff": null,
+  "88396e9445fffff": null,
+  "88396e9459fffff": {
+    "osm_id": 28720,
+    "name": "Saint-Jean-de-Védas",
+    "level": "district",
+    "area": 13157614.407865506,
+    "lat": 43.5751791,
+    "lon": 3.8264197
+  },
+  "88396e945bfffff": {
+    "osm_id": 28720,
+    "name": "Saint-Jean-de-Védas",
+    "level": "district",
+    "area": 13157614.407865506,
+    "lat": 43.5751791,
+    "lon": 3.8264197
+  },
+  "88396e945dfffff": null,
+  "88396e9469fffff": null,
+  "88396e946dfffff": null,
+  "88396e9549fffff": null,
+  "88396e954dfffff": {
+    "osm_id": 164266,
+    "name": "Gigean",
+    "level": "district",
+    "area": 16293404.168226525,
+    "lat": 43.5008343,
+    "lon": 3.7108476
+  },
+  "88396e9683fffff": null,
+  "88396e9685fffff": {
+    "osm_id": 1977724,
+    "name": "Croix d'Argent",
+    "level": "district",
+    "area": 3717266.098422289,
+    "lat": 43.5820557,
+    "lon": 3.8622973
+  },
+  "88396e9687fffff": null,
+  "88396e9691fffff": null,
+  "88396e9695fffff": null,
+  "88396e9699fffff": {
+    "osm_id": 1977723,
+    "name": "Prés d'Arènes",
+    "level": "district",
+    "area": 1608455.4838187248,
+    "lat": 43.5952405,
+    "lon": 3.8950768
+  },
+  "88396e969bfffff": null,
+  "88396e969dfffff": {
+    "osm_id": 1977726,
+    "name": "Prés d'Arènes",
+    "level": "district",
+    "area": 1513583.08329463,
+    "lat": 43.5860822,
+    "lon": 3.8846208
+  },
+  "88396e96a9fffff": {
+    "osm_id": 28720,
+    "name": "Saint-Jean-de-Védas",
+    "level": "district",
+    "area": 13157614.407865506,
+    "lat": 43.5751791,
+    "lon": 3.8264197
+  },
+  "88396e96e3fffff": {
+    "osm_id": 28720,
+    "name": "Saint-Jean-de-Védas",
+    "level": "district",
+    "area": 13157614.407865506,
+    "lat": 43.5751791,
+    "lon": 3.8264197
+  },
+  "88396e96e5fffff": {
+    "osm_id": 28720,
+    "name": "Saint-Jean-de-Védas",
+    "level": "district",
+    "area": 13157614.407865506,
+    "lat": 43.5751791,
+    "lon": 3.8264197
+  },
+  "88396e96e7fffff": {
+    "osm_id": 28720,
+    "name": "Saint-Jean-de-Védas",
+    "level": "district",
+    "area": 13157614.407865506,
+    "lat": 43.5751791,
+    "lon": 3.8264197
+  },
+  "88396e9731fffff": null,
+  "88396e9733fffff": null,
+  "88396e9735fffff": null,
+  "88396e973bfffff": null,
+  "88396e9a01fffff": {
+    "osm_id": 255441,
+    "name": "Pinet",
+    "level": "district",
+    "area": 8943514.2405098,
+    "lat": 43.4068,
+    "lon": 3.5072
+  },
+  "88396e9a03fffff": {
+    "osm_id": 255441,
+    "name": "Pinet",
+    "level": "district",
+    "area": 8943514.2405098,
+    "lat": 43.4068,
+    "lon": 3.5072
+  },
+  "88396e9a05fffff": {
+    "osm_id": 255441,
+    "name": "Pinet",
+    "level": "district",
+    "area": 8943514.2405098,
+    "lat": 43.4068,
+    "lon": 3.5072
+  },
+  "88396e9a0bfffff": {
+    "osm_id": 255441,
+    "name": "Pinet",
+    "level": "district",
+    "area": 8943514.2405098,
+    "lat": 43.4068,
+    "lon": 3.5072
+  },
+  "88396e9a0dfffff": {
+    "osm_id": 255441,
+    "name": "Pinet",
+    "level": "district",
+    "area": 8943514.2405098,
+    "lat": 43.4068,
+    "lon": 3.5072
+  },
+  "88396e9a19fffff": {
+    "osm_id": 255444,
+    "name": "Pomérols",
+    "level": "district",
+    "area": 11001313.862760104,
+    "lat": 43.390895,
+    "lon": 3.4992161
+  },
+  "88396e9a1bfffff": null,
+  "88396e9a1dfffff": {
+    "osm_id": 255444,
+    "name": "Pomérols",
+    "level": "district",
+    "area": 11001313.862760104,
+    "lat": 43.390895,
+    "lon": 3.4992161
+  },
+  "88396e9a61fffff": null,
+  "88396e9a63fffff": {
+    "osm_id": 255441,
+    "name": "Pinet",
+    "level": "district",
+    "area": 8943514.2405098,
+    "lat": 43.4068,
+    "lon": 3.5072
+  },
+  "88396e9a65fffff": null,
+  "88396e9a67fffff": null,
+  "88396e9ac9fffff": null,
+  "88396e9acdfffff": null,
+  "88396e9b41fffff": {
+    "osm_id": 164176,
+    "name": "Florensac",
+    "level": "district",
+    "area": 35985853.39901734,
+    "lat": 43.3827078,
+    "lon": 3.4631135
+  },
+  "88396e9b43fffff": null,
+  "88396e9b45fffff": null,
+  "88396e9b47fffff": {
+    "osm_id": 164176,
+    "name": "Florensac",
+    "level": "district",
+    "area": 35985853.39901734,
+    "lat": 43.3827078,
+    "lon": 3.4631135
+  },
+  "88396e9b59fffff": null,
+  "88396e9b5dfffff": null
 }

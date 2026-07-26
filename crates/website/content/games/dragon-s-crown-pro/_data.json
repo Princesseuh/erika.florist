@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1518048000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    }
+  ],
+  "companies": [
+    {
+      "id": 1060,
+      "name": "Vanillaware",
+      "role": "developer"
+    },
+    {
+      "id": 818,
+      "name": "Atlus",
+      "role": "publisher"
+    }
+  ]
+}

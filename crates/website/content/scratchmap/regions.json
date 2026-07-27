@@ -1519,8 +1519,8 @@
     "level": "city",
     "lat": 43.6044638,
     "lon": 1.4442433,
-    "percent": 1.5464814661110493,
-    "explored": 850,
+    "percent": 1.5519396359914412,
+    "explored": 853,
     "geometry": {
       "coordinates": [
         [
@@ -2547,8 +2547,8 @@
     "level": "country",
     "lat": 46.603354,
     "lon": 1.8883335,
-    "percent": 0.001670027632635303,
-    "explored": 9381,
+    "percent": 0.0016705616996748412,
+    "explored": 9384,
     "geometry": {
       "coordinates": [
         [
@@ -4707,8 +4707,8 @@
     "level": "district",
     "lat": 43.6306577,
     "lon": 1.4317601,
-    "percent": 6.628685207136287,
-    "explored": 184,
+    "percent": 6.736761596383073,
+    "explored": 187,
     "geometry": {
       "coordinates": [
         [
@@ -26953,7 +26953,7 @@
     "level": "district",
     "lat": 43.2390042,
     "lon": 3.1155056,
-    "percent": 1.151402704008367,
+    "percent": 1.1514027040083672,
     "explored": 98,
     "geometry": {
       "coordinates": [
@@ -33565,7 +33565,7 @@
     "level": "district",
     "lat": 43.5008343,
     "lon": 3.7108476,
-    "percent": 0.71243995914842,
+    "percent": 0.7124399591484201,
     "explored": 54,
     "geometry": {
       "coordinates": [

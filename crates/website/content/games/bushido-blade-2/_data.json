@@ -1,0 +1,50 @@
+{
+  "first_release_date": 889660800,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    }
+  ],
+  "companies": [
+    {
+      "id": 250,
+      "name": "Square",
+      "role": "publisher"
+    },
+    {
+      "id": 252,
+      "name": "Square Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 26,
+      "name": "Square Enix",
+      "role": "publisher"
+    },
+    {
+      "id": 13634,
+      "name": "Sony Computer Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 4106,
+      "name": "Light Weight",
+      "role": "developer"
+    }
+  ]
+}

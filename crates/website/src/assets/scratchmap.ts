@@ -15,7 +15,7 @@
 // lossless and reversible. Leaflet + h3-js are bundled from npm.
 
 import * as L from "leaflet";
-import { cellToBoundary, cellToLatLng, cellToParent, cellsToMultiPolygon, isValidCell } from "h3-js";
+import { cellToLatLng, cellToParent, cellsToMultiPolygon, isValidCell } from "h3-js";
 
 const el = document.getElementById("scratchmap-map");
 const dataEl = document.getElementById("scratchmap-cells");
@@ -34,52 +34,82 @@ if (el && dataEl) {
 
 	// Reveal resolution. Cells are stored at res-11; "filled" coarsens each to its
 	// res-10 parent so sparse walks read as areas, "precise" draws the true res-11
-	// hexes. Purely cosmetic — the stored data never changes. Precompute the drawn
-	// cells (deduped) and their centres per mode once, for cheap in-viewport filtering.
+	// hexes. Purely cosmetic — the stored data never changes.
 	const REVEAL = { precise: 11, filled: 10 } as const;
 	type RevealMode = keyof typeof REVEAL;
 
-	const pointsForRes = (res: number) => {
-		const seen = new Set<string>();
-		const points: { cell: string; lat: number; lng: number }[] = [];
-		for (const cell of visited) {
-			const drawn = res === 11 ? cell : cellToParent(cell, res);
-			if (seen.has(drawn)) continue;
-			seen.add(drawn);
-			const [lat, lng] = cellToLatLng(drawn);
-			points.push({ cell: drawn, lat, lng });
-		}
-		return points;
-	};
-	// Union outline of a set of drawn cells — dissolving shared hex edges so only the
-	// outer silhouette (and any interior holes) gets stroked, not a honeycomb.
-	const unionLoops = (points: { cell: string }[]): [number, number][][] => {
-		const loops: [number, number][][] = [];
-		if (points.length) {
-			for (const polygon of cellsToMultiPolygon(
-				points.map((p) => p.cell),
-				false,
-			)) {
-				for (const loop of polygon) loops.push(loop as [number, number][]);
-			}
-		}
-		return loops;
+	// Zoomed out, a res-11 hex is a small fraction of a pixel, so drawing tens of
+	// thousands of them costs a fortune and looks identical to drawing their parents.
+	// Coarsen with the zoom instead; the mode above still caps how fine we ever go.
+	//
+	// Each step is the finest resolution whose hexes stay within ~3px, so the coarsening
+	// is invisible: Web Mercator gives 156543·cos(lat)/2^zoom metres per pixel, and a hex
+	// is about twice its edge length across. Sized at lat 58° (the northern end of the
+	// data) because that's where a fixed-size hex looks biggest — anywhere further south
+	// it only comes out smaller. Deliberately conservative: getting this too coarse is
+	// visible as chunky blobs, while too fine only costs a little draw time.
+	const lodForZoom = (zoom: number): number => {
+		if (zoom < 2) return 3;
+		if (zoom < 3) return 4;
+		if (zoom < 4) return 5;
+		if (zoom < 6) return 6;
+		if (zoom < 7) return 7;
+		if (zoom < 9) return 8;
+		if (zoom < 10) return 9;
+		if (zoom < 12) return 10;
+		return 11;
 	};
 
-	// Precomputed drawn cells + outline per mode. Rebuilt whenever live mode adds cells.
-	let revealPoints!: Record<RevealMode, ReturnType<typeof pointsForRes>>;
-	let outlineLoops!: Record<RevealMode, [number, number][][]>;
-	const rebuildReveal = () => {
-		revealPoints = {
-			precise: pointsForRes(REVEAL.precise),
-			filled: pointsForRes(REVEAL.filled),
-		};
-		outlineLoops = {
-			precise: unionLoops(revealPoints.precise),
-			filled: unionLoops(revealPoints.filled),
-		};
+	// One reveal level: the union of the visited cells coarsened to `res`, as polygons
+	// with their outer ring first and any holes after, each with a lat/lng bounding box
+	// so a draw can skip everything off-screen without touching its vertices.
+	interface RevealPolygon {
+		rings: [number, number][][];
+		minLat: number;
+		maxLat: number;
+		minLng: number;
+		maxLng: number;
+	}
+
+	const buildLevel = (res: number): RevealPolygon[] => {
+		const drawn = new Set<string>();
+		for (const cell of visited) drawn.add(res === 11 ? cell : cellToParent(cell, res));
+		if (!drawn.size) return [];
+
+		// One union per level: shared hex edges dissolve, so what remains is the outer
+		// silhouette and its holes — the same shape, with far fewer vertices than the
+		// honeycomb, and usable for the fill as well as the outline.
+		return cellsToMultiPolygon([...drawn], false).map((polygon) => {
+			const rings = polygon as [number, number][][];
+			let minLat = Infinity;
+			let maxLat = -Infinity;
+			let minLng = Infinity;
+			let maxLng = -Infinity;
+			// The outer ring encloses the holes, so it alone bounds the polygon.
+			for (const [lat, lng] of rings[0] ?? []) {
+				if (lat < minLat) minLat = lat;
+				if (lat > maxLat) maxLat = lat;
+				if (lng < minLng) minLng = lng;
+				if (lng > maxLng) maxLng = lng;
+			}
+			return { rings, minLat, maxLat, minLng, maxLng };
+		});
 	};
-	rebuildReveal();
+
+	// Levels are built on first use and kept — panning around at one zoom rebuilds
+	// nothing, and a level you never reach is never computed. Live mode clears it.
+	let levels = new Map<number, RevealPolygon[]>();
+	const levelFor = (res: number): RevealPolygon[] => {
+		let level = levels.get(res);
+		if (!level) {
+			level = buildLevel(res);
+			levels.set(res, level);
+		}
+		return level;
+	};
+	const rebuildReveal = () => {
+		levels = new Map();
+	};
 
 	// Default to "filled": res-11 alone reads as a thin dotted trail. Choice persisted.
 	const storedReveal = localStorage.getItem("scratchmap-reveal");
@@ -230,37 +260,50 @@ if (el && dataEl) {
 		ctx.fillStyle = FOG_FILL;
 		ctx.fillRect(0, 0, size.x, size.y);
 
-		// 2. Cut out your visited cells (their jagged union is the only hex shape seen).
+		// 2. Cut out where you've been, then outline it. Both use the same union polygons
+		// at the current level of detail, so each one is projected once and reused for the
+		// hole and the stroke rather than walked twice.
 		const bounds = map.getBounds().pad(0.15);
-		ctx.globalCompositeOperation = "destination-out";
-		for (const pt of revealPoints[revealMode]) {
-			if (!bounds.contains([pt.lat, pt.lng])) continue;
-			const boundary = cellToBoundary(pt.cell);
-			ctx.beginPath();
-			for (let i = 0; i < boundary.length; i++) {
-				const point = map.latLngToContainerPoint([boundary[i][0], boundary[i][1]]);
-				if (i === 0) ctx.moveTo(point.x, point.y);
-				else ctx.lineTo(point.x, point.y);
-			}
-			ctx.closePath();
-			ctx.fill();
-		}
+		const sw = bounds.getSouthWest();
+		const ne = bounds.getNorthEast();
+		const level = levelFor(Math.min(REVEAL[revealMode], lodForZoom(map.getZoom())));
 
-		// 3. Trace a faint outline around the cleared silhouette (union loops, so shared
-		// hex edges are dissolved — only the outer border and any holes are drawn).
-		ctx.globalCompositeOperation = "source-over";
 		ctx.strokeStyle = FOG_OUTLINE;
 		ctx.lineWidth = 1.5;
 		ctx.lineJoin = "round";
-		for (const loop of outlineLoops[revealMode]) {
-			ctx.beginPath();
-			for (let i = 0; i < loop.length; i++) {
-				const point = map.latLngToContainerPoint([loop[i][0], loop[i][1]]);
-				if (i === 0) ctx.moveTo(point.x, point.y);
-				else ctx.lineTo(point.x, point.y);
+
+		for (const polygon of level) {
+			// Bounding-box reject before touching any vertex — at city zoom this skips
+			// virtually the whole world.
+			if (
+				polygon.maxLat < sw.lat ||
+				polygon.minLat > ne.lat ||
+				polygon.maxLng < sw.lng ||
+				polygon.minLng > ne.lng
+			) {
+				continue;
 			}
-			ctx.closePath();
-			ctx.stroke();
+
+			const path = new Path2D();
+			for (const ring of polygon.rings) {
+				let first = true;
+				for (const [lat, lng] of ring) {
+					const point = map.latLngToContainerPoint([lat, lng]);
+					if (first) {
+						path.moveTo(point.x, point.y);
+						first = false;
+					} else {
+						path.lineTo(point.x, point.y);
+					}
+				}
+				path.closePath();
+			}
+
+			// Even-odd so the rings after the first punch holes back into the fog.
+			ctx.globalCompositeOperation = "destination-out";
+			ctx.fill(path, "evenodd");
+			ctx.globalCompositeOperation = "source-over";
+			ctx.stroke(path);
 		}
 	};
 

@@ -548,16 +548,24 @@ if (el && dataEl) {
 	// browser Geolocation API while live mode is on — so on a walk you can watch yourself
 	// move over the tiles you've (already) cleared. Nothing starts until live is enabled, so
 	// no location prompt appears otherwise. This is the live device fix, not the stored hexes.
+	const LIVE_ICON = 48;
 	const liveDotStyle = document.createElement("style");
-	liveDotStyle.textContent =
-		"@keyframes scratchmap-live-pulse{0%{box-shadow:0 0 0 0 rgba(26,115,232,.5)}70%{box-shadow:0 0 0 14px rgba(26,115,232,0)}100%{box-shadow:0 0 0 0 rgba(26,115,232,0)}}";
+	liveDotStyle.textContent = `
+@keyframes scratchmap-live-pulse{0%{box-shadow:0 0 0 0 rgba(26,115,232,.5)}70%{box-shadow:0 0 0 14px rgba(26,115,232,0)}100%{box-shadow:0 0 0 0 rgba(26,115,232,0)}}
+.scratchmap-live{position:relative;display:block;width:${LIVE_ICON}px;height:${LIVE_ICON}px}
+.scratchmap-live-beam{position:absolute;inset:0;transform-origin:50% 50%;opacity:0;transition:opacity .25s ease,transform .2s linear}
+.scratchmap-live-dot{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#1a73e8;border:2px solid #fff;animation:scratchmap-live-pulse 2s infinite}
+@media (prefers-reduced-motion:reduce){.scratchmap-live-dot{animation:none}.scratchmap-live-beam{transition:opacity .25s ease}}`;
 	document.head.appendChild(liveDotStyle);
+	// The dot, plus a heading cone in the style of Google Maps. The wedge points "up" in
+	// its own coordinates and is rotated to the heading; it stays hidden until we actually
+	// know which way you're facing, since a cone pointing the wrong way is worse than none.
 	const positionMarker = L.marker([0, 0], {
 		icon: L.divIcon({
 			className: "",
-			iconSize: [0, 0],
-			iconAnchor: [0, 0],
-			html: '<span style="display:block;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#1a73e8;border:2px solid #fff;animation:scratchmap-live-pulse 2s infinite"></span>',
+			iconSize: [LIVE_ICON, LIVE_ICON],
+			iconAnchor: [LIVE_ICON / 2, LIVE_ICON / 2],
+			html: `<span class="scratchmap-live"><svg class="scratchmap-live-beam" width="${LIVE_ICON}" height="${LIVE_ICON}" viewBox="0 0 48 48" aria-hidden="true"><defs><radialGradient id="scratchmap-beam" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#1a73e8" stop-opacity=".6"/><stop offset="100%" stop-color="#1a73e8" stop-opacity="0"/></radialGradient></defs><path d="M24 24 L12 3.2 A24 24 0 0 1 36 3.2 Z" fill="url(#scratchmap-beam)"/></svg><span class="scratchmap-live-dot"></span></span>`,
 		}),
 		interactive: false,
 		keyboard: false,
@@ -577,21 +585,96 @@ if (el && dataEl) {
 	let positionShown = false;
 	let geoWatchId: number | undefined;
 	let geoCentred = false;
+
+	// Heading, in degrees clockwise from true north. `headingDeg` is the last reading;
+	// `beamAngle` is the same angle unwrapped — kept continuous across the 360° seam so the
+	// CSS rotation takes the short way round instead of spinning back through a full turn.
+	let headingDeg: number | null = null;
+	let beamAngle = 0;
+	let compassSeen = false;
+	const applyHeading = () => {
+		const beam = positionMarker
+			.getElement()
+			?.querySelector<SVGElement>(".scratchmap-live-beam");
+		if (!beam) return;
+		if (headingDeg === null) {
+			beam.style.opacity = "0";
+			return;
+		}
+		beamAngle += (((headingDeg - beamAngle) % 360) + 540) % 360 - 180;
+		beam.style.transform = `rotate(${beamAngle}deg)`;
+		beam.style.opacity = "1";
+	};
+	const setHeading = (deg: number | null) => {
+		if (deg !== null && !Number.isFinite(deg)) return;
+		headingDeg = deg;
+		applyHeading();
+	};
+
 	const onGeoPosition = (pos: GeolocationPosition) => {
-		const { latitude, longitude, accuracy } = pos.coords;
+		const { latitude, longitude, accuracy, heading } = pos.coords;
 		positionMarker.setLatLng([latitude, longitude]);
 		accuracyCircle.setLatLng([latitude, longitude]).setRadius(accuracy);
 		if (!positionShown) {
 			accuracyCircle.addTo(map);
 			positionMarker.addTo(map);
 			positionShown = true;
+			// The element only exists once the marker is on the map, so re-apply any
+			// heading the compass reported while we were still waiting for a fix.
+			applyHeading();
 		}
+		// Course over ground: only some devices report it, only while actually moving, and
+		// it's where you're travelling rather than where you're facing. The compass wins
+		// whenever it's available.
+		if (!compassSeen) setHeading(heading === null ? null : heading);
 		// Centre once, on the first real fix, then leave the map alone so panning sticks.
 		if (!geoCentred) {
 			map.setView([latitude, longitude], Math.max(map.getZoom(), 16));
 			geoCentred = true;
 		}
 	};
+	// Safari exposes a true-north compass heading directly; elsewhere the absolute
+	// orientation event gives `alpha`, which counts anticlockwise from north and so has to
+	// be flipped. A non-absolute event is relative to wherever the device happened to start
+	// and would point somewhere arbitrary, so it's ignored.
+	interface CompassEvent extends DeviceOrientationEvent {
+		webkitCompassHeading?: number;
+	}
+	const onOrientation = (event: Event) => {
+		const e = event as CompassEvent;
+		const heading =
+			typeof e.webkitCompassHeading === "number"
+				? e.webkitCompassHeading
+				: e.absolute && e.alpha !== null
+					? (360 - e.alpha) % 360
+					: null;
+		if (heading === null) return;
+		compassSeen = true;
+		setHeading(heading);
+	};
+	const startOrientation = async () => {
+		// iOS 13+ gates the compass behind a prompt that has to originate from a user
+		// gesture — live mode is turned on by a click, which is one.
+		const DOE = window.DeviceOrientationEvent as
+			| (typeof DeviceOrientationEvent & { requestPermission?: () => Promise<string> })
+			| undefined;
+		if (typeof DOE?.requestPermission === "function") {
+			try {
+				if ((await DOE.requestPermission()) !== "granted") return;
+			} catch {
+				return; // Declined, or not called from a gesture — carry on without a cone.
+			}
+		}
+		window.addEventListener("deviceorientationabsolute", onOrientation, true);
+		window.addEventListener("deviceorientation", onOrientation, true);
+	};
+	const stopOrientation = () => {
+		window.removeEventListener("deviceorientationabsolute", onOrientation, true);
+		window.removeEventListener("deviceorientation", onOrientation, true);
+		compassSeen = false;
+		setHeading(null);
+	};
+
 	const startGeolocation = () => {
 		if (geoWatchId !== undefined || !navigator.geolocation) return;
 		geoCentred = false;
@@ -600,12 +683,14 @@ if (el && dataEl) {
 			maximumAge: 5000,
 			timeout: 15000,
 		});
+		void startOrientation();
 	};
 	const stopGeolocation = () => {
 		if (geoWatchId !== undefined) {
 			navigator.geolocation.clearWatch(geoWatchId);
 			geoWatchId = undefined;
 		}
+		stopOrientation();
 		if (positionShown) {
 			positionMarker.remove();
 			accuracyCircle.remove();

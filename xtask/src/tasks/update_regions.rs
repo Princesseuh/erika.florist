@@ -18,6 +18,14 @@ const CACHE_PATH: &str = "crates/website/content/scratchmap/regions-cache.json";
 // Average area of an H3 resolution-11 cell, in m².
 const RES11_AREA_M2: f64 = 2149.643;
 
+// A region has to be more than a drive-by before it earns a badge. One GPS fix inside a
+// commune's boundary leaves a single 50 m hex behind, which would otherwise label the map
+// with a permanent `0.0037%` — a fifth of all regions are exactly that. The percent escape
+// hatch spares genuinely small areas, where two cells really can be several percent of a
+// city block. Countries are always drawn: a country you've set foot in is worth saying so.
+const MIN_EXPLORED_CELLS: usize = 5;
+const MIN_PERCENT: f64 = 0.25;
+
 const USER_AGENT: &str = "erika.florist-scratchmap/1.0 (+https://erika.florist)";
 const NOMINATIM: &str = "https://nominatim.openstreetmap.org/reverse";
 
@@ -198,6 +206,22 @@ fn region_name(resp: &ReverseResponse, level: &str) -> String {
             .and_then(|v| v.as_str())
             .map(str::to_string)
     };
+
+    // Districts name themselves. The polygon we keep — and the area `percent` divides by —
+    // belongs to the feature Nominatim returned, so only that feature's own name describes
+    // the number on the badge. The address block routinely carries a coarser container
+    // instead: every suburb inside Gothenburg's `Centrum` stadsområde reports
+    // `city_district = "Centrum"`, which would file one suburb's completion under its
+    // parent's name. Some features aren't in the address block at all (a Paris quartier
+    // comes back as `city_block`, which has no address key), so no ordering of those keys
+    // can name them. Cities and countries keep the walk below: there the address component
+    // really is the level being named.
+    if level == "district"
+        && let Some(name) = resp.name.as_deref().map(str::trim).filter(|n| !n.is_empty())
+    {
+        return name.to_string();
+    }
+
     let keys: &[&str] = match level {
         "district" => &[
             "city_district",
@@ -405,6 +429,9 @@ pub fn run_update_regions() -> Result<()> {
                 geometry,
             }
         })
+        .filter(|r| {
+            r.level == "country" || r.explored > MIN_EXPLORED_CELLS || r.percent >= MIN_PERCENT
+        })
         .collect();
     regions.sort_by(|a, b| {
         a.level
@@ -412,10 +439,9 @@ pub fn run_update_regions() -> Result<()> {
             .then(b.percent.partial_cmp(&a.percent).unwrap())
     });
 
-    fs::write(
-        &regions_path,
-        format!("{}\n", serde_json::to_string_pretty(&regions)?),
-    )?;
+    // Compact, not pretty: every coordinate on its own line tripled the file, and this is
+    // generated data inlined into the page — nobody reads the diff.
+    fs::write(&regions_path, format!("{}\n", serde_json::to_string(&regions)?))?;
     if cache_dirty {
         fs::write(
             &cache_path,

@@ -15,7 +15,7 @@
 // lossless and reversible. Leaflet + h3-js are bundled from npm.
 
 import * as L from "leaflet";
-import { cellToLatLng, cellToParent, cellsToMultiPolygon, isValidCell } from "h3-js";
+import { UNITS, cellArea, cellToLatLng, cellToParent, cellsToMultiPolygon, isValidCell } from "h3-js";
 
 const el = document.getElementById("scratchmap-map");
 const dataEl = document.getElementById("scratchmap-cells");
@@ -109,6 +109,7 @@ if (el && dataEl) {
 	};
 	const rebuildReveal = () => {
 		levels = new Map();
+		coverage.clear();
 	};
 
 	// Default to "filled": res-11 alone reads as a thin dotted trail. Choice persisted.
@@ -187,6 +188,9 @@ if (el && dataEl) {
 					// Storage disabled (private mode): the toggle still works this session.
 				}
 				sync();
+				// The badges and the stat quote the reveal on screen, so they move with it.
+				refreshBadges();
+				updateStat();
 				draw();
 			});
 			return bar;
@@ -208,12 +212,32 @@ if (el && dataEl) {
 	const stat = document.createElement("div");
 	stat.style.cssText =
 		"position:absolute;left:12px;bottom:10px;z-index:1000;pointer-events:none;font-size:12px;font-variant-numeric:tabular-nums;color:#4d4d4d;text-shadow:0 1px 3px rgba(247,247,247,0.9)";
+	// Both readings are true, they just answer different questions: "precise" is the ground
+	// you actually stood on, "filled" is what the map clears, since one visited cell fills
+	// its whole res-10 parent. The stat follows whichever reveal is on screen. Areas are
+	// summed per cell rather than multiplied by an average — H3 cells vary enough in size
+	// that the average runs ~10% high over this data.
+	const coverage = new Map<RevealMode, { count: number; m2: number }>();
+	const coverageFor = (mode: RevealMode) => {
+		let value = coverage.get(mode);
+		if (!value) {
+			const res = REVEAL[mode];
+			const drawn =
+				res === 11 ? visited : [...new Set(visited.map((cell) => cellToParent(cell, res)))];
+			value = {
+				count: drawn.length,
+				m2: drawn.reduce((total, cell) => total + cellArea(cell, UNITS.m2), 0),
+			};
+			coverage.set(mode, value);
+		}
+		return value;
+	};
 	const updateStat = () => {
-		const hexCount = visited.length;
+		const { count, m2 } = coverageFor(revealMode);
 		stat.textContent =
-			hexCount === 0
+			count === 0
 				? "Nothing discovered yet"
-				: `${hexCount} hexagon${hexCount === 1 ? "" : "s"} · ~${formatArea(Math.round(hexCount * 2150.6))}`;
+				: `${count} hexagon${count === 1 ? "" : "s"} · ~${formatArea(Math.round(m2))}`;
 	};
 	updateStat();
 	el.parentElement?.appendChild(stat);
@@ -341,7 +365,11 @@ if (el && dataEl) {
 		level: string;
 		lat: number;
 		lon: number;
-		percent: number;
+		/// The region's own area, and the two areas covered within it — see the matching
+		/// fields in xtask's `Region`.
+		area: number;
+		explored_m2: number;
+		filled_m2: number;
 		explored: number;
 		geometry?: GeoJSON.MultiPolygon;
 	}
@@ -359,10 +387,16 @@ if (el && dataEl) {
 	const regionCache: Record<string, CacheEntry | null> = cacheEl
 		? JSON.parse(cacheEl.textContent || "{}")
 		: {};
-	// Average res-11 hex area in CI's percent formula — keep in sync with xtask.
-	const RES11_AREA_M2 = 2149.643;
 	// Resolutions CI samples district/city/country at, for the parent → region lookup.
-	const REGION_RES = [8, 5, 3];
+	// Must match `LEVELS` in xtask/src/tasks/update_regions.rs — a mismatch silently misses
+	// every cache entry for that level, so live mode stops updating its badges.
+	const REGION_RES = [8, 7, 3];
+
+	// A badge reports the reveal you're looking at: the exact ground covered, or the larger
+	// area "filled" clears. Same underlying cells, two honest readings.
+	const share = (m2: number, area: number) => (area > 0 ? Math.min(100, (m2 / area) * 100) : 0);
+	const percentFor = (r: { exploredM2: number; filledM2: number; area: number }) =>
+		share(revealMode === "filled" ? r.filledM2 : r.exploredM2, r.area);
 
 	// City/country percentages are naturally tiny — show enough decimals to be honest
 	// (this is the "% of the earth you've explored" number) without going scientific.
@@ -396,11 +430,17 @@ if (el && dataEl) {
 	// Live-updatable state per region (keyed level:osm_id), so live mode can bump labels.
 	interface RegionState {
 		name: string;
-		explored: number;
 		area: number;
+		exploredM2: number;
+		filledM2: number;
 		marker: L.Marker;
 	}
 	const regionStates = new Map<string, RegionState>();
+
+	// The res-10 parents already accounted for in the shipped `filled_m2`. Captured before
+	// live mode can add anything, so a freshly-walked cell only grows the filled area when
+	// it opens a parent that wasn't already painted.
+	const filledParents = new Set(visited.map((cell) => cellToParent(cell, REVEAL.filled)));
 
 	for (const region of regions) {
 		const group = badgeLayers[region.level];
@@ -414,15 +454,19 @@ if (el && dataEl) {
 			}).addTo(group);
 		}
 
+		const covered = {
+			area: region.area,
+			exploredM2: region.explored_m2,
+			filledM2: region.filled_m2,
+		};
 		const marker = L.marker([region.lat, region.lon], {
-			icon: makeBadgeIcon(region.name, region.percent),
+			icon: makeBadgeIcon(region.name, percentFor(covered)),
 			interactive: false,
 			keyboard: false,
 		}).addTo(group);
 		regionStates.set(`${region.level}:${region.osm_id}`, {
 			name: region.name,
-			explored: region.explored,
-			area: 0,
+			...covered,
 			marker,
 		});
 	}
@@ -433,21 +477,35 @@ if (el && dataEl) {
 	const attributeToRegions = (cells: string[]) => {
 		const dirty = new Set<string>();
 		for (const cell of cells) {
+			const cellM2 = cellArea(cell, UNITS.m2);
+			// A cell only enlarges the filled reveal if its parent wasn't already painted.
+			const parent = cellToParent(cell, REVEAL.filled);
+			const opensParent = !filledParents.has(parent);
+			if (opensParent) filledParents.add(parent);
+			const parentM2 = opensParent ? cellArea(parent, UNITS.m2) : 0;
+
 			for (const res of REGION_RES) {
 				const entry = regionCache[cellToParent(cell, res)];
 				if (!entry) continue;
 				const key = `${entry.level}:${entry.osm_id}`;
 				const state = regionStates.get(key);
 				if (!state) continue;
-				state.explored += 1;
-				state.area = entry.area;
+				state.exploredM2 += cellM2;
+				state.filledM2 += parentM2;
 				dirty.add(key);
 			}
 		}
 		for (const key of dirty) {
 			const state = regionStates.get(key)!;
-			const percent = Math.min(100, ((state.explored * RES11_AREA_M2) / state.area) * 100);
-			state.marker.setIcon(makeBadgeIcon(state.name, percent));
+			state.marker.setIcon(makeBadgeIcon(state.name, percentFor(state)));
+		}
+	};
+
+	// Both readings come from the same cells, so flipping the reveal relabels every badge
+	// rather than recomputing anything.
+	const refreshBadges = () => {
+		for (const state of regionStates.values()) {
+			state.marker.setIcon(makeBadgeIcon(state.name, percentFor(state)));
 		}
 	};
 

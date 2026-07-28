@@ -1,4 +1,4 @@
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::fs;
 use std::thread::sleep;
 use std::time::{Duration, Instant};
@@ -15,8 +15,10 @@ const REGIONS_PATH: &str = "crates/website/content/scratchmap/regions.json";
 // Persisted geocode results, so weekly runs only hit Nominatim for *new* areas.
 const CACHE_PATH: &str = "crates/website/content/scratchmap/regions-cache.json";
 
-// Average area of an H3 resolution-11 cell, in m².
-const RES11_AREA_M2: f64 = 2149.643;
+// The resolution the map's "filled" reveal coarsens to — keep in sync with `REVEAL` in
+// scratchmap.ts. Filling a res-10 parent paints all seven of its children, so the area it
+// clears is real but larger than the area actually walked; both are reported.
+const FILLED_RES: Resolution = Resolution::Ten;
 
 // A region has to be more than a drive-by before it earns a badge. One GPS fix inside a
 // commune's boundary leaves a single 50 m hex behind, which would otherwise label the map
@@ -52,7 +54,14 @@ struct Region {
     level: String,
     lat: f64,
     lon: f64,
-    percent: f64,
+    /// The region's own area in m², so the page can derive a percentage for whichever
+    /// reveal it's drawing — and keep it exact as live mode adds cells.
+    area: f64,
+    /// Summed area of the visited res-11 cells: the ground you've actually covered.
+    explored_m2: f64,
+    /// Summed area of those cells' distinct res-10 parents: what the "filled" reveal
+    /// clears. Always ≥ `explored_m2`, since one visited child fills its whole parent.
+    filled_m2: f64,
     explored: usize,
     /// Simplified boundary as a GeoJSON MultiPolygon, for drawing the outline. This is
     /// the only place the geometry lives — the cache keeps just the lookup metadata,
@@ -217,7 +226,11 @@ fn region_name(resp: &ReverseResponse, level: &str) -> String {
     // can name them. Cities and countries keep the walk below: there the address component
     // really is the level being named.
     if level == "district"
-        && let Some(name) = resp.name.as_deref().map(str::trim).filter(|n| !n.is_empty())
+        && let Some(name) = resp
+            .name
+            .as_deref()
+            .map(str::trim)
+            .filter(|n| !n.is_empty())
     {
         return name.to_string();
     }
@@ -256,6 +269,17 @@ fn tidy_name(name: &str) -> String {
         name.trim().to_string()
     } else {
         parts[..2].join(" / ")
+    }
+}
+
+/// Share of a region covered by an area, as a percentage. Capped at 100: a cell credited
+/// to a region can spill over its boundary, and a filled res-10 parent easily covers more
+/// than a small district.
+fn share(area_m2: f64, region_area: f64) -> f64 {
+    if region_area <= 0.0 {
+        0.0
+    } else {
+        (area_m2 / region_area * 100.0).min(100.0)
     }
 }
 
@@ -301,17 +325,45 @@ pub fn run_update_regions() -> Result<()> {
         .collect();
     let mut fresh_geometry: BTreeMap<i64, serde_json::Value> = BTreeMap::new();
 
-    // Tally visited cells per distinct region, keyed by (level, OSM id).
-    let mut tally: BTreeMap<(String, i64), (CachedRegion, usize)> = BTreeMap::new();
+    // What a region has to show for itself: how many cells, how much ground they cover,
+    // and how much the coarser "filled" reveal paints for them.
+    #[derive(Default, Clone)]
+    struct Covered {
+        cells: usize,
+        explored_m2: f64,
+        filled_m2: f64,
+    }
+    impl Covered {
+        fn add(&mut self, other: &Covered) {
+            self.cells += other.cells;
+            self.explored_m2 += other.explored_m2;
+            self.filled_m2 += other.filled_m2;
+        }
+    }
+
+    // Tally coverage per distinct region, keyed by (level, OSM id).
+    let mut tally: BTreeMap<(String, i64), (CachedRegion, Covered)> = BTreeMap::new();
 
     for (level, zoom, dedupe_res) in LEVELS {
-        // Group cells by coarse parent; keep a count and one real sample cell each.
-        let mut groups: BTreeMap<CellIndex, (usize, CellIndex)> = BTreeMap::new();
+        // Group cells by coarse parent; keep coverage and one real sample cell each. H3's
+        // hierarchy nests, so a res-10 parent never straddles two groups and its area is
+        // credited exactly once.
+        let mut groups: BTreeMap<CellIndex, (Covered, CellIndex, BTreeSet<CellIndex>)> =
+            BTreeMap::new();
         for cell in &cells {
             if let Some(parent) = cell.parent(*dedupe_res) {
-                let entry = groups.entry(parent).or_insert((0, *cell));
-                entry.0 += 1;
+                let entry = groups
+                    .entry(parent)
+                    .or_insert_with(|| (Covered::default(), *cell, BTreeSet::new()));
+                entry.0.cells += 1;
+                entry.0.explored_m2 += cell.area_m2();
+                if let Some(filled) = cell.parent(FILLED_RES) {
+                    entry.2.insert(filled);
+                }
             }
+        }
+        for (covered, _, filled) in groups.values_mut() {
+            covered.filled_m2 = filled.iter().map(|c| c.area_m2()).sum();
         }
         let to_geocode = groups
             .keys()
@@ -330,7 +382,7 @@ pub fn run_update_regions() -> Result<()> {
 
         let started = Instant::now();
         let mut done = 0usize;
-        for (parent, (count, sample)) in &groups {
+        for (parent, (covered, sample, _)) in &groups {
             let key = parent.to_string();
             if !cache.contains_key(&key) {
                 let ll = LatLng::from(*sample);
@@ -370,8 +422,9 @@ pub fn run_update_regions() -> Result<()> {
             if let Some(Some(region)) = cache.get(&key) {
                 tally
                     .entry((region.level.clone(), region.osm_id))
-                    .or_insert_with(|| (region.clone(), 0))
-                    .1 += count;
+                    .or_insert_with(|| (region.clone(), Covered::default()))
+                    .1
+                    .add(covered);
             }
         }
     }
@@ -384,6 +437,9 @@ pub fn run_update_regions() -> Result<()> {
     // into an existing district entry when one exists rather than duplicating it.
     let district_res = LEVELS[0].2; // keep aligned with the "district" LEVELS entry
     let city_res = LEVELS[1].2; //     and the "city" entry
+    // Gathered per commune before being tallied, so a res-10 parent shared by several
+    // gap-filled cells is credited once instead of once per child.
+    let mut gap: BTreeMap<i64, (CachedRegion, Covered, BTreeSet<CellIndex>)> = BTreeMap::new();
     for cell in &cells {
         let Some(d_parent) = cell.parent(district_res) else {
             continue;
@@ -395,53 +451,73 @@ pub fn run_update_regions() -> Result<()> {
         let Some(c_parent) = cell.parent(city_res) else {
             continue;
         };
-        if let Some(Some(commune)) = cache.get(&c_parent.to_string()) {
-            if commune.level == "city" {
-                tally
-                    .entry(("district".to_string(), commune.osm_id))
-                    .or_insert_with(|| {
-                        let mut as_district = commune.clone();
-                        as_district.level = "district".to_string();
-                        (as_district, 0)
-                    })
-                    .1 += 1;
+        if let Some(Some(commune)) = cache.get(&c_parent.to_string())
+            && commune.level == "city"
+        {
+            let entry = gap.entry(commune.osm_id).or_insert_with(|| {
+                let mut as_district = commune.clone();
+                as_district.level = "district".to_string();
+                (as_district, Covered::default(), BTreeSet::new())
+            });
+            entry.1.cells += 1;
+            entry.1.explored_m2 += cell.area_m2();
+            if let Some(filled) = cell.parent(FILLED_RES) {
+                entry.2.insert(filled);
             }
         }
+    }
+    for (osm_id, (region, mut covered, filled)) in gap {
+        covered.filled_m2 = filled.iter().map(|c| c.area_m2()).sum();
+        tally
+            .entry(("district".to_string(), osm_id))
+            .or_insert_with(|| (region, Covered::default()))
+            .1
+            .add(&covered);
     }
 
     let mut regions: Vec<Region> = tally
         .into_values()
-        .map(|(region, count)| {
-            let percent = (count as f64 * RES11_AREA_M2 / region.area * 100.0).min(100.0);
+        .map(|(region, covered)| {
             let geometry = fresh_geometry
                 .get(&region.osm_id)
                 .or_else(|| prior_geometry.get(&region.osm_id))
                 .cloned()
                 .unwrap_or(serde_json::Value::Null);
+            // Whole m² is far finer than any badge shows, and keeps the JSON compact.
+            let round = |v: f64| v.round();
             Region {
                 osm_id: region.osm_id,
                 name: region.name,
                 level: region.level,
                 lat: region.lat,
                 lon: region.lon,
-                percent,
-                explored: count,
+                area: round(region.area),
+                explored_m2: round(covered.explored_m2),
+                filled_m2: round(covered.filled_m2),
+                explored: covered.cells,
                 geometry,
             }
         })
         .filter(|r| {
-            r.level == "country" || r.explored > MIN_EXPLORED_CELLS || r.percent >= MIN_PERCENT
+            r.level == "country"
+                || r.explored > MIN_EXPLORED_CELLS
+                || share(r.explored_m2, r.area) >= MIN_PERCENT
         })
         .collect();
     regions.sort_by(|a, b| {
-        a.level
-            .cmp(&b.level)
-            .then(b.percent.partial_cmp(&a.percent).unwrap())
+        a.level.cmp(&b.level).then(
+            share(b.explored_m2, b.area)
+                .partial_cmp(&share(a.explored_m2, a.area))
+                .unwrap(),
+        )
     });
 
     // Compact, not pretty: every coordinate on its own line tripled the file, and this is
     // generated data inlined into the page — nobody reads the diff.
-    fs::write(&regions_path, format!("{}\n", serde_json::to_string(&regions)?))?;
+    fs::write(
+        &regions_path,
+        format!("{}\n", serde_json::to_string(&regions)?),
+    )?;
     if cache_dirty {
         fs::write(
             &cache_path,

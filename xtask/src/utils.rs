@@ -51,6 +51,12 @@ pub fn log_info(msg: &str) {
     }
 }
 
+/// Prints a PROGRESS line. Unlike `log_info`, always shown — even under `--silent` —
+/// so long, rate-limited steps (e.g. Nominatim geocoding) report where they are in CI.
+pub fn log_progress(msg: &str) {
+    eprintln!("\x1b[1;36mPROGRESS\x1b[0m {msg}");
+}
+
 /// Reads YAML frontmatter from a markdown file and returns the parsed value as `serde_json::Value`.
 pub fn read_frontmatter(path: &Path) -> anyhow::Result<serde_json::Value> {
     use gray_matter::engine::YAML;

@@ -1,14 +1,14 @@
 use std::collections::BTreeMap;
 use std::fs;
 use std::thread::sleep;
-use std::time::Duration;
+use std::time::{Duration, Instant};
 
 use anyhow::{Context, Result};
 use geo::{Area, GeodesicArea, MultiPolygon, Simplify};
 use h3o::{CellIndex, LatLng, Resolution};
 use serde::{Deserialize, Serialize};
 
-use crate::utils::{log_info, log_success, log_warn, workspace_root};
+use crate::utils::{log_progress, log_success, log_warn, workspace_root};
 
 const CELLS_PATH: &str = "crates/website/content/scratchmap/cells.json";
 const REGIONS_PATH: &str = "crates/website/content/scratchmap/regions.json";
@@ -30,7 +30,10 @@ const LEVELS: &[(&str, u8, Resolution)] = &[
     // Sample districts every ~530 m (res 8) so neighbouring quartiers are picked up
     // separately rather than a coarser sample lumping them together.
     ("district", 14, Resolution::Eight),
-    ("city", 10, Resolution::Five),
+    // Sample cities every ~1.4 km (res 7). French communes are small and often adjacent,
+    // so a coarser sample lets two neighbours share one cell — the sampled town wins and
+    // the other is dropped, its cells miscredited (e.g. Gigean absorbed into Poussan).
+    ("city", 10, Resolution::Seven),
     ("country", 3, Resolution::Three),
 ];
 
@@ -204,7 +207,10 @@ fn region_name(resp: &ReverseResponse, level: &str) -> String {
             "quarter",
             "neighbourhood",
         ],
-        "city" => &["city", "town", "municipality", "village"],
+        // `municipality` last: in France it's the intercommunal métropole (e.g. every
+        // commune in Montpellier Métropole reports municipality="Montpellier"), which
+        // would collapse distinct towns into one. village/town/city name the commune.
+        "city" => &["city", "town", "village", "municipality"],
         _ => &["country"],
     };
     keys.iter()
@@ -227,6 +233,11 @@ fn tidy_name(name: &str) -> String {
     } else {
         parts[..2].join(" / ")
     }
+}
+
+/// `m:ss` — for compact elapsed / ETA readouts in the progress log.
+fn fmt_dur(secs: u64) -> String {
+    format!("{}:{:02}", secs / 60, secs % 60)
 }
 
 pub fn run_update_regions() -> Result<()> {
@@ -282,28 +293,54 @@ pub fn run_update_regions() -> Result<()> {
             .keys()
             .filter(|k| !cache.contains_key(&k.to_string()))
             .count();
-        log_info(&format!(
-            "{level}: {} area(s), {to_geocode} new to geocode",
-            groups.len()
+        // Progress is logged via `log_progress` (never suppressed by `--silent`) because
+        // this loop is rate-limited to one request per ~1.1s and can run for many minutes
+        // in CI — otherwise the step looks hung with no output until it finishes.
+        log_progress(&format!(
+            "{level}: {} area(s), {} cached, {to_geocode} new to geocode (~{} at {:.1}s each)",
+            groups.len(),
+            groups.len() - to_geocode,
+            fmt_dur((to_geocode as f64 * RATE_LIMIT.as_secs_f64()).ceil() as u64),
+            RATE_LIMIT.as_secs_f64(),
         ));
 
+        let started = Instant::now();
+        let mut done = 0usize;
         for (parent, (count, sample)) in &groups {
             let key = parent.to_string();
             if !cache.contains_key(&key) {
                 let ll = LatLng::from(*sample);
-                match reverse(ll.lat(), ll.lng(), *zoom, level) {
+                // Name the outcome for the progress line. Region names are already public
+                // (they ship in regions.json); the sample's raw coordinates are not logged.
+                let outcome = match reverse(ll.lat(), ll.lng(), *zoom, level) {
                     Ok(Some((region, geometry))) => {
+                        let name = region.name.clone();
                         fresh_geometry.insert(region.osm_id, geometry);
                         cache.insert(key.clone(), Some(region));
                         cache_dirty = true;
+                        format!("\"{name}\"")
                     }
                     Ok(None) => {
                         cache.insert(key.clone(), None);
                         cache_dirty = true;
+                        "no polygon".to_string()
                     }
                     // Leave uncached on transient errors so it's retried next run.
-                    Err(e) => log_warn(&format!("  reverse geocode failed for {key}: {e}")),
-                }
+                    Err(e) => {
+                        log_warn(&format!("  reverse geocode failed for {key}: {e}"));
+                        "failed".to_string()
+                    }
+                };
+                done += 1;
+                // ETA from the real average so far (network + rate-limit sleep), not the
+                // nominal 1.1s, so it stays honest if Nominatim is slow.
+                let remaining = to_geocode.saturating_sub(done);
+                let eta = (started.elapsed().as_secs_f64() / done as f64 * remaining as f64) as u64;
+                log_progress(&format!(
+                    "  {level} {done}/{to_geocode}: {outcome} · {} elapsed, ~{} left",
+                    fmt_dur(started.elapsed().as_secs()),
+                    fmt_dur(eta),
+                ));
                 sleep(RATE_LIMIT);
             }
             if let Some(Some(region)) = cache.get(&key) {
@@ -311,6 +348,39 @@ pub fn run_update_regions() -> Result<()> {
                     .entry((region.level.clone(), region.osm_id))
                     .or_insert_with(|| (region.clone(), 0))
                     .1 += count;
+            }
+        }
+    }
+
+    // District coverage gap-fill. At zoom 14, rural France has no sub-commune division,
+    // so ~70% of district samples return no polygon and those stretches draw nothing.
+    // Fall back to the commune (already fetched for the city level — no extra requests):
+    // any cell whose fine district lookup found nothing is attributed to its commune under
+    // the district level. Commune osm_ids are shared with the city level, so this merges
+    // into an existing district entry when one exists rather than duplicating it.
+    let district_res = LEVELS[0].2; // keep aligned with the "district" LEVELS entry
+    let city_res = LEVELS[1].2; //     and the "city" entry
+    for cell in &cells {
+        let Some(d_parent) = cell.parent(district_res) else {
+            continue;
+        };
+        // Only fill where the fine lookup returned no polygon (cached as None).
+        if !matches!(cache.get(&d_parent.to_string()), Some(None)) {
+            continue;
+        }
+        let Some(c_parent) = cell.parent(city_res) else {
+            continue;
+        };
+        if let Some(Some(commune)) = cache.get(&c_parent.to_string()) {
+            if commune.level == "city" {
+                tally
+                    .entry(("district".to_string(), commune.osm_id))
+                    .or_insert_with(|| {
+                        let mut as_district = commune.clone();
+                        as_district.level = "district".to_string();
+                        (as_district, 0)
+                    })
+                    .1 += 1;
             }
         }
     }

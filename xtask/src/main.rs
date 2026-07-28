@@ -20,6 +20,11 @@ Tasks:
                             neighbourhood/city/country completion into
                             content/scratchmap/regions.json.
 
+  import-timeline <path> [--dry-run]
+                            Merge a Google Maps timeline export (Timeline.json) into
+                            content/scratchmap/cells.json. --dry-run only reports what
+                            would be added.
+
   export-letterboxd         Generate a Letterboxd-compatible CSV from movie entries.
                             Writes to ./letterboxd-export.csv
 
@@ -63,6 +68,17 @@ fn main() -> anyhow::Result<()> {
         "update-catalogue" => tasks::update_catalogue::run_update_catalogue(),
         "update-scratchmap" => tasks::update_scratchmap::run_update_scratchmap(),
         "update-regions" => tasks::update_regions::run_update_regions(),
+        "import-timeline" => {
+            let path = args
+                .get(2)
+                .map(|s| s.as_str())
+                .filter(|s| !s.starts_with('-'))
+                .ok_or_else(|| {
+                    anyhow::anyhow!("import-timeline needs a path to a Timeline.json export")
+                })?;
+            let dry_run = args.iter().any(|a| a == "--dry-run");
+            tasks::import_timeline::run_import_timeline(path, dry_run)
+        }
         "export-letterboxd" => {
             let _ = dotenvy::dotenv();
             tasks::export_letterboxd::run_export_letterboxd()

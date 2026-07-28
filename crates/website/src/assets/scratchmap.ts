@@ -344,7 +344,10 @@ if (el && dataEl) {
 			className: "",
 			iconSize: [0, 0],
 			iconAnchor: [0, 0],
-			html: `<span style="display:inline-block;transform:translate(-50%,-50%);white-space:nowrap;background:rgba(247,247,247,0.92);border:1px solid rgba(10,9,8,0.12);border-radius:3px;padding:2px 6px;font:600 12px/1.1 system-ui,sans-serif;color:#0a0908;box-shadow:0 1px 2px rgba(0,0,0,0.15)">${name} · ${formatPercent(percent)}</span>`,
+			// Fully opaque background so the badge covers the CARTO base-map town label
+			// beneath it (marker pane already sits above the label pane) — a translucent
+			// fill let that label bleed through and garble the text.
+			html: `<span style="display:inline-block;transform:translate(-50%,-50%);white-space:nowrap;background:#f7f7f7;border:1px solid rgba(10,9,8,0.12);border-radius:3px;padding:2px 6px;font:600 12px/1.1 system-ui,sans-serif;color:#0a0908;box-shadow:0 1px 2px rgba(0,0,0,0.2)">${name} · ${formatPercent(percent)}</span>`,
 		});
 
 	// Live-updatable state per region (keyed level:osm_id), so live mode can bump labels.
@@ -440,6 +443,75 @@ if (el && dataEl) {
 	let liveOn = false;
 	let syncLiveButton: (() => void) | undefined;
 
+	// Live "you are here": the viewer's own device position, streamed in real time from the
+	// browser Geolocation API while live mode is on — so on a walk you can watch yourself
+	// move over the tiles you've (already) cleared. Nothing starts until live is enabled, so
+	// no location prompt appears otherwise. This is the live device fix, not the stored hexes.
+	const liveDotStyle = document.createElement("style");
+	liveDotStyle.textContent =
+		"@keyframes scratchmap-live-pulse{0%{box-shadow:0 0 0 0 rgba(26,115,232,.5)}70%{box-shadow:0 0 0 14px rgba(26,115,232,0)}100%{box-shadow:0 0 0 0 rgba(26,115,232,0)}}";
+	document.head.appendChild(liveDotStyle);
+	const positionMarker = L.marker([0, 0], {
+		icon: L.divIcon({
+			className: "",
+			iconSize: [0, 0],
+			iconAnchor: [0, 0],
+			html: '<span style="display:block;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#1a73e8;border:2px solid #fff;animation:scratchmap-live-pulse 2s infinite"></span>',
+		}),
+		interactive: false,
+		keyboard: false,
+		zIndexOffset: 1000,
+	});
+	// Translucent disc for the GPS accuracy radius, so you can tell whether a nearby tile is
+	// really under you or just within the fix's error.
+	const accuracyCircle = L.circle([0, 0], {
+		radius: 0,
+		interactive: false,
+		color: "#1a73e8",
+		weight: 1,
+		opacity: 0.4,
+		fillColor: "#1a73e8",
+		fillOpacity: 0.12,
+	});
+	let positionShown = false;
+	let geoWatchId: number | undefined;
+	let geoCentred = false;
+	const onGeoPosition = (pos: GeolocationPosition) => {
+		const { latitude, longitude, accuracy } = pos.coords;
+		positionMarker.setLatLng([latitude, longitude]);
+		accuracyCircle.setLatLng([latitude, longitude]).setRadius(accuracy);
+		if (!positionShown) {
+			accuracyCircle.addTo(map);
+			positionMarker.addTo(map);
+			positionShown = true;
+		}
+		// Centre once, on the first real fix, then leave the map alone so panning sticks.
+		if (!geoCentred) {
+			map.setView([latitude, longitude], Math.max(map.getZoom(), 16));
+			geoCentred = true;
+		}
+	};
+	const startGeolocation = () => {
+		if (geoWatchId !== undefined || !navigator.geolocation) return;
+		geoCentred = false;
+		geoWatchId = navigator.geolocation.watchPosition(onGeoPosition, () => {}, {
+			enableHighAccuracy: true,
+			maximumAge: 5000,
+			timeout: 15000,
+		});
+	};
+	const stopGeolocation = () => {
+		if (geoWatchId !== undefined) {
+			navigator.geolocation.clearWatch(geoWatchId);
+			geoWatchId = undefined;
+		}
+		if (positionShown) {
+			positionMarker.remove();
+			accuracyCircle.remove();
+			positionShown = false;
+		}
+	};
+
 	// Merge freshly-fetched cells; redraw only if something is actually new. `recenter`
 	// re-centres on the last-walked hex (used when live mode first starts).
 	const applyLive = (cells: string[], last: string | null, recenter: boolean) => {
@@ -488,10 +560,12 @@ if (el && dataEl) {
 		if (on === liveOn) return;
 		liveOn = on;
 		if (on) {
+			startGeolocation();
 			void fetchLive(true); // immediate refresh, centred on the last-walked hex
 			startPolling();
 		} else {
 			stopPolling();
+			stopGeolocation();
 		}
 		syncLiveButton?.();
 	};

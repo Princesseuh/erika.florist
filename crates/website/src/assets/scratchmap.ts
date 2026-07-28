@@ -365,12 +365,12 @@ if (el && dataEl) {
 		level: string;
 		lat: number;
 		lon: number;
-		/// The region's own area, and the two areas covered within it — see the matching
-		/// fields in xtask's `Region`.
-		area: number;
-		explored_m2: number;
-		filled_m2: number;
+		/// Hexagons collected out of hexagons held, at each reveal resolution — see the
+		/// matching fields in xtask's `Region`.
 		explored: number;
+		total: number;
+		filled: number;
+		filled_total: number;
 		geometry?: GeoJSON.MultiPolygon;
 	}
 	const regionsEl = document.getElementById("scratchmap-regions");
@@ -392,11 +392,18 @@ if (el && dataEl) {
 	// every cache entry for that level, so live mode stops updating its badges.
 	const REGION_RES = [8, 7, 3];
 
-	// A badge reports the reveal you're looking at: the exact ground covered, or the larger
-	// area "filled" clears. Same underlying cells, two honest readings.
-	const share = (m2: number, area: number) => (area > 0 ? Math.min(100, (m2 / area) * 100) : 0);
-	const percentFor = (r: { exploredM2: number; filledM2: number; area: number }) =>
-		share(revealMode === "filled" ? r.filledM2 : r.exploredM2, r.area);
+	// A badge counts the hexagons of the reveal you're looking at. Both numerator and
+	// denominator come from the same set, so no cap is needed and collecting a region
+	// outright reads exactly 100%.
+	interface Counts {
+		explored: number;
+		total: number;
+		filled: number;
+		filledTotal: number;
+	}
+	const share = (have: number, total: number) => (total > 0 ? (have / total) * 100 : 0);
+	const percentFor = (r: Counts) =>
+		revealMode === "filled" ? share(r.filled, r.filledTotal) : share(r.explored, r.total);
 
 	// City/country percentages are naturally tiny — show enough decimals to be honest
 	// (this is the "% of the earth you've explored" number) without going scientific.
@@ -428,11 +435,8 @@ if (el && dataEl) {
 		});
 
 	// Live-updatable state per region (keyed level:osm_id), so live mode can bump labels.
-	interface RegionState {
+	interface RegionState extends Counts {
 		name: string;
-		area: number;
-		exploredM2: number;
-		filledM2: number;
 		marker: L.Marker;
 	}
 	const regionStates = new Map<string, RegionState>();
@@ -454,10 +458,11 @@ if (el && dataEl) {
 			}).addTo(group);
 		}
 
-		const covered = {
-			area: region.area,
-			exploredM2: region.explored_m2,
-			filledM2: region.filled_m2,
+		const covered: Counts = {
+			explored: region.explored,
+			total: region.total,
+			filled: region.filled,
+			filledTotal: region.filled_total,
 		};
 		const marker = L.marker([region.lat, region.lon], {
 			icon: makeBadgeIcon(region.name, percentFor(covered)),
@@ -477,12 +482,10 @@ if (el && dataEl) {
 	const attributeToRegions = (cells: string[]) => {
 		const dirty = new Set<string>();
 		for (const cell of cells) {
-			const cellM2 = cellArea(cell, UNITS.m2);
-			// A cell only enlarges the filled reveal if its parent wasn't already painted.
+			// A cell only adds to the filled reveal if its parent wasn't already painted.
 			const parent = cellToParent(cell, REVEAL.filled);
 			const opensParent = !filledParents.has(parent);
 			if (opensParent) filledParents.add(parent);
-			const parentM2 = opensParent ? cellArea(parent, UNITS.m2) : 0;
 
 			for (const res of REGION_RES) {
 				const entry = regionCache[cellToParent(cell, res)];
@@ -490,8 +493,11 @@ if (el && dataEl) {
 				const key = `${entry.level}:${entry.osm_id}`;
 				const state = regionStates.get(key);
 				if (!state) continue;
-				state.exploredM2 += cellM2;
-				state.filledM2 += parentM2;
+				// Approximate between syncs: this credits the cell to the region its coarse
+				// parent geocoded to, where CI tests the region's own outline. The next CI
+				// run replaces it with the exact count.
+				state.explored += 1;
+				if (opensParent) state.filled += 1;
 				dirty.add(key);
 			}
 		}

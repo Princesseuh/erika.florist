@@ -5,6 +5,7 @@ use std::time::{Duration, Instant};
 
 use anyhow::{Context, Result};
 use geo::{Area, GeodesicArea, MultiPolygon, Simplify};
+use h3o::geom::TilerBuilder;
 use h3o::{CellIndex, LatLng, Resolution};
 use serde::{Deserialize, Serialize};
 
@@ -54,15 +55,15 @@ struct Region {
     level: String,
     lat: f64,
     lon: f64,
-    /// The region's own area in m², so the page can derive a percentage for whichever
-    /// reveal it's drawing — and keep it exact as live mode adds cells.
-    area: f64,
-    /// Summed area of the visited res-11 cells: the ground you've actually covered.
-    explored_m2: f64,
-    /// Summed area of those cells' distinct res-10 parents: what the "filled" reveal
-    /// clears. Always ≥ `explored_m2`, since one visited child fills its whole parent.
-    filled_m2: f64,
+    /// Hexagons of this region you've been in, out of how many it holds. A hexagon belongs
+    /// to whichever region contains its centre, so the regions partition the map and
+    /// collecting all of one gives exactly 100% — no clamping, and nothing to spill over.
     explored: usize,
+    total: usize,
+    /// The same pair at res-10, the resolution the "filled" reveal draws, so that badge
+    /// reports the hexagons you can actually see rather than the ones underneath them.
+    filled: usize,
+    filled_total: usize,
     /// Simplified boundary as a GeoJSON MultiPolygon, for drawing the outline. This is
     /// the only place the geometry lives — the cache keeps just the lookup metadata,
     /// and a run reuses the previous regions.json's geometry for cached regions.
@@ -272,14 +273,40 @@ fn tidy_name(name: &str) -> String {
     }
 }
 
-/// Share of a region covered by an area, as a percentage. Capped at 100: a cell credited
-/// to a region can spill over its boundary, and a filled res-10 parent easily covers more
-/// than a small district.
-fn share(area_m2: f64, region_area: f64) -> f64 {
-    if region_area <= 0.0 {
+/// Share of a region's hexagons you've collected. No cap is needed — `have` is drawn from
+/// the same set as `total`, so it can't run past it.
+fn share(have: usize, total: usize) -> f64 {
+    if total == 0 {
         0.0
     } else {
-        (area_m2 / region_area * 100.0).min(100.0)
+        have as f64 / total as f64 * 100.0
+    }
+}
+
+/// Every res-`res` hexagon whose centre lies inside `shape`.
+fn cells_of(shape: &MultiPolygon<f64>, res: Resolution) -> Vec<CellIndex> {
+    let mut tiler = TilerBuilder::new(res).build();
+    for polygon in shape {
+        if tiler.add(polygon.clone()).is_err() {
+            return Vec::new(); // Degenerate outline; treated as unmeasurable.
+        }
+    }
+    tiler.into_coverage().collect()
+}
+
+/// How many res-`res` hexagons a region of `area_m2` holds, sized from a real cell at its
+/// centre. H3 cells vary enough in area that the published global average is useless here —
+/// Gothenburg's res-11 cells are a fifth smaller than the mean, which threw the estimate
+/// out by 22%. Sampling locally lands within about 1%.
+fn estimate_cells(area_m2: f64, lat: f64, lon: f64, res: Resolution) -> usize {
+    let Ok(centre) = LatLng::new(lat, lon) else {
+        return 0;
+    };
+    let cell_area = centre.to_cell(res).area_m2();
+    if cell_area <= 0.0 {
+        0
+    } else {
+        (area_m2 / cell_area).round() as usize
     }
 }
 
@@ -325,45 +352,30 @@ pub fn run_update_regions() -> Result<()> {
         .collect();
     let mut fresh_geometry: BTreeMap<i64, serde_json::Value> = BTreeMap::new();
 
-    // What a region has to show for itself: how many cells, how much ground they cover,
-    // and how much the coarser "filled" reveal paints for them.
+    // What a region has to show for itself, as hexagons had out of hexagons held.
     #[derive(Default, Clone)]
     struct Covered {
-        cells: usize,
-        explored_m2: f64,
-        filled_m2: f64,
+        explored: usize,
+        total: usize,
+        filled: usize,
+        filled_total: usize,
     }
-    impl Covered {
-        fn add(&mut self, other: &Covered) {
-            self.cells += other.cells;
-            self.explored_m2 += other.explored_m2;
-            self.filled_m2 += other.filled_m2;
-        }
-    }
+
+    // The cells you've been in, and the coarser cells the "filled" reveal paints for them.
+    let visited: BTreeSet<CellIndex> = cells.iter().copied().collect();
+    let revealed: BTreeSet<CellIndex> = cells.iter().filter_map(|c| c.parent(FILLED_RES)).collect();
 
     // Tally coverage per distinct region, keyed by (level, OSM id).
     let mut tally: BTreeMap<(String, i64), (CachedRegion, Covered)> = BTreeMap::new();
 
     for (level, zoom, dedupe_res) in LEVELS {
-        // Group cells by coarse parent; keep coverage and one real sample cell each. H3's
-        // hierarchy nests, so a res-10 parent never straddles two groups and its area is
-        // credited exactly once.
-        let mut groups: BTreeMap<CellIndex, (Covered, CellIndex, BTreeSet<CellIndex>)> =
-            BTreeMap::new();
+        // Group cells by coarse parent purely to decide what to geocode — one sample point
+        // each. What a region holds is counted from its own outline further down.
+        let mut groups: BTreeMap<CellIndex, CellIndex> = BTreeMap::new();
         for cell in &cells {
             if let Some(parent) = cell.parent(*dedupe_res) {
-                let entry = groups
-                    .entry(parent)
-                    .or_insert_with(|| (Covered::default(), *cell, BTreeSet::new()));
-                entry.0.cells += 1;
-                entry.0.explored_m2 += cell.area_m2();
-                if let Some(filled) = cell.parent(FILLED_RES) {
-                    entry.2.insert(filled);
-                }
+                groups.entry(parent).or_insert(*cell);
             }
-        }
-        for (covered, _, filled) in groups.values_mut() {
-            covered.filled_m2 = filled.iter().map(|c| c.area_m2()).sum();
         }
         let to_geocode = groups
             .keys()
@@ -382,7 +394,7 @@ pub fn run_update_regions() -> Result<()> {
 
         let started = Instant::now();
         let mut done = 0usize;
-        for (parent, (covered, sample, _)) in &groups {
+        for (parent, sample) in &groups {
             let key = parent.to_string();
             if !cache.contains_key(&key) {
                 let ll = LatLng::from(*sample);
@@ -422,24 +434,18 @@ pub fn run_update_regions() -> Result<()> {
             if let Some(Some(region)) = cache.get(&key) {
                 tally
                     .entry((region.level.clone(), region.osm_id))
-                    .or_insert_with(|| (region.clone(), Covered::default()))
-                    .1
-                    .add(covered);
+                    .or_insert_with(|| (region.clone(), Covered::default()));
             }
         }
     }
 
-    // District coverage gap-fill. At zoom 14, rural France has no sub-commune division,
-    // so ~70% of district samples return no polygon and those stretches draw nothing.
-    // Fall back to the commune (already fetched for the city level — no extra requests):
-    // any cell whose fine district lookup found nothing is attributed to its commune under
-    // the district level. Commune osm_ids are shared with the city level, so this merges
-    // into an existing district entry when one exists rather than duplicating it.
+    // District coverage gap-fill. At zoom 14, rural France has no sub-commune division, so
+    // ~70% of district samples return no polygon and those stretches would draw nothing.
+    // Fall back to the commune (already fetched for the city level — no extra requests) by
+    // entering it at the district level too. Commune osm_ids are shared between the two
+    // levels, so this merges into an existing district entry rather than duplicating it.
     let district_res = LEVELS[0].2; // keep aligned with the "district" LEVELS entry
     let city_res = LEVELS[1].2; //     and the "city" entry
-    // Gathered per commune before being tallied, so a res-10 parent shared by several
-    // gap-filled cells is credited once instead of once per child.
-    let mut gap: BTreeMap<i64, (CachedRegion, Covered, BTreeSet<CellIndex>)> = BTreeMap::new();
     for cell in &cells {
         let Some(d_parent) = cell.parent(district_res) else {
             continue;
@@ -454,25 +460,72 @@ pub fn run_update_regions() -> Result<()> {
         if let Some(Some(commune)) = cache.get(&c_parent.to_string())
             && commune.level == "city"
         {
-            let entry = gap.entry(commune.osm_id).or_insert_with(|| {
-                let mut as_district = commune.clone();
-                as_district.level = "district".to_string();
-                (as_district, Covered::default(), BTreeSet::new())
-            });
-            entry.1.cells += 1;
-            entry.1.explored_m2 += cell.area_m2();
-            if let Some(filled) = cell.parent(FILLED_RES) {
-                entry.2.insert(filled);
-            }
+            tally
+                .entry(("district".to_string(), commune.osm_id))
+                .or_insert_with(|| {
+                    let mut as_district = commune.clone();
+                    as_district.level = "district".to_string();
+                    (as_district, Covered::default())
+                });
         }
     }
-    for (osm_id, (region, mut covered, filled)) in gap {
-        covered.filled_m2 = filled.iter().map(|c| c.area_m2()).sum();
-        tally
-            .entry(("district".to_string(), osm_id))
-            .or_insert_with(|| (region, Covered::default()))
-            .1
-            .add(&covered);
+
+    // Now count. A region's outline is tiled at both reveal resolutions and the results
+    // intersected with where you've been, so numerator and denominator always come from
+    // the same set of hexagons.
+    let outlines: BTreeMap<i64, MultiPolygon<f64>> = tally
+        .values()
+        .filter_map(|(region, _)| {
+            let value = fresh_geometry
+                .get(&region.osm_id)
+                .or_else(|| prior_geometry.get(&region.osm_id))?;
+            let geometry: geojson::Geometry = serde_json::from_value(value.clone()).ok()?;
+            match geo::Geometry::try_from(geometry).ok()? {
+                geo::Geometry::MultiPolygon(mp) => Some((region.osm_id, mp)),
+                geo::Geometry::Polygon(p) => Some((region.osm_id, MultiPolygon(vec![p]))),
+                _ => None,
+            }
+        })
+        .collect();
+
+    log_progress(&format!("counting hexagons in {} region(s)", tally.len()));
+    for ((level, osm_id), (region, covered)) in &mut tally {
+        // A country's outline is simplified to ~16 km and loses its islands, so tiling it
+        // would be meaningless — and 6 billion hexagons is not a thing you can enumerate.
+        // Count what you've been in by the coarse parent and size the rest from the true
+        // area. Nobody is finishing a country, so approximate is fine here and only here.
+        if level == "country" {
+            let parent_res = LEVELS[2].2;
+            covered.explored = cells
+                .iter()
+                .filter(|c| {
+                    c.parent(parent_res).is_some_and(|p| {
+                        matches!(cache.get(&p.to_string()), Some(Some(r)) if r.osm_id == *osm_id)
+                    })
+                })
+                .count();
+            covered.filled = revealed
+                .iter()
+                .filter(|c| {
+                    c.parent(parent_res).is_some_and(|p| {
+                        matches!(cache.get(&p.to_string()), Some(Some(r)) if r.osm_id == *osm_id)
+                    })
+                })
+                .count();
+            covered.total = estimate_cells(region.area, region.lat, region.lon, Resolution::Eleven);
+            covered.filled_total = estimate_cells(region.area, region.lat, region.lon, FILLED_RES);
+            continue;
+        }
+
+        let Some(shape) = outlines.get(osm_id) else {
+            continue; // No outline to count against; stays at zero and gets filtered out.
+        };
+        let precise = cells_of(shape, Resolution::Eleven);
+        covered.total = precise.len();
+        covered.explored = precise.iter().filter(|c| visited.contains(c)).count();
+        let coarse = cells_of(shape, FILLED_RES);
+        covered.filled_total = coarse.len();
+        covered.filled = coarse.iter().filter(|c| revealed.contains(c)).count();
     }
 
     let mut regions: Vec<Region> = tally
@@ -483,31 +536,30 @@ pub fn run_update_regions() -> Result<()> {
                 .or_else(|| prior_geometry.get(&region.osm_id))
                 .cloned()
                 .unwrap_or(serde_json::Value::Null);
-            // Whole m² is far finer than any badge shows, and keeps the JSON compact.
-            let round = |v: f64| v.round();
             Region {
                 osm_id: region.osm_id,
                 name: region.name,
                 level: region.level,
                 lat: region.lat,
                 lon: region.lon,
-                area: round(region.area),
-                explored_m2: round(covered.explored_m2),
-                filled_m2: round(covered.filled_m2),
-                explored: covered.cells,
+                explored: covered.explored,
+                total: covered.total,
+                filled: covered.filled,
+                filled_total: covered.filled_total,
                 geometry,
             }
         })
         .filter(|r| {
-            r.level == "country"
-                || r.explored > MIN_EXPLORED_CELLS
-                || share(r.explored_m2, r.area) >= MIN_PERCENT
+            r.explored > 0
+                && (r.level == "country"
+                    || r.explored > MIN_EXPLORED_CELLS
+                    || share(r.explored, r.total) >= MIN_PERCENT)
         })
         .collect();
     regions.sort_by(|a, b| {
         a.level.cmp(&b.level).then(
-            share(b.explored_m2, b.area)
-                .partial_cmp(&share(a.explored_m2, a.area))
+            share(b.explored, b.total)
+                .partial_cmp(&share(a.explored, a.total))
                 .unwrap(),
         )
     });

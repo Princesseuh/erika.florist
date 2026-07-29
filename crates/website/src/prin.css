@@ -496,6 +496,13 @@
 	:root[data-catalogue-authed="true"] [data-promote] {
 		display: block;
 	}
+
+	/* The modal "Mark finished" button is the promote control reachable on touch/mobile
+	   (no hover). JS un-hides it for planned entries regardless of auth, so gate it here:
+	   keep it hidden for logged-out visitors, and let JS control it once authed. */
+	:root:not([data-catalogue-authed="true"]) #review-modal-promote {
+		display: none;
+	}
 }
 
 /* Native CSS masonry. When the browser supports the `grid-template-rows: masonry`

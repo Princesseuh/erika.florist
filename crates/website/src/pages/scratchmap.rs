@@ -12,10 +12,10 @@ const CELLS_JSON: &str = include_str!("../../content/scratchmap/cells.json");
 // Neighbourhood/city/country completion, computed in CI by `xtask update-regions`.
 const REGIONS_JSON: &str = include_str!("../../content/scratchmap/regions.json");
 
-// CI's geocode cache (sample parent cell → region). Tiny, no geometry. Shipped so the
-// logged-in live view can attribute freshly-walked cells to regions client-side using
-// the same algorithm CI uses, without calling Nominatim.
-const REGIONS_CACHE_JSON: &str = include_str!("../../content/scratchmap/regions-cache.json");
+// CI's geocode cache (content/scratchmap/regions-cache.json) is deliberately *not* shipped.
+// Live mode used to attribute freshly-walked cells by their coarse parent cell, which
+// needed it; it now tests the region outlines already present in REGIONS_JSON, which is
+// both exact and ~44 kB lighter over the wire.
 
 #[route("/scratchmap/")]
 pub struct ScratchMap;
@@ -47,11 +47,6 @@ impl Route for ScratchMap {
                     // Per-region completion badges, shown by zoom level.
                     script type="application/json" id="scratchmap-regions" {
                         (PreEscaped(REGIONS_JSON.trim()))
-                    }
-
-                    // Geocode cache for the live view's client-side region attribution.
-                    script type="application/json" id="scratchmap-regions-cache" {
-                        (PreEscaped(REGIONS_CACHE_JSON.trim()))
                     }
                 }
             ),

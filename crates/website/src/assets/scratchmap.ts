@@ -376,21 +376,23 @@ if (el && dataEl) {
 	const regionsEl = document.getElementById("scratchmap-regions");
 	const regions: Region[] = regionsEl ? JSON.parse(regionsEl.textContent || "[]") : [];
 
-	// CI's attribution cache (sample parent cell → region metadata, or null). Shipped so
-	// live mode can bump a region's % with the exact algorithm CI uses — no Nominatim.
-	interface CacheEntry {
-		osm_id: number;
-		level: string;
-		area: number;
-	}
-	const cacheEl = document.getElementById("scratchmap-regions-cache");
-	const regionCache: Record<string, CacheEntry | null> = cacheEl
-		? JSON.parse(cacheEl.textContent || "{}")
-		: {};
-	// Resolutions CI samples district/city/country at, for the parent → region lookup.
-	// Must match `LEVELS` in xtask/src/tasks/update_regions.rs — a mismatch silently misses
-	// every cache entry for that level, so live mode stops updating its badges.
-	const REGION_RES = [8, 7, 3];
+	// Is a point inside a region? Ray casting, with the rings after the first in each
+	// polygon treated as holes — the same "centre of the hexagon falls inside the outline"
+	// rule xtask tiles with, so a badge bumped live agrees with what CI recomputes later.
+	const inRing = (lng: number, lat: number, ring: GeoJSON.Position[]) => {
+		let inside = false;
+		for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+			const a = ring[i];
+			const b = ring[j];
+			if (!a || !b) continue;
+			const [xi, yi] = a as [number, number];
+			const [xj, yj] = b as [number, number];
+			if (yi > lat !== yj > lat && lng < ((xj - xi) * (lat - yi)) / (yj - yi) + xi) {
+				inside = !inside;
+			}
+		}
+		return inside;
+	};
 
 	// A badge counts the hexagons of the reveal you're looking at. Both numerator and
 	// denominator come from the same set, so no cap is needed and collecting a region
@@ -438,7 +440,32 @@ if (el && dataEl) {
 	interface RegionState extends Counts {
 		name: string;
 		marker: L.Marker;
+		/// The outline to test freshly-walked cells against, with its bounding box so the
+		/// overwhelmingly common "nowhere near here" case costs four comparisons.
+		rings: GeoJSON.Position[][][] | undefined;
+		minLng: number;
+		minLat: number;
+		maxLng: number;
+		maxLat: number;
 	}
+
+	const containsPoint = (state: RegionState, lng: number, lat: number) => {
+		if (
+			!state.rings ||
+			lng < state.minLng ||
+			lng > state.maxLng ||
+			lat < state.minLat ||
+			lat > state.maxLat
+		) {
+			return false;
+		}
+		return state.rings.some(
+			(polygon) =>
+				polygon[0] !== undefined &&
+				inRing(lng, lat, polygon[0]) &&
+				!polygon.slice(1).some((hole) => inRing(lng, lat, hole)),
+		);
+	};
 	const regionStates = new Map<string, RegionState>();
 
 	// The res-10 parents already accounted for in the shipped `filled_m2`. Captured before
@@ -469,10 +496,30 @@ if (el && dataEl) {
 			interactive: false,
 			keyboard: false,
 		}).addTo(group);
+		const rings = region.geometry?.coordinates;
+		let minLng = Infinity;
+		let minLat = Infinity;
+		let maxLng = -Infinity;
+		let maxLat = -Infinity;
+		// The outer ring of each polygon bounds it; the holes are inside by definition.
+		for (const polygon of rings ?? []) {
+			for (const position of polygon[0] ?? []) {
+				const [lng, lat] = position as [number, number];
+				if (lng < minLng) minLng = lng;
+				if (lng > maxLng) maxLng = lng;
+				if (lat < minLat) minLat = lat;
+				if (lat > maxLat) maxLat = lat;
+			}
+		}
 		regionStates.set(`${region.level}:${region.osm_id}`, {
 			name: region.name,
 			...covered,
 			marker,
+			rings,
+			minLng,
+			minLat,
+			maxLng,
+			maxLat,
 		});
 	}
 
@@ -487,15 +534,9 @@ if (el && dataEl) {
 			const opensParent = !filledParents.has(parent);
 			if (opensParent) filledParents.add(parent);
 
-			for (const res of REGION_RES) {
-				const entry = regionCache[cellToParent(cell, res)];
-				if (!entry) continue;
-				const key = `${entry.level}:${entry.osm_id}`;
-				const state = regionStates.get(key);
-				if (!state) continue;
-				// Approximate between syncs: this credits the cell to the region its coarse
-				// parent geocoded to, where CI tests the region's own outline. The next CI
-				// run replaces it with the exact count.
+			const [lat, lng] = cellToLatLng(cell);
+			for (const [key, state] of regionStates) {
+				if (!containsPoint(state, lng, lat)) continue;
 				state.explored += 1;
 				if (opensParent) state.filled += 1;
 				dirty.add(key);

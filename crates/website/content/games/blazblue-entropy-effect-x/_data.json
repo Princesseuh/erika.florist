@@ -1,0 +1,52 @@
+{
+  "first_release_date": 1770854400,
+  "genres": [
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "Switch 2",
+      "id": 508
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 45557,
+      "name": "Astrolabe Games",
+      "role": "publisher"
+    },
+    {
+      "id": 1218,
+      "name": "Arc System Works",
+      "role": "publisher"
+    },
+    {
+      "id": 13184,
+      "name": "91Act",
+      "role": "developer"
+    }
+  ]
+}

@@ -4,7 +4,7 @@ use std::thread::sleep;
 use std::time::Duration;
 
 use anyhow::{Context, Result};
-use geo::{Centroid, Contains, Coord, GeodesicArea, LineString, MultiPolygon, Polygon, Simplify};
+use geo::{Centroid, Contains, Coord, LineString, MultiPolygon, Polygon, Simplify};
 use h3o::geom::TilerBuilder;
 use h3o::{CellIndex, LatLng, Resolution};
 use serde::Serialize;
@@ -14,8 +14,6 @@ use crate::utils::{log_progress, log_success, log_warn, workspace_root};
 
 const CELLS_PATH: &str = "crates/website/content/scratchmap/cells.json";
 const REGIONS_PATH: &str = "crates/website/content/scratchmap/regions.json";
-// Parent-cell → region table for the live view.
-const CACHE_PATH: &str = "crates/website/content/scratchmap/regions-cache.json";
 // Processed outlines by OSM relation id. A run only downloads relations not in here.
 const BOUNDARIES_PATH: &str = "crates/website/content/scratchmap/boundaries-cache.json";
 // Boundary ids per visited res-4 area, and tags plus edit timestamps per boundary.
@@ -1010,7 +1008,6 @@ fn fetch_geometries(
 pub fn run_update_regions() -> Result<()> {
     let root = workspace_root();
     let regions_path = root.join(REGIONS_PATH);
-    let cache_path = root.join(CACHE_PATH);
     let boundaries_path = root.join(BOUNDARIES_PATH);
 
     let cells: Vec<CellIndex> = fs::read_to_string(root.join(CELLS_PATH))
@@ -1364,57 +1361,6 @@ pub fn run_update_regions() -> Result<()> {
         });
     }
 
-    // 9. Live-view cache: coarse parent cell → region at res 8 (district), res 7
-    // (city), res 3 (country). Must match REGION_RES in scratchmap.ts. Only parents
-    // near visited cells ship: live mode covers the next streets of a walk, a new
-    // area waits for the weekly sync, and the cache stays small.
-    let mut allowed: BTreeMap<Resolution, BTreeSet<CellIndex>> = BTreeMap::new();
-    for res in [Resolution::Eight, Resolution::Seven] {
-        let mut set = BTreeSet::new();
-        for parent in cells.iter().filter_map(|c| c.parent(res)).collect::<BTreeSet<_>>() {
-            set.extend(parent.grid_disk::<Vec<_>>(1));
-        }
-        allowed.insert(res, set);
-    }
-    // Only countries with visited cells: the live view cannot need the rest, and the
-    // whole world at res 3 would triple the cache.
-    let mut live_cache: BTreeMap<String, Value> = BTreeMap::new();
-    for ((_, prior_entry, shape, _), region) in countries.iter().zip(&country_regions) {
-        if region.explored == 0 {
-            continue;
-        }
-        for cell in cells_of(shape, Resolution::Three) {
-            live_cache.entry(cell.to_string()).or_insert_with(|| {
-                serde_json::json!({
-                    "osm_id": prior_entry["osm_id"],
-                    "level": "country",
-                    "area": 0.0,
-                })
-            });
-        }
-    }
-    for region in &kept {
-        let res = if region.candidate.display_level == "city" {
-            Resolution::Seven
-        } else {
-            Resolution::Eight
-        };
-        let area = region.shape.geodesic_area_unsigned();
-        for cell in cells_of(&region.shape, res) {
-            if !allowed[&res].contains(&cell) {
-                continue;
-            }
-            live_cache.insert(
-                cell.to_string(),
-                serde_json::json!({
-                    "osm_id": region.candidate.id,
-                    "level": region.candidate.display_level,
-                    "area": area,
-                }),
-            );
-        }
-    }
-
     // 10. Output. The displayed outline is the counting outline: a second per-region
     // simplification would desynchronise shared borders again.
     let mut regions: Vec<Region> = kept
@@ -1449,14 +1395,6 @@ pub fn run_update_regions() -> Result<()> {
         &regions_path,
         format!("{}\n", serde_json::to_string(&regions)?),
     )?;
-    fs::write(
-        &cache_path,
-        format!("{}\n", serde_json::to_string(&live_cache)?),
-    )?;
-    log_success(&format!(
-        "Wrote {} region(s) to regions.json ({} lookup cell(s) in the live cache).",
-        regions.len(),
-        live_cache.len()
-    ));
+    log_success(&format!("Wrote {} region(s) to regions.json.", regions.len()));
     Ok(())
 }

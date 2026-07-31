@@ -1,7 +1,10 @@
-use maud::{PreEscaped, html};
+use std::hash::{DefaultHasher, Hash, Hasher};
+
+use maud::html;
 use maudit::{assets::StyleOptions, route::prelude::*};
 
 use crate::layouts::base_layout;
+use crate::state;
 
 // Sorted JSON array of visited H3 cell ids. `include_str!` makes cargo rebuild, and
 // Maudit re-render, when the data changes.
@@ -12,6 +15,42 @@ const REGIONS_JSON: &str = include_str!("../../content/scratchmap/regions.json")
 
 // Parent cell → region, so the live view attributes new cells with the CI lookup.
 const REGIONS_CACHE_JSON: &str = include_str!("../../content/scratchmap/regions-cache.json");
+
+fn scratchmap_hash() -> String {
+    let mut hasher = DefaultHasher::new();
+    CELLS_JSON.hash(&mut hasher);
+    REGIONS_JSON.hash(&mut hasher);
+    REGIONS_CACHE_JSON.hash(&mut hasher);
+    format!("{:x}", hasher.finish())
+}
+
+// The map data, versioned by its content hash. The page carries only the hash;
+// scratchmap-db.ts fetches this once per data change and serves IndexedDB after.
+#[route("/scratchmap/content.json")]
+pub struct ScratchMapContent;
+
+impl Route for ScratchMapContent {
+    fn render(&self, _ctx: &mut PageContext) -> impl Into<RenderResult> {
+        let hash = scratchmap_hash();
+        let _ = state::set_scratchmap_hash(hash.clone());
+        format!(
+            "[{:?},{},{}]",
+            hash,
+            CELLS_JSON.trim(),
+            REGIONS_JSON.trim()
+        )
+    }
+}
+
+// The live-view attribution cache, fetched only after login.
+#[route("/scratchmap/live-cache.json")]
+pub struct ScratchMapLiveCache;
+
+impl Route for ScratchMapLiveCache {
+    fn render(&self, _ctx: &mut PageContext) -> impl Into<RenderResult> {
+        format!("[{:?},{}]", scratchmap_hash(), REGIONS_CACHE_JSON.trim())
+    }
+}
 
 #[route("/scratchmap/")]
 pub struct ScratchMap;
@@ -25,6 +64,10 @@ impl Route for ScratchMap {
             StyleOptions { tailwind: false },
         )?;
 
+        // Empty on incremental rebuilds where ScratchMapContent stayed cached;
+        // scratchmap-db.ts then just refetches content.json.
+        let hash = state::get_scratchmap_hash().unwrap_or_default();
+
         Ok(base_layout(
             Some("Scratch map".into()),
             Some(
@@ -32,20 +75,7 @@ impl Route for ScratchMap {
             ),
             html!(
                 div id="scratchmap-frame" class="relative h-[calc(100vh-213px)] md:h-[calc(100vh-255px)]" {
-                    div id="scratchmap-map" class="absolute inset-0 bg-white-sugar-cane" {}
-
-                    script type="application/json" id="scratchmap-cells" {
-                        (PreEscaped(CELLS_JSON.trim()))
-                    }
-
-                    script type="application/json" id="scratchmap-regions" {
-                        (PreEscaped(REGIONS_JSON.trim()))
-                    }
-
-                    script type="application/json" id="scratchmap-regions-cache" {
-                        (PreEscaped(REGIONS_CACHE_JSON.trim()))
-                    }
-
+                    div id="scratchmap-map" class="absolute inset-0 bg-white-sugar-cane" data-latest=(hash) {}
                 }
             ),
             true,

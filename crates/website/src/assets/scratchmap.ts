@@ -8,16 +8,21 @@
 
 import * as L from "leaflet";
 import { UNITS, cellArea, cellToLatLng, cellToParent, cellsToMultiPolygon, isValidCell } from "h3-js";
+import {
+	type LiveCacheEntry,
+	type ScratchmapCache,
+	loadLiveCache,
+	loadScratchmapCache,
+} from "./scratchmap-db";
 
 const el = document.getElementById("scratchmap-map");
-const dataEl = document.getElementById("scratchmap-cells");
+const latestHash = el instanceof HTMLElement ? (el.dataset.latest ?? "") : "";
 
-if (el && dataEl) {
+function init(data: ScratchmapCache): void {
+	if (!el) return;
 	// h3-js throws on invalid ids, so filter them. The Set lets live mode merge new
 	// cells without duplicates.
-	const visitedSet = new Set(
-		(JSON.parse(dataEl.textContent || "[]") as string[]).filter(isValidCell),
-	);
+	const visitedSet = new Set(data.cells.filter(isValidCell));
 	let visited = [...visitedSet];
 
 	const FOG_FILL = "rgba(82, 72, 156, 0.6)"; // violet-ultra
@@ -335,32 +340,11 @@ if (el && dataEl) {
 	map.on("zoomend moveend viewreset", draw);
 	map.on("resize", resize);
 
-	interface Region {
-		osm_id: number;
-		name: string;
-		level: string;
-		lat: number;
-		lon: number;
-		// See the matching fields in xtask's `Region`.
-		explored: number;
-		total: number;
-		filled: number;
-		filled_total: number;
-		geometry?: GeoJSON.MultiPolygon;
-	}
-	const regionsEl = document.getElementById("scratchmap-regions");
-	const regions: Region[] = regionsEl ? JSON.parse(regionsEl.textContent || "[]") : [];
+	const regions = data.regions;
 
-	// Parent cell → region, from CI, so live mode updates badges with the same lookup.
-	interface CacheEntry {
-		osm_id: number;
-		level: string;
-		area: number;
-	}
-	const cacheEl = document.getElementById("scratchmap-regions-cache");
-	const regionCache: Record<string, CacheEntry | null> = cacheEl
-		? JSON.parse(cacheEl.textContent || "{}")
-		: {};
+	// Parent cell → region, so live mode updates badges with the same lookup CI uses.
+	// Loaded only after login, from scratchmap-db.
+	let regionCache: Record<string, LiveCacheEntry | null> = {};
 	// Lookup resolutions for district/city/country. Must match the cache resolutions
 	// in xtask/src/tasks/update_regions.rs; a mismatch silently disables live badges.
 	const REGION_RES = [8, 7, 3];
@@ -804,14 +788,19 @@ if (el && dataEl) {
 		try {
 			const res = await fetch(`${API_URL}/auth`, { credentials: "include" });
 			if (!res.ok) return;
-			const data = (await res.json()) as { authenticated?: boolean };
-			if (data.authenticated !== true) return;
+			const auth = (await res.json()) as { authenticated?: boolean };
+			if (auth.authenticated !== true) return;
+			regionCache = await loadLiveCache(latestHash);
 			addLiveControl();
 			if (location.hash === "#live") setLive(true);
 		} catch {
 			// Auth check failed: stay in static mode.
 		}
 	})();
+}
+
+if (el) {
+	loadScratchmapCache(latestHash, init, () => init({ cells: [], regions: [] }));
 }
 
 export {};

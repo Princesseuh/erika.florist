@@ -769,13 +769,35 @@ function init(data: ScratchmapCache): void {
 		}
 	};
 
+	// Seconds until the next poll, shown as tiny text inside the Live button.
+	let nextPollAt = 0;
+	let countdownTimer: number | undefined;
+	let countdownEl: HTMLElement | null = null;
+	const updateCountdown = () => {
+		if (!countdownEl) return;
+		const seconds = Math.max(0, Math.ceil((nextPollAt - Date.now()) / 1000));
+		countdownEl.textContent = String(seconds);
+	};
+
 	const startPolling = () => {
-		if (livePoll === undefined) livePoll = window.setInterval(() => void fetchLive(false), POLL_MS);
+		if (livePoll === undefined) {
+			nextPollAt = Date.now() + POLL_MS;
+			livePoll = window.setInterval(() => {
+				nextPollAt = Date.now() + POLL_MS;
+				void fetchLive(false);
+			}, POLL_MS);
+			countdownTimer = window.setInterval(updateCountdown, 1000);
+			updateCountdown();
+		}
 	};
 	const stopPolling = () => {
 		if (livePoll !== undefined) {
 			clearInterval(livePoll);
 			livePoll = undefined;
+		}
+		if (countdownTimer !== undefined) {
+			clearInterval(countdownTimer);
+			countdownTimer = undefined;
 		}
 	};
 
@@ -811,12 +833,19 @@ function init(data: ScratchmapCache): void {
 				button.href = "#";
 				button.setAttribute("role", "button");
 				centerIcon(button);
+				button.style.position = "relative";
 				syncLiveButton = () => {
 					button.style.color = liveOn ? "#c0392b" : "";
 					button.title = liveOn
 						? "Live: following new cells — click to stop"
 						: "Live: off — click to follow cells as you walk";
-					button.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" style="display:block" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/><path d="M16.24 7.76a6 6 0 0 1 0 8.48M7.76 16.24a6 6 0 0 1 0-8.48"/></svg>`;
+					button.innerHTML =
+						`<svg viewBox="0 0 24 24" width="16" height="16" style="display:block" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/><path d="M16.24 7.76a6 6 0 0 1 0 8.48M7.76 16.24a6 6 0 0 1 0-8.48"/></svg>` +
+						(liveOn
+							? `<span style="position:absolute;right:1px;bottom:0;font:600 8px/1 system-ui,sans-serif;font-variant-numeric:tabular-nums;pointer-events:none"></span>`
+							: "");
+					countdownEl = button.querySelector("span");
+					updateCountdown();
 				};
 				syncLiveButton();
 				L.DomEvent.on(button, "click", (event) => {

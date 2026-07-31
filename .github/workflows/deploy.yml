@@ -47,9 +47,18 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy
     steps:
+      # Wiki modified dates and the mtime restore need full commit history, but
+      # not old images. The filter skips blobs over 128 KB, which cuts the
+      # checkout from ~2.9 GB to ~1.2 GB.
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          filter: blob:limit=131072
+
+      # Rename detection loads old blobs the partial clone does not have.
+      # getLastModified.sh is unaffected: it passes --find-renames itself.
+      - name: Disable rename detection for the mtime restore
+        run: git config diff.renames false
 
       # Maudit's placeholder cache is validated by mtime+size; checkout resets
       # mtimes, so restore them from git history to get cache hits across runs.

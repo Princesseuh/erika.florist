@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Refactor commits that must not count as content modifications.
 ignore_commits=(
   "67f6075f51de7c62327fba114e9310774f94fb95"
   "03eb7d5aea2e4750b1db40aa363b36b409d802a6"
@@ -19,30 +20,46 @@ ignore_commits=(
   "bfea42334de27584b70367a0375ed9972a6e14e1"
 )
 
-# Determine job count (cross-platform)
-if command -v nproc >/dev/null 2>&1; then
-  JOBS=$(nproc)
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-  JOBS=$(sysctl -n hw.ncpu)
-else
-  JOBS=4
-fi
+# git log prints paths relative to the repository root; find prints them
+# relative to the current directory.
+prefix=$(git rev-parse --show-prefix)
 
-ignore_pattern=$(IFS='|'; echo "${ignore_commits[*]}")
-export ignore_pattern
-
-process_file() {
-  local fname="$1"
-  local line
-  line=$(git log --follow --no-patch --date=iso --pretty="format:%cs|%H;" -- "$fname" \
-    | grep -Ev "$ignore_pattern" \
-    | head -n 1)
-  # No newline here
-  printf '%s|%s' "$fname" "$line"
+# One history pass. The markdown pathspec keeps rename detection away from
+# image blobs, so this works in a partial clone that has no old images.
+# A per-file `git log --follow` walk compares against the full tree and
+# downloads gigabytes of old image blobs in such a clone.
+git log --name-status --find-renames --format='@%cs|%H' -- ':(top)*.md' ':(top)*.mdx' ':(top)*.mdoc' |
+	awk -v FS='\t' \
+		-v prefix="$prefix" \
+		-v ignores="${ignore_commits[*]}" \
+		-v files="$(find content/wiki -name '*.md' | tr '\n' ' ')" '
+BEGIN {
+	n = split(ignores, a, " ")
+	for (i = 1; i <= n; i++) ignore[a[i]] = 1
+	m = split(files, f, " ")
+	for (i = 1; i <= m; i++) active[prefix f[i]] = f[i]
 }
-
-export -f process_file
-
-# Collect outputs in parallel but without newlines
-find content/wiki -name "*.md" -print0 |
-  xargs -0 -P "$JOBS" -I{} bash -c 'process_file "$@"' _ {}
+/^@/ {
+	split(substr($0, 2), c, "|")
+	date = c[1]; hash = c[2]
+	skip = (hash in ignore)
+	next
+}
+NF < 2 { next }
+{
+	target = $NF
+	if (!(target in active)) next
+	orig = active[target]
+	if (!skip) {
+		done[orig] = date "|" hash
+		delete active[target]
+	} else if ($1 ~ /^R/) {
+		# An ignored commit renamed the file: keep walking its old path.
+		active[$2] = orig
+		delete active[target]
+	}
+}
+END {
+	for (i = 1; i <= m; i++)
+		if (f[i] in done) printf "%s|%s;", f[i], done[f[i]]
+}'

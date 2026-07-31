@@ -21,7 +21,6 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
             pages::Catalogue,
             pages::Stats,
             pages::ScratchMapContent,
-            pages::ScratchMapLiveCache,
             pages::ScratchMap,
             pages::Collections,
             pages::CollectionPage,

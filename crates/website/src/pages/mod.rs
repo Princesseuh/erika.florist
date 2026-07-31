@@ -24,6 +24,6 @@ pub use login::LoginPage;
 pub use projects::{ProjectIndex, ProjectPage};
 pub use rss::blog::BlogRSS;
 pub use rss::catalogue::CatalogueRSS;
-pub use scratchmap::{ScratchMap, ScratchMapContent, ScratchMapLiveCache};
+pub use scratchmap::{ScratchMap, ScratchMapContent};
 pub use stats::Stats;
 pub use wiki::{WikiEntryPage, WikiIndex};

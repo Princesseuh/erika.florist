@@ -22,12 +22,6 @@ export interface ScratchmapCache {
 	regions: ScratchmapRegion[];
 }
 
-export interface LiveCacheEntry {
-	osm_id: number;
-	level: string;
-	area: number;
-}
-
 type ScratchmapContent = [hash: string, cells: string[], regions: ScratchmapRegion[]];
 
 function createStores(db: IDBDatabase): void {
@@ -47,8 +41,6 @@ function isContent(value: unknown): value is ScratchmapContent {
 		Array.isArray(value[2])
 	);
 }
-
-let dbHandle: IDBDatabase | undefined;
 
 // onReady fires with the data in both the cache-hit and fetch paths; seeding is
 // background work.
@@ -138,7 +130,6 @@ export function loadScratchmapCache(
 	openRequest.addEventListener("upgradeneeded", () => createStores(openRequest.result));
 	openRequest.addEventListener("success", () => {
 		db = openRequest.result;
-		dbHandle = db;
 		checkFreshness();
 	});
 	openRequest.addEventListener("error", () => {
@@ -149,7 +140,6 @@ export function loadScratchmapCache(
 			retry.addEventListener("upgradeneeded", () => createStores(retry.result));
 			retry.addEventListener("success", () => {
 				db = retry.result;
-				dbHandle = db;
 				void fetchAndSeed();
 			});
 			retry.addEventListener("error", onError);
@@ -159,56 +149,4 @@ export function loadScratchmapCache(
 			onError();
 		});
 	});
-}
-
-// The live-view attribution cache, fetched only for the logged-in owner and cached
-// under the same content hash. Resolves {} on any failure: live mode then simply
-// stops updating badges between syncs.
-export async function loadLiveCache(
-	latestHash: string,
-): Promise<Record<string, LiveCacheEntry | null>> {
-	const db = dbHandle;
-	if (db) {
-		const cached = await new Promise<Record<string, LiveCacheEntry | null> | undefined>(
-			(resolve) => {
-				const req: IDBRequest<unknown> = db
-					.transaction("data", "readonly")
-					.objectStore("data")
-					.get("live-cache");
-				req.addEventListener("success", () => {
-					const raw = req.result;
-					if (
-						typeof raw === "object" &&
-						raw !== null &&
-						"hash" in raw &&
-						(raw as { hash: unknown }).hash === latestHash &&
-						"data" in raw
-					) {
-						resolve((raw as { data: Record<string, LiveCacheEntry | null> }).data);
-					} else {
-						resolve(undefined);
-					}
-				});
-				req.addEventListener("error", () => resolve(undefined));
-			},
-		);
-		if (cached) return cached;
-	}
-	try {
-		const response = await fetch(`/scratchmap/live-cache.json?v=${latestHash}`);
-		const json: unknown = await response.json();
-		if (!Array.isArray(json) || json.length < 2 || typeof json[1] !== "object") {
-			throw new Error("Invalid live-cache format");
-		}
-		const [hash, data] = json as [string, Record<string, LiveCacheEntry | null>];
-		if (db) {
-			db.transaction("data", "readwrite")
-				.objectStore("data")
-				.put({ data, hash, id: "live-cache" });
-		}
-		return data;
-	} catch (error) {
-		console.error("Failed to fetch scratchmap live cache", error);
-		return {};
-	}
 }

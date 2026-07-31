@@ -8,12 +8,7 @@
 
 import * as L from "leaflet";
 import { UNITS, cellArea, cellToLatLng, cellToParent, cellsToMultiPolygon, isValidCell } from "h3-js";
-import {
-	type LiveCacheEntry,
-	type ScratchmapCache,
-	loadLiveCache,
-	loadScratchmapCache,
-} from "./scratchmap-db";
+import { type ScratchmapCache, loadScratchmapCache } from "./scratchmap-db";
 
 const el = document.getElementById("scratchmap-map");
 const latestHash = el instanceof HTMLElement ? (el.dataset.latest ?? "") : "";
@@ -342,12 +337,23 @@ function init(data: ScratchmapCache): void {
 
 	const regions = data.regions;
 
-	// Parent cell → region, so live mode updates badges with the same lookup CI uses.
-	// Loaded only after login, from scratchmap-db.
-	let regionCache: Record<string, LiveCacheEntry | null> = {};
-	// Lookup resolutions for district/city/country. Must match the cache resolutions
-	// in xtask/src/tasks/update_regions.rs; a mismatch silently disables live badges.
-	const REGION_RES = [8, 7, 3];
+	// Is a point inside a region? Ray casting; rings after the first in each polygon
+	// are holes. The same centre-in-outline rule xtask tiles with, so a badge bumped
+	// live agrees with what CI recomputes later.
+	const inRing = (lng: number, lat: number, ring: GeoJSON.Position[]) => {
+		let inside = false;
+		for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+			const a = ring[i];
+			const b = ring[j];
+			if (!a || !b) continue;
+			const [xi, yi] = a as [number, number];
+			const [xj, yj] = b as [number, number];
+			if (yi > lat !== yj > lat && lng < ((xj - xi) * (lat - yi)) / (yj - yi) + xi) {
+				inside = !inside;
+			}
+		}
+		return inside;
+	};
 
 	// Numerator and denominator come from the same set, so a full region reads 100%.
 	interface Counts {
@@ -393,7 +399,32 @@ function init(data: ScratchmapCache): void {
 	interface RegionState extends Counts {
 		name: string;
 		marker: L.Marker;
+		// The outline to test freshly-walked cells against, with its bounding box so
+		// the common "nowhere near here" case costs four comparisons.
+		rings: GeoJSON.Position[][][] | undefined;
+		minLng: number;
+		minLat: number;
+		maxLng: number;
+		maxLat: number;
 	}
+
+	const containsPoint = (state: RegionState, lng: number, lat: number) => {
+		if (
+			!state.rings ||
+			lng < state.minLng ||
+			lng > state.maxLng ||
+			lat < state.minLat ||
+			lat > state.maxLat
+		) {
+			return false;
+		}
+		return state.rings.some(
+			(polygon) =>
+				polygon[0] !== undefined &&
+				inRing(lng, lat, polygon[0]) &&
+				!polygon.slice(1).some((hole) => inRing(lng, lat, hole)),
+		);
+	};
 	const regionStates = new Map<string, RegionState>();
 
 	// Parents painted before live mode starts. A new cell only grows "filled" counts
@@ -431,10 +462,30 @@ function init(data: ScratchmapCache): void {
 			keyboard: false,
 			pane: "badgePane",
 		}).addTo(group);
+		const rings = region.geometry?.coordinates;
+		let minLng = Infinity;
+		let minLat = Infinity;
+		let maxLng = -Infinity;
+		let maxLat = -Infinity;
+		// The outer ring of each polygon bounds it; holes are inside by definition.
+		for (const polygon of rings ?? []) {
+			for (const position of polygon[0] ?? []) {
+				const [lng, lat] = position as [number, number];
+				if (lng < minLng) minLng = lng;
+				if (lng > maxLng) maxLng = lng;
+				if (lat < minLat) minLat = lat;
+				if (lat > maxLat) maxLat = lat;
+			}
+		}
 		regionStates.set(`${region.level}:${region.osm_id}`, {
 			name: region.name,
 			...covered,
 			marker,
+			rings,
+			minLng,
+			minLat,
+			maxLng,
+			maxLat,
 		});
 	}
 
@@ -447,13 +498,9 @@ function init(data: ScratchmapCache): void {
 			const opensParent = !filledParents.has(parent);
 			if (opensParent) filledParents.add(parent);
 
-			for (const res of REGION_RES) {
-				const entry = regionCache[cellToParent(cell, res)];
-				if (!entry) continue;
-				const key = `${entry.level}:${entry.osm_id}`;
-				const state = regionStates.get(key);
-				if (!state) continue;
-				// Approximate between syncs; the next CI run writes the exact counts.
+			const [lat, lng] = cellToLatLng(cell);
+			for (const [key, state] of regionStates) {
+				if (!containsPoint(state, lng, lat)) continue;
 				state.explored += 1;
 				if (opensParent) state.filled += 1;
 				dirty.add(key);
@@ -790,7 +837,6 @@ function init(data: ScratchmapCache): void {
 			if (!res.ok) return;
 			const auth = (await res.json()) as { authenticated?: boolean };
 			if (auth.authenticated !== true) return;
-			regionCache = await loadLiveCache(latestHash);
 			addLiveControl();
 			if (location.hash === "#live") setLive(true);
 		} catch {

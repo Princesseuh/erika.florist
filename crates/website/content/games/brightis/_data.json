@@ -1,0 +1,37 @@
+{
+  "first_release_date": 939859200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    }
+  ],
+  "companies": [
+    {
+      "id": 9860,
+      "name": "Arc Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 1415,
+      "name": "Quintet",
+      "role": "developer"
+    },
+    {
+      "id": 2206,
+      "name": "Shade",
+      "role": "developer"
+    },
+    {
+      "id": 13634,
+      "name": "Sony Computer Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

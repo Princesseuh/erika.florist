@@ -13,14 +13,13 @@ const CELLS_JSON: &str = include_str!("../../content/scratchmap/cells.json");
 // Region completion, computed by `xtask update-regions`.
 const REGIONS_JSON: &str = include_str!("../../content/scratchmap/regions.json");
 
-// Parent cell → region, so the live view attributes new cells with the CI lookup.
-const REGIONS_CACHE_JSON: &str = include_str!("../../content/scratchmap/regions-cache.json");
+// The region-attribution cache is deliberately *not* shipped: live mode tests the
+// region outlines already present in REGIONS_JSON, which is exact and lighter.
 
 fn scratchmap_hash() -> String {
     let mut hasher = DefaultHasher::new();
     CELLS_JSON.hash(&mut hasher);
     REGIONS_JSON.hash(&mut hasher);
-    REGIONS_CACHE_JSON.hash(&mut hasher);
     format!("{:x}", hasher.finish())
 }
 
@@ -39,16 +38,6 @@ impl Route for ScratchMapContent {
             CELLS_JSON.trim(),
             REGIONS_JSON.trim()
         )
-    }
-}
-
-// The live-view attribution cache, fetched only after login.
-#[route("/scratchmap/live-cache.json")]
-pub struct ScratchMapLiveCache;
-
-impl Route for ScratchMapLiveCache {
-    fn render(&self, _ctx: &mut PageContext) -> impl Into<RenderResult> {
-        format!("[{:?},{}]", scratchmap_hash(), REGIONS_CACHE_JSON.trim())
     }
 }
 

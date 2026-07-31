@@ -16,7 +16,8 @@ Tasks:
                             merge them into content/scratchmap/cells.json.
                             Requires SCRATCHMAP_TOKEN (and optionally SCRATCHMAP_API).
 
-  update-regions            Reverse-geocode visited cells (via Nominatim) and compute
+  update-regions            Match visited cells against OSM boundaries (via Overpass)
+                            and Natural Earth countries, then compute
                             neighbourhood/city/country completion into
                             content/scratchmap/regions.json.
 

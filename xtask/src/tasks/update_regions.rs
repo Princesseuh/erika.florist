@@ -1,52 +1,284 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::fs;
 use std::thread::sleep;
-use std::time::{Duration, Instant};
+use std::time::Duration;
 
 use anyhow::{Context, Result};
-use geo::{Area, GeodesicArea, MultiPolygon, Simplify};
+use geo::{Centroid, Contains, Coord, GeodesicArea, LineString, MultiPolygon, Polygon, Simplify};
 use h3o::geom::TilerBuilder;
 use h3o::{CellIndex, LatLng, Resolution};
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
+use serde_json::Value;
 
 use crate::utils::{log_progress, log_success, log_warn, workspace_root};
 
 const CELLS_PATH: &str = "crates/website/content/scratchmap/cells.json";
 const REGIONS_PATH: &str = "crates/website/content/scratchmap/regions.json";
-// Persisted geocode results, so weekly runs only hit Nominatim for *new* areas.
+// Parent-cell → region table for the live view.
 const CACHE_PATH: &str = "crates/website/content/scratchmap/regions-cache.json";
+// Processed outlines by OSM relation id. A run only downloads relations not in here.
+const BOUNDARIES_PATH: &str = "crates/website/content/scratchmap/boundaries-cache.json";
+// Boundary ids per visited res-4 area, and tags plus edit timestamps per boundary.
+// Holds only facts about OSM, so an idle week writes an identical file.
+const SWEEP_PATH: &str = "crates/website/content/scratchmap/sweep-cache.json";
+// Metadata and full-detail outlines for every country in the world. Countries are
+// the one layer not sourced from OSM: OSM country relations trace maritime legal
+// boundaries, far off the coast, while Natural Earth follows the coast with shared
+// border arcs. This file is the vendored source; display outlines derive from it on
+// every run. Natural Earth is only downloaded to rebuild this file from empty.
+const COUNTRY_SHAPES_PATH: &str = "crates/website/content/scratchmap/country-shapes.json";
+const NE_PATH: &str = "target/ne_10m_admin_0.json";
+const NE_URL: &str =
+    "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_0_countries.geojson";
+const USER_AGENT: &str = "erika.florist-scratchmap/1.0 (+https://erika.florist)";
+// Public instances shed load with 429/504 responses; requests rotate between them.
+const OVERPASS: &[&str] = &[
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.kumi.systems/api/interpreter",
+    "https://overpass.private.coffee/api/interpreter",
+];
+// Pause between queries to one Overpass instance.
+const POLITE: Duration = Duration::from_millis(5000);
 
-// The resolution the map's "filled" reveal coarsens to — keep in sync with `REVEAL` in
-// scratchmap.ts. Filling a res-10 parent paints all seven of its children, so the area it
-// clears is real but larger than the area actually walked; both are reported.
+// Must match `REVEAL.filled` in scratchmap.ts.
 const FILLED_RES: Resolution = Resolution::Ten;
 
-// A region has to be more than a drive-by before it earns a badge. One GPS fix inside a
-// commune's boundary leaves a single 50 m hex behind, which would otherwise label the map
-// with a permanent `0.0037%` — a fifth of all regions are exactly that. The percent escape
-// hatch spares genuinely small areas, where two cells really can be several percent of a
-// city block. Countries are always drawn: a country you've set foot in is worth saying so.
+// Badge threshold: more cells than a drive-by leaves, or a real share of a small
+// region. Countries always draw.
 const MIN_EXPLORED_CELLS: usize = 5;
 const MIN_PERCENT: f64 = 0.25;
 
-const USER_AGENT: &str = "erika.florist-scratchmap/1.0 (+https://erika.florist)";
-const NOMINATIM: &str = "https://nominatim.openstreetmap.org/reverse";
+// Simplification tolerance, ~20 m: far below a 50 m hexagon, so counts stay exact.
+// Applied per OSM way, before ring assembly. Neighbour regions share border ways,
+// so both sides simplify to identical points and drawn borders coincide at any zoom.
+const BASE_TOLERANCE: f64 = 0.0002;
 
-// Nominatim's public API asks for max 1 request/second.
-const RATE_LIMIT: Duration = Duration::from_millis(1100);
+/// Admin levels that libpostal marks as "city" in one country. The data is vendored
+/// in xtask/data/libpostal-boundaries.json; the README there has the provenance.
+/// Used only to break the 7-vs-8 municipality tie; some rows are stale (Ireland).
+fn libpostal_city_levels(root: &std::path::Path, iso: &str) -> Vec<u8> {
+    let iso = iso.to_lowercase();
+    if iso.is_empty() {
+        return Vec::new();
+    }
+    let tables: BTreeMap<String, BTreeMap<String, String>> =
+        fs::read_to_string(root.join("xtask/data/libpostal-boundaries.json"))
+            .ok()
+            .and_then(|s| serde_json::from_str(&s).ok())
+            .unwrap_or_default();
+    let Some(table) = tables.get(&iso) else {
+        return Vec::new();
+    };
+    table
+        .iter()
+        .filter(|(_, kind)| *kind == "city")
+        .filter_map(|(level, _)| level.parse().ok())
+        .collect()
+}
 
-// (level name, Nominatim reverse `zoom`, H3 resolution to dedupe sample points at).
-// Coarser levels need fewer samples, so we dedupe them harder to save requests.
-const LEVELS: &[(&str, u8, Resolution)] = &[
-    // Sample districts every ~530 m (res 8) so neighbouring quartiers are picked up
-    // separately rather than a coarser sample lumping them together.
-    ("district", 14, Resolution::Eight),
-    // Sample cities every ~1.4 km (res 7). French communes are small and often adjacent,
-    // so a coarser sample lets two neighbours share one cell — the sampled town wins and
-    // the other is dropped, its cells miscredited (e.g. Gigean absorbed into Poussan).
-    ("city", 10, Resolution::Seven),
-    ("country", 3, Resolution::Three),
-];
+/// Natural Earth 1:10m admin-0 features, downloaded once and cached in target/.
+fn load_ne(root: &std::path::Path) -> Result<Value> {
+    let path = root.join(NE_PATH);
+    if !path.exists() {
+        log_progress("downloading Natural Earth 1:10m country outlines (one-time)");
+        let json: Value = ureq::get(NE_URL)
+            .header("User-Agent", USER_AGENT)
+            .call()
+            .context("Natural Earth download failed")?
+            .body_mut()
+            .with_config()
+            .limit(64 * 1024 * 1024)
+            .read_json()
+            .context("Natural Earth returned unexpected JSON")?;
+        fs::write(&path, serde_json::to_string(&json)?)?;
+    }
+    Ok(serde_json::from_str(&fs::read_to_string(&path)?)?)
+}
+
+/// One sovereign country in Natural Earth. Dependencies share their sovereign's
+/// SOV_A3 (Puerto Rico groups under the US); the representative feature is the most
+/// populous member. ISO_A2_EH avoids the "-99" plain ISO_A2 has for France and Norway.
+struct NeCountry {
+    name: String,
+    lat: f64,
+    lon: f64,
+    ne_id: i64,
+    sov: String,
+}
+
+fn ne_index(ne: &Value) -> BTreeMap<String, NeCountry> {
+    let mut best_pop: BTreeMap<String, f64> = BTreeMap::new();
+    let mut out: BTreeMap<String, NeCountry> = BTreeMap::new();
+    for feature in ne["features"].as_array().into_iter().flatten() {
+        let p = &feature["properties"];
+        // NAME_LONG holds the short everyday form ("United States").
+        let (Some(sov), Some(iso), Some(name)) = (
+            p["SOV_A3"].as_str(),
+            p["ISO_A2_EH"].as_str(),
+            p["NAME_LONG"].as_str().or(p["NAME"].as_str()),
+        ) else {
+            continue;
+        };
+        // Disputed entities share the ISO placeholder "-99" and would collide.
+        if iso == "-99" {
+            continue;
+        }
+        let pop = p["POP_EST"].as_f64().unwrap_or(0.0);
+        if best_pop.get(sov).is_none_or(|prev| pop > *prev) {
+            best_pop.insert(sov.to_string(), pop);
+            // A new representative can carry a different ISO key; remove the old entry.
+            out.retain(|_, c| c.sov != sov);
+            out.insert(
+                iso.to_string(),
+                NeCountry {
+                    name: name.to_string(),
+                    lat: p["LABEL_Y"].as_f64().unwrap_or(0.0),
+                    lon: p["LABEL_X"].as_f64().unwrap_or(0.0),
+                    ne_id: p["NE_ID"].as_i64().unwrap_or(0),
+                    sov: sov.to_string(),
+                },
+            );
+        }
+    }
+    out
+}
+
+/// One parsed Natural Earth feature: sovereign key, feature id, geometry.
+struct NeFeature {
+    sov: String,
+    ne_id: i64,
+    shape: MultiPolygon<f64>,
+}
+
+/// Parse every feature once. Callers iterate this instead of re-parsing per country.
+fn ne_features(ne: &Value) -> Vec<NeFeature> {
+    ne["features"]
+        .as_array()
+        .into_iter()
+        .flatten()
+        .filter_map(|feature| {
+            Some(NeFeature {
+                sov: feature["properties"]["SOV_A3"].as_str()?.to_string(),
+                ne_id: feature["properties"]["NE_ID"].as_i64().unwrap_or(0),
+                shape: from_geojson(&feature["geometry"])?,
+            })
+        })
+        .collect()
+}
+
+/// Decimate a full-detail country outline for display: full detail near visited
+/// cells, world detail elsewhere, small far islets dropped.
+fn display_outline(full: &MultiPolygon<f64>, near: &[(f64, f64)]) -> Value {
+    let kept: Vec<Polygon<f64>> = full
+        .iter()
+        .filter(|poly| {
+            let (mut minx, mut miny, mut maxx, mut maxy) =
+                (f64::MAX, f64::MAX, f64::MIN, f64::MIN);
+            for c in poly.exterior().coords() {
+                minx = minx.min(c.x);
+                miny = miny.min(c.y);
+                maxx = maxx.max(c.x);
+                maxy = maxy.max(c.y);
+            }
+            // Keep a ring smaller than ~5 km only if it is near visited cells.
+            if (maxx - minx).hypot(maxy - miny) >= 0.05 {
+                return true;
+            }
+            let (cx, cy) = ((minx + maxx) / 2.0, (miny + maxy) / 2.0);
+            near.iter()
+                .any(|(lat, lng)| (lng - cx).abs() < 3.0 && (lat - cy).abs() < 3.0)
+        })
+        .map(|poly| {
+            Polygon::new(
+                LineString::from(adaptive_detail(poly.exterior().0.as_slice(), near)),
+                poly.interiors()
+                    .iter()
+                    .map(|r| LineString::from(adaptive_detail(r.0.as_slice(), near)))
+                    .collect(),
+            )
+        })
+        .collect();
+    to_geojson(&MultiPolygon(kept))
+}
+
+/// A country seed built from Natural Earth: full geometry, badge point, totals.
+fn ne_seed(features: &[NeFeature], country: &NeCountry) -> Option<Value> {
+    let merged: Vec<Polygon<f64>> = features
+        .iter()
+        .filter(|f| f.sov == country.sov)
+        .flat_map(|f| f.shape.iter().cloned())
+        .collect();
+    if merged.is_empty() {
+        return None;
+    }
+    let geometry = to_geojson(&MultiPolygon(merged));
+    // Totals come from the representative feature only: Denmark's percentage must not
+    // divide by Greenland. Area is measured by res-5 tiling because Natural Earth
+    // rings wind clockwise, which breaks geodesic area.
+    let area = features
+        .iter()
+        .find(|f| f.ne_id == country.ne_id)
+        .map(|f| {
+            cells_of(&f.shape, Resolution::Five)
+                .iter()
+                .map(|c| c.area_m2())
+                .sum::<f64>()
+        })?;
+    let centre = LatLng::new(country.lat, country.lon).ok()?;
+    let cell11 = centre.to_cell(Resolution::Eleven).area_m2();
+    let cell10 = centre.to_cell(FILLED_RES).area_m2();
+    Some(serde_json::json!({
+        "name": country.name,
+        "osm_id": country.ne_id,
+        "lat": country.lat,
+        "lon": country.lon,
+        "total": (area / cell11).round() as u64,
+        "filled_total": (area / cell10).round() as u64,
+        "geometry": geometry,
+    }))
+}
+
+/// Keep full detail near visited cells; simplify the rest to world-view detail.
+/// Both sides of a shared border split runs at the same points, and Douglas-Peucker
+/// is symmetric under reversal, so shared arcs stay identical.
+fn adaptive_detail(coords: &[Coord<f64>], near: &[(f64, f64)]) -> Vec<Coord<f64>> {
+    const FAR_TOLERANCE: f64 = 0.05;
+    let is_near = |c: &Coord<f64>| {
+        near.iter()
+            .any(|(lat, lng)| (c.x - lng).abs() < 3.0 && (c.y - lat).abs() < 3.0)
+    };
+
+    let mut out: Vec<Coord<f64>> = Vec::new();
+    let mut run: Vec<Coord<f64>> = Vec::new();
+    let mut run_near = coords.first().map(&is_near).unwrap_or(false);
+    let flush = |run: &mut Vec<Coord<f64>>, run_near: bool, out: &mut Vec<Coord<f64>>| {
+        if run.is_empty() {
+            return;
+        }
+        let piece = if run_near {
+            std::mem::take(run)
+        } else {
+            LineString::from(std::mem::take(run)).simplify(&FAR_TOLERANCE).0
+        };
+        let skip = usize::from(!out.is_empty()); // runs share their boundary point
+        out.extend(piece.into_iter().skip(skip));
+    };
+    for &c in coords {
+        let n = is_near(&c);
+        if n != run_near {
+            let boundary = run.last().copied();
+            flush(&mut run, run_near, &mut out);
+            run_near = n;
+            // Keep the line continuous across the run boundary.
+            if let Some(b) = boundary {
+                run.push(b);
+            }
+        }
+        run.push(c);
+    }
+    flush(&mut run, run_near, &mut out);
+    out
+}
 
 #[derive(Serialize)]
 struct Region {
@@ -55,211 +287,30 @@ struct Region {
     level: String,
     lat: f64,
     lon: f64,
-    /// Hexagons of this region you've been in, out of how many it holds. A hexagon belongs
-    /// to whichever region contains its centre, so the regions partition the map and
-    /// collecting all of one gives exactly 100% — no clamping, and nothing to spill over.
+    /// Visited hexagons of this region, out of the hexagons it holds. A hexagon
+    /// belongs to the region that contains its centre, so a full region reads 100%.
     explored: usize,
     total: usize,
-    /// The same pair at res-10, the resolution the "filled" reveal draws, so that badge
-    /// reports the hexagons you can actually see rather than the ones underneath them.
+    /// The same pair at res 10, the resolution the "filled" reveal draws.
     filled: usize,
     filled_total: usize,
-    /// Simplified boundary as a GeoJSON MultiPolygon, for drawing the outline. This is
-    /// the only place the geometry lives — the cache keeps just the lookup metadata,
-    /// and a run reuses the previous regions.json's geometry for cached regions.
-    geometry: serde_json::Value,
+    geometry: Value,
 }
 
-/// A geocoded region's lookup metadata, cached by the sample cell that produced it. A
-/// cache value of `null` means "looked up, no usable polygon" — so point-only places
-/// (common at the district level) aren't re-queried every week. Deliberately holds no
-/// geometry, to keep the cache file tiny.
-#[derive(Serialize, Deserialize, Clone)]
-struct CachedRegion {
-    osm_id: i64,
+/// Admin level, name, and bounding box from the tag sweep.
+type CandidateInfo = (u8, String, [f64; 4]);
+
+#[derive(Clone)]
+struct Candidate {
+    id: i64,
+    admin_level: u8,
     name: String,
-    level: String,
-    area: f64,
-    lat: f64,
-    lon: f64,
+    /// (south, west, north, east)
+    bb: [f64; 4],
+    display_level: String,
 }
 
-/// Douglas-Peucker tolerance (degrees) per level — coarser for bigger regions so a
-/// country outline doesn't ship thousands of points.
-fn simplify_tolerance(level: &str) -> f64 {
-    match level {
-        // Districts are small; keep them full-detail (0 = no simplify) so adjacent
-        // districts' shared borders stay coincident instead of diverging into slivers.
-        "district" => 0.0,
-        "city" => 0.002,
-        // Countries are viewed from far away and have huge, complex borders — simplify
-        // hard so the outline stays roughly a hundred points, not thousands.
-        _ => 0.15,
-    }
-}
-
-/// Keep only the largest polygon — drops far-flung territories/islands that bloat a
-/// country outline you're only ever viewing over its mainland.
-fn primary_landmass(mp: MultiPolygon<f64>) -> MultiPolygon<f64> {
-    match mp
-        .into_iter()
-        .max_by(|a, b| a.unsigned_area().partial_cmp(&b.unsigned_area()).unwrap())
-    {
-        Some(biggest) => MultiPolygon(vec![biggest]),
-        None => MultiPolygon(vec![]),
-    }
-}
-
-/// A simplified `geo` MultiPolygon → a compact GeoJSON MultiPolygon value ([lng,lat],
-/// coordinates rounded to ~1 m).
-fn to_geojson(mp: &MultiPolygon<f64>) -> serde_json::Value {
-    let round = |v: f64| (v * 100_000.0).round() / 100_000.0;
-    let coords: Vec<Vec<Vec<[f64; 2]>>> = mp
-        .iter()
-        .map(|poly| {
-            std::iter::once(poly.exterior())
-                .chain(poly.interiors())
-                .map(|ring| ring.coords().map(|c| [round(c.x), round(c.y)]).collect())
-                .collect()
-        })
-        .collect();
-    serde_json::json!({ "type": "MultiPolygon", "coordinates": coords })
-}
-
-#[derive(Deserialize)]
-struct ReverseResponse {
-    osm_id: Option<i64>,
-    name: Option<String>,
-    lat: Option<String>,
-    lon: Option<String>,
-    #[serde(default)]
-    address: serde_json::Map<String, serde_json::Value>,
-    geojson: Option<serde_json::Value>,
-}
-
-/// Reverse-geocode a point at a given zoom, returning the region's metadata and its
-/// (simplified) outline geometry, or `None` if there's no polygon to measure.
-fn reverse(
-    lat: f64,
-    lon: f64,
-    zoom: u8,
-    level: &str,
-) -> Result<Option<(CachedRegion, serde_json::Value)>> {
-    let url = format!(
-        "{NOMINATIM}?format=jsonv2&lat={lat}&lon={lon}&zoom={zoom}&polygon_geojson=1&addressdetails=1&accept-language=en"
-    );
-    let mut resp: ReverseResponse = ureq::get(&url)
-        .header("User-Agent", USER_AGENT)
-        .call()
-        .context("Nominatim request failed")?
-        .body_mut()
-        .read_json()
-        .context("Nominatim returned unexpected JSON")?;
-
-    let Some(geojson_value) = resp.geojson.take() else {
-        return Ok(None);
-    };
-    let geometry: geojson::Geometry = match serde_json::from_value(geojson_value) {
-        Ok(g) => g,
-        Err(_) => return Ok(None),
-    };
-    let poly: MultiPolygon<f64> = match geo::Geometry::try_from(geometry) {
-        Ok(geo::Geometry::Polygon(p)) => MultiPolygon(vec![p]),
-        Ok(geo::Geometry::MultiPolygon(mp)) => mp,
-        _ => return Ok(None),
-    };
-    let area = poly.geodesic_area_unsigned();
-    if area <= 0.0 {
-        return Ok(None);
-    }
-
-    let name = tidy_name(&region_name(&resp, level));
-    if name.is_empty() {
-        return Ok(None);
-    }
-
-    let plat = resp.lat.and_then(|s| s.parse().ok()).unwrap_or(lat);
-    let plon = resp.lon.and_then(|s| s.parse().ok()).unwrap_or(lon);
-    let osm_id = resp
-        .osm_id
-        .unwrap_or_else(|| (plat * 1000.0) as i64 * 1_000_000 + (plon * 1000.0) as i64);
-
-    let tolerance = simplify_tolerance(level);
-    let simplified = if tolerance > 0.0 {
-        poly.simplify(&tolerance)
-    } else {
-        poly
-    };
-    let outline = if level == "country" {
-        primary_landmass(simplified)
-    } else {
-        simplified
-    };
-    let geometry = to_geojson(&outline);
-
-    let region = CachedRegion {
-        osm_id,
-        name,
-        level: level.to_string(),
-        area,
-        lat: plat,
-        lon: plon,
-    };
-    Ok(Some((region, geometry)))
-}
-
-/// Pick the best display name for a level from Nominatim's address components.
-fn region_name(resp: &ReverseResponse, level: &str) -> String {
-    let addr = |key: &str| {
-        resp.address
-            .get(key)
-            .and_then(|v| v.as_str())
-            .map(str::to_string)
-    };
-
-    // Districts name themselves. The polygon we keep — and the area `percent` divides by —
-    // belongs to the feature Nominatim returned, so only that feature's own name describes
-    // the number on the badge. The address block routinely carries a coarser container
-    // instead: every suburb inside Gothenburg's `Centrum` stadsområde reports
-    // `city_district = "Centrum"`, which would file one suburb's completion under its
-    // parent's name. Some features aren't in the address block at all (a Paris quartier
-    // comes back as `city_block`, which has no address key), so no ordering of those keys
-    // can name them. Cities and countries keep the walk below: there the address component
-    // really is the level being named.
-    if level == "district"
-        && let Some(name) = resp
-            .name
-            .as_deref()
-            .map(str::trim)
-            .filter(|n| !n.is_empty())
-    {
-        return name.to_string();
-    }
-
-    let keys: &[&str] = match level {
-        "district" => &[
-            "city_district",
-            "district",
-            "borough",
-            "suburb",
-            "quarter",
-            "neighbourhood",
-        ],
-        // `municipality` last: in France it's the intercommunal métropole (e.g. every
-        // commune in Montpellier Métropole reports municipality="Montpellier"), which
-        // would collapse distinct towns into one. village/town/city name the commune.
-        "city" => &["city", "town", "village", "municipality"],
-        _ => &["country"],
-    };
-    keys.iter()
-        .find_map(|k| addr(k))
-        .or_else(|| resp.name.clone())
-        .unwrap_or_default()
-}
-
-/// OSM sometimes names a district by concatenating every sub-area with " / "
-/// (e.g. "Minimes / Barrière de Paris / Ponts-Jumeaux / …"). Trim to the first two
-/// for a Bump-style label.
+/// OSM sometimes joins many sub-area names with " / ". Keep the first two.
 fn tidy_name(name: &str) -> String {
     let parts: Vec<&str> = name
         .split('/')
@@ -273,8 +324,6 @@ fn tidy_name(name: &str) -> String {
     }
 }
 
-/// Share of a region's hexagons you've collected. No cap is needed — `have` is drawn from
-/// the same set as `total`, so it can't run past it.
 fn share(have: usize, total: usize) -> f64 {
     if total == 0 {
         0.0
@@ -283,42 +332,686 @@ fn share(have: usize, total: usize) -> f64 {
     }
 }
 
-/// Every res-`res` hexagon whose centre lies inside `shape`.
+/// Res-`res` hexagons whose centres lie inside `shape`. A polygon the tiler rejects
+/// is skipped, so one bad ring cannot zero out a whole country.
 fn cells_of(shape: &MultiPolygon<f64>, res: Resolution) -> Vec<CellIndex> {
     let mut tiler = TilerBuilder::new(res).build();
     for polygon in shape {
         if tiler.add(polygon.clone()).is_err() {
-            return Vec::new(); // Degenerate outline; treated as unmeasurable.
+            log_warn("  skipped a polygon the tiler rejected");
         }
     }
     tiler.into_coverage().collect()
 }
 
-/// How many res-`res` hexagons a region of `area_m2` holds, sized from a real cell at its
-/// centre. H3 cells vary enough in area that the published global average is useless here —
-/// Gothenburg's res-11 cells are a fifth smaller than the mean, which threw the estimate
-/// out by 22%. Sampling locally lands within about 1%.
-fn estimate_cells(area_m2: f64, lat: f64, lon: f64, res: Resolution) -> usize {
-    let Ok(centre) = LatLng::new(lat, lon) else {
-        return 0;
-    };
-    let cell_area = centre.to_cell(res).area_m2();
-    if cell_area <= 0.0 {
-        0
-    } else {
-        (area_m2 / cell_area).round() as usize
+/// MultiPolygon → GeoJSON, [lng, lat], rounded to ~1 m. Rounding can fuse points and
+/// decimation can flatten islets; degenerate rings are removed here because a single
+/// one makes the tiler reject the whole shape.
+fn to_geojson(mp: &MultiPolygon<f64>) -> Value {
+    let round = |v: f64| (v * 100_000.0).round() / 100_000.0;
+    let coords: Vec<Vec<Vec<[f64; 2]>>> = mp
+        .iter()
+        .map(|poly| {
+            std::iter::once(poly.exterior())
+                .chain(poly.interiors())
+                .filter_map(|ring| {
+                    let mut out: Vec<[f64; 2]> = Vec::with_capacity(ring.0.len());
+                    for c in ring.coords() {
+                        let p = [round(c.x), round(c.y)];
+                        if out.last() != Some(&p) {
+                            out.push(p);
+                        }
+                    }
+                    // A closed ring needs a triangle plus the closing point.
+                    (out.len() >= 4).then_some(out)
+                })
+                .collect()
+        })
+        .filter(|rings: &Vec<Vec<[f64; 2]>>| !rings.is_empty())
+        .collect();
+    serde_json::json!({ "type": "MultiPolygon", "coordinates": coords })
+}
+
+fn from_geojson(value: &Value) -> Option<MultiPolygon<f64>> {
+    let geometry: geojson::Geometry = serde_json::from_value(value.clone()).ok()?;
+    match geo::Geometry::try_from(geometry).ok()? {
+        geo::Geometry::MultiPolygon(mp) => Some(mp),
+        geo::Geometry::Polygon(p) => Some(MultiPolygon(vec![p])),
+        _ => None,
     }
 }
 
-/// `m:ss` — for compact elapsed / ETA readouts in the progress log.
-fn fmt_dur(secs: u64) -> String {
-    format!("{}:{:02}", secs / 60, secs % 60)
+/// One POST to one Overpass instance, with retries for transient 429/504 responses.
+fn overpass_at(endpoint: &str, query: &str) -> Result<Value> {
+    const WAITS: &[u64] = &[15, 45];
+    let attempt = || -> Result<Value> {
+        ureq::post(endpoint)
+            .header("User-Agent", USER_AGENT)
+            .send_form([("data", query)])
+            .with_context(|| format!("Overpass request to {endpoint} failed"))?
+            .body_mut()
+            .with_config()
+            // Geometry batches run far past the default body-size cap.
+            .limit(512 * 1024 * 1024)
+            .read_json()
+            .context("Overpass returned unexpected JSON")
+    };
+    let mut last = None;
+    for i in 0..=WAITS.len() {
+        match attempt() {
+            Ok(value) => return Ok(value),
+            Err(e) => {
+                last = Some(e);
+                if let Some(wait) = WAITS.get(i) {
+                    log_warn(&format!(
+                        "  Overpass hiccup ({:#}); retrying in {wait}s",
+                        last.as_ref().unwrap()
+                    ));
+                    sleep(Duration::from_secs(*wait));
+                }
+            }
+        }
+    }
+    Err(last.unwrap())
+}
+
+/// One query, tried on each instance in turn.
+fn overpass(query: &str) -> Result<Value> {
+    let mut last = None;
+    for endpoint in OVERPASS {
+        match overpass_at(endpoint, query) {
+            Ok(value) => return Ok(value),
+            Err(e) => last = Some(e),
+        }
+    }
+    Err(last.unwrap())
+}
+
+/// Boundary discovery and freshness, with a committed results-only cache.
+///
+/// Three paths, cheapest possible network for each:
+/// - New areas: one full sweep each, once ever.
+/// - Known boundaries: a weekly timestamp check by relation id (metadata only, no
+///   geometry, no area scans). A changed timestamp refreshes that one boundary; an
+///   id missing from the response was deleted upstream and is removed.
+/// - Known areas: a slow stateless rotation (hash of area vs week of year) re-sweeps
+///   each area about once a year, to discover boundaries that did not exist before.
+///
+/// The cache holds only facts (ids per area, tags and timestamps per boundary), so
+/// a week with no OSM changes writes a byte-identical file and CI commits nothing.
+/// Returns the candidates and the ids whose geometry must be fetched again.
+fn fetch_candidates(
+    areas: &[(String, [f64; 4])],
+    cell_points: &[(f64, f64)],
+    sweep_path: &std::path::Path,
+) -> Result<(BTreeMap<i64, CandidateInfo>, BTreeSet<i64>)> {
+    let state: BTreeMap<String, Value> = fs::read_to_string(sweep_path)
+        .ok()
+        .and_then(|s| serde_json::from_str(&s).ok())
+        .unwrap_or_default();
+    let mut area_ids: BTreeMap<String, Vec<i64>> = state
+        .get("areas")
+        .and_then(|v| v.as_object())
+        .map(|areas| {
+            areas
+                .iter()
+                .map(|(id, list)| {
+                    (
+                        id.clone(),
+                        list.as_array()
+                            .into_iter()
+                            .flatten()
+                            .filter_map(|v| v.as_i64())
+                            .collect(),
+                    )
+                })
+                .collect()
+        })
+        .unwrap_or_default();
+    let mut bounds: BTreeMap<String, Value> = state
+        .get("boundaries")
+        .and_then(|v| v.as_object())
+        .map(|b| b.iter().map(|(k, v)| (k.clone(), v.clone())).collect())
+        .unwrap_or_default();
+
+    // Drop areas that no longer hold cells.
+    let current: BTreeSet<&str> = areas.iter().map(|(id, _)| id.as_str()).collect();
+    area_ids.retain(|id, _| current.contains(id.as_str()));
+
+    let week = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.as_secs() / (7 * 86400))
+        .unwrap_or(0);
+    let in_rotation = |id: &str| {
+        id.parse::<CellIndex>()
+            .map(|c| u64::from(c) % 52 == week % 52)
+            .unwrap_or(false)
+    };
+
+    let mut to_sweep: Vec<&(String, [f64; 4])> = areas
+        .iter()
+        .filter(|(id, _)| !area_ids.contains_key(id) || in_rotation(id))
+        .collect();
+    let new_count = to_sweep
+        .iter()
+        .filter(|(id, _)| !area_ids.contains_key(id))
+        .count();
+    let mut refreshed: BTreeSet<i64> = BTreeSet::new();
+
+    if !to_sweep.is_empty() {
+        log_progress(&format!(
+            "sweeping {new_count} new and {} rotation area(s) for boundaries",
+            to_sweep.len() - new_count
+        ));
+    }
+    to_sweep.sort_by(|a, b| a.0.cmp(&b.0));
+    // Small chunks: `out bb` makes the server load full geometry, and large multi-box
+    // queries draw 504 responses.
+    for chunk in to_sweep.chunks(10) {
+        let clauses: String = chunk
+            .iter()
+            .map(|(_, b)| {
+                format!(
+                    "relation[\"boundary\"=\"administrative\"][\"admin_level\"~\"^(7|8|9|10|11)$\"][!\"end_date\"]({},{},{},{});",
+                    b[0], b[1], b[2], b[3]
+                )
+            })
+            .collect();
+        // Tags and boxes for the boundaries, then their edit timestamps via convert
+        // (a full `out meta` would carry every member list).
+        let query = format!(
+            "[out:json][timeout:300];({clauses})->.r;.r out tags bb;.r convert rel ::id=id(),ts=timestamp();out;"
+        );
+        let json = overpass(&query)?;
+        let mut ts_of: BTreeMap<i64, String> = BTreeMap::new();
+        for el in json["elements"].as_array().into_iter().flatten() {
+            if el["type"].as_str() == Some("rel")
+                && let (Some(id), Some(ts)) = (el["id"].as_i64(), el["tags"]["ts"].as_str())
+            {
+                ts_of.insert(id, ts.to_string());
+            }
+        }
+        let mut found: Vec<(i64, u8, String, [f64; 4])> = Vec::new();
+        for el in json["elements"].as_array().into_iter().flatten() {
+            if el["type"].as_str() != Some("relation") {
+                continue;
+            }
+            let (Some(id), Some(tags), Some(bb)) = (
+                el["id"].as_i64(),
+                el["tags"].as_object(),
+                el["bounds"].as_object(),
+            ) else {
+                continue;
+            };
+            let Some(level) = tags
+                .get("admin_level")
+                .and_then(|v| v.as_str())
+                .and_then(|s| s.parse::<u8>().ok())
+            else {
+                continue;
+            };
+            let Some(name) = tags.get("name").and_then(|v| v.as_str()) else {
+                continue;
+            };
+            let bb = [
+                bb["minlat"].as_f64().unwrap_or(0.0),
+                bb["minlon"].as_f64().unwrap_or(0.0),
+                bb["maxlat"].as_f64().unwrap_or(0.0),
+                bb["maxlon"].as_f64().unwrap_or(0.0),
+            ];
+            // Only boundaries that can hold a visited cell matter; the rest would
+            // bloat the cache and the weekly timestamp checks twelvefold.
+            if !cell_points
+                .iter()
+                .any(|(lat, lng)| *lat >= bb[0] && *lat <= bb[2] && *lng >= bb[1] && *lng <= bb[3])
+            {
+                continue;
+            }
+            found.push((id, level, name.to_string(), bb));
+        }
+        for (id, level, name, bb) in &found {
+            let ts = ts_of.get(id).cloned().unwrap_or_default();
+            let entry = serde_json::json!({ "l": level, "n": name, "bb": bb, "ts": ts });
+            match bounds.get(&id.to_string()) {
+                // A boundary seen for the first time needs no geometry purge; the
+                // normal missing-id path fetches it.
+                None => {
+                    bounds.insert(id.to_string(), entry);
+                }
+                Some(prev) if *prev != entry => {
+                    refreshed.insert(*id);
+                    bounds.insert(id.to_string(), entry);
+                }
+                Some(_) => {}
+            }
+        }
+        // A boundary belongs to every area of this chunk that its box intersects.
+        for (area_id, ab) in chunk {
+            let mine: Vec<i64> = found
+                .iter()
+                .filter(|(_, _, _, bb)| {
+                    bb[0] <= ab[2] && ab[0] <= bb[2] && bb[1] <= ab[3] && ab[1] <= bb[3]
+                })
+                .map(|(id, _, _, _)| *id)
+                .collect();
+            area_ids.insert(area_id.clone(), mine);
+        }
+        write_sweep(sweep_path, &area_ids, &bounds)?;
+        sleep(POLITE);
+    }
+
+    // Timestamp check for every known boundary that this run did not just sweep.
+    let known: BTreeSet<i64> = area_ids.values().flatten().copied().collect();
+    let to_check: Vec<i64> = known
+        .iter()
+        .copied()
+        .filter(|id| !refreshed.contains(id))
+        .collect();
+    let mut changed: BTreeSet<i64> = BTreeSet::new();
+    let mut deleted: BTreeSet<i64> = BTreeSet::new();
+    for chunk in to_check.chunks(1000) {
+        let ids: Vec<String> = chunk.iter().map(|id| id.to_string()).collect();
+        let query = format!(
+            "[out:json][timeout:300];relation(id:{});convert rel ::id=id(),ts=timestamp();out;",
+            ids.join(",")
+        );
+        let json = overpass(&query)?;
+        let mut seen: BTreeMap<i64, String> = BTreeMap::new();
+        for el in json["elements"].as_array().into_iter().flatten() {
+            if let (Some(id), Some(ts)) = (el["id"].as_i64(), el["tags"]["ts"].as_str()) {
+                seen.insert(id, ts.to_string());
+            }
+        }
+        for id in chunk {
+            match seen.get(id) {
+                None => {
+                    deleted.insert(*id);
+                }
+                Some(ts) => {
+                    if bounds
+                        .get(&id.to_string())
+                        .and_then(|b| b["ts"].as_str())
+                        .is_none_or(|stored| stored != ts)
+                    {
+                        changed.insert(*id);
+                    }
+                }
+            }
+        }
+        sleep(POLITE);
+    }
+
+    // Changed boundaries: refresh tags, box, and timestamp in one query.
+    if !changed.is_empty() {
+        log_progress(&format!("{} boundary change(s) upstream", changed.len()));
+        let ids: Vec<String> = changed.iter().map(|id| id.to_string()).collect();
+        let query = format!(
+            "[out:json][timeout:300];relation(id:{})->.r;.r out tags bb;.r convert rel ::id=id(),ts=timestamp();out;",
+            ids.join(",")
+        );
+        let json = overpass(&query)?;
+        let mut ts_of: BTreeMap<i64, String> = BTreeMap::new();
+        for el in json["elements"].as_array().into_iter().flatten() {
+            if el["type"].as_str() == Some("rel")
+                && let (Some(id), Some(ts)) = (el["id"].as_i64(), el["tags"]["ts"].as_str())
+            {
+                ts_of.insert(id, ts.to_string());
+            }
+        }
+        for el in json["elements"].as_array().into_iter().flatten() {
+            if el["type"].as_str() != Some("relation") {
+                continue;
+            }
+            let (Some(id), Some(tags), Some(bb)) = (
+                el["id"].as_i64(),
+                el["tags"].as_object(),
+                el["bounds"].as_object(),
+            ) else {
+                continue;
+            };
+            let level = tags
+                .get("admin_level")
+                .and_then(|v| v.as_str())
+                .and_then(|s| s.parse::<u8>().ok());
+            let name = tags.get("name").and_then(|v| v.as_str());
+            let (Some(level), Some(name)) = (level, name) else {
+                deleted.insert(id); // No longer a usable boundary.
+                continue;
+            };
+            let bb = [
+                bb["minlat"].as_f64().unwrap_or(0.0),
+                bb["minlon"].as_f64().unwrap_or(0.0),
+                bb["maxlat"].as_f64().unwrap_or(0.0),
+                bb["maxlon"].as_f64().unwrap_or(0.0),
+            ];
+            let ts = ts_of.get(&id).cloned().unwrap_or_default();
+            bounds.insert(
+                id.to_string(),
+                serde_json::json!({ "l": level, "n": name, "bb": bb, "ts": ts }),
+            );
+            refreshed.insert(id);
+        }
+        sleep(POLITE);
+    }
+
+    if !deleted.is_empty() {
+        log_progress(&format!("{} boundary(ies) deleted upstream", deleted.len()));
+        for id in &deleted {
+            bounds.remove(&id.to_string());
+        }
+        for list in area_ids.values_mut() {
+            list.retain(|id| !deleted.contains(id));
+        }
+    }
+    bounds.retain(|id, _| {
+        id.parse::<i64>()
+            .map(|id| known.contains(&id) && !deleted.contains(&id))
+            .unwrap_or(false)
+    });
+    write_sweep(sweep_path, &area_ids, &bounds)?;
+
+    let mut out = BTreeMap::new();
+    for (id, info) in &bounds {
+        let (Ok(id), Some(level), Some(name), Some(bb)) = (
+            id.parse::<i64>(),
+            info["l"].as_u64(),
+            info["n"].as_str(),
+            info["bb"].as_array(),
+        ) else {
+            continue;
+        };
+        let bb: Vec<f64> = bb.iter().filter_map(|v| v.as_f64()).collect();
+        if bb.len() != 4 {
+            continue;
+        }
+        out.insert(
+            id,
+            (level as u8, name.to_string(), [bb[0], bb[1], bb[2], bb[3]]),
+        );
+    }
+    refreshed.extend(&deleted);
+    Ok((out, refreshed))
+}
+
+fn write_sweep(
+    path: &std::path::Path,
+    areas: &BTreeMap<String, Vec<i64>>,
+    bounds: &BTreeMap<String, Value>,
+) -> Result<()> {
+    fs::write(
+        path,
+        format!(
+            "{}\n",
+            serde_json::to_string(&serde_json::json!({ "areas": areas, "boundaries": bounds }))?
+        ),
+    )?;
+    Ok(())
+}
+
+/// Remove vertices where the line reverses on itself (more than ~168°).
+/// Simplification collapses narrow spurs (jetties, lagoon parcels) into zero-width
+/// needles, which render as crossing spikes.
+fn prune_spikes(line: &mut Vec<Coord<f64>>) {
+    loop {
+        let mut removed = false;
+        let mut i = 1;
+        while i + 1 < line.len() {
+            let (a, b, c) = (line[i - 1], line[i], line[i + 1]);
+            let (v1x, v1y) = (b.x - a.x, b.y - a.y);
+            let (v2x, v2y) = (c.x - b.x, c.y - b.y);
+            let dot = v1x * v2x + v1y * v2y;
+            let m = (v1x * v1x + v1y * v1y).sqrt() * (v2x * v2x + v2y * v2y).sqrt();
+            if m > 0.0 && dot / m < -0.98 {
+                line.remove(i);
+                removed = true;
+            } else {
+                i += 1;
+            }
+        }
+        if !removed {
+            break;
+        }
+    }
+}
+
+/// Join ways into closed rings by matching endpoints. OSM stores boundaries as
+/// shared way segments.
+fn join_ways(mut ways: Vec<Vec<Coord<f64>>>) -> Vec<LineString<f64>> {
+    let key = |c: &Coord<f64>| ((c.x * 1e7).round() as i64, (c.y * 1e7).round() as i64);
+    let mut rings = Vec::new();
+    while let Some(mut current) = ways.pop() {
+        loop {
+            if current.len() > 3 && key(&current[0]) == key(current.last().unwrap()) {
+                rings.push(LineString::from(current));
+                break;
+            }
+            let tail = key(current.last().unwrap());
+            let Some(pos) = ways
+                .iter()
+                .position(|w| key(&w[0]) == tail || key(w.last().unwrap()) == tail)
+            else {
+                break; // Unclosed ring: broken data. Dropped.
+            };
+            let mut next = ways.remove(pos);
+            if key(next.last().unwrap()) == tail {
+                next.reverse();
+            }
+            current.extend(next.into_iter().skip(1));
+        }
+    }
+    for ring in &mut rings {
+        let mut coords = std::mem::take(&mut ring.0);
+        prune_spikes(&mut coords);
+        ring.0 = coords;
+    }
+    rings.retain(|r| r.0.len() > 3);
+    rings
+}
+
+/// One Overpass relation element with `out geom` members → a MultiPolygon.
+fn assemble(element: &Value) -> Option<MultiPolygon<f64>> {
+    let mut outer_ways = Vec::new();
+    let mut inner_ways = Vec::new();
+    for member in element["members"].as_array().into_iter().flatten() {
+        if member["type"].as_str() != Some("way") {
+            continue;
+        }
+        let Some(geometry) = member["geometry"].as_array() else {
+            continue;
+        };
+        let coords: Vec<Coord<f64>> = geometry
+            .iter()
+            .filter_map(|p| {
+                Some(Coord {
+                    x: p["lon"].as_f64()?,
+                    y: p["lat"].as_f64()?,
+                })
+            })
+            .collect();
+        if coords.len() < 2 {
+            continue;
+        }
+        // Simplify per way. Endpoints survive, so ring joining still works.
+        let coords = LineString::from(coords).simplify(&BASE_TOLERANCE).0;
+        match member["role"].as_str() {
+            Some("inner") => inner_ways.push(coords),
+            _ => outer_ways.push(coords),
+        }
+    }
+
+    let outer_rings = join_ways(outer_ways);
+    if outer_rings.is_empty() {
+        return None;
+    }
+    let inner_rings = join_ways(inner_ways);
+
+    let shells: Vec<Polygon<f64>> = outer_rings
+        .iter()
+        .map(|r| Polygon::new(r.clone(), vec![]))
+        .collect();
+    let mut holes: Vec<Vec<LineString<f64>>> = vec![Vec::new(); shells.len()];
+    for inner in inner_rings {
+        let probe = geo::Point::from(inner.0[0]);
+        if let Some(i) = shells.iter().position(|s| s.contains(&probe)) {
+            holes[i].push(inner);
+        }
+    }
+    Some(MultiPolygon(
+        outer_rings
+            .into_iter()
+            .zip(holes)
+            .map(|(shell, holes)| Polygon::new(shell, holes))
+            .collect(),
+    ))
+}
+
+/// Outlines for the given relation ids, from cache or Overpass. Raw responses cache
+/// in target/, so a processing change recomputes locally with no refetch. Processed
+/// outlines go to the committed cache that CI reuses. Both are written after every
+/// chunk, so an interrupted run resumes.
+fn fetch_geometries(
+    ids: &[i64],
+    stale: &BTreeSet<i64>,
+    cache: &mut BTreeMap<String, Value>,
+    cache_path: &std::path::Path,
+    raw_path: &std::path::Path,
+) -> Result<BTreeMap<i64, MultiPolygon<f64>>> {
+    let mut raw_cache: BTreeMap<String, Value> = fs::read_to_string(raw_path)
+        .ok()
+        .and_then(|s| serde_json::from_str(&s).ok())
+        .unwrap_or_default();
+    // Boundaries edited upstream must fetch fresh geometry.
+    for id in stale {
+        cache.remove(&id.to_string());
+        raw_cache.remove(&id.to_string());
+    }
+
+    // A cache entry counts only if it parses as a polygon.
+    let usable = |cache: &BTreeMap<String, Value>, key: &str| {
+        cache.get(key).and_then(from_geojson).is_some()
+    };
+
+    let mut reprocessed = 0usize;
+    for id in ids {
+        let key = id.to_string();
+        if usable(cache, &key) {
+            continue;
+        }
+        let Some(el) = raw_cache.get(&key) else {
+            continue;
+        };
+        match assemble(el) {
+            Some(mp) => {
+                cache.insert(key, to_geojson(&mp));
+                reprocessed += 1;
+            }
+            None => log_warn(&format!("  could not assemble outline for relation {id}")),
+        }
+    }
+    if reprocessed > 0 {
+        log_progress(&format!(
+            "reprocessed {reprocessed} outline(s) from the raw cache (no refetch needed)"
+        ));
+        fs::write(cache_path, format!("{}\n", serde_json::to_string(cache)?))?;
+    }
+
+    let missing: Vec<i64> = ids
+        .iter()
+        .copied()
+        .filter(|id| !usable(cache, &id.to_string()) && !raw_cache.contains_key(&id.to_string()))
+        .collect();
+
+    // One worker per instance drains a shared queue, so each instance still receives
+    // one polite query at a time. A failed chunk goes back in the queue for another
+    // instance; after three passes the run aborts, and the caches keep what succeeded.
+    let total = missing.len().div_ceil(20);
+    if total > 0 {
+        log_progress(&format!(
+            "fetching {} new region(s) in {total} chunk(s) across {} Overpass instance(s)",
+            missing.len(),
+            OVERPASS.len()
+        ));
+        let queue: std::sync::Mutex<std::collections::VecDeque<(Vec<i64>, usize)>> =
+            std::sync::Mutex::new(missing.chunks(20).map(|c| (c.to_vec(), 0usize)).collect());
+        let state = std::sync::Mutex::new((std::mem::take(cache), std::mem::take(&mut raw_cache), 0usize));
+        let fatal: std::sync::Mutex<Option<anyhow::Error>> = std::sync::Mutex::new(None);
+
+        std::thread::scope(|scope| {
+            for endpoint in OVERPASS {
+                let (queue, state, fatal) = (&queue, &state, &fatal);
+                scope.spawn(move || {
+                    loop {
+                        if fatal.lock().unwrap().is_some() {
+                            break;
+                        }
+                        let Some((chunk, passes)) = queue.lock().unwrap().pop_front() else {
+                            break;
+                        };
+                        let id_list: Vec<String> = chunk.iter().map(|id| id.to_string()).collect();
+                        let query = format!(
+                            "[out:json][timeout:300];relation(id:{});out geom;",
+                            id_list.join(",")
+                        );
+                        match overpass_at(endpoint, &query) {
+                            Ok(json) => {
+                                let mut guard = state.lock().unwrap();
+                                let (cache, raw_cache, done) = &mut *guard;
+                                for el in json["elements"].as_array().into_iter().flatten() {
+                                    let Some(id) = el["id"].as_i64() else { continue };
+                                    raw_cache.insert(id.to_string(), el.clone());
+                                    match assemble(el) {
+                                        Some(mp) => {
+                                            cache.insert(id.to_string(), to_geojson(&mp));
+                                        }
+                                        None => log_warn(&format!(
+                                            "  could not assemble outline for relation {id}"
+                                        )),
+                                    }
+                                }
+                                *done += 1;
+                                log_progress(&format!("fetching boundaries {done}/{total}"));
+                                let _ = fs::write(raw_path, serde_json::to_string(raw_cache).unwrap_or_default());
+                                let _ = fs::write(
+                                    cache_path,
+                                    format!("{}\n", serde_json::to_string(cache).unwrap_or_default()),
+                                );
+                            }
+                            Err(e) => {
+                                if passes + 1 >= 3 {
+                                    *fatal.lock().unwrap() = Some(e);
+                                    break;
+                                }
+                                queue.lock().unwrap().push_back((chunk, passes + 1));
+                            }
+                        }
+                        sleep(POLITE);
+                    }
+                });
+            }
+        });
+
+        // The raw cache was already persisted chunk-by-chunk inside the workers.
+        let (cache_back, _raw_back, _) = state.into_inner().unwrap();
+        *cache = cache_back;
+        if let Some(e) = fatal.into_inner().unwrap() {
+            return Err(e.context("a boundary chunk failed on every Overpass instance"));
+        }
+    }
+
+    let mut shapes = BTreeMap::new();
+    for id in ids {
+        if let Some(mp) = cache.get(&id.to_string()).and_then(from_geojson) {
+            shapes.insert(*id, mp);
+        }
+    }
+    Ok(shapes)
 }
 
 pub fn run_update_regions() -> Result<()> {
     let root = workspace_root();
     let regions_path = root.join(REGIONS_PATH);
     let cache_path = root.join(CACHE_PATH);
+    let boundaries_path = root.join(BOUNDARIES_PATH);
 
     let cells: Vec<CellIndex> = fs::read_to_string(root.join(CELLS_PATH))
         .ok()
@@ -334,228 +1027,416 @@ pub fn run_update_regions() -> Result<()> {
         return Ok(());
     }
 
-    // Cache maps a sample cell id → its region metadata (or null when there's no polygon).
-    let mut cache: BTreeMap<String, Option<CachedRegion>> = fs::read_to_string(&cache_path)
+    let visited: BTreeSet<CellIndex> = cells.iter().copied().collect();
+    let revealed: BTreeSet<CellIndex> = cells.iter().filter_map(|c| c.parent(FILLED_RES)).collect();
+    let cell_points: Vec<(f64, f64)> = cells
+        .iter()
+        .map(|c| {
+            let ll = LatLng::from(*c);
+            (ll.lat(), ll.lng())
+        })
+        .collect();
+
+    // Country shapes classify every other region and attribute cells to countries.
+    // The file is machine-written; a missing file rebuilds through auto-seeding below.
+    let shapes_path = root.join(COUNTRY_SHAPES_PATH);
+    let mut country_shapes: BTreeMap<String, Value> = fs::read_to_string(&shapes_path)
         .ok()
         .and_then(|s| serde_json::from_str(&s).ok())
         .unwrap_or_default();
-    let mut cache_dirty = false;
-
-    // Geometry lives only in regions.json. Reuse the previous run's for cached regions
-    // (keyed by OSM id) so we don't re-geocode just to redraw an unchanged outline.
-    let prior_geometry: BTreeMap<i64, serde_json::Value> = fs::read_to_string(&regions_path)
+    let mut boundaries: BTreeMap<String, Value> = fs::read_to_string(&boundaries_path)
         .ok()
-        .and_then(|s| serde_json::from_str::<Vec<serde_json::Value>>(&s).ok())
-        .unwrap_or_default()
-        .into_iter()
-        .filter_map(|r| Some((r.get("osm_id")?.as_i64()?, r.get("geometry")?.clone())))
-        .collect();
-    let mut fresh_geometry: BTreeMap<i64, serde_json::Value> = BTreeMap::new();
+        .and_then(|s| serde_json::from_str(&s).ok())
+        .unwrap_or_default();
+    let raw_geom_path = root.join("target/overpass-raw-relations.json");
+    // Bootstrap only: an empty file rebuilds every country from Natural Earth.
+    // Weekly runs never load Natural Earth.
+    if country_shapes.is_empty() {
+        match load_ne(&root) {
+            Ok(ne) => {
+                let feats = ne_features(&ne);
+                for (iso, country) in &ne_index(&ne) {
+                    if let Some(seed) = ne_seed(&feats, country) {
+                        country_shapes.insert(iso.clone(), seed);
+                    }
+                }
+                log_progress(&format!(
+                    "seeded {} countries from Natural Earth",
+                    country_shapes.len()
+                ));
+                fs::write(
+                    &shapes_path,
+                    format!("{}\n", serde_json::to_string(&country_shapes)?),
+                )?;
+            }
+            Err(e) => log_warn(&format!("Natural Earth unavailable ({e:#})")),
+        }
+    }
+    // ISO, metadata, geometry, and a padded bounding box that gates the point tests
+    // below (a world of countries is too many for ungated polygon math).
+    type Country = (String, Value, MultiPolygon<f64>, [f64; 4]);
+    let build_countries = |shapes: &BTreeMap<String, Value>| -> Vec<Country> {
+        shapes
+            .iter()
+            .filter_map(|(iso, meta)| {
+                let mp = from_geojson(&meta["geometry"])?;
+                let (mut s, mut w, mut nn, mut e) = (f64::MAX, f64::MAX, f64::MIN, f64::MIN);
+                for poly in &mp {
+                    for c in poly.exterior().coords() {
+                        s = s.min(c.y);
+                        w = w.min(c.x);
+                        nn = nn.max(c.y);
+                        e = e.max(c.x);
+                    }
+                }
+                Some((iso.clone(), meta.clone(), mp, [s - 1.6, w - 1.6, nn + 1.6, e + 1.6]))
+            })
+            .collect()
+    };
+    let countries = build_countries(&country_shapes);
 
-    // What a region has to show for itself, as hexagons had out of hexagons held.
-    #[derive(Default, Clone)]
-    struct Covered {
+    // 1. One bounding box for each visited res-4 area (~35 km across).
+    let mut areas = Vec::new();
+    for parent in cells
+        .iter()
+        .filter_map(|c| c.parent(Resolution::Four))
+        .collect::<BTreeSet<_>>()
+    {
+        let (mut s, mut w, mut n, mut e) = (f64::MAX, f64::MAX, f64::MIN, f64::MIN);
+        for vertex in parent.boundary().iter() {
+            s = s.min(vertex.lat());
+            w = w.min(vertex.lng());
+            n = n.max(vertex.lat());
+            e = e.max(vertex.lng());
+        }
+        areas.push((parent.to_string(), [s - 0.02, w - 0.02, n + 0.02, e + 0.02]));
+    }
+    let (raw, stale) = fetch_candidates(&areas, &cell_points, &root.join(SWEEP_PATH))?;
+
+    // 2. Classify each boundary by country and keep only ones that can hold a visited
+    // cell. Pass one learns which admin levels exist per country; pass two assigns
+    // display levels.
+    let classify = |bb: &[f64; 4]| -> &str {
+        let centre = geo::Point::new((bb[1] + bb[3]) / 2.0, (bb[0] + bb[2]) / 2.0);
+        // Containment first. Coastal bounding-box centres fall in the sea, so fall
+        // back to the nearest country.
+        let near: Vec<&Country> = countries
+            .iter()
+            .filter(|(_, _, _, b)| {
+                centre.y() >= b[0] && centre.y() <= b[2] && centre.x() >= b[1] && centre.x() <= b[3]
+            })
+            .collect();
+        near.iter()
+            .find(|(_, _, mp, _)| mp.contains(&centre))
+            .map(|(iso, _, _, _)| iso.as_str())
+            .or_else(|| {
+                use geo::EuclideanDistance;
+                near.iter()
+                    .map(|(iso, _, mp, _)| (iso.as_str(), mp.euclidean_distance(&centre)))
+                    .filter(|(_, d)| *d < 0.5) // ~50 km: offshore, not another continent
+                    .min_by(|a, b| a.1.partial_cmp(&b.1).unwrap())
+                    .map(|(iso, _)| iso)
+            })
+            .unwrap_or("")
+    };
+
+    let mut iso_of: BTreeMap<i64, &str> = BTreeMap::new();
+    let mut present: BTreeMap<&str, BTreeMap<u8, usize>> = BTreeMap::new();
+    for (id, (admin_level, _, bb)) in &raw {
+        if !cell_points
+            .iter()
+            .any(|(lat, lng)| *lat >= bb[0] && *lat <= bb[2] && *lng >= bb[1] && *lng <= bb[3])
+        {
+            continue;
+        }
+        let iso = classify(bb);
+        iso_of.insert(*id, iso);
+        *present
+            .entry(iso)
+            .or_default()
+            .entry(*admin_level)
+            .or_default() += 1;
+    }
+
+    // Which admin_level is the municipality? libpostal answers when it names 7 or 8
+    // and such boundaries exist. Otherwise the more numerous of 7/8 wins, because
+    // municipalities are the small, numerous tier (180 communes, 2 arrondissements).
+    // The count rule also guards against stale libpostal rows. Districts are 9-11.
+    let mut city_level_memo: BTreeMap<String, u8> = BTreeMap::new();
+    for (iso, counts) in &present {
+        let n = |level: u8| counts.get(&level).copied().unwrap_or(0);
+        let candidates_78: Vec<u8> = libpostal_city_levels(&root, iso)
+            .into_iter()
+            .filter(|l| (*l == 7 || *l == 8) && n(*l) > 0)
+            .collect();
+        let city = candidates_78
+            .into_iter()
+            .max_by_key(|l| n(*l))
+            .unwrap_or_else(|| if n(7) > n(8) { 7 } else { 8 });
+        city_level_memo.insert(iso.to_string(), city);
+    }
+
+    let mut candidates: Vec<Candidate> = Vec::new();
+    let mut by_level: BTreeMap<(String, u8), usize> = BTreeMap::new();
+    for (id, (admin_level, name, bb)) in &raw {
+        let Some(iso) = iso_of.get(id) else { continue };
+        let city_level = city_level_memo.get(*iso).copied().unwrap_or(8);
+        let display_level = if *admin_level == city_level {
+            "city"
+        } else if (9..=11).contains(admin_level) {
+            "district"
+        } else {
+            continue;
+        };
+        *by_level
+            .entry((iso.to_string(), *admin_level))
+            .or_default() += 1;
+        candidates.push(Candidate {
+            id: *id,
+            admin_level: *admin_level,
+            name: name.clone(),
+            bb: *bb,
+            display_level: display_level.to_string(),
+        });
+    }
+    log_progress(&format!(
+        "{} boundary candidate(s): {}",
+        candidates.len(),
+        by_level
+            .iter()
+            .map(|((iso, lvl), n)| format!("{iso}/{lvl}×{n}"))
+            .collect::<Vec<_>>()
+            .join(", ")
+    ));
+
+    // 3. Outlines.
+    let ids: Vec<i64> = candidates.iter().map(|c| c.id).collect();
+    let shapes = fetch_geometries(&ids, &stale, &mut boundaries, &boundaries_path, &raw_geom_path)?;
+
+    // 4. Count. The outline is tiled at both reveal resolutions and intersected with
+    // the visited set, so numerator and denominator come from the same hexagons.
+    struct Counted {
+        candidate: Candidate,
+        shape: MultiPolygon<f64>,
         explored: usize,
         total: usize,
         filled: usize,
         filled_total: usize,
     }
-
-    // The cells you've been in, and the coarser cells the "filled" reveal paints for them.
-    let visited: BTreeSet<CellIndex> = cells.iter().copied().collect();
-    let revealed: BTreeSet<CellIndex> = cells.iter().filter_map(|c| c.parent(FILLED_RES)).collect();
-
-    // Tally coverage per distinct region, keyed by (level, OSM id).
-    let mut tally: BTreeMap<(String, i64), (CachedRegion, Covered)> = BTreeMap::new();
-
-    for (level, zoom, dedupe_res) in LEVELS {
-        // Group cells by coarse parent purely to decide what to geocode — one sample point
-        // each. What a region holds is counted from its own outline further down.
-        let mut groups: BTreeMap<CellIndex, CellIndex> = BTreeMap::new();
-        for cell in &cells {
-            if let Some(parent) = cell.parent(*dedupe_res) {
-                groups.entry(parent).or_insert(*cell);
-            }
-        }
-        let to_geocode = groups
-            .keys()
-            .filter(|k| !cache.contains_key(&k.to_string()))
-            .count();
-        // Progress is logged via `log_progress` (never suppressed by `--silent`) because
-        // this loop is rate-limited to one request per ~1.1s and can run for many minutes
-        // in CI — otherwise the step looks hung with no output until it finishes.
-        log_progress(&format!(
-            "{level}: {} area(s), {} cached, {to_geocode} new to geocode (~{} at {:.1}s each)",
-            groups.len(),
-            groups.len() - to_geocode,
-            fmt_dur((to_geocode as f64 * RATE_LIMIT.as_secs_f64()).ceil() as u64),
-            RATE_LIMIT.as_secs_f64(),
-        ));
-
-        let started = Instant::now();
-        let mut done = 0usize;
-        for (parent, sample) in &groups {
-            let key = parent.to_string();
-            if !cache.contains_key(&key) {
-                let ll = LatLng::from(*sample);
-                // Name the outcome for the progress line. Region names are already public
-                // (they ship in regions.json); the sample's raw coordinates are not logged.
-                let outcome = match reverse(ll.lat(), ll.lng(), *zoom, level) {
-                    Ok(Some((region, geometry))) => {
-                        let name = region.name.clone();
-                        fresh_geometry.insert(region.osm_id, geometry);
-                        cache.insert(key.clone(), Some(region));
-                        cache_dirty = true;
-                        format!("\"{name}\"")
-                    }
-                    Ok(None) => {
-                        cache.insert(key.clone(), None);
-                        cache_dirty = true;
-                        "no polygon".to_string()
-                    }
-                    // Leave uncached on transient errors so it's retried next run.
-                    Err(e) => {
-                        log_warn(&format!("  reverse geocode failed for {key}: {e}"));
-                        "failed".to_string()
-                    }
-                };
-                done += 1;
-                // ETA from the real average so far (network + rate-limit sleep), not the
-                // nominal 1.1s, so it stays honest if Nominatim is slow.
-                let remaining = to_geocode.saturating_sub(done);
-                let eta = (started.elapsed().as_secs_f64() / done as f64 * remaining as f64) as u64;
-                log_progress(&format!(
-                    "  {level} {done}/{to_geocode}: {outcome} · {} elapsed, ~{} left",
-                    fmt_dur(started.elapsed().as_secs()),
-                    fmt_dur(eta),
-                ));
-                sleep(RATE_LIMIT);
-            }
-            if let Some(Some(region)) = cache.get(&key) {
-                tally
-                    .entry((region.level.clone(), region.osm_id))
-                    .or_insert_with(|| (region.clone(), Covered::default()));
-            }
-        }
-    }
-
-    // District coverage gap-fill. At zoom 14, rural France has no sub-commune division, so
-    // ~70% of district samples return no polygon and those stretches would draw nothing.
-    // Fall back to the commune (already fetched for the city level — no extra requests) by
-    // entering it at the district level too. Commune osm_ids are shared between the two
-    // levels, so this merges into an existing district entry rather than duplicating it.
-    let district_res = LEVELS[0].2; // keep aligned with the "district" LEVELS entry
-    let city_res = LEVELS[1].2; //     and the "city" entry
-    for cell in &cells {
-        let Some(d_parent) = cell.parent(district_res) else {
+    log_progress(&format!("counting hexagons in {} region(s)", ids.len()));
+    // Regions stay exactly as OSM maps them, water included. OSM maritime extents
+    // disagree between admin levels, so a clip to the country cuts real land
+    // (Styrsö sits outside Sweden's own polygon).
+    let mut counted: Vec<Counted> = Vec::new();
+    for candidate in candidates {
+        let Some(shape) = shapes.get(&candidate.id) else {
             continue;
-        };
-        // Only fill where the fine lookup returned no polygon (cached as None).
-        if !matches!(cache.get(&d_parent.to_string()), Some(None)) {
-            continue;
-        }
-        let Some(c_parent) = cell.parent(city_res) else {
-            continue;
-        };
-        if let Some(Some(commune)) = cache.get(&c_parent.to_string())
-            && commune.level == "city"
-        {
-            tally
-                .entry(("district".to_string(), commune.osm_id))
-                .or_insert_with(|| {
-                    let mut as_district = commune.clone();
-                    as_district.level = "district".to_string();
-                    (as_district, Covered::default())
-                });
-        }
-    }
-
-    // Now count. A region's outline is tiled at both reveal resolutions and the results
-    // intersected with where you've been, so numerator and denominator always come from
-    // the same set of hexagons.
-    let outlines: BTreeMap<i64, MultiPolygon<f64>> = tally
-        .values()
-        .filter_map(|(region, _)| {
-            let value = fresh_geometry
-                .get(&region.osm_id)
-                .or_else(|| prior_geometry.get(&region.osm_id))?;
-            let geometry: geojson::Geometry = serde_json::from_value(value.clone()).ok()?;
-            match geo::Geometry::try_from(geometry).ok()? {
-                geo::Geometry::MultiPolygon(mp) => Some((region.osm_id, mp)),
-                geo::Geometry::Polygon(p) => Some((region.osm_id, MultiPolygon(vec![p]))),
-                _ => None,
-            }
-        })
-        .collect();
-
-    log_progress(&format!("counting hexagons in {} region(s)", tally.len()));
-    for ((level, osm_id), (region, covered)) in &mut tally {
-        // A country's outline is simplified to ~16 km and loses its islands, so tiling it
-        // would be meaningless — and 6 billion hexagons is not a thing you can enumerate.
-        // Count what you've been in by the coarse parent and size the rest from the true
-        // area. Nobody is finishing a country, so approximate is fine here and only here.
-        if level == "country" {
-            let parent_res = LEVELS[2].2;
-            covered.explored = cells
-                .iter()
-                .filter(|c| {
-                    c.parent(parent_res).is_some_and(|p| {
-                        matches!(cache.get(&p.to_string()), Some(Some(r)) if r.osm_id == *osm_id)
-                    })
-                })
-                .count();
-            covered.filled = revealed
-                .iter()
-                .filter(|c| {
-                    c.parent(parent_res).is_some_and(|p| {
-                        matches!(cache.get(&p.to_string()), Some(Some(r)) if r.osm_id == *osm_id)
-                    })
-                })
-                .count();
-            covered.total = estimate_cells(region.area, region.lat, region.lon, Resolution::Eleven);
-            covered.filled_total = estimate_cells(region.area, region.lat, region.lon, FILLED_RES);
-            continue;
-        }
-
-        let Some(shape) = outlines.get(osm_id) else {
-            continue; // No outline to count against; stays at zero and gets filtered out.
         };
         let precise = cells_of(shape, Resolution::Eleven);
-        covered.total = precise.len();
-        covered.explored = precise.iter().filter(|c| visited.contains(c)).count();
+        let explored = precise.iter().filter(|c| visited.contains(c)).count();
+        if explored == 0 {
+            continue; // The bounding box touched cells; the region did not.
+        }
         let coarse = cells_of(shape, FILLED_RES);
-        covered.filled_total = coarse.len();
-        covered.filled = coarse.iter().filter(|c| revealed.contains(c)).count();
+        counted.push(Counted {
+            explored,
+            total: precise.len(),
+            filled: coarse.iter().filter(|c| revealed.contains(c)).count(),
+            filled_total: coarse.len(),
+            shape: shape.clone(),
+            candidate,
+        });
     }
 
-    let mut regions: Vec<Region> = tally
-        .into_values()
-        .map(|(region, covered)| {
-            let geometry = fresh_geometry
-                .get(&region.osm_id)
-                .or_else(|| prior_geometry.get(&region.osm_id))
-                .cloned()
-                .unwrap_or(serde_json::Value::Null);
-            Region {
-                osm_id: region.osm_id,
-                name: region.name,
-                level: region.level,
-                lat: region.lat,
-                lon: region.lon,
-                explored: covered.explored,
-                total: covered.total,
-                filled: covered.filled,
-                filled_total: covered.filled_total,
-                geometry,
+    // 5. De-overlap per display level, finest admin_level first: drop a region that
+    // contains an already-kept finer one. This keeps a commune from sitting at the
+    // district level on top of its own quartiers.
+    counted.sort_by(|a, b| {
+        b.candidate
+            .admin_level
+            .cmp(&a.candidate.admin_level)
+            .then_with(|| a.candidate.id.cmp(&b.candidate.id))
+    });
+    let mut kept: Vec<Counted> = Vec::new();
+    for region in counted {
+        let contains_finer = kept.iter().any(|k| {
+            k.candidate.display_level == region.candidate.display_level
+                && k.candidate.admin_level > region.candidate.admin_level
+                && k.shape
+                    .centroid()
+                    .is_some_and(|c| region.shape.contains(&c))
+        });
+        if contains_finer {
+            continue;
+        }
+        kept.push(region);
+    }
+
+    // 6. Badge threshold, before the gap-fill so the gap-fill sees what will be drawn.
+    kept.retain(|r| {
+        r.explored > MIN_EXPLORED_CELLS || share(r.explored, r.total) >= MIN_PERCENT
+    });
+
+    // 7. Gap-fill: a city with no surviving district inside it also stands in for
+    // itself at the district zoom. Cities with real districts are not duplicated.
+    let clones: Vec<Counted> = kept
+        .iter()
+        .filter(|c| c.candidate.display_level == "city")
+        .filter(|city| {
+            !kept.iter().any(|d| {
+                d.candidate.display_level == "district"
+                    && d.shape
+                        .centroid()
+                        .is_some_and(|centre| city.shape.contains(&centre))
+            })
+        })
+        .map(|city| {
+            let mut candidate = city.candidate.clone();
+            candidate.display_level = "district".to_string();
+            Counted {
+                candidate,
+                shape: city.shape.clone(),
+                explored: city.explored,
+                total: city.total,
+                filled: city.filled,
+                filled_total: city.filled_total,
             }
         })
-        .filter(|r| {
-            r.explored > 0
-                && (r.level == "country"
-                    || r.explored > MIN_EXPLORED_CELLS
-                    || share(r.explored, r.total) >= MIN_PERCENT)
+        .collect();
+    kept.extend(clones);
+
+    // 8. Countries. Attribute res-6 parents (~6 km) of visited cells: nearest country
+    // within 1.5 degrees (containment gives distance zero). Res 3 cells (~110 km)
+    // lost coastal cities to the sea and border cells to the neighbour country.
+    let mut country_of: BTreeMap<CellIndex, usize> = BTreeMap::new();
+    {
+        use geo::EuclideanDistance;
+        let parents6: BTreeSet<CellIndex> = cells
+            .iter()
+            .chain(revealed.iter())
+            .filter_map(|c| c.parent(Resolution::Six))
+            .collect();
+        for parent in parents6 {
+            let ll = LatLng::from(parent);
+            let point = geo::Point::new(ll.lng(), ll.lat());
+            let owner = countries
+                .iter()
+                .enumerate()
+                .filter(|(_, (_, _, _, b))| {
+                    ll.lat() >= b[0] && ll.lat() <= b[2] && ll.lng() >= b[1] && ll.lng() <= b[3]
+                })
+                .map(|(i, (_, _, shape, _))| (i, shape.euclidean_distance(&point)))
+                .filter(|(_, d)| *d < 1.5)
+                .min_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
+            if let Some((i, _)) = owner {
+                country_of.insert(parent, i);
+            }
+        }
+    }
+    let mut country_regions: Vec<Region> = Vec::new();
+    for (i, (_, prior_entry, shape, _)) in countries.iter().enumerate() {
+        let osm_id = prior_entry["osm_id"].as_i64().unwrap_or_default();
+        let explored = cells
+            .iter()
+            .filter(|c| {
+                c.parent(Resolution::Six)
+                    .is_some_and(|p| country_of.get(&p) == Some(&i))
+            })
+            .count();
+        let filled = revealed
+            .iter()
+            .filter(|c| {
+                c.parent(Resolution::Six)
+                    .is_some_and(|p| country_of.get(&p) == Some(&i))
+            })
+            .count();
+        country_regions.push(Region {
+            osm_id,
+            name: prior_entry["name"].as_str().unwrap_or_default().to_string(),
+            level: "country".to_string(),
+            lat: prior_entry["lat"].as_f64().unwrap_or_default(),
+            lon: prior_entry["lon"].as_f64().unwrap_or_default(),
+            explored,
+            total: prior_entry["total"].as_u64().unwrap_or_default() as usize,
+            filled,
+            filled_total: prior_entry["filled_total"].as_u64().unwrap_or_default() as usize,
+            geometry: display_outline(shape, &cell_points),
+        });
+    }
+
+    // 9. Live-view cache: coarse parent cell → region at res 8 (district), res 7
+    // (city), res 3 (country). Must match REGION_RES in scratchmap.ts. Only parents
+    // near visited cells ship: live mode covers the next streets of a walk, a new
+    // area waits for the weekly sync, and the cache stays small.
+    let mut allowed: BTreeMap<Resolution, BTreeSet<CellIndex>> = BTreeMap::new();
+    for res in [Resolution::Eight, Resolution::Seven] {
+        let mut set = BTreeSet::new();
+        for parent in cells.iter().filter_map(|c| c.parent(res)).collect::<BTreeSet<_>>() {
+            set.extend(parent.grid_disk::<Vec<_>>(1));
+        }
+        allowed.insert(res, set);
+    }
+    // Only countries with visited cells: the live view cannot need the rest, and the
+    // whole world at res 3 would triple the cache.
+    let mut live_cache: BTreeMap<String, Value> = BTreeMap::new();
+    for ((_, prior_entry, shape, _), region) in countries.iter().zip(&country_regions) {
+        if region.explored == 0 {
+            continue;
+        }
+        for cell in cells_of(shape, Resolution::Three) {
+            live_cache.entry(cell.to_string()).or_insert_with(|| {
+                serde_json::json!({
+                    "osm_id": prior_entry["osm_id"],
+                    "level": "country",
+                    "area": 0.0,
+                })
+            });
+        }
+    }
+    for region in &kept {
+        let res = if region.candidate.display_level == "city" {
+            Resolution::Seven
+        } else {
+            Resolution::Eight
+        };
+        let area = region.shape.geodesic_area_unsigned();
+        for cell in cells_of(&region.shape, res) {
+            if !allowed[&res].contains(&cell) {
+                continue;
+            }
+            live_cache.insert(
+                cell.to_string(),
+                serde_json::json!({
+                    "osm_id": region.candidate.id,
+                    "level": region.candidate.display_level,
+                    "area": area,
+                }),
+            );
+        }
+    }
+
+    // 10. Output. The displayed outline is the counting outline: a second per-region
+    // simplification would desynchronise shared borders again.
+    let mut regions: Vec<Region> = kept
+        .into_iter()
+        .map(|region| {
+            let centre = region.shape.centroid();
+            let display = region.shape.clone();
+            Region {
+                osm_id: region.candidate.id,
+                name: tidy_name(&region.candidate.name),
+                level: region.candidate.display_level.clone(),
+                lat: centre.map(|c| c.y()).unwrap_or(region.candidate.bb[0]),
+                lon: centre.map(|c| c.x()).unwrap_or(region.candidate.bb[1]),
+                explored: region.explored,
+                total: region.total,
+                filled: region.filled,
+                filled_total: region.filled_total,
+                geometry: to_geojson(&display),
+            }
         })
         .collect();
+    regions.extend(country_regions);
     regions.sort_by(|a, b| {
         a.level.cmp(&b.level).then(
             share(b.explored, b.total)
@@ -564,21 +1445,18 @@ pub fn run_update_regions() -> Result<()> {
         )
     });
 
-    // Compact, not pretty: every coordinate on its own line tripled the file, and this is
-    // generated data inlined into the page — nobody reads the diff.
     fs::write(
         &regions_path,
         format!("{}\n", serde_json::to_string(&regions)?),
     )?;
-    if cache_dirty {
-        fs::write(
-            &cache_path,
-            format!("{}\n", serde_json::to_string_pretty(&cache)?),
-        )?;
-    }
+    fs::write(
+        &cache_path,
+        format!("{}\n", serde_json::to_string(&live_cache)?),
+    )?;
     log_success(&format!(
-        "Wrote {} region(s) to regions.json.",
-        regions.len()
+        "Wrote {} region(s) to regions.json ({} lookup cell(s) in the live cache).",
+        regions.len(),
+        live_cache.len()
     ));
     Ok(())
 }

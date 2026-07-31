@@ -1,0 +1,1442 @@
+{
+ "ad": {
+  "2": "country",
+  "7": "state",
+  "8": "city"
+ },
+ "ae": {
+  "2": "country",
+  "4": "state"
+ },
+ "af": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district"
+ },
+ "ag": {
+  "2": "country"
+ },
+ "ai": {
+  "2": "country"
+ },
+ "al": {
+  "2": "country",
+  "6": "state",
+  "7": "city",
+  "8": "city"
+ },
+ "am": {
+  "2": "country",
+  "4": "state",
+  "8": "city"
+ },
+ "ao": {
+  "2": "country",
+  "4": "state"
+ },
+ "ar": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "7": "city",
+  "8": "city",
+  "9": "suburb",
+  "10": "suburb"
+ },
+ "as": {
+  "4": "country",
+  "6": "state_district",
+  "8": "city"
+ },
+ "at": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "au": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "7": "city",
+  "9": "suburb",
+  "10": "suburb"
+ },
+ "aw": {
+  "3": "country"
+ },
+ "ax": {
+  "3": "country",
+  "8": "state"
+ },
+ "az": {
+  "2": "country",
+  "4": "state"
+ },
+ "ba": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "city",
+  "7": "city",
+  "8": "city",
+  "9": "city_district"
+ },
+ "bb": {
+  "2": "country",
+  "6": "state"
+ },
+ "bd": {
+  "2": "country",
+  "3": "state",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "7": "city",
+  "8": "city",
+  "9": "city"
+ },
+ "be": {
+  "2": "country",
+  "4": "country_region",
+  "6": "state",
+  "7": "state_district",
+  "8": "city",
+  "9": "city"
+ },
+ "bf": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "8": "city",
+  "9": "city"
+ },
+ "bg": {
+  "2": "country",
+  "6": "state",
+  "7": "city",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "bh": {
+  "2": "country",
+  "4": "state"
+ },
+ "bi": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district"
+ },
+ "bj": {
+  "2": "country",
+  "4": "state",
+  "6": "city"
+ },
+ "bl": {
+  "3": "country"
+ },
+ "bm": {
+  "2": "country",
+  "6": "state",
+  "8": "city"
+ },
+ "bn": {
+  "2": "country",
+  "6": "state",
+  "9": "city",
+  "10": "city"
+ },
+ "bo": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "city_district",
+  "11": "suburb"
+ },
+ "bq": {
+  "4": "country"
+ },
+ "br": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "bs": {
+  "2": "country",
+  "6": "state",
+  "8": "state"
+ },
+ "bt": {
+  "2": "country",
+  "4": "state"
+ },
+ "bv": {
+  "4": "country"
+ },
+ "bw": {
+  "2": "country",
+  "4": "state"
+ },
+ "by": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city",
+  "9": "city_district"
+ },
+ "bz": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city"
+ },
+ "ca": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "cc": {
+  "4": "country"
+ },
+ "cd": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "7": "city_district",
+  "8": "suburb"
+ },
+ "cf": {
+  "2": "country",
+  "4": "state",
+  "8": "suburb"
+ },
+ "cg": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district"
+ },
+ "ch": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "10": "suburb"
+ },
+ "ci": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "9": "city",
+  "10": "suburb"
+ },
+ "ck": {
+  "2": "country",
+  "8": "state"
+ },
+ "cl": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city"
+ },
+ "cm": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "10": "suburb"
+ },
+ "cn": {
+  "2": "country",
+  "4": "state",
+  "5": "city",
+  "6": "state_district",
+  "8": "city",
+  "10": "city"
+ },
+ "co": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "5": "state_district",
+  "6": "city",
+  "7": "city_district",
+  "8": "city_district",
+  "9": "suburb"
+ },
+ "cr": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city",
+  "10": "suburb"
+ },
+ "cu": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city",
+  "10": "suburb"
+ },
+ "cv": {
+  "2": "country",
+  "6": "state"
+ },
+ "cw": {
+  "3": "country"
+ },
+ "cx": {
+  "4": "country"
+ },
+ "cy": {
+  "2": "country",
+  "3": "country_region",
+  "6": "state",
+  "8": "city"
+ },
+ "cz": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "10": "suburb"
+ },
+ "de": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "city_district",
+  "11": "suburb"
+ },
+ "dj": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district"
+ },
+ "dk": {
+  "2": "country",
+  "4": "state",
+  "7": "city",
+  "8": "city",
+  "9": "suburb",
+  "10": "city"
+ },
+ "dm": {
+  "2": "country",
+  "4": "state"
+ },
+ "do": {
+  "2": "country",
+  "4": "state",
+  "6": "city",
+  "7": "city",
+  "8": "city"
+ },
+ "dz": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "7": "city"
+ },
+ "ec": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "7": "city",
+  "8": "city",
+  "9": "suburb"
+ },
+ "ee": {
+  "2": "country",
+  "6": "state",
+  "8": "city",
+  "9": "city",
+  "10": "suburb"
+ },
+ "eg": {
+  "2": "country",
+  "4": "state",
+  "8": "city",
+  "9": "city"
+ },
+ "er": {
+  "2": "country",
+  "4": "state"
+ },
+ "es": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "et": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "8": "city"
+ },
+ "fi": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "9": "city",
+  "10": "suburb"
+ },
+ "fj": {
+  "2": "country",
+  "4": "state"
+ },
+ "fk": {
+  "2": "country"
+ },
+ "fm": {
+  "2": "country",
+  "4": "state"
+ },
+ "fo": {
+  "2": "country",
+  "4": "state",
+  "8": "city"
+ },
+ "fr": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "ga": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district"
+ },
+ "gb": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "8": "city",
+  "10": "city"
+ },
+ "gd": {
+  "2": "country"
+ },
+ "ge": {
+  "2": "country",
+  "3": "state",
+  "4": "state",
+  "6": "state_district",
+  "8": "city",
+  "9": "city_district"
+ },
+ "gf": {
+  "6": "country",
+  "7": "state",
+  "8": "city",
+  "10": "suburb"
+ },
+ "gg": {
+  "2": "country"
+ },
+ "gh": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district"
+ },
+ "gi": {
+  "2": "country"
+ },
+ "gl": {
+  "2": "country"
+ },
+ "gm": {
+  "2": "country",
+  "4": "state"
+ },
+ "gn": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district"
+ },
+ "gp": {
+  "6": "country",
+  "7": "state",
+  "8": "city",
+  "10": "suburb"
+ },
+ "gq": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state"
+ },
+ "gr": {
+  "2": "country",
+  "3": "state",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "gs": {
+  "2": "country"
+ },
+ "gt": {
+  "2": "country",
+  "4": "state",
+  "6": "city"
+ },
+ "gu": {
+  "4": "country",
+  "6": "state_district",
+  "8": "city"
+ },
+ "gw": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district"
+ },
+ "gy": {
+  "2": "country",
+  "4": "state"
+ },
+ "hk": {
+  "3": "country",
+  "5": "state",
+  "6": "state_district",
+  "8": "city"
+ },
+ "hm": {
+  "4": "country"
+ },
+ "hn": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city",
+  "9": "suburb"
+ },
+ "hr": {
+  "2": "country",
+  "6": "state",
+  "7": "city",
+  "8": "city",
+  "9": "suburb",
+  "10": "suburb"
+ },
+ "ht": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "8": "city",
+  "10": "suburb"
+ },
+ "hu": {
+  "2": "country",
+  "4": "country_region",
+  "5": "country_region",
+  "6": "state",
+  "7": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "id": {
+  "2": "country",
+  "4": "state",
+  "5": "city",
+  "6": "city_district",
+  "7": "city",
+  "8": "city_district",
+  "9": "suburb"
+ },
+ "ie": {
+  "2": "country",
+  "5": "state",
+  "6": "state_district",
+  "7": "state_district",
+  "10": "city"
+ },
+ "il": {
+  "2": "country",
+  "4": "state",
+  "8": "city",
+  "10": "suburb"
+ },
+ "im": {
+  "2": "country",
+  "6": "state",
+  "8": "city"
+ },
+ "in": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "7": "city",
+  "8": "city",
+  "9": "city_district",
+  "10": "city_district"
+ },
+ "io": {
+  "2": "country"
+ },
+ "iq": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "6": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "ir": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "9": "city",
+  "10": "suburb"
+ },
+ "is": {
+  "2": "country",
+  "5": "state",
+  "6": "city",
+  "10": "suburb"
+ },
+ "it": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city",
+  "10": "city_district"
+ },
+ "je": {
+  "2": "country",
+  "8": "state"
+ },
+ "jm": {
+  "2": "country",
+  "6": "state",
+  "8": "city"
+ },
+ "jo": {
+  "2": "country",
+  "4": "state"
+ },
+ "jp": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "7": "city",
+  "8": "city_district",
+  "9": "suburb",
+  "10": "suburb"
+ },
+ "ke": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city"
+ },
+ "kg": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city"
+ },
+ "kh": {
+  "2": "country",
+  "4": "state",
+  "6": "suburb"
+ },
+ "ki": {
+  "2": "country"
+ },
+ "km": {
+  "2": "country",
+  "4": "state"
+ },
+ "kn": {
+  "2": "country"
+ },
+ "kp": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "8": "city"
+ },
+ "kr": {
+  "2": "country",
+  "4": "state",
+  "6": "city_district",
+  "7": "suburb",
+  "8": "suburb",
+  "9": "suburb",
+  "10": "suburb"
+ },
+ "kw": {
+  "2": "country",
+  "4": "state"
+ },
+ "ky": {
+  "2": "country"
+ },
+ "kz": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city"
+ },
+ "la": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district"
+ },
+ "lb": {
+  "2": "country",
+  "3": "state",
+  "4": "state_district",
+  "10": "suburb"
+ },
+ "lc": {
+  "2": "country"
+ },
+ "li": {
+  "2": "country",
+  "6": "state",
+  "8": "city"
+ },
+ "lk": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "8": "city"
+ },
+ "lr": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district"
+ },
+ "ls": {
+  "2": "country",
+  "5": "state"
+ },
+ "lt": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "8": "city",
+  "10": "city_district"
+ },
+ "lu": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "8": "city",
+  "9": "suburb"
+ },
+ "lv": {
+  "2": "country",
+  "4": "country_region",
+  "6": "state",
+  "7": "city",
+  "8": "city",
+  "9": "city",
+  "10": "suburb"
+ },
+ "ly": {
+  "2": "country",
+  "4": "state"
+ },
+ "ma": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "9": "city_district"
+ },
+ "mc": {
+  "2": "country",
+  "8": "city",
+  "10": "city_district"
+ },
+ "md": {
+  "2": "country",
+  "3": "state",
+  "4": "state",
+  "6": "state",
+  "7": "state_district",
+  "8": "city",
+  "9": "city",
+  "10": "suburb"
+ },
+ "me": {
+  "2": "country",
+  "6": "state",
+  "8": "city"
+ },
+ "mf": {
+  "3": "country"
+ },
+ "mg": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "mh": {
+  "2": "country"
+ },
+ "mk": {
+  "2": "country",
+  "4": "country_region",
+  "6": "city",
+  "7": "city",
+  "8": "city",
+  "9": "suburb",
+  "10": "suburb"
+ },
+ "ml": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city"
+ },
+ "mm": {
+  "2": "country",
+  "4": "state",
+  "6": "city",
+  "7": "state_district",
+  "8": "city"
+ },
+ "mn": {
+  "2": "country",
+  "4": "state"
+ },
+ "mo": {
+  "3": "country",
+  "5": "state",
+  "6": "state_district"
+ },
+ "mp": {
+  "4": "country",
+  "6": "state_district",
+  "8": "city"
+ },
+ "mq": {
+  "6": "country",
+  "7": "state",
+  "8": "city",
+  "10": "suburb"
+ },
+ "mr": {
+  "2": "country",
+  "4": "state"
+ },
+ "ms": {
+  "2": "country",
+  "6": "state"
+ },
+ "mt": {
+  "2": "country",
+  "4": "state",
+  "8": "city"
+ },
+ "mu": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "5": "state"
+ },
+ "mv": {
+  "2": "country",
+  "4": "state"
+ },
+ "mw": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state"
+ },
+ "mx": {
+  "2": "country",
+  "4": "state",
+  "6": "city",
+  "8": "city",
+  "9": "city_district",
+  "10": "city_district"
+ },
+ "my": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "state_district",
+  "10": "city"
+ },
+ "mz": {
+  "2": "country",
+  "4": "state",
+  "8": "city",
+  "9": "city_district"
+ },
+ "na": {
+  "2": "country",
+  "3": "city",
+  "4": "state",
+  "5": "city",
+  "6": "city"
+ },
+ "nc": {
+  "3": "country",
+  "6": "state",
+  "7": "state",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "ne": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district"
+ },
+ "nf": {
+  "4": "country"
+ },
+ "ng": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district"
+ },
+ "ni": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "nl": {
+  "2": "country",
+  "3": "country",
+  "4": "state",
+  "6": "state_district",
+  "7": "city",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb",
+  "11": "suburb"
+ },
+ "no": {
+  "2": "country",
+  "4": "state",
+  "7": "city",
+  "9": "city_district"
+ },
+ "np": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "nr": {
+  "2": "country"
+ },
+ "nu": {
+  "2": "country"
+ },
+ "nz": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city_district"
+ },
+ "om": {
+  "2": "country",
+  "4": "state",
+  "8": "city"
+ },
+ "pa": {
+  "2": "country",
+  "4": "state",
+  "5": "city",
+  "9": "city"
+ },
+ "pe": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city",
+  "10": "suburb"
+ },
+ "pf": {
+  "3": "country",
+  "7": "state",
+  "8": "city"
+ },
+ "pg": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district"
+ },
+ "ph": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "5": "state_district",
+  "6": "city",
+  "7": "city_district",
+  "8": "city_district",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "pk": {
+  "2": "country",
+  "4": "state"
+ },
+ "pl": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "city",
+  "11": "suburb"
+ },
+ "pm": {
+  "3": "country",
+  "8": "city"
+ },
+ "pn": {
+  "2": "country"
+ },
+ "pr": {
+  "4": "country",
+  "6": "state_district",
+  "8": "city",
+  "10": "suburb"
+ },
+ "ps": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "5": "state_district",
+  "8": "city",
+  "10": "suburb"
+ },
+ "pt": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "7": "city",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "pw": {
+  "2": "country",
+  "8": "state"
+ },
+ "py": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "8": "city",
+  "10": "suburb"
+ },
+ "qa": {
+  "2": "country",
+  "4": "city",
+  "10": "city_district"
+ },
+ "re": {
+  "6": "country",
+  "7": "state",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "ro": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "5": "city_district",
+  "6": "city"
+ },
+ "rs": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city"
+ },
+ "ru": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "5": "state_district",
+  "6": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "rw": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "state_district"
+ },
+ "sa": {
+  "2": "country",
+  "4": "state"
+ },
+ "sb": {
+  "2": "country"
+ },
+ "sc": {
+  "2": "country"
+ },
+ "sd": {
+  "2": "country",
+  "4": "state",
+  "8": "state_district",
+  "9": "city",
+  "10": "suburb"
+ },
+ "se": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "7": "city",
+  "8": "city_district",
+  "9": "suburb"
+ },
+ "sg": {
+  "2": "country",
+  "6": "state"
+ },
+ "sh": {
+  "2": "country"
+ },
+ "si": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "5": "state",
+  "7": "state_district",
+  "8": "city",
+  "10": "suburb"
+ },
+ "sj": {
+  "4": "country"
+ },
+ "sk": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "6": "city",
+  "8": "state_district",
+  "9": "city",
+  "10": "city"
+ },
+ "sl": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "7": "suburb"
+ },
+ "sm": {
+  "2": "country",
+  "8": "city"
+ },
+ "sn": {
+  "2": "country",
+  "3": "state",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "so": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "9": "city_district"
+ },
+ "sr": {
+  "2": "country",
+  "4": "state"
+ },
+ "ss": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district"
+ },
+ "st": {
+  "2": "country"
+ },
+ "sv": {
+  "2": "country",
+  "4": "state",
+  "5": "city"
+ },
+ "sx": {
+  "3": "country"
+ },
+ "sy": {
+  "2": "country",
+  "4": "state"
+ },
+ "sz": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district"
+ },
+ "tc": {
+  "2": "country",
+  "6": "state"
+ },
+ "td": {
+  "2": "country",
+  "4": "state"
+ },
+ "tf": {
+  "3": "country"
+ },
+ "tg": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city"
+ },
+ "th": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city_district",
+  "10": "city"
+ },
+ "tj": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city"
+ },
+ "tk": {
+  "2": "country"
+ },
+ "tl": {
+  "2": "country",
+  "4": "state"
+ },
+ "tm": {
+  "2": "country",
+  "4": "state",
+  "8": "city"
+ },
+ "tn": {
+  "2": "country",
+  "4": "state",
+  "5": "city",
+  "6": "city_district"
+ },
+ "to": {
+  "2": "country"
+ },
+ "tr": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "6": "state_district",
+  "8": "city",
+  "10": "suburb"
+ },
+ "tt": {
+  "2": "country"
+ },
+ "tv": {
+  "2": "country"
+ },
+ "tw": {
+  "2": "country",
+  "4": "city",
+  "5": "city_district",
+  "6": "state_district",
+  "7": "city_district",
+  "8": "city",
+  "9": "suburb"
+ },
+ "tz": {
+  "2": "country",
+  "4": "state",
+  "5": "state_district",
+  "7": "state_district",
+  "9": "city"
+ },
+ "ua": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "7": "city_district",
+  "8": "city_district",
+  "9": "city"
+ },
+ "ug": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "state_district",
+  "9": "city",
+  "10": "city_district"
+ },
+ "um": {
+  "4": "country"
+ },
+ "us": {
+  "2": "country",
+  "4": "state",
+  "5": "city",
+  "6": "state_district",
+  "7": "city",
+  "8": "city",
+  "9": "city_district",
+  "10": "suburb"
+ },
+ "uy": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city"
+ },
+ "uz": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city"
+ },
+ "va": {
+  "2": "country"
+ },
+ "vc": {
+  "2": "country",
+  "6": "state"
+ },
+ "ve": {
+  "2": "country",
+  "3": "country_region",
+  "4": "state",
+  "6": "state_district",
+  "7": "state_district",
+  "8": "city",
+  "9": "suburb"
+ },
+ "vg": {
+  "2": "country"
+ },
+ "vi": {
+  "4": "country",
+  "6": "state_district",
+  "8": "city"
+ },
+ "vn": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city_district",
+  "10": "city_district"
+ },
+ "vu": {
+  "2": "country"
+ },
+ "wf": {
+  "3": "country"
+ },
+ "ws": {
+  "2": "country"
+ },
+ "ye": {
+  "2": "country",
+  "4": "state"
+ },
+ "yt": {
+  "3": "country",
+  "8": "city"
+ },
+ "za": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city",
+  "10": "city_district"
+ },
+ "zm": {
+  "2": "country",
+  "4": "state"
+ },
+ "zw": {
+  "2": "country",
+  "4": "state",
+  "6": "state_district",
+  "8": "city"
+ }
+}

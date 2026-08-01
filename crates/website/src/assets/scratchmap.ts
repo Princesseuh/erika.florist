@@ -232,10 +232,12 @@ function init(data: ScratchmapCache): void {
 	map.getPane("overlayPane")!.style.transform = "translateZ(0)";
 	map.getPane("overlayPane")!.style.willChange = "transform";
 
-	// Basemap colour under missing tiles, so the fog composites to the same
-	// purple whether tiles have arrived or not. The page background carries
-	// the fog-over-this colour (#8a86b9) for the moment before the map exists.
-	map.getPane("tilePane")!.style.background = "#dfe3e3";
+	// Flat basemap colour under missing tiles, so the fog composites to the
+	// same purple whether tiles have arrived or not. It must be on the
+	// container: Leaflet panes have no size of their own, so a pane
+	// background never paints. The page ships the fog-over-this colour
+	// (#8a86b9) instead, for the moment before the fog first draws.
+	el.style.background = "#dfe3e3";
 
 	L.tileLayer("https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png", {
 		attribution:

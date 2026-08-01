@@ -232,6 +232,11 @@ function init(data: ScratchmapCache): void {
 	map.getPane("overlayPane")!.style.transform = "translateZ(0)";
 	map.getPane("overlayPane")!.style.willChange = "transform";
 
+	// Basemap colour under missing tiles, so the fog composites to the same
+	// purple whether tiles have arrived or not. The page background carries
+	// the fog-over-this colour (#8a86b9) for the moment before the map exists.
+	map.getPane("tilePane")!.style.background = "#dfe3e3";
+
 	L.tileLayer("https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png", {
 		attribution:
 			'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',

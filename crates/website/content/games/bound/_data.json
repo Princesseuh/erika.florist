@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1471305600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PSVR",
+      "id": 165
+    }
+  ],
+  "companies": [
+    {
+      "id": 3496,
+      "name": "Plastic",
+      "role": "developer"
+    },
+    {
+      "id": 10100,
+      "name": "Sony Interactive Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

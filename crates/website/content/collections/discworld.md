@@ -1,0 +1,47 @@
+---
+title: "Discworld"
+members:
+  - book/the-colour-of-magic
+  - book/the-light-fantastic
+  - book/equal-rites
+  - book/mort
+  - book/sourcery
+  - book/wyrd-sisters
+  - book/pyramids
+  - book/guards-guards
+  - book/eric
+  - book/moving-pictures
+  - book/reaper-man
+  - book/witches-abroad
+  - book/small-gods
+  - book/lords-and-ladies
+  - book/men-at-arms
+  - book/soul-music
+  - book/interesting-times
+  - book/maskerade
+  - book/feet-of-clay
+  - book/hogfather
+  - book/jingo
+  - book/the-last-continent
+  - book/carpe-jugulum
+  - book/the-fifth-elephant
+  - book/the-truth
+  - book/thief-of-time
+  - book/the-last-hero
+  - book/the-amazing-maurice-and-his-educated-rodents
+  - book/night-watch
+  - book/the-wee-free-men
+  - book/monstrous-regiment
+  - book/a-hat-full-of-sky
+  - book/going-postal
+  - book/thud
+  - book/wintersmith
+  - book/making-money
+  - book/unseen-academicals
+  - book/i-shall-wear-midnight
+  - book/snuff
+  - book/raising-steam
+  - book/the-shepherd-s-crown
+---
+
+The main Discworld series, in publication order.

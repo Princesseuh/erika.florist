@@ -7,7 +7,16 @@
 // data never changes.
 
 import * as L from "leaflet";
-import { UNITS, cellArea, cellToLatLng, cellToParent, cellsToMultiPolygon, isValidCell } from "h3-js";
+import {
+	UNITS,
+	cellArea,
+	cellToBoundary,
+	cellToLatLng,
+	cellToParent,
+	cellsToMultiPolygon,
+	isValidCell,
+	polygonToCells,
+} from "h3-js";
 import { type ScratchmapCache, loadScratchmapCache } from "./scratchmap-db";
 
 const el = document.getElementById("scratchmap-map");
@@ -22,6 +31,12 @@ function init(data: ScratchmapCache): void {
 
 	const FOG_FILL = "rgba(82, 72, 156, 0.6)"; // violet-ultra
 	const FOG_OUTLINE = "rgba(46, 40, 82, 0.65)"; // dark violet edge around the cleared area
+
+	// Warm, so the focused region separates from the violet fog.
+	const HIGHLIGHT_FILL = "rgba(249, 160, 63, 0.45)"; // orange-carrot
+	const HIGHLIGHT_OUTLINE = "#c73c2e"; // accent-valencia
+	const HIGHLIGHT_DIM = "rgba(10, 9, 8, 0.2)"; // charcoal
+	const HIGHLIGHT_PENDING = "rgba(249, 160, 63, 0.5)"; // orange-carrot
 
 	// "filled" coarsens each cell to its res-10 parent, so sparse walks read as areas.
 	const REVEAL = { precise: 11, filled: 10 } as const;
@@ -89,6 +104,8 @@ function init(data: ScratchmapCache): void {
 	const rebuildReveal = () => {
 		levels = new Map();
 		coverage.clear();
+		visitedByRes.clear();
+		unexploredCache.clear();
 	};
 
 	// Default "filled": res 11 alone reads as a thin dotted trail.
@@ -104,6 +121,9 @@ function init(data: ScratchmapCache): void {
 		maxZoom: 19,
 		worldCopyJump: true,
 		zoomAnimation: false,
+		// A click frames the region under it; a double click fires that twice, under
+		// Leaflet's own zoom.
+		doubleClickZoom: false,
 	});
 	L.control.zoom({ position: "topright" }).addTo(map);
 
@@ -259,6 +279,8 @@ function init(data: ScratchmapCache): void {
 	map.getPane("fogPane")!.appendChild(canvas);
 	const ctx = canvas.getContext("2d");
 
+	let highlightKey: string | null = null;
+
 	const draw = () => {
 		if (!ctx) return;
 
@@ -275,11 +297,14 @@ function init(data: ScratchmapCache): void {
 		const bounds = map.getBounds().pad(0.15);
 		const sw = bounds.getSouthWest();
 		const ne = bounds.getNorthEast();
-		const level = levelFor(Math.min(REVEAL[revealMode], lodForZoom(map.getZoom())));
+		const res = Math.min(REVEAL[revealMode], lodForZoom(map.getZoom()));
+		const level = levelFor(res);
 
 		ctx.strokeStyle = FOG_OUTLINE;
 		ctx.lineWidth = 1.5;
 		ctx.lineJoin = "round";
+
+		const cleared: Path2D[] = [];
 
 		for (const polygon of level) {
 			// Off-screen rejection before touching any vertex.
@@ -312,7 +337,10 @@ function init(data: ScratchmapCache): void {
 			ctx.fill(path, "evenodd");
 			ctx.globalCompositeOperation = "source-over";
 			ctx.stroke(path);
+			cleared.push(path);
 		}
+
+		drawHighlight(cleared, size.x, size.y, res, sw, ne);
 	};
 
 	const resize = () => {
@@ -496,6 +524,220 @@ function init(data: ScratchmapCache): void {
 		});
 	}
 
+	// Countries are excluded: one holds tens of millions of res-10 cells, and a
+	// honeycomb that size says nothing about a neighbourhood.
+	const UNEXPLORED_CAP = 12000;
+
+	// Each coarser resolution holds a seventh of the cells, so the res-10 count that
+	// already ships bounds every resolution without tiling anything to find out.
+	const cellEstimate = (state: RegionState, res: number) =>
+		res >= 11 ? state.total : state.filledTotal / 7 ** (10 - res);
+
+	const visitedByRes = new Map<number, Set<string>>();
+	const walkedAt = (res: number): Set<string> => {
+		let set = visitedByRes.get(res);
+		if (!set) {
+			set = new Set(visited.map((cell) => (res === 11 ? cell : cellToParent(cell, res))));
+			visitedByRes.set(res, set);
+		}
+		return set;
+	};
+
+	// The centre travels with the id: the draw culls by centre on every frame.
+	interface UnexploredCell {
+		cell: string;
+		lat: number;
+		lng: number;
+	}
+
+	const unexploredCache = new Map<string, UnexploredCell[]>();
+	const unexploredCells = (key: string, state: RegionState, res: number): UnexploredCell[] => {
+		const cacheKey = `${key}:${res}`;
+		const cached = unexploredCache.get(cacheKey);
+		if (cached) return cached;
+
+		const cells: UnexploredCell[] = [];
+		if (state.rings && !key.startsWith("country:") && cellEstimate(state, res) <= UNEXPLORED_CAP) {
+			const walked = walkedAt(res);
+			for (const polygon of state.rings) {
+				// h3-js reads GeoJSON winding directly, so the [lng, lat] rings pass through
+				// untouched and holes stay holes. Same centre-in-outline rule CI tiles with.
+				for (const cell of polygonToCells(polygon as number[][][], res, true)) {
+					if (walked.has(cell)) continue;
+					const [lat, lng] = cellToLatLng(cell);
+					cells.push({ cell, lat, lng });
+				}
+			}
+		}
+		unexploredCache.set(cacheKey, cells);
+		return cells;
+	};
+
+	// Region rings are [lng, lat]; the reveal's are [lat, lng].
+	const regionPath = (state: RegionState): Path2D => {
+		const path = new Path2D();
+		for (const polygon of state.rings ?? []) {
+			for (const ring of polygon) {
+				let first = true;
+				for (const position of ring) {
+					const [lng, lat] = position as [number, number];
+					const point = map.latLngToContainerPoint([lat, lng]);
+					if (first) {
+						path.moveTo(point.x, point.y);
+						first = false;
+					} else {
+						path.lineTo(point.x, point.y);
+					}
+				}
+				path.closePath();
+			}
+		}
+		return path;
+	};
+
+	// Runs after the fog, so the tint lands on the cleared area instead of under it.
+	const drawHighlight = (
+		cleared: Path2D[],
+		width: number,
+		height: number,
+		res: number,
+		sw: L.LatLng,
+		ne: L.LatLng,
+	) => {
+		if (!ctx) return;
+		const key = highlightKey;
+		const state = key === null ? undefined : regionStates.get(key);
+		if (key === null || !state?.rings) return;
+
+		// Off-screen, the dim would veil the whole viewport with nothing lit under it.
+		if (
+			state.maxLat < sw.lat ||
+			state.minLat > ne.lat ||
+			state.maxLng < sw.lng ||
+			state.minLng > ne.lng
+		) {
+			return;
+		}
+
+		const region = regionPath(state);
+		ctx.globalCompositeOperation = "source-over";
+
+		// Even-odd throughout, so a region with a hole neither dims nor tints it.
+		const outside = new Path2D();
+		outside.rect(0, 0, width, height);
+		outside.addPath(region);
+		ctx.fillStyle = HIGHLIGHT_DIM;
+		ctx.fill(outside, "evenodd");
+
+		ctx.save();
+		ctx.clip(region, "evenodd");
+		ctx.fillStyle = HIGHLIGHT_FILL;
+		for (const path of cleared) ctx.fill(path, "evenodd");
+		ctx.restore();
+
+		// Before the honeycomb bails out: a fully walked region still needs its boundary.
+		ctx.strokeStyle = HIGHLIGHT_OUTLINE;
+		ctx.lineWidth = 2.5;
+		ctx.stroke(region);
+
+		// Not clipped to the outline: a cell belongs to the region when its centre does,
+		// so a border cell legitimately pokes out.
+		const remaining = unexploredCells(key, state, res);
+		if (remaining.length === 0) return;
+
+		// Under a few pixels the honeycomb reads as noise and costs a path per cell.
+		const metresPerPixel =
+			(156543.03392 * Math.cos((map.getCenter().lat * Math.PI) / 180)) / 2 ** map.getZoom();
+		if (Math.sqrt(cellArea(remaining[0]!.cell, UNITS.m2)) / metresPerPixel < 4) return;
+
+		const pending = new Path2D();
+		let drawn = 0;
+		for (const { cell, lat, lng } of remaining) {
+			if (lat < sw.lat || lat > ne.lat || lng < sw.lng || lng > ne.lng) continue;
+			let first = true;
+			for (const [blat, blng] of cellToBoundary(cell)) {
+				const point = map.latLngToContainerPoint([blat, blng]);
+				if (first) {
+					pending.moveTo(point.x, point.y);
+					first = false;
+				} else {
+					pending.lineTo(point.x, point.y);
+				}
+			}
+			pending.closePath();
+			drawn += 1;
+		}
+		if (drawn > 0) {
+			ctx.strokeStyle = HIGHLIGHT_PENDING;
+			ctx.lineWidth = 1;
+			ctx.stroke(pending);
+		}
+	};
+
+	const regionAt = (lat: number, lng: number): string | null => {
+		const prefix = `${levelForZoom(map.getZoom())}:`;
+		let best: string | null = null;
+		let bestArea = Infinity;
+		for (const [key, state] of regionStates) {
+			if (!key.startsWith(prefix) || !containsPoint(state, lng, lat)) continue;
+			// Outlines do nest at the same level; the tightest match is the one meant.
+			const area = (state.maxLng - state.minLng) * (state.maxLat - state.minLat);
+			if (area < bestArea) {
+				bestArea = area;
+				best = key;
+			}
+		}
+		return best;
+	};
+
+	const HOVER_CAPABLE = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+	let pointerLatLng: L.LatLng | null = null;
+	let livePosition: L.LatLng | null = null;
+
+	const refreshHighlight = () => {
+		const aimed = HOVER_CAPABLE ? pointerLatLng : map.getCenter();
+		const next =
+			(aimed && regionAt(aimed.lat, aimed.lng)) ??
+			(livePosition && regionAt(livePosition.lat, livePosition.lng)) ??
+			null;
+		if (next === highlightKey) return;
+		highlightKey = next;
+		if (HOVER_CAPABLE) el.style.cursor = next === null ? "" : "pointer";
+		// The focused badge names what is lit up, so it has to survive decluttering.
+		declutter();
+		scheduleDraw();
+	};
+
+	// The click point decides rather than the highlight, so a tap works on touch, where
+	// the highlight tracks the centre instead.
+	map.on("click", (event: L.LeafletMouseEvent) => {
+		const key = regionAt(event.latlng.lat, event.latlng.lng);
+		const state = key === null ? undefined : regionStates.get(key);
+		if (!state?.rings) return;
+
+		const bounds = L.latLngBounds([state.minLat, state.minLng], [state.maxLat, state.maxLng]);
+		const framed = map.getBoundsZoom(bounds, false, L.point(24, 24));
+		const current = map.getZoom();
+		// Hold the current zoom when the region only just overflows the screen: half the
+		// districts fit at zoom ~14, so framing every click ratchets in or jolts out.
+		map.setView(bounds.getCenter(), framed > current || current - framed > 1 ? framed : current);
+	});
+
+	if (HOVER_CAPABLE) {
+		map.on("mousemove", (event: L.LeafletMouseEvent) => {
+			pointerLatLng = event.latlng;
+			refreshHighlight();
+		});
+		map.on("mouseout", () => {
+			pointerLatLng = null;
+			refreshHighlight();
+		});
+	} else {
+		map.on("move", refreshHighlight);
+	}
+	// Zoom swaps the active level, so the same point can resolve to another region.
+	map.on("zoomend", refreshHighlight);
+
 	// Attribute new cells the way CI does: parent cell → cached region → +1. Cells
 	// with uncached parents wait for the next sync.
 	const attributeToRegions = (cells: string[]) => {
@@ -537,7 +779,12 @@ function init(data: ScratchmapCache): void {
 		const placed: { x: number; y: number; w: number; h: number }[] = [];
 		const entries = [...regionStates.entries()]
 			.filter(([key]) => key.startsWith(`${level}:`))
-			.sort((a, b) => b[1].explored - a[1].explored);
+			// The focused region places first, so its badge is never the one dropped.
+			.sort(
+				(a, b) =>
+					Number(b[0] === highlightKey) - Number(a[0] === highlightKey) ||
+					b[1].explored - a[1].explored,
+			);
 		for (const [, state] of entries) {
 			const point = map.project(state.marker.getLatLng(), zoom);
 			const label = `${state.name} · ${formatPercent(percentFor(state))}`;
@@ -584,6 +831,8 @@ function init(data: ScratchmapCache): void {
 
 	resize();
 	updateBadges();
+	// Touch has no pointer event to wait for; the centre is already meaningful.
+	refreshHighlight();
 
 	// Live mode (logged in): poll the Worker for new cells. The endpoint is
 	// cookie-gated, so the browser never holds the write token.
@@ -642,15 +891,13 @@ function init(data: ScratchmapCache): void {
 	let beamAngle = 0;
 	let compassSeen = false;
 	const applyHeading = () => {
-		const beam = positionMarker
-			.getElement()
-			?.querySelector<SVGElement>(".scratchmap-live-beam");
+		const beam = positionMarker.getElement()?.querySelector<SVGElement>(".scratchmap-live-beam");
 		if (!beam) return;
 		if (headingDeg === null) {
 			beam.style.opacity = "0";
 			return;
 		}
-		beamAngle += (((headingDeg - beamAngle) % 360) + 540) % 360 - 180;
+		beamAngle += ((((headingDeg - beamAngle) % 360) + 540) % 360) - 180;
 		beam.style.transform = `rotate(${beamAngle}deg)`;
 		beam.style.opacity = "1";
 	};
@@ -664,6 +911,8 @@ function init(data: ScratchmapCache): void {
 		const { latitude, longitude, accuracy, heading } = pos.coords;
 		positionMarker.setLatLng([latitude, longitude]);
 		accuracyCircle.setLatLng([latitude, longitude]).setRadius(accuracy);
+		livePosition = L.latLng(latitude, longitude);
+		refreshHighlight();
 		if (!positionShown) {
 			accuracyCircle.addTo(map);
 			positionMarker.addTo(map);
@@ -736,6 +985,8 @@ function init(data: ScratchmapCache): void {
 			geoWatchId = undefined;
 		}
 		stopOrientation();
+		livePosition = null;
+		refreshHighlight();
 		if (positionShown) {
 			positionMarker.remove();
 			accuracyCircle.remove();

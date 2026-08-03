@@ -43,6 +43,7 @@ struct MediaData {
 }
 
 pub fn run_get_data_movies_shows(content_type: &str) -> anyhow::Result<usize> {
+    let agent = crate::tasks::get_info_cover_book::http_agent();
     let api_key = std::env::var("TMDB_KEY").context("TMDB_KEY env var not set")?;
     let dirs = get_content_dirs(content_type)?;
 
@@ -78,7 +79,7 @@ pub fn run_get_data_movies_shows(content_type: &str) -> anyhow::Result<usize> {
             .with_context(|| format!("no tmdb id in frontmatter for {dir_name}"))?;
 
         let url = format!("https://api.themoviedb.org/3/{endpoint}/{tmdb_id}?api_key={api_key}");
-        let response: TmdbResponse = ureq::get(&url).call()?.body_mut().read_json()?;
+        let response: TmdbResponse = agent.get(&url).call()?.body_mut().read_json()?;
 
         // Shows use `name` and `first_air_date`, movies use `title` and `release_date`
         let title = response.title.or(response.name);
@@ -118,7 +119,7 @@ pub fn run_get_data_movies_shows(content_type: &str) -> anyhow::Result<usize> {
         if let Some(poster_path) = response.poster_path {
             let poster_url = format!("https://image.tmdb.org/t/p/w780{poster_path}");
             let cover_path = dir.join("cover.png");
-            crate::tasks::get_info_cover_book::download_and_save_image(&poster_url, &cover_path)
+            crate::tasks::get_info_cover_book::download_and_save_image(&agent, &poster_url, &cover_path)
                 .with_context(|| format!("downloading cover for {dir_name}"))?;
             log_success(&format!("Cover saved for {dir_name}!"));
         }

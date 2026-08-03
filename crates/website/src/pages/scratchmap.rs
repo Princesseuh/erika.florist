@@ -24,7 +24,7 @@ fn scratchmap_hash() -> String {
 }
 
 // The map data, versioned by its content hash. The page carries only the hash;
-// scratchmap-db.ts fetches this once per data change and serves IndexedDB after.
+// scratchmap/db.ts fetches this once per data change and serves IndexedDB after.
 #[route("/scratchmap/content.json")]
 pub struct ScratchMapContent;
 
@@ -46,7 +46,7 @@ pub struct ScratchMap;
 
 impl Route for ScratchMap {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
-        ctx.assets.include_script("src/assets/scratchmap.ts")?;
+        ctx.assets.include_script("src/assets/scratchmap/index.ts")?;
         // tailwind: false — vendored CSS, not Tailwind source.
         ctx.assets.include_style_with_options(
             "../../node_modules/leaflet/dist/leaflet.css",
@@ -54,7 +54,7 @@ impl Route for ScratchMap {
         )?;
 
         // Empty on incremental rebuilds where ScratchMapContent stayed cached;
-        // scratchmap-db.ts then just refetches content.json.
+        // scratchmap/db.ts then just refetches content.json.
         let hash = state::get_scratchmap_hash().unwrap_or_default();
 
         Ok(base_layout(

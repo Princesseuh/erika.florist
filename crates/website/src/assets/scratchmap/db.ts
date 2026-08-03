@@ -1,6 +1,3 @@
-// Local-first data layer for the scratch map, in the shape of catalogue-db.ts: the
-// page carries only a content hash, this module serves the data from IndexedDB and
-// refetches content.json only when the hash changed.
 export const DB_NAME = "scratchmap";
 export const DB_VERSION = 1;
 

@@ -33,6 +33,9 @@ const ELLIPSIS = "overflow:hidden;text-overflow:ellipsis;white-space:nowrap";
 const PANEL_CLASS = "scratchmap-search";
 const ROW_CLASS = "scratchmap-search-option";
 
+const SEARCH_ICON =
+	'<svg viewBox="0 0 24 24" width="16" height="16" style="display:block" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>';
+
 // Hover stays in CSS so it cannot move the keyboard selection, which aria-activedescendant
 // reports to a screen reader; a passing mouse must not relocate that. Both tints are
 // orange-carrot, as the map's highlight uses.
@@ -44,6 +47,7 @@ const STYLES = `.${ROW_CLASS}:hover{background:rgba(249,160,63,0.18)}
 .${ROW_CLASS}[aria-selected="true"]{background:rgba(249,160,63,0.35)}
 .${PANEL_CLASS} input{padding:6px 8px;font:400 13px/1.3 system-ui,sans-serif}
 .${ROW_CLASS}{padding:5px 8px}
+.${PANEL_CLASS}-panel{width:240px;max-width:70vw;background:#f7f7f7;border:1px solid rgba(10,9,8,0.12);border-radius:3px;box-shadow:0 1px 3px rgba(0,0,0,0.25);overflow:hidden}
 @media (pointer:coarse){
 .${PANEL_CLASS} input{padding:10px 8px;font-size:16px}
 .${ROW_CLASS}{padding:8px}
@@ -99,10 +103,22 @@ export function addSearchControl(map: L.Map, regions: Regions): void {
 	const SearchControl = L.Control.extend({
 		onAdd() {
 			const container = L.DomUtil.create("div", `leaflet-control ${PANEL_CLASS}`);
-			container.style.cssText =
-				"width:240px;max-width:70vw;background:#f7f7f7;border:1px solid rgba(10,9,8,0.12);border-radius:3px;box-shadow:0 1px 3px rgba(0,0,0,0.25);overflow:hidden";
 
-			const input = L.DomUtil.create("input", "", container) as HTMLInputElement;
+			// Collapsed, this is one of the map's own bar buttons; `leaflet-bar` on the
+			// container is what gives it that look, so it comes off once the panel is out.
+			const toggle = L.DomUtil.create("a", "", container) as HTMLAnchorElement;
+			toggle.href = "#";
+			toggle.setAttribute("role", "button");
+			toggle.setAttribute("aria-controls", "scratchmap-search-panel");
+			toggle.title = "Search regions";
+			toggle.setAttribute("aria-label", "Search regions");
+			toggle.style.cssText = "align-items:center;justify-content:center";
+			toggle.innerHTML = SEARCH_ICON;
+
+			const panel = L.DomUtil.create("div", `${PANEL_CLASS}-panel`, container);
+			panel.id = "scratchmap-search-panel";
+
+			const input = L.DomUtil.create("input", "", panel) as HTMLInputElement;
 			input.type = "search";
 			input.placeholder = "Search regions";
 			input.autocomplete = "off";
@@ -114,7 +130,7 @@ export function addSearchControl(map: L.Map, regions: Regions): void {
 			input.style.cssText =
 				"display:block;box-sizing:border-box;width:100%;border:0;background:transparent;outline:none;color:#0a0908";
 
-			const list = L.DomUtil.create("ul", "", container) as HTMLUListElement;
+			const list = L.DomUtil.create("ul", "", panel) as HTMLUListElement;
 			list.id = "scratchmap-search-results";
 			list.setAttribute("role", "listbox");
 			list.setAttribute("aria-label", "Region results");
@@ -123,13 +139,37 @@ export function addSearchControl(map: L.Map, regions: Regions): void {
 
 			// aria-expanded alone is not announced when it changes, so the count is said out
 			// loud instead. Off-screen rather than hidden: display:none is never announced.
-			const status = L.DomUtil.create("div", "", container);
+			const status = L.DomUtil.create("div", "", panel);
 			status.setAttribute("role", "status");
 			status.style.cssText =
 				"position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap";
 
 			let results: SearchEntry[] = [];
 			let active = -1;
+
+			const setOpen = (open: boolean) => {
+				container.className = open
+					? `leaflet-control ${PANEL_CLASS}`
+					: `leaflet-control leaflet-bar ${PANEL_CLASS}`;
+				toggle.style.display = open ? "none" : "flex";
+				panel.style.display = open ? "block" : "none";
+				toggle.setAttribute("aria-expanded", String(open));
+			};
+
+			// Returning focus to the button is right only when the viewer dismissed the panel
+			// themselves; clicking the map away from it must not pull focus back.
+			const collapse = (returnFocus: boolean) => {
+				close();
+				setOpen(false);
+				if (returnFocus) toggle.focus();
+			};
+
+			setOpen(false);
+			L.DomEvent.on(toggle, "click", (event) => {
+				L.DomEvent.stop(event);
+				setOpen(true);
+				input.focus();
+			});
 
 			const paint = () => {
 				for (const [position, row] of [...list.children].entries()) {
@@ -144,11 +184,14 @@ export function addSearchControl(map: L.Map, regions: Regions): void {
 				if (!entry) return;
 				input.value = entry.name;
 				regions.focusRegion(entry);
-				// A pointer user keeps the caret, ready for the next query. On touch, holding
-				// focus would leave the keyboard covering the region just framed, and blurring
-				// to nowhere costs a keyboard user nothing there.
-				if (!HOVER_CAPABLE) input.blur();
 				close();
+				// A pointer user keeps the caret and the panel, ready to refine. On touch the
+				// keyboard and the panel would both sit over the region just framed, so the
+				// whole thing folds back to its button.
+				if (!HOVER_CAPABLE) {
+					input.blur();
+					collapse(false);
+				}
 			};
 
 			const render = () => {
@@ -208,7 +251,12 @@ export function addSearchControl(map: L.Map, regions: Regions): void {
 
 			input.addEventListener("input", update);
 			input.addEventListener("focus", update);
-			input.addEventListener("blur", close);
+			input.addEventListener("blur", () => {
+				close();
+				// An empty box that lost focus is only clutter. A query part-way through is
+				// not, so it survives a click on the map.
+				if (input.value === "") collapse(false);
+			});
 			input.addEventListener("keydown", (event) => {
 				// An IME drives its candidate list with the same keys. Committing "Montréal"
 				// must not also pick a result out from under the composition.
@@ -232,12 +280,12 @@ export function addSearchControl(map: L.Map, regions: Regions): void {
 					event.preventDefault();
 					choose(active);
 				} else if (event.key === "Escape") {
-					// Dismiss first, clear second, so a query survives a look at the map. The
-					// preventDefault suppresses the native clear `type="search"` does on Escape,
-					// which would collapse both steps into one.
+					// Dismiss the list first, fold the panel away second, so a query survives a
+					// look at the map. The preventDefault suppresses the native clear
+					// `type="search"` does on Escape, which would collapse both steps into one.
 					event.preventDefault();
 					if (count > 0) close();
-					else input.value = "";
+					else collapse(true);
 				}
 			});
 

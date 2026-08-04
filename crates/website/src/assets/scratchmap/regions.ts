@@ -38,7 +38,7 @@ const share = (have: number, total: number) => (total > 0 ? (have / total) * 100
 
 // Small percentages get enough decimals to stay honest, without scientific
 // notation.
-const formatPercent = (p: number): string => {
+export const formatPercent = (p: number): string => {
 	if (p <= 0) return "0%";
 	if (p >= 10) return `${Math.round(p)}%`;
 	if (p >= 1) return `${p.toFixed(1)}%`;
@@ -50,6 +50,14 @@ const formatPercent = (p: number): string => {
 // that, the OSM city level carries the real coastline.
 const levelForZoom = (z: number): string => (z >= 13 ? "district" : z >= 8 ? "city" : "country");
 
+// The inverse of levelForZoom, inside the map's own zoom range. Framing a region outside
+// its band draws another level's outlines, so neither its badge nor its highlight shows.
+const ZOOM_BAND: Record<string, [number, number]> = {
+	city: [8, 12],
+	country: [2, 7],
+	district: [13, 19],
+};
+
 const makeBadgeIcon = (name: string, percent: number) =>
 	L.divIcon({
 		className: "",
@@ -59,20 +67,56 @@ const makeBadgeIcon = (name: string, percent: number) =>
 		html: `<span style="display:inline-block;transform:translate(-50%,-50%);white-space:nowrap;background:#f7f7f7;border:1px solid rgba(10,9,8,0.12);border-radius:3px;padding:2px 6px;font:600 12px/1.1 system-ui,sans-serif;color:#0a0908;box-shadow:0 1px 2px rgba(0,0,0,0.2)">${name} · ${formatPercent(percent)}</span>`,
 	});
 
-// Keyed level:osm_id, so live mode can update labels.
-interface RegionState extends Counts {
-	name: string;
-	marker: L.Marker;
-	// The outline to test freshly-walked cells against, with its bounding box so
-	// the common "nowhere near here" case costs four comparisons.
-	rings: GeoJSON.Position[][][] | undefined;
+interface Bounds {
 	minLng: number;
 	minLat: number;
 	maxLng: number;
 	maxLat: number;
 }
 
-const containsPoint = (state: RegionState, lng: number, lat: number) => {
+// The outer ring of each polygon bounds it; holes are inside by definition.
+const boundsOf = (rings: GeoJSON.Position[][][] | undefined): Bounds => {
+	let minLng = Infinity;
+	let minLat = Infinity;
+	let maxLng = -Infinity;
+	let maxLat = -Infinity;
+	for (const polygon of rings ?? []) {
+		for (const position of polygon[0] ?? []) {
+			const [lng, lat] = position as [number, number];
+			if (lng < minLng) minLng = lng;
+			if (lng > maxLng) maxLng = lng;
+			if (lat < minLat) minLat = lat;
+			if (lat > maxLat) maxLat = lat;
+		}
+	}
+	return { minLng, minLat, maxLng, maxLat };
+};
+
+// An outline to test points against, with its bounding box so the common "nowhere near
+// here" case costs four comparisons.
+interface Outline extends Bounds {
+	rings: GeoJSON.Position[][][] | undefined;
+}
+
+// Keyed level:osm_id, so live mode can update labels.
+interface RegionState extends Counts, Outline {
+	name: string;
+	marker: L.Marker;
+}
+
+// What the search can offer: every country, walked or not, since the world's outlines all
+// ship. A city or district only exists in the data once walked, so there is no more.
+export interface SearchEntry extends Bounds {
+	key: string;
+	name: string;
+	level: string;
+	explored: number;
+	// The badge anchor, which is the point the containing region is resolved from.
+	lat: number;
+	lon: number;
+}
+
+const containsPoint = (state: Outline, lng: number, lat: number) => {
 	if (
 		!state.rings ||
 		lng < state.minLng ||
@@ -117,6 +161,16 @@ export function createRegions(
 	};
 	const regionStates = new Map<string, RegionState>();
 
+	const searchEntries: SearchEntry[] = [];
+	// A city with no district inside it is cloned onto the district layer under the same
+	// osm_id. Both frame the same outline, so only the original earns a search hit.
+	const cityIds = new Set(
+		regions.filter((region) => region.level === "city").map((region) => region.osm_id),
+	);
+	// Outlines a search hit can sit inside. Countries come in walked or not: a city in a
+	// country nobody walked still has to name it.
+	const parentOutlines: (Outline & { level: string; name: string })[] = [];
+
 	// Parents painted before live mode starts. A new cell only grows "filled" counts
 	// when it opens a parent that is not in here.
 	const filledParents = new Set(fog.walkedAt(REVEAL.filled));
@@ -125,9 +179,13 @@ export function createRegions(
 		const group = badgeLayers[region.level];
 		if (!group) continue;
 
+		const rings = region.geometry?.coordinates;
+		const bounds = boundsOf(rings);
+		const key = `${region.level}:${region.osm_id}`;
+
 		// Same group as the badge, so both toggle together. Unexplored regions (the
 		// world's other countries) draw dim: context, not content.
-		if (region.geometry?.coordinates?.length) {
+		if (rings?.length) {
 			L.geoJSON(region.geometry, {
 				interactive: false,
 				style:
@@ -135,6 +193,26 @@ export function createRegions(
 						? { color: "#2e2852", weight: 1.5, opacity: 0.85, fill: false }
 						: { color: "#2e2852", weight: 1, opacity: 0.3, fill: false },
 			}).addTo(group);
+		}
+
+		if (rings?.length && (region.level === "country" || region.level === "city")) {
+			parentOutlines.push({ level: region.level, name: region.name, rings, ...bounds });
+		}
+
+		if (
+			rings?.length &&
+			(region.level === "country" || region.explored > 0) &&
+			!(region.level === "district" && cityIds.has(region.osm_id))
+		) {
+			searchEntries.push({
+				key,
+				name: region.name,
+				level: region.level,
+				explored: region.explored,
+				lat: region.lat,
+				lon: region.lon,
+				...bounds,
+			});
 		}
 
 		// No badge for a region with nothing explored; the outline still draws.
@@ -152,30 +230,12 @@ export function createRegions(
 			keyboard: false,
 			pane: "badgePane",
 		}).addTo(group);
-		const rings = region.geometry?.coordinates;
-		let minLng = Infinity;
-		let minLat = Infinity;
-		let maxLng = -Infinity;
-		let maxLat = -Infinity;
-		// The outer ring of each polygon bounds it; holes are inside by definition.
-		for (const polygon of rings ?? []) {
-			for (const position of polygon[0] ?? []) {
-				const [lng, lat] = position as [number, number];
-				if (lng < minLng) minLng = lng;
-				if (lng > maxLng) maxLng = lng;
-				if (lat < minLat) minLat = lat;
-				if (lat > maxLat) maxLat = lat;
-			}
-		}
-		regionStates.set(`${region.level}:${region.osm_id}`, {
+		regionStates.set(key, {
 			name: region.name,
 			...covered,
+			...bounds,
 			marker,
 			rings,
-			minLng,
-			minLat,
-			maxLng,
-			maxLat,
 		});
 	}
 
@@ -373,13 +433,31 @@ export function createRegions(
 	const HOVER_CAPABLE = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 	let pointerLatLng: L.LatLng | null = null;
 	let livePosition: L.LatLng | null = null;
+	// A searched region, lit until the pointer or a drag takes the map back. It ranks
+	// under the pointer so hovering elsewhere still wins, and over the live dot because
+	// a search is the more deliberate of the two.
+	let pinnedKey: string | null = null;
 
 	const refreshHighlight = () => {
-		const aimed = HOVER_CAPABLE ? pointerLatLng : map.getCenter();
-		const next =
-			(aimed && regionAt(aimed.lat, aimed.lng)) ??
-			(livePosition && regionAt(livePosition.lat, livePosition.lng)) ??
-			null;
+		// The pin holds only while its own level is the one drawn. Zooming away from a
+		// searched region would otherwise keep it lit from a layer no longer on the map.
+		const pinned =
+			pinnedKey !== null && pinnedKey.startsWith(`${levelForZoom(map.getZoom())}:`)
+				? pinnedKey
+				: null;
+
+		// Deliberate aim first: the pointer, then the region just searched. A touch viewer
+		// has neither, so the map centre stands in — but under the pin, since framing
+		// centres a bounding box, and for a bent or scattered outline that point lands
+		// outside the region and often inside a walked neighbour.
+		let next: string | null = null;
+		if (HOVER_CAPABLE && pointerLatLng) next = regionAt(pointerLatLng.lat, pointerLatLng.lng);
+		next ??= pinned;
+		if (next === null && !HOVER_CAPABLE) {
+			const centre = map.getCenter();
+			next = regionAt(centre.lat, centre.lng);
+		}
+		if (next === null && livePosition) next = regionAt(livePosition.lat, livePosition.lng);
 		if (next === highlightKey) return;
 		highlightKey = next;
 		if (HOVER_CAPABLE) container.style.cursor = next === null ? "" : "pointer";
@@ -412,6 +490,7 @@ export function createRegions(
 	if (HOVER_CAPABLE) {
 		map.on("mousemove", (event: L.LeafletMouseEvent) => {
 			pointerLatLng = event.latlng;
+			pinnedKey = null;
 			refreshHighlight();
 		});
 		map.on("mouseout", () => {
@@ -434,6 +513,72 @@ export function createRegions(
 	// Zoom swaps the active level, so the same point can resolve to another region.
 	map.on("zoomend", refreshHighlight);
 	map.on("zoomend", updateBadges);
+	// Only a real gesture drags; setView never does. That makes it the one signal that
+	// the viewer moved on from the searched region.
+	map.on("dragstart", () => {
+		if (pinnedKey === null) return;
+		pinnedKey = null;
+		refreshHighlight();
+	});
+
+	// Frame a search hit and light it up. The zoom clamps into the region's own band, so
+	// what lands on screen is the layer the result came from.
+	const focusRegion = (entry: SearchEntry) => {
+		// The pointer rests on the search panel, so its last position over the map must not
+		// outrank the result. Only a walked region has an outline to light up.
+		pointerLatLng = null;
+		pinnedKey = regionStates.has(entry.key) ? entry.key : null;
+
+		const bounds = L.latLngBounds([entry.minLat, entry.minLng], [entry.maxLat, entry.maxLng]);
+		const [floor, ceiling] = ZOOM_BAND[entry.level] ?? [map.getMinZoom(), map.getMaxZoom()];
+		const framed = map.getBoundsZoom(bounds, false, L.point(24, 24));
+		map.setView(bounds.getCenter(), Math.min(Math.max(framed, floor), ceiling));
+		refreshHighlight();
+	};
+
+	// Null for a country nobody has walked: it has an outline but no percentage.
+	const regionPercent = (key: string): number | null => {
+		const state = regionStates.get(key);
+		return state ? percentFor(state) : null;
+	};
+
+	// Same-name places sit worlds apart: Montréal is a Québec city and an Aude commune
+	// both. The region around one tells them apart. Nearest first, since the tighter
+	// container is the more telling: a district names its city, and falls back to the
+	// country only where no city holds it, as with the Puerto Rican barrios.
+	const CONTEXT_LEVELS: Record<string, string[]> = {
+		city: ["country"],
+		country: [],
+		district: ["city", "country"],
+	};
+
+	// Resolved on demand: only the handful of results on screen ever need it.
+	const contexts = new Map<string, string | null>();
+	const regionContext = (entry: SearchEntry): string | null => {
+		const cached = contexts.get(entry.key);
+		if (cached !== undefined) return cached;
+
+		let found: string | null = null;
+		for (const wanted of CONTEXT_LEVELS[entry.level] ?? []) {
+			let bestArea = Infinity;
+			for (const outline of parentOutlines) {
+				// The tightest container says the most. A container repeating the name is kept:
+				// "Luxembourg · Luxembourg" still says which of the two it is.
+				if (outline.level !== wanted) continue;
+				if (!containsPoint(outline, entry.lon, entry.lat)) continue;
+				const area = (outline.maxLng - outline.minLng) * (outline.maxLat - outline.minLat);
+				if (area < bestArea) {
+					bestArea = area;
+					found = outline.name;
+				}
+			}
+			// Coastal outlines are coarse enough that a centroid can fall just outside the
+			// country holding it. No name beats a wrong one, so nothing is guessed.
+			if (found !== null) break;
+		}
+		contexts.set(entry.key, found);
+		return found;
+	};
 
 	// Attribute new cells the way CI does: parent cell → cached region → +1. Cells
 	// with uncached parents wait for the next sync.
@@ -483,5 +628,9 @@ export function createRegions(
 		refreshBadges,
 		attributeToRegions,
 		setLivePosition,
+		searchEntries,
+		focusRegion,
+		regionPercent,
+		regionContext,
 	};
 }

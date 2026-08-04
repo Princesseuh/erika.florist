@@ -4,6 +4,7 @@ import { type ScratchmapCache, loadScratchmapCache } from "./db";
 import { addBarButton } from "./controls";
 import { createFog } from "./fog";
 import { createRegions } from "./regions";
+import { addSearchControl } from "./search";
 import { setupLive } from "./live";
 
 const FULLSCREEN_ICON =
@@ -69,6 +70,7 @@ function init(el: HTMLElement, data: ScratchmapCache): void {
 	const fog = createFog(map, el, data.cells);
 	const regions = createRegions(map, el, data.regions, fog);
 	fog.setOverlay(regions.drawHighlight);
+	addSearchControl(map, regions);
 
 	const fullscreenButton = addBarButton(map, () => {
 		const frame = document.getElementById("scratchmap-frame");

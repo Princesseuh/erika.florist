@@ -8,7 +8,7 @@ import {
 	polygonToCells,
 } from "h3-js";
 import type { ScratchmapRegion } from "./db";
-import { type Fog, type FogView, REVEAL, traceLayerPath } from "./fog";
+import { type Fog, type FogView, REVEAL } from "./fog";
 
 // Warm, so the focused region separates from the violet fog.
 const HIGHLIGHT_FILL = "rgba(249, 160, 63, 0.45)"; // orange-carrot
@@ -296,20 +296,27 @@ export function createRegions(
 	};
 
 	// Boundaries are cached, so re-tracing the honeycomb does not recompute thousands
-	// of H3 boundaries.
+	// of H3 boundaries. The traced path rides along, since it now outlives any zoom.
 	interface Honeycomb {
 		res: number;
 		// Keyed by cell id, so freshly walked cells delete in place.
 		hexes: Map<string, [number, number][]>;
+		// Null until first drawn, and again once a walked cell drops out.
+		traced: Traced | null;
 	}
 
+	// A region at the cap holds 12000 boundaries and a path over them, so this is the
+	// one cache here worth a ceiling. Insertion order makes the Map its own LRU.
+	const HONEYCOMB_CACHE = 8;
 	const honeycombs = new Map<string, Honeycomb>();
-	// Bumped when a walked cell leaves a honeycomb, so the traced path rebuilds.
-	let honeycombVersion = 0;
 	const honeycombFor = (key: string, state: RegionState, res: number): Honeycomb => {
 		const cacheKey = `${key}:${res}`;
-		let honeycomb = honeycombs.get(cacheKey);
-		if (honeycomb) return honeycomb;
+		const hit = honeycombs.get(cacheKey);
+		if (hit) {
+			honeycombs.delete(cacheKey);
+			honeycombs.set(cacheKey, hit);
+			return hit;
+		}
 
 		const hexes = new Map<string, [number, number][]>();
 		if (state.rings && !key.startsWith("country:") && cellEstimate(state, res) <= UNEXPLORED_CAP) {
@@ -323,14 +330,19 @@ export function createRegions(
 				}
 			}
 		}
-		honeycomb = { res, hexes };
+		const honeycomb: Honeycomb = { res, hexes, traced: null };
 		honeycombs.set(cacheKey, honeycomb);
+		if (honeycombs.size > HONEYCOMB_CACHE) {
+			const oldest = honeycombs.keys().next().value;
+			if (oldest !== undefined) honeycombs.delete(oldest);
+		}
 		return honeycomb;
 	};
 
-	// A layer point is the projection at the current zoom minus Leaflet's pixel origin,
-	// so a path traced in them survives everything but a zoom: a pan moves the pane, and
-	// a view reset moves the origin by whole pixels. Both come back as a translation.
+	// Web Mercator scales exactly with zoom: projecting at zoom z is projecting at zoom 0
+	// times 2^z. So one traced path serves every zoom, and the draw scales it into place
+	// rather than re-projecting a vertex. Vertices stay unrounded, which is what makes
+	// the scaled positions come out right at any zoom.
 	interface Traced {
 		path: Path2D;
 		zoom: number;
@@ -341,30 +353,63 @@ export function createRegions(
 		const origin = map.getPixelOrigin();
 		return { path, zoom: map.getZoom(), originX: origin.x, originY: origin.y };
 	};
-	const stillProjected = (value: Traced) => value.zoom === map.getZoom();
-	// Container coordinates for a path traced under an older pixel origin.
-	const offsetFor = (value: Traced, pane: L.Point) => {
+
+	// Where a traced path sits now: coordinates are relative to the pixel origin of the
+	// zoom it was traced at, so the scale carries them to the current one.
+	const placeFor = (value: Traced, pane: L.Point) => {
+		const scale = 2 ** (map.getZoom() - value.zoom);
 		const origin = map.getPixelOrigin();
-		return { x: pane.x + value.originX - origin.x, y: pane.y + value.originY - origin.y };
+		return {
+			scale,
+			x: pane.x + value.originX * scale - origin.x,
+			y: pane.y + value.originY * scale - origin.y,
+		};
 	};
 
-	// One region highlights at a time, so both path caches hold a single entry.
+	// Rings arrive [lat, lng]; the projection is the current zoom's, less the origin the
+	// path is stamped with.
+	const traceRing = (
+		path: Path2D,
+		ring: Iterable<[number, number]>,
+		originX: number,
+		originY: number,
+	) => {
+		let first = true;
+		for (const [lat, lng] of ring) {
+			const point = map.project([lat, lng]);
+			const x = point.x - originX;
+			const y = point.y - originY;
+			if (first) {
+				path.moveTo(x, y);
+				first = false;
+			} else {
+				path.lineTo(x, y);
+			}
+		}
+		path.closePath();
+	};
+
+	// One region highlights at a time, and its outline no longer turns over on a zoom or
+	// a pan, so a single entry serves.
 	let outlineCache: (Traced & { key: string }) | null = null;
 	// Region rings are [lng, lat]; the reveal's are [lat, lng].
 	const regionPath = (key: string, state: RegionState): Traced => {
-		if (outlineCache?.key === key && stillProjected(outlineCache)) return outlineCache;
+		if (outlineCache?.key === key) return outlineCache;
+		const origin = map.getPixelOrigin();
 		const path = new Path2D();
 		for (const polygon of state.rings ?? []) {
 			for (const ring of polygon) {
 				let first = true;
 				for (const position of ring) {
 					const [lng, lat] = position as [number, number];
-					const point = map.latLngToLayerPoint([lat, lng]);
+					const point = map.project([lat, lng]);
+					const x = point.x - origin.x;
+					const y = point.y - origin.y;
 					if (first) {
-						path.moveTo(point.x, point.y);
+						path.moveTo(x, y);
 						first = false;
 					} else {
-						path.lineTo(point.x, point.y);
+						path.lineTo(x, y);
 					}
 				}
 				path.closePath();
@@ -377,14 +422,6 @@ export function createRegions(
 	// The whole honeycomb traces at once, off-screen cells included: UNEXPLORED_CAP
 	// bounds it, and the canvas clips what falls outside far cheaper than a pan can
 	// retrace it.
-	interface PendingCache extends Traced {
-		key: string;
-		res: number;
-		version: number;
-		empty: boolean;
-	}
-	let pendingCache: PendingCache | null = null;
-
 	const pendingPath = (key: string, state: RegionState, res: number): Traced | null => {
 		// Under a few pixels the honeycomb reads as noise and costs a subpath per cell.
 		// Cells of one resolution vary little enough in size for the average to decide.
@@ -392,30 +429,17 @@ export function createRegions(
 			(156543.03392 * Math.cos((map.getCenter().lat * Math.PI) / 180)) / 2 ** map.getZoom();
 		if (Math.sqrt(getHexagonAreaAvg(res, UNITS.m2)) / metresPerPixel < 4) return null;
 
-		const cached = pendingCache;
-		if (
-			cached &&
-			cached.key === key &&
-			cached.res === res &&
-			cached.version === honeycombVersion &&
-			stillProjected(cached)
-		) {
-			return cached.empty ? null : cached;
-		}
+		const honeycomb = honeycombFor(key, state, res);
+		if (honeycomb.hexes.size === 0) return null;
+		if (honeycomb.traced) return honeycomb.traced;
 
-		const { hexes } = honeycombFor(key, state, res);
+		const origin = map.getPixelOrigin();
 		const path = new Path2D();
 		// Not clipped to the outline: a cell belongs to the region when its centre does,
 		// so a border cell legitimately pokes out.
-		for (const boundary of hexes.values()) traceLayerPath(map, path, boundary);
-		pendingCache = {
-			...traced(path),
-			key,
-			res,
-			version: honeycombVersion,
-			empty: hexes.size === 0,
-		};
-		return hexes.size === 0 ? null : pendingCache;
+		for (const boundary of honeycomb.hexes.values()) traceRing(path, boundary, origin.x, origin.y);
+		honeycomb.traced = traced(path);
+		return honeycomb.traced;
 	};
 
 	// Runs after the fog, so the tint lands on the cleared area instead of under it.
@@ -440,38 +464,48 @@ export function createRegions(
 		ctx.globalCompositeOperation = "source-over";
 
 		const pane = L.DomUtil.getPosition(map.getPanes().mapPane);
-		const outline = offsetFor(region, pane);
+		const outline = placeFor(region, pane);
 		ctx.save();
 		ctx.translate(outline.x, outline.y);
+		ctx.scale(outline.scale, outline.scale);
 
 		// Even-odd throughout, so a region with a hole neither dims nor tints it.
 		const outside = new Path2D();
-		outside.rect(-outline.x, -outline.y, view.width, view.height);
+		outside.rect(
+			-outline.x / outline.scale,
+			-outline.y / outline.scale,
+			view.width / outline.scale,
+			view.height / outline.scale,
+		);
 		outside.addPath(region.path);
 		ctx.fillStyle = HIGHLIGHT_DIM;
 		ctx.fill(outside, "evenodd");
 
 		ctx.save();
 		ctx.clip(region.path, "evenodd");
-		// The fog traces its cleared paths in container coordinates.
+		// The fog traces its cleared paths in container coordinates: undo the placement,
+		// innermost first. The clip is already resolved, so it stays put.
+		ctx.scale(1 / outline.scale, 1 / outline.scale);
 		ctx.translate(-outline.x, -outline.y);
 		ctx.fillStyle = HIGHLIGHT_FILL;
 		for (const path of cleared) ctx.fill(path, "evenodd");
 		ctx.restore();
 
 		// Before the honeycomb bails out: a fully walked region still needs its boundary.
+		// The scale applies to the stroke too, so the width divides back out.
 		ctx.strokeStyle = HIGHLIGHT_OUTLINE;
-		ctx.lineWidth = 2.5;
+		ctx.lineWidth = 2.5 / outline.scale;
 		ctx.stroke(region.path);
 		ctx.restore();
 
 		const pending = pendingPath(key, state, view.res);
 		if (pending) {
-			const honeycomb = offsetFor(pending, pane);
+			const honeycomb = placeFor(pending, pane);
 			ctx.save();
 			ctx.translate(honeycomb.x, honeycomb.y);
+			ctx.scale(honeycomb.scale, honeycomb.scale);
 			ctx.strokeStyle = HIGHLIGHT_PENDING;
-			ctx.lineWidth = 1;
+			ctx.lineWidth = 1 / honeycomb.scale;
 			ctx.stroke(pending.path);
 			ctx.restore();
 		}
@@ -653,7 +687,7 @@ export function createRegions(
 				const removed = honeycomb.hexes.delete(
 					honeycomb.res === REVEAL.precise ? cell : cellToParent(cell, honeycomb.res),
 				);
-				if (removed) honeycombVersion += 1;
+				if (removed) honeycomb.traced = null;
 			}
 		}
 		const dirty = new Set<string>();

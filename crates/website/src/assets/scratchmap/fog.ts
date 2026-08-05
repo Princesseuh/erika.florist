@@ -66,26 +66,6 @@ export const tracePath = (map: L.Map, path: Path2D, ring: Iterable<[number, numb
 	path.closePath();
 };
 
-// Same, in layer pixels. A pan moves the pane rather than these coordinates, so a
-// path traced this way survives one and draws again under the pane offset.
-export const traceLayerPath = (
-	map: L.Map,
-	path: Path2D,
-	ring: Iterable<[number, number]>,
-): void => {
-	let first = true;
-	for (const [lat, lng] of ring) {
-		const point = map.latLngToLayerPoint([lat, lng]);
-		if (first) {
-			path.moveTo(point.x, point.y);
-			first = false;
-		} else {
-			path.lineTo(point.x, point.y);
-		}
-	}
-	path.closePath();
-};
-
 const groupDigits = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 const formatArea = (m2: number) =>
 	m2 >= 1_000_000 ? `${groupDigits(Math.round(m2 / 1_000_000))} km²` : `${groupDigits(m2)} m²`;

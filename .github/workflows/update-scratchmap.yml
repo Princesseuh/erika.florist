@@ -6,26 +6,21 @@ on:
     # Every Monday at 04:00 UTC
     - cron: "0 4 * * 1"
 
+# Unlike the deploy workflow, a run in flight is never cancelled: it writes the
+# caches it fetched, so a manual dispatch waits rather than truncating one.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           token: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
-
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2
-
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "latest"
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -35,14 +30,15 @@ jobs:
       - name: Pull visited cells from the Worker
         env:
           SCRATCHMAP_TOKEN: ${{ secrets.SCRATCHMAP_TOKEN }}
-        run: cargo xtask update-scratchmap --silent
+        run: cargo run --release -p xtask -- update-scratchmap --silent
 
+      # Release, not the `cargo xtask` alias: tiling a region runs inside geo and
+      # h3o, and their debug assertions cost more here than the optimiser saves.
       - name: Compute region completion
-        run: cargo xtask update-regions --silent
+        run: cargo run --release -p xtask -- update-regions --silent
 
       - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "[ci] update scratchmap"
           file_pattern: crates/website/content/scratchmap/*.json
-          branch: ${{ github.head_ref }}

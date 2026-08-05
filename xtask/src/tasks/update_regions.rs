@@ -7,6 +7,7 @@ use anyhow::{Context, Result};
 use geo::{Centroid, Contains, Coord, LineString, MultiPolygon, Polygon, Simplify};
 use h3o::geom::TilerBuilder;
 use h3o::{CellIndex, LatLng, Resolution};
+use rayon::prelude::*;
 use serde::Serialize;
 use serde_json::Value;
 
@@ -253,7 +254,8 @@ fn adaptive_detail(coords: &[Coord<f64>], near: &[(f64, f64)]) -> Vec<Coord<f64>
         if run.is_empty() {
             return;
         }
-        let piece = if run_near {
+        // A run of two has nothing to drop, and Douglas-Peucker asserts on one.
+        let piece = if run_near || run.len() < 3 {
             std::mem::take(run)
         } else {
             LineString::from(std::mem::take(run)).simplify(&FAR_TOLERANCE).0
@@ -1224,26 +1226,27 @@ pub fn run_update_regions() -> Result<()> {
     // Regions stay exactly as OSM maps them, water included. OSM maritime extents
     // disagree between admin levels, so a clip to the country cuts real land
     // (Styrsö sits outside Sweden's own polygon).
-    let mut counted: Vec<Counted> = Vec::new();
-    for candidate in candidates {
-        let Some(shape) = shapes.get(&candidate.id) else {
-            continue;
-        };
-        let precise = cells_of(shape, Resolution::Eleven);
-        let explored = precise.iter().filter(|c| visited.contains(c)).count();
-        if explored == 0 {
-            continue; // The bounding box touched cells; the region did not.
-        }
-        let coarse = cells_of(shape, FILLED_RES);
-        counted.push(Counted {
-            explored,
-            total: precise.len(),
-            filled: coarse.iter().filter(|c| revealed.contains(c)).count(),
-            filled_total: coarse.len(),
-            shape: shape.clone(),
-            candidate,
-        });
-    }
+    // Tiling a region is most of this task's work and each one stands alone.
+    let mut counted: Vec<Counted> = candidates
+        .into_par_iter()
+        .filter_map(|candidate| {
+            let shape = shapes.get(&candidate.id)?;
+            let precise = cells_of(shape, Resolution::Eleven);
+            let explored = precise.iter().filter(|c| visited.contains(c)).count();
+            if explored == 0 {
+                return None; // The bounding box touched cells; the region did not.
+            }
+            let coarse = cells_of(shape, FILLED_RES);
+            Some(Counted {
+                explored,
+                total: precise.len(),
+                filled: coarse.iter().filter(|c| revealed.contains(c)).count(),
+                filled_total: coarse.len(),
+                shape: shape.clone(),
+                candidate,
+            })
+        })
+        .collect();
 
     // 5. De-overlap per display level, finest admin_level first: drop a region that
     // contains an already-kept finer one. This keeps a commune from sitting at the

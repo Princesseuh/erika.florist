@@ -1,5 +1,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::fs;
+use std::sync::OnceLock;
+use std::sync::atomic::{AtomicUsize, Ordering};
 use std::thread::sleep;
 use std::time::Duration;
 
@@ -11,7 +13,7 @@ use rayon::prelude::*;
 use serde::Serialize;
 use serde_json::Value;
 
-use crate::utils::{log_progress, log_success, log_warn, workspace_root};
+use crate::utils::{log_info, log_progress, log_success, log_warn, workspace_root};
 
 const CELLS_PATH: &str = "crates/website/content/scratchmap/cells.json";
 const REGIONS_PATH: &str = "crates/website/content/scratchmap/regions.json";
@@ -31,11 +33,21 @@ const NE_URL: &str =
     "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_0_countries.geojson";
 const USER_AGENT: &str = "erika.florist-scratchmap/1.0 (+https://erika.florist)";
 // Public instances shed load with 429/504 responses; requests rotate between them.
+// Distinct hosts only: overpass.kumi.systems is a CNAME to overpass.private.coffee,
+// so listing both bought no redundancy and failed as one.
 const OVERPASS: &[&str] = &[
     "https://overpass-api.de/api/interpreter",
-    "https://overpass.kumi.systems/api/interpreter",
     "https://overpass.private.coffee/api/interpreter",
+    "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
 ];
+// Instance that answered last, so a run stops leading with a host it knows is sick.
+static PREFERRED: AtomicUsize = AtomicUsize::new(0);
+// Queries ask the server for up to `[timeout:300]`, and a struggling instance will
+// hold the connection that whole time. Give up sooner and ask a different one.
+// Tag and timestamp queries return little and a healthy instance answers in seconds;
+// geometry batches are megabytes and legitimately take longer.
+const METADATA_TIMEOUT: Duration = Duration::from_secs(45);
+const GEOMETRY_TIMEOUT: Duration = Duration::from_secs(120);
 // Pause between queries to one Overpass instance.
 const POLITE: Duration = Duration::from_millis(5000);
 
@@ -60,11 +72,14 @@ fn libpostal_city_levels(root: &std::path::Path, iso: &str) -> Vec<u8> {
     if iso.is_empty() {
         return Vec::new();
     }
-    let tables: BTreeMap<String, BTreeMap<String, String>> =
+    // Read once: this is called per country, inside the classification loop.
+    static TABLES: OnceLock<BTreeMap<String, BTreeMap<String, String>>> = OnceLock::new();
+    let tables = TABLES.get_or_init(|| {
         fs::read_to_string(root.join("xtask/data/libpostal-boundaries.json"))
             .ok()
             .and_then(|s| serde_json::from_str(&s).ok())
-            .unwrap_or_default();
+            .unwrap_or_default()
+    });
     let Some(table) = tables.get(&iso) else {
         return Vec::new();
     };
@@ -381,24 +396,31 @@ fn from_geojson(value: &Value) -> Option<MultiPolygon<f64>> {
     }
 }
 
+/// One POST to one Overpass instance, no retry.
+fn overpass_once(endpoint: &str, query: &str, timeout: Duration) -> Result<Value> {
+    ureq::post(endpoint)
+        .config()
+        .timeout_global(Some(timeout))
+        .build()
+        .header("User-Agent", USER_AGENT)
+        .send_form([("data", query)])
+        .with_context(|| format!("Overpass request to {endpoint} failed"))?
+        .body_mut()
+        .with_config()
+        // Geometry batches run far past the default body-size cap.
+        .limit(512 * 1024 * 1024)
+        .read_json()
+        .context("Overpass returned unexpected JSON")
+}
+
 /// One POST to one Overpass instance, with retries for transient 429/504 responses.
+/// Used where the caller has already picked the instance; `overpass` is the general
+/// entry point.
 fn overpass_at(endpoint: &str, query: &str) -> Result<Value> {
     const WAITS: &[u64] = &[15, 45];
-    let attempt = || -> Result<Value> {
-        ureq::post(endpoint)
-            .header("User-Agent", USER_AGENT)
-            .send_form([("data", query)])
-            .with_context(|| format!("Overpass request to {endpoint} failed"))?
-            .body_mut()
-            .with_config()
-            // Geometry batches run far past the default body-size cap.
-            .limit(512 * 1024 * 1024)
-            .read_json()
-            .context("Overpass returned unexpected JSON")
-    };
     let mut last = None;
     for i in 0..=WAITS.len() {
-        match attempt() {
+        match overpass_once(endpoint, query, GEOMETRY_TIMEOUT) {
             Ok(value) => return Ok(value),
             Err(e) => {
                 last = Some(e);
@@ -415,13 +437,42 @@ fn overpass_at(endpoint: &str, query: &str) -> Result<Value> {
     Err(last.unwrap())
 }
 
-/// One query, tried on each instance in turn.
+/// One query. Every instance is tried before any backoff, so a sick one costs a
+/// request rather than the whole ladder, and the one that answers is tried first next.
 fn overpass(query: &str) -> Result<Value> {
+    const WAITS: &[u64] = &[15, 45];
     let mut last = None;
-    for endpoint in OVERPASS {
-        match overpass_at(endpoint, query) {
-            Ok(value) => return Ok(value),
-            Err(e) => last = Some(e),
+    for i in 0..=WAITS.len() {
+        let first = PREFERRED.load(Ordering::Relaxed);
+        for n in 0..OVERPASS.len() {
+            let pick = (first + n) % OVERPASS.len();
+            let started = std::time::Instant::now();
+            match overpass_once(OVERPASS[pick], query, METADATA_TIMEOUT) {
+                Ok(value) => {
+                    PREFERRED.store(pick, Ordering::Relaxed);
+                    log_info(&format!(
+                        "  {} answered in {:.1}s",
+                        OVERPASS[pick],
+                        started.elapsed().as_secs_f64()
+                    ));
+                    return Ok(value);
+                }
+                Err(e) => {
+                    log_info(&format!(
+                        "  {} did not answer after {:.1}s ({e:#})",
+                        OVERPASS[pick],
+                        started.elapsed().as_secs_f64()
+                    ));
+                    last = Some(e);
+                }
+            }
+        }
+        if let Some(wait) = WAITS.get(i) {
+            log_warn(&format!(
+                "  no Overpass instance answered ({:#}); retrying in {wait}s",
+                last.as_ref().unwrap()
+            ));
+            sleep(Duration::from_secs(*wait));
         }
     }
     Err(last.unwrap())

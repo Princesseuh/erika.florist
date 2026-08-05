@@ -492,7 +492,7 @@ fn overpass(query: &str) -> Result<Value> {
 /// a week with no OSM changes writes a byte-identical file and CI commits nothing.
 /// Returns the candidates and the ids whose geometry must be fetched again.
 fn fetch_candidates(
-    areas: &[(String, [f64; 4])],
+    areas: &[(String, [f64; 4], usize)],
     cell_points: &[(f64, f64)],
     sweep_path: &std::path::Path,
 ) -> Result<(BTreeMap<i64, CandidateInfo>, BTreeSet<i64>)> {
@@ -525,9 +525,22 @@ fn fetch_candidates(
         .map(|b| b.iter().map(|(k, v)| (k.clone(), v.clone())).collect())
         .unwrap_or_default();
 
+    // Cell count each area was last swept against. An area with no entry predates
+    // this bookkeeping and is swept once to pick up whatever its old sweep discarded.
+    let mut swept: BTreeMap<String, usize> = state
+        .get("swept")
+        .and_then(|v| v.as_object())
+        .map(|s| {
+            s.iter()
+                .filter_map(|(id, n)| Some((id.clone(), n.as_u64()? as usize)))
+                .collect()
+        })
+        .unwrap_or_default();
+
     // Drop areas that no longer hold cells.
-    let current: BTreeSet<&str> = areas.iter().map(|(id, _)| id.as_str()).collect();
+    let current: BTreeSet<&str> = areas.iter().map(|(id, _, _)| id.as_str()).collect();
     area_ids.retain(|id, _| current.contains(id.as_str()));
+    swept.retain(|id, _| current.contains(id.as_str()));
 
     let week = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
@@ -539,20 +552,26 @@ fn fetch_candidates(
             .unwrap_or(false)
     };
 
-    let mut to_sweep: Vec<&(String, [f64; 4])> = areas
+    let mut to_sweep: Vec<&(String, [f64; 4], usize)> = areas
         .iter()
-        .filter(|(id, _)| !area_ids.contains_key(id) || in_rotation(id))
+        .filter(|(id, _, count)| {
+            !area_ids.contains_key(id) || swept.get(id) != Some(count) || in_rotation(id)
+        })
         .collect();
     let new_count = to_sweep
         .iter()
-        .filter(|(id, _)| !area_ids.contains_key(id))
+        .filter(|(id, _, _)| !area_ids.contains_key(id))
+        .count();
+    let grown = to_sweep
+        .iter()
+        .filter(|(id, _, count)| area_ids.contains_key(id) && swept.get(id) != Some(count))
         .count();
     let mut refreshed: BTreeSet<i64> = BTreeSet::new();
 
     if !to_sweep.is_empty() {
         log_progress(&format!(
-            "sweeping {new_count} new and {} rotation area(s) for boundaries",
-            to_sweep.len() - new_count
+            "sweeping {new_count} new, {grown} grown and {} rotation area(s) for boundaries",
+            to_sweep.len() - new_count - grown
         ));
     }
     to_sweep.sort_by(|a, b| a.0.cmp(&b.0));
@@ -561,7 +580,7 @@ fn fetch_candidates(
     for chunk in to_sweep.chunks(10) {
         let clauses: String = chunk
             .iter()
-            .map(|(_, b)| {
+            .map(|(_, b, _)| {
                 format!(
                     "relation[\"boundary\"=\"administrative\"][\"admin_level\"~\"^(7|8|9|10|11)$\"][!\"end_date\"]({},{},{},{});",
                     b[0], b[1], b[2], b[3]
@@ -637,7 +656,8 @@ fn fetch_candidates(
             }
         }
         // A boundary belongs to every area of this chunk that its box intersects.
-        for (area_id, ab) in chunk {
+        for (area_id, ab, count) in chunk {
+            swept.insert(area_id.clone(), *count);
             let mine: Vec<i64> = found
                 .iter()
                 .filter(|(_, _, _, bb)| {
@@ -660,7 +680,7 @@ fn fetch_candidates(
             }
             area_ids.insert(area_id.clone(), mine);
         }
-        write_sweep(sweep_path, &area_ids, &bounds)?;
+        write_sweep(sweep_path, &area_ids, &bounds, &swept)?;
         sleep(POLITE);
     }
 
@@ -789,7 +809,7 @@ fn fetch_candidates(
             .map(|id| known.contains(&id) && !deleted.contains(&id))
             .unwrap_or(false)
     });
-    write_sweep(sweep_path, &area_ids, &bounds)?;
+    write_sweep(sweep_path, &area_ids, &bounds, &swept)?;
 
     let mut out = BTreeMap::new();
     for (id, info) in &bounds {
@@ -818,12 +838,17 @@ fn write_sweep(
     path: &std::path::Path,
     areas: &BTreeMap<String, Vec<i64>>,
     bounds: &BTreeMap<String, Value>,
+    swept: &BTreeMap<String, usize>,
 ) -> Result<()> {
     fs::write(
         path,
         format!(
             "{}\n",
-            serde_json::to_string(&serde_json::json!({ "areas": areas, "boundaries": bounds }))?
+            serde_json::to_string(&serde_json::json!({
+                "areas": areas,
+                "boundaries": bounds,
+                "swept": swept,
+            }))?
         ),
     )?;
     Ok(())
@@ -1175,13 +1200,15 @@ pub fn run_update_regions() -> Result<()> {
     };
     let countries = build_countries(&country_shapes);
 
-    // 1. One bounding box for each visited res-4 area (~35 km across).
+    // 1. One bounding box for each visited res-4 area (~35 km across), with how many
+    // cells it holds: a sweep only keeps boundaries that already contain a cell, so
+    // an area that gained cells has to be swept again to discover the rest.
+    let mut per_area: BTreeMap<CellIndex, usize> = BTreeMap::new();
+    for parent in cells.iter().filter_map(|c| c.parent(Resolution::Four)) {
+        *per_area.entry(parent).or_default() += 1;
+    }
     let mut areas = Vec::new();
-    for parent in cells
-        .iter()
-        .filter_map(|c| c.parent(Resolution::Four))
-        .collect::<BTreeSet<_>>()
-    {
+    for (parent, count) in per_area {
         let (mut s, mut w, mut n, mut e) = (f64::MAX, f64::MAX, f64::MIN, f64::MIN);
         for vertex in parent.boundary().iter() {
             s = s.min(vertex.lat());
@@ -1189,7 +1216,11 @@ pub fn run_update_regions() -> Result<()> {
             n = n.max(vertex.lat());
             e = e.max(vertex.lng());
         }
-        areas.push((parent.to_string(), [s - 0.02, w - 0.02, n + 0.02, e + 0.02]));
+        areas.push((
+            parent.to_string(),
+            [s - 0.02, w - 0.02, n + 0.02, e + 0.02],
+            count,
+        ));
     }
     let (raw, stale) = fetch_candidates(&areas, &cell_points, &root.join(SWEEP_PATH))?;
 

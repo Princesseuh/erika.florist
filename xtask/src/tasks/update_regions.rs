@@ -594,6 +594,19 @@ fn fetch_candidates(
                 })
                 .map(|(id, _, _, _)| *id)
                 .collect();
+            // An instance can answer 200 with an empty result set when it is unhealthy
+            // or serving a partial database, and that is indistinguishable from an area
+            // genuinely holding no boundaries. Losing every region in an area is far
+            // worse than keeping a stale list, so only ever grow from empty.
+            if mine.is_empty()
+                && area_ids.get(area_id).is_some_and(|prev| !prev.is_empty())
+            {
+                log_warn(&format!(
+                    "  area {area_id} swept empty but {} boundary(ies) were known; keeping them",
+                    area_ids[area_id].len()
+                ));
+                continue;
+            }
             area_ids.insert(area_id.clone(), mine);
         }
         write_sweep(sweep_path, &area_ids, &bounds)?;
@@ -622,21 +635,38 @@ fn fetch_candidates(
                 seen.insert(id, ts.to_string());
             }
         }
+        // Instances replicate at different speeds, so the same relation can come back
+        // with an older timestamp than the one another instance gave us last week.
+        // Only a newer one means a real edit; equal or older means this instance is
+        // behind, and treating that as a change refetches the whole cache for nothing.
         for id in chunk {
-            match seen.get(id) {
-                None => {
-                    deleted.insert(*id);
-                }
-                Some(ts) => {
-                    if bounds
-                        .get(&id.to_string())
-                        .and_then(|b| b["ts"].as_str())
-                        .is_none_or(|stored| stored != ts)
-                    {
-                        changed.insert(*id);
-                    }
-                }
+            if let Some(ts) = seen.get(id)
+                && bounds
+                    .get(&id.to_string())
+                    .and_then(|b| b["ts"].as_str())
+                    .is_none_or(|stored| ts.as_str() > stored)
+            {
+                changed.insert(*id);
             }
+        }
+        // A truncated or partial response is indistinguishable from a mass deletion,
+        // and deletion purges the boundary from every area that holds it. Real
+        // deletions trickle in ones and twos, so distrust anything larger.
+        let absent: Vec<i64> = chunk
+            .iter()
+            .copied()
+            .filter(|id| !seen.contains_key(id))
+            .collect();
+        let tolerance = (chunk.len() / 20).max(5);
+        if absent.len() > tolerance {
+            log_warn(&format!(
+                "  {} of {} boundaries missing from the timestamp check; \
+                 treating the response as partial rather than as deletions",
+                absent.len(),
+                chunk.len()
+            ));
+        } else {
+            deleted.extend(absent);
         }
         sleep(POLITE);
     }

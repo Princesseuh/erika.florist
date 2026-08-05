@@ -58,6 +58,7 @@ Options:
 }
 
 fn main() -> anyhow::Result<()> {
+    utils::start_clock();
     let args: Vec<String> = env::args().collect();
     let task = args.get(1).map(|s| s.as_str()).unwrap_or("--help");
 

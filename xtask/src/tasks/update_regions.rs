@@ -1308,30 +1308,39 @@ pub fn run_update_regions() -> Result<()> {
     // disagree between admin levels, so a clip to the country cuts real land
     // (Styrsö sits outside Sweden's own polygon).
     // Tiling a region is most of this task's work and each one stands alone.
+    let done = std::sync::atomic::AtomicUsize::new(0);
+    let step = (ids.len() / 8).max(1);
     let mut counted: Vec<Counted> = candidates
         .into_par_iter()
         .filter_map(|candidate| {
             let shape = shapes.get(&candidate.id)?;
             let precise = cells_of(shape, Resolution::Eleven);
             let explored = precise.iter().filter(|c| visited.contains(c)).count();
-            if explored == 0 {
-                return None; // The bounding box touched cells; the region did not.
+            // The bounding box touched cells; the region did not.
+            let counted = (explored > 0).then(|| {
+                let coarse = cells_of(shape, FILLED_RES);
+                Counted {
+                    explored,
+                    total: precise.len(),
+                    filled: coarse.iter().filter(|c| revealed.contains(c)).count(),
+                    filled_total: coarse.len(),
+                    shape: shape.clone(),
+                    candidate,
+                }
+            });
+            // Counted after the tiling, so a stall shows as a number that stops moving.
+            let n = done.fetch_add(1, std::sync::atomic::Ordering::Relaxed) + 1;
+            if n.is_multiple_of(step) {
+                log_progress(&format!("  counted {n}/{}", ids.len()));
             }
-            let coarse = cells_of(shape, FILLED_RES);
-            Some(Counted {
-                explored,
-                total: precise.len(),
-                filled: coarse.iter().filter(|c| revealed.contains(c)).count(),
-                filled_total: coarse.len(),
-                shape: shape.clone(),
-                candidate,
-            })
+            counted
         })
         .collect();
 
     // 5. De-overlap per display level, finest admin_level first: drop a region that
     // contains an already-kept finer one. This keeps a commune from sitting at the
     // district level on top of its own quartiers.
+    log_progress(&format!("de-overlapping {} counted region(s)", counted.len()));
     counted.sort_by(|a, b| {
         b.candidate
             .admin_level
@@ -1360,6 +1369,7 @@ pub fn run_update_regions() -> Result<()> {
 
     // 7. Gap-fill: a city with no surviving district inside it also stands in for
     // itself at the district zoom. Cities with real districts are not duplicated.
+    log_progress(&format!("gap-filling from {} kept region(s)", kept.len()));
     let clones: Vec<Counted> = kept
         .iter()
         .filter(|c| c.candidate.display_level == "city")
@@ -1389,6 +1399,7 @@ pub fn run_update_regions() -> Result<()> {
     // 8. Countries. Attribute res-6 parents (~6 km) of visited cells: nearest country
     // within 1.5 degrees (containment gives distance zero). Res 3 cells (~110 km)
     // lost coastal cities to the sea and border cells to the neighbour country.
+    log_progress(&format!("attributing cells to {} countries", countries.len()));
     let mut country_of: BTreeMap<CellIndex, usize> = BTreeMap::new();
     {
         use geo::EuclideanDistance;
@@ -1447,6 +1458,7 @@ pub fn run_update_regions() -> Result<()> {
 
     // 10. Output. The displayed outline is the counting outline: a second per-region
     // simplification would desynchronise shared borders again.
+    log_progress("building output geometry");
     let mut regions: Vec<Region> = kept
         .into_iter()
         .map(|region| {

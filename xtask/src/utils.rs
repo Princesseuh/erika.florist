@@ -1,5 +1,20 @@
 use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
+use std::time::Instant;
 use std::{env, fs};
+
+static START: OnceLock<Instant> = OnceLock::new();
+
+/// Starts the clock the log helpers count from. Call once, first thing in `main`:
+/// without it the clock starts at whatever the first log line happens to be.
+pub fn start_clock() {
+    let _ = START.set(Instant::now());
+}
+
+fn stamp() -> String {
+    let secs = START.get_or_init(Instant::now).elapsed().as_secs_f64();
+    format!("\x1b[90m[{secs:6.1}s]\x1b[0m")
+}
 
 /// Returns the workspace root (the directory containing the top-level Cargo.toml).
 pub fn workspace_root() -> PathBuf {
@@ -29,32 +44,32 @@ pub fn get_content_dirs(content_type: &str) -> anyhow::Result<Vec<PathBuf>> {
 
 /// Prints a timestamped SUCCESS line.
 pub fn log_success(msg: &str) {
-    eprintln!("\x1b[1;32mSUCCESS\x1b[0m {msg}");
+    eprintln!("{} \x1b[1;32mSUCCESS\x1b[0m {msg}", stamp());
 }
 
 /// Prints a timestamped ERROR line.
 #[allow(dead_code)]
 pub fn log_error(msg: &str) {
-    eprintln!("\x1b[1;31mERROR\x1b[0m {msg}");
+    eprintln!("{} \x1b[1;31mERROR\x1b[0m {msg}", stamp());
 }
 
 /// Prints a timestamped WARNING line.
 pub fn log_warn(msg: &str) {
-    eprintln!("\x1b[1;33mWARNING\x1b[0m {msg}");
+    eprintln!("{} \x1b[1;33mWARNING\x1b[0m {msg}", stamp());
 }
 
 /// Prints a timestamped INFO line (suppressed by `--silent`).
 pub fn log_info(msg: &str) {
     let silent = env::args().any(|a| a == "--silent");
     if !silent {
-        eprintln!("\x1b[90mINFO\x1b[0m {msg}");
+        eprintln!("{} \x1b[90mINFO\x1b[0m {msg}", stamp());
     }
 }
 
 /// Prints a PROGRESS line. Unlike `log_info`, always shown — even under `--silent` —
 /// so long, rate-limited steps (e.g. Nominatim geocoding) report where they are in CI.
 pub fn log_progress(msg: &str) {
-    eprintln!("\x1b[1;36mPROGRESS\x1b[0m {msg}");
+    eprintln!("{} \x1b[1;36mPROGRESS\x1b[0m {msg}", stamp());
 }
 
 /// Reads YAML frontmatter from a markdown file and returns the parsed value as `serde_json::Value`.

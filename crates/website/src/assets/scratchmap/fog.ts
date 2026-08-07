@@ -19,9 +19,68 @@ export interface FogView {
 	ne: L.LatLng;
 	width: number;
 	height: number;
+	cleared: Placement & { path: Path2D };
 }
-export type FogOverlay = (ctx: CanvasRenderingContext2D, cleared: Path2D[], view: FogView) => void;
+export type FogOverlay = (ctx: CanvasRenderingContext2D, view: FogView) => void;
 export type Fog = ReturnType<typeof createFog>;
+
+// Web Mercator scales exactly with zoom: projecting at zoom z is projecting at zoom 0
+// times 2^z. So one traced path serves every zoom, and the draw scales it into place
+// rather than re-projecting a vertex. Vertices stay unrounded, which is what makes
+// the scaled positions come out right at any zoom.
+export interface Traced {
+	path: Path2D;
+	zoom: number;
+	originX: number;
+	originY: number;
+}
+
+export interface Placement {
+	scale: number;
+	x: number;
+	y: number;
+}
+
+export const traceAnchor = (map: L.Map, path: Path2D): Traced => {
+	const origin = map.getPixelOrigin();
+	return { path, zoom: map.getZoom(), originX: origin.x, originY: origin.y };
+};
+
+// Where a traced path sits now: coordinates are relative to the pixel origin of the
+// zoom it was traced at, so the scale carries them to the current one.
+export const placeFor = (map: L.Map, value: Traced, pane: L.Point): Placement => {
+	const scale = 2 ** (map.getZoom() - value.zoom);
+	const origin = map.getPixelOrigin();
+	return {
+		scale,
+		x: pane.x + value.originX * scale - origin.x,
+		y: pane.y + value.originY * scale - origin.y,
+	};
+};
+
+// Rings arrive [lat, lng]; the projection is the current zoom's, less the origin the
+// path is stamped with.
+export const traceRing = (
+	map: L.Map,
+	path: Path2D,
+	ring: Iterable<[number, number]>,
+	originX: number,
+	originY: number,
+): void => {
+	let first = true;
+	for (const [lat, lng] of ring) {
+		const point = map.project([lat, lng]);
+		const x = point.x - originX;
+		const y = point.y - originY;
+		if (first) {
+			path.moveTo(x, y);
+			first = false;
+		} else {
+			path.lineTo(x, y);
+		}
+	}
+	path.closePath();
+};
 
 const FOG_FILL = "rgba(82, 72, 156, 0.6)"; // violet-ultra
 const FOG_OUTLINE = "rgba(46, 40, 82, 0.65)"; // dark violet edge around the cleared area
@@ -40,30 +99,6 @@ const lodForZoom = (zoom: number): number => {
 	if (zoom < 10) return 9;
 	if (zoom < 12) return 10;
 	return 11;
-};
-
-// One union polygon of the reveal, with a bounding box for off-screen rejection.
-interface RevealPolygon {
-	rings: [number, number][][];
-	minLat: number;
-	maxLat: number;
-	minLng: number;
-	maxLng: number;
-}
-
-// Append one [lat, lng] ring to the path, projected to container pixels.
-export const tracePath = (map: L.Map, path: Path2D, ring: Iterable<[number, number]>): void => {
-	let first = true;
-	for (const [lat, lng] of ring) {
-		const point = map.latLngToContainerPoint([lat, lng]);
-		if (first) {
-			path.moveTo(point.x, point.y);
-			first = false;
-		} else {
-			path.lineTo(point.x, point.y);
-		}
-	}
-	path.closePath();
 };
 
 const groupDigits = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -108,7 +143,7 @@ export function createFog(map: L.Map, container: HTMLElement, cells: string[]) {
 		return centres;
 	};
 
-	const buildLevel = (res: number, scope: L.LatLngBounds | null): RevealPolygon[] => {
+	const buildLevel = (res: number, scope: L.LatLngBounds | null): Traced => {
 		let drawn: string[];
 		if (scope) {
 			const south = scope.getSouth();
@@ -122,25 +157,19 @@ export function createFog(map: L.Map, container: HTMLElement, cells: string[]) {
 		} else {
 			drawn = [...walkedAt(res)];
 		}
-		if (!drawn.length) return [];
 
-		// Union the cells: shared edges dissolve, which leaves the silhouette with far
-		// fewer vertices than the honeycomb.
-		return cellsToMultiPolygon(drawn, false).map((polygon) => {
-			const rings = polygon as [number, number][][];
-			let minLat = Infinity;
-			let maxLat = -Infinity;
-			let minLng = Infinity;
-			let maxLng = -Infinity;
-			// The outer ring bounds the holes too.
-			for (const [lat, lng] of rings[0] ?? []) {
-				if (lat < minLat) minLat = lat;
-				if (lat > maxLat) maxLat = lat;
-				if (lng < minLng) minLng = lng;
-				if (lng > maxLng) maxLng = lng;
+		const path = new Path2D();
+		if (drawn.length) {
+			const origin = map.getPixelOrigin();
+			// Union the cells: shared edges dissolve, which leaves the silhouette with far
+			// fewer vertices than the honeycomb.
+			for (const polygon of cellsToMultiPolygon(drawn, false)) {
+				for (const ring of polygon) {
+					traceRing(map, path, ring as [number, number][], origin.x, origin.y);
+				}
 			}
-			return { rings, minLat, maxLat, minLng, maxLng };
-		});
+		}
+		return traceAnchor(map, path);
 	};
 
 	// Res 10 and 11 unions cover tens of thousands of cells (~1 s on a phone), so
@@ -149,17 +178,17 @@ export function createFog(map: L.Map, container: HTMLElement, cells: string[]) {
 	// cheap. Coarser levels are small; they build once, globally.
 	const VIEWPORT_RES = 10;
 	interface Level {
-		polygons: RevealPolygon[];
+		traced: Traced;
 		scope: L.LatLngBounds | null;
 	}
 	const levels = new Map<number, Level>();
-	const levelFor = (res: number, view: L.LatLngBounds): RevealPolygon[] => {
+	const levelFor = (res: number, view: L.LatLngBounds): Traced => {
 		const cached = levels.get(res);
-		if (cached && (cached.scope === null || cached.scope.contains(view))) return cached.polygons;
+		if (cached && (cached.scope === null || cached.scope.contains(view))) return cached.traced;
 		const scope = res >= VIEWPORT_RES ? view.pad(1.5) : null;
-		const level = { polygons: buildLevel(res, scope), scope };
+		const level = { traced: buildLevel(res, scope), scope };
 		levels.set(res, level);
-		return level.polygons;
+		return level.traced;
 	};
 
 	// Default "filled": res 11 alone reads as a thin dotted trail.
@@ -208,7 +237,8 @@ export function createFog(map: L.Map, container: HTMLElement, cells: string[]) {
 	const draw = () => {
 		if (!ctx) return;
 
-		L.DomUtil.setPosition(canvas, L.DomUtil.getPosition(map.getPanes().mapPane).multiplyBy(-1));
+		const pane = L.DomUtil.getPosition(map.getPanes().mapPane);
+		L.DomUtil.setPosition(canvas, pane.multiplyBy(-1));
 
 		const size = map.getSize();
 		ctx.clearRect(0, 0, size.x, size.y);
@@ -218,39 +248,31 @@ export function createFog(map: L.Map, container: HTMLElement, cells: string[]) {
 		ctx.fillRect(0, 0, size.x, size.y);
 
 		const bounds = map.getBounds().pad(0.15);
-		const sw = bounds.getSouthWest();
-		const ne = bounds.getNorthEast();
 		const res = Math.min(REVEAL[mode], lodForZoom(map.getZoom()));
+		const reveal = levelFor(res, bounds);
+		const place = placeFor(map, reveal, pane);
 
+		ctx.save();
+		ctx.translate(place.x, place.y);
+		ctx.scale(place.scale, place.scale);
+		// Even-odd: rings after the first of each polygon punch holes.
+		ctx.globalCompositeOperation = "destination-out";
+		ctx.fill(reveal.path, "evenodd");
+		ctx.globalCompositeOperation = "source-over";
 		ctx.strokeStyle = FOG_OUTLINE;
-		ctx.lineWidth = 1.5;
 		ctx.lineJoin = "round";
+		ctx.lineWidth = 1.5 / place.scale;
+		ctx.stroke(reveal.path);
+		ctx.restore();
 
-		const cleared: Path2D[] = [];
-
-		for (const polygon of levelFor(res, bounds)) {
-			// Off-screen rejection before touching any vertex.
-			if (
-				polygon.maxLat < sw.lat ||
-				polygon.minLat > ne.lat ||
-				polygon.maxLng < sw.lng ||
-				polygon.minLng > ne.lng
-			) {
-				continue;
-			}
-
-			const path = new Path2D();
-			for (const ring of polygon.rings) tracePath(map, path, ring);
-
-			// Even-odd: rings after the first punch holes.
-			ctx.globalCompositeOperation = "destination-out";
-			ctx.fill(path, "evenodd");
-			ctx.globalCompositeOperation = "source-over";
-			ctx.stroke(path);
-			cleared.push(path);
-		}
-
-		overlay?.(ctx, cleared, { res, sw, ne, width: size.x, height: size.y });
+		overlay?.(ctx, {
+			res,
+			sw: bounds.getSouthWest(),
+			ne: bounds.getNorthEast(),
+			width: size.x,
+			height: size.y,
+			cleared: { path: reveal.path, ...place },
+		});
 	};
 
 	const resize = () => {

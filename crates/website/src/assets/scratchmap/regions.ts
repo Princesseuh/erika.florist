@@ -8,7 +8,15 @@ import {
 	polygonToCells,
 } from "h3-js";
 import type { ScratchmapRegion } from "./db";
-import { type Fog, type FogView, REVEAL } from "./fog";
+import {
+	type Fog,
+	type FogView,
+	REVEAL,
+	type Traced,
+	placeFor,
+	traceAnchor,
+	traceRing,
+} from "./fog";
 
 // Warm, so the focused region separates from the violet fog.
 const HIGHLIGHT_FILL = "rgba(249, 160, 63, 0.45)"; // orange-carrot
@@ -246,6 +254,23 @@ export function createRegions(
 		});
 	}
 
+	const bboxArea = (state: Bounds) => (state.maxLng - state.minLng) * (state.maxLat - state.minLat);
+
+	// Outlines nest at the same level; ascending area makes the first containing hit the tightest.
+	const statesByLevel = new Map<string, [string, RegionState][]>();
+	for (const entry of regionStates) {
+		const level = entry[0].slice(0, entry[0].indexOf(":"));
+		let list = statesByLevel.get(level);
+		if (!list) {
+			list = [];
+			statesByLevel.set(level, list);
+		}
+		list.push(entry);
+	}
+	for (const list of statesByLevel.values()) {
+		list.sort((a, b) => bboxArea(a[1]) - bboxArea(b[1]));
+	}
+
 	let highlightKey: string | null = null;
 
 	// Low zooms hold more badges than the screen has room for. Place greedily, most
@@ -255,8 +280,7 @@ export function createRegions(
 		const zoom = map.getZoom();
 		const level = levelForZoom(zoom);
 		const placed: { x: number; y: number; w: number; h: number }[] = [];
-		const entries = [...regionStates.entries()]
-			.filter(([key]) => key.startsWith(`${level}:`))
+		const entries = [...(statesByLevel.get(level) ?? [])]
 			// The focused region places first, so its badge is never the one dropped.
 			.sort(
 				(a, b) =>
@@ -309,7 +333,67 @@ export function createRegions(
 	// one cache here worth a ceiling. Insertion order makes the Map its own LRU.
 	const HONEYCOMB_CACHE = 8;
 	const honeycombs = new Map<string, Honeycomb>();
-	const honeycombFor = (key: string, state: RegionState, res: number): Honeycomb => {
+	const storeHoneycomb = (cacheKey: string, honeycomb: Honeycomb) => {
+		honeycombs.set(cacheKey, honeycomb);
+		if (honeycombs.size > HONEYCOMB_CACHE) {
+			const oldest = honeycombs.keys().next().value;
+			if (oldest !== undefined) honeycombs.delete(oldest);
+		}
+	};
+
+	// Slices wait out gestures: on touch, the centre-follow highlight kicks builds mid-pan.
+	let mapBusy = false;
+	const settledWaiters: (() => void)[] = [];
+	map.on("movestart zoomstart", () => {
+		mapBusy = true;
+	});
+	map.on("moveend zoomend", () => {
+		mapBusy = false;
+		while (settledWaiters.length) settledWaiters.shift()?.();
+	});
+	const idleSlice = () =>
+		new Promise<void>((resolve) => {
+			const next = () => {
+				// Safari has no requestIdleCallback.
+				if (typeof requestIdleCallback === "function") {
+					requestIdleCallback(() => resolve(), { timeout: 500 });
+				} else {
+					setTimeout(resolve, 1);
+				}
+			};
+			if (mapBusy) settledWaiters.push(next);
+			else next();
+		});
+
+	// polygonToCells is unsliceable (~45 ms for the largest district); boundaries chunk.
+	const BOUNDARY_SLICE = 500;
+	const buildingHoneycombs = new Set<string>();
+	let buildQueue: Promise<void> = Promise.resolve();
+	const buildHoneycomb = async (cacheKey: string, state: RegionState, res: number) => {
+		const walked = fog.walkedAt(res);
+		const cells: string[] = [];
+		for (const polygon of state.rings ?? []) {
+			await idleSlice();
+			// h3-js reads GeoJSON winding directly, so the [lng, lat] rings pass through
+			// untouched and holes stay holes. Same centre-in-outline rule CI tiles with.
+			for (const cell of polygonToCells(polygon as number[][][], res, true)) {
+				if (!walked.has(cell)) cells.push(cell);
+			}
+		}
+		const hexes = new Map<string, [number, number][]>();
+		for (let i = 0; i < cells.length; i += BOUNDARY_SLICE) {
+			await idleSlice();
+			for (const cell of cells.slice(i, i + BOUNDARY_SLICE)) {
+				hexes.set(cell, cellToBoundary(cell));
+			}
+		}
+		buildingHoneycombs.delete(cacheKey);
+		storeHoneycomb(cacheKey, { res, hexes, traced: null });
+		if (hexes.size > 0) fog.scheduleDraw();
+	};
+
+	// Null while a build is in flight; the finished build schedules the frame that adds it.
+	const honeycombFor = (key: string, state: RegionState, res: number): Honeycomb | null => {
 		const cacheKey = `${key}:${res}`;
 		const hit = honeycombs.get(cacheKey);
 		if (hit) {
@@ -317,76 +401,20 @@ export function createRegions(
 			honeycombs.set(cacheKey, hit);
 			return hit;
 		}
-
-		const hexes = new Map<string, [number, number][]>();
-		if (state.rings && !key.startsWith("country:") && cellEstimate(state, res) <= UNEXPLORED_CAP) {
-			const walked = fog.walkedAt(res);
-			for (const polygon of state.rings) {
-				// h3-js reads GeoJSON winding directly, so the [lng, lat] rings pass through
-				// untouched and holes stay holes. Same centre-in-outline rule CI tiles with.
-				for (const cell of polygonToCells(polygon as number[][][], res, true)) {
-					if (walked.has(cell)) continue;
-					hexes.set(cell, cellToBoundary(cell));
-				}
-			}
+		if (!state.rings || key.startsWith("country:") || cellEstimate(state, res) > UNEXPLORED_CAP) {
+			const empty: Honeycomb = { res, hexes: new Map(), traced: null };
+			storeHoneycomb(cacheKey, empty);
+			return empty;
 		}
-		const honeycomb: Honeycomb = { res, hexes, traced: null };
-		honeycombs.set(cacheKey, honeycomb);
-		if (honeycombs.size > HONEYCOMB_CACHE) {
-			const oldest = honeycombs.keys().next().value;
-			if (oldest !== undefined) honeycombs.delete(oldest);
+		if (!buildingHoneycombs.has(cacheKey)) {
+			buildingHoneycombs.add(cacheKey);
+			buildQueue = buildQueue
+				.then(() => buildHoneycomb(cacheKey, state, res))
+				.catch(() => {
+					buildingHoneycombs.delete(cacheKey);
+				});
 		}
-		return honeycomb;
-	};
-
-	// Web Mercator scales exactly with zoom: projecting at zoom z is projecting at zoom 0
-	// times 2^z. So one traced path serves every zoom, and the draw scales it into place
-	// rather than re-projecting a vertex. Vertices stay unrounded, which is what makes
-	// the scaled positions come out right at any zoom.
-	interface Traced {
-		path: Path2D;
-		zoom: number;
-		originX: number;
-		originY: number;
-	}
-	const traced = (path: Path2D): Traced => {
-		const origin = map.getPixelOrigin();
-		return { path, zoom: map.getZoom(), originX: origin.x, originY: origin.y };
-	};
-
-	// Where a traced path sits now: coordinates are relative to the pixel origin of the
-	// zoom it was traced at, so the scale carries them to the current one.
-	const placeFor = (value: Traced, pane: L.Point) => {
-		const scale = 2 ** (map.getZoom() - value.zoom);
-		const origin = map.getPixelOrigin();
-		return {
-			scale,
-			x: pane.x + value.originX * scale - origin.x,
-			y: pane.y + value.originY * scale - origin.y,
-		};
-	};
-
-	// Rings arrive [lat, lng]; the projection is the current zoom's, less the origin the
-	// path is stamped with.
-	const traceRing = (
-		path: Path2D,
-		ring: Iterable<[number, number]>,
-		originX: number,
-		originY: number,
-	) => {
-		let first = true;
-		for (const [lat, lng] of ring) {
-			const point = map.project([lat, lng]);
-			const x = point.x - originX;
-			const y = point.y - originY;
-			if (first) {
-				path.moveTo(x, y);
-				first = false;
-			} else {
-				path.lineTo(x, y);
-			}
-		}
-		path.closePath();
+		return null;
 	};
 
 	// One region highlights at a time, and its outline no longer turns over on a zoom or
@@ -415,7 +443,7 @@ export function createRegions(
 				path.closePath();
 			}
 		}
-		outlineCache = { ...traced(path), key };
+		outlineCache = { ...traceAnchor(map, path), key };
 		return outlineCache;
 	};
 
@@ -430,20 +458,22 @@ export function createRegions(
 		if (Math.sqrt(getHexagonAreaAvg(res, UNITS.m2)) / metresPerPixel < 4) return null;
 
 		const honeycomb = honeycombFor(key, state, res);
-		if (honeycomb.hexes.size === 0) return null;
+		if (!honeycomb || honeycomb.hexes.size === 0) return null;
 		if (honeycomb.traced) return honeycomb.traced;
 
 		const origin = map.getPixelOrigin();
 		const path = new Path2D();
 		// Not clipped to the outline: a cell belongs to the region when its centre does,
 		// so a border cell legitimately pokes out.
-		for (const boundary of honeycomb.hexes.values()) traceRing(path, boundary, origin.x, origin.y);
-		honeycomb.traced = traced(path);
+		for (const boundary of honeycomb.hexes.values()) {
+			traceRing(map, path, boundary, origin.x, origin.y);
+		}
+		honeycomb.traced = traceAnchor(map, path);
 		return honeycomb.traced;
 	};
 
 	// Runs after the fog, so the tint lands on the cleared area instead of under it.
-	const drawHighlight = (ctx: CanvasRenderingContext2D, cleared: Path2D[], view: FogView) => {
+	const drawHighlight = (ctx: CanvasRenderingContext2D, view: FogView) => {
 		const key = highlightKey;
 		if (key === null) return;
 		const state = regionStates.get(key);
@@ -464,7 +494,7 @@ export function createRegions(
 		ctx.globalCompositeOperation = "source-over";
 
 		const pane = L.DomUtil.getPosition(map.getPanes().mapPane);
-		const outline = placeFor(region, pane);
+		const outline = placeFor(map, region, pane);
 		ctx.save();
 		ctx.translate(outline.x, outline.y);
 		ctx.scale(outline.scale, outline.scale);
@@ -483,12 +513,14 @@ export function createRegions(
 
 		ctx.save();
 		ctx.clip(region.path, "evenodd");
-		// The fog traces its cleared paths in container coordinates: undo the placement,
-		// innermost first. The clip is already resolved, so it stays put.
+		// The fog path carries its own anchor: undo this placement, innermost first, then
+		// apply the fog's. The clip is already resolved, so it stays put.
 		ctx.scale(1 / outline.scale, 1 / outline.scale);
 		ctx.translate(-outline.x, -outline.y);
+		ctx.translate(view.cleared.x, view.cleared.y);
+		ctx.scale(view.cleared.scale, view.cleared.scale);
 		ctx.fillStyle = HIGHLIGHT_FILL;
-		for (const path of cleared) ctx.fill(path, "evenodd");
+		ctx.fill(view.cleared.path, "evenodd");
 		ctx.restore();
 
 		// Before the honeycomb bails out: a fully walked region still needs its boundary.
@@ -500,7 +532,7 @@ export function createRegions(
 
 		const pending = pendingPath(key, state, view.res);
 		if (pending) {
-			const honeycomb = placeFor(pending, pane);
+			const honeycomb = placeFor(map, pending, pane);
 			ctx.save();
 			ctx.translate(honeycomb.x, honeycomb.y);
 			ctx.scale(honeycomb.scale, honeycomb.scale);
@@ -512,19 +544,10 @@ export function createRegions(
 	};
 
 	const regionAt = (lat: number, lng: number): string | null => {
-		const prefix = `${levelForZoom(map.getZoom())}:`;
-		let best: string | null = null;
-		let bestArea = Infinity;
-		for (const [key, state] of regionStates) {
-			if (!key.startsWith(prefix) || !containsPoint(state, lng, lat)) continue;
-			// Outlines do nest at the same level; the tightest match is the one meant.
-			const area = (state.maxLng - state.minLng) * (state.maxLat - state.minLat);
-			if (area < bestArea) {
-				bestArea = area;
-				best = key;
-			}
+		for (const [key, state] of statesByLevel.get(levelForZoom(map.getZoom())) ?? []) {
+			if (containsPoint(state, lng, lat)) return key;
 		}
-		return best;
+		return null;
 	};
 
 	const HOVER_CAPABLE = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -584,28 +607,29 @@ export function createRegions(
 		map.setView(bounds.getCenter(), framed > current || current - framed > 1 ? framed : current);
 	});
 
+	// Pointer and pan events outpace frames; one probe per frame is enough.
+	let probePending = false;
+	const scheduleRefresh = () => {
+		if (probePending) return;
+		probePending = true;
+		requestAnimationFrame(() => {
+			probePending = false;
+			refreshHighlight();
+		});
+	};
+
 	if (HOVER_CAPABLE) {
 		map.on("mousemove", (event: L.LeafletMouseEvent) => {
 			pointerLatLng = event.latlng;
 			pinnedKey = null;
-			refreshHighlight();
+			scheduleRefresh();
 		});
 		map.on("mouseout", () => {
 			pointerLatLng = null;
-			refreshHighlight();
+			scheduleRefresh();
 		});
 	} else {
-		// Touch pans fire move at event rate; one point-in-region probe per frame is
-		// enough.
-		let probePending = false;
-		map.on("move", () => {
-			if (probePending) return;
-			probePending = true;
-			requestAnimationFrame(() => {
-				probePending = false;
-				refreshHighlight();
-			});
-		});
+		map.on("move", scheduleRefresh);
 	}
 	// Zoom swaps the active level, so the same point can resolve to another region.
 	map.on("zoomend", refreshHighlight);
@@ -663,7 +687,7 @@ export function createRegions(
 				// "Luxembourg · Luxembourg" still says which of the two it is.
 				if (outline.level !== wanted) continue;
 				if (!containsPoint(outline, entry.lon, entry.lat)) continue;
-				const area = (outline.maxLng - outline.minLng) * (outline.maxLat - outline.minLat);
+				const area = bboxArea(outline);
 				if (area < bestArea) {
 					bestArea = area;
 					found = outline.name;

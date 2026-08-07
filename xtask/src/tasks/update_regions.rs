@@ -54,6 +54,9 @@ const POLITE: Duration = Duration::from_millis(5000);
 // Must match `REVEAL.filled` in scratchmap.ts.
 const FILLED_RES: Resolution = Resolution::Ten;
 
+// Must match `UNEXPLORED_CAP` in regions.ts.
+const UNEXPLORED_CAP: usize = 12000;
+
 // Badge threshold: more cells than a drive-by leaves, or a real share of a small
 // region. Countries always draw.
 const MIN_EXPLORED_CELLS: usize = 5;
@@ -309,7 +312,23 @@ struct Region {
     /// The same pair at res 10, the resolution the "filled" reveal draws.
     filled: usize,
     filled_total: usize,
+    /// Full tiling of the region, compacted; the client subtracts walked cells itself.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    cells_precise: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    cells_filled: Option<Vec<String>>,
     geometry: Value,
+}
+
+/// Sorted so an idle week still writes a byte-identical file.
+fn compact_ids(mut cells: Vec<CellIndex>) -> Option<Vec<String>> {
+    if cells.is_empty() || cells.len() > UNEXPLORED_CAP {
+        return None;
+    }
+    CellIndex::compact(&mut cells).ok()?;
+    let mut ids: Vec<String> = cells.into_iter().map(|c| c.to_string()).collect();
+    ids.sort_unstable();
+    Some(ids)
 }
 
 /// Admin level, name, and bounding box from the tag sweep.
@@ -1333,6 +1352,8 @@ pub fn run_update_regions() -> Result<()> {
         total: usize,
         filled: usize,
         filled_total: usize,
+        cells_precise: Option<Vec<String>>,
+        cells_filled: Option<Vec<String>>,
     }
     log_progress(&format!("counting hexagons in {} region(s)", ids.len()));
     // Regions stay exactly as OSM maps them, water included. OSM maritime extents
@@ -1355,6 +1376,8 @@ pub fn run_update_regions() -> Result<()> {
                     total: precise.len(),
                     filled: coarse.iter().filter(|c| revealed.contains(c)).count(),
                     filled_total: coarse.len(),
+                    cells_precise: compact_ids(precise),
+                    cells_filled: compact_ids(coarse),
                     shape: shape.clone(),
                     candidate,
                 }
@@ -1422,6 +1445,8 @@ pub fn run_update_regions() -> Result<()> {
                 total: city.total,
                 filled: city.filled,
                 filled_total: city.filled_total,
+                cells_precise: city.cells_precise.clone(),
+                cells_filled: city.cells_filled.clone(),
             }
         })
         .collect();
@@ -1483,6 +1508,8 @@ pub fn run_update_regions() -> Result<()> {
             total: prior_entry["total"].as_u64().unwrap_or_default() as usize,
             filled,
             filled_total: prior_entry["filled_total"].as_u64().unwrap_or_default() as usize,
+            cells_precise: None,
+            cells_filled: None,
             geometry: display_outline(shape, &cell_points),
         });
     }
@@ -1505,6 +1532,8 @@ pub fn run_update_regions() -> Result<()> {
                 total: region.total,
                 filled: region.filled,
                 filled_total: region.filled_total,
+                cells_precise: region.cells_precise,
+                cells_filled: region.cells_filled,
                 geometry: to_geojson(&display),
             }
         })

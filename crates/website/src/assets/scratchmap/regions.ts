@@ -6,6 +6,7 @@ import {
 	cellToParent,
 	getHexagonAreaAvg,
 	polygonToCells,
+	uncompactCells,
 } from "h3-js";
 import type { ScratchmapRegion } from "./db";
 import {
@@ -117,6 +118,8 @@ interface Outline extends Bounds {
 interface RegionState extends Counts, Outline {
 	name: string;
 	marker: L.Marker;
+	cellsPrecise: string[] | undefined;
+	cellsFilled: string[] | undefined;
 }
 
 // What the search can offer: every country, walked or not, since the world's outlines all
@@ -157,6 +160,13 @@ const UNEXPLORED_CAP = 12000;
 // already ships bounds every resolution without tiling anything to find out.
 const cellEstimate = (state: RegionState, res: number) =>
 	res >= 11 ? state.total : state.filledTotal / 7 ** (10 - res);
+
+// Only the two reveal resolutions ship precompacted; coarser LODs still tile locally.
+const compactCellsFor = (state: RegionState, res: number): string[] | undefined => {
+	if (res === REVEAL.precise) return state.cellsPrecise;
+	if (res === REVEAL.filled) return state.cellsFilled;
+	return undefined;
+};
 
 export type Regions = ReturnType<typeof createRegions>;
 
@@ -251,6 +261,8 @@ export function createRegions(
 			...bounds,
 			marker,
 			rings,
+			cellsPrecise: region.cells_precise,
+			cellsFilled: region.cells_filled,
 		});
 	}
 
@@ -352,39 +364,49 @@ export function createRegions(
 		while (settledWaiters.length) settledWaiters.shift()?.();
 	});
 	const idleSlice = () =>
-		new Promise<void>((resolve) => {
+		new Promise<IdleDeadline | null>((resolve) => {
 			const next = () => {
 				// Safari has no requestIdleCallback.
 				if (typeof requestIdleCallback === "function") {
-					requestIdleCallback(() => resolve(), { timeout: 500 });
+					requestIdleCallback((deadline) => resolve(deadline), { timeout: 500 });
 				} else {
-					setTimeout(resolve, 1);
+					setTimeout(() => resolve(null), 1);
 				}
 			};
 			if (mapBusy) settledWaiters.push(next);
 			else next();
 		});
-
-	// polygonToCells is unsliceable (~45 ms for the largest district); boundaries chunk.
-	const BOUNDARY_SLICE = 500;
 	const buildingHoneycombs = new Set<string>();
 	let buildQueue: Promise<void> = Promise.resolve();
 	const buildHoneycomb = async (cacheKey: string, state: RegionState, res: number) => {
 		const walked = fog.walkedAt(res);
-		const cells: string[] = [];
-		for (const polygon of state.rings ?? []) {
+		const shipped = compactCellsFor(state, res);
+		let cells: string[];
+		if (shipped) {
 			await idleSlice();
-			// h3-js reads GeoJSON winding directly, so the [lng, lat] rings pass through
-			// untouched and holes stay holes. Same centre-in-outline rule CI tiles with.
-			for (const cell of polygonToCells(polygon as number[][][], res, true)) {
-				if (!walked.has(cell)) cells.push(cell);
+			cells = uncompactCells(shipped, res).filter((cell) => !walked.has(cell));
+		} else {
+			cells = [];
+			for (const polygon of state.rings ?? []) {
+				await idleSlice();
+				// h3-js reads GeoJSON winding directly, so the [lng, lat] rings pass through
+				// untouched and holes stay holes. Same centre-in-outline rule CI tiles with.
+				for (const cell of polygonToCells(polygon as number[][][], res, true)) {
+					if (!walked.has(cell)) cells.push(cell);
+				}
 			}
 		}
 		const hexes = new Map<string, [number, number][]>();
-		for (let i = 0; i < cells.length; i += BOUNDARY_SLICE) {
-			await idleSlice();
-			for (const cell of cells.slice(i, i + BOUNDARY_SLICE)) {
-				hexes.set(cell, cellToBoundary(cell));
+		let done = 0;
+		while (done < cells.length) {
+			const deadline = await idleSlice();
+			// A timed-out callback reports no time left; the floor still makes progress.
+			const until = performance.now() + Math.max((deadline?.timeRemaining() ?? 8) - 1, 4);
+			while (done < cells.length && performance.now() < until) {
+				for (const stop = Math.min(done + 100, cells.length); done < stop; done++) {
+					const cell = cells[done];
+					if (cell) hexes.set(cell, cellToBoundary(cell));
+				}
 			}
 		}
 		buildingHoneycombs.delete(cacheKey);
@@ -401,7 +423,11 @@ export function createRegions(
 			honeycombs.set(cacheKey, hit);
 			return hit;
 		}
-		if (!state.rings || key.startsWith("country:") || cellEstimate(state, res) > UNEXPLORED_CAP) {
+		if (
+			!state.rings ||
+			key.startsWith("country:") ||
+			(!compactCellsFor(state, res) && cellEstimate(state, res) > UNEXPLORED_CAP)
+		) {
 			const empty: Honeycomb = { res, hexes: new Map(), traced: null };
 			storeHoneycomb(cacheKey, empty);
 			return empty;

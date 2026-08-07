@@ -11,6 +11,9 @@ export interface ScratchmapRegion {
 	total: number;
 	filled: number;
 	filled_total: number;
+	// Compacted full tilings from xtask, when the region is under the honeycomb cap.
+	cells_precise?: string[];
+	cells_filled?: string[];
 	geometry?: GeoJSON.MultiPolygon;
 }
 

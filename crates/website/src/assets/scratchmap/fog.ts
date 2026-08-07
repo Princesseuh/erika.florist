@@ -58,8 +58,10 @@ export const placeFor = (map: L.Map, value: Traced, pane: L.Point): Placement =>
 	};
 };
 
+const MAX_LATITUDE = 85.0511287798;
+
 // Rings arrive [lat, lng]; the projection is the current zoom's, less the origin the
-// path is stamped with.
+// path is stamped with. Inlined EPSG:3857: map.project allocates two objects per vertex.
 export const traceRing = (
 	map: L.Map,
 	path: Path2D,
@@ -67,11 +69,13 @@ export const traceRing = (
 	originX: number,
 	originY: number,
 ): void => {
+	const scale = 256 * 2 ** map.getZoom();
 	let first = true;
 	for (const [lat, lng] of ring) {
-		const point = map.project([lat, lng]);
-		const x = point.x - originX;
-		const y = point.y - originY;
+		const clamped = lat > MAX_LATITUDE ? MAX_LATITUDE : lat < -MAX_LATITUDE ? -MAX_LATITUDE : lat;
+		const sin = Math.sin((clamped * Math.PI) / 180);
+		const x = scale * (lng / 360 + 0.5) - originX;
+		const y = scale * (0.5 - Math.log((1 + sin) / (1 - sin)) / (4 * Math.PI)) - originY;
 		if (first) {
 			path.moveTo(x, y);
 			first = false;

@@ -49,7 +49,7 @@ impl Route for ScratchMap {
         ctx.assets.include_script("src/assets/scratchmap/index.ts")?;
         // tailwind: false — vendored CSS, not Tailwind source.
         ctx.assets.include_style_with_options(
-            "../../node_modules/leaflet/dist/leaflet.css",
+            "node_modules/leaflet/dist/leaflet.css",
             StyleOptions { tailwind: false },
         )?;
 

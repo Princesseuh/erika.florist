@@ -39,7 +39,7 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
         BuildOptions {
             base_url: Some("https://erika.florist".into()),
             assets: AssetsOptions {
-                tailwind_binary_path: "../../node_modules/.bin/tailwindcss".into(),
+                tailwind_binary_path: "node_modules/.bin/tailwindcss".into(),
                 hashing_strategy: AssetHashingStrategy::Precise,
                 ..Default::default()
             },

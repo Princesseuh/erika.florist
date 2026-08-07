@@ -2,7 +2,12 @@
 	"name": "@princesseuh/catalogue-mcp",
 	"version": "0.1.0",
 	"description": "MCP server exposing Erika's catalogue (games, movies, shows, books) as queryable tools.",
-	"type": "module",
+	"keywords": [
+		"catalogue",
+		"claude",
+		"mcp"
+	],
+	"license": "MIT",
 	"bin": {
 		"erika-catalogue-mcp": "./dist/index.js"
 	},
@@ -10,8 +15,10 @@
 		"dist",
 		"README.md"
 	],
+	"type": "module",
 	"scripts": {
 		"build": "tsc",
+		"check": "tsc --noEmit",
 		"dev": "tsc --watch",
 		"start": "node dist/index.js"
 	},
@@ -26,11 +33,5 @@
 	},
 	"engines": {
 		"node": ">=18"
-	},
-	"keywords": [
-		"mcp",
-		"catalogue",
-		"claude"
-	],
-	"license": "MIT"
+	}
 }

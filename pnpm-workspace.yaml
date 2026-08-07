@@ -1,5 +1,6 @@
 packages:
   - "packages/*"
+  - "crates/website"
 
 allowBuilds:
   "@parcel/watcher": true

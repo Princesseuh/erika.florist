@@ -8,30 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@tailwindcss/cli':
-        specifier: ^4.3.0
-        version: 4.3.0
-      '@types/leaflet':
-        specifier: ^1.9.21
-        version: 1.9.21
-      github-slugger:
-        specifier: ^2.0.0
-        version: 2.0.0
-      h3-js:
-        specifier: ^4.5.0
-        version: 4.5.0
-      leaflet:
-        specifier: ^1.9.4
-        version: 1.9.4
-      quick-score:
-        specifier: ^0.2.0
-        version: 0.2.0
-      tailwindcss:
-        specifier: ^4.3.0
-        version: 4.3.0
-      thumbhash:
-        specifier: ^0.1.1
-        version: 0.1.1
       wrangler:
         specifier: ^4.94.0
         version: 4.94.0
@@ -48,6 +24,30 @@ importers:
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
+
+  crates/website:
+    dependencies:
+      '@tailwindcss/cli':
+        specifier: ^4.3.0
+        version: 4.3.0
+      '@types/leaflet':
+        specifier: ^1.9.21
+        version: 1.9.21
+      h3-js:
+        specifier: ^4.5.0
+        version: 4.5.0
+      leaflet:
+        specifier: ^1.9.4
+        version: 1.9.4
+      quick-score:
+        specifier: ^0.2.0
+        version: 0.2.0
+      tailwindcss:
+        specifier: ^4.3.0
+        version: 4.3.0
+      thumbhash:
+        specifier: ^0.1.1
+        version: 0.1.1
 
   packages/catalogue-mcp:
     dependencies:
@@ -1120,9 +1120,6 @@ packages:
   get-proto@1.0.1:
     resolution: {integrity: sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g==}
     engines: {node: '>= 0.4'}
-
-  github-slugger@2.0.0:
-    resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
 
   gopd@1.2.0:
     resolution: {integrity: sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==}
@@ -2351,8 +2348,6 @@ snapshots:
     dependencies:
       dunder-proto: 1.0.1
       es-object-atoms: 1.1.2
-
-  github-slugger@2.0.0: {}
 
   gopd@1.2.0: {}
 

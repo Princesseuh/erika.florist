@@ -1,8 +1,8 @@
 ---
 title: "LEGO 2K Drive"
-rating: "okay"
-finishedDate: N/A
+rating: "liked"
+finishedDate: 2026-08-06
 igdb: "242493"
 ---
 
-The actual gameplay is pretty fun, but the game is clearly aimed at children and over-explain everything, cut the gameplay often for boring and overly long dialogues that are only sometimes funny.
+It's fun, but it's definitely a bit childish in some regards and some parts end up being pretty frustrating (zombie levels, long dialogues, obvious tutorials, etc) despite the game itself being fun

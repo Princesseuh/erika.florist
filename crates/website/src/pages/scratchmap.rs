@@ -1,4 +1,5 @@
 use std::hash::{DefaultHasher, Hash, Hasher};
+use std::sync::OnceLock;
 
 use maud::html;
 use maudit::{assets::StyleOptions, route::prelude::*};
@@ -23,6 +24,25 @@ fn scratchmap_hash() -> String {
     format!("{:x}", hasher.finish())
 }
 
+// Deriving these client-side is a 49k-call pass (~300 ms on a phone) before first paint.
+fn parents6() -> &'static String {
+    static PARENTS: OnceLock<String> = OnceLock::new();
+    PARENTS.get_or_init(|| {
+        let cells: Vec<String> = serde_json::from_str(CELLS_JSON).unwrap_or_default();
+        let mut parents = std::collections::BTreeSet::new();
+        for cell in &cells {
+            if let Some(parent) = cell
+                .parse::<h3o::CellIndex>()
+                .ok()
+                .and_then(|index| index.parent(h3o::Resolution::Six))
+            {
+                parents.insert(parent.to_string());
+            }
+        }
+        serde_json::to_string(&parents).unwrap_or_default()
+    })
+}
+
 // The map data, versioned by its content hash. The page carries only the hash;
 // scratchmap/db.ts fetches this once per data change and serves IndexedDB after.
 #[route("/scratchmap/content.json")]
@@ -33,10 +53,11 @@ impl Route for ScratchMapContent {
         let hash = scratchmap_hash();
         let _ = state::set_scratchmap_hash(hash.clone());
         format!(
-            "[{:?},{},{}]",
+            "[{:?},{},{},{}]",
             hash,
             CELLS_JSON.trim(),
-            REGIONS_JSON.trim()
+            REGIONS_JSON.trim(),
+            parents6()
         )
     }
 }
@@ -46,7 +67,8 @@ pub struct ScratchMap;
 
 impl Route for ScratchMap {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
-        ctx.assets.include_script("src/assets/scratchmap/index.ts")?;
+        ctx.assets
+            .include_script("src/assets/scratchmap/index.ts")?;
         // tailwind: false — vendored CSS, not Tailwind source.
         ctx.assets.include_style_with_options(
             "node_modules/leaflet/dist/leaflet.css",

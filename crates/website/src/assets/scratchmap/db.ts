@@ -11,7 +11,7 @@ export interface ScratchmapRegion {
 	total: number;
 	filled: number;
 	filled_total: number;
-	// Compacted full tilings from xtask, when the region is under the honeycomb cap.
+	// Full tilings, compacted; the client subtracts walked cells itself.
 	cells_precise?: string[];
 	cells_filled?: string[];
 	geometry?: GeoJSON.MultiPolygon;
@@ -20,9 +20,16 @@ export interface ScratchmapRegion {
 export interface ScratchmapCache {
 	cells: string[];
 	regions: ScratchmapRegion[];
+	// Res-6 parents of `cells`, precomputed at build so no init pass touches every cell.
+	parents6: string[];
 }
 
-type ScratchmapContent = [hash: string, cells: string[], regions: ScratchmapRegion[]];
+type ScratchmapContent = [
+	hash: string,
+	cells: string[],
+	regions: ScratchmapRegion[],
+	parents6: string[],
+];
 
 function createStores(db: IDBDatabase): void {
 	for (const name of Array.from(db.objectStoreNames)) {
@@ -35,10 +42,11 @@ function createStores(db: IDBDatabase): void {
 function isContent(value: unknown): value is ScratchmapContent {
 	return (
 		Array.isArray(value) &&
-		value.length >= 3 &&
+		value.length >= 4 &&
 		typeof value[0] === "string" &&
 		Array.isArray(value[1]) &&
-		Array.isArray(value[2])
+		Array.isArray(value[2]) &&
+		Array.isArray(value[3])
 	);
 }
 
@@ -76,9 +84,9 @@ export function loadScratchmapCache(
 			onError();
 			return;
 		}
-		const [hash, cells, regions] = data;
-		onReady({ cells, regions });
-		seed(hash, { cells, regions });
+		const [hash, cells, regions, parents6] = data;
+		onReady({ cells, regions, parents6 });
+		seed(hash, { cells, regions, parents6 });
 	}
 
 	function loadFromCache(): void {
@@ -88,9 +96,15 @@ export function loadScratchmapCache(
 			.get("content");
 		req.addEventListener("success", () => {
 			const raw = req.result;
-			if (typeof raw === "object" && raw !== null && "cells" in raw && "regions" in raw) {
-				const { cells, regions } = raw as ScratchmapCache;
-				onReady({ cells, regions });
+			if (
+				typeof raw === "object" &&
+				raw !== null &&
+				"cells" in raw &&
+				"regions" in raw &&
+				"parents6" in raw
+			) {
+				const { cells, regions, parents6 } = raw as ScratchmapCache;
+				onReady({ cells, regions, parents6 });
 			} else {
 				void fetchAndSeed();
 			}

@@ -67,7 +67,7 @@ function init(el: HTMLElement, data: ScratchmapCache): void {
 		maxZoom: 19,
 	}).addTo(map);
 
-	const fog = createFog(map, el, data.cells);
+	const fog = createFog(map, el, data.cells, data.parents6);
 	const regions = createRegions(map, el, data.regions, fog);
 	fog.setOverlay(regions.drawHighlight);
 	addSearchControl(map, regions);
@@ -103,7 +103,8 @@ function init(el: HTMLElement, data: ScratchmapCache): void {
 	syncReveal(revealButton);
 
 	if (fog.visited.size > 0) {
-		const points = [...fog.visited].map((cell) => cellToLatLng(cell));
+		// Res-6 parents bound the same area to within a few km, at 1/70th the points.
+		const points = [...fog.walkedAt(6)].map((cell) => cellToLatLng(cell));
 		map.fitBounds(L.latLngBounds(points), { padding: [40, 40], maxZoom: 15 });
 	} else {
 		map.setView([30, 10], 4);
@@ -128,6 +129,8 @@ function init(el: HTMLElement, data: ScratchmapCache): void {
 	setupLive(
 		map,
 		(cells) => {
+			// Primed before the merge: the snapshot must predate the fog set mutation.
+			regions.primeLiveAttribution();
 			const fresh = fog.addCells(cells);
 			if (fresh.length === 0) return;
 			regions.attributeToRegions(fresh);
@@ -142,6 +145,6 @@ if (el) {
 	loadScratchmapCache(
 		el.dataset.latest ?? "",
 		(data) => init(el, data),
-		() => init(el, { cells: [], regions: [] }),
+		() => init(el, { cells: [], regions: [], parents6: [] }),
 	);
 }

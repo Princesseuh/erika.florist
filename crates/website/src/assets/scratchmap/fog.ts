@@ -109,19 +109,28 @@ const groupDigits = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " 
 const formatArea = (m2: number) =>
 	m2 >= 1_000_000 ? `${groupDigits(Math.round(m2 / 1_000_000))} km²` : `${groupDigits(m2)} m²`;
 
-export function createFog(map: L.Map, container: HTMLElement, cells: string[]) {
-	// h3-js throws on invalid ids, so filter them. The Set lets live mode merge new
-	// cells without duplicates.
-	const visited = new Set(cells.filter(isValidCell));
+export function createFog(map: L.Map, container: HTMLElement, cells: string[], parents6: string[]) {
+	// CI-generated ids behind a hash-versioned cache; validating 49k costs ~100 ms on a phone.
+	const visited = new Set(cells);
 
 	// The fog, the stat, and the regions' honeycomb all consume these same sets.
 	const visitedByRes = new Map<number, Set<string>>();
+	if (parents6.length > 0) visitedByRes.set(6, new Set(parents6));
 	const walkedAt = (res: number): ReadonlySet<string> => {
 		if (res === REVEAL.precise) return visited;
 		let set = visitedByRes.get(res);
 		if (!set) {
+			// H3 parenthood composes, so the coarsest finer set already built is an exact source.
+			let source: Iterable<string> = visited;
+			let sourceRes: number = REVEAL.precise;
+			for (const [built, builtSet] of visitedByRes) {
+				if (built > res && built < sourceRes) {
+					source = builtSet;
+					sourceRes = built;
+				}
+			}
 			set = new Set();
-			for (const cell of visited) set.add(cellToParent(cell, res));
+			for (const cell of source) set.add(cellToParent(cell, res));
 			visitedByRes.set(res, set);
 		}
 		return set;
@@ -225,7 +234,13 @@ export function createFog(map: L.Map, container: HTMLElement, cells: string[]) {
 				? "Nothing discovered yet"
 				: `${count} hexagon${count === 1 ? "" : "s"} · ~${formatArea(Math.round(m2))}`;
 	};
-	updateStat();
+	// Idle: the stat walks every cell, and pre-derived LOD sets keep zooms hitch-free.
+	const warmCaches = () => {
+		updateStat();
+		for (let res = 10; res >= 3; res--) walkedAt(res);
+	};
+	if (typeof requestIdleCallback === "function") requestIdleCallback(warmCaches);
+	else setTimeout(warmCaches, 2000);
 	container.parentElement?.appendChild(stat);
 
 	// The fog canvas draws in container coordinates; each draw cancels the map pane's

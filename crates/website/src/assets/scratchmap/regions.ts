@@ -161,7 +161,7 @@ const UNEXPLORED_CAP = 12000;
 const cellEstimate = (state: RegionState, res: number) =>
 	res >= 11 ? state.total : state.filledTotal / 7 ** (10 - res);
 
-// Only the two reveal resolutions ship precompacted; coarser LODs still tile locally.
+// Only the two reveal resolutions ship precompacted; coarser LODs tile locally.
 const compactCellsFor = (state: RegionState, res: number): string[] | undefined => {
 	if (res === REVEAL.precise) return state.cellsPrecise;
 	if (res === REVEAL.filled) return state.cellsFilled;
@@ -196,9 +196,11 @@ export function createRegions(
 	// country nobody walked still has to name it.
 	const parentOutlines: (Outline & { level: string; name: string })[] = [];
 
-	// Parents painted before live mode starts. A new cell only grows "filled" counts
-	// when it opens a parent that is not in here.
-	const filledParents = new Set(fog.walkedAt(REVEAL.filled));
+	// Must snapshot before a live merge mutates the fog sets, or fresh cells read as old.
+	let filledParents: Set<string> | null = null;
+	const primeLiveAttribution = () => {
+		filledParents ??= new Set(fog.walkedAt(REVEAL.filled));
+	};
 
 	for (const region of regions) {
 		const group = badgeLayers[region.level];
@@ -740,11 +742,12 @@ export function createRegions(
 				if (removed) honeycomb.traced = null;
 			}
 		}
+		primeLiveAttribution();
 		const dirty = new Set<string>();
 		for (const cell of cells) {
 			const parent = cellToParent(cell, REVEAL.filled);
-			const opensParent = !filledParents.has(parent);
-			if (opensParent) filledParents.add(parent);
+			const opensParent = !filledParents!.has(parent);
+			if (opensParent) filledParents!.add(parent);
 
 			const [lat, lng] = cellToLatLng(cell);
 			for (const [key, state] of regionStates) {
@@ -775,6 +778,7 @@ export function createRegions(
 		updateBadges,
 		refreshBadges,
 		attributeToRegions,
+		primeLiveAttribution,
 		setLivePosition,
 		searchEntries,
 		focusRegion,

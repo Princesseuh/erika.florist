@@ -14,14 +14,15 @@ const hexIcon = (filled: boolean) =>
 	`<svg viewBox="0 0 24 24" width="16" height="16" style="display:block" fill="${filled ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/></svg>`;
 
 function init(el: HTMLElement, data: ScratchmapCache): void {
-	// Zoom animation stays off: the fog canvas draws in container coordinates and
-	// cannot track Leaflet's mid-zoom CSS transform.
+	// Off because a zoom-out scales the viewport-sized fog canvas down, baring its edges.
 	const map = L.map(el, {
 		zoomControl: false,
 		minZoom: 2,
 		maxZoom: 19,
 		worldCopyJump: true,
 		zoomAnimation: false,
+		// A pinch otherwise rounds to a whole level on release, which reads as a snap.
+		zoomSnap: 0,
 		// A click frames the region under it; a double click fires that twice, under
 		// Leaflet's own zoom.
 		doubleClickZoom: false,

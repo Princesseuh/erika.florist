@@ -23,6 +23,8 @@ function init(el: HTMLElement, data: ScratchmapCache): void {
 		zoomAnimation: false,
 		// A pinch otherwise rounds to a whole level on release, which reads as a snap.
 		zoomSnap: 0,
+		// Outlines only redraw on moveend, so the surface has to outrun a drag.
+		renderer: L.svg({ padding: 0.5 }),
 		// A click frames the region under it; a double click fires that twice, under
 		// Leaflet's own zoom.
 		doubleClickZoom: false,

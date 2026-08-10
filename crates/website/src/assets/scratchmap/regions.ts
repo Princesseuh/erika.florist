@@ -25,6 +25,13 @@ const HIGHLIGHT_OUTLINE = "#c73c2e"; // accent-valencia
 const HIGHLIGHT_DIM = "rgba(10, 9, 8, 0.2)"; // charcoal
 const HIGHLIGHT_PENDING = "rgba(249, 160, 63, 0.5)"; // orange-carrot
 
+// Reads as noise below this, and it bounds how many hexes a frame can ever be asked to draw.
+const MIN_HEX_PX = 8;
+
+// The mesh lands a beat after the outline it belongs to, so it eases in rather than pops.
+const MESH_FADE_MS = 220;
+const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)");
+
 // Is a point inside a region? Ray casting; rings after the first in each polygon
 // are holes. The same centre-in-outline rule xtask tiles with, so a badge bumped
 // live agrees with what CI recomputes later.
@@ -286,6 +293,9 @@ export function createRegions(
 	}
 
 	let highlightKey: string | null = null;
+	// start null means it was ready on arrival, so it draws opaque at once.
+	let meshFade: { id: string; start: number | null } | null = null;
+	let meshAwaited: string | null = null;
 
 	// Low zooms hold more badges than the screen has room for. Place greedily, most
 	// explored first, and hide any badge that would overlap a placed one. Projected
@@ -337,15 +347,15 @@ export function createRegions(
 	// of H3 boundaries. The traced path rides along, since it now outlives any zoom.
 	interface Honeycomb {
 		res: number;
-		// Keyed by cell id, so freshly walked cells delete in place.
-		hexes: Map<string, [number, number][]>;
-		// Null until first drawn, and again once a walked cell drops out.
+		// Unexplored cells; kept after the boundaries go, to tell empty from untraced.
+		count: number;
+		// Dropped once traced: 12000 boundary arrays cost far more than the path over them.
+		hexes: Map<string, [number, number][]> | null;
 		traced: Traced | null;
 	}
 
-	// A region at the cap holds 12000 boundaries and a path over them, so this is the
-	// one cache here worth a ceiling. Insertion order makes the Map its own LRU.
-	const HONEYCOMB_CACHE = 8;
+	// Fits the regions on screen plus recent hovers; insertion order makes it its own LRU.
+	const HONEYCOMB_CACHE = 24;
 	const honeycombs = new Map<string, Honeycomb>();
 	const storeHoneycomb = (cacheKey: string, honeycomb: Honeycomb) => {
 		honeycombs.set(cacheKey, honeycomb);
@@ -378,6 +388,21 @@ export function createRegions(
 			if (mapBusy) settledWaiters.push(next);
 			else next();
 		});
+	// Traced whole, off-screen cells included: clipping beats retracing on every pan.
+	const traceHoneycomb = (honeycomb: Honeycomb): Traced | null => {
+		if (honeycomb.traced) return honeycomb.traced;
+		if (!honeycomb.hexes) return null;
+		const origin = map.getPixelOrigin();
+		const path = new Path2D();
+		// Not clipped to the outline: a border cell owned by its centre legitimately pokes out.
+		for (const boundary of honeycomb.hexes.values()) {
+			traceRing(map, path, boundary, origin.x, origin.y);
+		}
+		honeycomb.traced = traceAnchor(map, path);
+		honeycomb.hexes = null;
+		return honeycomb.traced;
+	};
+
 	const buildingHoneycombs = new Set<string>();
 	let buildQueue: Promise<void> = Promise.resolve();
 	const buildHoneycomb = async (cacheKey: string, state: RegionState, res: number) => {
@@ -412,8 +437,12 @@ export function createRegions(
 			}
 		}
 		buildingHoneycombs.delete(cacheKey);
-		storeHoneycomb(cacheKey, { res, hexes, traced: null });
-		if (hexes.size > 0) fog.scheduleDraw();
+		const honeycomb: Honeycomb = { res, count: hexes.size, hexes, traced: null };
+		storeHoneycomb(cacheKey, honeycomb);
+		if (hexes.size === 0) return;
+		await idleSlice();
+		traceHoneycomb(honeycomb);
+		if (cacheKey === `${highlightKey}:${fog.currentRes()}`) fog.scheduleDraw();
 	};
 
 	// Null while a build is in flight; the finished build schedules the frame that adds it.
@@ -430,7 +459,7 @@ export function createRegions(
 			key.startsWith("country:") ||
 			(!compactCellsFor(state, res) && cellEstimate(state, res) > UNEXPLORED_CAP)
 		) {
-			const empty: Honeycomb = { res, hexes: new Map(), traced: null };
+			const empty: Honeycomb = { res, count: 0, hexes: null, traced: null };
 			storeHoneycomb(cacheKey, empty);
 			return empty;
 		}
@@ -478,26 +507,17 @@ export function createRegions(
 	// The whole honeycomb traces at once, off-screen cells included: UNEXPLORED_CAP
 	// bounds it, and the canvas clips what falls outside far cheaper than a pan can
 	// retrace it.
-	const pendingPath = (key: string, state: RegionState, res: number): Traced | null => {
-		// Under a few pixels the honeycomb reads as noise and costs a subpath per cell.
-		// Cells of one resolution vary little enough in size for the average to decide.
+	const meshDrawable = (res: number) => {
 		const metresPerPixel =
 			(156543.03392 * Math.cos((map.getCenter().lat * Math.PI) / 180)) / 2 ** map.getZoom();
-		if (Math.sqrt(getHexagonAreaAvg(res, UNITS.m2)) / metresPerPixel < 4) return null;
+		return Math.sqrt(getHexagonAreaAvg(res, UNITS.m2)) / metresPerPixel >= MIN_HEX_PX;
+	};
 
+	const pendingPath = (key: string, state: RegionState, res: number): Traced | null => {
+		if (!meshDrawable(res)) return null;
 		const honeycomb = honeycombFor(key, state, res);
-		if (!honeycomb || honeycomb.hexes.size === 0) return null;
-		if (honeycomb.traced) return honeycomb.traced;
-
-		const origin = map.getPixelOrigin();
-		const path = new Path2D();
-		// Not clipped to the outline: a cell belongs to the region when its centre does,
-		// so a border cell legitimately pokes out.
-		for (const boundary of honeycomb.hexes.values()) {
-			traceRing(map, path, boundary, origin.x, origin.y);
-		}
-		honeycomb.traced = traceAnchor(map, path);
-		return honeycomb.traced;
+		if (!honeycomb || honeycomb.count === 0) return null;
+		return traceHoneycomb(honeycomb);
 	};
 
 	// Runs after the fog, so the tint lands on the cleared area instead of under it.
@@ -558,18 +578,56 @@ export function createRegions(
 		ctx.stroke(region.path);
 		ctx.restore();
 
+		// Keyed by what the mesh depicts, so a pan holds it steady but a swap re-evaluates.
+		const fadeId = `${key}:${view.res}`;
 		const pending = pendingPath(key, state, view.res);
-		if (pending) {
+		if (!pending) {
+			meshAwaited = fadeId;
+		} else {
+			// Only a late mesh eases in; fading a prebuilt one would undo its instant arrival.
+			if (meshFade?.id !== fadeId) {
+				meshFade = { id: fadeId, start: meshAwaited === fadeId ? performance.now() : null };
+			}
+			const progress =
+				meshFade.start === null || REDUCED_MOTION.matches
+					? 1
+					: Math.min(1, (performance.now() - meshFade.start) / MESH_FADE_MS);
+
 			const honeycomb = placeFor(map, pending, pane);
 			ctx.save();
 			ctx.translate(honeycomb.x, honeycomb.y);
 			ctx.scale(honeycomb.scale, honeycomb.scale);
+			ctx.globalAlpha = 1 - (1 - progress) ** 3;
 			ctx.strokeStyle = HIGHLIGHT_PENDING;
 			ctx.lineWidth = 1 / honeycomb.scale;
 			ctx.stroke(pending.path);
 			ctx.restore();
+			if (progress < 1) fog.scheduleDraw();
 		}
 	};
+
+	// A hover can only be instant if the mesh predates it, so idle builds what is on screen.
+	const prebuildVisible = () => {
+		const res = fog.currentRes();
+		if (!meshDrawable(res)) return;
+		const bounds = map.getBounds();
+		for (const [key, state] of statesByLevel.get(levelForZoom(map.getZoom())) ?? []) {
+			if (
+				state.maxLat < bounds.getSouth() ||
+				state.minLat > bounds.getNorth() ||
+				state.maxLng < bounds.getWest() ||
+				state.minLng > bounds.getEast()
+			) {
+				continue;
+			}
+			const honeycomb = honeycombFor(key, state, res);
+			if (honeycomb) traceHoneycomb(honeycomb);
+		}
+	};
+	map.on("moveend zoomend", () => {
+		if (typeof requestIdleCallback === "function") requestIdleCallback(() => prebuildVisible());
+		else setTimeout(prebuildVisible, 200);
+	});
 
 	const regionAt = (lat: number, lng: number): string | null => {
 		for (const [key, state] of statesByLevel.get(levelForZoom(map.getZoom())) ?? []) {
@@ -732,16 +790,8 @@ export function createRegions(
 	// Attribute new cells the way CI does: parent cell → cached region → +1. Cells
 	// with uncached parents wait for the next sync.
 	const attributeToRegions = (cells: string[]) => {
-		// Walked cells only ever leave a honeycomb, so cached ones shrink in place
-		// instead of rebuilding with polygonToCells.
-		for (const honeycomb of honeycombs.values()) {
-			for (const cell of cells) {
-				const removed = honeycomb.hexes.delete(
-					honeycomb.res === REVEAL.precise ? cell : cellToParent(cell, honeycomb.res),
-				);
-				if (removed) honeycomb.traced = null;
-			}
-		}
+		// Rebuilding from the shipped tilings beats keeping boundaries for the rare merge.
+		honeycombs.clear();
 		primeLiveAttribution();
 		const dirty = new Set<string>();
 		for (const cell of cells) {

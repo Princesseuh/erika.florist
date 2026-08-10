@@ -376,6 +376,7 @@ export function createFog(map: L.Map, container: HTMLElement, cells: string[], p
 		visited: visited as ReadonlySet<string>,
 		walkedAt,
 		revealMode: () => mode,
+		currentRes: () => Math.min(REVEAL[mode], lodForZoom(map.getZoom())),
 		toggleReveal,
 		addCells,
 		scheduleDraw,

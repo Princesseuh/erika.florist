@@ -59,7 +59,8 @@ pub fn header(
                 }
             }
             section."hidden sm:flex mx-auto w-centered-width items-center justify-end" {
-                section."grid h-min grid-cols-3 gap-x-10 justify-self-end text-xl font-[550]" {
+                // Plain 1fr shrinks under the word, clipping the hover background mid-label.
+                section."grid h-min grid-cols-[repeat(3,minmax(min-content,1fr))] gap-x-6 lg:gap-x-10 justify-self-end text-xl font-[550]" {
                     @for item in menu.iter() {
                         a class="bg-transparent p-1 tracking-wider".(button_class).(if *item == "wiki" {"hover:text-violet-ultra"} else {""}) href=(format!("/{}/", item)) {
                             (item)

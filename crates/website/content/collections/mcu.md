@@ -37,4 +37,5 @@ members:
   - movie/captain-america-brave-new-world
   - movie/thunderbolts
   - movie/the-fantastic-4-first-steps
+  - movie/spider-man-brand-new-day
 ---

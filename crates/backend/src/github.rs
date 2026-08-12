@@ -21,6 +21,12 @@ pub struct BatchItem {
     /// updates it in place (used for promoting planned → finished).
     #[serde(default)]
     pub slug: Option<String>,
+    /// Joins the collection without rewriting its entry file, unlike a slug alone.
+    #[serde(rename = "ref-only", alias = "ref_only", default)]
+    pub ref_only: bool,
+    /// Keeps the file's existing body, so editing a rating cannot wipe a review.
+    #[serde(rename = "keep-comment", alias = "keep_comment", default)]
+    pub keep_comment: bool,
 }
 
 fn default_status() -> String {
@@ -201,10 +207,8 @@ async fn fetch_existing_file(token: &str, repo: &str, path: &str) -> Result<Stri
     String::from_utf8(bytes).map_err(|e| Error::from(e.to_string()))
 }
 
-/// Promotes an existing planned entry to finished by editing its frontmatter
-/// in place: drops `status`, inserts `rating`/`finishedDate` after `title`,
-/// and replaces the body with the new comment. The source-id line
-/// (`tmdb`/`igdb`/`isbn`) and any other frontmatter is preserved untouched.
+/// Rewrites rating/finishedDate in place, keeping the source-id and the rest of
+/// the frontmatter, and the body too when `keep_comment` is set.
 fn promote_markdown(existing: &str, item: &BatchItem) -> Result<String, Error> {
     let rest = existing
         .strip_prefix("---\n")
@@ -243,9 +247,14 @@ fn promote_markdown(existing: &str, item: &BatchItem) -> Result<String, Error> {
         out.push_str(&format!("rating: \"{}\"\n", item.rating));
         out.push_str(&format!("finishedDate: {}\n", finished_date));
     }
+    let body = if item.keep_comment {
+        rest[end + "\n---".len()..].trim_start_matches('\n')
+    } else {
+        item.comment.as_str()
+    };
     out.push_str("---\n\n");
-    out.push_str(&item.comment);
-    if !item.comment.ends_with('\n') {
+    out.push_str(body);
+    if !body.ends_with('\n') {
         out.push('\n');
     }
     Ok(out)
@@ -278,11 +287,7 @@ struct ResolvedFile {
     display_title: String,
 }
 
-pub async fn batch_commit(
-    token: &str,
-    repo: &str,
-    form: &BatchForm,
-) -> Result<String, Error> {
+pub async fn batch_commit(token: &str, repo: &str, form: &BatchForm) -> Result<String, Error> {
     if form.items.is_empty() {
         return Err(Error::from("No items to commit"));
     }
@@ -293,7 +298,23 @@ pub async fn batch_commit(
     for item in &form.items {
         let (path_type, source_key) = type_to_paths(&item.r#type)?;
 
-        let is_promote = item.slug.as_ref().is_some_and(|s| !s.is_empty());
+        let has_slug = item.slug.as_ref().is_some_and(|s| !s.is_empty());
+
+        if item.ref_only {
+            let slug = item
+                .slug
+                .clone()
+                .filter(|s| !s.is_empty())
+                .ok_or_else(|| Error::from("A reference-only item needs a slug"))?;
+            member_refs.push(format!(
+                "{}/{}",
+                canonical_collection_type(&item.r#type)?,
+                slug
+            ));
+            continue;
+        }
+
+        let is_promote = has_slug;
 
         let (slug, content) = if is_promote {
             // Promote: edit the existing file's frontmatter in place. The
@@ -319,7 +340,11 @@ pub async fn batch_commit(
         };
 
         let path = format!("crates/website/content/{}/{}/{}.md", path_type, slug, slug);
-        member_refs.push(format!("{}/{}", canonical_collection_type(&item.r#type)?, slug));
+        member_refs.push(format!(
+            "{}/{}",
+            canonical_collection_type(&item.r#type)?,
+            slug
+        ));
         resolved.push(ResolvedFile {
             path,
             content,
@@ -339,6 +364,12 @@ pub async fn batch_commit(
                 display_title: collection_slug.to_string(),
             });
         }
+    }
+
+    if resolved.is_empty() {
+        return Err(Error::from(
+            "Nothing to commit: those entries are already in the collection",
+        ));
     }
 
     let message = compose_batch_message(form, &resolved);
@@ -375,7 +406,11 @@ fn append_collection_members(existing: &str, new_refs: &[String]) -> Result<Stri
     let insert_after = lines
         .iter()
         .rposition(|line| line.starts_with("  ") && line.trim_start().starts_with("- "))
-        .or_else(|| lines.iter().position(|line| line.trim_start().starts_with("members:")))
+        .or_else(|| {
+            lines
+                .iter()
+                .position(|line| line.trim_start().starts_with("members:"))
+        })
         .ok_or_else(|| Error::from("Collection has no members list"))?;
 
     let additions: Vec<String> = to_add.iter().map(|r| format!("  - {}", r)).collect();
@@ -394,6 +429,22 @@ fn compose_batch_message(form: &BatchForm, resolved: &[ResolvedFile]) -> String 
     let has_new_entries = form.items.iter().any(|i| i.slug.is_none());
     let skip_marker_ci = if form.skip_ci { " [skip ci]" } else { "" };
     let skip_marker_cd = if has_new_entries { " [skip cd]" } else { "" };
+
+    // Reference-only items write no file, breaking the item/file pairing below.
+    if form.items.iter().all(|i| i.ref_only) {
+        let titles: Vec<&str> = form.items.iter().map(|i| i.name.as_str()).collect();
+        let what = if titles.len() == 1 {
+            titles[0].to_string()
+        } else {
+            format!("{} entries", titles.len())
+        };
+        let collection = form.collection.as_deref().unwrap_or("collection");
+        return format!(
+            "content(catalogue): Add {} to collection {}{}",
+            what, collection, skip_marker_ci
+        );
+    }
+
     if resolved.len() == 1 {
         let only = &resolved[0];
         let planned = form.items[0].status == "planned";
@@ -451,7 +502,10 @@ async fn commit_files(
         .to_string();
 
     // 2. Get the tree sha from the parent commit.
-    let commit_url = format!("https://api.github.com/repos/{}/git/commits/{}", repo, head_sha);
+    let commit_url = format!(
+        "https://api.github.com/repos/{}/git/commits/{}",
+        repo, head_sha
+    );
     let commit_json = gh_get(&commit_url, token).await?;
     let base_tree_sha = commit_json["tree"]["sha"]
         .as_str()
@@ -587,7 +641,11 @@ fn build_collection_markdown(title: &str, description: &str, members: &[String])
     out
 }
 
-pub async fn commit_collection(token: &str, repo: &str, form: &CollectionForm) -> Result<String, Error> {
+pub async fn commit_collection(
+    token: &str,
+    repo: &str,
+    form: &CollectionForm,
+) -> Result<String, Error> {
     if form.title.trim().is_empty() {
         return Err(Error::from("Collection title is required"));
     }

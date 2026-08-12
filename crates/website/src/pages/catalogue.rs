@@ -128,13 +128,13 @@ impl Route for CatalogueContent {
 
         // Helper macro to reduce code duplication
         macro_rules! add_entries {
-            ($entries:expr, $type_id:expr) => {
+            ($entries:expr, $type_id:expr, $source:ident) => {
                 for item in $entries {
                     let data = item.data(ctx);
                     let rendered_content = item.render(ctx);
                     let (cover_url, placeholder) = &data.cover;
 
-                    let mut entry = Vec::with_capacity(13);
+                    let mut entry = Vec::with_capacity(14);
                     entry.push(serde_json::Value::String(cover_url.clone()));
                     entry.push(serde_json::Value::String(placeholder.clone()));
                     entry.push(serde_json::Value::Number(serde_json::Number::from(
@@ -195,15 +195,18 @@ impl Route for CatalogueContent {
                         None => entry.push(serde_json::Value::Null),
                     }
 
+                    // Lets the add form tell an entry it already holds from a fresh one.
+                    entry.push(serde_json::Value::String(data.$source.clone()));
+
                     entries_data.push(entry);
                 }
             };
         }
 
-        add_entries!(games, 0);
-        add_entries!(movies, 1);
-        add_entries!(shows, 2);
-        add_entries!(books, 3);
+        add_entries!(games, 0, igdb);
+        add_entries!(movies, 1, tmdb);
+        add_entries!(shows, 2, tmdb);
+        add_entries!(books, 3, isbn);
 
         let collections_index = crate::pages::collection::build_collections_index(ctx);
 

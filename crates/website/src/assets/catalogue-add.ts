@@ -26,8 +26,19 @@ interface KnownEntry {
 	title: string;
 	type: EntryType;
 	planned: boolean;
+	rating: string;
+	date: string;
 }
 const TYPE_BY_ID: Record<number, EntryType> = { 0: "game", 1: "movie", 2: "tv", 3: "book" };
+// Mirrors Rating::to_number in the content model.
+const RATING_BY_NUMBER: Record<number, string> = {
+	0: "hated",
+	1: "disliked",
+	2: "okay",
+	3: "liked",
+	4: "loved",
+	5: "masterpiece",
+};
 const known = new Map<string, KnownEntry>();
 const knownKey = (type: EntryType, sourceId: string) => `${type}:${sourceId}`;
 
@@ -44,7 +55,17 @@ async function loadKnownEntries() {
 			const sourceId = row[13];
 			if (type === undefined || typeof title !== "string") continue;
 			if (typeof slug !== "string" || typeof sourceId !== "string" || sourceId === "") continue;
-			known.set(knownKey(type, sourceId), { planned: row[9] === 1, slug, title, type });
+			const rating = typeof row[4] === "number" ? (RATING_BY_NUMBER[row[4]] ?? "") : "";
+			// Stamped as UTC midnight, so read it back in UTC or it slips a day.
+			const date = typeof row[6] === "number" ? new Date(row[6]).toISOString().slice(0, 10) : "";
+			known.set(knownKey(type, sourceId), {
+				date,
+				planned: row[9] === 1,
+				rating,
+				slug,
+				title,
+				type,
+			});
 		}
 	} catch (error) {
 		console.error("Failed to load catalogue for duplicate checks:", error);
@@ -306,14 +327,56 @@ function selectResult(result: SearchResult) {
 	setHidden(searchResults, true);
 }
 
+// Fetched because the shipped copy is rendered HTML; on failure the box stays empty, which keeps it.
+async function prefillComment(entry: KnownEntry) {
+	commentInput.disabled = true;
+	try {
+		const url = `${API_URL}/entry-comment?type=${entry.type}&slug=${encodeURIComponent(entry.slug)}`;
+		const response = await fetch(url, { credentials: "include" });
+		if (!response.ok) {
+			return;
+		}
+		const data: unknown = await response.json();
+		if (typeof data === "object" && data !== null && "comment" in data) {
+			const comment = (data as { comment: unknown }).comment;
+			// A later mode change must not drop someone else's text in here.
+			if (
+				typeof comment === "string" &&
+				mode === "edit" &&
+				promoteSlugHidden.value === entry.slug
+			) {
+				commentInput.value = comment.trimEnd();
+			}
+		}
+	} catch (error) {
+		console.error("Could not load the current review:", error);
+	} finally {
+		commentInput.disabled = false;
+	}
+}
+
 function startEditing(entry: KnownEntry, cover: string | null) {
 	openModal("edit");
+	// Whatever was half-typed for a new entry must not leak into this one.
+	resetFormFields();
 	typeSelect.value = entry.type;
 	titleInput.value = entry.title;
 	sourceIdHidden.value = "";
 	sourceIdDisplay.value = "";
 	promoteSlugHidden.value = entry.slug;
 	selectedTitle.textContent = entry.title;
+
+	dateInput.value = entry.date;
+	const ratingInput =
+		entry.rating === ""
+			? null
+			: document.querySelector<HTMLInputElement>(`input[name="rating"][value="${entry.rating}"]`);
+	if (ratingInput !== null) {
+		ratingInput.checked = true;
+	}
+	if (!entry.planned) {
+		void prefillComment(entry);
+	}
 	if (cover === null) {
 		setHidden(selectedCover, true);
 		setHidden(selectedCoverPlaceholder, false);

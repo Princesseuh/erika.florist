@@ -5,7 +5,7 @@ const API_URL =
 
 type EntryType = "game" | "movie" | "tv" | "book";
 type EntryStatus = "finished" | "planned";
-type Mode = "finished" | "planned" | "promote";
+type Mode = "finished" | "planned" | "promote" | "edit";
 
 interface QueueItem {
 	type: EntryType;
@@ -16,6 +16,39 @@ interface QueueItem {
 	date: string;
 	comment: string;
 	slug?: string;
+	"ref-only"?: boolean;
+	"keep-comment"?: boolean;
+}
+
+// Keyed by source id, so a hit matches the exact release and not a same-titled one.
+interface KnownEntry {
+	slug: string;
+	title: string;
+	type: EntryType;
+	planned: boolean;
+}
+const TYPE_BY_ID: Record<number, EntryType> = { 0: "game", 1: "movie", 2: "tv", 3: "book" };
+const known = new Map<string, KnownEntry>();
+const knownKey = (type: EntryType, sourceId: string) => `${type}:${sourceId}`;
+
+async function loadKnownEntries() {
+	try {
+		const response = await fetch("/catalogue/content.json");
+		const data: unknown = await response.json();
+		const rows = Array.isArray(data) && Array.isArray(data[1]) ? data[1] : [];
+		for (const row of rows) {
+			if (!Array.isArray(row)) continue;
+			const type = TYPE_BY_ID[row[2] as number];
+			const title = row[3];
+			const slug = row[10];
+			const sourceId = row[13];
+			if (type === undefined || typeof title !== "string") continue;
+			if (typeof slug !== "string" || typeof sourceId !== "string" || sourceId === "") continue;
+			known.set(knownKey(type, sourceId), { planned: row[9] === 1, slug, title, type });
+		}
+	} catch (error) {
+		console.error("Failed to load catalogue for duplicate checks:", error);
+	}
 }
 
 function isEntryType(value: string): value is EntryType {
@@ -132,7 +165,7 @@ function resetFormFields() {
 }
 
 function computeSubmitLabel(currentMode: Mode): string {
-	if (currentMode === "promote") {
+	if (currentMode === "promote" || currentMode === "edit") {
 		return "Submit";
 	}
 	const total = queue.length + 1;
@@ -148,24 +181,28 @@ function applyMode(next: Mode) {
 		btn.classList.toggle("bg-zinc-200", !matches);
 	}
 
-	const isPromote = next === "promote";
+	// Both act on an entry that already exists, so they share every layout rule.
+	const onExisting = next === "promote" || next === "edit";
 	const isPlanned = next === "planned";
 
-	setHidden(modeToggle, isPromote);
+	setHidden(modeToggle, onExisting);
 	setHidden(ratingRow, isPlanned);
 	setHidden(dateRow, isPlanned);
 	setHidden(commentRow, isPlanned);
-	setHidden(typeTitleRow, isPromote);
-	setHidden(addToQueueBtn, isPromote);
+	setHidden(typeTitleRow, onExisting);
+	setHidden(addToQueueBtn, onExisting);
 	// Promote reuses the entry's existing source id from its file, so the
 	// manual override field is irrelevant here.
-	setHidden(sourceIdDisplay, isPromote);
+	setHidden(sourceIdDisplay, onExisting);
 
-	typeSelect.disabled = isPromote;
-	titleInput.disabled = isPromote ? true : typeSelect.value === "";
+	typeSelect.disabled = onExisting;
+	titleInput.disabled = onExisting ? true : typeSelect.value === "";
+	commentInput.placeholder = next === "edit" ? "Leave empty to keep the current review" : "";
 
-	if (isPromote) {
+	if (next === "promote") {
 		modalTitle.textContent = "Mark as finished";
+	} else if (next === "edit") {
+		modalTitle.textContent = "Edit entry";
 	} else if (isPlanned) {
 		modalTitle.textContent = "Add to plan";
 	} else {
@@ -269,7 +306,80 @@ function selectResult(result: SearchResult) {
 	setHidden(searchResults, true);
 }
 
-function buildResultRow(r: SearchResult): HTMLDivElement {
+function startEditing(entry: KnownEntry, cover: string | null) {
+	openModal("edit");
+	typeSelect.value = entry.type;
+	titleInput.value = entry.title;
+	sourceIdHidden.value = "";
+	sourceIdDisplay.value = "";
+	promoteSlugHidden.value = entry.slug;
+	selectedTitle.textContent = entry.title;
+	if (cover === null) {
+		setHidden(selectedCover, true);
+		setHidden(selectedCoverPlaceholder, false);
+	} else {
+		selectedCover.src = cover.startsWith("//") ? `https:${cover}` : cover;
+		setHidden(selectedCover, false);
+		setHidden(selectedCoverPlaceholder, true);
+	}
+	setHidden(searchResults, true);
+}
+
+async function addExistingToCollection(entry: KnownEntry) {
+	const password = passwordInput.value;
+	if (password === "") {
+		setError("Password is required to add to the collection");
+		return;
+	}
+	setError(null);
+	submitBtn.disabled = true;
+	try {
+		const response = await fetch(`${API_URL}/commit-batch`, {
+			body: JSON.stringify({
+				collection: collectionSlug,
+				"form-password": password,
+				items: [
+					{
+						name: entry.title,
+						"ref-only": true,
+						slug: entry.slug,
+						type: entry.type,
+					},
+				],
+				"skip-ci": skipCiCheckbox.checked,
+			}),
+			credentials: "include",
+			headers: { "Content-Type": "application/json" },
+			method: "POST",
+		});
+		if (!response.ok) {
+			setError(`Failed: ${await response.text()}`);
+			return;
+		}
+		closeModal();
+	} catch (error) {
+		console.error("Add to collection failed:", error);
+		setError("An error occurred");
+	} finally {
+		submitBtn.disabled = false;
+	}
+}
+
+function buildActionButton(label: string, onClick: () => void): HTMLButtonElement {
+	const button = document.createElement("button");
+	button.type = "button";
+	button.className =
+		"text-xs font-bold px-2 py-1 border-2 border-black bg-white-sugar-cane hover:bg-zinc-200 shrink-0";
+	button.textContent = label;
+	button.addEventListener("click", (event) => {
+		event.stopPropagation();
+		onClick();
+	});
+	return button;
+}
+
+function buildResultRow(r: SearchResult, type: EntryType): HTMLDivElement {
+	const existing = known.get(knownKey(type, r.id));
 	const div = document.createElement("div");
 	div.className = "flex items-center gap-2 p-2 hover:bg-zinc-200 cursor-pointer text-black";
 	if (r.cover === null) {
@@ -289,6 +399,27 @@ function buildResultRow(r: SearchResult): HTMLDivElement {
 		span.textContent = r.name;
 		div.append(img, span);
 	}
+	if (existing !== undefined) {
+		const badge = document.createElement("span");
+		badge.className =
+			"text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5 bg-orange-carrot text-black shrink-0";
+		badge.textContent = existing.planned ? "planned" : "in catalogue";
+		div.append(badge);
+		div.append(
+			buildActionButton(existing.planned ? "Finish" : "Edit", () => {
+				startEditing(existing, r.cover);
+			}),
+		);
+		if (collectionSlug !== "") {
+			div.append(
+				buildActionButton("Add here", () => {
+					void addExistingToCollection(existing);
+				}),
+			);
+		}
+	}
+
+	// The row itself still selects, so a deliberate duplicate stays one click away.
 	div.addEventListener("click", () => {
 		selectResult(r);
 	});
@@ -329,7 +460,7 @@ function displayResults(data: unknown, type: EntryType) {
 	}
 
 	for (const r of results) {
-		searchResults.append(buildResultRow(r));
+		searchResults.append(buildResultRow(r, type));
 	}
 }
 
@@ -370,7 +501,7 @@ function gatherCurrentItem(): QueueItem | null {
 	const sourceId = sourceIdDisplay.value === "" ? sourceIdHidden.value : sourceIdDisplay.value;
 	const promoteSlug = promoteSlugHidden.value;
 
-	if (mode !== "promote") {
+	if (mode !== "promote" && mode !== "edit") {
 		if (typeValue === "") {
 			setError("Please select a type");
 			return null;
@@ -417,6 +548,10 @@ function gatherCurrentItem(): QueueItem | null {
 	if (promoteSlug !== "") {
 		item.slug = promoteSlug;
 	}
+	// An untouched comment box means "leave the review alone", not "erase it".
+	if (mode === "edit" && comment === "") {
+		item["keep-comment"] = true;
+	}
 	return item;
 }
 
@@ -429,6 +564,8 @@ interface BatchPayloadItem {
 	date: string;
 	comment: string;
 	slug: string | null;
+	"ref-only"?: boolean;
+	"keep-comment"?: boolean;
 }
 
 interface BatchPayload {
@@ -439,14 +576,15 @@ interface BatchPayload {
 }
 
 // On a collection detail page, adds are also appended to this collection.
-const collectionSlug =
-	document.getElementById("catalogue-core")?.dataset.collectionSlug ?? "";
+const collectionSlug = document.getElementById("catalogue-core")?.dataset.collectionSlug ?? "";
 
 function toPayloadItem(i: QueueItem): BatchPayloadItem {
 	return {
 		comment: i.comment,
 		date: i.date,
+		...(i["keep-comment"] === true ? { "keep-comment": true } : {}),
 		name: i.name,
+		...(i["ref-only"] === true ? { "ref-only": true } : {}),
 		rating: i.rating,
 		slug: i.slug ?? null,
 		"source-id": i.source_id,
@@ -511,6 +649,8 @@ async function submitAll() {
 		let verb: string;
 		if (mode === "promote") {
 			verb = "Promoted!";
+		} else if (mode === "edit") {
+			verb = "Entry updated!";
 		} else if (items.length === 1) {
 			verb = "Entry added!";
 		} else {
@@ -596,13 +736,7 @@ function isPromoteRequestDetail(value: unknown): value is PromoteRequestDetail {
 	const type = readString(value, "type");
 	const title = readString(value, "title");
 	const cover = readString(value, "cover");
-	return (
-		slug !== null &&
-		type !== null &&
-		isEntryType(type) &&
-		title !== null &&
-		cover !== null
-	);
+	return slug !== null && type !== null && isEntryType(type) && title !== null && cover !== null;
 }
 
 let searchDebounce: number | undefined;
@@ -709,6 +843,9 @@ document.addEventListener("catalogue:promote-request", (event) => {
 document.addEventListener("DOMContentLoaded", async () => {
 	try {
 		await checkAuth();
+		if (isAuthenticated) {
+			await loadKnownEntries();
+		}
 	} catch (error) {
 		console.error(error);
 	}

@@ -143,6 +143,27 @@ pub async fn check_if_file_exists(
     Ok((200..300).contains(&status))
 }
 
+/// The raw body on main; the shipped copy is rendered HTML and would not round-trip.
+pub async fn fetch_entry_comment(
+    token: &str,
+    repo: &str,
+    item_type: &str,
+    slug: &str,
+) -> Result<String, Error> {
+    let (path_type, _) = type_to_paths(item_type)?;
+    let path = format!("crates/website/content/{}/{}/{}.md", path_type, slug, slug);
+    let existing = fetch_existing_file(token, repo, &path).await?;
+    let Some(rest) = existing.strip_prefix("---\n") else {
+        return Ok(existing);
+    };
+    let Some(end) = rest.find("\n---") else {
+        return Ok(String::new());
+    };
+    Ok(rest[end + "\n---".len()..]
+        .trim_start_matches('\n')
+        .to_string())
+}
+
 /// Resolve the (path_type, source_key) pair from the item's type field.
 fn type_to_paths(item_type: &str) -> Result<(&'static str, &'static str), Error> {
     Ok(match item_type {

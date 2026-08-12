@@ -5,7 +5,7 @@ mod search;
 use search::{search_igdb, search_isbn, search_tmdb};
 
 mod github;
-use github::{batch_commit, commit_collection, BatchForm, CollectionForm};
+use github::{batch_commit, commit_collection, fetch_entry_comment, BatchForm, CollectionForm};
 
 mod scratchmap;
 
@@ -75,7 +75,11 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
 
         let mut hasher = Sha256::new();
         hasher.update(password.as_bytes());
-        let hashed_input: String = hasher.finalize().iter().map(|b| format!("{:02x}", b)).collect();
+        let hashed_input: String = hasher
+            .finalize()
+            .iter()
+            .map(|b| format!("{:02x}", b))
+            .collect();
 
         if hashed_input == hashed_password.to_string() {
             let response = Response::from_json(&serde_json::json!({"success": true}))?;
@@ -218,6 +222,41 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
         };
     }
 
+    if req.path() == "/entry-comment" && req.method() == Method::Get {
+        let url = req.url()?;
+        let mut item_type = None;
+        let mut slug = None;
+        for (key, value) in url.query_pairs() {
+            match key.as_ref() {
+                "type" => item_type = Some(value.to_string()),
+                "slug" => slug = Some(value.to_string()),
+                _ => {}
+            }
+        }
+        let (Some(item_type), Some(slug)) = (item_type, slug) else {
+            return Response::error("Missing type or slug", 400);
+        };
+
+        let github_token = env
+            .secret("GITHUB_KEY")
+            .map_err(|_| Error::from("GITHUB_KEY not set"))?;
+        let github_repo = env
+            .secret("GITHUB_REPO")
+            .map_err(|_| Error::from("GITHUB_REPO not set"))?;
+
+        return match fetch_entry_comment(
+            &github_token.to_string(),
+            &github_repo.to_string(),
+            &item_type,
+            &slug,
+        )
+        .await
+        {
+            Ok(comment) => Response::from_json(&serde_json::json!({ "comment": comment })),
+            Err(e) => Response::error(e.to_string(), 502),
+        };
+    }
+
     if req.path() == "/commit-batch" && req.method() == Method::Post {
         let body_text = req.text().await?;
         let form: BatchForm = match serde_json::from_str(&body_text) {
@@ -230,7 +269,11 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
         };
         let mut hasher = Sha256::new();
         hasher.update(form.form_password.as_bytes());
-        let hashed_input: String = hasher.finalize().iter().map(|b| format!("{:02x}", b)).collect();
+        let hashed_input: String = hasher
+            .finalize()
+            .iter()
+            .map(|b| format!("{:02x}", b))
+            .collect();
         if hashed_input != form_password.to_string() {
             return Response::error("Unauthorized", 401);
         }
@@ -268,7 +311,11 @@ async fn handle(req: &mut Request, env: &Env) -> Result<Response> {
         };
         let mut hasher = Sha256::new();
         hasher.update(form.form_password.as_bytes());
-        let hashed_input: String = hasher.finalize().iter().map(|b| format!("{:02x}", b)).collect();
+        let hashed_input: String = hasher
+            .finalize()
+            .iter()
+            .map(|b| format!("{:02x}", b))
+            .collect();
         if hashed_input != form_password.to_string() {
             return Response::error("Unauthorized", 401);
         }

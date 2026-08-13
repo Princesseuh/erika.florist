@@ -48,6 +48,14 @@ jobs:
           TMDB_KEY: ${{ secrets.TMDB_KEY }}
         run: cargo run --release -p xtask -- update-catalogue --silent
 
+      # Fetching metadata takes minutes, so main has often moved on by now. Autostash
+      # replays the generated files onto its tip, rather than losing them to a
+      # rejected push.
+      - name: Catch up to main
+        run: |
+          git fetch origin main
+          git rebase --autostash origin/main
+
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:

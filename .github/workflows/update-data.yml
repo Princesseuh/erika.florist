@@ -32,12 +32,21 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: xtask
+
+      # Release, and cargo direct rather than the debug `pnpm run update-data`, so
+      # this shares one warm cache with the other xtask workflow.
       - name: Update catalogue data
         env:
           IGDB_KEY: ${{ secrets.IGDB_KEY }}
           IGDB_CLIENT: ${{ secrets.IGDB_CLIENT }}
           TMDB_KEY: ${{ secrets.TMDB_KEY }}
-        run: pnpm run update-data
+        run: cargo run --release -p xtask -- update-catalogue --silent
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4

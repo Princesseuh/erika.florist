@@ -26,6 +26,8 @@ jobs:
 
       - name: Cache cargo
         uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: xtask
 
       - name: Pull visited cells from the Worker
         env:

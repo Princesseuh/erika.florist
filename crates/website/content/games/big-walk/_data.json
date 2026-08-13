@@ -1,0 +1,51 @@
+{
+  "first_release_date": 1785801600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Switch 2",
+      "id": 508
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 5213,
+      "name": "Panic",
+      "role": "publisher"
+    },
+    {
+      "id": 10314,
+      "name": "House House",
+      "role": "developer"
+    }
+  ]
+}

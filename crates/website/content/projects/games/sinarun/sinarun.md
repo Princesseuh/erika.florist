@@ -1,8 +1,11 @@
 ---
-  title: "SinaRun"
-  tagline: "Minimalist 3D platform/racing game"
-  featured: true
-  type: 'game'
+title: "SinaRun"
+tagline: "Minimalist 3D platform/racing game"
+featured: true
+date: 2015-10-01
+type: "game"
+role: "creator"
+external_url: "https://store.steampowered.com/app/324470/SinaRun/"
 ---
 
 SinaRun is a first-person 3D platform/racing game, developped using [Unity](https://unity3d.com/) and written in [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)

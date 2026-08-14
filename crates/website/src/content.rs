@@ -15,10 +15,23 @@ pub use maudit::{
     content::{ContentSources, markdown::*, shortcodes::MarkdownShortcodes},
     content_sources,
 };
-pub use project::{Project, ProjectType};
+pub use project::{Project, ProjectOrg, ProjectRole, ProjectType, has_project_page};
 pub use wiki::{WikiEntry, wiki_add_modified_info};
 
 use crate::components::dinkus;
+
+pub fn strip_frontmatter(raw: &str) -> String {
+    let trimmed = raw.trim_start();
+    if let Some(rest) = trimmed.strip_prefix("---\n") {
+        if let Some(end) = rest.find("\n---\n") {
+            return rest[end + 5..].trim_start().to_string();
+        }
+        if let Some(end) = rest.find("\n---") {
+            return rest[end + 4..].trim_start().to_string();
+        }
+    }
+    trimmed.to_string()
+}
 
 pub fn content_sources(root: String) -> ContentSources {
     let create_markdown_options = || {
@@ -128,7 +141,7 @@ pub fn content_sources(root: String) -> ContentSources {
     content_sources![
         "blog" => glob_markdown_with_options::<BlogPost>(&blog_path, create_markdown_options()),
         "wiki" => wiki_add_modified_info(&glob_markdown::<WikiEntry>(&wiki_path), create_markdown_options()),
-        "projects" => glob_markdown::<Project>(&projects_path),
+        "projects" => glob_markdown_with_options::<Project>(&projects_path, create_markdown_options()),
 
         // Catalogue
         "books" => catalogue_add_metadata(&glob_markdown::<CatalogueBook>(&books_path), None),

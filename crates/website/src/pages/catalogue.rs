@@ -6,7 +6,7 @@ use maudit::route::prelude::*;
 use crate::components::catalogue::{SidebarConfig, catalogue_filters};
 use crate::components::icon::Icon;
 use crate::components::mobile_menu;
-use crate::content::Status;
+use crate::content::{Status, strip_frontmatter};
 use crate::{content::CatalogueMetadata, layouts::base_layout, state};
 
 fn catalogue_sidebar(prefix: &str, mobile: bool) -> maud::Markup {
@@ -225,19 +225,6 @@ impl Route for CatalogueContent {
 
 #[route("/catalogue/mcp.json")]
 pub struct CatalogueMCP;
-
-fn strip_frontmatter(raw: &str) -> String {
-    let trimmed = raw.trim_start();
-    if let Some(rest) = trimmed.strip_prefix("---\n") {
-        if let Some(end) = rest.find("\n---\n") {
-            return rest[end + 5..].trim_start().to_string();
-        }
-        if let Some(end) = rest.find("\n---") {
-            return rest[end + 4..].trim_start().to_string();
-        }
-    }
-    trimmed.to_string()
-}
 
 impl Route for CatalogueMCP {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {

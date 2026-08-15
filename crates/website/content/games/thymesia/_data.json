@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1660780800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    }
+  ],
+  "companies": [
+    {
+      "id": 32832,
+      "name": "OverBorder Studio",
+      "role": "developer"
+    },
+    {
+      "id": 16437,
+      "name": "Team17",
+      "role": "publisher"
+    }
+  ]
+}

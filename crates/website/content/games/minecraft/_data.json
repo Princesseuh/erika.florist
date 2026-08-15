@@ -1,0 +1,82 @@
+{
+  "first_release_date": 1482105600,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "FireTV",
+      "id": 132
+    },
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "Switch 2",
+      "id": 508
+    },
+    {
+      "abbreviation": "Gear VR",
+      "id": 388
+    },
+    {
+      "abbreviation": "Win Phone",
+      "id": 74
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 58,
+      "name": "Mojang Studios",
+      "role": "developer"
+    }
+  ]
+}

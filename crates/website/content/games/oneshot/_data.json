@@ -1,0 +1,52 @@
+{
+  "first_release_date": 1481155200,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 4706,
+      "name": "Degica Games",
+      "role": "publisher"
+    },
+    {
+      "id": 44263,
+      "name": "Komodo",
+      "role": "publisher"
+    },
+    {
+      "id": 26904,
+      "name": "Future Cat",
+      "role": "developer"
+    }
+  ]
+}

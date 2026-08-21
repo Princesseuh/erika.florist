@@ -1,0 +1,63 @@
+{
+  "first_release_date": 1442275200,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 29538,
+      "name": "8-4",
+      "role": "publisher"
+    },
+    {
+      "id": 6545,
+      "name": "tobyfox",
+      "role": "developer"
+    }
+  ]
+}

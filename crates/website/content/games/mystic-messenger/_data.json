@@ -1,0 +1,26 @@
+{
+  "first_release_date": 1467936000,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 9029,
+      "name": "Cheritz",
+      "role": "developer"
+    }
+  ]
+}

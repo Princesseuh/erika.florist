@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1126742400,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "NDS",
+      "id": 20
+    }
+  ],
+  "companies": [
+    {
+      "id": 37,
+      "name": "Capcom",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    }
+  ]
+}

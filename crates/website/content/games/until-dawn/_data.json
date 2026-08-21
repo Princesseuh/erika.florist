@@ -1,0 +1,27 @@
+{
+  "first_release_date": 1440460800,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    }
+  ],
+  "companies": [
+    {
+      "id": 4895,
+      "name": "Supermassive Games",
+      "role": "developer"
+    },
+    {
+      "id": 13634,
+      "name": "Sony Computer Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

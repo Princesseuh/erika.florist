@@ -1,0 +1,77 @@
+{
+  "first_release_date": 1223856000,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "Win Phone",
+      "id": 74
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 613,
+      "name": "2D Boy",
+      "role": "developer"
+    },
+    {
+      "id": 2766,
+      "name": "Tomorrow Corporation",
+      "role": "publisher"
+    },
+    {
+      "id": 612,
+      "name": "Brighter Minds",
+      "role": "publisher"
+    },
+    {
+      "id": 53,
+      "name": "Microsoft Game Studios",
+      "role": "publisher"
+    }
+  ]
+}

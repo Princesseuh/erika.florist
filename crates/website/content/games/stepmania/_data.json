@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1002844800,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": []
+}

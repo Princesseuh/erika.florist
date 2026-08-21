@@ -1,0 +1,65 @@
+{
+  "first_release_date": 1271721600,
+  "genres": [
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    },
+    {
+      "abbreviation": "Win Phone",
+      "id": 74
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "Mobile",
+      "id": 55
+    }
+  ],
+  "companies": [
+    {
+      "id": 891,
+      "name": "Halfbrick Studios",
+      "role": "developer"
+    },
+    {
+      "id": 59678,
+      "name": "Perpetuum Media",
+      "role": "publisher"
+    },
+    {
+      "id": 50370,
+      "name": "Digital Games",
+      "role": "publisher"
+    },
+    {
+      "id": 2431,
+      "name": "Big Ant Studios",
+      "role": "publisher"
+    }
+  ]
+}

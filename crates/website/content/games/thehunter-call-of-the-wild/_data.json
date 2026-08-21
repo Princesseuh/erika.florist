@@ -1,0 +1,59 @@
+{
+  "first_release_date": 1487203200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 437,
+      "name": "Avalanche Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 5093,
+      "name": "Expansive Worlds",
+      "role": "developer"
+    }
+  ]
+}

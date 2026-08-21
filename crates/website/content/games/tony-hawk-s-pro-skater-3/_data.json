@@ -1,0 +1,58 @@
+{
+  "first_release_date": 1004227200,
+  "genres": [
+    {
+      "id": 14,
+      "name": "Sport"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "NGC",
+      "id": 21
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 148,
+      "name": "Gearbox Software",
+      "role": "publisher"
+    },
+    {
+      "id": 66,
+      "name": "Activision",
+      "role": "publisher"
+    },
+    {
+      "id": 90,
+      "name": "Neversoft Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 73,
+      "name": "Aspyr Media",
+      "role": "publisher"
+    },
+    {
+      "id": 432,
+      "name": "Beenox",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "first_release_date": 961977600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 378,
+      "name": "Westlake Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 4,
+      "name": "Eidos Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 26,
+      "name": "Square Enix",
+      "role": "publisher"
+    },
+    {
+      "id": 27,
+      "name": "Eidos Montréal",
+      "role": "publisher"
+    },
+    {
+      "id": 25,
+      "name": "Ion Storm",
+      "role": "developer"
+    },
+    {
+      "id": 73,
+      "name": "Aspyr Media",
+      "role": "publisher"
+    },
+    {
+      "id": 8115,
+      "name": "Sold Out Software",
+      "role": "publisher"
+    }
+  ]
+}

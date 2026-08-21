@@ -1,0 +1,44 @@
+{
+  "first_release_date": 757296000,
+  "genres": [
+    {
+      "id": 14,
+      "name": "Sport"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "SNES",
+      "id": 19
+    },
+    {
+      "abbreviation": "Genesis/MegaDrive",
+      "id": 29
+    },
+    {
+      "abbreviation": "Sega CD",
+      "id": 78
+    }
+  ],
+  "companies": [
+    {
+      "id": 566,
+      "name": "Midway",
+      "role": "developer"
+    },
+    {
+      "id": 33804,
+      "name": "Playtronic",
+      "role": "publisher"
+    },
+    {
+      "id": 23993,
+      "name": "Tec Toy",
+      "role": "publisher"
+    }
+  ]
+}

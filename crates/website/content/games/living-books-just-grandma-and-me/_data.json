@@ -1,0 +1,40 @@
+{
+  "first_release_date": 697420800,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 21725,
+      "name": "Living Books",
+      "role": "developer"
+    },
+    {
+      "id": 195,
+      "name": "Brøderbund Software",
+      "role": "publisher"
+    },
+    {
+      "id": 6400,
+      "name": "Random House",
+      "role": "publisher"
+    }
+  ]
+}

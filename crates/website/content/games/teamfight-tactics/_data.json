@@ -1,0 +1,46 @@
+{
+  "first_release_date": 1561507200,
+  "genres": [
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 16,
+      "name": "Turn-based strategy (TBS)"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    },
+    {
+      "id": 35,
+      "name": "Card & Board Game"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 41,
+      "name": "Riot Games",
+      "role": "developer"
+    }
+  ]
+}

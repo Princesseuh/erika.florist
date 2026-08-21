@@ -1,0 +1,27 @@
+{
+  "first_release_date": 1024876800,
+  "genres": [
+    {
+      "id": 35,
+      "name": "Card & Board Game"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 8021,
+      "name": "Daybreak Games",
+      "role": "developer"
+    },
+    {
+      "id": 1047,
+      "name": "Leaping Lizard",
+      "role": "developer"
+    }
+  ]
+}

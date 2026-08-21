@@ -1,0 +1,48 @@
+{
+  "first_release_date": 1524182400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    }
+  ],
+  "companies": [
+    {
+      "id": 10100,
+      "name": "Sony Interactive Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 4357,
+      "name": "SIE Santa Monica Studio",
+      "role": "developer"
+    },
+    {
+      "id": 38814,
+      "name": "Jetpack Interactive",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "first_release_date": 777945600,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 16,
+      "name": "Turn-based strategy (TBS)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "SNES",
+      "id": 19
+    },
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    },
+    {
+      "abbreviation": "New 3DS",
+      "id": 137
+    },
+    {
+      "abbreviation": "GBA",
+      "id": 24
+    },
+    {
+      "abbreviation": "SFAM",
+      "id": 58
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 762,
+      "name": "HAL Laboratory",
+      "role": "developer"
+    },
+    {
+      "id": 21480,
+      "name": "Ape",
+      "role": "developer"
+    }
+  ]
+}

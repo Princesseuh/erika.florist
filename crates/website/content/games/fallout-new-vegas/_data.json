@@ -1,0 +1,49 @@
+{
+  "first_release_date": 1287446400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 248,
+      "name": "Bandai Namco Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 47,
+      "name": "Obsidian Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 2493,
+      "name": "1C/Cenega",
+      "role": "publisher"
+    },
+    {
+      "id": 16565,
+      "name": "Bethesda Softworks",
+      "role": "publisher"
+    }
+  ]
+}

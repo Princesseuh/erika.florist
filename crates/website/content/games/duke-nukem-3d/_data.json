@@ -1,0 +1,54 @@
+{
+  "first_release_date": 829872000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    }
+  ],
+  "companies": [
+    {
+      "id": 130,
+      "name": "MacSoft Games",
+      "role": "publisher"
+    },
+    {
+      "id": 224,
+      "name": "3D Realms",
+      "role": "developer"
+    },
+    {
+      "id": 227,
+      "name": "U.S. Gold",
+      "role": "publisher"
+    },
+    {
+      "id": 224,
+      "name": "3D Realms",
+      "role": "developer"
+    },
+    {
+      "id": 228,
+      "name": "FormGen",
+      "role": "publisher"
+    }
+  ]
+}

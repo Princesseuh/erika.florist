@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1418947200,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 445,
+      "name": "505 Games",
+      "role": "publisher"
+    },
+    {
+      "id": 2490,
+      "name": "Kunos Simulazioni",
+      "role": "developer"
+    }
+  ]
+}

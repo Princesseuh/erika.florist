@@ -1,0 +1,41 @@
+{
+  "first_release_date": 913939200,
+  "genres": [
+    {
+      "id": 26,
+      "name": "Quiz/Trivia"
+    },
+    {
+      "id": 35,
+      "name": "Card & Board Game"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "N64",
+      "id": 4
+    }
+  ],
+  "companies": [
+    {
+      "id": 864,
+      "name": "Hudson Soft",
+      "role": "developer"
+    },
+    {
+      "id": 2334,
+      "name": "CAProductions",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 812,
+      "name": "Gradiente",
+      "role": "publisher"
+    }
+  ]
+}

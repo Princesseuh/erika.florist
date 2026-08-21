@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1624233600,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 26,
+      "name": "Quiz/Trivia"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    }
+  ],
+  "companies": [
+    {
+      "id": 25322,
+      "name": "The New York Times Company",
+      "role": "publisher"
+    },
+    {
+      "id": 39732,
+      "name": "Josh Wardle",
+      "role": "developer"
+    }
+  ]
+}

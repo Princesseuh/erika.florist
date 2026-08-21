@@ -1,0 +1,69 @@
+{
+  "first_release_date": 1103500800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    },
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": null,
+      "id": 159
+    }
+  ],
+  "companies": [
+    {
+      "id": 44165,
+      "name": "Oonaki WWW",
+      "role": "publisher"
+    },
+    {
+      "id": 3701,
+      "name": "Nicalis, Inc.",
+      "role": "publisher"
+    },
+    {
+      "id": 3923,
+      "name": "Studio Pixel",
+      "role": "developer"
+    },
+    {
+      "id": 3923,
+      "name": "Studio Pixel",
+      "role": "publisher"
+    }
+  ]
+}

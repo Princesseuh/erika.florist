@@ -1,0 +1,30 @@
+{
+  "first_release_date": 1130112000,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    }
+  ],
+  "companies": [
+    {
+      "id": 15142,
+      "name": "RocketSnail Games",
+      "role": "developer"
+    }
+  ]
+}

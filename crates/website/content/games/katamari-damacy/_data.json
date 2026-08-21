@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1079568000,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 263,
+      "name": "Namco",
+      "role": "publisher"
+    },
+    {
+      "id": 38076,
+      "name": "Keita Takahashi",
+      "role": "developer"
+    },
+    {
+      "id": 1976,
+      "name": "NOW Production",
+      "role": "developer"
+    }
+  ]
+}

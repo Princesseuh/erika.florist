@@ -1,0 +1,162 @@
+{
+  "first_release_date": 754704000,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 405
+    },
+    {
+      "abbreviation": null,
+      "id": 149
+    },
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "SNES",
+      "id": 19
+    },
+    {
+      "abbreviation": null,
+      "id": 409
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": null,
+      "id": 118
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    },
+    {
+      "abbreviation": "Saturn",
+      "id": 32
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    },
+    {
+      "abbreviation": "GBA",
+      "id": 24
+    },
+    {
+      "abbreviation": "SFAM",
+      "id": 58
+    }
+  ],
+  "companies": [
+    {
+      "id": 355,
+      "name": "Zoo Digital",
+      "role": "publisher"
+    },
+    {
+      "id": 354,
+      "name": "DSI Games",
+      "role": "publisher"
+    },
+    {
+      "id": 379,
+      "name": "Full Fat",
+      "role": "publisher"
+    },
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 284,
+      "name": "Maxis",
+      "role": "developer"
+    },
+    {
+      "id": 489,
+      "name": "Mindscape",
+      "role": "publisher"
+    },
+    {
+      "id": 9463,
+      "name": "Fujitsu",
+      "role": "publisher"
+    },
+    {
+      "id": 74966,
+      "name": "WinWare",
+      "role": "publisher"
+    },
+    {
+      "id": 191,
+      "name": "Imagineer",
+      "role": "publisher"
+    },
+    {
+      "id": 1221,
+      "name": "Artdink",
+      "role": "publisher"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 231,
+      "name": "Tec Toy Indústria de Brinquedos",
+      "role": "publisher"
+    },
+    {
+      "id": 678,
+      "name": "Black Pearl Software",
+      "role": "publisher"
+    },
+    {
+      "id": 41630,
+      "name": "Dice Creative",
+      "role": "publisher"
+    },
+    {
+      "id": 762,
+      "name": "HAL Laboratory",
+      "role": "publisher"
+    },
+    {
+      "id": 197,
+      "name": "THQ",
+      "role": "publisher"
+    },
+    {
+      "id": 31302,
+      "name": "ZIOSoft",
+      "role": "publisher"
+    }
+  ]
+}

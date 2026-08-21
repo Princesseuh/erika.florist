@@ -1,0 +1,64 @@
+{
+  "first_release_date": 1290643200,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    }
+  ],
+  "companies": [
+    {
+      "id": 2345,
+      "name": "Abstraction Games",
+      "role": "publisher"
+    },
+    {
+      "id": 2262,
+      "name": "NIS America",
+      "role": "publisher"
+    },
+    {
+      "id": 1217,
+      "name": "Spike Chunsoft",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "first_release_date": 1000944000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 23,
+      "name": "Feral Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 4,
+      "name": "Eidos Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 498,
+      "name": "Pyro Studios",
+      "role": "developer"
+    },
+    {
+      "id": 631,
+      "name": "Zonic Limited",
+      "role": "developer"
+    }
+  ]
+}

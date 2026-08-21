@@ -1,0 +1,53 @@
+{
+  "first_release_date": 1285027200,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 16,
+      "name": "Turn-based strategy (TBS)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 73,
+      "name": "Aspyr Media",
+      "role": "publisher"
+    },
+    {
+      "id": 1466,
+      "name": "Mastertronic",
+      "role": "publisher"
+    },
+    {
+      "id": 377,
+      "name": "Firaxis Games",
+      "role": "developer"
+    },
+    {
+      "id": 8,
+      "name": "2K Games",
+      "role": "publisher"
+    }
+  ]
+}

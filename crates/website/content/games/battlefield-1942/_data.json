@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1031616000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 73,
+      "name": "Aspyr Media",
+      "role": "publisher"
+    },
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 137,
+      "name": "Digital Illusions CE",
+      "role": "developer"
+    }
+  ]
+}

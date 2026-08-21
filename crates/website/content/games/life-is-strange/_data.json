@@ -1,0 +1,77 @@
+{
+  "first_release_date": 1422489600,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 894,
+      "name": "DON'T NOD",
+      "role": "developer"
+    },
+    {
+      "id": 23,
+      "name": "Feral Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 26,
+      "name": "Square Enix",
+      "role": "publisher"
+    },
+    {
+      "id": 38591,
+      "name": "Pingle Game Studio",
+      "role": "publisher"
+    }
+  ]
+}

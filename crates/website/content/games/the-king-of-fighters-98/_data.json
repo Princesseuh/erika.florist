@@ -1,0 +1,83 @@
+{
+  "first_release_date": 901152000,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "neogeoaes",
+      "id": 80
+    },
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    },
+    {
+      "abbreviation": null,
+      "id": 136
+    }
+  ],
+  "companies": [
+    {
+      "id": 1474,
+      "name": "SNK",
+      "role": "publisher"
+    },
+    {
+      "id": 2582,
+      "name": "SNK Playmore",
+      "role": "publisher"
+    },
+    {
+      "id": 5675,
+      "name": "Yumekobo",
+      "role": "publisher"
+    },
+    {
+      "id": 1474,
+      "name": "SNK",
+      "role": "developer"
+    },
+    {
+      "id": 2837,
+      "name": "D4 Enterprise",
+      "role": "publisher"
+    },
+    {
+      "id": 64324,
+      "name": "TUG",
+      "role": "publisher"
+    }
+  ]
+}

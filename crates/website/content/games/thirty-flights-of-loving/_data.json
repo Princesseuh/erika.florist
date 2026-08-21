@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1345420800,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 3921,
+      "name": "Blendo Games",
+      "role": "developer"
+    },
+    {
+      "id": 1005,
+      "name": "Klei Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

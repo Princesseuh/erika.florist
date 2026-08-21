@@ -1,0 +1,22 @@
+{
+  "first_release_date": 1349049600,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    }
+  ],
+  "companies": [
+    {
+      "id": 7721,
+      "name": "Porpentine",
+      "role": "developer"
+    }
+  ]
+}

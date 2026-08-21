@@ -1,0 +1,62 @@
+{
+  "first_release_date": 794188800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 478
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    }
+  ],
+  "companies": [
+    {
+      "id": 904,
+      "name": "SoftBank",
+      "role": "publisher"
+    },
+    {
+      "id": 120,
+      "name": "MacPlay",
+      "role": "publisher"
+    },
+    {
+      "id": 506,
+      "name": "Parallax Software",
+      "role": "developer"
+    },
+    {
+      "id": 903,
+      "name": "Interplay Productions",
+      "role": "developer"
+    },
+    {
+      "id": 24213,
+      "name": "Interplay",
+      "role": "publisher"
+    }
+  ]
+}

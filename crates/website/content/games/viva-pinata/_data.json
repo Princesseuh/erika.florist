@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1163030400,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 771,
+      "name": "Rare",
+      "role": "developer"
+    },
+    {
+      "id": 53,
+      "name": "Microsoft Game Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 60,
+      "name": "Climax Group",
+      "role": "developer"
+    }
+  ]
+}

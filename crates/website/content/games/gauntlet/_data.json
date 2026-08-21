@@ -1,0 +1,109 @@
+{
+  "first_release_date": 498182400,
+  "genres": [
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": null,
+      "id": 115
+    },
+    {
+      "abbreviation": "Atari8bit",
+      "id": 65
+    },
+    {
+      "abbreviation": "C64",
+      "id": 15
+    },
+    {
+      "abbreviation": "ZXS",
+      "id": 26
+    },
+    {
+      "abbreviation": "Atari-ST",
+      "id": 63
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Apple][",
+      "id": 75
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "ACPC",
+      "id": 25
+    },
+    {
+      "abbreviation": "SMS",
+      "id": 64
+    },
+    {
+      "abbreviation": "MSX",
+      "id": 27
+    }
+  ],
+  "companies": [
+    {
+      "id": 11247,
+      "name": "Mindscape, Inc.",
+      "role": "publisher"
+    },
+    {
+      "id": 227,
+      "name": "U.S. Gold",
+      "role": "publisher"
+    },
+    {
+      "id": 327,
+      "name": "Midway Games",
+      "role": "publisher"
+    },
+    {
+      "id": 1267,
+      "name": "Backbone Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 1210,
+      "name": "Gremlin Graphics",
+      "role": "publisher"
+    },
+    {
+      "id": 1746,
+      "name": "Atari Games",
+      "role": "developer"
+    },
+    {
+      "id": 263,
+      "name": "Namco",
+      "role": "publisher"
+    },
+    {
+      "id": 1746,
+      "name": "Atari Games",
+      "role": "publisher"
+    }
+  ]
+}

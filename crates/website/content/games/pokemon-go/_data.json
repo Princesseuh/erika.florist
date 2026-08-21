@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1467763200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 5054,
+      "name": "Niantic Labs",
+      "role": "developer"
+    },
+    {
+      "id": 1074,
+      "name": "The Pokémon Company",
+      "role": "developer"
+    }
+  ]
+}

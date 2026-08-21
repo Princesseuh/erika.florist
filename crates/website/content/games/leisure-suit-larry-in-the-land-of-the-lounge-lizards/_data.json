@@ -1,0 +1,62 @@
+{
+  "first_release_date": 549763200,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 115
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": null,
+      "id": 151
+    },
+    {
+      "abbreviation": "Atari-ST",
+      "id": 63
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    },
+    {
+      "abbreviation": "Apple][",
+      "id": 75
+    },
+    {
+      "abbreviation": null,
+      "id": 126
+    }
+  ],
+  "companies": [
+    {
+      "id": 32,
+      "name": "Sierra On-Line",
+      "role": "developer"
+    }
+  ]
+}

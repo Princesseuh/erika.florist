@@ -1,0 +1,50 @@
+{
+  "first_release_date": 1432080000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 15917,
+      "name": "ELEX",
+      "role": "publisher"
+    },
+    {
+      "id": 20258,
+      "name": "Papergames",
+      "role": "developer"
+    },
+    {
+      "id": 3595,
+      "name": "Tencent Games",
+      "role": "publisher"
+    },
+    {
+      "id": 13020,
+      "name": "Kakao Games",
+      "role": "publisher"
+    },
+    {
+      "id": 18713,
+      "name": "VNG Corporation",
+      "role": "publisher"
+    }
+  ]
+}

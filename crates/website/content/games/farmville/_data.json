@@ -1,0 +1,26 @@
+{
+  "first_release_date": 1245369600,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    }
+  ],
+  "companies": [
+    {
+      "id": 5229,
+      "name": "Zynga",
+      "role": "developer"
+    }
+  ]
+}

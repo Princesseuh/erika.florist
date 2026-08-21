@@ -1,0 +1,52 @@
+{
+  "first_release_date": 1397779200,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 774,
+      "name": "QLOC",
+      "role": "publisher"
+    },
+    {
+      "id": 3121,
+      "name": "1C-SoftClub",
+      "role": "publisher"
+    },
+    {
+      "id": 37,
+      "name": "Capcom",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "first_release_date": 805075200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Saturn",
+      "id": 32
+    }
+  ],
+  "companies": [
+    {
+      "id": 14085,
+      "name": "Softstar",
+      "role": "developer"
+    }
+  ]
+}

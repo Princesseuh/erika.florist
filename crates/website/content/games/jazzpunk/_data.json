@@ -1,0 +1,48 @@
+{
+  "first_release_date": 1391731200,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 4440,
+      "name": "Adult Swim Games",
+      "role": "publisher"
+    },
+    {
+      "id": 4440,
+      "name": "Adult Swim Games",
+      "role": "publisher"
+    },
+    {
+      "id": 4059,
+      "name": "Necrophone Games",
+      "role": "developer"
+    }
+  ]
+}

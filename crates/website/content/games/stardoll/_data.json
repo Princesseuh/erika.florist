@@ -1,0 +1,22 @@
+{
+  "first_release_date": 1104451200,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    }
+  ],
+  "companies": [
+    {
+      "id": 17737,
+      "name": "Glorious Games",
+      "role": "developer"
+    }
+  ]
+}

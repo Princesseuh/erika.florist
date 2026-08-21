@@ -1,0 +1,69 @@
+{
+  "first_release_date": 1559001600,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 11662,
+      "name": "Annapurna Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 11662,
+      "name": "Annapurna Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 6209,
+      "name": "Mobius Digital",
+      "role": "developer"
+    },
+    {
+      "id": 31592,
+      "name": "Limited Run Games",
+      "role": "publisher"
+    }
+  ]
+}

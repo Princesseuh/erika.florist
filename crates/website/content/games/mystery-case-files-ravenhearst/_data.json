@@ -1,0 +1,56 @@
+{
+  "first_release_date": 1166140800,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "NDS",
+      "id": 20
+    }
+  ],
+  "companies": [
+    {
+      "id": 2245,
+      "name": "Big Fish Games",
+      "role": "publisher"
+    },
+    {
+      "id": 2452,
+      "name": "Big Fish Studios",
+      "role": "developer"
+    },
+    {
+      "id": 2390,
+      "name": "Engine Software",
+      "role": "developer"
+    }
+  ]
+}

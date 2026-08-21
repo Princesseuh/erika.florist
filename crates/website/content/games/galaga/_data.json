@@ -1,0 +1,94 @@
+{
+  "first_release_date": 368150400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": null,
+      "id": 149
+    },
+    {
+      "abbreviation": "x1",
+      "id": 77
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": null,
+      "id": 374
+    },
+    {
+      "abbreviation": null,
+      "id": 152
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "MSX",
+      "id": 27
+    }
+  ],
+  "companies": [
+    {
+      "id": 566,
+      "name": "Midway",
+      "role": "publisher"
+    },
+    {
+      "id": 13956,
+      "name": "Namco Limited",
+      "role": "developer"
+    },
+    {
+      "id": 25663,
+      "name": "NAMCO BANDAI Games Inc.",
+      "role": "publisher"
+    },
+    {
+      "id": 42819,
+      "name": "Gotch Technology",
+      "role": "publisher"
+    },
+    {
+      "id": 13956,
+      "name": "Namco Limited",
+      "role": "developer"
+    },
+    {
+      "id": 2067,
+      "name": "Dempa Shimbunsha",
+      "role": "publisher"
+    },
+    {
+      "id": 11748,
+      "name": "Bug-Byte Software",
+      "role": "publisher"
+    },
+    {
+      "id": 2067,
+      "name": "Dempa Shimbunsha",
+      "role": "publisher"
+    },
+    {
+      "id": 38100,
+      "name": "MediaKite Distribution",
+      "role": "publisher"
+    }
+  ]
+}

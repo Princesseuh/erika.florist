@@ -1,0 +1,63 @@
+{
+  "first_release_date": 876441600,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "OnLive",
+      "id": 113
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    }
+  ],
+  "companies": [
+    {
+      "id": 244,
+      "name": "Edusoft",
+      "role": "publisher"
+    },
+    {
+      "id": 120,
+      "name": "MacPlay",
+      "role": "publisher"
+    },
+    {
+      "id": 173,
+      "name": "The Omni Group",
+      "role": "publisher"
+    },
+    {
+      "id": 5,
+      "name": "Interplay Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 12,
+      "name": "Black Isle Studios",
+      "role": "developer"
+    },
+    {
+      "id": 16565,
+      "name": "Bethesda Softworks",
+      "role": "publisher"
+    }
+  ]
+}

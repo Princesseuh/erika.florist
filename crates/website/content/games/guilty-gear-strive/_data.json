@@ -1,0 +1,57 @@
+{
+  "first_release_date": 1623369600,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 1218,
+      "name": "Arc System Works",
+      "role": "developer"
+    },
+    {
+      "id": 16956,
+      "name": "Arc System Works America",
+      "role": "publisher"
+    },
+    {
+      "id": 9666,
+      "name": "Bandai Namco Entertainment Asia",
+      "role": "publisher"
+    },
+    {
+      "id": 9607,
+      "name": "Bandai Namco Entertainment Europe",
+      "role": "publisher"
+    }
+  ]
+}

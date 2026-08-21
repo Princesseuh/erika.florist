@@ -1,0 +1,61 @@
+{
+  "first_release_date": 1058227200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 10,
+      "name": "LucasArts",
+      "role": "publisher"
+    },
+    {
+      "id": 66,
+      "name": "Activision",
+      "role": "publisher"
+    },
+    {
+      "id": 2,
+      "name": "BioWare",
+      "role": "developer"
+    },
+    {
+      "id": 73,
+      "name": "Aspyr Media",
+      "role": "publisher"
+    }
+  ]
+}

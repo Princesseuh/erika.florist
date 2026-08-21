@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1563840000,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 30735,
+      "name": "mestiez",
+      "role": "developer"
+    },
+    {
+      "id": 30736,
+      "name": "Studio Minus",
+      "role": "publisher"
+    }
+  ]
+}

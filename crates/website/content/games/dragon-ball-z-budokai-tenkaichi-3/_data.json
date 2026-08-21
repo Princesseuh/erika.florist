@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1191456000,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 1053,
+      "name": "Spike",
+      "role": "developer"
+    },
+    {
+      "id": 6330,
+      "name": "Namco Bandai Games",
+      "role": "publisher"
+    },
+    {
+      "id": 2406,
+      "name": "Atari, Inc.",
+      "role": "publisher"
+    }
+  ]
+}

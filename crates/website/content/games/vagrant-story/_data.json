@@ -1,0 +1,49 @@
+{
+  "first_release_date": 950140800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    }
+  ],
+  "companies": [
+    {
+      "id": 252,
+      "name": "Square Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 5544,
+      "name": "Square Product Development Division 4",
+      "role": "developer"
+    },
+    {
+      "id": 26,
+      "name": "Square Enix",
+      "role": "publisher"
+    },
+    {
+      "id": 250,
+      "name": "Square",
+      "role": "publisher"
+    }
+  ]
+}

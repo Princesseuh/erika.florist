@@ -1,0 +1,44 @@
+{
+  "first_release_date": 1258416000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 55,
+      "name": "Turtle Rock Studios",
+      "role": "developer"
+    },
+    {
+      "id": 56,
+      "name": "Valve",
+      "role": "developer"
+    },
+    {
+      "id": 56,
+      "name": "Valve",
+      "role": "publisher"
+    }
+  ]
+}

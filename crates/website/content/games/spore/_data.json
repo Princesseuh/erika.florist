@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1220486400,
+  "genres": [
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 284,
+      "name": "Maxis",
+      "role": "developer"
+    }
+  ]
+}

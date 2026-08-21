@@ -1,0 +1,85 @@
+{
+  "first_release_date": 1516665600,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Switch 2",
+      "id": 508
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Steam VR",
+      "id": 163
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": null,
+      "id": 385
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 2095,
+      "name": "Panic Button Games",
+      "role": "publisher"
+    },
+    {
+      "id": 11262,
+      "name": "Gearbox Publishing",
+      "role": "publisher"
+    },
+    {
+      "id": 7423,
+      "name": "Unknown Worlds",
+      "role": "developer"
+    },
+    {
+      "id": 11360,
+      "name": "Playdigious",
+      "role": "publisher"
+    }
+  ]
+}

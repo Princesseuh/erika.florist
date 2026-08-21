@@ -1,0 +1,49 @@
+{
+  "first_release_date": 1118275200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 1701,
+      "name": "Ice-Pick Lodge",
+      "role": "developer"
+    },
+    {
+      "id": 468,
+      "name": "Meridian4",
+      "role": "publisher"
+    },
+    {
+      "id": 2992,
+      "name": "Buka Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 9961,
+      "name": "Frogster Interactive Pictures",
+      "role": "publisher"
+    }
+  ]
+}

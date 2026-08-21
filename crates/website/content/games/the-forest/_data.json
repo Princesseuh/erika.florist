@@ -1,0 +1,42 @@
+{
+  "first_release_date": 1525046400,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Steam VR",
+      "id": 163
+    }
+  ],
+  "companies": [
+    {
+      "id": 3108,
+      "name": "Endnight Games Ltd",
+      "role": "developer"
+    }
+  ]
+}

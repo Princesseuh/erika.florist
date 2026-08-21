@@ -1,0 +1,70 @@
+{
+  "first_release_date": 566524800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 115
+    },
+    {
+      "abbreviation": null,
+      "id": 121
+    },
+    {
+      "abbreviation": "SNES",
+      "id": 19
+    },
+    {
+      "abbreviation": "Atari-ST",
+      "id": 63
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": null,
+      "id": 118
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    },
+    {
+      "abbreviation": "SFAM",
+      "id": 58
+    }
+  ],
+  "companies": [
+    {
+      "id": 764,
+      "name": "Psygnosis",
+      "role": "publisher"
+    },
+    {
+      "id": 2380,
+      "name": "JVC Musical Industries",
+      "role": "publisher"
+    },
+    {
+      "id": 1191,
+      "name": "FTL Games",
+      "role": "publisher"
+    },
+    {
+      "id": 1191,
+      "name": "FTL Games",
+      "role": "developer"
+    },
+    {
+      "id": 4290,
+      "name": "Victor Musical Industries",
+      "role": "publisher"
+    }
+  ]
+}

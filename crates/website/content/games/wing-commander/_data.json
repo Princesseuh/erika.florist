@@ -1,0 +1,113 @@
+{
+  "first_release_date": 654307200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Amiga CD32",
+      "id": 114
+    },
+    {
+      "abbreviation": "SNES",
+      "id": 19
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": null,
+      "id": 118
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    },
+    {
+      "abbreviation": "Sega CD",
+      "id": 78
+    },
+    {
+      "abbreviation": "SFAM",
+      "id": 58
+    }
+  ],
+  "companies": [
+    {
+      "id": 9315,
+      "name": "GameTap Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 13217,
+      "name": "Fujitsu Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 10141,
+      "name": "Sega Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 11247,
+      "name": "Mindscape, Inc.",
+      "role": "publisher"
+    },
+    {
+      "id": 295,
+      "name": "Origin Systems",
+      "role": "developer"
+    },
+    {
+      "id": 1743,
+      "name": "ASCII Corporation",
+      "role": "publisher"
+    },
+    {
+      "id": 489,
+      "name": "Mindscape",
+      "role": "publisher"
+    },
+    {
+      "id": 489,
+      "name": "Mindscape",
+      "role": "publisher"
+    },
+    {
+      "id": 1271,
+      "name": "Ocean Software",
+      "role": "publisher"
+    },
+    {
+      "id": 2810,
+      "name": "Bits Laboratory",
+      "role": "publisher"
+    },
+    {
+      "id": 1884,
+      "name": "CSK Research Institute",
+      "role": "publisher"
+    },
+    {
+      "id": 1151,
+      "name": "Game Arts",
+      "role": "publisher"
+    }
+  ]
+}

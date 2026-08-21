@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1287100800,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 5187,
+      "name": "07th Expansion",
+      "role": "developer"
+    },
+    {
+      "id": 23309,
+      "name": "HOBIBOX",
+      "role": "publisher"
+    }
+  ]
+}

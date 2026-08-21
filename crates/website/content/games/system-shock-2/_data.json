@@ -1,0 +1,49 @@
+{
+  "first_release_date": 934329600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 3,
+      "name": "Looking Glass Studios",
+      "role": "developer"
+    },
+    {
+      "id": 21,
+      "name": "Irrational Games",
+      "role": "developer"
+    },
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 13169,
+      "name": "Nightdive Studios",
+      "role": "publisher"
+    }
+  ]
+}

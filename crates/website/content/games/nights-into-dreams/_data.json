@@ -1,0 +1,31 @@
+{
+  "first_release_date": 836524800,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Saturn",
+      "id": 32
+    }
+  ],
+  "companies": [
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 395,
+      "name": "Sonic Team",
+      "role": "developer"
+    }
+  ]
+}

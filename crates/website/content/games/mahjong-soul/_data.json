@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1528416000,
+  "genres": [
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 35,
+      "name": "Card & Board Game"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 19094,
+      "name": "Yostar Games",
+      "role": "publisher"
+    },
+    {
+      "id": 19095,
+      "name": "Catfood Studio",
+      "role": "developer"
+    }
+  ]
+}

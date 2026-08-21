@@ -1,0 +1,87 @@
+{
+  "first_release_date": 1237161600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "blackberry",
+      "id": 73
+    },
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    },
+    {
+      "abbreviation": "Win Phone",
+      "id": 74
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": null,
+      "id": 413
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "NDS",
+      "id": 20
+    },
+    {
+      "abbreviation": "Mobile",
+      "id": 55
+    }
+  ],
+  "companies": [
+    {
+      "id": 12703,
+      "name": "Lima Sky",
+      "role": "developer"
+    },
+    {
+      "id": 45216,
+      "name": "Innovative Concepts In Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 2312,
+      "name": "Raw Thrills",
+      "role": "publisher"
+    },
+    {
+      "id": 27191,
+      "name": "Real Networks",
+      "role": "publisher"
+    },
+    {
+      "id": 3114,
+      "name": "GameHouse",
+      "role": "publisher"
+    },
+    {
+      "id": 71588,
+      "name": "OriginData",
+      "role": "publisher"
+    }
+  ]
+}

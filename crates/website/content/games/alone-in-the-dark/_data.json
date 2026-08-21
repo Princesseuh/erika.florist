@@ -1,0 +1,90 @@
+{
+  "first_release_date": 715305600,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Acorn Archimedes",
+      "id": 116
+    },
+    {
+      "abbreviation": null,
+      "id": 149
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "3DO",
+      "id": 50
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": null,
+      "id": 118
+    }
+  ],
+  "companies": [
+    {
+      "id": 1115,
+      "name": "Imotion",
+      "role": "publisher"
+    },
+    {
+      "id": 10075,
+      "name": "THQ Nordic",
+      "role": "publisher"
+    },
+    {
+      "id": 213,
+      "name": "Infogrames",
+      "role": "developer"
+    },
+    {
+      "id": 213,
+      "name": "Infogrames",
+      "role": "publisher"
+    },
+    {
+      "id": 120,
+      "name": "MacPlay",
+      "role": "publisher"
+    },
+    {
+      "id": 21399,
+      "name": "Arrow Micro-Techs Corp.",
+      "role": "publisher"
+    },
+    {
+      "id": 885,
+      "name": "Krisalis Software",
+      "role": "publisher"
+    },
+    {
+      "id": 885,
+      "name": "Krisalis Software",
+      "role": "publisher"
+    },
+    {
+      "id": 5,
+      "name": "Interplay Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

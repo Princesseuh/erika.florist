@@ -1,0 +1,57 @@
+{
+  "first_release_date": 1639008000,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 49963,
+      "name": "popIn",
+      "role": "developer"
+    },
+    {
+      "id": 15242,
+      "name": "ESQUADRA, Inc.",
+      "role": "publisher"
+    },
+    {
+      "id": 53892,
+      "name": "XGIMI",
+      "role": "publisher"
+    },
+    {
+      "id": 53271,
+      "name": "Aladdin X",
+      "role": "developer"
+    }
+  ]
+}

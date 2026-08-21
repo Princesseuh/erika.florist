@@ -1,0 +1,48 @@
+{
+  "first_release_date": 1158969600,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 30152,
+      "name": "Emergent Studios",
+      "role": "developer"
+    },
+    {
+      "id": 30153,
+      "name": "Boštjan Čadež",
+      "role": "developer"
+    },
+    {
+      "id": 30154,
+      "name": "David Lu",
+      "role": "publisher"
+    }
+  ]
+}

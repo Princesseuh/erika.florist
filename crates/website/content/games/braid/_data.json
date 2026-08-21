@@ -1,0 +1,74 @@
+{
+  "first_release_date": 1217980800,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 1335,
+      "name": "Number None Inc.",
+      "role": "publisher"
+    },
+    {
+      "id": 4132,
+      "name": "icculus.org",
+      "role": "publisher"
+    },
+    {
+      "id": 53,
+      "name": "Microsoft Game Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 1051,
+      "name": "Hothead Games",
+      "role": "publisher"
+    },
+    {
+      "id": 1335,
+      "name": "Number None Inc.",
+      "role": "developer"
+    }
+  ]
+}

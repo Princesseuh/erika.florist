@@ -1,0 +1,27 @@
+{
+  "first_release_date": 886032000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Saturn",
+      "id": 32
+    }
+  ],
+  "companies": [
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 2458,
+      "name": "Team Andromeda",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1266451200,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 261,
+      "name": "Quantic Dream",
+      "role": "developer"
+    },
+    {
+      "id": 13634,
+      "name": "Sony Computer Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

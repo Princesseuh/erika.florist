@@ -1,0 +1,43 @@
+{
+  "first_release_date": 909014400,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    }
+  ],
+  "companies": [
+    {
+      "id": 5043,
+      "name": "OutSide Directors Company",
+      "role": "developer"
+    },
+    {
+      "id": 1850,
+      "name": "Asmik Ace Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

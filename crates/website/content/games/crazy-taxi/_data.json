@@ -1,0 +1,97 @@
+{
+  "first_release_date": 918777600,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "NGC",
+      "id": 21
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "DC",
+      "id": 23
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 287,
+      "name": "Acclaim Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 32588,
+      "name": "Acclaim Studios Cheltenham",
+      "role": "publisher"
+    },
+    {
+      "id": 1488,
+      "name": "Activision Value",
+      "role": "publisher"
+    },
+    {
+      "id": 32589,
+      "name": "Sega Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 27535,
+      "name": "Strangelite Limited",
+      "role": "publisher"
+    },
+    {
+      "id": 1906,
+      "name": "Hitmaker",
+      "role": "developer"
+    },
+    {
+      "id": 103,
+      "name": "Black Hole Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    }
+  ]
+}

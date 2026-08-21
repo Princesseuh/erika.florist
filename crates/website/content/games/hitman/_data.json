@@ -1,0 +1,60 @@
+{
+  "first_release_date": 1457654400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Stadia",
+      "id": 170
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 26,
+      "name": "Square Enix",
+      "role": "publisher"
+    },
+    {
+      "id": 23,
+      "name": "Feral Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 290,
+      "name": "IO Interactive",
+      "role": "developer"
+    }
+  ]
+}

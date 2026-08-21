@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1455235200,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 5188,
+      "name": "MangaGamer",
+      "role": "publisher"
+    },
+    {
+      "id": 18161,
+      "name": "Liar-soft",
+      "role": "developer"
+    }
+  ]
+}

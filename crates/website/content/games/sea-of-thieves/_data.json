@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1521504000,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 771,
+      "name": "Rare",
+      "role": "developer"
+    },
+    {
+      "id": 17966,
+      "name": "Xbox Game Studios",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "first_release_date": 1601596800,
+  "genres": [
+    {
+      "id": 26,
+      "name": "Quiz/Trivia"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    }
+  ],
+  "companies": [
+    {
+      "id": 34304,
+      "name": "Onrizon",
+      "role": "developer"
+    }
+  ]
+}

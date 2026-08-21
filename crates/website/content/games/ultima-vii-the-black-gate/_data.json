@@ -1,0 +1,26 @@
+{
+  "first_release_date": 703382400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    }
+  ],
+  "companies": [
+    {
+      "id": 295,
+      "name": "Origin Systems",
+      "role": "developer"
+    }
+  ]
+}

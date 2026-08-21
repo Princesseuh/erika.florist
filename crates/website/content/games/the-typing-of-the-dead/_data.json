@@ -1,0 +1,44 @@
+{
+  "first_release_date": 946598400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "DC",
+      "id": 23
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 1177,
+      "name": "WOW Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 874,
+      "name": "Smilebit",
+      "role": "publisher"
+    }
+  ]
+}

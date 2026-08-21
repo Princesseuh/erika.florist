@@ -1,0 +1,27 @@
+{
+  "first_release_date": 1162857600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 53,
+      "name": "Microsoft Game Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 17463,
+      "name": "Epic Games",
+      "role": "developer"
+    }
+  ]
+}

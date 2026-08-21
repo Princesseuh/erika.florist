@@ -1,0 +1,51 @@
+{
+  "first_release_date": 1564444800,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 20828,
+      "name": "adamgryu",
+      "role": "developer"
+    },
+    {
+      "id": 31009,
+      "name": "Whippoorwill",
+      "role": "publisher"
+    }
+  ]
+}

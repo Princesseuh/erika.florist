@@ -1,0 +1,53 @@
+{
+  "first_release_date": 1344816000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 248,
+      "name": "Bandai Namco Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 823,
+      "name": "United Front Games",
+      "role": "developer"
+    },
+    {
+      "id": 824,
+      "name": "Square Enix London Studios",
+      "role": "developer"
+    },
+    {
+      "id": 26,
+      "name": "Square Enix",
+      "role": "publisher"
+    }
+  ]
+}

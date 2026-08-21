@@ -1,0 +1,58 @@
+{
+  "first_release_date": 265507200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Handheld",
+      "id": 411
+    },
+    {
+      "abbreviation": "Mobile",
+      "id": 55
+    }
+  ],
+  "companies": [
+    {
+      "id": 10173,
+      "name": "Midway Manufacturing",
+      "role": "publisher"
+    },
+    {
+      "id": 817,
+      "name": "Taito",
+      "role": "developer"
+    },
+    {
+      "id": 4593,
+      "name": "Sonic Powered",
+      "role": "publisher"
+    },
+    {
+      "id": 1453,
+      "name": "Sharp",
+      "role": "publisher"
+    },
+    {
+      "id": 43716,
+      "name": "My Arcade",
+      "role": "publisher"
+    }
+  ]
+}

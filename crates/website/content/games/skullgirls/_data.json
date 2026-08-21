@@ -1,0 +1,71 @@
+{
+  "first_release_date": 1334016000,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 2976,
+      "name": "Autumn Games",
+      "role": "publisher"
+    },
+    {
+      "id": 5082,
+      "name": "Lab Zero Games",
+      "role": "developer"
+    },
+    {
+      "id": 1772,
+      "name": "Marvelous AQL",
+      "role": "publisher"
+    },
+    {
+      "id": 74,
+      "name": "CyberFront",
+      "role": "publisher"
+    },
+    {
+      "id": 5083,
+      "name": "Reverge Labs",
+      "role": "developer"
+    },
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "publisher"
+    }
+  ]
+}

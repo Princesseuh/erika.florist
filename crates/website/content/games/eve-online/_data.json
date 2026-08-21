@@ -1,0 +1,58 @@
+{
+  "first_release_date": 1052179200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 197,
+      "name": "THQ",
+      "role": "publisher"
+    },
+    {
+      "id": 1762,
+      "name": "Simon & Schuster",
+      "role": "publisher"
+    },
+    {
+      "id": 3301,
+      "name": "Atari Europe",
+      "role": "publisher"
+    },
+    {
+      "id": 61251,
+      "name": "Crucial Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 76603,
+      "name": "Fenris Creations",
+      "role": "developer"
+    }
+  ]
+}

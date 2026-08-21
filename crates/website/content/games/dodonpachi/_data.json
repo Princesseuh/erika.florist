@@ -1,0 +1,57 @@
+{
+  "first_release_date": 855100800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "Saturn",
+      "id": 32
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    }
+  ],
+  "companies": [
+    {
+      "id": 2516,
+      "name": "SPS",
+      "role": "publisher"
+    },
+    {
+      "id": 2958,
+      "name": "CAVE Interactive",
+      "role": "developer"
+    },
+    {
+      "id": 17183,
+      "name": "Hamster Corporation",
+      "role": "publisher"
+    },
+    {
+      "id": 818,
+      "name": "Atlus",
+      "role": "publisher"
+    }
+  ]
+}

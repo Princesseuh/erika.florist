@@ -1,0 +1,111 @@
+{
+  "first_release_date": 424828800,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": null,
+      "id": 238
+    },
+    {
+      "abbreviation": "Philips CDI",
+      "id": 117
+    },
+    {
+      "abbreviation": null,
+      "id": 239
+    },
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "Atari-ST",
+      "id": 63
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "3DO",
+      "id": 50
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    },
+    {
+      "abbreviation": "Jaguar",
+      "id": 62
+    },
+    {
+      "abbreviation": null,
+      "id": 410
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "Sega CD",
+      "id": 78
+    }
+  ],
+  "companies": [
+    {
+      "id": 1139,
+      "name": "Cinematronics",
+      "role": "publisher"
+    },
+    {
+      "id": 5058,
+      "name": "ReadySoft",
+      "role": "publisher"
+    },
+    {
+      "id": 33333,
+      "name": "Visionary Design Technologies",
+      "role": "publisher"
+    },
+    {
+      "id": 23993,
+      "name": "Tec Toy",
+      "role": "publisher"
+    },
+    {
+      "id": 1851,
+      "name": "T&E Soft",
+      "role": "publisher"
+    },
+    {
+      "id": 2419,
+      "name": "Advanced Microcomputer Systems",
+      "role": "developer"
+    }
+  ]
+}

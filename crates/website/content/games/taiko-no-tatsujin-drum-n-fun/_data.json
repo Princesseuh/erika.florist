@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1531958400,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 248,
+      "name": "Bandai Namco Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 22721,
+      "name": "Bandai Namco Studios",
+      "role": "developer"
+    },
+    {
+      "id": 30142,
+      "name": "Dokidoki Grooveworks",
+      "role": "developer"
+    }
+  ]
+}

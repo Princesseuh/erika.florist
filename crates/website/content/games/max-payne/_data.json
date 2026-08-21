@@ -1,0 +1,103 @@
+{
+  "first_release_date": 995846400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 204,
+      "name": "Gathering of Developers",
+      "role": "publisher"
+    },
+    {
+      "id": 130,
+      "name": "MacSoft Games",
+      "role": "publisher"
+    },
+    {
+      "id": 2134,
+      "name": "War Drum Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 3190,
+      "name": "neo Software",
+      "role": "publisher"
+    },
+    {
+      "id": 306,
+      "name": "Rockstar Toronto",
+      "role": "publisher"
+    },
+    {
+      "id": 378,
+      "name": "Westlake Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 29,
+      "name": "Rockstar Games",
+      "role": "publisher"
+    },
+    {
+      "id": 23,
+      "name": "Feral Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 139,
+      "name": "Take-Two Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 305,
+      "name": "Remedy Entertainment",
+      "role": "developer"
+    }
+  ]
+}

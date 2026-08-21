@@ -1,0 +1,34 @@
+{
+  "first_release_date": 1468454400,
+  "genres": [
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 36,
+      "name": "MOBA"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 12745,
+      "name": "Moonton",
+      "role": "developer"
+    }
+  ]
+}

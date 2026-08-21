@@ -1,0 +1,138 @@
+{
+  "first_release_date": 464486400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Acorn Archimedes",
+      "id": 116
+    },
+    {
+      "abbreviation": "bbcmicro",
+      "id": 69
+    },
+    {
+      "abbreviation": "C64",
+      "id": 15
+    },
+    {
+      "abbreviation": "ZXS",
+      "id": 26
+    },
+    {
+      "abbreviation": "Atari-ST",
+      "id": 63
+    },
+    {
+      "abbreviation": "Acorn Electron",
+      "id": 134
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": null,
+      "id": 155
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    },
+    {
+      "abbreviation": "Apple][",
+      "id": 75
+    },
+    {
+      "abbreviation": "ACPC",
+      "id": 25
+    },
+    {
+      "abbreviation": "NES",
+      "id": 18
+    },
+    {
+      "abbreviation": "MSX",
+      "id": 27
+    }
+  ],
+  "companies": [
+    {
+      "id": 6410,
+      "name": "Hybrid Technology",
+      "role": "publisher"
+    },
+    {
+      "id": 1375,
+      "name": "Firebird",
+      "role": "publisher"
+    },
+    {
+      "id": 11485,
+      "name": "Merlin Software U.K.",
+      "role": "publisher"
+    },
+    {
+      "id": 191,
+      "name": "Imagineer",
+      "role": "publisher"
+    },
+    {
+      "id": 11155,
+      "name": "Mr. Micro Ltd.",
+      "role": "publisher"
+    },
+    {
+      "id": 11618,
+      "name": "Realtime Games Software Ltd.",
+      "role": "publisher"
+    },
+    {
+      "id": 12668,
+      "name": "Torus",
+      "role": "publisher"
+    },
+    {
+      "id": 1374,
+      "name": "Acornsoft",
+      "role": "developer"
+    },
+    {
+      "id": 208,
+      "name": "Frontier Developments",
+      "role": "developer"
+    },
+    {
+      "id": 56602,
+      "name": "David Braben",
+      "role": "developer"
+    },
+    {
+      "id": 467,
+      "name": "Digital Integration",
+      "role": "publisher"
+    },
+    {
+      "id": 1374,
+      "name": "Acornsoft",
+      "role": "publisher"
+    },
+    {
+      "id": 56601,
+      "name": "Ian Bell",
+      "role": "developer"
+    }
+  ]
+}

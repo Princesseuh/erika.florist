@@ -1,0 +1,46 @@
+{
+  "first_release_date": 1334188800,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "FireTV",
+      "id": 132
+    },
+    {
+      "abbreviation": "Win Phone",
+      "id": 74
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 1285,
+      "name": "King",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "first_release_date": 1051574400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 6123,
+      "name": "Shanda",
+      "role": "publisher"
+    },
+    {
+      "id": 1414,
+      "name": "Nexon Co. Ltd.",
+      "role": "publisher"
+    },
+    {
+      "id": 6122,
+      "name": "AsiaSoft",
+      "role": "publisher"
+    },
+    {
+      "id": 3098,
+      "name": "Gamania",
+      "role": "publisher"
+    },
+    {
+      "id": 6121,
+      "name": "Wizet",
+      "role": "developer"
+    },
+    {
+      "id": 17940,
+      "name": "Nexon Korea",
+      "role": "developer"
+    },
+    {
+      "id": 17597,
+      "name": "Nexon America",
+      "role": "publisher"
+    }
+  ]
+}

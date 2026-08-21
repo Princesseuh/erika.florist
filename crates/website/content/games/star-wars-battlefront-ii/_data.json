@@ -1,0 +1,54 @@
+{
+  "first_release_date": 1130716800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 63,
+      "name": "Pandemic Studios",
+      "role": "developer"
+    },
+    {
+      "id": 10,
+      "name": "LucasArts",
+      "role": "publisher"
+    },
+    {
+      "id": 64,
+      "name": "Savage Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 66,
+      "name": "Activision",
+      "role": "publisher"
+    },
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    }
+  ]
+}

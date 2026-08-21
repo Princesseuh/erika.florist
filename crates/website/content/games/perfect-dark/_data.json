@@ -1,0 +1,36 @@
+{
+  "first_release_date": 958953600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "N64",
+      "id": 4
+    }
+  ],
+  "companies": [
+    {
+      "id": 771,
+      "name": "Rare",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 812,
+      "name": "Gradiente",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "first_release_date": 1337990400,
+  "genres": [
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    },
+    {
+      "abbreviation": "Win Phone",
+      "id": 74
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 957,
+      "name": "Ndemic Creations",
+      "role": "developer"
+    }
+  ]
+}

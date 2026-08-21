@@ -1,0 +1,106 @@
+{
+  "first_release_date": 233971200,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "pdp11",
+      "id": 108
+    },
+    {
+      "abbreviation": "Atari8bit",
+      "id": 65
+    },
+    {
+      "abbreviation": null,
+      "id": 149
+    },
+    {
+      "abbreviation": "C64",
+      "id": 15
+    },
+    {
+      "abbreviation": null,
+      "id": 151
+    },
+    {
+      "abbreviation": "pdp10",
+      "id": 96
+    },
+    {
+      "abbreviation": "Atari-ST",
+      "id": 63
+    },
+    {
+      "abbreviation": "C16",
+      "id": 93
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": null,
+      "id": 155
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    },
+    {
+      "abbreviation": "Apple][",
+      "id": 75
+    },
+    {
+      "abbreviation": null,
+      "id": 126
+    },
+    {
+      "abbreviation": "ACPC",
+      "id": 25
+    },
+    {
+      "abbreviation": "C+4",
+      "id": 94
+    },
+    {
+      "abbreviation": "APCW",
+      "id": 154
+    }
+  ],
+  "companies": [
+    {
+      "id": 9556,
+      "name": "Commodore Electronics Ltd.",
+      "role": "publisher"
+    },
+    {
+      "id": 368,
+      "name": "Infocom",
+      "role": "developer"
+    },
+    {
+      "id": 1123,
+      "name": "Personal Software",
+      "role": "publisher"
+    },
+    {
+      "id": 368,
+      "name": "Infocom",
+      "role": "developer"
+    },
+    {
+      "id": 1798,
+      "name": "SystemSoft",
+      "role": "publisher"
+    }
+  ]
+}

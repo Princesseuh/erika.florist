@@ -1,0 +1,22 @@
+{
+  "first_release_date": 662601600,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    }
+  ],
+  "companies": [
+    {
+      "id": 1087,
+      "name": "MECC",
+      "role": "developer"
+    }
+  ]
+}

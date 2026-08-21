@@ -1,0 +1,54 @@
+{
+  "first_release_date": 1438214400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 44289,
+      "name": "Aniplex of America",
+      "role": "publisher"
+    },
+    {
+      "id": 49566,
+      "name": "Lasengle",
+      "role": "developer"
+    },
+    {
+      "id": 18352,
+      "name": "Aniplex",
+      "role": "publisher"
+    },
+    {
+      "id": 16493,
+      "name": "Delightworks",
+      "role": "developer"
+    },
+    {
+      "id": 6429,
+      "name": "TYPE-MOON",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "first_release_date": 1526342400,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 6067,
+      "name": "Aquiris Game Studio",
+      "role": "developer"
+    }
+  ]
+}

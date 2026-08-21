@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1337817600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    },
+    {
+      "abbreviation": "Win Phone",
+      "id": 74
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 2695,
+      "name": "SYBO Games",
+      "role": "developer"
+    },
+    {
+      "id": 2694,
+      "name": "Kiloo Games",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "first_release_date": 936748800,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    }
+  ],
+  "companies": [
+    {
+      "id": 764,
+      "name": "Psygnosis",
+      "role": "developer"
+    }
+  ]
+}

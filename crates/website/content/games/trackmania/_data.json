@@ -1,0 +1,51 @@
+{
+  "first_release_date": 1593561600,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 26178,
+      "name": "Ubisoft Nadeo",
+      "role": "developer"
+    },
+    {
+      "id": 104,
+      "name": "Ubisoft Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

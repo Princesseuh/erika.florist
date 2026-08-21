@@ -1,0 +1,38 @@
+{
+  "first_release_date": 1212624000,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 16,
+      "name": "Turn-based strategy (TBS)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 11271,
+      "name": "Unproductive Fun Time",
+      "role": "developer"
+    }
+  ]
+}

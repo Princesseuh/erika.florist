@@ -1,0 +1,22 @@
+{
+  "first_release_date": 499651200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Apple][",
+      "id": 75
+    }
+  ],
+  "companies": [
+    {
+      "id": 295,
+      "name": "Origin Systems",
+      "role": "developer"
+    }
+  ]
+}

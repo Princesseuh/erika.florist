@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1141171200,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 3701,
+      "name": "Nicalis, Inc.",
+      "role": "publisher"
+    },
+    {
+      "id": 906,
+      "name": "Nabi Studios",
+      "role": "developer"
+    }
+  ]
+}

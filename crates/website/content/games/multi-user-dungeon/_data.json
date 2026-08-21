@@ -1,0 +1,20 @@
+{
+  "first_release_date": 283910400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Apple][",
+      "id": 75
+    }
+  ],
+  "companies": []
+}

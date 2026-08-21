@@ -1,0 +1,58 @@
+{
+  "first_release_date": 918518400,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 16,
+      "name": "Turn-based strategy (TBS)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 73,
+      "name": "Aspyr Media",
+      "role": "publisher"
+    },
+    {
+      "id": 106,
+      "name": "Loki Software",
+      "role": "publisher"
+    },
+    {
+      "id": 378,
+      "name": "Westlake Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 377,
+      "name": "Firaxis Games",
+      "role": "developer"
+    }
+  ]
+}

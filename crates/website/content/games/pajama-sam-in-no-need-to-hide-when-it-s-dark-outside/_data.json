@@ -1,0 +1,61 @@
+{
+  "first_release_date": 844387200,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 26,
+      "name": "Quiz/Trivia"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 603,
+      "name": "Humongous Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 1889,
+      "name": "Mistic Studios",
+      "role": "developer"
+    },
+    {
+      "id": 700,
+      "name": "Majesco Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 2406,
+      "name": "Atari, Inc.",
+      "role": "publisher"
+    }
+  ]
+}

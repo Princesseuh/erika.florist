@@ -1,0 +1,53 @@
+{
+  "first_release_date": 943228800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DC",
+      "id": 23
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 17463,
+      "name": "Epic Games",
+      "role": "developer"
+    },
+    {
+      "id": 205,
+      "name": "GT Interactive Software",
+      "role": "publisher"
+    },
+    {
+      "id": 213,
+      "name": "Infogrames",
+      "role": "publisher"
+    },
+    {
+      "id": 130,
+      "name": "MacSoft Games",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "first_release_date": 368150400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Apple][",
+      "id": 75
+    }
+  ],
+  "companies": [
+    {
+      "id": 273,
+      "name": "Sir-tech Software",
+      "role": "developer"
+    }
+  ]
+}

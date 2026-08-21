@@ -1,0 +1,27 @@
+{
+  "first_release_date": 1048723200,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "NGC",
+      "id": 21
+    }
+  ],
+  "companies": [
+    {
+      "id": 732,
+      "name": "Project Soul",
+      "role": "developer"
+    },
+    {
+      "id": 263,
+      "name": "Namco",
+      "role": "publisher"
+    }
+  ]
+}

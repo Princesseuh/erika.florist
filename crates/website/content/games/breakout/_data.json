@@ -1,0 +1,54 @@
+{
+  "first_release_date": 200793600,
+  "genres": [
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "Atari2600",
+      "id": 59
+    },
+    {
+      "abbreviation": null,
+      "id": 147
+    },
+    {
+      "abbreviation": "MSX",
+      "id": 27
+    }
+  ],
+  "companies": [
+    {
+      "id": 13460,
+      "name": "General Instrument Microelectronic",
+      "role": "publisher"
+    },
+    {
+      "id": 82,
+      "name": "Atari",
+      "role": "developer"
+    },
+    {
+      "id": 1743,
+      "name": "ASCII Corporation",
+      "role": "publisher"
+    },
+    {
+      "id": 82,
+      "name": "Atari",
+      "role": "developer"
+    },
+    {
+      "id": 263,
+      "name": "Namco",
+      "role": "publisher"
+    }
+  ]
+}

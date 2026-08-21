@@ -1,0 +1,81 @@
+{
+  "first_release_date": 723168000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Acorn Archimedes",
+      "id": 116
+    },
+    {
+      "abbreviation": "Philips CDI",
+      "id": 117
+    },
+    {
+      "abbreviation": "SNES",
+      "id": 19
+    },
+    {
+      "abbreviation": "Genesis/MegaDrive",
+      "id": 29
+    },
+    {
+      "abbreviation": "3DO",
+      "id": 50
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    },
+    {
+      "abbreviation": "Jaguar",
+      "id": 62
+    },
+    {
+      "abbreviation": "Sega CD",
+      "id": 78
+    },
+    {
+      "abbreviation": "SFAM",
+      "id": 58
+    }
+  ],
+  "companies": [
+    {
+      "id": 501,
+      "name": "Delphine Software",
+      "role": "developer"
+    },
+    {
+      "id": 227,
+      "name": "U.S. Gold",
+      "role": "publisher"
+    },
+    {
+      "id": 285,
+      "name": "Tiertex Design Studios",
+      "role": "developer"
+    },
+    {
+      "id": 23993,
+      "name": "Tec Toy",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "first_release_date": 1426118400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 19967,
+      "name": "Lab42 Games",
+      "role": "publisher"
+    },
+    {
+      "id": 14087,
+      "name": "Sega Corporation",
+      "role": "publisher"
+    },
+    {
+      "id": 15878,
+      "name": "Sega Games",
+      "role": "publisher"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 19080,
+      "name": "Ryu Ga Gotoku Studio",
+      "role": "developer"
+    },
+    {
+      "id": 15878,
+      "name": "Sega Games",
+      "role": "developer"
+    }
+  ]
+}

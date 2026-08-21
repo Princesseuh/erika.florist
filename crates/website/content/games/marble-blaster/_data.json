@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1039737600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 6638,
+      "name": "GarageGames",
+      "role": "developer"
+    },
+    {
+      "id": 2848,
+      "name": "eGames",
+      "role": "publisher"
+    }
+  ]
+}

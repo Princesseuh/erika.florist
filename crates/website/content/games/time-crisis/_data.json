@@ -1,0 +1,30 @@
+{
+  "first_release_date": 817776000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    }
+  ],
+  "companies": [
+    {
+      "id": 263,
+      "name": "Namco",
+      "role": "developer"
+    }
+  ]
+}

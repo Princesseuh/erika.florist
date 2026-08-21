@@ -1,0 +1,55 @@
+{
+  "first_release_date": 1346371200,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "blackberry",
+      "id": 73
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 1687,
+      "name": "Terry Cavanagh",
+      "role": "developer"
+    },
+    {
+      "id": 1061,
+      "name": "Distractionware",
+      "role": "developer"
+    }
+  ]
+}

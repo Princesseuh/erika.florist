@@ -1,0 +1,51 @@
+{
+  "first_release_date": 1448928000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Stadia",
+      "id": 170
+    },
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 38,
+      "name": "Ubisoft Montreal",
+      "role": "developer"
+    },
+    {
+      "id": 104,
+      "name": "Ubisoft Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

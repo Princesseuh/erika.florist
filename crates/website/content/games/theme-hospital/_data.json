@@ -1,0 +1,39 @@
+{
+  "first_release_date": 855014400,
+  "genres": [
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    }
+  ],
+  "companies": [
+    {
+      "id": 14,
+      "name": "Bullfrog Productions",
+      "role": "developer"
+    },
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    }
+  ]
+}

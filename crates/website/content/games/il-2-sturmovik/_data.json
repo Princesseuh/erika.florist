@@ -1,0 +1,22 @@
+{
+  "first_release_date": 1006041600,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 674,
+      "name": "Maddox Games",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "first_release_date": 1241481600,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "Win Phone",
+      "id": 74
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": null,
+      "id": 159
+    }
+  ],
+  "companies": [
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 1893,
+      "name": "PopCap Games",
+      "role": "publisher"
+    },
+    {
+      "id": 1893,
+      "name": "PopCap Games",
+      "role": "developer"
+    }
+  ]
+}

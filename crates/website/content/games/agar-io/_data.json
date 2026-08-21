@@ -1,0 +1,51 @@
+{
+  "first_release_date": 1430179200,
+  "genres": [
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 7452,
+      "name": "Miniclip.com",
+      "role": "publisher"
+    },
+    {
+      "id": 9357,
+      "name": "Matheus Valadares",
+      "role": "developer"
+    }
+  ]
+}

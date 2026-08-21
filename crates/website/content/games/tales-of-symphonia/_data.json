@@ -1,0 +1,41 @@
+{
+  "first_release_date": 1062115200,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "NGC",
+      "id": 21
+    }
+  ],
+  "companies": [
+    {
+      "id": 5024,
+      "name": "Bandai Namco Holdings",
+      "role": "publisher"
+    },
+    {
+      "id": 826,
+      "name": "Namco Tales Studio",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 263,
+      "name": "Namco",
+      "role": "publisher"
+    }
+  ]
+}

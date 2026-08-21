@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1163462400,
+  "genres": [
+    {
+      "id": 14,
+      "name": "Sport"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 696,
+      "name": "HB Studios",
+      "role": "developer"
+    },
+    {
+      "id": 454,
+      "name": "EA Sports",
+      "role": "publisher"
+    }
+  ]
+}

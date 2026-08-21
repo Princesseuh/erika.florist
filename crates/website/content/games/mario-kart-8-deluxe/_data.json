@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1493337600,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 45214,
+      "name": "Nintendo EPD Production Group No. 9",
+      "role": "developer"
+    },
+    {
+      "id": 7902,
+      "name": "Nintendo Entertainment Planning & Development",
+      "role": "developer"
+    }
+  ]
+}

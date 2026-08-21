@@ -1,0 +1,55 @@
+{
+  "first_release_date": 969494400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 120,
+      "name": "MacPlay",
+      "role": "publisher"
+    },
+    {
+      "id": 12,
+      "name": "Black Isle Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 222,
+      "name": "BioWare Edmonton",
+      "role": "developer"
+    },
+    {
+      "id": 5,
+      "name": "Interplay Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 2,
+      "name": "BioWare",
+      "role": "developer"
+    },
+    {
+      "id": 3118,
+      "name": "MumboJumbo",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1297900800,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 818,
+      "name": "Atlus",
+      "role": "developer"
+    },
+    {
+      "id": 423,
+      "name": "Deep Silver",
+      "role": "publisher"
+    }
+  ]
+}

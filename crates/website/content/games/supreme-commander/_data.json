@@ -1,0 +1,48 @@
+{
+  "first_release_date": 1171584000,
+  "genres": [
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 299,
+      "name": "Hellbent Games",
+      "role": "developer"
+    },
+    {
+      "id": 197,
+      "name": "THQ",
+      "role": "publisher"
+    },
+    {
+      "id": 239,
+      "name": "Gas Powered Games",
+      "role": "developer"
+    }
+  ]
+}

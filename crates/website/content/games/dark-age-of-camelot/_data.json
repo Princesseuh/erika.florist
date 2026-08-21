@@ -1,0 +1,22 @@
+{
+  "first_release_date": 1002672000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 87,
+      "name": "Mythic Entertainment",
+      "role": "developer"
+    }
+  ]
+}

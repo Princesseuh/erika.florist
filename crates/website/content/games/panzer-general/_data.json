@@ -1,0 +1,67 @@
+{
+  "first_release_date": 786240000,
+  "genres": [
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 149
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "3DO",
+      "id": 50
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    }
+  ],
+  "companies": [
+    {
+      "id": 1486,
+      "name": "Strategic Simulations",
+      "role": "developer"
+    },
+    {
+      "id": 50207,
+      "name": "Ergo Software",
+      "role": "publisher"
+    },
+    {
+      "id": 1486,
+      "name": "Strategic Simulations",
+      "role": "developer"
+    },
+    {
+      "id": 22043,
+      "name": "AMT Savan Corp",
+      "role": "publisher"
+    },
+    {
+      "id": 5830,
+      "name": "Xing Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 11247,
+      "name": "Mindscape, Inc.",
+      "role": "publisher"
+    }
+  ]
+}

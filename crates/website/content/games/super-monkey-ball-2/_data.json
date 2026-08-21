@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1030233600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "NGC",
+      "id": 21
+    }
+  ],
+  "companies": [
+    {
+      "id": 1096,
+      "name": "Amusement Vision",
+      "role": "developer"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    }
+  ]
+}

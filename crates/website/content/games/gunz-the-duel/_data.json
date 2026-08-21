@@ -1,0 +1,52 @@
+{
+  "first_release_date": 1076716800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 13678,
+      "name": "Netmarble Games",
+      "role": "publisher"
+    },
+    {
+      "id": 17943,
+      "name": "Aeria Games & Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 18715,
+      "name": "MAIET Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 1868,
+      "name": "Level Up! Games",
+      "role": "publisher"
+    },
+    {
+      "id": 2748,
+      "name": "GameOn",
+      "role": "publisher"
+    },
+    {
+      "id": 16187,
+      "name": "NHN Entertainment Corp.",
+      "role": "publisher"
+    },
+    {
+      "id": 8151,
+      "name": "Masangsoft, Inc.",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "first_release_date": 846806400,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 3682,
+      "name": "Digital Domain",
+      "role": "developer"
+    },
+    {
+      "id": 22340,
+      "name": "Mattel Media",
+      "role": "publisher"
+    }
+  ]
+}

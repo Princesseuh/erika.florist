@@ -1,0 +1,41 @@
+{
+  "first_release_date": 1143072000,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "NDS",
+      "id": 20
+    }
+  ],
+  "companies": [
+    {
+      "id": 700,
+      "name": "Majesco Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 445,
+      "name": "505 Games",
+      "role": "publisher"
+    },
+    {
+      "id": 1438,
+      "name": "Office Create",
+      "role": "developer"
+    },
+    {
+      "id": 817,
+      "name": "Taito",
+      "role": "developer"
+    }
+  ]
+}

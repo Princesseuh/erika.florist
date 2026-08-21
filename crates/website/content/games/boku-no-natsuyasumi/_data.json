@@ -1,0 +1,36 @@
+{
+  "first_release_date": 961632000,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    }
+  ],
+  "companies": [
+    {
+      "id": 13634,
+      "name": "Sony Computer Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 3063,
+      "name": "Millennium Kitchen",
+      "role": "developer"
+    },
+    {
+      "id": 816,
+      "name": "Atelier Double",
+      "role": "developer"
+    }
+  ]
+}

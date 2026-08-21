@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1162771200,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "NDS",
+      "id": 20
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 1728,
+      "name": "iNiS",
+      "role": "developer"
+    }
+  ]
+}

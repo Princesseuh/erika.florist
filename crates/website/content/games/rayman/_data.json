@@ -1,0 +1,58 @@
+{
+  "first_release_date": 810432000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "Saturn",
+      "id": 32
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    }
+  ],
+  "companies": [
+    {
+      "id": 77136,
+      "name": "Ludimedia SAS",
+      "role": "publisher"
+    },
+    {
+      "id": 27081,
+      "name": "Sony Computer Entertainment America",
+      "role": "publisher"
+    },
+    {
+      "id": 77135,
+      "name": "Ubi Soft Paris Studios",
+      "role": "developer"
+    },
+    {
+      "id": 16845,
+      "name": "Ubi Soft Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 104,
+      "name": "Ubisoft Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

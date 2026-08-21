@@ -1,0 +1,40 @@
+{
+  "first_release_date": 725760000,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "3DO",
+      "id": 50
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    }
+  ],
+  "companies": [
+    {
+      "id": 317,
+      "name": "Dynamix",
+      "role": "developer"
+    },
+    {
+      "id": 5064,
+      "name": "Jeff Tunnell Productions",
+      "role": "developer"
+    },
+    {
+      "id": 32,
+      "name": "Sierra On-Line",
+      "role": "publisher"
+    }
+  ]
+}

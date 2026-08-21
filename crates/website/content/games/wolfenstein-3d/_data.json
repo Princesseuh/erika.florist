@@ -1,0 +1,27 @@
+{
+  "first_release_date": 705024000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    }
+  ],
+  "companies": [
+    {
+      "id": 184,
+      "name": "id Software",
+      "role": "developer"
+    },
+    {
+      "id": 188,
+      "name": "Apogee Software",
+      "role": "publisher"
+    }
+  ]
+}

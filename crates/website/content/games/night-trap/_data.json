@@ -1,0 +1,62 @@
+{
+  "first_release_date": 719107200,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "3DO",
+      "id": 50
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Sega CD",
+      "id": 78
+    }
+  ],
+  "companies": [
+    {
+      "id": 141,
+      "name": "Virgin Interactive Entertainment (Europe) Ltd.",
+      "role": "publisher"
+    },
+    {
+      "id": 23993,
+      "name": "Tec Toy",
+      "role": "publisher"
+    },
+    {
+      "id": 1181,
+      "name": "Digital Pictures",
+      "role": "publisher"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 1181,
+      "name": "Digital Pictures",
+      "role": "developer"
+    }
+  ]
+}

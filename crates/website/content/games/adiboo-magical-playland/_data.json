@@ -1,0 +1,27 @@
+{
+  "first_release_date": 851990400,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 938,
+      "name": "Coktel Vision",
+      "role": "developer"
+    },
+    {
+      "id": 1078,
+      "name": "Knowledge Adventure",
+      "role": "publisher"
+    }
+  ]
+}

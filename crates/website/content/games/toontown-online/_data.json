@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1054512000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 95,
+      "name": "Disney Interactive",
+      "role": "developer"
+    },
+    {
+      "id": 17898,
+      "name": "Disney Online",
+      "role": "publisher"
+    }
+  ]
+}

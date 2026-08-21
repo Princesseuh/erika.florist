@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1512345600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 24714,
+      "name": "111dots Studio",
+      "role": "developer"
+    },
+    {
+      "id": 689,
+      "name": "Garena",
+      "role": "publisher"
+    }
+  ]
+}

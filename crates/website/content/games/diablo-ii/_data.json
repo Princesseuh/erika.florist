@@ -1,0 +1,35 @@
+{
+  "first_release_date": 962236800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 59,
+      "name": "Blizzard North",
+      "role": "developer"
+    },
+    {
+      "id": 51,
+      "name": "Blizzard Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

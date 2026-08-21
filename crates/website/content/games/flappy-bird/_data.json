@@ -1,0 +1,26 @@
+{
+  "first_release_date": 1369353600,
+  "genres": [
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 3222,
+      "name": ".GEARS Studios",
+      "role": "developer"
+    }
+  ]
+}

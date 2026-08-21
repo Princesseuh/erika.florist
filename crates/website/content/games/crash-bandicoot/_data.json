@@ -1,0 +1,48 @@
+{
+  "first_release_date": 842227200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    }
+  ],
+  "companies": [
+    {
+      "id": 401,
+      "name": "Naughty Dog",
+      "role": "developer"
+    },
+    {
+      "id": 13634,
+      "name": "Sony Computer Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 813,
+      "name": "Universal Interactive Studios",
+      "role": "publisher"
+    }
+  ]
+}

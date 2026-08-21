@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1320883200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 126,
+      "name": "Bethesda Game Studios",
+      "role": "developer"
+    },
+    {
+      "id": 16565,
+      "name": "Bethesda Softworks",
+      "role": "publisher"
+    }
+  ]
+}

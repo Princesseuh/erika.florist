@@ -1,0 +1,58 @@
+{
+  "first_release_date": 1600387200,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PSVR2",
+      "id": 390
+    },
+    {
+      "abbreviation": null,
+      "id": 161
+    },
+    {
+      "abbreviation": "Switch 2",
+      "id": 508
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Steam VR",
+      "id": 163
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": null,
+      "id": 385
+    }
+  ],
+  "companies": [
+    {
+      "id": 28249,
+      "name": "Kinetic Games",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "first_release_date": 723168000,
+  "genres": [
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "Genesis/MegaDrive",
+      "id": 29
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 23993,
+      "name": "Tec Toy",
+      "role": "publisher"
+    },
+    {
+      "id": 14087,
+      "name": "Sega Corporation",
+      "role": "publisher"
+    },
+    {
+      "id": 15878,
+      "name": "Sega Games",
+      "role": "publisher"
+    },
+    {
+      "id": 4981,
+      "name": "Sega Enterprises, Ltd.",
+      "role": "publisher"
+    },
+    {
+      "id": 1568,
+      "name": "Ancient",
+      "role": "developer"
+    },
+    {
+      "id": 23611,
+      "name": "MNM Software",
+      "role": "developer"
+    },
+    {
+      "id": 21727,
+      "name": "Shout! Designworks",
+      "role": "developer"
+    },
+    {
+      "id": 2201,
+      "name": "H.I.C.",
+      "role": "developer"
+    },
+    {
+      "id": 4981,
+      "name": "Sega Enterprises, Ltd.",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "first_release_date": 938649600,
+  "genres": [
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DC",
+      "id": 23
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "publisher"
+    },
+    {
+      "id": 128,
+      "name": "Microsoft",
+      "role": "publisher"
+    },
+    {
+      "id": 68,
+      "name": "Ensemble Studios",
+      "role": "developer"
+    }
+  ]
+}

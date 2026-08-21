@@ -1,0 +1,32 @@
+{
+  "first_release_date": 1217462400,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "NDS",
+      "id": 20
+    }
+  ],
+  "companies": [
+    {
+      "id": 2674,
+      "name": "Nintendo SPD Production Group No. 1",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 4074,
+      "name": "TNX Music Recordings",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "first_release_date": 347068800,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Atari2600",
+      "id": 59
+    }
+  ],
+  "companies": [
+    {
+      "id": 2519,
+      "name": "Sears",
+      "role": "publisher"
+    },
+    {
+      "id": 82,
+      "name": "Atari",
+      "role": "developer"
+    },
+    {
+      "id": 19210,
+      "name": "Polyvox",
+      "role": "publisher"
+    }
+  ]
+}

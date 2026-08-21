@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1185408000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "NDS",
+      "id": 20
+    }
+  ],
+  "companies": [
+    {
+      "id": 800,
+      "name": "Jupiter Corporation",
+      "role": "developer"
+    },
+    {
+      "id": 799,
+      "name": "Square Enix Product Development Division 1",
+      "role": "developer"
+    },
+    {
+      "id": 26,
+      "name": "Square Enix",
+      "role": "publisher"
+    }
+  ]
+}

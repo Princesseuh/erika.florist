@@ -1,0 +1,22 @@
+{
+  "first_release_date": 318211200,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Atari2600",
+      "id": 59
+    }
+  ],
+  "companies": [
+    {
+      "id": 66,
+      "name": "Activision",
+      "role": "developer"
+    }
+  ]
+}

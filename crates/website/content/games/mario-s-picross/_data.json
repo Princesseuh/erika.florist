@@ -1,0 +1,36 @@
+{
+  "first_release_date": 795139200,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    },
+    {
+      "abbreviation": "Game Boy",
+      "id": 33
+    }
+  ],
+  "companies": [
+    {
+      "id": 800,
+      "name": "Jupiter Corporation",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 21480,
+      "name": "Ape",
+      "role": "developer"
+    }
+  ]
+}

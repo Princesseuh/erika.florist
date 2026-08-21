@@ -1,0 +1,27 @@
+{
+  "first_release_date": 1059091200,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "NGC",
+      "id": 21
+    }
+  ],
+  "companies": [
+    {
+      "id": 1096,
+      "name": "Amusement Vision",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    }
+  ]
+}

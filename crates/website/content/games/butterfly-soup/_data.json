@@ -1,0 +1,42 @@
+{
+  "first_release_date": 1496016000,
+  "genres": [
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 15219,
+      "name": "Brianna Lei",
+      "role": "developer"
+    }
+  ]
+}

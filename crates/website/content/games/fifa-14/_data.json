@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1379980800,
+  "genres": [
+    {
+      "id": 14,
+      "name": "Sport"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 454,
+      "name": "EA Sports",
+      "role": "publisher"
+    },
+    {
+      "id": 277,
+      "name": "EA Canada",
+      "role": "developer"
+    }
+  ]
+}

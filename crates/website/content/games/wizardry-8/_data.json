@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1005782400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 273,
+      "name": "Sir-tech Software",
+      "role": "publisher"
+    },
+    {
+      "id": 274,
+      "name": "Sir-Tech Canada",
+      "role": "developer"
+    },
+    {
+      "id": 13169,
+      "name": "Nightdive Studios",
+      "role": "publisher"
+    }
+  ]
+}

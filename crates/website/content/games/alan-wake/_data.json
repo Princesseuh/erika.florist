@@ -1,0 +1,65 @@
+{
+  "first_release_date": 1273795200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 756,
+      "name": "E-Frontier",
+      "role": "publisher"
+    },
+    {
+      "id": 754,
+      "name": "Legacy Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 755,
+      "name": "Namco Bandai Partners",
+      "role": "publisher"
+    },
+    {
+      "id": 53,
+      "name": "Microsoft Game Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 305,
+      "name": "Remedy Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 945,
+      "name": "Nitro Games",
+      "role": "publisher"
+    },
+    {
+      "id": 305,
+      "name": "Remedy Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 753,
+      "name": "Nordic Games Publishing",
+      "role": "publisher"
+    }
+  ]
+}

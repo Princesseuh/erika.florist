@@ -1,0 +1,32 @@
+{
+  "first_release_date": 880070400,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "N64",
+      "id": 4
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 771,
+      "name": "Rare",
+      "role": "developer"
+    },
+    {
+      "id": 812,
+      "name": "Gradiente",
+      "role": "publisher"
+    }
+  ]
+}

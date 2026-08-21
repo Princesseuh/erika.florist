@@ -1,0 +1,44 @@
+{
+  "first_release_date": 806284800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    }
+  ],
+  "companies": [
+    {
+      "id": 1821,
+      "name": "ASCII Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 334,
+      "name": "Sony Computer Entertainment Europe",
+      "role": "publisher"
+    },
+    {
+      "id": 1012,
+      "name": "FromSoftware",
+      "role": "developer"
+    }
+  ]
+}

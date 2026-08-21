@@ -1,0 +1,157 @@
+{
+  "first_release_date": 436320000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "vic-20",
+      "id": 71
+    },
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "sg1000",
+      "id": 84
+    },
+    {
+      "abbreviation": "bbcmicro",
+      "id": 69
+    },
+    {
+      "abbreviation": "Atari8bit",
+      "id": 65
+    },
+    {
+      "abbreviation": null,
+      "id": 149
+    },
+    {
+      "abbreviation": null,
+      "id": 125
+    },
+    {
+      "abbreviation": "C64",
+      "id": 15
+    },
+    {
+      "abbreviation": "ZXS",
+      "id": 26
+    },
+    {
+      "abbreviation": "WonderSwan",
+      "id": 57
+    },
+    {
+      "abbreviation": "x1",
+      "id": 77
+    },
+    {
+      "abbreviation": "Win Phone",
+      "id": 74
+    },
+    {
+      "abbreviation": "Atari-ST",
+      "id": 63
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Apple][",
+      "id": 75
+    },
+    {
+      "abbreviation": null,
+      "id": 152
+    },
+    {
+      "abbreviation": null,
+      "id": 157
+    },
+    {
+      "abbreviation": "ACPC",
+      "id": 25
+    },
+    {
+      "abbreviation": "MSX",
+      "id": 27
+    }
+  ],
+  "companies": [
+    {
+      "id": 1215,
+      "name": "Banpresto",
+      "role": "publisher"
+    },
+    {
+      "id": 1010,
+      "name": "Microsoft Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 10327,
+      "name": "Studio Voltz",
+      "role": "publisher"
+    },
+    {
+      "id": 10282,
+      "name": "Sony",
+      "role": "publisher"
+    },
+    {
+      "id": 195,
+      "name": "Brøderbund Software",
+      "role": "developer"
+    },
+    {
+      "id": 10326,
+      "name": "Aisystem Tokyo",
+      "role": "publisher"
+    },
+    {
+      "id": 1798,
+      "name": "SystemSoft",
+      "role": "publisher"
+    },
+    {
+      "id": 6060,
+      "name": "Soft Pro International",
+      "role": "publisher"
+    },
+    {
+      "id": 4075,
+      "name": "Software Projects",
+      "role": "publisher"
+    },
+    {
+      "id": 1287,
+      "name": "Irem",
+      "role": "developer"
+    },
+    {
+      "id": 4981,
+      "name": "Sega Enterprises, Ltd.",
+      "role": "publisher"
+    },
+    {
+      "id": 195,
+      "name": "Brøderbund Software",
+      "role": "developer"
+    }
+  ]
+}

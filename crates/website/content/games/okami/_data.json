@@ -1,0 +1,53 @@
+{
+  "first_release_date": 1145491200,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 2055,
+      "name": "Clover Studio",
+      "role": "developer"
+    },
+    {
+      "id": 37,
+      "name": "Capcom",
+      "role": "publisher"
+    },
+    {
+      "id": 2670,
+      "name": "HexaDrive",
+      "role": "developer"
+    },
+    {
+      "id": 431,
+      "name": "Ready At Dawn",
+      "role": "publisher"
+    }
+  ]
+}

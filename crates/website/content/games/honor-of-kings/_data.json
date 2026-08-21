@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1448496000,
+  "genres": [
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 36,
+      "name": "MOBA"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 35809,
+      "name": "TiMi Studio Group",
+      "role": "developer"
+    },
+    {
+      "id": 39493,
+      "name": "Level Infinite",
+      "role": "publisher"
+    },
+    {
+      "id": 3595,
+      "name": "Tencent Games",
+      "role": "publisher"
+    }
+  ]
+}

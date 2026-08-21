@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1088208000,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 11321,
+      "name": "Kikiyama",
+      "role": "developer"
+    },
+    {
+      "id": 6120,
+      "name": "DeNA Co., Ltd.",
+      "role": "publisher"
+    },
+    {
+      "id": 23125,
+      "name": "PLAYISM",
+      "role": "publisher"
+    }
+  ]
+}

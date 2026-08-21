@@ -1,0 +1,35 @@
+{
+  "first_release_date": 973728000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 147,
+      "name": "Vivendi Universal",
+      "role": "publisher"
+    },
+    {
+      "id": 56,
+      "name": "Valve",
+      "role": "developer"
+    }
+  ]
+}

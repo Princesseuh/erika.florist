@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1328227200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 517,
+      "name": "Paradox Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 7466,
+      "name": "Paradox Development Studio",
+      "role": "developer"
+    }
+  ]
+}

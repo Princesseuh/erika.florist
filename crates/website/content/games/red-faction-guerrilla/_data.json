@@ -1,0 +1,44 @@
+{
+  "first_release_date": 1243900800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 197,
+      "name": "THQ",
+      "role": "publisher"
+    },
+    {
+      "id": 682,
+      "name": "Reactor Zero",
+      "role": "developer"
+    },
+    {
+      "id": 7462,
+      "name": "Volition",
+      "role": "developer"
+    }
+  ]
+}

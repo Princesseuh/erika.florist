@@ -1,0 +1,22 @@
+{
+  "first_release_date": 655344000,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 128,
+      "name": "Microsoft",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "first_release_date": 1350345600,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 1118,
+      "name": "Torn Banner Studios",
+      "role": "developer"
+    },
+    {
+      "id": 1117,
+      "name": "Lace Mamba Global",
+      "role": "publisher"
+    },
+    {
+      "id": 66,
+      "name": "Activision",
+      "role": "publisher"
+    },
+    {
+      "id": 1118,
+      "name": "Torn Banner Studios",
+      "role": "publisher"
+    }
+  ]
+}

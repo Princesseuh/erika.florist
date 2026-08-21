@@ -1,0 +1,26 @@
+{
+  "first_release_date": 407548800,
+  "genres": [
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Atari2600",
+      "id": 59
+    }
+  ],
+  "companies": [
+    {
+      "id": 82,
+      "name": "Atari",
+      "role": "developer"
+    }
+  ]
+}

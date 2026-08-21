@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1507507200,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 25496,
+      "name": "Frank Lantz",
+      "role": "developer"
+    },
+    {
+      "id": 25497,
+      "name": "Everybody House Games",
+      "role": "publisher"
+    }
+  ]
+}

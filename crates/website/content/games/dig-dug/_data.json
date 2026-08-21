@@ -1,0 +1,41 @@
+{
+  "first_release_date": 383011200,
+  "genres": [
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 42819,
+      "name": "Gotch Technology",
+      "role": "publisher"
+    },
+    {
+      "id": 263,
+      "name": "Namco",
+      "role": "developer"
+    },
+    {
+      "id": 6330,
+      "name": "Namco Bandai Games",
+      "role": "publisher"
+    },
+    {
+      "id": 82,
+      "name": "Atari",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1095897600,
+  "genres": [
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 35,
+      "name": "Card & Board Game"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    }
+  ],
+  "companies": [
+    {
+      "id": 53,
+      "name": "Microsoft Game Studios",
+      "role": "developer"
+    },
+    {
+      "id": 7700,
+      "name": "Code Mystics",
+      "role": "publisher"
+    },
+    {
+      "id": 700,
+      "name": "Majesco Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

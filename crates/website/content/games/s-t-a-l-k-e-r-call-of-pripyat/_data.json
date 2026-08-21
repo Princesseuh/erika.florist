@@ -1,0 +1,68 @@
+{
+  "first_release_date": 1254441600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 3227,
+      "name": "Zoo Corporation",
+      "role": "publisher"
+    },
+    {
+      "id": 423,
+      "name": "Deep Silver",
+      "role": "publisher"
+    },
+    {
+      "id": 538,
+      "name": "Viva Media",
+      "role": "publisher"
+    },
+    {
+      "id": 144,
+      "name": "GSC Game World",
+      "role": "developer"
+    },
+    {
+      "id": 372,
+      "name": "GSC World Publishing",
+      "role": "publisher"
+    },
+    {
+      "id": 731,
+      "name": "bitComposer Games",
+      "role": "publisher"
+    },
+    {
+      "id": 65372,
+      "name": "Mataboo",
+      "role": "publisher"
+    }
+  ]
+}

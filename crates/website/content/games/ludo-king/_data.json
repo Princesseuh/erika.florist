@@ -1,0 +1,34 @@
+{
+  "first_release_date": 1481932800,
+  "genres": [
+    {
+      "id": 35,
+      "name": "Card & Board Game"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Win Phone",
+      "id": 74
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 37432,
+      "name": "Gametion Technologies",
+      "role": "developer"
+    }
+  ]
+}

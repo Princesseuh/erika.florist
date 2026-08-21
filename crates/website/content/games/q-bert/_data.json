@@ -1,0 +1,34 @@
+{
+  "first_release_date": 403747200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    }
+  ],
+  "companies": [
+    {
+      "id": 927,
+      "name": "Gottlieb",
+      "role": "developer"
+    }
+  ]
+}

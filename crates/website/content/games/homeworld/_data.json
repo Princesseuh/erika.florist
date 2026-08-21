@@ -1,0 +1,43 @@
+{
+  "first_release_date": 938476800,
+  "genres": [
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 196,
+      "name": "Relic Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 24,
+      "name": "Sierra Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

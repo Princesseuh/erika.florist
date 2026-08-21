@@ -1,0 +1,46 @@
+{
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 54477,
+      "name": "Funkin' Crew",
+      "role": "developer"
+    },
+    {
+      "id": 4442,
+      "name": "Newgrounds",
+      "role": "publisher"
+    }
+  ]
+}

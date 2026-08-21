@@ -1,0 +1,60 @@
+{
+  "first_release_date": 1394496000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Ouya",
+      "id": 72
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 4834,
+      "name": "Sickhead Games",
+      "role": "publisher"
+    },
+    {
+      "id": 5542,
+      "name": "Maddy Makes Games",
+      "role": "developer"
+    },
+    {
+      "id": 4834,
+      "name": "Sickhead Games",
+      "role": "publisher"
+    }
+  ]
+}

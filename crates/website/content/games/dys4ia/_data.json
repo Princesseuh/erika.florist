@@ -1,0 +1,27 @@
+{
+  "first_release_date": 1331251200,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    }
+  ],
+  "companies": [
+    {
+      "id": 7898,
+      "name": "Anna Anthropy",
+      "role": "developer"
+    },
+    {
+      "id": 4442,
+      "name": "Newgrounds",
+      "role": "publisher"
+    }
+  ]
+}

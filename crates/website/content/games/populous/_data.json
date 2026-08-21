@@ -1,0 +1,98 @@
+{
+  "first_release_date": 613008000,
+  "genres": [
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Acorn Archimedes",
+      "id": 116
+    },
+    {
+      "abbreviation": null,
+      "id": 149
+    },
+    {
+      "abbreviation": null,
+      "id": 121
+    },
+    {
+      "abbreviation": "SNES",
+      "id": 19
+    },
+    {
+      "abbreviation": "Genesis/MegaDrive",
+      "id": 29
+    },
+    {
+      "abbreviation": "Atari-ST",
+      "id": 63
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "turbografx16",
+      "id": 86
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    },
+    {
+      "abbreviation": "SMS",
+      "id": 64
+    }
+  ],
+  "companies": [
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 864,
+      "name": "Hudson Soft",
+      "role": "publisher"
+    },
+    {
+      "id": 14,
+      "name": "Bullfrog Productions",
+      "role": "developer"
+    },
+    {
+      "id": 191,
+      "name": "Imagineer",
+      "role": "publisher"
+    },
+    {
+      "id": 23993,
+      "name": "Tec Toy",
+      "role": "publisher"
+    }
+  ]
+}

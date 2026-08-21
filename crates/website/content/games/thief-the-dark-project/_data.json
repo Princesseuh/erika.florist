@@ -1,0 +1,36 @@
+{
+  "first_release_date": 912384000,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 4,
+      "name": "Eidos Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 3,
+      "name": "Looking Glass Studios",
+      "role": "developer"
+    },
+    {
+      "id": 1488,
+      "name": "Activision Value",
+      "role": "publisher"
+    }
+  ]
+}

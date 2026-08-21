@@ -1,0 +1,35 @@
+{
+  "first_release_date": 977356800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "DC",
+      "id": 23
+    }
+  ],
+  "companies": [
+    {
+      "id": 395,
+      "name": "Sonic Team",
+      "role": "developer"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    }
+  ]
+}

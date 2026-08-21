@@ -1,0 +1,30 @@
+{
+  "first_release_date": 486172800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": null,
+      "id": 121
+    }
+  ],
+  "companies": [
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "first_release_date": 661478400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    }
+  ],
+  "companies": [
+    {
+      "id": 184,
+      "name": "id Software",
+      "role": "developer"
+    },
+    {
+      "id": 188,
+      "name": "Apogee Software",
+      "role": "publisher"
+    }
+  ]
+}

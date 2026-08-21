@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1158192000,
+  "genres": [
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 2055,
+      "name": "Clover Studio",
+      "role": "developer"
+    },
+    {
+      "id": 37,
+      "name": "Capcom",
+      "role": "publisher"
+    }
+  ]
+}

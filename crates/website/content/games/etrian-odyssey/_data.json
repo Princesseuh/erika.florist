@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1169078400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "NDS",
+      "id": 20
+    }
+  ],
+  "companies": [
+    {
+      "id": 818,
+      "name": "Atlus",
+      "role": "developer"
+    },
+    {
+      "id": 2488,
+      "name": "Atlus USA",
+      "role": "publisher"
+    }
+  ]
+}

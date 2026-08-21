@@ -1,0 +1,50 @@
+{
+  "first_release_date": 921542400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 242,
+      "name": "Verant Interactive",
+      "role": "developer"
+    },
+    {
+      "id": 241,
+      "name": "989 Studios",
+      "role": "developer"
+    },
+    {
+      "id": 243,
+      "name": "Sony Online Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 6997,
+      "name": "Daybreak Game Company",
+      "role": "publisher"
+    },
+    {
+      "id": 49861,
+      "name": "Darkpaw Games",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "first_release_date": 1395705600,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 36,
+      "name": "MOBA"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 3595,
+      "name": "Tencent Games",
+      "role": "publisher"
+    },
+    {
+      "id": 43596,
+      "name": "Titan Forge Games",
+      "role": "developer"
+    },
+    {
+      "id": 2499,
+      "name": "Hi-Rez Studios",
+      "role": "publisher"
+    }
+  ]
+}

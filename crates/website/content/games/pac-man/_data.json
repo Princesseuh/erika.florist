@@ -1,0 +1,27 @@
+{
+  "first_release_date": 327801600,
+  "genres": [
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    }
+  ],
+  "companies": [
+    {
+      "id": 10173,
+      "name": "Midway Manufacturing",
+      "role": "publisher"
+    },
+    {
+      "id": 263,
+      "name": "Namco",
+      "role": "developer"
+    }
+  ]
+}

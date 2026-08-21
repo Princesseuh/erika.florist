@@ -1,0 +1,27 @@
+{
+  "first_release_date": 1103673600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    }
+  ],
+  "companies": [
+    {
+      "id": 128,
+      "name": "Microsoft",
+      "role": "publisher"
+    },
+    {
+      "id": 1012,
+      "name": "FromSoftware",
+      "role": "developer"
+    }
+  ]
+}

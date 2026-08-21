@@ -1,0 +1,26 @@
+{
+  "first_release_date": 1366934400,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 10582,
+      "name": "Nitro Chiral",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "first_release_date": 942969600,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 458,
+      "name": "Funcom",
+      "role": "developer"
+    },
+    {
+      "id": 340,
+      "name": "Empire Interactive",
+      "role": "publisher"
+    }
+  ]
+}

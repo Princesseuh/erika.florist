@@ -1,0 +1,35 @@
+{
+  "first_release_date": 962236800,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "DC",
+      "id": 23
+    }
+  ],
+  "companies": [
+    {
+      "id": 874,
+      "name": "Smilebit",
+      "role": "developer"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    }
+  ]
+}

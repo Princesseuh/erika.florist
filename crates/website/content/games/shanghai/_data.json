@@ -1,0 +1,80 @@
+{
+  "first_release_date": 528508800,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": null,
+      "id": 149
+    },
+    {
+      "abbreviation": null,
+      "id": 121
+    },
+    {
+      "abbreviation": null,
+      "id": 125
+    },
+    {
+      "abbreviation": "C64",
+      "id": 15
+    },
+    {
+      "abbreviation": "Lynx",
+      "id": 61
+    },
+    {
+      "abbreviation": "Atari-ST",
+      "id": 63
+    },
+    {
+      "abbreviation": "turbografx16",
+      "id": 86
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    },
+    {
+      "abbreviation": "famicom",
+      "id": 99
+    },
+    {
+      "abbreviation": "MSX2",
+      "id": 53
+    },
+    {
+      "abbreviation": "NES",
+      "id": 18
+    },
+    {
+      "abbreviation": "SMS",
+      "id": 64
+    }
+  ],
+  "companies": [
+    {
+      "id": 66,
+      "name": "Activision",
+      "role": "publisher"
+    },
+    {
+      "id": 66,
+      "name": "Activision",
+      "role": "developer"
+    },
+    {
+      "id": 864,
+      "name": "Hudson Soft",
+      "role": "publisher"
+    }
+  ]
+}

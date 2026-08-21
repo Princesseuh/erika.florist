@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1559779200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    }
+  ],
+  "companies": [
+    {
+      "id": 16437,
+      "name": "Team17",
+      "role": "publisher"
+    },
+    {
+      "id": 66992,
+      "name": "Expression Games",
+      "role": "developer"
+    }
+  ]
+}

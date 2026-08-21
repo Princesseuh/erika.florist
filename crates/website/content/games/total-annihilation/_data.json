@@ -1,0 +1,35 @@
+{
+  "first_release_date": 875577600,
+  "genres": [
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 604,
+      "name": "Cavedog Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 205,
+      "name": "GT Interactive Software",
+      "role": "publisher"
+    }
+  ]
+}

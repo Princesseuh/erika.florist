@@ -1,0 +1,65 @@
+{
+  "first_release_date": 757987200,
+  "genres": [
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "neogeoaes",
+      "id": 80
+    },
+    {
+      "abbreviation": "neogeomvs",
+      "id": 79
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    },
+    {
+      "abbreviation": null,
+      "id": 136
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 1474,
+      "name": "SNK",
+      "role": "publisher"
+    },
+    {
+      "id": 2678,
+      "name": "Data East",
+      "role": "developer"
+    },
+    {
+      "id": 4501,
+      "name": "DotEmu",
+      "role": "publisher"
+    },
+    {
+      "id": 4501,
+      "name": "DotEmu",
+      "role": "publisher"
+    }
+  ]
+}

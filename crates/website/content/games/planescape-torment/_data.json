@@ -1,0 +1,47 @@
+{
+  "first_release_date": 944956800,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 12,
+      "name": "Black Isle Studios",
+      "role": "developer"
+    },
+    {
+      "id": 5,
+      "name": "Interplay Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

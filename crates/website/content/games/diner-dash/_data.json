@@ -1,0 +1,59 @@
+{
+  "first_release_date": 1102032000,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "NDS",
+      "id": 20
+    },
+    {
+      "abbreviation": "Mobile",
+      "id": 55
+    }
+  ],
+  "companies": [
+    {
+      "id": 2779,
+      "name": "GameLab",
+      "role": "developer"
+    },
+    {
+      "id": 508,
+      "name": "PlayFirst",
+      "role": "publisher"
+    }
+  ]
+}

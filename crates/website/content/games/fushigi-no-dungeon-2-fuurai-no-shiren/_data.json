@@ -1,0 +1,26 @@
+{
+  "first_release_date": 817776000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "SFAM",
+      "id": 58
+    }
+  ],
+  "companies": [
+    {
+      "id": 1093,
+      "name": "Chunsoft",
+      "role": "developer"
+    }
+  ]
+}

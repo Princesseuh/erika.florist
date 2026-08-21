@@ -1,0 +1,38 @@
+{
+  "first_release_date": 612748800,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    },
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    },
+    {
+      "abbreviation": "NES",
+      "id": 18
+    }
+  ],
+  "companies": [
+    {
+      "id": 37,
+      "name": "Capcom",
+      "role": "developer"
+    }
+  ]
+}

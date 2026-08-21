@@ -1,0 +1,71 @@
+{
+  "first_release_date": 1431993600,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 50,
+      "name": "WB Games",
+      "role": "publisher"
+    },
+    {
+      "id": 3119,
+      "name": "cdp.pl",
+      "role": "publisher"
+    },
+    {
+      "id": 1217,
+      "name": "Spike Chunsoft",
+      "role": "publisher"
+    },
+    {
+      "id": 248,
+      "name": "Bandai Namco Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 908,
+      "name": "CD Projekt RED",
+      "role": "developer"
+    },
+    {
+      "id": 946,
+      "name": "Saber Interactive",
+      "role": "publisher"
+    }
+  ]
+}

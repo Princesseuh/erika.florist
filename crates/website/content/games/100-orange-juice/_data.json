@@ -1,0 +1,34 @@
+{
+  "first_release_date": 1250294400,
+  "genres": [
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 16,
+      "name": "Turn-based strategy (TBS)"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 35,
+      "name": "Card & Board Game"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 6082,
+      "name": "Orange_Juice",
+      "role": "developer"
+    }
+  ]
+}

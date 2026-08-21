@@ -1,0 +1,55 @@
+{
+  "first_release_date": 710121600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "SNES",
+      "id": 19
+    },
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "SFAM",
+      "id": 58
+    }
+  ],
+  "companies": [
+    {
+      "id": 10068,
+      "name": "Masaya",
+      "role": "publisher"
+    },
+    {
+      "id": 7301,
+      "name": "Arsys Software",
+      "role": "publisher"
+    },
+    {
+      "id": 23979,
+      "name": "NCS",
+      "role": "publisher"
+    },
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "publisher"
+    },
+    {
+      "id": 195,
+      "name": "Brøderbund Software",
+      "role": "developer"
+    },
+    {
+      "id": 16845,
+      "name": "Ubi Soft Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

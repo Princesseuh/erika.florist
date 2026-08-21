@@ -1,0 +1,31 @@
+{
+  "first_release_date": 748742400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Sega CD",
+      "id": 78
+    }
+  ],
+  "companies": [
+    {
+      "id": 395,
+      "name": "Sonic Team",
+      "role": "developer"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    }
+  ]
+}

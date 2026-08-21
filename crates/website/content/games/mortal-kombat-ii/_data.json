@@ -1,0 +1,83 @@
+{
+  "first_release_date": 757382400,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "SNES",
+      "id": 19
+    },
+    {
+      "abbreviation": "Sega32",
+      "id": 30
+    },
+    {
+      "abbreviation": "Genesis/MegaDrive",
+      "id": 29
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    },
+    {
+      "abbreviation": "Saturn",
+      "id": 32
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    }
+  ],
+  "companies": [
+    {
+      "id": 566,
+      "name": "Midway",
+      "role": "developer"
+    },
+    {
+      "id": 23993,
+      "name": "Tec Toy",
+      "role": "publisher"
+    },
+    {
+      "id": 287,
+      "name": "Acclaim Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 532,
+      "name": "Probe Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 387,
+      "name": "Sculptured Software",
+      "role": "publisher"
+    },
+    {
+      "id": 33804,
+      "name": "Playtronic",
+      "role": "publisher"
+    }
+  ]
+}

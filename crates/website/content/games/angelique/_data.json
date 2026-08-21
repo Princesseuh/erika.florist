@@ -1,0 +1,39 @@
+{
+  "first_release_date": 780278400,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "GBA",
+      "id": 24
+    },
+    {
+      "abbreviation": "SFAM",
+      "id": 58
+    }
+  ],
+  "companies": [
+    {
+      "id": 630,
+      "name": "Koei",
+      "role": "publisher"
+    },
+    {
+      "id": 14064,
+      "name": "Ruby Party",
+      "role": "developer"
+    }
+  ]
+}

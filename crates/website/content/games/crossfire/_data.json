@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1178150400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 5220,
+      "name": "Smilegate",
+      "role": "developer"
+    },
+    {
+      "id": 30237,
+      "name": "Neowiz",
+      "role": "publisher"
+    }
+  ]
+}

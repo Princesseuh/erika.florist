@@ -1,0 +1,56 @@
+{
+  "first_release_date": 1539820800,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 33512,
+      "name": "Warp Digital Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 1365,
+      "name": "Lucas Pope",
+      "role": "developer"
+    },
+    {
+      "id": 15527,
+      "name": "3909",
+      "role": "publisher"
+    }
+  ]
+}

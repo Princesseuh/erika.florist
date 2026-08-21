@@ -1,0 +1,74 @@
+{
+  "first_release_date": 1465862400,
+  "genres": [
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Stadia",
+      "id": 170
+    },
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 1260,
+      "name": "Behaviour Interactive",
+      "role": "developer"
+    },
+    {
+      "id": 445,
+      "name": "505 Games",
+      "role": "publisher"
+    },
+    {
+      "id": 423,
+      "name": "Deep Silver",
+      "role": "publisher"
+    },
+    {
+      "id": 280,
+      "name": "Starbreeze Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 5501,
+      "name": "NetEase Games",
+      "role": "publisher"
+    }
+  ]
+}

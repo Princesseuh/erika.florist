@@ -1,0 +1,34 @@
+{
+  "first_release_date": 596505600,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 125
+    },
+    {
+      "abbreviation": "MSX2",
+      "id": 53
+    }
+  ],
+  "companies": [
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "developer"
+    }
+  ]
+}

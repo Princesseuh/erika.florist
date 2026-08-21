@@ -1,0 +1,52 @@
+{
+  "first_release_date": 1063670400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "NGC",
+      "id": 21
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 444,
+      "name": "Radical Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 815,
+      "name": "Vivendi Universal Games",
+      "role": "publisher"
+    },
+    {
+      "id": 24,
+      "name": "Sierra Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

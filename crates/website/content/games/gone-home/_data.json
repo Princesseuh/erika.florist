@@ -1,0 +1,60 @@
+{
+  "first_release_date": 1376524800,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 11662,
+      "name": "Annapurna Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 918,
+      "name": "Fullbright",
+      "role": "developer"
+    },
+    {
+      "id": 2512,
+      "name": "Midnight City",
+      "role": "publisher"
+    }
+  ]
+}

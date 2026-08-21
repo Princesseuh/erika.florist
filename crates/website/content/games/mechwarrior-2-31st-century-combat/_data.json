@@ -1,0 +1,66 @@
+{
+  "first_release_date": 804470400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Saturn",
+      "id": 32
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    }
+  ],
+  "companies": [
+    {
+      "id": 66,
+      "name": "Activision",
+      "role": "developer"
+    },
+    {
+      "id": 66,
+      "name": "Activision",
+      "role": "publisher"
+    },
+    {
+      "id": 25832,
+      "name": "Quantum Factory",
+      "role": "developer"
+    },
+    {
+      "id": 22474,
+      "name": "Bandai Visual",
+      "role": "publisher"
+    },
+    {
+      "id": 38678,
+      "name": "Tec Toy Indústria de Brinquedos S.A.",
+      "role": "publisher"
+    }
+  ]
+}

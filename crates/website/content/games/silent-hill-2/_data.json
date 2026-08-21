@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1001289600,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 10446,
+      "name": "Team Silent",
+      "role": "developer"
+    },
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "publisher"
+    }
+  ]
+}

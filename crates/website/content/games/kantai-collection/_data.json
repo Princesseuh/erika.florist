@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1366675200,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 16,
+      "name": "Turn-based strategy (TBS)"
+    },
+    {
+      "id": 35,
+      "name": "Card & Board Game"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    }
+  ],
+  "companies": [
+    {
+      "id": 836,
+      "name": "Kadokawa Games",
+      "role": "developer"
+    },
+    {
+      "id": 6574,
+      "name": "DMM.com",
+      "role": "publisher"
+    }
+  ]
+}

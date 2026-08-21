@@ -1,0 +1,35 @@
+{
+  "first_release_date": 631065600,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Lynx",
+      "id": 61
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 366,
+      "name": "Epyx",
+      "role": "developer"
+    },
+    {
+      "id": 190,
+      "name": "Atari Corporation",
+      "role": "publisher"
+    }
+  ]
+}

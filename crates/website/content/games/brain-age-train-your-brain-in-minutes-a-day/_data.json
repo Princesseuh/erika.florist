@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1116460800,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 26,
+      "name": "Quiz/Trivia"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    },
+    {
+      "abbreviation": "NDS",
+      "id": 20
+    }
+  ],
+  "companies": [
+    {
+      "id": 866,
+      "name": "Nintendo SPD Production Group No. 2",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "first_release_date": 1623369600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    }
+  ],
+  "companies": [
+    {
+      "id": 834,
+      "name": "Insomniac Games",
+      "role": "developer"
+    },
+    {
+      "id": 10100,
+      "name": "Sony Interactive Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 291,
+      "name": "Nixxes Software",
+      "role": "publisher"
+    },
+    {
+      "id": 26294,
+      "name": "PlayStation Studios",
+      "role": "publisher"
+    }
+  ]
+}

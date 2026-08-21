@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1354838400,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 26,
+      "name": "Quiz/Trivia"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 6393,
+      "name": "Harvester Games",
+      "role": "developer"
+    },
+    {
+      "id": 6394,
+      "name": "Screen 7",
+      "role": "publisher"
+    }
+  ]
+}

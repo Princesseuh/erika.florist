@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1083110400,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mobile",
+      "id": 55
+    }
+  ],
+  "companies": [
+    {
+      "id": 22937,
+      "name": "Visual Art's Motto",
+      "role": "publisher"
+    },
+    {
+      "id": 3031,
+      "name": "Key",
+      "role": "developer"
+    },
+    {
+      "id": 2648,
+      "name": "Visual Arts",
+      "role": "publisher"
+    }
+  ]
+}

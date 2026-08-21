@@ -1,0 +1,36 @@
+{
+  "first_release_date": 1004054400,
+  "genres": [
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "NGC",
+      "id": 21
+    }
+  ],
+  "companies": [
+    {
+      "id": 812,
+      "name": "Gradiente",
+      "role": "publisher"
+    },
+    {
+      "id": 421,
+      "name": "Nintendo Entertainment Analysis & Development",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    }
+  ]
+}

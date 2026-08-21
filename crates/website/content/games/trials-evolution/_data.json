@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1334707200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 10,
+      "name": "Racing"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 1009,
+      "name": "RedLynx",
+      "role": "developer"
+    },
+    {
+      "id": 1010,
+      "name": "Microsoft Studios",
+      "role": "publisher"
+    }
+  ]
+}

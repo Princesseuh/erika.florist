@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1425945600,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Stadia",
+      "id": 170
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 943,
+      "name": "Colossal Order",
+      "role": "developer"
+    },
+    {
+      "id": 517,
+      "name": "Paradox Interactive",
+      "role": "publisher"
+    }
+  ]
+}

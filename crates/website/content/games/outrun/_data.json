@@ -1,0 +1,40 @@
+{
+  "first_release_date": 527990400,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": null,
+      "id": 121
+    }
+  ],
+  "companies": [
+    {
+      "id": 2422,
+      "name": "Hertz",
+      "role": "publisher"
+    },
+    {
+      "id": 830,
+      "name": "Sega AM2",
+      "role": "developer"
+    },
+    {
+      "id": 4981,
+      "name": "Sega Enterprises, Ltd.",
+      "role": "publisher"
+    }
+  ]
+}

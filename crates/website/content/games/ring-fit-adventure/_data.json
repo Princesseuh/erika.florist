@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1571356800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 7902,
+      "name": "Nintendo Entertainment Planning & Development",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 45210,
+      "name": "Nintendo EPD Production Group No. 4",
+      "role": "developer"
+    }
+  ]
+}

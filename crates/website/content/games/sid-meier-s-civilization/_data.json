@@ -1,0 +1,51 @@
+{
+  "first_release_date": 686188800,
+  "genres": [
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 16,
+      "name": "Turn-based strategy (TBS)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 149
+    },
+    {
+      "abbreviation": "Atari-ST",
+      "id": 63
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    }
+  ],
+  "companies": [
+    {
+      "id": 9150,
+      "name": "MicroProse Software, Inc.",
+      "role": "publisher"
+    },
+    {
+      "id": 1176,
+      "name": "MPS Labs",
+      "role": "developer"
+    }
+  ]
+}

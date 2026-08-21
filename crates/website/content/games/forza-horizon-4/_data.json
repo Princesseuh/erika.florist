@@ -1,0 +1,58 @@
+{
+  "first_release_date": 1538438400,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 17966,
+      "name": "Xbox Game Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 1432,
+      "name": "Playground Games",
+      "role": "developer"
+    },
+    {
+      "id": 439,
+      "name": "Sumo Digital",
+      "role": "publisher"
+    },
+    {
+      "id": 21449,
+      "name": "Sumo Nottingham",
+      "role": "publisher"
+    },
+    {
+      "id": 2095,
+      "name": "Panic Button Games",
+      "role": "publisher"
+    }
+  ]
+}

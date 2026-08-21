@@ -1,0 +1,40 @@
+{
+  "first_release_date": 913939200,
+  "genres": [
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 325,
+      "name": "Saffire",
+      "role": "developer"
+    },
+    {
+      "id": 51,
+      "name": "Blizzard Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 24,
+      "name": "Sierra Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

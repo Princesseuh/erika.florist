@@ -1,0 +1,43 @@
+{
+  "first_release_date": 723168000,
+  "genres": [
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Acorn Archimedes",
+      "id": 116
+    },
+    {
+      "abbreviation": "Genesis/MegaDrive",
+      "id": 29
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    }
+  ],
+  "companies": [
+    {
+      "id": 8108,
+      "name": "Virgin Games",
+      "role": "publisher"
+    },
+    {
+      "id": 113,
+      "name": "Westwood Studios",
+      "role": "developer"
+    }
+  ]
+}

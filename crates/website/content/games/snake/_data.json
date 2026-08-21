@@ -1,0 +1,22 @@
+{
+  "first_release_date": 891302400,
+  "genres": [
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Mobile",
+      "id": 55
+    }
+  ],
+  "companies": [
+    {
+      "id": 2421,
+      "name": "Nokia",
+      "role": "developer"
+    }
+  ]
+}

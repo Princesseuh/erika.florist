@@ -1,0 +1,26 @@
+{
+  "first_release_date": 1476316800,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PSVR",
+      "id": 165
+    }
+  ],
+  "companies": [
+    {
+      "id": 5024,
+      "name": "Bandai Namco Holdings",
+      "role": "developer"
+    }
+  ]
+}

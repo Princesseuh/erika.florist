@@ -1,0 +1,58 @@
+{
+  "first_release_date": 764380800,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "Amiga CD32",
+      "id": 114
+    },
+    {
+      "abbreviation": "3DO",
+      "id": 50
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    }
+  ],
+  "companies": [
+    {
+      "id": 2814,
+      "name": "Human Soft",
+      "role": "publisher"
+    },
+    {
+      "id": 26598,
+      "name": "Matsushita Electric Industrial",
+      "role": "publisher"
+    },
+    {
+      "id": 1019,
+      "name": "GameTek, Inc.",
+      "role": "publisher"
+    },
+    {
+      "id": 29376,
+      "name": "Eurocom Developments",
+      "role": "publisher"
+    },
+    {
+      "id": 37,
+      "name": "Capcom",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "first_release_date": 666489600,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Acorn Archimedes",
+      "id": 116
+    },
+    {
+      "abbreviation": "Amiga CD32",
+      "id": 114
+    },
+    {
+      "abbreviation": null,
+      "id": 158
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    }
+  ],
+  "companies": [
+    {
+      "id": 885,
+      "name": "Krisalis Software",
+      "role": "publisher"
+    },
+    {
+      "id": 764,
+      "name": "Psygnosis",
+      "role": "publisher"
+    },
+    {
+      "id": 536,
+      "name": "DMA Design",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "first_release_date": 1573171200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 10100,
+      "name": "Sony Interactive Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 170,
+      "name": "Kojima Productions",
+      "role": "developer"
+    },
+    {
+      "id": 445,
+      "name": "505 Games",
+      "role": "publisher"
+    }
+  ]
+}

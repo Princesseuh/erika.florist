@@ -1,0 +1,60 @@
+{
+  "first_release_date": 423273600,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 125
+    },
+    {
+      "abbreviation": "x1",
+      "id": 77
+    },
+    {
+      "abbreviation": "famicom",
+      "id": 99
+    },
+    {
+      "abbreviation": null,
+      "id": 152
+    },
+    {
+      "abbreviation": null,
+      "id": 157
+    },
+    {
+      "abbreviation": "MSX",
+      "id": 27
+    }
+  ],
+  "companies": [
+    {
+      "id": 1854,
+      "name": "Enix Corporation",
+      "role": "publisher"
+    },
+    {
+      "id": 1093,
+      "name": "Chunsoft",
+      "role": "publisher"
+    },
+    {
+      "id": 45904,
+      "name": "Yuji Horii",
+      "role": "developer"
+    }
+  ]
+}

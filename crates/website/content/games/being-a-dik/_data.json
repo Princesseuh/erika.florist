@@ -1,0 +1,34 @@
+{
+  "first_release_date": 1581638400,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 21582,
+      "name": "Dr PinkCake",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "first_release_date": 1113868800,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 197,
+      "name": "THQ",
+      "role": "publisher"
+    },
+    {
+      "id": 85,
+      "name": "Double Fine Productions",
+      "role": "developer"
+    },
+    {
+      "id": 85,
+      "name": "Double Fine Productions",
+      "role": "publisher"
+    },
+    {
+      "id": 684,
+      "name": "Budcat Creations",
+      "role": "publisher"
+    },
+    {
+      "id": 700,
+      "name": "Majesco Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 17966,
+      "name": "Xbox Game Studios",
+      "role": "publisher"
+    }
+  ]
+}

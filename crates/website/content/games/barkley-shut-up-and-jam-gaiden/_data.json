@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1203638400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 33557,
+      "name": "Tales of Game",
+      "role": "developer"
+    },
+    {
+      "id": 33558,
+      "name": "Tales of Game's Studios",
+      "role": "developer"
+    }
+  ]
+}

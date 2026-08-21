@@ -1,0 +1,53 @@
+{
+  "first_release_date": 1331596800,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 857,
+      "name": "ThatGameCompany",
+      "role": "developer"
+    },
+    {
+      "id": 13634,
+      "name": "Sony Computer Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 11662,
+      "name": "Annapurna Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 55091,
+      "name": "Inline Assembly",
+      "role": "publisher"
+    }
+  ]
+}

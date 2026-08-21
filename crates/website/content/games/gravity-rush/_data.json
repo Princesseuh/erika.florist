@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1328745600,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    }
+  ],
+  "companies": [
+    {
+      "id": 400,
+      "name": "SCE Japan Studio",
+      "role": "developer"
+    },
+    {
+      "id": 13634,
+      "name": "Sony Computer Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

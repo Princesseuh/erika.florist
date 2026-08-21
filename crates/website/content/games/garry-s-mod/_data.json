@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1103846400,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 56,
+      "name": "Valve",
+      "role": "publisher"
+    },
+    {
+      "id": 1715,
+      "name": "Facepunch Studios",
+      "role": "developer"
+    }
+  ]
+}

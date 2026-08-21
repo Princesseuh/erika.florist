@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1126137600,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 104,
+      "name": "Ubisoft Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 35649,
+      "name": "Ubisoft Mobile Games",
+      "role": "publisher"
+    },
+    {
+      "id": 20513,
+      "name": "Ubisoft Owlient",
+      "role": "developer"
+    }
+  ]
+}

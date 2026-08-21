@@ -1,0 +1,60 @@
+{
+  "first_release_date": 694137600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    }
+  ],
+  "companies": [
+    {
+      "id": 227,
+      "name": "U.S. Gold",
+      "role": "publisher"
+    },
+    {
+      "id": 6000,
+      "name": "Kixx",
+      "role": "publisher"
+    },
+    {
+      "id": 501,
+      "name": "Delphine Software",
+      "role": "publisher"
+    },
+    {
+      "id": 501,
+      "name": "Delphine Software",
+      "role": "developer"
+    },
+    {
+      "id": 674,
+      "name": "Maddox Games",
+      "role": "publisher"
+    },
+    {
+      "id": 24213,
+      "name": "Interplay",
+      "role": "publisher"
+    },
+    {
+      "id": 120,
+      "name": "MacPlay",
+      "role": "publisher"
+    }
+  ]
+}

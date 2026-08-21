@@ -1,0 +1,72 @@
+{
+  "first_release_date": 877392000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "N64",
+      "id": 4
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    }
+  ],
+  "companies": [
+    {
+      "id": 536,
+      "name": "DMA Design",
+      "role": "developer"
+    },
+    {
+      "id": 703,
+      "name": "BMG Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 139,
+      "name": "Take-Two Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 662,
+      "name": "Visual Science",
+      "role": "publisher"
+    },
+    {
+      "id": 704,
+      "name": "ASC Games",
+      "role": "publisher"
+    },
+    {
+      "id": 29,
+      "name": "Rockstar Games",
+      "role": "publisher"
+    },
+    {
+      "id": 10560,
+      "name": "Syscom Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

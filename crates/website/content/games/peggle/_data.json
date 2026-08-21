@@ -1,0 +1,81 @@
+{
+  "first_release_date": 1172534400,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 405
+    },
+    {
+      "abbreviation": "blackberry",
+      "id": 73
+    },
+    {
+      "abbreviation": null,
+      "id": 240
+    },
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "Mobile",
+      "id": 55
+    }
+  ],
+  "companies": [
+    {
+      "id": 44184,
+      "name": "Magmic",
+      "role": "publisher"
+    },
+    {
+      "id": 22044,
+      "name": "Vega Mobile",
+      "role": "publisher"
+    },
+    {
+      "id": 243,
+      "name": "Sony Online Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 1893,
+      "name": "PopCap Games",
+      "role": "developer"
+    }
+  ]
+}

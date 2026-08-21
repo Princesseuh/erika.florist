@@ -1,0 +1,78 @@
+{
+  "first_release_date": 724550400,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 149
+    },
+    {
+      "abbreviation": null,
+      "id": 121
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": null,
+      "id": 118
+    },
+    {
+      "abbreviation": "Saturn",
+      "id": 32
+    },
+    {
+      "abbreviation": null,
+      "id": 150
+    }
+  ],
+  "companies": [
+    {
+      "id": 14081,
+      "name": "ELF Corporation",
+      "role": "developer"
+    },
+    {
+      "id": 14082,
+      "name": "NEC Avenue",
+      "role": "publisher"
+    },
+    {
+      "id": 20876,
+      "name": "DMM GAMES",
+      "role": "publisher"
+    },
+    {
+      "id": 30244,
+      "name": "DiGination",
+      "role": "publisher"
+    },
+    {
+      "id": 2052,
+      "name": "NEC Interchannel",
+      "role": "publisher"
+    }
+  ]
+}

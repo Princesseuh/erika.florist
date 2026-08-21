@@ -1,0 +1,56 @@
+{
+  "first_release_date": 1364947200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 1010,
+      "name": "Microsoft Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 1228,
+      "name": "The Behemoth",
+      "role": "publisher"
+    },
+    {
+      "id": 1228,
+      "name": "The Behemoth",
+      "role": "developer"
+    }
+  ]
+}

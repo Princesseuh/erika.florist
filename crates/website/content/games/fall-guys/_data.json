@@ -1,0 +1,68 @@
+{
+  "first_release_date": 1596499200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Series X|S",
+      "id": 169
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "PS5",
+      "id": 167
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 2581,
+      "name": "Mediatonic",
+      "role": "developer"
+    },
+    {
+      "id": 17463,
+      "name": "Epic Games",
+      "role": "publisher"
+    },
+    {
+      "id": 634,
+      "name": "Devolver Digital",
+      "role": "publisher"
+    }
+  ]
+}

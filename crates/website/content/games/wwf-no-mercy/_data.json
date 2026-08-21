@@ -1,0 +1,36 @@
+{
+  "first_release_date": 974419200,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "N64",
+      "id": 4
+    }
+  ],
+  "companies": [
+    {
+      "id": 1408,
+      "name": "AKI Corporation",
+      "role": "developer"
+    },
+    {
+      "id": 1850,
+      "name": "Asmik Ace Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 197,
+      "name": "THQ",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "first_release_date": 514857600,
+  "genres": [
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    }
+  ],
+  "companies": [
+    {
+      "id": 817,
+      "name": "Taito",
+      "role": "developer"
+    },
+    {
+      "id": 838,
+      "name": "Romstar",
+      "role": "publisher"
+    }
+  ]
+}

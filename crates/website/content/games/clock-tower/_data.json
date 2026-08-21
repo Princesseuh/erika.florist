@@ -1,0 +1,48 @@
+{
+  "first_release_date": 811036800,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    },
+    {
+      "abbreviation": "SFAM",
+      "id": 58
+    }
+  ],
+  "companies": [
+    {
+      "id": 251,
+      "name": "SUNSOFT",
+      "role": "publisher"
+    },
+    {
+      "id": 1744,
+      "name": "Human Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 1752,
+      "name": "Athena",
+      "role": "publisher"
+    }
+  ]
+}

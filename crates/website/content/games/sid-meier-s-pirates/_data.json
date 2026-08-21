@@ -1,0 +1,84 @@
+{
+  "first_release_date": 547430400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 115
+    },
+    {
+      "abbreviation": "C64",
+      "id": 15
+    },
+    {
+      "abbreviation": "Atari-ST",
+      "id": 63
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    },
+    {
+      "abbreviation": "Apple][",
+      "id": 75
+    },
+    {
+      "abbreviation": "ACPC",
+      "id": 25
+    },
+    {
+      "abbreviation": "NES",
+      "id": 18
+    }
+  ],
+  "companies": [
+    {
+      "id": 9150,
+      "name": "MicroProse Software, Inc.",
+      "role": "developer"
+    },
+    {
+      "id": 11624,
+      "name": "Ultra Software Corporation",
+      "role": "publisher"
+    },
+    {
+      "id": 9150,
+      "name": "MicroProse Software, Inc.",
+      "role": "developer"
+    }
+  ]
+}

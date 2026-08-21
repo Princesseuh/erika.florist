@@ -1,0 +1,45 @@
+{
+  "first_release_date": 311644800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "Apple][",
+      "id": 75
+    }
+  ],
+  "companies": [
+    {
+      "id": 1081,
+      "name": "Adventure International",
+      "role": "publisher"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 817,
+      "name": "Taito",
+      "role": "publisher"
+    },
+    {
+      "id": 82,
+      "name": "Atari",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "first_release_date": 1158019200,
+  "genres": [
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 197,
+      "name": "THQ",
+      "role": "publisher"
+    },
+    {
+      "id": 3991,
+      "name": "Russel",
+      "role": "publisher"
+    },
+    {
+      "id": 196,
+      "name": "Relic Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 23,
+      "name": "Feral Interactive",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1020211200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 245,
+      "name": "ZeniMax Media",
+      "role": "publisher"
+    },
+    {
+      "id": 126,
+      "name": "Bethesda Game Studios",
+      "role": "developer"
+    },
+    {
+      "id": 16565,
+      "name": "Bethesda Softworks",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "first_release_date": 885340800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "NGC",
+      "id": 21
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    },
+    {
+      "abbreviation": "DC",
+      "id": 23
+    }
+  ],
+  "companies": [
+    {
+      "id": 655,
+      "name": "Capcom Production Studio 3",
+      "role": "publisher"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 17160,
+      "name": "Virgin Interactive Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 651,
+      "name": "Sourcenext",
+      "role": "publisher"
+    },
+    {
+      "id": 42627,
+      "name": "Capcom Planning Room 2",
+      "role": "developer"
+    },
+    {
+      "id": 37,
+      "name": "Capcom",
+      "role": "publisher"
+    }
+  ]
+}

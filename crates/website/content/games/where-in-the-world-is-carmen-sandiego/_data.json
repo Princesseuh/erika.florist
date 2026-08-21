@@ -1,0 +1,43 @@
+{
+  "first_release_date": 483062400,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "C64",
+      "id": 15
+    },
+    {
+      "abbreviation": null,
+      "id": 151
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Apple][",
+      "id": 75
+    }
+  ],
+  "companies": [
+    {
+      "id": 195,
+      "name": "Brøderbund Software",
+      "role": "developer"
+    },
+    {
+      "id": 55967,
+      "name": "Computerware",
+      "role": "publisher"
+    }
+  ]
+}

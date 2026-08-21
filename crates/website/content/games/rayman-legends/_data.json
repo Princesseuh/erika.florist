@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1377734400,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    }
+  ],
+  "companies": [
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    },
+    {
+      "id": 702,
+      "name": "Ubisoft Montpellier",
+      "role": "developer"
+    }
+  ]
+}

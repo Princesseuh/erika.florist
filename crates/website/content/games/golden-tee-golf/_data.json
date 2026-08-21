@@ -1,0 +1,30 @@
+{
+  "first_release_date": 631065600,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    }
+  ],
+  "companies": [
+    {
+      "id": 8599,
+      "name": "Incredible Tehnology",
+      "role": "developer"
+    }
+  ]
+}

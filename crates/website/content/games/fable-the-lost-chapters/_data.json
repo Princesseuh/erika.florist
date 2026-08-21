@@ -1,0 +1,54 @@
+{
+  "first_release_date": 1127174400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 411,
+      "name": "Robosoft Technologies",
+      "role": "publisher"
+    },
+    {
+      "id": 410,
+      "name": "Big Blue Box",
+      "role": "developer"
+    },
+    {
+      "id": 6,
+      "name": "Lionhead Studios",
+      "role": "developer"
+    },
+    {
+      "id": 53,
+      "name": "Microsoft Game Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 23,
+      "name": "Feral Interactive",
+      "role": "publisher"
+    }
+  ]
+}

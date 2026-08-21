@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1317168000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 4672,
+      "name": "Edmund McMillen",
+      "role": "developer"
+    },
+    {
+      "id": 40025,
+      "name": "Florian Himsl",
+      "role": "developer"
+    }
+  ]
+}

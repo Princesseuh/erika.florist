@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1079395200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 130,
+      "name": "MacSoft Games",
+      "role": "publisher"
+    },
+    {
+      "id": 17463,
+      "name": "Epic Games",
+      "role": "developer"
+    },
+    {
+      "id": 2406,
+      "name": "Atari, Inc.",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "first_release_date": 807235200,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Saturn",
+      "id": 32
+    }
+  ],
+  "companies": [
+    {
+      "id": 5833,
+      "name": "Outrigger Koubou",
+      "role": "publisher"
+    },
+    {
+      "id": 66,
+      "name": "Activision",
+      "role": "publisher"
+    },
+    {
+      "id": 343,
+      "name": "Kronos Digital Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 5042,
+      "name": "Infini Entertainment Technology",
+      "role": "developer"
+    },
+    {
+      "id": 32,
+      "name": "Sierra On-Line",
+      "role": "developer"
+    }
+  ]
+}

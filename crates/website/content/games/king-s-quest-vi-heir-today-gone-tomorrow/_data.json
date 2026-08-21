@@ -1,0 +1,57 @@
+{
+  "first_release_date": 717811200,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    }
+  ],
+  "companies": [
+    {
+      "id": 32,
+      "name": "Sierra On-Line",
+      "role": "developer"
+    },
+    {
+      "id": 482,
+      "name": "Revolution Software",
+      "role": "developer"
+    },
+    {
+      "id": 66,
+      "name": "Activision",
+      "role": "publisher"
+    },
+    {
+      "id": 32,
+      "name": "Sierra On-Line",
+      "role": "publisher"
+    }
+  ]
+}

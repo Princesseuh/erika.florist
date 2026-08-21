@@ -1,0 +1,16 @@
+{
+  "first_release_date": 1307577600,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    }
+  ],
+  "companies": []
+}

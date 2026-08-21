@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1321228800,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "Sega CD",
+      "id": 78
+    }
+  ],
+  "companies": [
+    {
+      "id": 1731,
+      "name": "Imagineering Inc.",
+      "role": "developer"
+    },
+    {
+      "id": 1000,
+      "name": "Absolute Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

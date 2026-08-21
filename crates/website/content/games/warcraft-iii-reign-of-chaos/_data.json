@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1025654400,
+  "genres": [
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 24,
+      "name": "Sierra Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 37,
+      "name": "Capcom",
+      "role": "publisher"
+    },
+    {
+      "id": 51,
+      "name": "Blizzard Entertainment",
+      "role": "developer"
+    }
+  ]
+}

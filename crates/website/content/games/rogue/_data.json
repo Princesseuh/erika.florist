@@ -1,0 +1,89 @@
+{
+  "first_release_date": 347068800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "pdp11",
+      "id": 108
+    },
+    {
+      "abbreviation": "Atari8bit",
+      "id": 65
+    },
+    {
+      "abbreviation": null,
+      "id": 125
+    },
+    {
+      "abbreviation": "C64",
+      "id": 15
+    },
+    {
+      "abbreviation": "ZXS",
+      "id": 26
+    },
+    {
+      "abbreviation": null,
+      "id": 151
+    },
+    {
+      "abbreviation": "Atari-ST",
+      "id": 63
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Amiga",
+      "id": 16
+    },
+    {
+      "abbreviation": "ACPC",
+      "id": 25
+    }
+  ],
+  "companies": [
+    {
+      "id": 366,
+      "name": "Epyx",
+      "role": "publisher"
+    },
+    {
+      "id": 1466,
+      "name": "Mastertronic",
+      "role": "publisher"
+    },
+    {
+      "id": 1349,
+      "name": "Artificial Intelligence Design",
+      "role": "developer"
+    },
+    {
+      "id": 1821,
+      "name": "ASCII Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "first_release_date": 633744000,
+  "genres": [
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    },
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "NES",
+      "id": 18
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 213,
+      "name": "Infogrames",
+      "role": "publisher"
+    },
+    {
+      "id": 2103,
+      "name": "Aksys Games",
+      "role": "publisher"
+    },
+    {
+      "id": 445,
+      "name": "505 Games",
+      "role": "publisher"
+    },
+    {
+      "id": 38087,
+      "name": "American Technos",
+      "role": "publisher"
+    },
+    {
+      "id": 1218,
+      "name": "Arc System Works",
+      "role": "publisher"
+    },
+    {
+      "id": 1753,
+      "name": "Technos Japan",
+      "role": "developer"
+    },
+    {
+      "id": 1218,
+      "name": "Arc System Works",
+      "role": "publisher"
+    },
+    {
+      "id": 37153,
+      "name": "I.T.L",
+      "role": "publisher"
+    }
+  ]
+}

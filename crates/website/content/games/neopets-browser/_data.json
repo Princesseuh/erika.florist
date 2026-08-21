@@ -1,0 +1,42 @@
+{
+  "first_release_date": 942624000,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    }
+  ],
+  "companies": [
+    {
+      "id": 2710,
+      "name": "Nickelodeon",
+      "role": "developer"
+    },
+    {
+      "id": 24144,
+      "name": "JumpStart Games",
+      "role": "developer"
+    },
+    {
+      "id": 51120,
+      "name": "World of Neopia, Inc.",
+      "role": "developer"
+    },
+    {
+      "id": 48254,
+      "name": "Fluffy Dog Studio",
+      "role": "developer"
+    },
+    {
+      "id": 12241,
+      "name": "NetDragon",
+      "role": "developer"
+    }
+  ]
+}

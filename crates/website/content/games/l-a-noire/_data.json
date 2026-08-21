@@ -1,0 +1,58 @@
+{
+  "first_release_date": 1305590400,
+  "genres": [
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Steam VR",
+      "id": 163
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 30,
+      "name": "Team Bondi",
+      "role": "developer"
+    },
+    {
+      "id": 308,
+      "name": "Rockstar Leeds",
+      "role": "developer"
+    },
+    {
+      "id": 139,
+      "name": "Take-Two Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 29,
+      "name": "Rockstar Games",
+      "role": "publisher"
+    },
+    {
+      "id": 365,
+      "name": "Rockstar North",
+      "role": "developer"
+    }
+  ]
+}

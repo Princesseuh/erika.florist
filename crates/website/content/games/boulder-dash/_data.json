@@ -1,0 +1,40 @@
+{
+  "first_release_date": 444441600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Atari8bit",
+      "id": 65
+    }
+  ],
+  "companies": [
+    {
+      "id": 4886,
+      "name": "First Star Software",
+      "role": "developer"
+    },
+    {
+      "id": 4119,
+      "name": "Mirrorsoft",
+      "role": "publisher"
+    },
+    {
+      "id": 5976,
+      "name": "Prism Leisure Corporation Plc",
+      "role": "publisher"
+    }
+  ]
+}

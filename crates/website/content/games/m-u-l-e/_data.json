@@ -1,0 +1,78 @@
+{
+  "first_release_date": 436492800,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 16,
+      "name": "Turn-based strategy (TBS)"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Atari8bit",
+      "id": 65
+    },
+    {
+      "abbreviation": null,
+      "id": 125
+    },
+    {
+      "abbreviation": "C64",
+      "id": 15
+    },
+    {
+      "abbreviation": "x1",
+      "id": 77
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "NES",
+      "id": 18
+    },
+    {
+      "abbreviation": "MSX",
+      "id": 27
+    }
+  ],
+  "companies": [
+    {
+      "id": 2391,
+      "name": "IBM",
+      "role": "publisher"
+    },
+    {
+      "id": 5125,
+      "name": "Ozark Softscape",
+      "role": "developer"
+    },
+    {
+      "id": 341,
+      "name": "Bullet-Proof Software",
+      "role": "publisher"
+    },
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 489,
+      "name": "Mindscape",
+      "role": "publisher"
+    }
+  ]
+}

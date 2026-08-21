@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1234224000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 50,
+      "name": "WB Games",
+      "role": "publisher"
+    },
+    {
+      "id": 407,
+      "name": "Monolith Productions",
+      "role": "developer"
+    },
+    {
+      "id": 74,
+      "name": "CyberFront",
+      "role": "publisher"
+    }
+  ]
+}

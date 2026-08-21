@@ -1,0 +1,70 @@
+{
+  "first_release_date": 1341360000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 1010,
+      "name": "Microsoft Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 4602,
+      "name": "BlitWorks",
+      "role": "developer"
+    },
+    {
+      "id": 1421,
+      "name": "Mossmouth",
+      "role": "developer"
+    },
+    {
+      "id": 4602,
+      "name": "BlitWorks",
+      "role": "publisher"
+    },
+    {
+      "id": 1421,
+      "name": "Mossmouth",
+      "role": "publisher"
+    }
+  ]
+}

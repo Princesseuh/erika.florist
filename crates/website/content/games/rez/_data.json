@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1006387200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 7,
+      "name": "Music"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "DC",
+      "id": 23
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 2009,
+      "name": "United Game Artists",
+      "role": "developer"
+    }
+  ]
+}

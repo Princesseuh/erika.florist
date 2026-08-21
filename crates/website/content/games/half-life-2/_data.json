@@ -1,0 +1,61 @@
+{
+  "first_release_date": 1100563200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 56,
+      "name": "Valve",
+      "role": "developer"
+    },
+    {
+      "id": 22994,
+      "name": "NVIDIA Lightspeed Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 24,
+      "name": "Sierra Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

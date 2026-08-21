@@ -1,0 +1,57 @@
+{
+  "first_release_date": 1102809600,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "Mobile",
+      "id": 55
+    }
+  ],
+  "companies": [
+    {
+      "id": 61,
+      "name": "Gameloft",
+      "role": "developer"
+    },
+    {
+      "id": 617,
+      "name": "Bandai",
+      "role": "publisher"
+    },
+    {
+      "id": 4710,
+      "name": "WildTangent",
+      "role": "publisher"
+    },
+    {
+      "id": 786,
+      "name": "Q Entertainment",
+      "role": "developer"
+    }
+  ]
+}

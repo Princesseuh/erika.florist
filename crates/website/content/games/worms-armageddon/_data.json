@@ -1,0 +1,90 @@
+{
+  "first_release_date": 917568000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "N64",
+      "id": 4
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    },
+    {
+      "abbreviation": "DC",
+      "id": 23
+    }
+  ],
+  "companies": [
+    {
+      "id": 213,
+      "name": "Infogrames",
+      "role": "developer"
+    },
+    {
+      "id": 191,
+      "name": "Imagineer",
+      "role": "publisher"
+    },
+    {
+      "id": 12843,
+      "name": "Russobit-M",
+      "role": "publisher"
+    },
+    {
+      "id": 197,
+      "name": "THQ",
+      "role": "publisher"
+    },
+    {
+      "id": 5176,
+      "name": "Sold Out Sales & Marketing",
+      "role": "publisher"
+    },
+    {
+      "id": 9150,
+      "name": "MicroProse Software, Inc.",
+      "role": "publisher"
+    },
+    {
+      "id": 37694,
+      "name": "Acer TWP",
+      "role": "publisher"
+    },
+    {
+      "id": 16437,
+      "name": "Team17",
+      "role": "publisher"
+    },
+    {
+      "id": 16437,
+      "name": "Team17",
+      "role": "developer"
+    }
+  ]
+}

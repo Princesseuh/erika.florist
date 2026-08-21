@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1225497600,
+  "genres": [
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "browser",
+      "id": 82
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "Mobile",
+      "id": 55
+    }
+  ],
+  "companies": [
+    {
+      "id": 4697,
+      "name": "Noodlecake Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 13660,
+      "name": "Bennett Foddy",
+      "role": "developer"
+    }
+  ]
+}

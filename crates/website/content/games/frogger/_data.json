@@ -1,0 +1,36 @@
+{
+  "first_release_date": 365472000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    }
+  ],
+  "companies": [
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "developer"
+    },
+    {
+      "id": 1297,
+      "name": "Gremlin Industries",
+      "role": "publisher"
+    }
+  ]
+}

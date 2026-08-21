@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1004918400,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "NGC",
+      "id": 21
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 277,
+      "name": "EA Canada",
+      "role": "developer"
+    },
+    {
+      "id": 1945,
+      "name": "EA Sports BIG",
+      "role": "publisher"
+    }
+  ]
+}

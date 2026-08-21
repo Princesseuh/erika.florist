@@ -1,0 +1,43 @@
+{
+  "first_release_date": 959212800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    }
+  ],
+  "companies": [
+    {
+      "id": 1215,
+      "name": "Banpresto",
+      "role": "developer"
+    },
+    {
+      "id": 6330,
+      "name": "Namco Bandai Games",
+      "role": "publisher"
+    }
+  ]
+}

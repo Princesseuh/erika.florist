@@ -1,0 +1,27 @@
+{
+  "first_release_date": 849830400,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    }
+  ],
+  "companies": [
+    {
+      "id": 13634,
+      "name": "Sony Computer Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 2225,
+      "name": "NanaOn-Sha",
+      "role": "developer"
+    }
+  ]
+}

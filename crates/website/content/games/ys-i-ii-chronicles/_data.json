@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1261612800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    }
+  ],
+  "companies": [
+    {
+      "id": 2751,
+      "name": "Nihon Falcom",
+      "role": "developer"
+    },
+    {
+      "id": 2187,
+      "name": "XSEED Games",
+      "role": "publisher"
+    }
+  ]
+}

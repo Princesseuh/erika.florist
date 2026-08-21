@@ -1,0 +1,27 @@
+{
+  "first_release_date": 1225065600,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    }
+  ],
+  "companies": [
+    {
+      "id": 746,
+      "name": "Media Molecule",
+      "role": "developer"
+    },
+    {
+      "id": 13634,
+      "name": "Sony Computer Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "first_release_date": 1541721600,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PSVR",
+      "id": 165
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Steam VR",
+      "id": 163
+    },
+    {
+      "abbreviation": null,
+      "id": 385
+    },
+    {
+      "abbreviation": null,
+      "id": 384
+    }
+  ],
+  "companies": [
+    {
+      "id": 13246,
+      "name": "Resonair",
+      "role": "developer"
+    },
+    {
+      "id": 29992,
+      "name": "Monstars Inc.",
+      "role": "developer"
+    },
+    {
+      "id": 27260,
+      "name": "Enhance",
+      "role": "publisher"
+    }
+  ]
+}

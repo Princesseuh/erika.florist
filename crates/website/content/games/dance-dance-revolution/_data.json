@@ -1,0 +1,35 @@
+{
+  "first_release_date": 906768000,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    }
+  ],
+  "companies": [
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "publisher"
+    },
+    {
+      "id": 1806,
+      "name": "Bemani",
+      "role": "developer"
+    }
+  ]
+}

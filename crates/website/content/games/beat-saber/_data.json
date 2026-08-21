@@ -1,0 +1,67 @@
+{
+  "first_release_date": 1525132800,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Meta Quest 2",
+      "id": 386
+    },
+    {
+      "abbreviation": "PSVR2",
+      "id": 390
+    },
+    {
+      "abbreviation": null,
+      "id": 161
+    },
+    {
+      "abbreviation": "PSVR",
+      "id": 165
+    },
+    {
+      "abbreviation": "Steam VR",
+      "id": 163
+    },
+    {
+      "abbreviation": "Meta Quest 3",
+      "id": 471
+    },
+    {
+      "abbreviation": null,
+      "id": 385
+    },
+    {
+      "abbreviation": null,
+      "id": 384
+    }
+  ],
+  "companies": [
+    {
+      "id": 13383,
+      "name": "Beat Games",
+      "role": "developer"
+    },
+    {
+      "id": 14481,
+      "name": "Hyperbolic Magnetism",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "first_release_date": 1112400000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "NGC",
+      "id": 21
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 73,
+      "name": "Aspyr Media",
+      "role": "publisher"
+    },
+    {
+      "id": 10,
+      "name": "LucasArts",
+      "role": "publisher"
+    },
+    {
+      "id": 4,
+      "name": "Eidos Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 13100,
+      "name": "Giant Interactive Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 4288,
+      "name": "i5works",
+      "role": "publisher"
+    },
+    {
+      "id": 292,
+      "name": "Traveller's Tales",
+      "role": "developer"
+    }
+  ]
+}

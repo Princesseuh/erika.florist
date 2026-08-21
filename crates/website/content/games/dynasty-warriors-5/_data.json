@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1109203200,
+  "genres": [
+    {
+      "id": 24,
+      "name": "Tactical"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 630,
+      "name": "Koei",
+      "role": "publisher"
+    },
+    {
+      "id": 1394,
+      "name": "Omega Force",
+      "role": "developer"
+    }
+  ]
+}

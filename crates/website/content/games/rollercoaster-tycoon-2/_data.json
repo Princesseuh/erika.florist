@@ -1,0 +1,40 @@
+{
+  "first_release_date": 1034640000,
+  "genres": [
+    {
+      "id": 11,
+      "name": "Real Time Strategy (RTS)"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 213,
+      "name": "Infogrames",
+      "role": "publisher"
+    },
+    {
+      "id": 8532,
+      "name": "Chris Sawyer Productions",
+      "role": "developer"
+    },
+    {
+      "id": 2406,
+      "name": "Atari, Inc.",
+      "role": "publisher"
+    }
+  ]
+}

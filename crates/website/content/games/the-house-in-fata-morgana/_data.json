@@ -1,0 +1,62 @@
+{
+  "first_release_date": 1356912000,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "3DS",
+      "id": 37
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 2909,
+      "name": "FuRyu",
+      "role": "publisher"
+    },
+    {
+      "id": 5188,
+      "name": "MangaGamer",
+      "role": "publisher"
+    },
+    {
+      "id": 25436,
+      "name": "Gengosha",
+      "role": "publisher"
+    },
+    {
+      "id": 15686,
+      "name": "NOVECT",
+      "role": "developer"
+    },
+    {
+      "id": 20661,
+      "name": "Crunchyroll Games",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "first_release_date": 948585600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "neogeoaes",
+      "id": 80
+    },
+    {
+      "abbreviation": "browser",
+      "id": 82
+    },
+    {
+      "abbreviation": "neogeomvs",
+      "id": 79
+    },
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 2837,
+      "name": "D4 Enterprise",
+      "role": "publisher"
+    },
+    {
+      "id": 1474,
+      "name": "SNK",
+      "role": "developer"
+    }
+  ]
+}

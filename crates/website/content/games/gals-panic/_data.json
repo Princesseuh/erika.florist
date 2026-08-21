@@ -1,0 +1,22 @@
+{
+  "first_release_date": 660009600,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    }
+  ],
+  "companies": [
+    {
+      "id": 2360,
+      "name": "Kaneko",
+      "role": "developer"
+    }
+  ]
+}

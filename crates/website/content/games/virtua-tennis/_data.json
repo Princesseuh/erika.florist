@@ -1,0 +1,77 @@
+{
+  "first_release_date": 944006400,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "NGage",
+      "id": 42
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "GBA",
+      "id": 24
+    },
+    {
+      "abbreviation": "DC",
+      "id": 23
+    }
+  ],
+  "companies": [
+    {
+      "id": 4981,
+      "name": "Sega Enterprises, Ltd.",
+      "role": "publisher"
+    },
+    {
+      "id": 2327,
+      "name": "Sega AM3",
+      "role": "developer"
+    },
+    {
+      "id": 229,
+      "name": "Sega of America",
+      "role": "publisher"
+    },
+    {
+      "id": 1906,
+      "name": "Hitmaker",
+      "role": "developer"
+    },
+    {
+      "id": 1666,
+      "name": "Sega Europe",
+      "role": "publisher"
+    },
+    {
+      "id": 1488,
+      "name": "Activision Value",
+      "role": "publisher"
+    },
+    {
+      "id": 18441,
+      "name": "Empire Interactive Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 27535,
+      "name": "Strangelite Limited",
+      "role": "publisher"
+    }
+  ]
+}

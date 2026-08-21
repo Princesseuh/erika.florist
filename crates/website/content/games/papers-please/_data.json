@@ -1,0 +1,59 @@
+{
+  "first_release_date": 1375920000,
+  "genres": [
+    {
+      "id": 2,
+      "name": "Point-and-click"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    }
+  ],
+  "companies": [
+    {
+      "id": 15527,
+      "name": "3909",
+      "role": "publisher"
+    },
+    {
+      "id": 1365,
+      "name": "Lucas Pope",
+      "role": "developer"
+    }
+  ]
+}

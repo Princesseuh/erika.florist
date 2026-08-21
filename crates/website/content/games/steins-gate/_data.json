@@ -1,0 +1,79 @@
+{
+  "first_release_date": 1255564800,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 4091,
+      "name": "PQube",
+      "role": "publisher"
+    },
+    {
+      "id": 3020,
+      "name": "JAST USA",
+      "role": "publisher"
+    },
+    {
+      "id": 5996,
+      "name": "MAGES.",
+      "role": "developer"
+    },
+    {
+      "id": 2929,
+      "name": "Kadokawa Shoten",
+      "role": "publisher"
+    },
+    {
+      "id": 2946,
+      "name": "Nitro Plus",
+      "role": "developer"
+    },
+    {
+      "id": 2428,
+      "name": "5pb.",
+      "role": "developer"
+    }
+  ]
+}

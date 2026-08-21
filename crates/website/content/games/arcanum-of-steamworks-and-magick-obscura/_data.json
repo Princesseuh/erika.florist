@@ -1,0 +1,32 @@
+{
+  "first_release_date": 998352000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 24,
+      "name": "Sierra Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 117,
+      "name": "Troika Games",
+      "role": "developer"
+    },
+    {
+      "id": 66,
+      "name": "Activision",
+      "role": "publisher"
+    }
+  ]
+}

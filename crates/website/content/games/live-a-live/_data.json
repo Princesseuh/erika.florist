@@ -1,0 +1,27 @@
+{
+  "first_release_date": 778464000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "SFAM",
+      "id": 58
+    }
+  ],
+  "companies": [
+    {
+      "id": 250,
+      "name": "Square",
+      "role": "publisher"
+    },
+    {
+      "id": 53150,
+      "name": "Square Osaka Development Department",
+      "role": "developer"
+    }
+  ]
+}

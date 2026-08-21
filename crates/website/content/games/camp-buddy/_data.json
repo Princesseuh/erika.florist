@@ -1,0 +1,30 @@
+{
+  "first_release_date": 1541894400,
+  "genres": [
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 22789,
+      "name": "BLits Games",
+      "role": "developer"
+    }
+  ]
+}

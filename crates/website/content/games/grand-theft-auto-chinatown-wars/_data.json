@@ -1,0 +1,48 @@
+{
+  "first_release_date": 1237248000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    },
+    {
+      "abbreviation": "NDS",
+      "id": 20
+    }
+  ],
+  "companies": [
+    {
+      "id": 308,
+      "name": "Rockstar Leeds",
+      "role": "developer"
+    },
+    {
+      "id": 365,
+      "name": "Rockstar North",
+      "role": "developer"
+    },
+    {
+      "id": 29,
+      "name": "Rockstar Games",
+      "role": "publisher"
+    }
+  ]
+}

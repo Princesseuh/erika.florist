@@ -1,0 +1,64 @@
+{
+  "first_release_date": 700272000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 405
+    },
+    {
+      "abbreviation": null,
+      "id": 149
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": null,
+      "id": 118
+    }
+  ],
+  "companies": [
+    {
+      "id": 295,
+      "name": "Origin Systems",
+      "role": "publisher"
+    },
+    {
+      "id": 31302,
+      "name": "ZIOSoft",
+      "role": "publisher"
+    },
+    {
+      "id": 1124,
+      "name": "Floodgate Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 200,
+      "name": "Electronic Arts Victor",
+      "role": "publisher"
+    },
+    {
+      "id": 22058,
+      "name": "Infinity Co., Ltd.",
+      "role": "publisher"
+    },
+    {
+      "id": 2620,
+      "name": "Looking Glass Technologies",
+      "role": "developer"
+    },
+    {
+      "id": 3,
+      "name": "Looking Glass Studios",
+      "role": "developer"
+    }
+  ]
+}

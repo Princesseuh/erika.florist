@@ -1,0 +1,50 @@
+{
+  "first_release_date": 1112659200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 147,
+      "name": "Vivendi Universal",
+      "role": "publisher"
+    },
+    {
+      "id": 24,
+      "name": "Sierra Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 21,
+      "name": "Irrational Games",
+      "role": "developer"
+    },
+    {
+      "id": 4478,
+      "name": "Livedoor",
+      "role": "publisher"
+    },
+    {
+      "id": 66,
+      "name": "Activision",
+      "role": "publisher"
+    }
+  ]
+}

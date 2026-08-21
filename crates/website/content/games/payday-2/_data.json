@@ -1,0 +1,64 @@
+{
+  "first_release_date": 1376352000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 905,
+      "name": "Overkill Software",
+      "role": "developer"
+    },
+    {
+      "id": 280,
+      "name": "Starbreeze Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 445,
+      "name": "505 Games",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "first_release_date": 977184000,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 30,
+      "name": "Pinball"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": []
+}

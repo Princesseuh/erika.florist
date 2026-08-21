@@ -1,0 +1,36 @@
+{
+  "first_release_date": 940464000,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "N64",
+      "id": 4
+    }
+  ],
+  "companies": [
+    {
+      "id": 702,
+      "name": "Ubisoft Montpellier",
+      "role": "developer"
+    },
+    {
+      "id": 812,
+      "name": "Gradiente",
+      "role": "publisher"
+    },
+    {
+      "id": 16845,
+      "name": "Ubi Soft Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

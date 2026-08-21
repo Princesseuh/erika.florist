@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1440028800,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    }
+  ],
+  "companies": [
+    {
+      "id": 248,
+      "name": "Bandai Namco Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 22022,
+      "name": "Geechs Inc.",
+      "role": "developer"
+    }
+  ]
+}

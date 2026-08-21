@@ -1,0 +1,52 @@
+{
+  "first_release_date": 735955200,
+  "genres": [
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 306
+    },
+    {
+      "abbreviation": "SNES",
+      "id": 19
+    },
+    {
+      "abbreviation": "Mobile",
+      "id": 55
+    },
+    {
+      "abbreviation": "SFAM",
+      "id": 58
+    }
+  ],
+  "companies": [
+    {
+      "id": 864,
+      "name": "Hudson Soft",
+      "role": "publisher"
+    },
+    {
+      "id": 17174,
+      "name": "Produce!",
+      "role": "developer"
+    },
+    {
+      "id": 2889,
+      "name": "Mattel",
+      "role": "publisher"
+    }
+  ]
+}

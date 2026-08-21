@@ -1,0 +1,49 @@
+{
+  "first_release_date": 842572800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Saturn",
+      "id": 32
+    }
+  ],
+  "companies": [
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 1177,
+      "name": "WOW Entertainment",
+      "role": "developer"
+    },
+    {
+      "id": 806,
+      "name": "Tantalus Interactive",
+      "role": "publisher"
+    }
+  ]
+}

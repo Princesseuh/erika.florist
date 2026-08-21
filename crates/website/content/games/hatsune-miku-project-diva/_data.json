@@ -1,0 +1,32 @@
+{
+  "first_release_date": 1246492800,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PSP",
+      "id": 38
+    }
+  ],
+  "companies": [
+    {
+      "id": 6219,
+      "name": "Dingo",
+      "role": "developer"
+    },
+    {
+      "id": 2922,
+      "name": "Crypton Future Media",
+      "role": "developer"
+    },
+    {
+      "id": 14087,
+      "name": "Sega Corporation",
+      "role": "developer"
+    }
+  ]
+}

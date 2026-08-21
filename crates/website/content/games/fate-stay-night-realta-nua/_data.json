@@ -1,0 +1,44 @@
+{
+  "first_release_date": 1176940800,
+  "genres": [
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 6429,
+      "name": "TYPE-MOON",
+      "role": "developer"
+    },
+    {
+      "id": 2929,
+      "name": "Kadokawa Shoten",
+      "role": "publisher"
+    },
+    {
+      "id": 836,
+      "name": "Kadokawa Games",
+      "role": "publisher"
+    }
+  ]
+}

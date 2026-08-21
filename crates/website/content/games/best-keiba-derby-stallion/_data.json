@@ -1,0 +1,30 @@
+{
+  "first_release_date": 693273600,
+  "genres": [
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 14,
+      "name": "Sport"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "famicom",
+      "id": 99
+    }
+  ],
+  "companies": [
+    {
+      "id": 1743,
+      "name": "ASCII Corporation",
+      "role": "developer"
+    }
+  ]
+}

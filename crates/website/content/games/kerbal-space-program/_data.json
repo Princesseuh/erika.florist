@@ -1,0 +1,60 @@
+{
+  "first_release_date": 1430092800,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "WiiU",
+      "id": 41
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 1464,
+      "name": "Squad",
+      "role": "developer"
+    },
+    {
+      "id": 2827,
+      "name": "Flying Tiger Developments",
+      "role": "publisher"
+    },
+    {
+      "id": 14035,
+      "name": "Private Division",
+      "role": "publisher"
+    }
+  ]
+}

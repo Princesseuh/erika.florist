@@ -1,0 +1,27 @@
+{
+  "first_release_date": 875059200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 295,
+      "name": "Origin Systems",
+      "role": "developer"
+    }
+  ]
+}

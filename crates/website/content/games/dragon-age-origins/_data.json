@@ -1,0 +1,44 @@
+{
+  "first_release_date": 1257206400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 223,
+      "name": "Edge of Reality",
+      "role": "publisher"
+    },
+    {
+      "id": 222,
+      "name": "BioWare Edmonton",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "first_release_date": 1286841600,
+  "genres": [
+    {
+      "id": 7,
+      "name": "Music"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    }
+  ],
+  "companies": [
+    {
+      "id": 841,
+      "name": "Ubisoft Paris",
+      "role": "developer"
+    },
+    {
+      "id": 899,
+      "name": "Ubisoft Milan",
+      "role": "developer"
+    },
+    {
+      "id": 104,
+      "name": "Ubisoft Entertainment",
+      "role": "publisher"
+    }
+  ]
+}

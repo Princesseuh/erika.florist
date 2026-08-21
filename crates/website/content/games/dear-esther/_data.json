@@ -1,0 +1,39 @@
+{
+  "first_release_date": 1329177600,
+  "genres": [
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 4132,
+      "name": "icculus.org",
+      "role": "publisher"
+    },
+    {
+      "id": 1364,
+      "name": "The Chinese Room",
+      "role": "developer"
+    }
+  ]
+}

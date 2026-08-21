@@ -1,0 +1,47 @@
+{
+  "first_release_date": 1321315200,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    }
+  ],
+  "companies": [
+    {
+      "id": 37,
+      "name": "Capcom",
+      "role": "developer"
+    },
+    {
+      "id": 2821,
+      "name": "Eighting",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "first_release_date": 1005609600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 24,
+      "name": "Tactical"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 129,
+      "name": "Konami",
+      "role": "publisher"
+    },
+    {
+      "id": 312,
+      "name": "Konami Computer Entertainment Japan",
+      "role": "developer"
+    }
+  ]
+}

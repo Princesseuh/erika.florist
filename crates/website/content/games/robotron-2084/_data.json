@@ -1,0 +1,103 @@
+{
+  "first_release_date": 378691200,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "vic-20",
+      "id": 71
+    },
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "bbcmicro",
+      "id": 69
+    },
+    {
+      "abbreviation": "Atari7800",
+      "id": 60
+    },
+    {
+      "abbreviation": "Atari8bit",
+      "id": 65
+    },
+    {
+      "abbreviation": "C64",
+      "id": 15
+    },
+    {
+      "abbreviation": "Lynx",
+      "id": 61
+    },
+    {
+      "abbreviation": "Atari-ST",
+      "id": 63
+    },
+    {
+      "abbreviation": "Acorn Electron",
+      "id": 134
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "Atari5200",
+      "id": 66
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    },
+    {
+      "abbreviation": "Apple][",
+      "id": 75
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 1839,
+      "name": "Williams Electronics",
+      "role": "publisher"
+    },
+    {
+      "id": 1840,
+      "name": "Vid Kidz",
+      "role": "developer"
+    },
+    {
+      "id": 11161,
+      "name": "Shadowsoft",
+      "role": "publisher"
+    },
+    {
+      "id": 190,
+      "name": "Atari Corporation",
+      "role": "publisher"
+    },
+    {
+      "id": 82,
+      "name": "Atari",
+      "role": "publisher"
+    },
+    {
+      "id": 888,
+      "name": "Digital Eclipse",
+      "role": "publisher"
+    }
+  ]
+}

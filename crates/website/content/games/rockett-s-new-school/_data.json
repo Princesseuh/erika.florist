@@ -1,0 +1,26 @@
+{
+  "first_release_date": 873072000,
+  "genres": [
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 19312,
+      "name": "Purple Moon",
+      "role": "developer"
+    }
+  ]
+}

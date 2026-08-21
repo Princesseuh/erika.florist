@@ -1,0 +1,44 @@
+{
+  "first_release_date": 755481600,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": null,
+      "id": 405
+    },
+    {
+      "abbreviation": null,
+      "id": 149
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "DOS",
+      "id": 13
+    }
+  ],
+  "companies": [
+    {
+      "id": 3693,
+      "name": "Infinity",
+      "role": "publisher"
+    },
+    {
+      "id": 184,
+      "name": "id Software",
+      "role": "developer"
+    },
+    {
+      "id": 191,
+      "name": "Imagineer",
+      "role": "publisher"
+    }
+  ]
+}

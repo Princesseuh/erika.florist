@@ -1,0 +1,48 @@
+{
+  "first_release_date": 920160000,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 16,
+      "name": "Turn-based strategy (TBS)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 97,
+      "name": "New World Computing",
+      "role": "developer"
+    },
+    {
+      "id": 106,
+      "name": "Loki Software",
+      "role": "developer"
+    },
+    {
+      "id": 99,
+      "name": "The 3DO Company",
+      "role": "publisher"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "first_release_date": 913334400,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 7432,
+      "name": "Retroism",
+      "role": "publisher"
+    },
+    {
+      "id": 183,
+      "name": "Hasbro Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 130,
+      "name": "MacSoft Games",
+      "role": "publisher"
+    },
+    {
+      "id": 37694,
+      "name": "Acer TWP",
+      "role": "publisher"
+    },
+    {
+      "id": 2039,
+      "name": "Tommo Inc",
+      "role": "publisher"
+    },
+    {
+      "id": 9150,
+      "name": "MicroProse Software, Inc.",
+      "role": "publisher"
+    },
+    {
+      "id": 9150,
+      "name": "MicroProse Software, Inc.",
+      "role": "developer"
+    }
+  ]
+}

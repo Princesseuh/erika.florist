@@ -1,0 +1,86 @@
+{
+  "first_release_date": 1334275200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "Vita",
+      "id": 46
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 4602,
+      "name": "BlitWorks",
+      "role": "publisher"
+    },
+    {
+      "id": 1010,
+      "name": "Microsoft Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 1111,
+      "name": "Trapdoor",
+      "role": "publisher"
+    },
+    {
+      "id": 1013,
+      "name": "Polytron Corporation",
+      "role": "developer"
+    },
+    {
+      "id": 1013,
+      "name": "Polytron Corporation",
+      "role": "publisher"
+    }
+  ]
+}

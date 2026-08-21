@@ -1,0 +1,40 @@
+{
+  "first_release_date": 890870400,
+  "genres": [
+    {
+      "id": 4,
+      "name": "Fighting"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS1",
+      "id": 7
+    }
+  ],
+  "companies": [
+    {
+      "id": 13634,
+      "name": "Sony Computer Entertainment",
+      "role": "publisher"
+    },
+    {
+      "id": 263,
+      "name": "Namco",
+      "role": "developer"
+    },
+    {
+      "id": 38881,
+      "name": "Production I.G",
+      "role": "publisher"
+    }
+  ]
+}

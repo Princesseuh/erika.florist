@@ -1,0 +1,43 @@
+{
+  "first_release_date": 1505347200,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    }
+  ],
+  "companies": [
+    {
+      "id": 510,
+      "name": "Larian Studios",
+      "role": "developer"
+    },
+    {
+      "id": 3757,
+      "name": "Elverils LLC",
+      "role": "developer"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "first_release_date": 591667200,
+  "genres": [
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Arcade",
+      "id": 52
+    },
+    {
+      "abbreviation": "Wii",
+      "id": 5
+    }
+  ],
+  "companies": [
+    {
+      "id": 14776,
+      "name": "Tecmo",
+      "role": "developer"
+    },
+    {
+      "id": 70,
+      "name": "Nintendo",
+      "role": "publisher"
+    }
+  ]
+}

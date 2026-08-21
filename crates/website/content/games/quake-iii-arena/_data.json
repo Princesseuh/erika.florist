@@ -1,0 +1,77 @@
+{
+  "first_release_date": 944092800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "Linux",
+      "id": 3
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "DC",
+      "id": 23
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 1,
+      "name": "Electronic Arts",
+      "role": "publisher"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 106,
+      "name": "Loki Software",
+      "role": "publisher"
+    },
+    {
+      "id": 184,
+      "name": "id Software",
+      "role": "developer"
+    },
+    {
+      "id": 66,
+      "name": "Activision",
+      "role": "publisher"
+    },
+    {
+      "id": 358,
+      "name": "Raster Productions",
+      "role": "publisher"
+    },
+    {
+      "id": 362,
+      "name": "Pi Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 14,
+      "name": "Bullfrog Productions",
+      "role": "publisher"
+    }
+  ]
+}

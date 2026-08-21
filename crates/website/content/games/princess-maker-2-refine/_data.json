@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1096502400,
+  "genres": [
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 2324,
+      "name": "CyberFront Korea",
+      "role": "publisher"
+    },
+    {
+      "id": 10139,
+      "name": "Gainax",
+      "role": "developer"
+    }
+  ]
+}

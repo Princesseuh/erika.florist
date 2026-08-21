@@ -1,0 +1,52 @@
+{
+  "first_release_date": 1166140800,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 15,
+      "name": "Strategy"
+    },
+    {
+      "id": 16,
+      "name": "Turn-based strategy (TBS)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 34,
+      "name": "Visual Novel"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": null,
+      "id": 372
+    }
+  ],
+  "companies": [
+    {
+      "id": 12940,
+      "name": "Alicesoft",
+      "role": "developer"
+    },
+    {
+      "id": 5188,
+      "name": "MangaGamer",
+      "role": "publisher"
+    },
+    {
+      "id": 18561,
+      "name": "DLsite",
+      "role": "publisher"
+    }
+  ]
+}

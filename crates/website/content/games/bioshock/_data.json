@@ -1,0 +1,76 @@
+{
+  "first_release_date": 1187654400,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 9,
+      "name": "Puzzle"
+    },
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    }
+  ],
+  "companies": [
+    {
+      "id": 649,
+      "name": "2K Boston",
+      "role": "developer"
+    },
+    {
+      "id": 411,
+      "name": "Robosoft Technologies",
+      "role": "publisher"
+    },
+    {
+      "id": 2492,
+      "name": "2K Australia",
+      "role": "developer"
+    },
+    {
+      "id": 8,
+      "name": "2K Games",
+      "role": "publisher"
+    },
+    {
+      "id": 15,
+      "name": "2K Marin",
+      "role": "publisher"
+    },
+    {
+      "id": 649,
+      "name": "2K Boston",
+      "role": "publisher"
+    },
+    {
+      "id": 2492,
+      "name": "2K Australia",
+      "role": "publisher"
+    }
+  ]
+}

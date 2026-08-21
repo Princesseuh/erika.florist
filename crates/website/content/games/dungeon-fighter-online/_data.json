@@ -1,0 +1,44 @@
+{
+  "first_release_date": 1122854400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    },
+    {
+      "id": 25,
+      "name": "Hack and slash/Beat 'em up"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    },
+    {
+      "id": 33,
+      "name": "Arcade"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 9962,
+      "name": "Hangame",
+      "role": "publisher"
+    },
+    {
+      "id": 8431,
+      "name": "Nexon",
+      "role": "publisher"
+    },
+    {
+      "id": 7716,
+      "name": "Neople",
+      "role": "developer"
+    }
+  ]
+}

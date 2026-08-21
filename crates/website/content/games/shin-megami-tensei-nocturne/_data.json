@@ -1,0 +1,31 @@
+{
+  "first_release_date": 1075334400,
+  "genres": [
+    {
+      "id": 12,
+      "name": "Role-playing (RPG)"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 818,
+      "name": "Atlus",
+      "role": "developer"
+    },
+    {
+      "id": 2932,
+      "name": "Ghostlight Ltd.",
+      "role": "publisher"
+    }
+  ]
+}

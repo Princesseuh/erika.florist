@@ -1,0 +1,68 @@
+{
+  "first_release_date": 1502755200,
+  "genres": [
+    {
+      "id": 8,
+      "name": "Platform"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "XONE",
+      "id": 49
+    },
+    {
+      "abbreviation": "Switch",
+      "id": 130
+    }
+  ],
+  "companies": [
+    {
+      "id": 11925,
+      "name": "Headcannon",
+      "role": "developer"
+    },
+    {
+      "id": 10426,
+      "name": "PagodaWest Games",
+      "role": "developer"
+    },
+    {
+      "id": 1304,
+      "name": "Tantalus Media",
+      "role": "publisher"
+    },
+    {
+      "id": 25754,
+      "name": "Christian Whitehead",
+      "role": "developer"
+    },
+    {
+      "id": 112,
+      "name": "Sega",
+      "role": "publisher"
+    },
+    {
+      "id": 68980,
+      "name": "Hyperkinetic Studios",
+      "role": "publisher"
+    },
+    {
+      "id": 15878,
+      "name": "Sega Games",
+      "role": "publisher"
+    }
+  ]
+}

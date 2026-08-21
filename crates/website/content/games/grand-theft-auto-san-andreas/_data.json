@@ -1,0 +1,86 @@
+{
+  "first_release_date": 1098748800,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 10,
+      "name": "Racing"
+    },
+    {
+      "id": 31,
+      "name": "Adventure"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "XBOX",
+      "id": 11
+    },
+    {
+      "abbreviation": "PS3",
+      "id": 9
+    },
+    {
+      "abbreviation": "PS4",
+      "id": 48
+    },
+    {
+      "abbreviation": "Win Phone",
+      "id": 74
+    },
+    {
+      "abbreviation": "Android",
+      "id": 34
+    },
+    {
+      "abbreviation": "PC",
+      "id": 6
+    },
+    {
+      "abbreviation": "iOS",
+      "id": 39
+    },
+    {
+      "abbreviation": "Mac",
+      "id": 14
+    },
+    {
+      "abbreviation": "X360",
+      "id": 12
+    },
+    {
+      "abbreviation": "PS2",
+      "id": 8
+    }
+  ],
+  "companies": [
+    {
+      "id": 365,
+      "name": "Rockstar North",
+      "role": "developer"
+    },
+    {
+      "id": 139,
+      "name": "Take-Two Interactive",
+      "role": "publisher"
+    },
+    {
+      "id": 29,
+      "name": "Rockstar Games",
+      "role": "publisher"
+    },
+    {
+      "id": 1967,
+      "name": "TransGaming Inc.",
+      "role": "publisher"
+    },
+    {
+      "id": 2134,
+      "name": "War Drum Studios",
+      "role": "publisher"
+    }
+  ]
+}

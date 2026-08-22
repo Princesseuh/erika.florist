@@ -1,5 +1,8 @@
 ---
 title: "Rhythm Heaven"
-status: "planned"
+rating: "loved"
+finishedDate: N/A
 igdb: "8167"
 ---
+
+Pretty cute

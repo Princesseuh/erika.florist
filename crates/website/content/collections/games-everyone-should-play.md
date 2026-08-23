@@ -41,7 +41,6 @@ members:
   - game/double-dragon
   - game/dungeon-master
   - game/final-fantasy
-  - game/leisure-suit-larry-in-the-land-of-the-lounge-lizards
   - game/mike-tyson-s-punch-out
   - game/sid-meier-s-pirates
   - game/ninja-gaiden
@@ -53,7 +52,6 @@ members:
   - game/sweet-home
   - game/tetris
   - game/commander-keen-invasion-of-the-vorticons
-  - game/gals-panic
   - game/microsoft-minesweeper
   - game/microsoft-solitaire
   - game/river-city-ransom
@@ -69,7 +67,6 @@ members:
   - game/zzt
   - game/alone-in-the-dark
   - game/contra-iii-the-alien-wars
-  - game/doukyuu-sei
   - game/dune-ii-the-building-of-a-dynasty
   - game/flashback-the-quest-for-identity
   - game/king-s-quest-vi-heir-today-gone-tomorrow
@@ -102,7 +99,7 @@ members:
   - game/mortal-kombat-ii
   - game/panzer-general
   - game/super-metroid
-  - game/super-street-fighter-ii-turbo
+  - game/street-fighter-30th-anniversary-collection
   - game/tokimeki-memorial
   - game/windjammers
   - game/3d-pinball-space-cadet
@@ -133,7 +130,7 @@ members:
   - game/super-mario-64
   - game/the-house-of-the-dead
   - game/the-settlers-ii-veni-vidi-vici
-  - game/tomb-raider
+  - game/tomb-raider-i-ii-iii-remastered
   - game/blast-corps
   - game/bushido-blade
   - game/castlevania-symphony-of-the-night
@@ -212,7 +209,6 @@ members:
   - game/phantasy-star-online
   - game/spyro-year-of-the-dragon
   - game/super-robot-taisen-alpha
-  - game/tsukihime
   - game/vagrant-story
   - game/visual-pinball
   - game/wwf-no-mercy
@@ -254,7 +250,7 @@ members:
   - game/rollercoaster-tycoon-2
   - game/super-monkey-ball-2
   - game/the-elder-scrolls-iii-morrowind
-  - game/the-legend-of-zelda-the-wind-waker
+  - game/the-legend-of-zelda-the-wind-waker-hd
   - game/warcraft-iii-reign-of-chaos
   - game/beyond-good-evil
   - game/eve-online
@@ -338,7 +334,6 @@ members:
   - game/okami
   - game/rayman-raving-rabbids
   - game/roblox
-  - game/sengoku-rance
   - game/toribash
   - game/viva-pinata
   - game/wii-sports
@@ -429,7 +424,7 @@ members:
   - game/starcraft-ii-wings-of-liberty
   - game/super-crate-box
   - game/super-meat-boy
-  - game/umineko-no-naku-koro-ni
+  - game/umineko
   - game/vvvvvv
   - game/xenoblade-chronicles
   - game/bastion
@@ -440,7 +435,7 @@ members:
   - game/hatoful-boyfriend
   - game/jetpack-joyride
   - game/l-a-noire
-  - game/minecraft-java-edition
+  - game/minecraft
   - game/nethack
   - game/portal-2
   - game/realm-of-the-mad-god
@@ -476,7 +471,6 @@ members:
   - game/hotline-miami
   - game/howling-dogs
   - game/journey
-  - game/katawa-shoujo
   - game/mari0
   - game/mark-of-the-ninja
   - game/pixel-dungeon
@@ -504,7 +498,6 @@ members:
   - game/depression-quest
   - game/don-t-starve
   - game/dota2
-  - game/dramatical-murder-re-connect
   - game/europa-universalis-iv
   - game/fifa-14
   - game/final-fantasy-xiv-online
@@ -540,7 +533,6 @@ members:
   - game/jazzpunk
   - game/lisa-the-painful
   - game/monument-valley
-  - game/nekopara-vol-1
   - game/nidhogg
   - game/puyo-puyo-tetris
   - game/shovel-knight
@@ -562,7 +554,6 @@ members:
   - game/fate-grand-order
   - game/her-story
   - game/honor-of-kings
-  - game/huniepop
   - game/idolish7
   - game/kerbal-space-program
   - game/life-is-strange
@@ -588,7 +579,6 @@ members:
   - game/hitman
   - game/human-fall-flat
   - game/inside
-  - game/kindred-spirits-on-the-roof
   - game/ludo-king
   - game/mobile-legends-bang-bang
   - game/mystic-messenger
@@ -630,9 +620,7 @@ members:
   - game/pubg-battlegrounds
   - game/sniper-elite-4
   - game/sonic-mania
-  - game/summertime-saga
   - game/the-legend-of-zelda-breath-of-the-wild
-  - game/the-tearoom
   - game/thehunter-call-of-the-wild
   - game/tom-clancy-s-ghost-recon-wildlands
   - game/total-war-warhammer-ii
@@ -643,7 +631,6 @@ members:
   - game/assassin-s-creed-odyssey
   - game/beat-saber
   - game/bloons-td-6
-  - game/camp-buddy
   - game/celeste
   - game/dead-cells
   - game/farming-simulator-19
@@ -673,7 +660,6 @@ members:
   - game/death-stranding
   - game/disco-elysium
   - game/hell-let-loose
-  - game/koikatsu-party
   - game/outer-wilds
   - game/people-playground
   - game/ring-fit-adventure
@@ -681,7 +667,6 @@ members:
   - game/slay-the-spire
   - game/super-mario-maker-2
   - game/teamfight-tactics
-  - game/being-a-dik
   - game/deep-rock-galactic
   - game/factorio
   - game/fall-guys
@@ -699,7 +684,6 @@ members:
   - game/trackmania
   - game/ultrakill
   - game/cruelty-squad
-  - game/degrees-of-lewdity
   - game/guilty-gear-strive
   - game/it-takes-two
   - game/mass-effect-legendary-edition
@@ -714,4 +698,4 @@ members:
   - game/jian-wang-3-heavy-plate
 ---
 
-An essential-gaming canon of 711 games, from [this list](https://video-game-list.princssdev.workers.dev).
+An essential-gaming canon of 695 games, from [this list](https://video-game-list.princssdev.workers.dev).

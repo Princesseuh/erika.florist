@@ -1,0 +1,30 @@
+{
+  "first_release_date": 1787184000,
+  "genres": [
+    {
+      "id": 5,
+      "name": "Shooter"
+    },
+    {
+      "id": 13,
+      "name": "Simulator"
+    },
+    {
+      "id": 32,
+      "name": "Indie"
+    }
+  ],
+  "platforms": [
+    {
+      "abbreviation": "PC",
+      "id": 6
+    }
+  ],
+  "companies": [
+    {
+      "id": 80410,
+      "name": "Dazed Games",
+      "role": "developer"
+    }
+  ]
+}

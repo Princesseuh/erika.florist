@@ -1,5 +1,4 @@
 packages:
-  - "packages/*"
   - "crates/website"
 
 allowBuilds:

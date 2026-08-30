@@ -86,7 +86,8 @@ export const traceRing = (
 	path.closePath();
 };
 
-const FOG_FILL = "rgba(82, 72, 156, 0.6)"; // violet-ultra
+// 0.5, not 0.6: the basemap carries its own labels now, and they read through this.
+const FOG_FILL = "rgba(82, 72, 156, 0.5)"; // violet-ultra
 const FOG_OUTLINE = "rgba(46, 40, 82, 0.65)"; // dark violet edge around the cleared area
 
 // Zoomed out, a res-11 hexagon is far under one pixel; draw coarser parents

@@ -7,6 +7,12 @@ import { createRegions } from "./regions";
 import { addSearchControl } from "./search";
 import { setupLive } from "./live";
 
+// One line to swap the whole basemap, because this is the part that keeps breaking.
+const BASEMAP_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+
+// Raise for more street detail, lower for a cleaner fog.
+const BASEMAP_FADE = 0.65;
+
 const FULLSCREEN_ICON =
 	'<svg viewBox="0 0 24 24" width="16" height="16" style="display:block" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4H4v4M16 4h4v4M8 20H4v-4M16 20h4v-4"/></svg>';
 
@@ -31,11 +37,11 @@ function init(el: HTMLElement, data: ScratchmapCache): void {
 	});
 	L.control.zoom({ position: "topright" }).addTo(map);
 
-	// Fixed pane order: fog 350 < labels 450 < badges 590 < live dot (default 600).
+	// Fixed pane order: fog 350 < badges 590 < live dot (default 600).
 	// Badges avoid the default marker pane, which rewrites marker z-indexes during
 	// pans. translateZ(0) pins each pane to its own compositing layer now: lazily
 	// promoted layers can composite in paint order instead of z-index order, which
-	// let outlines or labels flash above badges during pans (WebKit).
+	// let outlines flash above badges during pans (WebKit).
 	const pane = (name: string, zIndex: string) => {
 		const paneEl = map.createPane(name);
 		paneEl.style.zIndex = zIndex;
@@ -44,7 +50,6 @@ function init(el: HTMLElement, data: ScratchmapCache): void {
 		paneEl.style.willChange = "transform";
 	};
 	pane("fogPane", "350");
-	pane("labelPane", "450");
 	pane("badgePane", "590");
 	// The outline SVG is the layer most prone to lazy promotion; pin it too.
 	map.getPane("overlayPane")!.style.transform = "translateZ(0)";
@@ -54,19 +59,20 @@ function init(el: HTMLElement, data: ScratchmapCache): void {
 	// same purple whether tiles have arrived or not. It must be on the
 	// container: Leaflet panes have no size of their own, so a pane
 	// background never paints. The page ships the fog-over-this colour
-	// (#8a86b9) instead, for the moment before the fog first draws.
+	// (#9996c0) instead, for the moment before the fog first draws.
 	el.style.background = "#dfe3e3";
 
-	L.tileLayer("https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png", {
-		attribution:
-			'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-		subdomains: "abcd",
-		maxZoom: 19,
-	}).addTo(map);
+	// Desaturated and faded on the pane rather than per tile: one composited filter instead
+	// of one per image. Turns the standard OSM style into something close to the light canvas
+	// this map was designed against, and sits it back so the fog is what reads.
+	map.getPane("tilePane")!.style.filter =
+		`grayscale(1) brightness(1.06) contrast(0.9) opacity(${BASEMAP_FADE})`;
 
-	L.tileLayer("https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png", {
-		pane: "labelPane",
-		subdomains: "abcd",
+	// The OSMF's own tiles, chosen for staying power: every keyless alternative is a company
+	// tolerating us. Labels are baked in, so they sit under the fog rather than over it.
+	L.tileLayer(BASEMAP_URL, {
+		attribution:
+			'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 		maxZoom: 19,
 	}).addTo(map);
 

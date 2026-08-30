@@ -89,7 +89,7 @@ impl Route for ScratchMap {
                     // The fog colour as composited over the tile-pane background in
                     // scratchmap.ts. An inline style outlives Leaflet's own container
                     // background, so the page never flashes white before the fog paints.
-                    div id="scratchmap-map" class="absolute inset-0" style="background:#8a86b9" data-latest=(hash) {}
+                    div id="scratchmap-map" class="absolute inset-0" style="background:#9996c0" data-latest=(hash) {}
                 }
             ),
             true,

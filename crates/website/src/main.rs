@@ -1,4 +1,4 @@
-use erikaflorist::{content::content_sources, pages};
+use erikaflorist::{build_stats, content::content_sources, pages};
 use graphgarden_core::{
     build::build,
     config::{Config, OutputConfig, ParseConfig, SiteConfig},
@@ -50,6 +50,8 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
             ..Default::default()
         },
     )?;
+
+    build_stats::record(&output, output.start_time.elapsed())?;
 
     // After the Maudit build, generate the GraphGarden protocol file.
     if output.has_changes() {

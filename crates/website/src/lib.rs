@@ -1,4 +1,5 @@
 #![allow(dead_code)]
+pub mod build_stats;
 pub mod components;
 pub mod content;
 pub mod layouts;

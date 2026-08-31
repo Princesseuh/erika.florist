@@ -1,0 +1,1129 @@
+[
+  {
+    "date": "2026-05-30T14:42:25Z",
+    "commit": "598a2017",
+    "duration_ms": 6984,
+    "pages": 78,
+    "run": 26686608688
+  },
+  {
+    "date": "2026-05-31T15:51:28Z",
+    "commit": "ec7e588b",
+    "duration_ms": 8014,
+    "pages": 78,
+    "run": 26717209253
+  },
+  {
+    "date": "2026-05-31T19:39:51Z",
+    "commit": "ddb71eef",
+    "duration_ms": 9562,
+    "pages": 78,
+    "run": 26722508485
+  },
+  {
+    "date": "2026-06-01T00:46:30Z",
+    "commit": "b9b46bcb",
+    "duration_ms": 9727,
+    "pages": 78,
+    "run": 26729387688
+  },
+  {
+    "date": "2026-06-01T20:50:14Z",
+    "commit": "b97a5b01",
+    "duration_ms": 10967,
+    "pages": 78,
+    "run": 26781233701
+  },
+  {
+    "date": "2026-06-03T20:36:38Z",
+    "commit": "00444310",
+    "duration_ms": 11296,
+    "pages": 78,
+    "run": 26911484409
+  },
+  {
+    "date": "2026-06-03T21:23:55Z",
+    "commit": "42f62b49",
+    "duration_ms": 12189,
+    "pages": 78,
+    "run": 26913903459
+  },
+  {
+    "date": "2026-06-05T11:23:02Z",
+    "commit": "230dc6ee",
+    "duration_ms": 12335,
+    "pages": 78,
+    "run": 27011988061
+  },
+  {
+    "date": "2026-06-06T00:18:04Z",
+    "commit": "c3f9a0ac",
+    "duration_ms": 13306,
+    "pages": 78,
+    "run": 27046969405
+  },
+  {
+    "date": "2026-06-08T01:32:02Z",
+    "commit": "9db6cd1d",
+    "duration_ms": 13709,
+    "pages": 78,
+    "run": 27111098203
+  },
+  {
+    "date": "2026-06-09T19:49:28Z",
+    "commit": "6f3f5fc7",
+    "duration_ms": 365987,
+    "pages": 78,
+    "run": 27231629561
+  },
+  {
+    "date": "2026-06-10T17:09:48Z",
+    "commit": "a166d0dd",
+    "duration_ms": 368653,
+    "pages": 78,
+    "run": 27292757218
+  },
+  {
+    "date": "2026-06-10T19:22:36Z",
+    "commit": "3802a819",
+    "duration_ms": 370065,
+    "pages": 78,
+    "run": 27300451102
+  },
+  {
+    "date": "2026-06-11T00:52:37Z",
+    "commit": "557fdcc0",
+    "duration_ms": 398038,
+    "pages": 78,
+    "run": 27316351885
+  },
+  {
+    "date": "2026-06-12T00:28:17Z",
+    "commit": "b528f5da",
+    "duration_ms": 368273,
+    "pages": 78,
+    "run": 27386345039
+  },
+  {
+    "date": "2026-06-12T19:43:35Z",
+    "commit": "cebc0939",
+    "duration_ms": 354806,
+    "pages": 78,
+    "run": 27438921279
+  },
+  {
+    "date": "2026-06-13T10:21:47Z",
+    "commit": "572a8904",
+    "duration_ms": 370351,
+    "pages": 78,
+    "run": 27464040519
+  },
+  {
+    "date": "2026-06-13T14:46:31Z",
+    "commit": "e818e55b",
+    "duration_ms": 355004,
+    "pages": 78,
+    "run": 27469929466
+  },
+  {
+    "date": "2026-06-13T18:03:54Z",
+    "commit": "c4c7bd8f",
+    "duration_ms": 371422,
+    "pages": 78,
+    "run": 27474727611
+  },
+  {
+    "date": "2026-06-13T18:16:40Z",
+    "commit": "608fae58",
+    "duration_ms": 342523,
+    "pages": 78,
+    "run": 27475033244
+  },
+  {
+    "date": "2026-06-13T19:03:33Z",
+    "commit": "b1f4f2c7",
+    "duration_ms": 276652,
+    "pages": 78,
+    "run": 27476170234
+  },
+  {
+    "date": "2026-06-14T12:27:33Z",
+    "commit": "1cc05d79",
+    "duration_ms": 358328,
+    "pages": 78,
+    "run": 27498831525
+  },
+  {
+    "date": "2026-06-15T11:20:14Z",
+    "commit": "a15b21d6",
+    "duration_ms": 399630,
+    "pages": 78,
+    "run": 27542702767
+  },
+  {
+    "date": "2026-06-15T23:24:22Z",
+    "commit": "75b27317",
+    "duration_ms": 372209,
+    "pages": 78,
+    "run": 27583026755
+  },
+  {
+    "date": "2026-06-17T21:06:57Z",
+    "commit": "7ba756cb",
+    "duration_ms": 205652,
+    "pages": 78,
+    "run": 27719821563
+  },
+  {
+    "date": "2026-06-17T21:29:56Z",
+    "commit": "6fe22a74",
+    "duration_ms": 360784,
+    "pages": 78,
+    "run": 27721004686
+  },
+  {
+    "date": "2026-06-18T09:45:09Z",
+    "commit": "2a177957",
+    "duration_ms": 373572,
+    "pages": 78,
+    "run": 27750971279
+  },
+  {
+    "date": "2026-06-18T20:25:53Z",
+    "commit": "0840111c",
+    "duration_ms": 375810,
+    "pages": 78,
+    "run": 27787200405
+  },
+  {
+    "date": "2026-06-21T18:57:21Z",
+    "commit": "a6a6db9e",
+    "duration_ms": 361552,
+    "pages": 78,
+    "run": 27914257461
+  },
+  {
+    "date": "2026-06-21T21:19:54Z",
+    "commit": "793d5df0",
+    "duration_ms": 376949,
+    "pages": 78,
+    "run": 27917813606
+  },
+  {
+    "date": "2026-06-24T22:30:00Z",
+    "commit": "61902418",
+    "duration_ms": 363013,
+    "pages": 78,
+    "run": 28133774602
+  },
+  {
+    "date": "2026-06-27T13:46:12Z",
+    "commit": "1015154e",
+    "duration_ms": 378842,
+    "pages": 78,
+    "run": 28291042959
+  },
+  {
+    "date": "2026-06-28T16:22:13Z",
+    "commit": "8b9bcdc0",
+    "duration_ms": 378000,
+    "pages": 78,
+    "run": 28328473503
+  },
+  {
+    "date": "2026-06-28T20:44:33Z",
+    "commit": "62b94685",
+    "duration_ms": 378371,
+    "pages": 78,
+    "run": 28335421742
+  },
+  {
+    "date": "2026-06-29T21:23:02Z",
+    "commit": "eb20290d",
+    "duration_ms": 379988,
+    "pages": 78,
+    "run": 28403576511
+  },
+  {
+    "date": "2026-06-30T16:25:26Z",
+    "commit": "f5ac0a11",
+    "duration_ms": 210014,
+    "pages": 78,
+    "run": 28459704324
+  },
+  {
+    "date": "2026-06-30T23:23:33Z",
+    "commit": "268fa0e1",
+    "duration_ms": 366355,
+    "pages": 78,
+    "run": 28482359393
+  },
+  {
+    "date": "2026-07-02T00:25:40Z",
+    "commit": "4dd9630b",
+    "duration_ms": 366558,
+    "pages": 78,
+    "run": 28556833454
+  },
+  {
+    "date": "2026-07-02T01:15:38Z",
+    "commit": "af556464",
+    "duration_ms": 386817,
+    "pages": 78,
+    "run": 28558561028
+  },
+  {
+    "date": "2026-07-03T00:37:58Z",
+    "commit": "170046de",
+    "duration_ms": 369220,
+    "pages": 78,
+    "run": 28630629491
+  },
+  {
+    "date": "2026-07-03T01:50:11Z",
+    "commit": "6464a542",
+    "duration_ms": 387614,
+    "pages": 78,
+    "run": 28633143006
+  },
+  {
+    "date": "2026-07-03T20:36:32Z",
+    "commit": "f18e8c55",
+    "duration_ms": 387553,
+    "pages": 78,
+    "run": 28682337117
+  },
+  {
+    "date": "2026-07-03T21:59:34Z",
+    "commit": "5a561a63",
+    "duration_ms": 368389,
+    "pages": 78,
+    "run": 28685122752
+  },
+  {
+    "date": "2026-07-04T01:06:35Z",
+    "commit": "cd62460c",
+    "duration_ms": 368819,
+    "pages": 78,
+    "run": 28690233400
+  },
+  {
+    "date": "2026-07-04T19:42:41Z",
+    "commit": "9ab94590",
+    "duration_ms": 209799,
+    "pages": 78,
+    "run": 28717539146
+  },
+  {
+    "date": "2026-07-04T22:19:16Z",
+    "commit": "63329ca5",
+    "duration_ms": 822302,
+    "pages": 96,
+    "run": 28721448415
+  },
+  {
+    "date": "2026-07-04T23:59:27Z",
+    "commit": "57653b06",
+    "duration_ms": 784691,
+    "pages": 96,
+    "run": 28723744013
+  },
+  {
+    "date": "2026-07-05T15:30:11Z",
+    "commit": "954849a7",
+    "duration_ms": 816628,
+    "pages": 96,
+    "run": 28745715734
+  },
+  {
+    "date": "2026-07-05T16:48:09Z",
+    "commit": "0ffaeeda",
+    "duration_ms": 818475,
+    "pages": 96,
+    "run": 28747883800
+  },
+  {
+    "date": "2026-07-05T18:48:42Z",
+    "commit": "721969a3",
+    "duration_ms": 845005,
+    "pages": 96,
+    "run": 28751170704
+  },
+  {
+    "date": "2026-07-05T22:50:28Z",
+    "commit": "04964cc7",
+    "duration_ms": 15757,
+    "pages": 96,
+    "run": 28757609591
+  },
+  {
+    "date": "2026-07-05T22:57:38Z",
+    "commit": "bd565a0a",
+    "duration_ms": 850898,
+    "pages": 96,
+    "run": 28757796500
+  },
+  {
+    "date": "2026-07-06T22:34:48Z",
+    "commit": "e69bbab8",
+    "duration_ms": 12960,
+    "pages": 96,
+    "run": 28827905888
+  },
+  {
+    "date": "2026-07-08T00:22:14Z",
+    "commit": "c704bd38",
+    "duration_ms": 14596,
+    "pages": 96,
+    "run": 28908168914
+  },
+  {
+    "date": "2026-07-08T00:29:17Z",
+    "commit": "0190d8d1",
+    "duration_ms": 13016,
+    "pages": 96,
+    "run": 28908449052
+  },
+  {
+    "date": "2026-07-08T20:43:14Z",
+    "commit": "756c9fb1",
+    "duration_ms": 13214,
+    "pages": 96,
+    "run": 28974347548
+  },
+  {
+    "date": "2026-07-09T00:11:43Z",
+    "commit": "a9251eee",
+    "duration_ms": 13095,
+    "pages": 96,
+    "run": 28984622612
+  },
+  {
+    "date": "2026-07-10T01:04:38Z",
+    "commit": "13562cc6",
+    "duration_ms": 12303,
+    "pages": 96,
+    "run": 29061536653
+  },
+  {
+    "date": "2026-07-10T09:43:04Z",
+    "commit": "e34c68db",
+    "duration_ms": 12980,
+    "pages": 96,
+    "run": 29083972382
+  },
+  {
+    "date": "2026-07-10T11:33:03Z",
+    "commit": "129385d3",
+    "duration_ms": 13070,
+    "pages": 96,
+    "run": 29089777806
+  },
+  {
+    "date": "2026-07-13T18:04:57Z",
+    "commit": "bb42e7ae",
+    "duration_ms": 14638,
+    "pages": 96,
+    "run": 29273028668
+  },
+  {
+    "date": "2026-07-13T23:52:39Z",
+    "commit": "2247db10",
+    "duration_ms": 12933,
+    "pages": 97,
+    "run": 29294327626
+  },
+  {
+    "date": "2026-07-15T12:24:19Z",
+    "commit": "d6e05316",
+    "duration_ms": 16221,
+    "pages": 97,
+    "run": 29415083246
+  },
+  {
+    "date": "2026-07-15T22:28:08Z",
+    "commit": "27a3a7de",
+    "duration_ms": 13057,
+    "pages": 97,
+    "run": 29455500926
+  },
+  {
+    "date": "2026-07-17T10:22:15Z",
+    "commit": "9db6b221",
+    "duration_ms": 16793,
+    "pages": 98,
+    "run": 29573232972
+  },
+  {
+    "date": "2026-07-17T13:56:23Z",
+    "commit": "c708ce4d",
+    "duration_ms": 13064,
+    "pages": 98,
+    "run": 29585920351
+  },
+  {
+    "date": "2026-07-17T15:42:35Z",
+    "commit": "75ac4cb5",
+    "duration_ms": 14571,
+    "pages": 100,
+    "run": 29593227949
+  },
+  {
+    "date": "2026-07-19T01:52:23Z",
+    "commit": "cc5ecbff",
+    "duration_ms": 14810,
+    "pages": 100,
+    "run": 29669273433
+  },
+  {
+    "date": "2026-07-20T17:29:12Z",
+    "commit": "4271d51b",
+    "duration_ms": 13220,
+    "pages": 100,
+    "run": 29763848897
+  },
+  {
+    "date": "2026-07-20T21:46:02Z",
+    "commit": "07a22cfc",
+    "duration_ms": 11637,
+    "pages": 100,
+    "run": 29781448148
+  },
+  {
+    "date": "2026-07-21T09:00:34Z",
+    "commit": "22809cb2",
+    "duration_ms": 13513,
+    "pages": 100,
+    "run": 29816510710
+  },
+  {
+    "date": "2026-07-22T00:41:07Z",
+    "commit": "568e50c8",
+    "duration_ms": 853286,
+    "pages": 101,
+    "run": 29880941228
+  },
+  {
+    "date": "2026-07-22T08:09:17Z",
+    "commit": "d8b02af8",
+    "duration_ms": 13230,
+    "pages": 101,
+    "run": 29902886695
+  },
+  {
+    "date": "2026-07-22T09:19:14Z",
+    "commit": "82b3c3d4",
+    "duration_ms": 552270,
+    "pages": 101,
+    "run": 29907487425
+  },
+  {
+    "date": "2026-07-22T10:52:49Z",
+    "commit": "28be3c84",
+    "duration_ms": 849784,
+    "pages": 101,
+    "run": 29913594679
+  },
+  {
+    "date": "2026-07-22T13:35:18Z",
+    "commit": "38d67763",
+    "duration_ms": 1751,
+    "pages": 101,
+    "run": 29924565579
+  },
+  {
+    "date": "2026-07-22T13:45:23Z",
+    "commit": "14de6cec",
+    "duration_ms": 1756,
+    "pages": 101,
+    "run": 29925343659
+  },
+  {
+    "date": "2026-07-22T14:47:10Z",
+    "commit": "9f21c5a7",
+    "duration_ms": 1803,
+    "pages": 101,
+    "run": 29930255059
+  },
+  {
+    "date": "2026-07-22T15:03:25Z",
+    "commit": "95b21f7b",
+    "duration_ms": 1783,
+    "pages": 101,
+    "run": 29931551408
+  },
+  {
+    "date": "2026-07-22T15:14:38Z",
+    "commit": "5e690975",
+    "duration_ms": 1788,
+    "pages": 101,
+    "run": 29932430370
+  },
+  {
+    "date": "2026-07-22T15:23:48Z",
+    "commit": "a491c560",
+    "duration_ms": 1750,
+    "pages": 101,
+    "run": 29933165407
+  },
+  {
+    "date": "2026-07-22T15:27:31Z",
+    "commit": "a94aab8a",
+    "duration_ms": 1667,
+    "pages": 101,
+    "run": 29933457386
+  },
+  {
+    "date": "2026-07-22T15:59:55Z",
+    "commit": "0d763098",
+    "duration_ms": 1447,
+    "pages": 101,
+    "run": 29935985155
+  },
+  {
+    "date": "2026-07-23T04:37:50Z",
+    "commit": "153c67ae",
+    "duration_ms": 1375,
+    "pages": 101,
+    "run": 29980030164
+  },
+  {
+    "date": "2026-07-23T15:32:12Z",
+    "commit": "b3f80aaf",
+    "duration_ms": 3551,
+    "pages": 101,
+    "run": 30020996702
+  },
+  {
+    "date": "2026-07-23T21:52:45Z",
+    "commit": "ebb90737",
+    "duration_ms": 1714,
+    "pages": 101,
+    "run": 30047864474
+  },
+  {
+    "date": "2026-07-24T02:39:09Z",
+    "commit": "dc3d28a3",
+    "duration_ms": 1769,
+    "pages": 101,
+    "run": 30062180194
+  },
+  {
+    "date": "2026-07-24T03:05:06Z",
+    "commit": "70e028d4",
+    "duration_ms": 2637,
+    "pages": 101,
+    "run": 30063302191
+  },
+  {
+    "date": "2026-07-24T03:16:36Z",
+    "commit": "8ad88a37",
+    "duration_ms": 1786,
+    "pages": 101,
+    "run": 30063816409
+  },
+  {
+    "date": "2026-07-24T09:42:13Z",
+    "commit": "5e868230",
+    "duration_ms": 1752,
+    "pages": 101,
+    "run": 30083529140
+  },
+  {
+    "date": "2026-07-24T10:26:58Z",
+    "commit": "0eeb6a81",
+    "duration_ms": 1419,
+    "pages": 101,
+    "run": 30086198714
+  },
+  {
+    "date": "2026-07-26T21:44:46Z",
+    "commit": "b59d7abf",
+    "duration_ms": 3051,
+    "pages": 101,
+    "run": 30221708840
+  },
+  {
+    "date": "2026-07-26T21:59:49Z",
+    "commit": "7e93c99f",
+    "duration_ms": 1861,
+    "pages": 101,
+    "run": 30222214174
+  },
+  {
+    "date": "2026-07-27T05:23:23Z",
+    "commit": "87c4a926",
+    "duration_ms": 1728,
+    "pages": 101,
+    "run": 30239607407
+  },
+  {
+    "date": "2026-07-27T14:24:09Z",
+    "commit": "08497051",
+    "duration_ms": 2798,
+    "pages": 101,
+    "run": 30274890659
+  },
+  {
+    "date": "2026-07-27T15:13:46Z",
+    "commit": "3ece3a19",
+    "duration_ms": 3131,
+    "pages": 101,
+    "run": 30278970673
+  },
+  {
+    "date": "2026-07-28T11:18:12Z",
+    "commit": "43ac439b",
+    "duration_ms": 1571,
+    "pages": 101,
+    "run": 30354240882
+  },
+  {
+    "date": "2026-07-28T12:20:30Z",
+    "commit": "18e1b257",
+    "duration_ms": 1831,
+    "pages": 101,
+    "run": 30358526074
+  },
+  {
+    "date": "2026-07-28T17:25:54Z",
+    "commit": "23fdb485",
+    "duration_ms": 1743,
+    "pages": 101,
+    "run": 30382848980
+  },
+  {
+    "date": "2026-07-28T18:10:05Z",
+    "commit": "319fcf05",
+    "duration_ms": 1712,
+    "pages": 101,
+    "run": 30386195587
+  },
+  {
+    "date": "2026-07-28T18:31:26Z",
+    "commit": "24e29daa",
+    "duration_ms": 1551,
+    "pages": 101,
+    "run": 30387816646
+  },
+  {
+    "date": "2026-07-28T19:24:14Z",
+    "commit": "2fcc76ff",
+    "duration_ms": 1711,
+    "pages": 101,
+    "run": 30391787608
+  },
+  {
+    "date": "2026-07-28T23:55:24Z",
+    "commit": "c8319f27",
+    "duration_ms": 1740,
+    "pages": 101,
+    "run": 30409520939
+  },
+  {
+    "date": "2026-07-29T03:17:30Z",
+    "commit": "f492103c",
+    "duration_ms": 2242,
+    "pages": 101,
+    "run": 30419176994
+  },
+  {
+    "date": "2026-07-29T03:27:25Z",
+    "commit": "bdcd645c",
+    "duration_ms": 1522,
+    "pages": 101,
+    "run": 30419620141
+  },
+  {
+    "date": "2026-07-29T09:52:03Z",
+    "commit": "dc651a54",
+    "duration_ms": 2864,
+    "pages": 101,
+    "run": 30441367575
+  },
+  {
+    "date": "2026-07-29T11:25:19Z",
+    "commit": "b7e2d0fb",
+    "duration_ms": 1984,
+    "pages": 101,
+    "run": 30447497242
+  },
+  {
+    "date": "2026-07-29T12:26:09Z",
+    "commit": "4787a46f",
+    "duration_ms": 1791,
+    "pages": 101,
+    "run": 30451580932
+  },
+  {
+    "date": "2026-07-31T18:15:37Z",
+    "commit": "47e172ef",
+    "duration_ms": 5580,
+    "pages": 102,
+    "run": 30654444724
+  },
+  {
+    "date": "2026-07-31T19:50:33Z",
+    "commit": "ef3c66f7",
+    "duration_ms": 1543,
+    "pages": 102,
+    "run": 30660619163
+  },
+  {
+    "date": "2026-07-31T20:52:45Z",
+    "commit": "3e37d2c6",
+    "duration_ms": 1615,
+    "pages": 102,
+    "run": 30664547603
+  },
+  {
+    "date": "2026-07-31T23:27:43Z",
+    "commit": "22e04d85",
+    "duration_ms": 1697,
+    "pages": 102,
+    "run": 30672945386
+  },
+  {
+    "date": "2026-08-01T00:14:19Z",
+    "commit": "06dbd507",
+    "duration_ms": 1614,
+    "pages": 102,
+    "run": 30675029831
+  },
+  {
+    "date": "2026-08-01T01:41:21Z",
+    "commit": "5dafed05",
+    "duration_ms": 1291,
+    "pages": 102,
+    "run": 30678456127
+  },
+  {
+    "date": "2026-08-02T23:42:31Z",
+    "commit": "0a46ae55",
+    "duration_ms": 2702,
+    "pages": 102,
+    "run": 30772820902
+  },
+  {
+    "date": "2026-08-03T19:03:31Z",
+    "commit": "5bae3c0e",
+    "duration_ms": 24840,
+    "pages": 103,
+    "run": 30844072489
+  },
+  {
+    "date": "2026-08-03T21:26:05Z",
+    "commit": "1ca5e024",
+    "duration_ms": 1697,
+    "pages": 103,
+    "run": 30854610833
+  },
+  {
+    "date": "2026-08-03T23:57:34Z",
+    "commit": "9bcefa42",
+    "duration_ms": 1628,
+    "pages": 103,
+    "run": 30864006749
+  },
+  {
+    "date": "2026-08-04T10:16:37Z",
+    "commit": "c66f8ec9",
+    "duration_ms": 1697,
+    "pages": 103,
+    "run": 30899956752
+  },
+  {
+    "date": "2026-08-04T10:38:42Z",
+    "commit": "20f53586",
+    "duration_ms": 1734,
+    "pages": 103,
+    "run": 30901501035
+  },
+  {
+    "date": "2026-08-05T11:05:15Z",
+    "commit": "0deab1ca",
+    "duration_ms": 1683,
+    "pages": 103,
+    "run": 31000036191
+  },
+  {
+    "date": "2026-08-05T11:45:09Z",
+    "commit": "7c860d11",
+    "duration_ms": 1697,
+    "pages": 103,
+    "run": 31002717772
+  },
+  {
+    "date": "2026-08-05T12:58:30Z",
+    "commit": "7c68d426",
+    "duration_ms": 1668,
+    "pages": 103,
+    "run": 31008014493
+  },
+  {
+    "date": "2026-08-05T21:56:12Z",
+    "commit": "c92a1296",
+    "duration_ms": 1463,
+    "pages": 103,
+    "run": 31050741410
+  },
+  {
+    "date": "2026-08-05T22:05:57Z",
+    "commit": "1ac95402",
+    "duration_ms": 1704,
+    "pages": 103,
+    "run": 31051412988
+  },
+  {
+    "date": "2026-08-05T22:38:57Z",
+    "commit": "3457dd70",
+    "duration_ms": 1643,
+    "pages": 103,
+    "run": 31053536220
+  },
+  {
+    "date": "2026-08-07T05:43:52Z",
+    "commit": "202086b2",
+    "duration_ms": 3151,
+    "pages": 103,
+    "run": 31151546156
+  },
+  {
+    "date": "2026-08-07T07:47:51Z",
+    "commit": "e7866e2f",
+    "duration_ms": 1766,
+    "pages": 103,
+    "run": 31159075574
+  },
+  {
+    "date": "2026-08-07T07:51:40Z",
+    "commit": "b2e4b202",
+    "duration_ms": 1634,
+    "pages": 103,
+    "run": 31159323066
+  },
+  {
+    "date": "2026-08-07T09:41:04Z",
+    "commit": "883a0633",
+    "duration_ms": 2643,
+    "pages": 103,
+    "run": 31166925424
+  },
+  {
+    "date": "2026-08-07T09:50:45Z",
+    "commit": "4c012662",
+    "duration_ms": 1264,
+    "pages": 103,
+    "run": 31167601901
+  },
+  {
+    "date": "2026-08-08T13:29:18Z",
+    "commit": "016986e4",
+    "duration_ms": 2860,
+    "pages": 103,
+    "run": 31259651491
+  },
+  {
+    "date": "2026-08-08T19:17:39Z",
+    "commit": "949ff633",
+    "duration_ms": 3287,
+    "pages": 103,
+    "run": 31274069789
+  },
+  {
+    "date": "2026-08-09T00:52:34Z",
+    "commit": "a81102af",
+    "duration_ms": 1617,
+    "pages": 103,
+    "run": 31287098671
+  },
+  {
+    "date": "2026-08-10T00:24:46Z",
+    "commit": "dd936816",
+    "duration_ms": 1756,
+    "pages": 103,
+    "run": 31344380686
+  },
+  {
+    "date": "2026-08-10T04:39:37Z",
+    "commit": "82750c24",
+    "duration_ms": 1571,
+    "pages": 103,
+    "run": 31356182782
+  },
+  {
+    "date": "2026-08-11T10:16:32Z",
+    "commit": "b022e658",
+    "duration_ms": 1715,
+    "pages": 103,
+    "run": 31481481045
+  },
+  {
+    "date": "2026-08-11T10:26:20Z",
+    "commit": "0cfd8553",
+    "duration_ms": 2872,
+    "pages": 103,
+    "run": 31482198774
+  },
+  {
+    "date": "2026-08-11T12:22:38Z",
+    "commit": "7c17f15b",
+    "duration_ms": 1684,
+    "pages": 103,
+    "run": 31490913283
+  },
+  {
+    "date": "2026-08-12T01:29:04Z",
+    "commit": "a45ad8d1",
+    "duration_ms": 1674,
+    "pages": 103,
+    "run": 31553737280
+  },
+  {
+    "date": "2026-08-12T20:54:19Z",
+    "commit": "a516b6ee",
+    "duration_ms": 2302,
+    "pages": 103,
+    "run": 31639954204
+  },
+  {
+    "date": "2026-08-13T00:08:11Z",
+    "commit": "1b295e18",
+    "duration_ms": 3226,
+    "pages": 103,
+    "run": 31653390963
+  },
+  {
+    "date": "2026-08-13T00:43:15Z",
+    "commit": "3397b082",
+    "duration_ms": 2856,
+    "pages": 103,
+    "run": 31655375900
+  },
+  {
+    "date": "2026-08-13T23:21:49Z",
+    "commit": "d61f96b4",
+    "duration_ms": 2956,
+    "pages": 103,
+    "run": 31753534282
+  },
+  {
+    "date": "2026-08-14T09:44:39Z",
+    "commit": "8aff3985",
+    "duration_ms": 1946,
+    "pages": 106,
+    "run": 31789346545
+  },
+  {
+    "date": "2026-08-15T17:19:45Z",
+    "commit": "fdf680ff",
+    "duration_ms": 3066,
+    "pages": 106,
+    "run": 31897989299
+  },
+  {
+    "date": "2026-08-15T18:37:36Z",
+    "commit": "78f79261",
+    "duration_ms": 2450,
+    "pages": 106,
+    "run": 31901634007
+  },
+  {
+    "date": "2026-08-15T22:30:23Z",
+    "commit": "40a42d4e",
+    "duration_ms": 2477,
+    "pages": 106,
+    "run": 31912304346
+  },
+  {
+    "date": "2026-08-16T00:13:17Z",
+    "commit": "7054a076",
+    "duration_ms": 3176,
+    "pages": 106,
+    "run": 31916689811
+  },
+  {
+    "date": "2026-08-16T02:39:40Z",
+    "commit": "d002e1ed",
+    "duration_ms": 3002,
+    "pages": 106,
+    "run": 31922407386
+  },
+  {
+    "date": "2026-08-16T16:09:27Z",
+    "commit": "1d697281",
+    "duration_ms": 3118,
+    "pages": 106,
+    "run": 31957788962
+  },
+  {
+    "date": "2026-08-16T21:19:23Z",
+    "commit": "f02ec3e0",
+    "duration_ms": 2542,
+    "pages": 106,
+    "run": 31973147647
+  },
+  {
+    "date": "2026-08-17T04:20:47Z",
+    "commit": "efdb14d8",
+    "duration_ms": 1353,
+    "pages": 106,
+    "run": 31994140915
+  },
+  {
+    "date": "2026-08-19T02:16:30Z",
+    "commit": "1c551c02",
+    "duration_ms": 1724,
+    "pages": 106,
+    "run": 32207969961
+  },
+  {
+    "date": "2026-08-20T17:57:29Z",
+    "commit": "1422219f",
+    "duration_ms": 1844,
+    "pages": 106,
+    "run": 32400497891
+  },
+  {
+    "date": "2026-08-21T18:46:09Z",
+    "commit": "c3ae249b",
+    "duration_ms": 313999,
+    "pages": 107,
+    "run": 32515024834
+  },
+  {
+    "date": "2026-08-23T17:00:49Z",
+    "commit": "60c280a5",
+    "duration_ms": 2395,
+    "pages": 107,
+    "run": 32653466990
+  },
+  {
+    "date": "2026-08-23T18:03:20Z",
+    "commit": "d00a6c95",
+    "duration_ms": 1928,
+    "pages": 107,
+    "run": 32656815634
+  },
+  {
+    "date": "2026-08-24T04:23:08Z",
+    "commit": "2d070c69",
+    "duration_ms": 1926,
+    "pages": 107,
+    "run": 32689808509
+  },
+  {
+    "date": "2026-08-24T17:01:56Z",
+    "commit": "7a3c05b3",
+    "duration_ms": 3220,
+    "pages": 107,
+    "run": 32754263380
+  },
+  {
+    "date": "2026-08-27T19:06:39Z",
+    "commit": "8a88c9bd",
+    "duration_ms": 2437,
+    "pages": 107,
+    "run": 33106836530
+  }
+]

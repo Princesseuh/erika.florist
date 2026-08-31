@@ -6,3 +6,6 @@
 /.well-known/graphgarden.json
   access-control-allow-origin: *
   cache-control: public, max-age=3600
+
+/build-stats.json
+  cache-control: public, max-age=300

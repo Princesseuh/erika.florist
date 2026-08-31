@@ -26,6 +26,8 @@ pub struct AboutPage;
 
 impl Route for AboutPage {
     fn render(&self, ctx: &mut PageContext) -> impl Into<RenderResult> {
+        ctx.assets.include_script("src/assets/build-stats.ts")?;
+
         let rust_sample = highlight_code(
             "fn main() {\n    println!(\"Hello, world!\");\n}",
             &HighlightOptions::new("rust", "base16-ocean.dark"),
@@ -40,11 +42,19 @@ impl Route for AboutPage {
         let regular = entries
             .iter()
             .find(|e| !e.data(ctx).featured.unwrap_or(false));
-        base_layout(
+        Ok(base_layout(
             Some("About".into()),
-            Some("Design system and style guide for erika.florist.".into()),
+            Some("Build times, design system and style guide for erika.florist.".into()),
             html!(
                 div."container mx-auto my-8 px-4 max-w-centered-width" {
+                    h2."text-3xl font-semibold mb-2" { "Builds" }
+
+                    section."mb-12" {
+                        div id="build-chart" class="min-h-80" {
+                            div."h-80 border border-solid border-accent-valencia/10 bg-accent-valencia/5 animate-pulse" {}
+                        }
+                    }
+
                     h2."text-3xl font-semibold mb-2" { "Design" }
 
                     // Colours
@@ -223,6 +233,6 @@ impl Route for AboutPage {
             true,
             None,
             ctx,
-        )
+        ))
     }
 }

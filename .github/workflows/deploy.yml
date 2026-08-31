@@ -46,6 +46,8 @@ jobs:
     if: needs.changes.outputs.backend == 'true' || needs.changes.outputs.website == 'true'
     runs-on: ubuntu-latest
     name: Deploy
+    permissions:
+      contents: write
     steps:
       # Wiki modified dates and the mtime restore need full commit history, but
       # not old images. The filter skips blobs over 128 KB, which cuts the
@@ -111,3 +113,18 @@ jobs:
         with:
           workingDirectory: ./crates/backend
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      # The site build appends this run to the history file. Rebase first so a
+      # content commit that landed mid-deploy doesn't reject the push.
+      - name: Catch up to main
+        if: needs.changes.outputs.website == 'true'
+        run: |
+          git fetch origin main
+          git rebase --autostash origin/main
+
+      - name: Commit build history
+        if: needs.changes.outputs.website == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: "[ci] update build history [skip cd]"
+          file_pattern: crates/website/build-history.json

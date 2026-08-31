@@ -24,7 +24,10 @@ jobs:
       backend: ${{ steps.filter.outputs.backend }}
       website: ${{ steps.filter.outputs.website }}
     steps:
+      # sparse-checkout implies blob:none; paths-filter reads tree metadata, not the 1.4 GB of blobs.
       - uses: actions/checkout@v6
+        with:
+          sparse-checkout: .github
 
       - uses: dorny/paths-filter@v3
         id: filter

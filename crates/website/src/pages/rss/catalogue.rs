@@ -2,6 +2,7 @@ use maudit::route::prelude::*;
 use xml_builder::{XMLBuilder, XMLElement, XMLVersion};
 
 use crate::content::{CatalogueEntry, CatalogueMetadata};
+use crate::rss::XMLElementExt;
 
 #[route("/rss/catalogue/index.xml")]
 pub struct CatalogueRSS;
@@ -74,15 +75,15 @@ impl Route for CatalogueRSS {
         let mut channel = XMLElement::new("channel");
 
         let mut title = XMLElement::new("title");
-        title.add_text("Erika's Catalogue".to_string())?;
+        title.add_escaped_text("Erika's Catalogue")?;
         channel.add_child(title)?;
 
         let mut link = XMLElement::new("link");
-        link.add_text("https://erika.florist/catalogue".to_string())?;
+        link.add_escaped_text("https://erika.florist/catalogue")?;
         channel.add_child(link)?;
 
         let mut description = XMLElement::new("description");
-        description.add_text("Latest items from erika.florist catalogue".to_string())?;
+        description.add_escaped_text("Latest items from erika.florist catalogue")?;
         channel.add_child(description)?;
 
         let mut atom_link = XMLElement::new("atom:link");

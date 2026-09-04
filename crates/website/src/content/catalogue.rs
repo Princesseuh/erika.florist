@@ -14,7 +14,7 @@ use xml_builder::XMLElement;
 
 use crate::{
     content::{CatalogueBook, CatalogueGame, CatalogueMovie, CatalogueShow},
-    rss::{AsXMLError, rewrite_rss_content},
+    rss::{AsXMLError, XMLElementExt, rewrite_rss_content},
 };
 
 pub mod books;
@@ -242,16 +242,16 @@ fn catalogue_entry_to_xml(
     let mut item = XMLElement::new("item");
 
     let mut item_title = XMLElement::new("title");
-    item_title.add_text(title)?;
+    item_title.add_escaped_text(&title)?;
     item.add_child(item_title)?;
 
     let mut item_link = XMLElement::new("link");
-    item_link.add_text(entry_url.clone())?;
+    item_link.add_escaped_text(&entry_url)?;
     item.add_child(item_link)?;
 
     let mut guid = XMLElement::new("guid");
     guid.add_attribute("isPermaLink", "true");
-    guid.add_text(entry_url)?;
+    guid.add_escaped_text(&entry_url)?;
     item.add_child(guid)?;
 
     let mut pub_date = XMLElement::new("pubDate");
@@ -260,9 +260,9 @@ fn catalogue_entry_to_xml(
         let formatted_date = finished_date
             .format("%a, %d %b %Y 00:00:00 +0000")
             .to_string();
-        pub_date.add_text(formatted_date)?;
+        pub_date.add_escaped_text(&formatted_date)?;
     } else {
-        pub_date.add_text("Thu, 01 Jan 1970 00:00:00 +0000".to_string())?;
+        pub_date.add_escaped_text("Thu, 01 Jan 1970 00:00:00 +0000")?;
     }
     item.add_child(pub_date)?;
 
@@ -271,13 +271,13 @@ fn catalogue_entry_to_xml(
         Some(r) => format!("{}", r),
         None => "Planned".to_string(),
     };
-    item_description.add_text(description_text)?;
+    item_description.add_escaped_text(&description_text)?;
     item.add_child(item_description)?;
 
     let content = rewrite_rss_content(rendered_content)?;
 
     let mut content_encoded = XMLElement::new("content:encoded");
-    content_encoded.add_text(format!("<![CDATA[{}]]>", content))?;
+    content_encoded.add_cdata(&content)?;
     item.add_child(content_encoded)?;
 
     Ok(item)

@@ -51,8 +51,8 @@ pub fn base_layout(
                 meta property="og:type" content="website";
                 meta property="og:site_name" content="erika.florist";
 
-                link rel="alternate" type="application/rss+xml" title="Blog" href="https://erika.florist/rss/blog/";
-                link rel="alternate" type="application/rss+xml" title="Catalogue" href="https://erika.florist/rss/catalogue/";
+                link rel="alternate" type="application/rss+xml" title="Blog" href="https://erika.florist/rss/blog/index.xml";
+                link rel="alternate" type="application/rss+xml" title="Catalogue" href="https://erika.florist/rss/catalogue/index.xml";
 
                 meta name="twitter:card" content="summary";
             }

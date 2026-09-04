@@ -10,6 +10,28 @@ pub trait IntoXMLElement<T> {
     fn as_xml_element(&self, ctx: &mut PageContext) -> Result<XMLElement, AsXMLError>;
 }
 
+pub trait XMLElementExt {
+    /// `xml-builder` 0.6 does not escape text content, so do it here.
+    fn add_escaped_text(&mut self, text: impl AsRef<str>) -> Result<(), xml_builder::XMLError>;
+    /// Emit a CDATA section. The payload is written raw; it must not contain `]]>`.
+    fn add_cdata(&mut self, content: impl AsRef<str>) -> Result<(), xml_builder::XMLError>;
+}
+
+impl XMLElementExt for XMLElement {
+    fn add_escaped_text(&mut self, text: impl AsRef<str>) -> Result<(), xml_builder::XMLError> {
+        self.add_text(
+            text.as_ref()
+                .replace('&', "&amp;")
+                .replace('<', "&lt;")
+                .replace('>', "&gt;"),
+        )
+    }
+
+    fn add_cdata(&mut self, content: impl AsRef<str>) -> Result<(), xml_builder::XMLError> {
+        self.add_text(format!("<![CDATA[{}]]>", content.as_ref()))
+    }
+}
+
 #[derive(Debug)]
 pub enum AsXMLError {
     Rewrite(lol_html::errors::RewritingError),

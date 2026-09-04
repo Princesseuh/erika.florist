@@ -2,7 +2,7 @@ use maudit::route::prelude::*;
 use xml_builder::{XMLBuilder, XMLElement, XMLVersion};
 
 use crate::content::BlogPost;
-use crate::rss::IntoXMLElement;
+use crate::rss::{IntoXMLElement, XMLElementExt};
 
 #[route("/rss/blog/index.xml")]
 pub struct BlogRSS;
@@ -30,15 +30,15 @@ impl Route for BlogRSS {
         let mut channel = XMLElement::new("channel");
 
         let mut title = XMLElement::new("title");
-        title.add_text("Erika's blog".to_string())?;
+        title.add_escaped_text("Erika's blog")?;
         channel.add_child(title)?;
 
         let mut link = XMLElement::new("link");
-        link.add_text("https://erika.florist/articles".to_string())?;
+        link.add_escaped_text("https://erika.florist/articles")?;
         channel.add_child(link)?;
 
         let mut description = XMLElement::new("description");
-        description.add_text("Latest posts from erika.florist".to_string())?;
+        description.add_escaped_text("Latest posts from erika.florist")?;
         channel.add_child(description)?;
 
         let mut atom_link = XMLElement::new("atom:link");

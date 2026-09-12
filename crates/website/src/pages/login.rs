@@ -3,7 +3,7 @@ use maudit::route::prelude::*;
 
 use crate::layouts::base_layout;
 
-#[route("/login/")]
+#[route("/login/", sitemap(exclude = true))]
 pub struct LoginPage;
 
 impl Route for LoginPage {

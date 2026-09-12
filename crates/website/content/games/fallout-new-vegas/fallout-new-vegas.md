@@ -1,5 +1,8 @@
 ---
 title: "Fallout: New Vegas"
-status: "planned"
+rating: "loved"
+finishedDate: N/A
 igdb: "16"
 ---
+
+

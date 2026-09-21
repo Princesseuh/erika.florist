@@ -1,5 +1,8 @@
 ---
 title: "Willy Wonka & the Chocolate Factory"
-status: "planned"
+rating: "liked"
+finishedDate: N/A
 tmdb: "252"
 ---
+
+

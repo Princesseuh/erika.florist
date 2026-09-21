@@ -1,0 +1,18 @@
+{
+  "title": "The Simpsons",
+  "tagline": "Just a product of society that's lost its good manners.",
+  "id": 456,
+  "overview": "Set in Springfield, the average American town, the show focuses on the antics and everyday adventures of the Simpson family; Homer, Marge, Bart, Lisa and Maggie, as well as a virtual cast of thousands. Since the beginning, the series has been a pop culture icon, attracting hundreds of celebrities to guest star. The show has also made name for itself in its fearless satirical take on politics, media and American life in general.",
+  "releaseDate": "1989-12-17",
+  "runtime": null,
+  "companies": [
+    "Gracie Films",
+    "20th Century Fox Television",
+    "20th Television Animation",
+    "20th Television"
+  ],
+  "genres": [
+    "Animation",
+    "Comedy"
+  ]
+}

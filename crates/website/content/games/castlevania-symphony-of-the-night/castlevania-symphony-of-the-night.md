@@ -1,5 +1,8 @@
 ---
 title: "Castlevania: Symphony of the Night"
-status: "planned"
+rating: "loved"
+finishedDate: N/A
 igdb: "1128"
 ---
+
+

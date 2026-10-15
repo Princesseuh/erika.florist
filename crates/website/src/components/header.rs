@@ -47,13 +47,13 @@ pub fn header(
             section."hidden sm:block text-white-sugar-cane xl:basis-2/3" {
                 (logo())
                 @if include_about {
-                    section."hidden sm:block text-sm" {
+                    section."hidden sm:block text-sm" data-graphgarden-ignore="" {
                         "Often found in high-impact, yet overlooked areas, such as editor tooling or error handling. Currently working on "
                         a.(button_class).p-0 href="https://astro.build" { "Astro" }
                         ", "
                         a.(button_class).p-0 href="https://satteri.bruits.org" { "Sätteri" }
                         " and "
-                        a.(button_class).p-0 href="https://maudit.org" data-graphgarden-ignore="" { "Maudit" }
+                        a.(button_class).p-0 href="https://maudit.org" { "Maudit" }
                         "."
                     }
                 }
@@ -78,14 +78,14 @@ pub fn header(
                 }
             }
             @if include_about {
-                div class="px-6 py-8" {
+                div class="px-6 py-8" data-graphgarden-ignore="" {
                     p class="text-md text-white-sugar-cane/80" {
                         "Often found in high-impact, yet overlooked areas, such as editor tooling or error handling. Currently working on "
                         a.(button_class).p-0.sm:p-1 href="https://astro.build" { "Astro" }
                         ", "
                         a.(button_class).p-0.sm:p-1 href="https://satteri.bruits.org" { "Sätteri" }
                         " and "
-                        a.(button_class).p-0.sm:p-1 href="https://maudit.org" data-graphgarden-ignore="" { "Maudit" }
+                        a.(button_class).p-0.sm:p-1 href="https://maudit.org" { "Maudit" }
                         "."
                     }
                 }

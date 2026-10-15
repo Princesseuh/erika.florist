@@ -68,6 +68,7 @@ fn main() -> Result<BuildOutput, Box<dyn std::error::Error>> {
                 "https://bruits.org/".into(),
                 "https://maudit.org/".into(),
                 "https://satteri.bruits.org/".into(),
+                "https://garden.bruits.org/".into(),
             ],
             output: OutputConfig {
                 dir: "./dist".into(),

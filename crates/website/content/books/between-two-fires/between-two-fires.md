@@ -1,7 +1,7 @@
 ---
 title: "Between Two Fires"
 status: "planned"
-isbn: "1783783729"
+isbn: "9781937007867"
 ---
 
 
